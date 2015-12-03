@@ -1,0 +1,494 @@
+#navigation-header{
+	height:60px;
+}
+
+#navigationContainer{
+	background-color:#D32F2F;
+	color:white;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index: 99;
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.mainNav, .mainNav .tab{
+	height:60px !important;
+}
+
+.mainNav .tab a{
+	line-height: 60px !important;
+}
+
+#contentContainer{
+	display:block;
+	width:100%;
+	margin-top:50px;
+}
+
+.outerContainer{
+	position:relative;
+	/*transform: translateX(0);*/
+}
+
+.innerContainer{
+	position:relative;
+	top:1.75rem;
+	background-color:#fff;
+	min-height:90%;
+	text-align: center;
+}
+
+#game{
+	display:none;
+}
+
+#sideContainer{
+	background-color: white;
+	min-height: 90%;
+	z-index: 2 !important;
+	top: 40px;
+	bottom: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	overflow: hidden;
+	z-index:2;
+}
+
+#universalPopUp{
+	text-align:center;
+}
+
+.logoContainer{
+    font-size: 1.5em;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1px;
+    position:relative;
+}
+
+.logoImage img{
+    height: 43px;
+    margin-top: 6px;
+    z-index:0;
+}
+
+.logoIcon{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -0.3em;
+}
+
+.logoTitle{
+    display: inline-block;
+    margin-left: 11px;
+    margin-top: 6px;
+    color:white;
+}
+
+.logoAlpha{
+	font-size: 0.45em;
+    color: white;
+    position: absolute;
+    top: 35px;
+    left: 70px;
+    z-index: 1;
+}
+
+.logoLifebar{
+    width: 100px;
+    height: 7px;
+    background-color: #ddd;
+    position: relative;
+    top: -2px;
+    left: 12px;
+}
+
+.logoLifebarHealth{
+	width: 80%;
+    height: 5px;
+    background-color: #009688;/*#4CAF50;*/
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+.logoLifebarDamage{
+	width: 25%;
+    height: 5px;
+    background-color: #D50000;/*#4CAF50;*/
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+.logoBetaTag{
+  position: absolute;
+  font-size: 0.6em;
+  font-weight: bold;
+  left: 69px;
+  top: 47px;
+}
+
+.userContainer{
+	text-align: right;
+	margin-top: 7px;
+}
+
+.loginContainer{
+	text-align: right;
+	margin-top: 7px;
+}
+
+.forgotPasswordBtn{
+	
+}
+
+.userAvatar{
+	border-radius: 50%;
+	background-color: #eee;
+	width: 35px;
+	height: 35px;
+	vertical-align: middle;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.userNameTitle{
+	display: inline-block;	
+	font-size: 1.2em;
+	vertical-align: middle;
+	margin-left:0.75em;
+	cursor: pointer;
+}
+
+.userTotalXP{
+	display:inline-block;
+	font-size: 1.2em;
+	vertical-align: middle;
+	margin-left:0.75em;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.userTotalXP span{
+	color:#C8C7C7;
+}
+
+.userTotalXPLabel{
+	display:inline-block;
+}
+
+.userNotificiations{
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 2em;
+  vertical-align: middle;
+  cursor:pointer;
+  position: relative;
+}
+
+.userPTalkHelp{
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 2.2em;
+  vertical-align: middle;
+  cursor:pointer;
+}
+
+.userPTalk{
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 3px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.userPTalk img{
+  height: 30px;
+}
+
+.userAccountNavButton{
+	font-size:2em;
+	display:inline-block;
+	vertical-align:middle;
+	cursor: pointer;
+}
+#userAccountNav{
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	position: absolute;
+    top: 5px;
+    width: 8em;
+    height: auto;
+    right: 10px;
+}
+
+#userAccountNav li{
+	cursor: pointer;
+	font-size: 1rem;
+	color: rgba(0, 0, 0, 0.87);
+	line-height: 1.5rem;
+}
+
+#userAccountNav li > a{
+	display: block;
+	padding: 1rem 1rem;
+	text-align:center;
+	color:#474747;
+}
+
+
+.searchContainer, .searchContainerAnonymous{
+    background-color: transparent;
+    display: inline-block;
+    width: 150px;
+    position: relative;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.searchContainer:hover{
+
+}
+
+.searchInput{
+	display:inline-block;
+	position: absolute;
+	right: 3em;
+	left: 1em;
+	display:none;
+}
+
+.searchInput input:focus{
+	border:none;
+	box-shadow:none;
+}
+
+.SearchBtn{
+	cursor:pointer;
+}
+
+.backButtonLabel{
+	text-transform: none !important;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.mobileContainer{
+	display:none;
+	font-size: 1.2em;
+	margin: 1em;
+}
+
+.mobileTab{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.7em;
+	font-size: 1.3em;
+}
+
+.mobileNav{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.side-nav-logo{
+	padding: 2em 1.25em !important;
+}
+
+.side-nav-logo:hover{
+	background-color:transparent !important;
+}
+
+#loginButtonSideNav, #signupButtonSideNav{
+	color:white !important;
+}
+
+#MobileBackContainer{
+	background-color: #616161;
+	color: white;
+	text-align: left;
+	top:117px;
+	position:fixed;
+	left:0;
+	width:66.66667%;
+	display:none;
+	z-index:2;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.backContainer{
+	background-color: rgb(215, 214, 214);
+	color: rgba(0,0,0,0.7);
+	text-align: left;
+	position:fixed;
+	display: inline-block;
+	top: 55px;
+	left: 0;
+	right: 0;
+	z-index: 3;
+}
+
+.backContainerSideContent{
+	background-color: #DADADA;
+	color: #474747;
+	text-align: left;
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 3;
+}
+
+.backContainerSideContent .backButton{
+	font-size: 1.4em;
+	padding: 10px 0 0 20px;
+}
+
+.backContainer .backButton{
+	font-size: 1.4em;
+	padding: 10px 0 3px 0;
+}
+
+
+@media only screen and (max-width : 992px) {
+	#sideContainer{
+		display:none;
+		position: fixed;
+		right: -50%;
+		top:40px;
+		bottom: 0;
+		width: 55%;
+		-webkit-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+		-moz-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+		box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+	}
+	.identificationContainer .userContainer .userNameTitle, .identificationContainer .userContainer .userTotalXP {
+		display:none;
+	}
+	.userContainer{
+		top:1em;
+		bottom:auto;
+		width:auto;
+	}
+	.searchContainerAnonymous{
+		background-color:transparent;
+		width:auto;
+		left:auto;
+		right:1em;
+	}
+	.searchContainerAnonymous:hover{
+		background-color:transparent;
+	}
+	.searchContainerAnonymous .searchInput{
+		display:none;
+	}
+	.searchContainer{
+		left: 5px;
+	    right: 9em;
+	    width: 100px;
+	}
+	.loginContainer{
+		right: 8em;
+		top: 1.3em;
+		width: auto;
+	}
+	#MobileBackContainer{
+		top:45px;
+		width:100%;
+	}
+	.userPTalk, .userPTalkHelp, .userNotificiations{
+		display:none;
+	}
+}
+
+@media only screen and (max-width : 600px) {
+	#navigationContainer{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+	}
+	#sideContainer{
+		display:none;
+		position: fixed;
+		right: -100%;
+		top: 75px;
+		bottom: 0;
+		z-index: 100 !important;
+		width: 100%;
+	}
+	.userContainer{
+		display:none;
+	}
+	#navigation-header{
+		display:none;
+	}
+	#contentContainer{
+		margin-top:69px;
+	}
+	.searchInput{
+		display:none;
+	}
+	.searchContainer, .searchContainerAnonymous{
+		background-color:transparent;
+		width:auto;
+		left:auto;
+		right:1em;
+	}
+	.searchContainer:hover, .searchContainerAnonymous:hover{
+		background-color:transparent;
+	}
+	.mobileContainer{
+		display:inline-block;
+	}
+	.logoContainer{
+		display:none;
+	}
+	.logoLandingPage{
+		display:inline-block !important;
+	}
+	.loginContainer{
+		right: 65px;
+	}
+	#loginButton, #signupButton{
+		display:none;
+		box-shadow: none !important;
+		background-color: transparent !important;
+		font-size:1.5em !important;
+		color:white !important;
+	}
+	
+	.backContainer{
+		background-color:#D32F2F;
+		top: 75px;
+	}
+	
+	.backContainerSideContent{
+		top:0;
+		height:60px;
+	}
+	
+	.backButton{
+		padding: 16px 0 17px 0;
+	}
+}

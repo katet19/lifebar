@@ -1,0 +1,136 @@
+/*
+	Badges
+*/
+.badge-small{
+	width:150px;
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 2.5em;
+}
+
+.badge-large{
+    width: 350px;
+    background-color: white;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 1em;
+    padding: 1em;
+    margin-right: 10px;
+}
+
+.badge-small-image{
+    cursor: pointer;
+    width: 65px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    height: 65px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 0;
+}
+
+.badge-small-border-1{
+	    border: 5px solid gray;
+}
+
+.badge-small-border-2{
+	    border: 5px solid green;
+}
+
+.badge-small-border-3{
+	    border: 5px solid blue;
+}
+
+.badge-small-border-4{
+	    border: 5px solid purple;
+}
+
+.badge-small-border-5{
+	    border: 5px solid goldenrod;
+}
+
+.badge-small-name{
+    font-size: 0.8em;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    line-height: 1.4em;
+    margin-left: -0.75em;
+}
+
+.badge-large-name{
+    font-size: 1em;
+    font-weight: 500;
+    text-align: left;
+    margin-top:14px;
+    line-height: 1.4em;
+}
+
+.badge-category-header{
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.badge-category-header:hover{
+	color:#2196F3;
+}
+
+.badge-view-more{
+    padding: 0.5em 1em;
+    color: white;
+    background-color: #555593;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 400;
+}
+
+.badge-category-container{
+	background-color:white;
+	text-align:left;
+}
+
+.milestone-popup{
+
+}
+
+/*
+	Admin Badge Managament
+*/
+
+.game-badge-list-item{
+	display:inline-block;
+	margin-left:1.25em;
+	cursor:pointer;
+	font-weight: 500;
+	font-size:0.75em;
+	color:rgba(0,0,0,0.6);
+}
+
+.game-badge-list-item:hover{
+	color:black;
+}
+
+
+.game-badge-list-item-selection-usingimage{
+	font-weight:bold;
+}
+
+
+@media only screen and (max-width : 600px) {
+	.badge-small{
+		margin-bottom:1em;
+	}
+}

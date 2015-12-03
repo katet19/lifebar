@@ -1,0 +1,371 @@
+#userSettings{
+	background-color:white;
+	margin: 1em 0 5em;
+}
+
+.user-discover-card{
+	position: relative;
+	text-align: left;
+	background-color: #474747;
+	height: 185px;
+}
+
+.user-discover-card .card-image{
+	height:120px !important;
+}	
+
+.user-discover-card .card-content{
+	background-color: white;
+	height: 65px;
+	padding: 10px 24px 8px 16px !important;
+}
+
+.user-discover-card .card-reveal{
+	padding: 10px 24px 8px 16px !important;
+	z-index:4;
+}
+
+.user-discover-card .card-content .card-title{
+	font-size: 1em;
+	line-height: 15px;
+	font-weight: 500;
+}
+
+.user-discover-card .card-reveal .card-title{
+	font-size:1em;
+	line-height: 17px;
+	font-weight: 500;
+}
+
+.user-discover-card .card-image{
+	background-color:#F1F5F8;
+}
+
+.user-follow-action{
+	position: absolute;
+	bottom: 45px;
+	right: 0em;
+	font-size: 1.75em;
+}
+
+.user-name{
+  display: inline-block;
+  text-align: left;
+  top: 18px;
+  position: absolute;
+  left: 75px;
+  height: 45px;
+  overflow: hidden;
+}
+
+.userSettingsLabel{
+	text-align: center;
+	font-size: 2em;
+	padding-bottom: 1em !important;
+	font-weight: 200;
+}
+
+.critic-name-container{
+	position:relative;
+	cursor: pointer;
+}
+
+.critic-quote-container{
+	text-align: left;
+}
+
+.critic-action-container{
+	text-align: right;
+	margin-top: 2em;
+}
+
+.critic-container, .user-container{
+	background-color: white;
+	padding: 1em 0.75rem 0em !important;
+	border-bottom: 1px solid #ddd;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.critic-quote{
+	display: inline-block;
+	color: rgba(0,0,0,0.7);
+	font-size: 1.2em;
+	text-align: left;
+	width: 100%;
+}
+
+.critic-quote-icon{
+	display:inline-block;
+	font-size: 1.25em;
+	-moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+.disableAgreeBtn{
+	margin-bottom:5px;
+	color: rgba(0,0,0,0.2) !important;
+	font-weight: bold;
+	padding: 0 0.75rem;
+	cursor: initial;
+}
+
+.readBtn, .agreeBtn, .disagreeBtn, .detailsBtn{
+	margin-bottom:5px;
+	color: rgba(0,0,0,0.54);
+	font-weight: bold;
+	padding: 0 0.75rem;
+}
+
+.agreeBtn, .disableAgreeBtn, .disagreeBtn{
+	text-transform: none;
+}
+
+.readBtn:hover, .agreeBtn:hover, .detailsBtn:hover, .disagreeBtn:hover{
+	color: rgba(0,0,0,0.9);
+}
+
+.latest-xp-list-item{
+	background-color: white;
+	padding: 1em 0.75rem 0em !important;
+	border-bottom: 1px solid #ddd;
+	display:none;
+}
+
+.latest-xp-action-container{
+	text-align: right;
+	margin-top:0.5em;
+}
+
+.latest-xp-name-container{
+	position:relative;
+	cursor: pointer;
+}
+
+.latest-xp-quote{
+	display: inline-block;
+	color: rgba(0,0,0,0.7);
+	font-size: 1em;
+	text-align: left;
+	margin-top: 0.25em;
+}
+
+.latest-xp-game-name{
+	font-size: 1em;
+	font-weight: bold;
+	display: inline-block;
+	color: rgba(0,0,0,0.54);
+	cursor: pointer;
+	-webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+.latest-xp-game-name:hover{
+	color:rgba(0, 0, 0, 0.87);
+}
+
+.latest-xp-user-timestamp{
+	display: inline-block;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+.closeDetailsModal{
+	text-align: right;
+	font-size: 2em;
+	cursor: pointer;
+}
+.subNameContext{
+	font-weight:normal;
+}
+.subNameGameTitle{
+	color: rgba(0,0,0,0.54);
+}
+
+.details-pop-up-text{
+	font-size:1.25em;
+}
+
+.badge-lives{
+  font-size: 0.7em;
+  color: #fff;
+  /* background-color: #8B8E90; */
+  background-color: #43a047;
+  border-radius: 2px;
+  background-clip: padding-box;
+  min-width: 3rem;
+  padding: 3px 6px;
+  margin: 6px 1em 0;
+  float: right;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: none;
+}
+
+.badge-lives:after{
+	content: "up";
+}
+
+#universalUserPreview{
+	text-align: center;
+	display:none;
+	top:0px;
+	background-color:white;
+	padding:0;
+}
+
+.user-preview-card{
+	display:none;
+	background-color:white;
+	font-size:16px;
+}
+
+.user-preview-card-container{
+  box-shadow: initial;
+  margin-top:0;
+  webkit-box-shadow: initial;
+}
+
+.user-preview-card-avatar{
+  width: 100px;
+  border-radius: 50%;
+  display: inline-block;
+  float: left;
+  margin-left: 2em;
+  margin-top: 15px;
+  height: 100px;
+}
+
+.user-preview-card-name{
+	display:inline-block;
+}
+
+.user-preview-card-container .card-title{
+  font-size: 20px;
+  top: 25px;
+  left: 130px !important;
+  text-align: left;
+}
+
+.user-preview-card-container .card-action{
+	padding:0;
+	text-align:right;
+}
+
+.user-preview-card-container .card-action .btn-flat{
+  margin: 5px 0 5px;
+  padding: 0 5% 0 0;
+  color: #2196F3;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-preview-card-xp{
+  float: right;
+  margin-right: 10%;
+  font-size: 24px;
+  color: rgba(0,0,0,0.7);
+  margin-top: 25px;
+}
+
+.user-preview-card-xp-label{
+	color:rgba(0,0,0,0.3);
+	display:inline-block;
+	font-weight:bold;
+}
+
+.user-preview-card-container .card-content{
+	text-align: left;
+    padding: 0;
+    position: relative;
+    height: 175px;
+    margin: 50px 25px 0px;
+}
+
+.user-preview-card-agrees{
+  font-size: 0.7em;
+  color: #fff;
+  background-color: #43a047;
+  border-radius: 2px;
+  background-clip: padding-box;
+  min-width: 3rem;
+  margin-top: 1em;
+  padding: 3px 6px;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.user-preview-gamertag-label{
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 1em;
+  color: rgba(0,0,0,0.5);
+}
+
+.user-preview-gamertag-label span{
+	font-weight:normal;
+}
+
+
+@media only screen and (max-width : 600px) {
+	#userSettings{
+		margin:1em 0 5em;
+	}
+	.dynamic-card-content{
+		height: 120px;
+	}
+	.dynamic-card-content .card-content{
+		background-color: #F1F5F8;
+		height: 120px;
+		position: absolute;
+		top: 35px;
+		left: 34%;
+		right:1em;
+		bottom: 10px;
+	}
+	.dynamic-card-content .card-content .card-title{
+		font-size: 1.25em;
+		line-height: 20px;
+	}
+	.dynamic-card-content .card-content .user-follow-action{
+		bottom: 75px;
+	}
+	.critic-quote-container {
+	margin-top: 1.5em;
+	}
+	.details-pop-up-text{
+		font-size:1em;
+	}
+	.user-preview-card-avatar{
+	  width: 75px;
+	  border-radius: 50%;
+	  display: inline-block;
+	  float: left;
+	  margin-left: 1em;
+	  margin-top: 16px;
+	  height: 75px;
+	}
+	.user-preview-card-container .card-title{
+	  font-size: 15px;
+	  top: 17px;
+	  left: 83px !important;
+	  text-align: left;
+	}
+	.user-preview-card-xp{
+		  font-size: 18px;
+	}
+}

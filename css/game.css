@@ -1,0 +1,461 @@
+#game{
+	display:none;
+}
+
+.GameHeaderContainer{
+	height:300px; /*525px;*/
+	width:100%;
+	position:fixed;
+	z-index:2;
+	background-color: black;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#game-navigation-header{
+	position:absolute;
+	width:100%;
+	bottom:0;
+}
+
+.game-tab{
+	/*margin-top:330px;
+	min-height: 800px;*/
+	position:absolute;
+	top:330px;
+	padding:0 0.75rem 50px !important;
+}
+
+.GameHeaderBackground{
+	position:absolute;
+	top:0;
+	width:75%;
+	left:0;
+	height: 300px; /*35em;*/
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.GameTitle{
+	position: absolute;
+	top: 200px;
+	left:1em;
+	color:white;
+	font-size:2em;
+	z-index:3;
+	line-height: 25px;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.fixed-action-btn{
+	position: fixed !important;
+	right:27%;
+	bottom:1em;
+}
+
+.GameHiddenActionLabel{
+	display: none;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	padding: 0.5em;
+	position: absolute;
+	top: 0;
+	right: 4.5em;
+	font-size: 0.9em;
+	left: -15em;
+	border-radius: 5px;
+}
+
+.GameHiddenActionLabelBigFab{
+	display: none;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	padding: 0.5em;
+	position: absolute;
+	top: 1em;
+	right: 4.5em;
+	font-size: 0.9em;
+	left: -15em;
+	line-height: 20.25px;
+	text-transform: none;
+	border-radius: 5px;
+}
+
+.fixed-action-btn ul li:hover .GameHiddenActionLabel{
+	display:inline-block;
+}
+
+.fixed-action-btn ul li:hover .GameHiddenActionLabelBigFab{
+	display:inline-block;
+}
+
+.btn-floating{
+	/*opacity:0.85;*/
+}
+
+.btn-floating:hover{
+	opacity: 1;
+}
+
+.activeFAB .btn-floating{
+	opacity: 1;
+}
+
+.activeFAB .btn-large:hover .GameHiddenActionLabelBigFab{
+	display:inline-block;
+}
+
+.gameNav .indicator{
+	background-color: #D32F2F !important;
+}
+
+/* HeaderShrink CSS */
+.GameHeaderShrink{
+	height:10em !important;
+}
+
+.GameBackgroundOpacity{
+	opacity:0.7;
+}
+
+.GameTitleToBack{
+	top: 25px !important;
+	left: 2.5em !important;
+	text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+}
+
+.GameBackButtonDisappear{
+	opacity:0;
+}
+
+.game-tab-shrink{
+	/*margin-top:200px;
+	padding-bottom:130px;*/
+	top:200px;
+}
+
+.GameMyStatusIcons{
+	position: absolute;
+	z-index: 3;
+	top: 0.5em;
+	font-size: 1.5em;
+	right: 26%;
+	color: white;
+}
+
+.GameInfoHeader{
+	font-size: 1.75em;
+	padding: 0.75em 0 0.3em !important;
+	color: rgba(0,0,0,0.6);
+	border-bottom: 1px solid #ccc;
+}
+.GameInfoLabel{
+	text-align: left;
+	color:rgba(0,0,0,0.7);
+	font-size:1em;
+	font-weight:bold;
+	vertical-align: top;
+}
+
+.GameInfoContent{
+	text-align: left;
+	vertical-align: top;
+}
+
+.ShowInfoBtn{
+	margin: 0 0 0 1em;
+	text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+	cursor: pointer;
+}
+
+#game-critic-tab, #game-user-tab{
+	margin-bottom: 5em;
+}
+
+.fab-login{
+	
+}
+
+.card-tier-badge{
+  display: inline-block;
+  color: white;
+  padding: 0.3em 0.5em;
+  font-size: 0.9em;
+  float: right;
+  font-weight:400;
+  margin: 0.5em;
+}
+
+.card-add-badge{
+  display: inline-block;
+  color: black;
+  padding: 0.3em 0.5em;
+  font-size: 0.9em;
+  float: right;
+  font-weight: 400;
+  margin: 0.5em;
+  background-color: white;
+  opacity: 0.5;
+  -webkit-transition: all 0.35s ease;
+  -moz-transition: all 0.35s ease;
+  -o-transition: all 0.35s ease;
+  -ms-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+
+.card-add-badge:hover{
+	opacity: 0.9;
+}
+
+.card-game-tier{
+  width: 35px;
+  font-size: 1.25em;
+  display: inline-block;
+  height: 35px;
+  margin-top: 6px;
+  margin-left: 2.5px;
+  text-align: center;
+}
+
+.card-game-tier-container{
+  position: absolute;
+  right: 1em;
+  top: 180px;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.card-tier-add-options{
+	text-align:center;
+	font-weight:500;
+	overflow:hidden;
+}
+
+.card-tier-or-label{
+	font-size:1.2em;
+	text-align: center;
+	margin-bottom: 20px;
+	display:none;
+}
+
+.equip-xp-container{
+	
+}
+
+.equip-xp-header{
+	font-size:1.5em;
+	margin-left:15px;
+}
+
+.equip-xp-subheader{
+	margin-left:15px;
+}
+
+.equip-xp-games{
+	display:inline-block;
+	width:100%;
+	margin-top:15px;
+	position:relative;
+}
+
+.equip-slot{
+    font-weight: 400;
+    text-align: left;
+    background-color: rgba(0,0,0,0.7);
+    font-size: 1.25em;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    top: 5px;
+    padding: 2px 10px;
+    left: 5px;
+}
+
+.equip-xp-game{
+	width:30%;
+	display:inline-block;
+	margin:10px 1%;
+	position:relative;
+	text-align:center;
+}
+
+.equip-xp-game-title{
+	position:absolute;
+	color:white;
+	bottom:0px;
+	padding:2px;
+	left:0px;
+	right:0px;
+	background-color:rgba(0,0,0,0.5);
+	font-weight:400;
+}
+
+.equip-xp-game-image{
+	width:100%;
+	height:150px;
+	position:relative;
+	border:2px solid rgba(0,0,0,0.5);
+	display:inline-block;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.equip-xp-game-btn{
+    font-size: 1.25em;
+    font-weight: 500;
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+.equip-xp-game-empty-image{
+	border:2px dashed rgba(0,0,0,0.5);
+	width: 100%;
+    height: 150px;
+    position: relative;
+    display: inline-block;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.equip-xp-save{
+	
+}
+
+.equip-xp-changed{
+	
+}
+
+
+@media only screen and (max-width : 992px) {
+	.GameHeaderContainer, .GameHeaderBackground{
+		height:22em;
+	}
+	.GameHeaderBackground{
+		width:100%;
+	}
+	.fixed-action-btn{
+		position: fixed !important;
+		right:1em;
+		bottom:1em;
+	}
+	.GameTitle{
+		top:210px;
+	}
+	.game-tab {
+		/*margin-top: 330px;*/
+		top:330px;
+	}
+	.GameMyStatusIcons{
+		right:0.5em;
+	}
+	.GameInfoHeader{
+		text-align:left;
+		margin-top:0;
+		border-bottom:none;
+		font-size: 1.25em;
+		padding: 0 !important;
+	}
+	#game-critic-tab, #game-user-tab{
+		padding:0;
+	}
+}
+
+@media only screen and (max-width : 600px) {
+	.GameHeaderContainer{
+		height:14em;
+		/*position:absolute;*/
+	}
+	.GameHeaderBackground{
+		height:14em;
+	}
+	.fixed-action-btn{
+		position: fixed !important;
+		right: 1em;
+		bottom:0.75em;
+	}
+	#game{
+		position: absolute;
+		top: 0;
+		z-index: 99;
+	}
+	.GameTitle{
+		bottom: 50px;
+		top: inherit;
+		position: absolute;
+	}
+	.game-tab {
+		/*margin-top: 230px;*/
+		top:230px;
+	}
+	.GameCriticQuote{
+		font-size: 1em;
+		margin: 1.5em 2em 0 0.5em;
+	}
+	.fixed-action-btn ul li:hover .GameHiddenActionLabel{
+		display:none;
+	}
+
+	.fixed-action-btn .btn-large:hover .GameHiddenActionLabelBigFab{
+		display:none;
+	}
+	.card-game-tier-container{
+		top:130px;
+	}
+	.card-tier-details-active .btn-large{
+		  height: 36px;
+		  line-height: 36px;
+		  margin-bottom: 10px;
+	}
+	.card-tier-or-label{
+		margin-bottom:10px;
+	}
+	.card-game-tier-container{
+		display:none;
+	}
+}
+
+.card-game-tier-container-active {
+  position: absolute;
+  right: 0em !important;
+  top: 0;
+  color: white;
+  width: 100%;
+  height: 100%;
+  cursor: initial;
+  border-radius: 0;
+}
+
+.card-game-add-tier-container-active {
+  position: absolute;
+  right: 0em !important;
+  top: 0;
+  color: white;
+  width: 100%;
+  height: 100%;
+  cursor: initial;
+  border-radius: 0;
+}

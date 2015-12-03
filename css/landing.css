@@ -1,0 +1,893 @@
+.pressbtn-container{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  background-color:#D32F2F;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  z-index:1000;
+}
+
+.pressbtn-title{
+	color: white;
+    font-size: 2em;
+    font-weight: 200;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 25px;
+}
+
+/* Custom Stylesheet */
+/**
+ *
+ * Made By Joash Pereira
+ * Thanks for MaterializeCSS.com
+ */
+
+.default_color{background-color: #D32F2F !important}
+
+.default_color_text{color: #D32F2F !important}
+
+.icon-block {
+    padding: 0 15px;
+}
+
+#intro, #work, #team {padding-top: 4rem;}
+
+
+#index-banner {
+    min-height: 632px;
+    max-height: 864px;
+    position: relative;
+    background-color: #D32F2F;
+}
+
+#nav_f{
+    box-shadow: none !important; 
+    -webkit-box-shadow:none !important;
+}
+
+.text_h {
+    padding: 15% 0;
+    font-size: 6.0em;
+    font-weight: 100;
+    color:white;
+}
+
+.brand-logo{
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 2.1rem;
+    font-style: normal;
+    font-weight: 100;
+    padding: 0;
+    letter-spacing: 7px;
+}
+
+.text_h2 {font-weight: 100;margin-bottom: 4%; line-height: 4.5rem;}
+
+.span_h2 {font-weight: 300;color: #2196F3;}
+
+.text_b{color: #2196F3;}
+
+.in{font-weight: 400 !important; font-style: normal !important;}
+
+.promo i {
+    color: #2196F3;
+    font-size: 7rem;
+    display: block;
+}
+.card-content a {color: #2196F3;}
+
+.card-content a:hover {color: #2196F3;}
+
+#work, #team{background: rgb(247, 247, 247);}
+
+.text_pink{color:#EF9A9A;}
+
+nav ul a {
+    font-size: 1.2rem;
+    color: #FFF;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: 300;
+    padding: 0px 15px;
+}
+
+.cd-headline.type .cd-words-wrapper {
+    vertical-align: top;
+    overflow: hidden;
+}
+
+.cd-headline.type .cd-words-wrapper::after {
+    /* vertical bar */
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    height: 90%;
+    width: 1px;
+    background-color: #aebcb9;
+}
+
+.cd-headline.type .cd-words-wrapper.waiting::after {
+    -webkit-animation: cd-pulse 1s infinite;
+    -moz-animation: cd-pulse 1s infinite;
+    animation: cd-pulse 1s infinite;
+}
+.cd-headline.type .cd-words-wrapper.selected {
+    background-color: #FFF;
+}
+
+.cd-headline.type .cd-words-wrapper.selected::after {
+    visibility: hidden;
+}
+
+.cd-headline.type .cd-words-wrapper.selected b {
+    color: #D32F2F;
+}
+
+.cd-headline.type b {
+    visibility: hidden;
+}
+
+.cd-headline.type b.is-visible {
+    visibility: visible;
+}
+
+.cd-headline.type i {
+    position: absolute;
+    visibility: hidden;
+}
+.cd-headline.type i.in {
+    position: relative;
+    visibility: visible;
+}
+
+@-webkit-keyframes cd-pulse {
+    0% {
+        -webkit-transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    40% {
+        -webkit-transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(-50%) scale(0);
+        opacity: 0;
+    }
+}
+@-moz-keyframes cd-pulse {
+    0% {
+        -moz-transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    40% {
+        -moz-transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        -moz-transform: translateY(-50%) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes cd-pulse {
+    0% {
+        -webkit-transform: translateY(-50%) scale(1);
+        -moz-transform: translateY(-50%) scale(1);
+        -ms-transform: translateY(-50%) scale(1);
+        -o-transform: translateY(-50%) scale(1);
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    40% {
+        -webkit-transform: translateY(-50%) scale(0.9);
+        -moz-transform: translateY(-50%) scale(0.9);
+        -ms-transform: translateY(-50%) scale(0.9);
+        -o-transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(-50%) scale(0);
+        -moz-transform: translateY(-50%) scale(0);
+        -ms-transform: translateY(-50%) scale(0);
+        -o-transform: translateY(-50%) scale(0);
+        transform: translateY(-50%) scale(0);
+        opacity: 0;
+    }
+}
+
+
+/* Preloader */
+#preloader {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:#fff; /* change if the mask should have another color then white */
+    z-index:1200; /* makes sure it stays on top */
+}
+
+#status {
+    width:200px;
+    height:200px;
+    position:absolute;
+    left:50%; /* centers the loading animation horizontally one the screen */
+    top:50%; /* centers the loading animation vertically one the screen */
+    background-image:url(../img/status.gif); /* path to your loading animation */
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:-100px 0 0 -100px; /* is width and height divided by two */
+}
+
+@media only screen and (max-width: 480px) {
+    .text_h {
+        padding: 4% 0;
+        font-size: 5em;
+        font-weight: 100;
+        color: white;
+    }
+}
+
+input, textarea {
+    border-bottom: 1px solid #fff;
+}
+
+nav a.button-collapse {
+    left: -25px;
+}
+
+.card-avatar .waves-effect {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.card-avatar img {
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+}
+
+.card-avatar .card-content {
+    text-align: center;
+}
+
+.card .card-content p {
+    margin: 15px 0px;
+}
+
+.card-avatar .card-content i {
+   font-size: 1.5rem;
+}
+
+.card-avatar .card-content .card-title {
+    line-height: 30px !important;
+}
+
+.parallax-container {
+    max-height: 400px;
+}
+
+footer.page-footer {
+    margin-top: 0px !important;
+}
+
+.landing-show-discover, .landing-show-analytics, .landing-show-activity{
+	color: #2196F3;
+	cursor: pointer;
+	display:block;
+	font-weight:500;
+	margin-top: 15px;
+}
+
+.deactivateLandingPromo1{
+	opacity:0;
+	-webkit-transition: all 0.5s ease !important;
+    -moz-transition: all 0.5s ease !important;
+    -o-transition: all 0.5s ease !important;
+    -ms-transition: all 0.5s ease !important;
+    transition: all 0.5s ease !important;
+}
+
+.deactivateLandingPromo2{
+	opacity:0;
+	-webkit-transition: all 1s ease !important;
+    -moz-transition: all 1s ease !important; 
+    -o-transition: all 1s ease !important;
+    -ms-transition: all 1s ease !important;
+    transition: all 1s ease !important;
+}
+
+.deactivateLandingPromo3{
+	opacity:0;
+	-webkit-transition: all 1.5s ease !important;
+    -moz-transition: all 1.5s ease !important;
+    -o-transition: all 1.5s ease !important;
+    -ms-transition: all 1.5s ease !important;
+    transition: all 1.5s ease !important;
+}
+
+.activateLandingCard{
+	opacity:1;
+}
+
+
+/* Copied CSS, need to modify */
+
+/*CUSTOM ANIMATIONS*/
+
+/* Please Note: To use this CSS, you should include in your HTML the proper javascript: jquery.unveilEffects.js */
+
+
+
+	[class*=".effect-"] {
+	  -webkit-backface-visibility: hidden;
+	  -moz-backface-visibility: hidden;
+	  backface-visibility: hidden;
+	  -webkit-perspective: 1000;
+	  -moz-perspective: 1000;
+	  perspective: 1000;
+	}
+	.effect-fade {
+	  opacity: 0;
+	}
+	.effect-fade.in {
+	  opacity: 1;
+	}
+	.effect-slide-left {
+	  -webkit-transform: translate3d(-30%, 0, 0);
+	  transform: translate3d(-30%, 0, 0);
+	  opacity: 0;
+	}
+	.effect-slide-left.in {
+	  -webkit-transform: translate3d(0, 0, 0);
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+	.effect-slide-right {
+	  -webkit-transform: translate3d(30%, 0, 0);
+	  transform: translate3d(30%, 0, 0);
+	  opacity: 0;
+	}
+	.effect-slide-right.in {
+	  -webkit-transform: translate3d(0, 0, 0);
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+	.effect-slide-top {
+	  -webkit-transform: translate3d(0, -30%, 0);
+	  transform: translate3d(0, -30%, 0);
+	  opacity: 0;
+	}
+	.effect-slide-top.in {
+	  -webkit-transform: translate3d(0, 0, 0);
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+	.effect-slide-bottom {
+	  -webkit-transform: translate3d(0, 30%, 0);
+	  transform: translate3d(0, 30%, 0);
+	  opacity: 0;
+	}
+	.effect-slide-bottom.in {
+	  -webkit-transform: translate3d(0, 0, 0);
+	  transform: translate3d(0, 0, 0);
+	  opacity: 1;
+	}
+	.effect-pop {
+	  opacity: 0;
+	}
+	.effect-pop.in {
+	  -webkit-animation: pop 0.6s ease-out 0.5s both;
+	  -moz-animation: pop 0.6s ease-out 0.5s both;
+	  -o-animation: pop 0.6s ease-out 0.5s both;
+	  animation: pop 0.6s ease-out 0.5s both;
+	  opacity: 1 \9;
+	}
+	@-webkit-keyframes pop {
+	  0% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	  50% {
+		-webkit-transform: scale(1.2);
+		-ms-transform: scale(1.2);
+		transform: scale(1.2);
+		opacity: 1;
+	  }
+	  100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	}
+	@-moz-keyframes pop {
+	  0% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	  50% {
+		-webkit-transform: scale(1.2);
+		-ms-transform: scale(1.2);
+		transform: scale(1.2);
+		opacity: 1;
+	  }
+	  100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	}
+	@-o-keyframes pop {
+	  0% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	  50% {
+		-webkit-transform: scale(1.2);
+		-ms-transform: scale(1.2);
+		transform: scale(1.2);
+		opacity: 1;
+	  }
+	  100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	}
+	@keyframes pop {
+	  0% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	  50% {
+		-webkit-transform: scale(1.2);
+		-ms-transform: scale(1.2);
+		transform: scale(1.2);
+		opacity: 1;
+	  }
+	  100% {
+		opacity: 1;
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	  }
+	}
+	.effect-fall {
+	  opacity: 0;
+	  -webkit-transform: scale(1.5);
+	  -ms-transform: scale(1.5);
+	  transform: scale(1.5);
+	}
+	.effect-fall.in {
+	  -webkit-transform: scale(1);
+	  -ms-transform: scale(1);
+	  transform: scale(1);
+	  opacity: 1;
+	}
+	.effect-perspective {
+	  -webkit-perspective: 1300px;
+	  -moz-perspective: 1300px;
+	  perspective: 1300px;
+	}
+	.effect-helix {
+	  -webkit-transform-style: preserve-3d;
+	  -moz-transform-style: preserve-3d;
+	  transform-style: preserve-3d;
+	  opacity: 0;
+	  -webkit-transform: rotateY(-180deg);
+	  -ms-transform: rotateY(-180deg);
+	  transform: rotateY(-180deg);
+	}
+	.effect-helix.in {
+	  opacity: 1;
+	  -webkit-transform: rotateY(0);
+	  -ms-transform: rotateY(0);
+	  transform: rotateY(0);
+	}
+
+
+/*
+ * Author: Carlos Alvarez
+ * URL: http://alvarez.is
+ *
+ * Project Name: Landing Sumo - Theme 13
+ * URL: http://LandingSumo.com
+ * Version: 1.0
+ */
+
+/*	################################################################
+	1. GENERAL STRUCTURES
+################################################################# */
+
+/* Import fonts 
+@import url(http://fonts.googleapis.com/css?family=Raleway:900,700,400);
+
+* {
+	margin: 0;
+	padding: 0px;
+    font-family: 'Raleway', sans-serif;
+}*/
+/*body {*/
+/*	margin: 0;*/
+/*	color: #5a5a5a;*/
+/*}*/
+
+/*h1, h2, h3, h4, h5, h6 {*/
+/*    font-family: 'Raleway', sans-serif;*/
+/*	font-weight: 700;*/
+/*}*/
+
+
+/*p {*/
+/*	padding: 0;*/
+/*	margin-bottom: 12px;*/
+/*    font-family: 'Raleway', sans-serif;*/
+/*	font-weight: 300;*/
+/*	font-size: 18px;*/
+/*	line-height: 28px;*/
+/*	color: #666;*/
+/*	margin-top: 10px;*/
+/*}*/
+
+/*html,*/
+/*body {*/
+/*	height: 100%;*/
+/*}*/
+
+/*.alignleft { float: left; }*/
+/*.alignright { float: right; }*/
+/*.aligncenter {*/
+/*	margin-left: auto;*/
+/*	margin-right: auto;*/
+/*	display: block;*/
+/*	clear: both;*/
+/*}*/
+/*.centered {text-align: center}*/
+/*.mt {margin-top: 50px;}*/
+/*.mb {margin-bottom: 50px;}*/
+/*.mtb {margin-top: 50px; margin-bottom: 50px;}*/
+/*.mtb2 { margin-top: 100px; margin-bottom: 100px;}*/
+/*.ptb {padding-top: 80px; padding-bottom: 80px;}*/
+
+/*.clear {*/
+/*	clear: both;*/
+/*	display: block;*/
+/*	font-size: 0;*/
+/*	height: 0;*/
+/*	line-height: 0;*/
+/*	width:100%;*/
+/*}*/
+/*::-moz-selection  {*/
+/*	color: #fff;*/
+/*	text-shadow:none;*/
+/*	background:#2B2E31;*/
+/*}*/
+/*::selection {*/
+/*	color: #fff;*/
+/*	text-shadow:none;*/
+/*	background:#2B2E31;*/
+/*}*/
+/**,*/
+/**:after,*/
+/**:before {*/
+/*	-webkit-box-sizing: border-box;*/
+/*	-moz-box-sizing: border-box;*/
+/*	box-sizing: border-box;*/
+/*	padding: 0;*/
+/*	margin: 0;*/
+/*}*/
+/*a {*/
+/*	padding: 0;*/
+/*	margin: 0;*/
+/*	text-decoration: none;*/
+/*	-webkit-transition: background-color .4s linear, color .4s linear;*/
+/*	-moz-transition: background-color .4s linear, color .4s linear;*/
+/*	-o-transition: background-color .4s linear, color .4s linear;*/
+/*	-ms-transition: background-color .4s linear, color .4s linear;*/
+/*	transition: background-color .4s linear, color .4s linear;*/
+/*	color: #1abc9c;*/
+/*}*/
+/*a:hover,*/
+/*a:focus {*/
+/*  text-decoration: none;*/
+/*  color:#696E74;*/
+/*}*/
+
+.nopadding {
+	padding: 0px !important;
+	margin: 0px;
+}
+
+/* Bootstrap Modification */
+
+/*.navbar-inverse {*/
+/*	background: transparent;*/
+/*	border: transparent;*/
+/*}*/
+
+/*img {*/
+/*	padding-bottom: 10px;*/
+/*}*/
+
+/* FORM CONFIGURATION */
+
+/*input {*/
+/*	font-size: 16px;*/
+/*	min-height: 40px;*/
+/*	border-radius: 2px;*/
+/*	line-height: 20px;*/
+/*	padding: 11px 30px 12px;*/
+/*	border: 1px solid #b9b9af;*/
+/*	margin-bottom: 10px;*/
+/*	background-color: #fff;*/
+/*	-webkit-transition: background-color 0.2s;*/
+/*	transition: background-color 0.2s;*/
+/*}*/
+
+.subscribe-input {
+	float: left;
+	width: 65%;
+	text-align: left;
+	margin-right: 2px;
+}
+
+.subscribe-submit {
+	right: 0;
+}
+
+
+.btn-register, .btn-login {
+	margin-top: 15px;
+	border-radius: 50px;
+	margin-right: 10px;
+	top: 0px;
+	float: right;
+	font-size: 16px;
+}
+
+.btn-sub {
+	border-radius: 50px;
+}
+
+/* Overall Buttons*/
+.btn-theme {
+	border-radius: 50px;
+	font-size: 14px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.btn-white {
+	background: white;
+	color: #2f2f2f;
+}
+
+.btn-white:hover {
+	background: #2f2f2f;
+	color: white;
+}
+
+/* HEADER SECTION */
+#h {
+	background: url(../Images/LandingPage/LandingBG.jpg) no-repeat center top;*/
+    background-color: rgba(0,0,0,0.7);
+	padding-top: 10px;
+	text-align:center;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 650px;
+	width: 100%;
+
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    line-height: 0;
+}
+
+
+
+#h h1 {
+	color: #F6f6f6;
+	font-weight: 900;
+	font-size: 70px;
+	letter-spacing: 5px;
+}
+
+#h h5 {
+	color: white;
+	font-weight: 400;
+}
+
+#h img {
+	padding-bottom: 0px;
+}
+
+#h .logoTitle {
+	line-height: 1.5 !important;
+}
+
+#h #landing_profile{
+	/*position: relative;*/
+	/*bottom: -100px;*/
+	opacity: 0;
+}
+
+.slideup{
+	bottom: 0px !important;
+	opacity: 1 !important;
+}
+
+/* White Section */
+#w {
+	background: white;
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	overflow: hidden;
+}
+
+#w #landing_xp {
+	opacity: 0;
+}
+
+#w .col-md-6 {
+	padding-right: 0px;
+}
+
+#w p {
+	color: #9f9f9f;
+	font-size: 16px;
+}
+
+
+/* Blue Section - Picton */
+#picton {
+	background: #D32F2F;
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	color: white;
+	overflow: hidden;
+}
+
+#picton #landing_discover {
+	opacity: 0;
+}
+
+#picton .col-md-6 {
+	padding-left: 0px;
+}
+
+#picton p {
+	color: #e9e9e9;
+	font-size: 16px;
+}
+
+/* Blue Section - Curious */
+#curious {
+	background: white;
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	overflow: hidden;
+}
+
+#curious #landing_activity {
+	opacity: 0;
+}
+
+#curious .col-md-6 {
+	padding-right: 0px;
+}
+
+#curious p {
+	color: #9f9f9f;
+	font-size: 16px;
+}
+
+/* Blue Section - Malibu */
+#malibu {
+	background: Rgb(56, 118, 167);
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	color: white;
+	overflow: hidden;
+}
+
+#malibu #landing_notifications {
+	opacity: 0;
+}
+
+#malibu .col-md-6 {
+	padding-left: 0px;
+}
+
+#malibu p {
+	color: #e9e9e9;
+	font-size: 16px;
+}
+
+/* Blue Section - Jelly */
+#jelly {
+	background: #2574A9;
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	color: white;
+	overflow: hidden;
+}
+
+#jelly p {
+	color: #e9e9e9;
+	font-size: 16px;
+}
+
+#jelly h1 {
+	font-size: 200px;
+}
+
+#jelly h3 {
+	margin-top: 10px;
+}
+
+/* FOOTER */
+#landing-sign-up {
+	background: #2f2f2f;
+	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	color: white;
+}
+
+#landing-sign-up p {
+	color: white;
+}
+
+#landing-sign-up h4 {
+	font-weight: 400;
+	text-align: center;
+	font-size: 24px;
+}
+
+/* CREDIT */
+#c {
+	background: black;
+	padding: 20px;
+}
+
+#c p {
+	color: white;
+	font-size: 13px;
+}

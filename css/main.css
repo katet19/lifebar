@@ -1,0 +1,96 @@
+body{
+	background-color:rgb(237, 236, 236);
+	 -webkit-font-smoothing: subpixel-antialiased;
+	 overflow-y: scroll;
+}
+
+.HideForMobile{ display:inline-block; }
+
+.HideForDesktop{ display: none; }
+
+.HideForTabletAndMobile{ display: inline-block; }
+
+@media only screen and (max-width : 992px) {
+	.HideForDesktop{ display: inline-block; }
+	.HideForTabletAndMobile{ display: none; }
+}
+
+@media only screen and (max-width : 600px) {
+	.HideForMobile{ display: none; }
+}
+
+.info-container{
+	padding:2em 1em;
+}
+
+.info-label{
+  font-size: 1.5em;
+  font-weight: 300;
+  margin-bottom: 1em;
+}
+
+.info-details{
+	
+}
+
+@media only screen and (max-width : 992px) {
+
+}
+
+@media only screen and (max-width : 600px) {
+	.info-label{
+		font-size:1.25em;
+		font-weight:300;
+	}
+}
+
+.tier1BG{ background-color:#0A67A3 !important;   }
+
+.tier2BG{ background-color:#00B25C !important;  }
+
+.tier3BG{ background-color:#FF8E00 !important; }
+
+.tier4BG{ background-color:#FF4100 !important;  }
+
+.tier5BG{ background-color:#DB0058 !important;  }
+
+.tierTextColor1{ color:#0A67A3 !important;  }
+
+.tierTextColor2{ color:#00B25C !important;  }
+
+.tierTextColor3{ color:#FF8E00 !important; }
+
+.tierTextColor4{ color:#FF4100 !important;  }
+
+.tierTextColor5{ color:#DB0058 !important;  }
+
+#toast-container > div{
+	text-align: center !important;
+}
+
+.progress-side-bar{
+  position: relative;
+  height: 5px;
+  display: block;
+  width: 120%;
+  background-color: #acece6;
+  border-radius: 2px;
+  margin: 0.5rem -1.75rem 1rem;
+  overflow: hidden;
+}
+
+::-webkit-input-placeholder {
+   color: white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: white;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: white;  
+}
+
+:-ms-input-placeholder {  
+   color: white;  
+}
