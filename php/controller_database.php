@@ -1,6 +1,6 @@
 <?php
 function Connect(){
-	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave") or die('Error: '.mysql_error());
+	$mysqli = new mysqli("us-cdbr-azure-west-c.cloudapp.net", "b0e244f53bcf14", "8daf0624", "polygo6_weave") or die('Error: '.mysql_error());
 	if($mysqli->connect_error) 
      		die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
      		
