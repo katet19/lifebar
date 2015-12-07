@@ -31,25 +31,23 @@ function GetMyFeed($userid, $page, $filter){
 			$mylist = GetConnectedToList($userid);
 			$addedquery = array();
 			foreach($mylist as $user){
-				$addedquery[] = "eve.`UserID` = '".$user."'";
+				$addedquery[] = "'".$user."'";
 			}
-			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Users I Follow"){
 			$mylist = GetConnectedToUsersList($userid);
 			$addedquery = array();
 			foreach($mylist as $user){
-				
-				$addedquery[] = "eve.`UserID` = '".$user."'";
+				$addedquery[] = "'".$user."'";
 			}
-			$result = $mysqli->query("select eve.* from `Events` eve where (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Critics I Follow"){
 			$mylist = GetConnectedToCriticsList($userid);
 			$addedquery = array();
 			foreach($mylist as $user){
-				
-				$addedquery[] = "eve.`UserID` = '".$user."'";
+				$addedquery[] = "'".$user."'";
 			}
-			$result = $mysqli->query("select eve.* from `Events` eve where (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "My Activity"){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Users"){
@@ -62,10 +60,10 @@ function GetMyFeed($userid, $page, $filter){
 			$mylist = GetConnectedToList($userid);
 			$addedquery = array();
 			foreach($mylist as $user){
-				$addedquery[] = "eve.`UserID` = '".$user."'";
+				$addedquery[] = "'".$user."'";
 			}
-      echo "select eve.* from `Events` eve where eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45";
-			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
+      echo "select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45";
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}
 	}else{
 		if($filter == "All"){
