@@ -3,7 +3,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 ?>
-   <div class="col s6 m3 l2">
+   <div class="col <?php if($count == -1){ echo "s6 m5 l4"; }else{ echo "s6 m3 l2"; } ?>" >
       <div class="card user-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-id="<?php echo $user->_id; ?>" >
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
