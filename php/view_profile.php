@@ -73,28 +73,30 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 			</div>
 		</div>
 		
-		<!-- Abilities -->
-		<div class="col s12 m6 l8 no-right-padding">
-			<div class="row" style='margin-bottom:0'>
-				<div class="profile-card badge-card-container col s12 z-depth-1 ability-critic-height" style="height:170px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
-					<?php DisplayAbilitiesCritic($userid); ?>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Knowledge -->
-		<div class="col s12 m6 l8 no-right-padding">
-			<div class="row">
-				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:260px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
-					<?php $total = DisplayKnowledgeHighlightsCritic($userid); ?>
-					<?php if($total > 6){ ?>
-						<div class="badge-card-container-view-more knowledge-view-more">View More</div>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
+		<!-- Abilities, Knowledge -->
+        <div class="col s12 m6 l8 no-right-padding">
+            <div class="row">
+        		<div class="col s12 no-right-padding">
+        			<div class="row" style='margin-bottom:0'>
+        				<div class="profile-card badge-card-container col s12 z-depth-1 ability-critic-height" style="height:170px;">
+        					<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
+        					<?php DisplayAbilitiesCritic($userid); ?>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="col s12 no-right-padding">
+        			<div class="row">
+        				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:260px;">
+        					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
+        					<?php $total = DisplayKnowledgeHighlightsCritic($userid); ?>
+        					<?php if($total > 6){ ?>
+        						<div class="badge-card-container-view-more knowledge-view-more">View More</div>
+        					<?php } ?>
+        				</div>
+        			</div>
+        		</div>
+            </div>
+        </div>
 		
 		<!-- Checkpoints -->
 		<div class="col s12 m12 l3">
