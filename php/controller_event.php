@@ -24,7 +24,6 @@ function GetMyFeed($userid, $page, $filter){
 	$myfeed = array();
 	$seen = array();
 	$mysqli = Connect();
-  echo "Starting feed query";
 	if($userid > 0){
 		//$result = $mysqli->query("select eve.*, DATE(`Date`) as `ForDate` from `Events` eve where eve.`UserID` = '".$userid."' or eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by `ForDate` DESC limit ".$page.",45");
 		if($filter == "All"){
@@ -62,7 +61,6 @@ function GetMyFeed($userid, $page, $filter){
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
-      echo "select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45";
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}
 	}else{
@@ -204,7 +202,6 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeed[] = $myfeeditem;
 			}
 		}
-  mysql_error($mysqli);
 	
 	Close($mysqli, $result);
 	return $myfeed;
