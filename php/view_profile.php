@@ -114,7 +114,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
-				<div class="col s12 m12 l12" style="padding-left:0 !important;">
+				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style='height: 508px;'>
 							<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
@@ -276,7 +276,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
-				<div class="col s12 m12 l12" style="padding-left:0 !important;">
+				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:508px;">
 							<div class="badge-card-container-header" style="height:initial;width:100%;">Upcoming Quests <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Upcoming Quests are games that have been bookmarked but haven't been released yet"><i class="mdi-action-info"></i></span></div>
@@ -1339,7 +1339,7 @@ function DisplayKnowledge($knowledge, $size){
 		$percentage = round(($progress / $max) * 100);
 		?>
 		<div class="col <?php if($size == "relative"){ echo "s4"; }else{ echo "knowledge-fixed"; } ?>">
-			<div class="knowledge-container" data-progid="<?php echo $knowledge->_progress->_id; ?>" data-id="<?php echo $knowledge->_id; ?>" data-objectid="<?php echo $knowledge->_objectid; ?>">
+			<div class="knowledge-container" <?php if($size == "fixed"){ echo "style='margin-bottom: 25px;'"; } ?> data-progid="<?php echo $knowledge->_progress->_id; ?>" data-id="<?php echo $knowledge->_id; ?>" data-objectid="<?php echo $knowledge->_objectid; ?>">
 				<?php if($knowledge->_image == ""){ ?>
 					<div class="knowledge-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
 				<?php }else{ ?>
