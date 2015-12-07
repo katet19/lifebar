@@ -74,7 +74,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		</div>
 		
 		<!-- Abilities, Knowledge -->
-        <div class="col s12 m6 l8 no-right-padding">
+        <div class="col s12 m6 l8 no-right-padding" style="padding-right: 0;">
             <div class="row">
         		<div class="col s12 no-right-padding">
         			<div class="row" style='margin-bottom:0'>
