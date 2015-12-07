@@ -346,8 +346,10 @@
 		      	</div>
 	        </div>
 			<?php }
-			DisplayGameCard($game, $count, "gameResults");
-			$count++;
+            if($game->_id > 0){
+			 DisplayGameCard($game, $count, "gameResults");
+			 $count++;
+            }
       	} ?>
       	
       	
