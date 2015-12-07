@@ -238,7 +238,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		</div>
 		
 		<!-- Knowledge -->
-		<div class="col s12 m6 l5 no-right-padding">
+		<div class="col s12 m12 l5 no-right-padding">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
 					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
