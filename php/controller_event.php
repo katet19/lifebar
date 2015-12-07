@@ -32,6 +32,7 @@ function GetMyFeed($userid, $page, $filter){
 			foreach($mylist as $user){
 				$addedquery[] = "eve.`UserID` = '".$user."'";
 			}
+      echo "select eve.* from `Events` eve where eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45";
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Users I Follow"){
 			$mylist = GetConnectedToUsersList($userid);
