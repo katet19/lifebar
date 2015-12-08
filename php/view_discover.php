@@ -338,7 +338,7 @@
 	?>
 	 <div class="row discover-row searchResultsContainer">
       	<?php foreach($games as $game){ 
-			if($first){ $first = false; ?>
+			if($first && $game->_gbid > 0){ $first = false; ?>
 	        <div class="col s12">
 		      	<div class="searchHeader" style='margin-top:0em;'>
 		      		Games <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($games); ?>)</span>
@@ -346,8 +346,10 @@
 		      	</div>
 	        </div>
 			<?php }
-			DisplayGameCard($game, $count, "gameResults");
-			$count++;
+            if($game->_gbid > 0){
+			 DisplayGameCard($game, $count, "gameResults");
+			 $count++;
+            }
       	} ?>
       	
       	

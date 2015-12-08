@@ -377,7 +377,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 					$game = $card[1];
 					//quote will be following user id
 					$following = GetUser($event->_quote);
-					DisplayUserCard($following, 0, 0, 0);
+					DisplayUserCard($following, -1, 0, 0);
 					//FeedConnectionCard($user, $event, $following); 
 				}?>
 			</div>
