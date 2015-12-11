@@ -2,7 +2,7 @@
 function DisplayUserSettings(){
 	?>
 	<div id="userSettings" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
-    <div class="row">
+    <div class="row" style=' margin-top: 1em;'>
 	  <form class="col s12">
 	    <div class="row">
 	      <div class="input-field col s12">
