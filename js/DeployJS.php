@@ -2,6 +2,18 @@
 	$deployed = fopen("deployed.js", 'w+');
 	if($deployed){
 		echo "Opened deployed js file <br>";
+		$chart = file_get_contents("library/chart.js");
+		fwrite($deployed, $chart);
+		
+		$materialize = file_get_contents("library/materialize.js");
+		fwrite($deployed, $materialize);
+		
+		$modernizr = file_get_contents("library/modernizr.js");
+		fwrite($deployed, $modernizr);
+		
+		$vel = file_get_contents("library/velocity.min.js");
+		fwrite($deployed, $vel);
+		
 		$activity = file_get_contents("activity.js");
 		fwrite($deployed, $activity);
 		
@@ -40,18 +52,6 @@
 		
 		$xp = file_get_contents("xp.js");
 		fwrite($deployed, $xp);
-		
-		$chart = file_get_contents("library/chart.js");
-		fwrite($deployed, $chart);
-		
-		$materialize = file_get_contents("library/materialize.js");
-		fwrite($deployed, $materialize);
-		
-		$modernizr = file_get_contents("library/modernizr.js");
-		fwrite($deployed, $modernizr);
-		
-		$vel = file_get_contents("library/velocity.min.js");
-		fwrite($deployed, $vel);
 		
 		echo "Finished deploying JS";
 		fclose($deployed);
