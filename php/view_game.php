@@ -143,9 +143,9 @@ function ShowGameHeader($game, $critics, $users, $myxp){
 
 	</div>
 	<?php
-} ?>
+}
 
-<?php function ShowMyGameFAB($gameid){
+function ShowMyGameFAB($gameid){
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
 	if($_SESSION['logged-in']->_id > 0){ ?>
 	    <a class="btn-floating btn-large <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ echo "game-add-played-btn red darken-2"; }else{ echo "game-add-watched-btn red darken-2"; } ?> "  data-gameid='<?php echo $myxp->_game->_id; ?>'>
@@ -177,9 +177,9 @@ function ShowGameHeader($game, $critics, $users, $myxp){
 	<?php }else{ ?>
 		<div class="fab-login waves-effect waves-light btn">Add your XP</div>
 	<?php }
-}?>
+}
 
-<?php function DisplayGameInfo($game){	?>
+function DisplayGameInfo($game){	?>
 <div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
 	<div class="HideForDesktop">
 		<?php DisplayGameInfoBackNav(); ?>
@@ -281,21 +281,21 @@ function ShowGameHeader($game, $critics, $users, $myxp){
 	</div>
 
 	
-<?php } ?>
+<?php }
 
-<?php function DisplayGameBackNav(){ ?>
+function DisplayGameBackNav(){ ?>
 	<div class="backContainer" style='background:transparent;text-shadow: 1px 1px 5px rgba(0,0,0,0.3);/*position:absolute;top:0;*/'>
 		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0;" >Back</a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php function DisplayGameInfoBackNav(){ ?>
+function DisplayGameInfoBackNav(){ ?>
 	<div class="backContainerSideContent">
 		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:#474747;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:#474747;margin: 0;padding: 0 2em;" >Back</a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php
+
 function DisplayGameCard($game, $count, $classId){
 	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id) ?>
 	<div class="col s6 m3 l2">
@@ -356,9 +356,8 @@ function DisplayGameCard($game, $count, $classId){
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php }
 
-<?php
 function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
 	<div class="col s6 m4 l3">
 	      <div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
@@ -418,9 +417,8 @@ function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php }
 
-<?php
 function DisplaySmallGameCard($xp){
 	$game = $xp->_game; ?>
 	<div class="col">
@@ -430,9 +428,8 @@ function DisplaySmallGameCard($xp){
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php }
 
-<?php
 function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview){
 	$game = $xp->_game;?>
 	<div class="col s6 m4 l3">

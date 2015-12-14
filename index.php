@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta http-equiv="X-Frame-Options" content="deny">
+<meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
 <link rel="shortcut icon" href="http://polygonalweave.com/fav.ico" type="image/x-icon" />
 <link href="../css/landing.css" rel="stylesheet" type="text/css" />

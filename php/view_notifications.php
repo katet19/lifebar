@@ -6,14 +6,13 @@ function DisplayMyNotifications($userid){
 		</div>
 		<?php DisplayNotificationSecondaryContent();
 }
-?>
 
-<?php function DisplayNotificationSecondaryContent(){
+function DisplayNotificationSecondaryContent(){
 	$notifications = GetUserNotifications($_SESSION['logged-in']->_id);
 	DisplayNotificationCategories($notifications);
-} ?>
+}
 
-<?php function DisplayNotificationCategories($notifications){ 
+function DisplayNotificationCategories($notifications){ 
 	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
 	
 	foreach($notifications as $notification){
@@ -72,9 +71,9 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayNotificationList($notifications){ 
+function DisplayNotificationList($notifications){ 
 	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
 	
 	UpdateLastTimeVisited($_SESSION['logged-in']->_id);
@@ -116,9 +115,9 @@ function DisplayMyNotifications($userid){
 			} ?>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayGeneralNotification($details, $lastvisit){ ?>
+function DisplayGeneralNotification($details, $lastvisit){ ?>
 		<?php if($details->_type == "info" || $details->_type == "link"){ ?>
 			<div class="notification-card notification-general">
 				<div class="row" style="margin: 10px 0 0;">
@@ -139,9 +138,9 @@ function DisplayMyNotifications($userid){
 				</div>
 			</div>	
 		<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayReleaseNotification($details, $lastvisit){ ?>
+function DisplayReleaseNotification($details, $lastvisit){ ?>
 		<?php if($details->_type == "info"){ ?>
 			<div class="notification-card notification-release">
 				<div class="row" style="margin: 10px 0 0;">
@@ -200,9 +199,9 @@ function DisplayMyNotifications($userid){
 				</div>
 			</div>
 		<?php } ?>
-<?php } ?>
+<?php } 
 
-<?php function DisplayGameNotification($details, $lastvisit){ 
+function DisplayGameNotification($details, $lastvisit){ 
 	if($details->_type == "gamewithbg"){
 	?>
 	<div class="notification-card notification-game">
@@ -242,9 +241,9 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>	
 	<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayCriticNotification($details, $lastvisit){ ?>
+function DisplayCriticNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info" || $details->_type == "link"){ ?>
 		<div class="notification-card notification-critic">
 			<div class="row" style="margin: 10px 0 0;">
@@ -301,9 +300,9 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>	
 	<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayUserNotification($details, $lastvisit){ ?>
+function DisplayUserNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info"){ ?>
 		<div class="notification-card notification-user">
 			<div class="row" style="margin: 10px 0 0;">
@@ -342,9 +341,9 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>	
 	<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayAgreeNotification($details, $lastvisit){ ?>
+function DisplayAgreeNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info"){ ?>
 		<div class="notification-card notification-agree">
 			<div class="row" style="margin: 10px 0 0;">

@@ -469,9 +469,8 @@ function ShowTierGraphSelection($exp){
 	</div>
 	<?php
 }
-?>
 
-<?php function ShowMyXPFAB(){
+function ShowMyXPFAB(){
 	?>
 	<?php if($_SESSION['logged-in']->_id > 0){ ?>
 		<div class="fixed-action-btn" id="myxp-fab">
@@ -482,9 +481,8 @@ function ShowTierGraphSelection($exp){
 	  	</div>
 <?php } 
 }
-?>
 
-<?php function DisplayTierGameDetails($year, $tier, $userid){ 
+function DisplayTierGameDetails($year, $tier, $userid){ 
 	$exps = GetTierBreakdownYearTier($userid, $year, $tier);
 	?>
 	<div class="row">
@@ -504,15 +502,15 @@ function ShowTierGraphSelection($exp){
 				</div>
 		<?php } ?>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayMyXP($gameid){
+function DisplayMyXP($gameid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
 	if($myxp->_tier != 0){ ShowMyXP($myxp); }
-}?>
+}
 
-<?php function ShowMyXP($exp){ 
+function ShowMyXP($exp){ 
 		$agrees = GetAgreesForXP($exp->_id);
 		$agreedcount = array_shift($agrees);
 		?>
@@ -583,4 +581,3 @@ function ShowTierGraphSelection($exp){
 	    ?>
     </div>
 <?php } ?>
-
