@@ -27,22 +27,7 @@
 <link href="../css/weave.css" rel="stylesheet" type="text/css" />
 <link href="../css/badge.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="../js/library/chart.js"></script>
-<script type="text/javascript" src="../js/library/materialize.js"></script>
-<script type="text/javascript" src="../js/library/modernizr.js"></script>
-<script type="text/javascript" src="../js/library/velocity.min.js"></script>
-<script type="text/javascript" src="../js/activity.js"></script>
-<script type="text/javascript" src="../js/admin.js"></script>
-<script type="text/javascript" src="../js/discover.js"></script>
-<script type="text/javascript" src="../js/login.js"></script>
-<script type="text/javascript" src="../js/main.js"></script>
-<script type="text/javascript" src="../js/navigation.js"></script>
-<script type="text/javascript" src="../js/user.js"></script>
-<script type="text/javascript" src="../js/game.js"></script>
-<script type="text/javascript" src="../js/xp.js"></script>
-<script type="text/javascript" src="../js/notification.js"></script>
-<script type="text/javascript" src="../js/landing.js"></script>
-<script type="text/javascript" src="../js/profile.js"></script>
+<script type="text/javascript" src="../js/deployed.js"></script>
 </head>
 <body id="applicationContainer">
 	<div id="navigationContainer">
