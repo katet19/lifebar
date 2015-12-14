@@ -20,9 +20,8 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         </div>
       </div>
   </div>
-<?php } ?>
+<?php }
 
-<?php
 function DisplayCriticQuoteCard($exp){ 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
@@ -65,9 +64,9 @@ function DisplayCriticQuoteCard($exp){
 			<?php } ?>
 		</div>
   	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayUserQuoteCard($exp){
+function DisplayUserQuoteCard($exp){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
@@ -127,9 +126,9 @@ function DisplayCriticQuoteCard($exp){
 			<?php } ?>
 		</div>
   	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayGlobalLatestXP(){ 
+function DisplayGlobalLatestXP(){ 
 	$exps = GetGlobalLatestXP();
 	$count = 1;
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
@@ -314,5 +313,3 @@ function BuildWatchedSentence($exp){
 }
 
 ?>
-	 
-	 

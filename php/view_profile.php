@@ -980,9 +980,9 @@ function DisplayUserProfileGameCard($game, $quote, $tier, $played, $watched, $li
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php } 
 
-<?php function DisplayUpcomingQuests($userid){
+function DisplayUpcomingQuests($userid){
 	$xps = GetAnticipatedGames($userid, 4);
 	$newuser = false;
 	if(sizeof($xps) == 0 ){
@@ -1047,9 +1047,9 @@ function DisplayUserProfileGameCard($game, $quote, $tier, $played, $watched, $li
 		  </div>
 	<?php
 	}
-} ?>
+} 
 
-<?php function DisplayEquipXP($gameid, $showtitle){
+function DisplayEquipXP($gameid, $showtitle){
 	$user = GetUser($_SESSION['logged-in']->_id);
 	$equip1 = $user->_weave->_preferredXP;
 	$equip2 = $user->_weave->_subpreferredXP1;

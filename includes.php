@@ -19,6 +19,7 @@ ini_set('session.gc_divisor', 100);
 ini_set('session.cookie_secure', FALSE);
 ini_set('session.use_only_cookies', TRUE);
 session_start();
+require_once 'php/webService.php';
 require_once 'php/controller_database.php';
 require_once 'php/controller_gravatar.php';
 require_once 'php/controller_weave.php';
@@ -30,6 +31,7 @@ require_once 'php/library/Hybrid/Endpoint.php';
 if(!isset($_SESSION['logged-in']) && isset($_COOKIE["RememberMe"])){
 	LoginWithCookie($_COOKIE["RememberMe"]);
 }
+
 //Controllers
 require_once 'php/controller_admin.php';
 require_once 'php/controller_agree.php';
@@ -42,7 +44,6 @@ require_once 'php/controller_milestones.php';
 require_once 'php/controller_giantbomb.php';
 require_once 'php/controller_notifications.php';
 require_once 'php/controller_profile.php';
-require_once 'php/controller_typeaheadJS.php';
 require_once 'php/controller_user.php';
 //Views
 require_once 'php/view_admin.php';
@@ -60,6 +61,4 @@ require_once 'php/view_settings.php';
 require_once 'php/view_user.php';
 require_once 'php/view_xp.php';
 require_once 'php/view_profile.php';
-
-require_once 'php/webService.php';
 ?>

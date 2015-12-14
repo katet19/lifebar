@@ -1,15 +1,10 @@
 function ShowUserSettings(){
+	ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
 	$.ajax({ url: '../php/webService.php',
          data: {action: "UserSettings" },
          type: 'post',
          success: function(output) {
-     		$("#universalPopUp").html(output);
-			$("#universalPopUp").openModal();
-		  	$(".closeDetailsModal").unbind();
-		  	$(".closeDetailsModal").on('click', function(){
-		  		$("#universalPopUp").closeModal();
-		  		HideFocus();
-		  	});
+			$("#BattleProgess").html(output); 
             AttachUserSettingEvents();
          },
         error: function(x, t, m) {
@@ -24,7 +19,8 @@ function ShowUserSettings(){
 }
 
 function AttachUserSettingEvents(){
-    $("#SaveUserSettingsSubmitBtn").on('click', function(){
+    $("#SaveUserSettingsSubmitBtn").on('click', function(e){
+    	e.stopPropagation();
     	UserSettingsValidation();	
     });
     
@@ -87,8 +83,6 @@ function SaveUserSettings(userid, username, password, email, first, last, birthy
          type: 'post',
          success: function(output) {
          	$("#userSettings").find(".validation").hide();
-         	$("#universalPopUp").closeModal();
-		  	HideFocus();
          	Toast("User Settings Saved");
          },
         error: function(x, t, m) {

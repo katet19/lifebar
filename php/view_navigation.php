@@ -1,9 +1,9 @@
 <?php 
 function DisplayNavigation(){
 	DisplayHeaderNavigation();
-} ?>
+}
 
-<?php function DisplayHeaderNavigation(){ ?>
+function DisplayHeaderNavigation(){ ?>
 	<div class="identificationContainer">
 		<div class="mobileContainer" data-activates="slide-out">
 			<div class="mobileNav"><i class="mdi-navigation-menu small" style='color:white'></i></div>
@@ -60,9 +60,9 @@ function DisplayNavigation(){
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplaySideDrawer(){ ?>
+function DisplaySideDrawer(){ ?>
   <ul id="slide-out" class="side-nav full">
 	<li class="side-nav-logo" style="display:none">
 		<div class="logoIcon"><img src="http://polygonalweave.com/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
@@ -94,15 +94,14 @@ function DisplayNavigation(){
 		<li><a href="#!" class="signOutButton">Sign out</a></li>
 	<?php } ?>
   </ul>
-<?php } ?>
+<?php }
 
-<?php function DisplayMobileBackNav(){ ?>
+function DisplayMobileBackNav(){ ?>
 	<div id="MobileBackContainer">
 		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0 2em;font-size: 1.5em;vertical-align: middle;" >Back</a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php 
 function DisplayUniversalPopUp(){ ?>
 	<div id="universalPopUp" class="modal" style="background-color:white;"></div>
 <?php }
