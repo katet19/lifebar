@@ -10,24 +10,7 @@
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
 <link rel="shortcut icon" href="http://polygonalweave.com/fav.ico" type="image/x-icon" />
-<link href="../css/landing.css" rel="stylesheet" type="text/css" />
-<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
-<link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
-<link href="../css/navigation.css" rel="stylesheet" type="text/css" />
-<link href="../css/main.css" rel="stylesheet" type="text/css" />
-<link href="../css/activity.css" rel="stylesheet" type="text/css" />
-<link href="../css/admin.css" rel="stylesheet" type="text/css" />
-<link href="../css/discover.css" rel="stylesheet" type="text/css" />
-<link href="../css/user.css" rel="stylesheet" type="text/css" />
-<link href="../css/profile.css" rel="stylesheet" type="text/css" />
-<link href="../css/graph.css" rel="stylesheet" type="text/css" />
-<link href="../css/game.css" rel="stylesheet" type="text/css" />
-<link href="../css/xp.css" rel="stylesheet" type="text/css" />
-<link href="../css/notification.css" rel="stylesheet" type="text/css" />
-<link href="../css/weave.css" rel="stylesheet" type="text/css" />
-<link href="../css/badge.css" rel="stylesheet" type="text/css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="../js/deployed.js"></script>
+<link href="../css/deploy.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="applicationContainer">
 	<div id="navigationContainer">
@@ -71,5 +54,7 @@
 <?php DisplayUniversalBottomSheet(); ?>
 <?php DisplayBattleProgressSheet(); ?>
 <?php DisplayUniversalUserPreview(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../js/deployed.js"></script>
 </body>
 </html>
