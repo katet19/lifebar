@@ -5,8 +5,8 @@
 		$circle = file_get_contents("library/circle.css");
 		fwrite($deployed, $circle);
 		
-		$materialize = file_get_contents("library/materialize.css");
-		fwrite($deployed, $materialize);
+		//$materialize = file_get_contents("library/materialize.css");
+		//fwrite($deployed, $materialize);
 		
 		$activity = file_get_contents("activity.css");
 		fwrite($deployed, $activity);
