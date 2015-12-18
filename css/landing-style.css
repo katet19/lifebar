@@ -90,7 +90,7 @@ footer.page-footer {
 
 .landing-lifebar-container.smaller{
   width: 75px;
-  top: 2%;
+  top: 40px;
   left:1%;
 }
 
@@ -150,6 +150,10 @@ footer.page-footer {
       opacity: 1;
     }
   }
+
+.landing-generic{
+	display:none;
+}
 
 .landing-lifebar-container.smaller .landing-lifebar-half-circle{
     width: 100px;
@@ -390,27 +394,27 @@ section .innerText {
 .landing-sign-up{
   position: fixed !important;
   /* center the element */
-    right: 250px;
+    right: 200px;
     left: 0;
     top:510px;
     margin-right: auto;
     margin-left: auto;
     /* give it dimensions */
     /*min-height: 10em;*/
-    width: 225px;
+    width: 150px;
 }
 
 .landing-login{
   position: fixed !important;
   /* center the element */
     right: 0;
-    left: 250px;
+    left: 200px;
     top:510px;
     margin-right: auto;
     margin-left: auto;
     /* give it dimensions */
     /*min-height: 10em;*/
-    width: 225px;
+    width: 150px;
 }
 
 /* monitor/Card positioned to the left - this is a default position */

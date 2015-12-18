@@ -45,7 +45,7 @@ function ShowLanding(){
 			$(".active").removeClass("active");
 			
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
-			$(".btn-login").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
+			$(".landing-login").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
 			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
 			$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), ''); });
   			$(".critic-name-container").on("click", function(e){

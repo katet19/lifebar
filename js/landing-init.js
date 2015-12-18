@@ -150,6 +150,7 @@ function init() {
             $(".landing-xp-text").css("opacity", distanceY / 1000 - .5);
             // console.log(distanceY/100);
             $(".landing-lifebar-container.smaller .landing-lifebar-bar").css("width", 40+ distanceY/4);
+            $(".landing-generic").css({"display":"inline-block"});
             // Get the context of the canvas element we want to select
 
 
@@ -157,6 +158,7 @@ function init() {
             if ($(".landing-lifebar-container").hasClass("smaller")) {
                   $(".landing-lifebar-container").removeClass("smaller");
             }
+            $(".landing-generic").css({"display":"none"});
         }
 
     });

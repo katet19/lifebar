@@ -10,6 +10,7 @@
   $manFront = $('.landing-manFront'),
   $controller = $('.landing-controller');
   $macbook = $('.landing-macbook');
+  $genericAvatar = $(".landing-generic");
   $gamegif = $('.landing-gameGif');
   $lifebar = $('.landing-lifebar-container');
   $avatar = $('.landing-lifebar-account .material-icons');
@@ -18,6 +19,7 @@
   $activity = $('.landingActivity');
   $notifications = $('.landingNotifications');
   $mask = $('.landingMask');
+  var width = $( document ).width();
 
   // init
   var ctrl = new ScrollMagic.Controller({
@@ -43,8 +45,8 @@
   monitorIntroTl
     .to($avatar, .5, {autoAlpha: .5},'1')
     .from($monitor, .5, {yPercent: 200,xPercent: 100, ease: Power4.easeInOut})
-    .to($signup, .5, {top: 30, xPercent: 140}, '1')
-    .to($login, .5, {top: 30, xPercent: 160}, '1');
+    .to($signup, .5, {top: 30, right: 0, left: (width - 600)}, '1')
+    .to($login, .5, {top: 30, right: 0, left: (width - 250)}, '1');
 
   // monitor back to stylesheet position
   new ScrollMagic.Scene({
@@ -97,8 +99,9 @@
       .to($gamegif, 3, {scale: 0}, '0')
       .to($avatar, 1, {autoAlpha: 0},'0')
       .to($manFront, 3, {yPercent: -110, xPercent: -60, autoAlpha: 0, scale: .075}, '0')
-      .fromTo($manAvatar, 1, {yPercent: -57, xPercent: -34, autoAlpha: 0, scale: .075}, {yPercent: -57, xPercent: -34, autoAlpha: 1, scale: .075},'2')
-      .fromTo($graphs, .5, {yPercent: -57, xPercent: -34, autoAlpha: 0, scale: 0}, {yPercent: -57, xPercent: -34, autoAlpha: 1, scale: .75},'0');
+      .fromTo($manAvatar, 1, {yPercent: -55, xPercent: -34, autoAlpha: 0, scale: .075}, {yPercent: -55, xPercent: -34, autoAlpha: 1, scale: .075},'2')
+      .fromTo($graphs, .5, {yPercent: -57, xPercent: -34, autoAlpha: 0, scale: 0}, {yPercent: -57, xPercent: -34, autoAlpha: 1, scale: .75},'0')
+      .to($genericAvatar, 1, {opacity: 0}, '0');
 
   new ScrollMagic.Scene({
     triggerElement: $('.innerS2 h2')[0],

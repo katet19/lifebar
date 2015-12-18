@@ -14,10 +14,9 @@
       <div class="landing-lifebar-half-circle"></div>
       <div class="landing-lifebar-bar"></div>
         <div class="landing-lifebar-circle">
-
           <span class="landing-L"><strong>L</strong></span>
           <div class="landing-lifebar-account">
-            <i class="mdi-action-person"></i>
+            <i class="mdi-social-person landing-generic" style='color:white;font-size:2.5em;'></i>
             <div class="landing-manAvatar"><img src="http://lifebar.io/Images/LandingPage/manfront.png" /></div>
           </div>
         </div>
@@ -28,7 +27,7 @@
           <div class="box fade-in four">b</div>
           <div class="box fade-in five">a</div>
           <div class="box fade-in six">r</div>
-      </div>
+      	</div>
       <div class="landing-xp-text"></div>
     </div>
 
@@ -42,8 +41,8 @@
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
         </div>
         <div class="row center">
-          <div id="download-button" class="landing-sign-up btn waves-effect waves-light blue" style='z-index:2'>Sign Up</div>
-          <div class="landing-login btn waves-effect waves-light blue" style='z-index:2'>Login</div>
+          <a href="#landing-sign-up" id="download-button" class="landing-sign-up btn waves-effect waves-light blue" style='z-index:100'>Sign Up</a>
+          <div class="landing-login btn waves-effect waves-light blue" style='z-index:100'>Login</div>
         </div>
         <br><br>
 
@@ -69,11 +68,11 @@
         <div class="innerText innerS1">
           <div class="row">
         <div class="col s12 m12">
-          <div class="card red darken-1">
-            <div class="card-content white-text">
-              <span class="card-title"><h2>Play games.<br><strong>Earn experience!</strong></h2></span>
-              <ul class="landing-features white-text">
-                  <li>Weather you played <b>10 years ago</b> or <b>10 minutes ago</b>.</li>
+          <div class="">
+            <div class="card-content">
+              <span class="card-title"><h2 style='font-weight:200;'>Play games.<br><strong>Earn experience!</strong></h2></span>
+              <ul class="landing-features">
+                  <li>Whether you played <b>10 years ago</b> or <b>10 minutes ago</b>.</li>
                   <li>Write a<b> short blurb</b> about your experience.</li>
                   <li>Assign a <b>tier relative to other games</b> from that release year.</li>
               </ul>
@@ -86,13 +85,13 @@
       <section id="landing-two">
         <div class="innerText innerS2">
           <div class="row">
-        <div class="col s12 m12 white-text">
-          <div class="card red darken-1">
-            <div class="card-content white-text">
+        <div class="col s12 m12">
+          <div>
+            <div class="card-content">
               <span class="card-title">
-            <h2>Watch others play.<br><strong>Earn experience!</strong></h2>
+            <h2 style='font-weight:200;'>Watch others play.<br><strong>Earn experience!</strong></h2>
            </span> 
-            <ul class="landing-features white-text">
+            <ul class="landing-features">
                 <li>You gain knowledge by watching <b> others play.</b></li>
                 <li>Watch anything from <b> beta coverage</b> to a <b> complete playthrough.</b></li>
                 <li>All experiences count towards<b> growing your Lifebar</b>.</li>
@@ -121,12 +120,12 @@
         <div class="innerText innerS3">
           <div class="row">
         <div class="col s12 m12">
-          <div class="card red darken-1">
-            <div class="card-content white-text">
+          <div>
+            <div class="card-content">
               <span class="card-title">
-            <h2>Watch the <br><strong>numbers go up!</strong></h2>
+            <h2 style='font-weight:200;'>Watch the <br><strong>numbers go up!</strong></h2>
           </span>
-            <ul class="landing-features white-text">
+            <ul class="landing-features">
                 <li>As your experience grows <b> so does your knowledge.</b></li>
                 <li>See what <b>franchises and developers</b> you have spent the most time with.</li>
                 <li>Find out what <b>trends define you as a gamer.</b></li>
@@ -144,13 +143,13 @@
 
         <div class="innerText innerS4">
           <div class="row">
-        <div class="col s12 m12 white-text">
-          <div class="card red darken-1">
-            <div class="card-content white-text">
+        <div class="col s12 m12">
+          <div>
+            <div class="card-content">
               <span class="card-title">
-            <h2>Don't aggregate.  Personalize.</h2>
+            <h2 style='font-weight:200;'>Don't aggregate. <strong>Personalize.</strong></h2>
           </span>
-            <ul class="landing-features white-text">
+            <ul class="landing-features">
                 <li>You can easily<strong> follow your friends and popular personalities.</strong></li>
                 <li>Access over <strong>3,000 critic experiences and counting!</strong></li>
                 <li>Get the scoop on the<strong> latest AAA releases</strong> and <strong>unknown indie darlings.</strong></li>
@@ -173,12 +172,12 @@
 
         <div class="innerText innerS5">
           <div class="col s12 m12">
-            <div class="card red darken-1">
-              <div class="card-content white-text">
+            <div>
+              <div class="card-content">
                 <span class="card-title">
-            <h2>Stay in the loop.</h2>
+            <h2 style='font-weight:200;'>Stay in the loop.</h2>
           </span>
-            <ul class="landing-features white-text">
+            <ul class="landing-features">
                 <li>We will <strong>suggest games for you</strong> based of your previous experiences.</li>
                 <li>Be notified when a interesting game is <strong>soon to be released.</strong></li>
                 <li>Reieve <strong>1ups</strong> whenever anybody promotes your way of thinking.</li>
@@ -199,14 +198,16 @@
 	<div id="landing-sign-up" class="section scrollspy">
     <div class="row center">
 				<div class="col offset-m2 centered" style="width:70%">
-					<h4 class="mb">Sign Up Now to Find Out More.</h4>
+					<?php DisplayLandingSignup(); ?>
+					
+					<!--<h4 class="mb">Sign Up Now to Find Out More.</h4>
 					<form action="//polygonalweave.us8.list-manage.com/subscribe/post?u=4bc595c55268d466c30ef72dd&amp;id=0b032cbe1c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 	    				<div id="mc_embed_signup_scroll">
 	    					<input type="email" name="EMAIL" value="" class="email subscribe-input" id="mce-EMAIL" placeholder="Enter your e-mail address..." required>
 	    					<div style="position: absolute; left: -5000px;"><input type="text" name="b_4bc595c55268d466c30ef72dd_0b032cbe1c" tabindex="-1" value=""></div>
 							<button class='blue btn btn-lg btn-info btn-sub subscribe-submit' value="Subscribe" name="subscribe" id='mc-embedded-subscribe' type="submit">Yes, Please</button>
 						</div>
-					</form>
+					</form>-->
 				</div>
       </div>
 	</div>
@@ -216,7 +217,7 @@
 	<div id="landing-c">
       <div class="row center">
 				<div class="col offset-m3 centered" style="width:50%">
-					<p>Copyright 2015 | LifeBar.io</p>
+					<p>Copyright 2016 | LifeBar.io</p>
 				</div>
       </div>
 	</div>
