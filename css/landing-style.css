@@ -410,7 +410,7 @@ section .innerText {
   left: 50%;
   transform: translate(-150%, -50%);
   background-color: #999;
-  background-image: url("../Images/LandingPage/fallout4.gif");
+  background-image: url("http://lifebar.io/Images/LandingPage/fallout4.gif");
   /*opacity: 0;*/
   z-index: 0;
 }
@@ -498,7 +498,7 @@ section .innerText {
 /* A heart instead of a bullet */
 .landing-features li:before {
   /*content: '❤';*/
-  content: url("../Images/LandingPage/Coin.png");
+  content: url("http://lifebar.io/Images/LandingPage/Coin.png");
   font-size: 11px;
   position: absolute;
   left: 0;
