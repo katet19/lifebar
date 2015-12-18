@@ -1,6 +1,7 @@
 (function($) {
   var wh = window.innerHeight,
   $signup = $('.landing-sign-up'),
+  $login = $('.landing-login'),
   $monitor = $('.landing-monitor'),
   $innerS1 = $('.innerS1'),
   $innerS2 = $('.innerS2'),
@@ -42,7 +43,8 @@
   monitorIntroTl
     .to($avatar, .5, {autoAlpha: .5},'1')
     .from($monitor, .5, {yPercent: 200,xPercent: 100, ease: Power4.easeInOut})
-    .to($signup, .5, {top: 30, right: 35}, '1');
+    .to($signup, .5, {top: 30, xPercent: 140}, '1')
+    .to($login, .5, {top: 30, xPercent: 160}, '1');
 
   // monitor back to stylesheet position
   new ScrollMagic.Scene({

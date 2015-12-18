@@ -387,11 +387,25 @@ section .innerText {
   width:120px;
 }
 
-.landing-sign-up, .landing-login{
+.landing-sign-up{
+  position: fixed !important;
+  /* center the element */
+    right: 250px;
+    left: 0;
+    top:510px;
+    margin-right: auto;
+    margin-left: auto;
+    /* give it dimensions */
+    /*min-height: 10em;*/
+    width: 225px;
+}
+
+.landing-login{
   position: fixed !important;
   /* center the element */
     right: 0;
-    left: 0;
+    left: 250px;
+    top:510px;
     margin-right: auto;
     margin-left: auto;
     /* give it dimensions */

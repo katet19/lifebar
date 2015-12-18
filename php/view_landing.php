@@ -42,8 +42,8 @@
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
         </div>
         <div class="row center">
-          <div id="download-button" class="landing-sign-up btn-large waves-effect waves-light blue" style='z-index:2'>Sign Up</div>
-          <div class="landing-login btn-large waves-effect waves-light blue" style='z-index:2'>Login</div>
+          <div id="download-button" class="landing-sign-up btn waves-effect waves-light blue" style='z-index:2'>Sign Up</div>
+          <div class="landing-login btn waves-effect waves-light blue" style='z-index:2'>Login</div>
         </div>
         <br><br>
 
