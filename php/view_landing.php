@@ -18,7 +18,7 @@
           <span class="landing-L"><strong>L</strong></span>
           <div class="landing-lifebar-account">
             <i class="mdi-action-person"></i>
-            <div class="landing-manAvatar"><img src="Images/LandingPage/manfront.png" /></div>
+            <div class="landing-manAvatar"><img src="http://lifebar.io/Images/LandingPage/manfront.png" /></div>
           </div>
         </div>
         <div class="landing-lifebar-text">
@@ -49,8 +49,8 @@
       </div>
     </div>
 
-    <div class="parallax"><img src="Images/LandingPage/playstation-controller.jpg" alt="Unsplashed background img 1"></div>
-    <img src="Images/LandingPage/LandingBGsmall.jpg" class="preloadimage" alt="Unsplashed background img 1" >
+    <div class="parallax"><img src="http://lifebar.io/Images/LandingPage/playstation-controller.jpg" alt="Unsplashed background img 1"></div>
+    <img src="http://lifebar.io/Images/LandingPage/LandingBGsmall.jpg" class="preloadimage" alt="Unsplashed background img 1" >
 
   </div>
 
@@ -60,9 +60,9 @@
 
       <!--   Icon Section   -->
       <section id="landing-one">
-        <div class="landing-monitor"><img src="Images/LandingPage/monitor.png" /></div>
-        <div class="landing-controller"><img src="Images/LandingPage/DualShock3-in-Hand.png" /></div>
-        <div class="landing-manBack"><img src="Images/LandingPage/manback.png" /></div>
+        <div class="landing-monitor"><img src="http://lifebar.io/Images/LandingPage/monitor.png" /></div>
+        <div class="landing-controller"><img src="http://lifebar.io/Images/LandingPage/DualShock3-in-Hand.png" /></div>
+        <div class="landing-manBack"><img src="http://lifebar.io/Images/LandingPage/manback.png" /></div>
 
 
         <div class="innerText innerS1">
@@ -101,13 +101,13 @@
       </div>
     </div>
         </div>
-        <div class="landing-macbook" ><img src="Images/LandingPage/mackbook-pro-retina.png" />
+        <div class="landing-macbook" ><img src="http://lifebar.io/Images/LandingPage/mackbook-pro-retina.png" />
 
         </div>
 
-        <div class="landing-gameGif"><img src="Images/LandingPage/fallout4.gif" /></div>
+        <div class="landing-gameGif"><img src="http://lifebar.io/Images/LandingPage/fallout4.gif" /></div>
 
-        <div class="landing-manFront"><img src="Images/LandingPage/manfront.png" /></div>
+        <div class="landing-manFront"><img src="http://lifebar.io/Images/LandingPage/manfront.png" /></div>
         <div class="landingGraphs">
           <canvas id="landing-skills" width="400" height="250"></canvas>
           <canvas id="landing-skills2" width="400" height="250"></canvas><br>
@@ -160,9 +160,9 @@
     </div>
         </div>
         <div class="landingMask">
-          <!--<div class="gameGif"><img src="images/fallout4.gif" /></div>-->
-          <div class="landingActivity"><img src="Images/LandingPage/Activity.png" /></div>
-          <div class="landingNotifications"><img src="Images/LandingPage/Notifications.png" /></div>
+          <!--<div class="gameGif"><img src="http://lifebar.io/images/fallout4.gif" /></div>-->
+          <div class="landingActivity"><img src="http://lifebar.io/Images/LandingPage/Activity.png" /></div>
+          <div class="landingNotifications"><img src="http://lifebar.io/Images/LandingPage/Notifications.png" /></div>
         </div>
 
 
