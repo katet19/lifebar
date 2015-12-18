@@ -45,7 +45,8 @@
     min-height: 632px;
     max-height: 864px;
     position: relative;
-    background-color: #D32F2F;
+    background: url("http://lifebar.io/Images/LandingPage/playstation-controller.jpg");
+    background-size: cover;
 }
 
 #nav_f{

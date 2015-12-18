@@ -1,4 +1,3 @@
-/* global $macbook */
 (function($) {
   var wh = window.innerHeight,
   $signup = $('.landing-sign-up'),

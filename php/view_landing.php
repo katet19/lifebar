@@ -223,13 +223,6 @@
 
   <!--  Scripts-->
 
-
-
-
-  <!-- Include ScrollMagic and GSAP plugin -->
-    <script src="http://lifebar.io/js/library/TweenMax.min.js"></script>
-    <script src="http://lifebar.io/js/library/ScrollMagic.js"></script>
-    <script src="http://lifebar.io/js/library/animation.gsap.min.js"></script>
     <script src="http://lifebar.io/js/landing-main.js"></script>
     <script src="http://lifebar.io/js/landing-init.js"></script>
 

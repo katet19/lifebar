@@ -2,9 +2,10 @@
   $(function(){
 
     $('.button-collapse').sideNav();
-    $('.parallax').parallax();
+    //$('.parallax').parallax();
     $('.scrollspy').scrollSpy();
     $(".preloadimage").css("opacity", 0);
+    init();
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
@@ -160,4 +161,3 @@ function init() {
 
     });
 }
-window.onload = init();
