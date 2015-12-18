@@ -42,7 +42,7 @@
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
         </div>
         <div class="row center">
-          <a href="#landing-sign-up" id="download-button" class="landing-sign-up btn-large waves-effect waves-light blue">Sign Up Now</a>
+          <a href="#landing-sign-up" id="download-button" class="landing-sign-up btn-large waves-effect waves-light blue" style='z-index:2'>Sign Up Now</a>
         </div>
         <br><br>
 
@@ -50,7 +50,7 @@
     </div>
 
     <div class="parallax"><img src="http://lifebar.io/Images/LandingPage/playstation-controller.jpg" alt="Unsplashed background img 1"></div>
-    <img src="http://lifebar.io/Images/LandingPage/LandingBGsmall.jpg" class="preloadimage" alt="Unsplashed background img 1" >
+    <img src="http://lifebar.io/Images/LandingPage/playstation-controller.jpg" class="preloadimage" alt="Unsplashed background img 1" >
 
   </div>
 

@@ -42,7 +42,7 @@
   monitorIntroTl
     .to($avatar, .5, {autoAlpha: .5},'1')
     .from($monitor, .5, {yPercent: 200,xPercent: 100, ease: Power4.easeInOut})
-    .to($signup, .5, {yPercent: 140, xPercent: 180}, '1');
+    .to($signup, .5, {top: 30, right: 180}, '1');
 
   // monitor back to stylesheet position
   new ScrollMagic.Scene({
