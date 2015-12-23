@@ -59,7 +59,7 @@
     <div class="section">
 
       <!--   Icon Section   -->
-      <section id="landing-one" style='background:url(http://lifebar.io/Images/LandingPage/landpageaprtmentroom.jpg) 0% 50%;background-size:cover;'>
+      <section id="landing-one" style='background-color:rgb(74, 20, 140);'>
         <div class="landing-monitor"><img src="http://lifebar.io/Images/LandingPage/monitor.png" /></div>
         <div class="landing-controller"><img src="http://lifebar.io/Images/LandingPage/DualShock3-in-Hand.png" /></div>
         <div class="landing-manBack"><img src="http://lifebar.io/Images/LandingPage/manback.png" /></div>
