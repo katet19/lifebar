@@ -362,7 +362,7 @@ footer.page-footer {
 /*-----------ScrollMagic--------------*/
 
 section {
-  height: 600px;
+  height: 900px;
   position: relative;
   text-align: center;
 }
@@ -375,7 +375,7 @@ section .inner {
 /* Content of the following sections aligned next to the monitor */
 section .innerText {
   position: absolute;
-  top: 250px;
+  top: 450px;
   left: 60%;
   transform: translate(-100px, -50%);
   text-align: left;
@@ -386,6 +386,8 @@ section .innerText {
 .landing-xp-text{
   top: -140px;
   left: 100px;
+  color:white;
+  font-weight:500;
   position: relative;
   font-size: 24px;
   width:120px;
@@ -441,10 +443,20 @@ section .innerText {
   z-index: 0;
 }
 
-.landing-gameGif, .landingGraphs {
+.landing-gameGif {
   position: fixed;
   top: 50%;
   left: 10%;
+  display: inline;
+  opacity: 0;
+  z-index: 4;
+}
+
+.landingGraphs {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width:50%;
   display: inline;
   opacity: 0;
   z-index: 4;
@@ -515,22 +527,23 @@ section .innerText {
 /* A heart instead of a bullet */
 .landing-features li:before {
   /*content: '❤';*/
-  content: url("http://lifebar.io/Images/LandingPage/Coin.png");
+  /*content: url("http://lifebar.io/Images/LandingPage/Coin.png");*/
+  content: "■";
   font-size: 11px;
   position: absolute;
   left: 0;
   top: 8px;
   display: block;
-  color: #ff466a;
+  color: #fff;
 }
 
 /* FOOTER */
 #landing-sign-up {
-	background: #D32F2F;
-	width: 100%;
-	padding-top: 100px;
-	padding-bottom: 100px;
-	color: white;
+    background: transparent;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    color: rgb(237, 236, 236);
 }
 
 #landing-sign-up p {

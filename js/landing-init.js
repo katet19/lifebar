@@ -13,7 +13,7 @@
 function init() {
   var scrollFlag = true;
     window.addEventListener('scroll', function(e){
-        var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+        var distanceY = Math.round(window.pageYOffset || document.documentElement.scrollTop),
             shrinkOn = 200,
             fadeOn = 100,
             graphOn = 2248;

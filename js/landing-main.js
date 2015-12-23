@@ -101,6 +101,7 @@
       .to($manFront, 3, {yPercent: -110, xPercent: -60, autoAlpha: 0, scale: .075}, '0')
       .fromTo($manAvatar, 1, {yPercent: -55, xPercent: -34, autoAlpha: 0, scale: .075}, {yPercent: -55, xPercent: -34, autoAlpha: 1, scale: .075},'2')
       .fromTo($graphs, .5, {yPercent: -57, xPercent: -34, autoAlpha: 0, scale: 0}, {yPercent: -57, xPercent: -34, autoAlpha: 1, scale: .75},'0')
+      .to($macbook, .5, {yPercent: -60, xPercent: -40, autoAlpha: 0, scale: .5}, '.5')
       .to($genericAvatar, 1, {opacity: 0}, '0');
 
   new ScrollMagic.Scene({
