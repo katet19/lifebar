@@ -127,14 +127,14 @@ function init() {
                         }
                     ]
                 };
-                var context = document.getElementById('landing-skills').getContext('2d');
-                var skillsChart = new Chart(context).PolarArea(polardata);
-                var context2 = document.getElementById('landing-skills2').getContext('2d');
-                var skills2Chart = new Chart(context2).Line(linedata);
-                var context3 = document.getElementById('landing-skills3').getContext('2d');
-                var skills3Chart = new Chart(context3).Bar(bardata);
-                var context4 = document.getElementById('landing-skills4').getContext('2d');
-                var skills4Chart = new Chart(context4).Radar(radardata);
+                //var context = document.getElementById('landing-skills').getContext('2d');
+                //var skillsChart = new Chart(context).PolarArea(polardata);
+                //var context2 = document.getElementById('landing-skills2').getContext('2d');
+                //var skills2Chart = new Chart(context2).Line(linedata);
+                //var context3 = document.getElementById('landing-skills3').getContext('2d');
+                //var skills3Chart = new Chart(context3).Bar(bardata);
+                //var context4 = document.getElementById('landing-skills4').getContext('2d');
+                //var skills4Chart = new Chart(context4).Radar(radardata);
                 scrollFlag=false;
               }
             }
@@ -146,7 +146,7 @@ function init() {
         }
         if (distanceY > shrinkOn) {
             $(".landing-lifebar-container").addClass("smaller");
-            $(".landing-xp-text").text("+" + distanceY + " XP");
+            $(".landing-xp-text").text("+" + distanceY.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " XP");
             $(".landing-xp-text").css("opacity", distanceY / 1000 - .5);
             // console.log(distanceY/100);
             $(".landing-lifebar-container.smaller .landing-lifebar-bar").css("width", 40+ distanceY/4);

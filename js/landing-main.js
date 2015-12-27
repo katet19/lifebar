@@ -20,6 +20,7 @@
   $notifications = $('.landingNotifications');
   $mask = $('.landingMask');
   var width = $( document ).width();
+  window.scrollTo(0, 0);
 
   // init
   var ctrl = new ScrollMagic.Controller({
@@ -76,7 +77,7 @@
   monitorContentFront
 
     .to($monitor, .5, {yPercent: -50, xPercent: -10, scale: .5, autoAlpha: 0, ease: Power4.easeInOut}, '0')
-    .to($mask, .5, {yPercent: -62, xPercent: -26, scale: 1.5},'0')
+    //.to($mask, .5, {yPercent: -62, xPercent: -26, scale: 1.5},'0')
     .fromTo($macbook, .5, {yPercent: -60, xPercent: -40, autoAlpha: 0, scale: .5}, {yPercent: -51, xPercent: -39, autoAlpha: 1, scale: .98, ease: Power4.easeOut}, '.5')
     .to($manBack, .5, {yPercent: -30, xPercent: 10, autoAlpha: 0, scale: .2, ease: Power4.easeOut}, '.5')
     .to($controller, .1, {yPercent: 20, xPercent: -15, autoAlpha: 0, scale: .2, ease: Power4.easeOut}, '0')
@@ -115,7 +116,7 @@
   var monitorComputer2 = new TimelineMax();
   monitorComputer2
        .to($graphs, 1,{scale: 0},'1')
-      // .to($signup, .5, {autoAlpha: 0}, '1')
+       //.to($signup, .5, {autoAlpha: 0}, '1')
       .to($lifebar, 1, {yPercent: -80, autoAlpha: 0, scale: .9}, '1')
       .fromTo($activity, 3, {yPercent: 100, autoAlpha: 1}, {yPercent: -10, autoAlpha: 1}, '1');
 
@@ -131,7 +132,7 @@ new ScrollMagic.Scene({
 var monitorComputer3 = new TimelineMax();
 monitorComputer3
   
-    .fromTo($activity, 5, {yPercent: 800, autoAlpha: 1}, {yPercent: -100}, '3')
+    //.fromTo($activity, 5, {yPercent: 800, autoAlpha: 1}, {yPercent: -100}, '3')
     .fromTo($notifications, 3, {yPercent: 100, scale: .9}, {yPercent: -120, scale: .9}, '2');
 
 new ScrollMagic.Scene({
@@ -147,7 +148,7 @@ monitorComputer4
     // .to($activity, .1, {autoAlpha: 0, scale: 0}, '0')
     .to($notifications, 1, {yPercent: -600, autoAlpha:0, scale: 0}, '1')
     .to($macbook, 1, {yPercent: -160, scale: 0}, '2')
-    .to($signup, 1, {autoAlpha: 0}, '1');
+    //.to($signup, 1, {autoAlpha: 0}, '1');
 
 new ScrollMagic.Scene({
 triggerElement: $('.innerS5 h2')[0],
