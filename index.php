@@ -59,5 +59,6 @@
 <script type="text/javascript" src="../js/deployed.js"></script>
 <script type="text/javascript" src="../js/library/ScrollMagic.js"></script>
 <script type="text/javascript" src="../js/library/TweenMax.min.js"></script>
+<script type="text/javascript" src="../js/library/animation.gsap.min.js"></script>
 </body>
 </html>
