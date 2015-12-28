@@ -26,8 +26,11 @@
       	</div>
       <div class="landing-xp-text"></div>
     </div>
+    <div class="landing-lifebar-container-mobile">
+    	<?php DisplayLifeBarLogoLanding(true); ?>
+    </div>
 
-  <div id="index-banner" class="parallax-container">
+  <div id="index-banner" class="parallax-container" style='z-index:101;'>
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
@@ -137,7 +140,7 @@
           		<div>
             		<div class="card-content">
               			<span class="card-title">
-            				<h2 style='font-weight:200;'>Don't aggregate.<strong>Personalize.</strong></h2>
+            				<h2 style='font-weight:200;'>Don't aggregate. <strong>Personalize.</strong></h2>
         	 			</span>
 			            <ul class="landing-features">
 			                <li style='font-size:1.5em;margin-bottom: 0.25em;'>You can easily<strong> follow your friends and popular personalities.</strong></li>
@@ -192,13 +195,11 @@
 		
 <?php }
 
-function DisplayLifeBarLogoLanding(){ ?>
-	<div class="logoContainer">
-		<div class="logoTitle"><b>Life</b>bar</div>
-		<div class="logoAlpha" style='bottom:5px'>alpha</div>
-		<div class="logoLifebar">
-			<div class="logoLifebarHealth"></div>
-			<div class="logoLifebarDamage"></div>
+function DisplayLifeBarLogoLanding($showtag){ ?>
+	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
+		<div class="logoImage">
+			<img src='http://polygonalweave.com/Images/Generic/LifebarLogoTestTopDull.png' />
+			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
 		</div>
 	</div>
 <?php

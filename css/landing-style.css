@@ -75,7 +75,7 @@ footer.page-footer {
 
 .landing-lifebar-container{
   position: fixed;
-  z-index: 100;
+  z-index: 102;
   top: 50px;
   width:300px;
   -webkit-transition: height 0.3s;
@@ -97,6 +97,22 @@ footer.page-footer {
 .landing-lifebar-container.monitorMove{
   top: 140px;
   left: 36%;
+}
+
+.landing-lifebar-container-mobile{
+  display:none;
+  position: absolute;
+  z-index: 102;
+  top: 50px;
+  width:300px;
+  -webkit-transition: height 0.3s;
+  -moz-transition: height 0.3s;
+  -ms-transition: height 0.3s;
+  -o-transition: height 0.3s;
+  transition: height 0.3s;
+  transition: left 3s;
+  @include transition(height .3s);
+  overflow: visible;
 }
 
 .landing-lifebar-half-circle {
@@ -406,6 +422,18 @@ section .innerText {
     width: 150px;
 }
 
+.landing-sign-up-mobile{
+  position: inherit 1important;
+  /* center the element */
+    right: inherit;
+    left: inherit;
+    top:inherit;
+    margin-right:100px;
+    margin-left: auto;
+    /* give it dimensions */
+    /*min-height: 10em;*/
+}
+
 .landing-login{
   position: fixed !important;
   /* center the element */
@@ -417,6 +445,18 @@ section .innerText {
     /* give it dimensions */
     /*min-height: 10em;*/
     width: 150px;
+}
+
+.landing-login-mobile{
+  position: inherit !important;
+  /* center the element */
+    right: inherit;
+    left: inherit;
+    top:inherit;
+    margin-right: auto;
+    margin-left: auto;
+    /* give it dimensions */
+    /*min-height: 10em;*/
 }
 
 /* monitor/Card positioned to the left - this is a default position */

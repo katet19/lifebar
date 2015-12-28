@@ -39,11 +39,9 @@ function ShowLanding(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
-	 		$(".loginContainer, .searchContainer, .searchContainerAnonymous").hide();
 	 		location.hash = "landing";
  			$(".indicator").css({"display":"none"});
 			$(".active").removeClass("active");
-			
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
 			$(".landing-login").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
 			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
