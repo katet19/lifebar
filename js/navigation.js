@@ -39,7 +39,11 @@ function AttachTabLoadingEvents(){
 	  	window.open("http://talk.polygonalweave.com/c/support/polygonal-weave");
 	  });
 	  $(".logoContainer").on("click", function(){
-  		ShowLanding();
+	  	if($("#userAccountNav").length > 0){
+			ManuallyNavigateToTab("#profile");
+	  	}else{
+  			ShowLanding();
+	  	}
 	  });
 }
 

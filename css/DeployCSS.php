@@ -32,6 +32,9 @@
 		$landing = file_get_contents("landing.css");
 		fwrite($deployed, $landing);
 		
+		$landingstyle = file_get_contents("landing-style.css");
+		fwrite($deployed, $landingstyle);
+		
 		$main = file_get_contents("main.css");
 		fwrite($deployed, $main);
 		

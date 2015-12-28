@@ -4,6 +4,21 @@ require_once "includes.php";
 //RemoveUser(7887);
 //ClearEmptyUsers();
 
+//$list = array(8263,8898,8897,8894,8893,9031,9032,9128,9129,9205,9206,9247);
+//foreach($list as $old){
+	//UpdateUser($old,8146);
+//}
+function UpdateUser($old, $truth){
+	$mysqli = Connect();
+	$mysqli->query("update `Experiences` set `UserID` = '".$truth."' where `UserID` = '".$old."'");
+	$mysqli->query("update `Sub-Experiences` set `UserID` = '".$truth."' where `UserID` = '".$old."'");
+	$mysqli->query("update `Events` set `UserID` = '".$truth."' where `UserID` = '".$old."'");
+	$mysqli->query("update `Connections` set `Celebrity` = '".$truth."' where `Celebrity` = '".$old."'");
+	$mysqli->query("update `ImportReview` set `AuthorID` = '".$truth."' where `AuthorID` = '".$old."'");
+	$mysqli->query("delete from `Users` where `ID` = '".$old."'");
+	Close($mysqli, $result);
+}
+
 function ClearEmptyUsers(){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Users` where `Username` = '[CRITIC]'")) {

@@ -39,13 +39,11 @@ function ShowLanding(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
-	 		$(".loginContainer, .searchContainer, .searchContainerAnonymous").hide();
 	 		location.hash = "landing";
  			$(".indicator").css({"display":"none"});
 			$(".active").removeClass("active");
-			
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
-			$(".btn-login").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
+			$(".landing-login").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
 			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
 			$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), ''); });
   			$(".critic-name-container").on("click", function(e){
@@ -59,24 +57,22 @@ function ShowLanding(){
 			});
 			AttachSignUpEvents();
 			window.scrollTo(0, 0);
-			// $(window).scroll(function(){
-			// 	if(isLandingScrolledIntoView("#landing_profile")){
-			// 		$("#landing_profile").addClass("slideup");
-			// 		$(".deactivateLandingPromo2").addClass("activateLandingCard");
-			// 		$(".deactivateLandingPromo3").addClass("activateLandingCard");
-			// 	}
-			// 	if(isLandingScrolledIntoView(".game-discover-card") && cardanimated == false){
-			// 		setTimeout(function(){
-			// 			$("#game-card-2").find(".card-game-tier-container").click();
-			// 		}, 2500);
-			// 		setTimeout(function(){
-			// 			$("#game-card-2").find(".mdi-content-clear").click();
-			// 		}, 7000);
-			// 		cardanimated = true;
-			// 	}
-			// });
+			var graphRunYet = false;
+			var scrolled = false;
+			$(window).scroll(function(){
+			 	if(isLandingScrolledIntoView(".landingGraphs") && graphRunYet == false){
+			 		runGraphEvent();
+			 		graphRunYet = true;
+			 	}
+			 	if(scrolled == false){
+			 		$(".landing-monitor").css({"opacity":"1"});
+			 		scrolled = true;
+			 	}
+			 });
 			AttachSignUpLandingEvents();
 			AnimateLanding();
+			$('select').material_select();
+			$('.tooltipped').tooltip({delay: 30});
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -92,29 +88,29 @@ function ShowLanding(){
 function AttachSignUpLandingEvents(){
 	$("#SignupSubmitBtnLanding").on("click", function(e){
 		var errors = "";
-		if($("#signup-landing-section").find("#signup_username").val() === "")
+		if($("#landing-sign-up").find("#signup_username").val() === "")
 			errors = errors + "Username cannot be blank<br>";
-		if($("#signup-landing-section").find("#signup_email").val() === "")
+		if($("#landing-sign-up").find("#signup_email").val() === "")
 			errors = errors + "Email cannot be blank<br>";
-		if($("#signup-landing-section").find("#signup_password").val() === "" || $("#signup-landing-section").find("#signup_confirm_password").val() === "")
+		if($("#landing-sign-up").find("#signup_password").val() === "")
 			errors = errors + "Password cannot be blank<br>";
-		if($("#signup-landing-section").find("#signup_password").val() !== $("#signup-landing-section").find("#signup_confirm_password").val())
-			errors = errors + "Passwords do not match<br>";
-		if($("#signup-landing-section").find("#signup_username").val().indexOf(' ') >= 0)
+		//if($("#landing-sign-up").find("#signup_password").val() !== $("#landing-sign-up").find("#signup_confirm_password").val())
+		//	errors = errors + "Passwords do not match<br>";
+		if($("#landing-sign-up").find("#signup_username").val().indexOf(' ') >= 0)
 			errors = errors + "Username can not have spaces<br>";
 			
 		if(errors === "")
-			VerifyNewUserDataLanding($("#signup-landing-section").find("#signup_username").val(), $("#signup-landing-section").find("#signup_email").val());	
+			VerifyNewUserDataLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_email").val());	
 		else{
-			$("#signup-landing-section").find(".validation").html(errors);
-			$("#signup-landing-section").find(".validation").show();
+			$("#landing-sign-up").find(".validation").html(errors);
+			$("#landing-sign-up").find(".validation").show();
 		}
 			
 	});
 }
 
 function SignupFromLanding(username, password, email, first, last, birthyear){
-	ShowLoader($("#SignupSubmitBtnLanding"), 'small', '');
+	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
          data: {action: "Signup", username: username, password: password, email: email, first: first, last: last, birthyear: birthyear },
          type: 'post',
@@ -146,10 +142,10 @@ function VerifyNewUserDataLanding(username, email){
          				errors = errors + "Email is already used<br>";
          			}
          			if(errors !== ""){
-         				$("#signup-landing-section").find(".validation").html(errors);
-						$("#signup-landing-section").find(".validation").show();
+         				$("#landing-sign-up").find(".validation").html(errors);
+						$("#landing-sign-up").find(".validation").show();
          			}else{
-         				SignupFromLanding($("#signup-landing-section").find("#signup_username").val(), $("#signup-landing-section").find("#signup_password").val(), $("#signup-landing-section").find("#signup_email").val(), '', '', $("#signup-landing-section").find("#birthyear").val());
+         				SignupFromLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_password").val(), $("#landing-sign-up").find("#signup_email").val(), '', '', $("#landing-sign-up").find("#birthyear").val());
          			}
         },
         error: function(x, t, m) {
@@ -404,6 +400,30 @@ function AnimateLanding(){
 		e.target.style['visibility'] = 'hidden';
 		e.target.style['zIndex'] = 2;
 	}
+	
+	function runGraphEvent(){
+	var timeoutcounter = 0;
+	$(".bp-progress-item-bar").each(function(){
+		var after = $(this).find(".bp-progress-item-bar-after");
+		var before = $(this).find(".bp-progress-item-bar-before");
+		var lvlup = $(this).parent().find(".bp-progress-item-levelup");
+		//var left = after.attr("data-left");
+		//after.css({"left":left});
+		setTimeout(function(e){
+			var width = after.attr("data-width");
+			after.css({"width":width});
+			if(lvlup.attr("data-levelup") == "Yes" && lvlup.html() != "LEVEL UP!"){
+				lvlup.html("LEVEL UP!");
+				setTimeout(function(e){
+					before.css({"background-color":"#66BB6A"});
+					after.css({"background-color":"#66BB6A"});
+					lvlup.html("Level " + lvlup.attr("data-newlevel"));
+				}, 1000);
+			}
+		}, timeoutcounter);
+			timeoutcounter = timeoutcounter + 1000;
+	});
+}
 	
 
       
