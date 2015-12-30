@@ -23,7 +23,7 @@
   window.scrollTo(0, 0);
 
  if($(window).width() > 1000){
-	  $(".loginContainer, .searchContainer, .searchContainerAnonymous").hide();
+	  $(".loginContainer, .searchContainer, .searchContainerAnonymous, .landing-login-mobile, .landing-sign-up-mobile").hide();
 	  // init
 	  var ctrl = new ScrollMagic.Controller({
 	      globalSceneOptions: {
@@ -163,10 +163,10 @@
   $(".searchContainer, .searchContainerAnonymous").hide();
   $monitor.css({"display":"none"});
   $activity.css({"display":"none"});
-  $signup.removeClass("landing-sign-up");
-  $signup.addClass("landing-sign-up-mobile");
-  $login.removeClass("landing-login");
-  $login.addClass("landing-login-mobile");
+  $signup.hide();
+  $(".landing-sign-up-mobile").show();
+  $login.hide();
+  $(".landing-login-mobile").show();
   $("section").css({"height":"600px"});
   $("section .innerText").css({"left":"0","width":"100%","transform":"inherit","text-align":"center","top":"100px"});
   $("#landing-sign-up .row .col").css({"width":"100%","margin-left":"0%"});
@@ -177,7 +177,8 @@
   $(".landing-lifebar-container").hide();
   $("#index-banner, .parallax-container").css({"min-height":"600px","height":"600px"});
   $(".header").css({"padding-top":"0"});
-  $("h2").css({"font-size":"3rem"})
+  $("h2").css({"font-size":"3rem"});
+  $(".landing-features li").css({"font-size":"1.25em"});
 }
 
 })(jQuery);
