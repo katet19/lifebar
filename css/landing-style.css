@@ -103,8 +103,8 @@ footer.page-footer {
   display:none;
   position: absolute;
   z-index: 102;
-  top: 50px;
-  width:300px;
+    top: 25px;
+    width: 200px;
   -webkit-transition: height 0.3s;
   -moz-transition: height 0.3s;
   -ms-transition: height 0.3s;
@@ -423,12 +423,13 @@ section .innerText {
 }
 
 .landing-sign-up-mobile{
-  position: inherit 1important;
+  position: absolute !important;
   /* center the element */
     right: inherit;
-    left: inherit;
+    left: 17%;
     top:inherit;
-    margin-right:100px;
+    display:none;
+    margin-right:auto;
     margin-left: auto;
     /* give it dimensions */
     /*min-height: 10em;*/
@@ -448,11 +449,12 @@ section .innerText {
 }
 
 .landing-login-mobile{
-  position: inherit !important;
+  position: absolute !important;
   /* center the element */
-    right: inherit;
+    right: 17%;
     left: inherit;
     top:inherit;
+    display:none;
     margin-right: auto;
     margin-left: auto;
     /* give it dimensions */

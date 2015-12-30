@@ -29,8 +29,11 @@
     <div class="landing-lifebar-container-mobile">
     	<?php DisplayLifeBarLogoLanding(true); ?>
     </div>
-
-  <div id="index-banner" class="parallax-container" style='z-index:101;'>
+    
+    <a href="#landing-sign-up" id="download-button" class="landing-sign-up btn waves-effect waves-light blue" style='z-index:100'>Sign Up</a>
+    <div class="landing-login btn waves-effect waves-light blue" style='z-index:100'>Login</div>
+    
+  <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
@@ -40,8 +43,8 @@
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
         </div>
         <div class="row center">
-          <a href="#landing-sign-up" id="download-button" class="landing-sign-up btn waves-effect waves-light blue" style='z-index:100'>Sign Up</a>
-          <div class="landing-login btn waves-effect waves-light blue" style='z-index:100'>Login</div>
+          <a href="#landing-sign-up" id="download-button" class="btn waves-effect waves-light blue landing-sign-up-mobile" style='z-index:100'>Sign Up</a>
+          <div class="btn waves-effect waves-light blue landing-login-mobile" style='z-index:100'>Login</div>
         </div>
         <br><br>
       </div>
@@ -124,7 +127,7 @@
 				          <ul class="landing-features" style='color:white;'>
 				                <li style='font-size:1.5em;margin-bottom: 0.25em;'>As your experience grows, so does <b> your profile</b></li>
 				                <li style='font-size:1.5em;margin-bottom: 0.25em;'>See what <b>franchises and developers</b> you have spent the most time with.</li>
-				                <li style='font-size:1.5em;margin-bottom: 0.25em;'>Find out what <b>trends define you as a gamer.</b></li>
+				                <li style='font-size:1.5em;margin-bottom: 0.25em;'>Find out what <b>trends define your gaming habits</b></li>
 				          </ul>
 			          	</div>
 		        	</div>
@@ -172,7 +175,7 @@
 	<!-- ********** CREDITS ********** -->
 	<div id="landing-c">
   		<div class="row center">
-			<div class="col offset-m3 centered" style="width:50%">
+			<div class="col s12 centered">
 				<p>Copyright 2016 | LifeBar.io</p>
 			</div>
   		</div>
@@ -196,7 +199,7 @@
 <?php }
 
 function DisplayLifeBarLogoLanding($showtag){ ?>
-	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
+	<div class="landinglogoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
 			<img src='http://polygonalweave.com/Images/Generic/LifebarLogoTestTopDull.png' />
 			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
