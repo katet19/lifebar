@@ -15,12 +15,12 @@ function DisplayUserSettings(){
   	      <div class="input-field col s12 m12 l6">
 	        <i class="mdi-action-lock prefix"></i>
 	        <input id="settings_password" type="password">
-	        <label for="settings_password">Password</label>
+	        <label for="settings_password">Change Password</label>
 	      </div>
   	      <div class="input-field col s12 m12 l6">
 	        <i class="mdi-action-lock-outline prefix"></i>
 	        <input id="settings_confirm_password" type="password">
-	        <label for="settings_confirm_password">Confirm</label>
+	        <label for="settings_confirm_password">Confirm Change Password</label>
 	      </div>
       	</div>
   	    <div class="row">
