@@ -431,6 +431,7 @@ section .innerText {
     display:none;
     margin-right:auto;
     margin-left: auto;
+    z-index:104;
     /* give it dimensions */
     /*min-height: 10em;*/
 }
@@ -456,6 +457,7 @@ section .innerText {
     top:inherit;
     display:none;
     margin-right: auto;
+    z-index:104;
     margin-left: auto;
     /* give it dimensions */
     /*min-height: 10em;*/
