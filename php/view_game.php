@@ -93,7 +93,7 @@ function ShowUsers($users){
 			?>
 			<div class="row info-container" >
 				<div class="col s12" style="margin-top:4em !important;">
-					<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>
+					<!--<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>-->
 				</div>
 			</div>
 			<?php
@@ -102,7 +102,7 @@ function ShowUsers($users){
 			<div class="row info-container" >
 				<div class="col s12">
 					<div class="info-label">None of the users you follow have XP for this game yet!</div>
-					<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>
+					<!--<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>-->
 				</div>
 			</div>
 			<?php
