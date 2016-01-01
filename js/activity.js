@@ -29,7 +29,7 @@ function ShowActivityContent(filter){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -50,7 +50,7 @@ function RefreshActivity(filter){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -124,7 +124,7 @@ function EndlessLoader(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

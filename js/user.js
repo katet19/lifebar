@@ -14,7 +14,7 @@ function ShowUserSettings(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -71,7 +71,7 @@ function VerifyUserData(username, email){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -92,7 +92,7 @@ function SaveUserSettings(userid, username, password, email, first, last, birthy
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -126,7 +126,7 @@ function FollowUser(followid, elem, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

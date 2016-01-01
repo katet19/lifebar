@@ -89,12 +89,12 @@ function Toast(msg){
 }
 
 function ToastProgress(msg){
-	toast(msg, 10000);
+	toast(msg, 5000);
 }
 
 
 function ToastError(msg){
-	toast(msg, 120000);
+	toast(msg, 5000);
 }
 
 function ToastRight(msg){

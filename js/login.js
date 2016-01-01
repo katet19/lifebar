@@ -50,7 +50,7 @@ function Signup(username, password, email, first, last, birthyear){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -79,7 +79,7 @@ function VerifyNewUserData(username, email){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -110,7 +110,7 @@ function ResetPassword(key, password){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -163,7 +163,7 @@ function Login(user, pw){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 		});
 	}
 }
@@ -198,7 +198,7 @@ function RequestLoginReset(email){
 	            ToastError(t);
 	        }
 		},
-		timeout:30000
+		timeout:45000
 	});
 }
 
@@ -217,6 +217,6 @@ function Logout(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }

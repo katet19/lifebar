@@ -31,7 +31,7 @@ function ShowAnalyticsMainContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -55,7 +55,7 @@ function ShowAnalyticsSecondaryContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -92,7 +92,7 @@ function ShowUserAnalytics(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -116,7 +116,7 @@ function ShowPolygonalAnalytics(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

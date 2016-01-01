@@ -214,11 +214,11 @@ function CheckForNotifications(){
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
-	            ToastError("Server Timeout");
+	            //ToastError("Server Timeout");
 	        } else {
-	            ToastError(t);
+	            //ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }

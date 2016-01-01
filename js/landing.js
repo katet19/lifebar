@@ -81,7 +81,7 @@ function ShowLanding(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 }
 
@@ -126,7 +126,7 @@ function SignupFromLanding(username, password, email, first, last, birthyear){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -155,7 +155,7 @@ function VerifyNewUserDataLanding(username, email){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
