@@ -40,7 +40,7 @@ function LoadGame(gbid, currentTab, isID, browserNav){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	}else{
 		ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
@@ -66,7 +66,7 @@ function LoadGame(gbid, currentTab, isID, browserNav){
 		            ToastError(t);
 		        }
 			},
-			timeout:30000
+			timeout:45000
 		});
 		
 	}
@@ -104,7 +104,7 @@ function LoadGameDirect(gbid, currentTab, type){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -188,7 +188,7 @@ function SubmitBookmark(serviceValue, gameid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -216,7 +216,7 @@ function SubmitOwned(serviceValue, gameid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -235,7 +235,7 @@ function RequestUpdateFromGiantBomb(gameid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -299,7 +299,7 @@ function DisplayEquipXP(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -391,7 +391,7 @@ function SaveAgree(gameid, agreedwith, expid, username){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -409,7 +409,7 @@ function RemoveAgree(gameid, agreedwith, expid, username){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -428,7 +428,7 @@ function UpdatePreferredXP(gameid, slot){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});	
 }
 

@@ -21,7 +21,7 @@ function ShowNotificationMainContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -98,7 +98,7 @@ function DismissNotification(notificationid, notification){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 }

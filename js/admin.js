@@ -26,7 +26,7 @@ function ShowAdminMainContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -49,7 +49,7 @@ function ShowAdminSecondaryContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -107,7 +107,7 @@ function DisplayBadgeManagement(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -128,7 +128,7 @@ function DisplayBadgeNew(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -274,7 +274,7 @@ function DisplayBadgeForCategory(category, element){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -298,7 +298,7 @@ function SaveBadge(name, desc, type, diff, threshold, image, validation, categor
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -317,7 +317,7 @@ function TestBadge(badgeid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -338,7 +338,7 @@ function DisplayUnmappedManager(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -359,7 +359,7 @@ function DisplayUnmappedManagerReviewed(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -380,7 +380,7 @@ function DisplayPendingReviews(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -414,7 +414,7 @@ function AttachUnmappedManagerEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	});
 	$(".admin-ign-save-map").on("click", function(e){
@@ -435,7 +435,7 @@ function AttachUnmappedManagerEvents(){
 			            ToastError(t);
 			        }
 		    	},
-		    	timeout:30000
+		    	timeout:45000
 			});
 		}else{
 			if(gameid <= 0)
@@ -460,7 +460,7 @@ function AttachUnmappedManagerEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	});
 }
@@ -542,7 +542,7 @@ function SearchForGame(search, element){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -605,7 +605,7 @@ function SearchForGameBadge(search, element){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	}
 }
@@ -638,7 +638,7 @@ function SaveReview(element){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	}else{
 		Toast("Missing criteria for saving review");
@@ -661,7 +661,7 @@ function DismissPendingReview(id, element){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

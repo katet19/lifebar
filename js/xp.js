@@ -98,7 +98,7 @@ function ListenAndBuildPlayedSentence(){
 	});
 	$('.myxp-platforms').change(function() {
 		if(this.checked){
-			$(".myxp-sentence-intro").html("I watched");
+			$(".myxp-sentence-intro").html("I played");
 			if($(".myxp-sentence-platform").html() !== ""){
 				$(".myxp-sentence-platform").html($(".myxp-sentence-platform").html() + " " + $(this).attr("data-text"));
 			}else{
@@ -194,7 +194,7 @@ function AddWatchedFabEvent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -220,7 +220,7 @@ function AddPlayedFabEvent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -244,7 +244,7 @@ function UpdatePlayedEvent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -268,7 +268,7 @@ function UpdateWatchedEvent(watchid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -292,7 +292,7 @@ function UpdateTierQuoteEvent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -321,7 +321,7 @@ function CancelXPEntry(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -354,7 +354,7 @@ function DisplayTierDetails(tier, year){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -457,7 +457,7 @@ function SaveXPEntry(){
 			            ToastError(t);
 			        }
 		    	},
-		    	timeout:30000
+		    	timeout:45000
 			});
 		}else if($("#myxp-quote").length > 0 && $('input[type=radio][name=viewingitemgroup]').length > 0){
 			$.ajax({ url: '../php/webService.php',
@@ -477,7 +477,7 @@ function SaveXPEntry(){
 			            ToastError(t);
 			        }
 		    	},
-		    	timeout:30000
+		    	timeout:45000
 			});
 		}else if($(".myxp-platforms").length > 0){
 			$.ajax({ url: '../php/webService.php',
@@ -497,7 +497,7 @@ function SaveXPEntry(){
 			            ToastError(t);
 			        }
 		    	},
-		    	timeout:30000
+		    	timeout:45000
 			});
 		}else if($('input[type=radio][name=viewingitemgroup]').length > 0){
 			var update = $(".myxp-edit-container").attr("data-watchid");
@@ -520,7 +520,7 @@ function SaveXPEntry(){
 				            ToastError(t);
 				        }
 			    	},
-			    	timeout:30000
+			    	timeout:45000
 				});
 			}else{
 				$.ajax({ url: '../php/webService.php',
@@ -540,7 +540,7 @@ function SaveXPEntry(){
 				            ToastError(t);
 				        }
 			    	},
-			    	timeout:30000
+			    	timeout:45000
 				});
 			}
 		}else if($("#myxp-quote").length > 0){
@@ -560,7 +560,7 @@ function SaveXPEntry(){
 			            ToastError(t);
 			        }
 		    	},
-		    	timeout:30000
+		    	timeout:45000
 			});
 		}
 	}else{
@@ -664,7 +664,7 @@ function DeleteXP(subxpid){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	}else{
 		$.ajax({ url: '../php/webService.php',
@@ -685,7 +685,7 @@ function DeleteXP(subxpid){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});	
 	}
 }
@@ -703,7 +703,7 @@ function CalculateWeave(){
 	            //ToastError(t);
 	        }
     	},
-    	timeout:50000
+    	timeout:450000
 	});
 }
 
@@ -733,7 +733,7 @@ function GetGameFAB(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

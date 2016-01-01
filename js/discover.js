@@ -72,7 +72,7 @@ function Search(searchstring){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
@@ -238,7 +238,7 @@ function ShowDiscoverHome(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -297,7 +297,7 @@ function ShowAdvancedSearch(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -356,7 +356,7 @@ function AttachDiscoverHomeEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 		
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
@@ -463,7 +463,7 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
@@ -500,7 +500,7 @@ function CustomCategory(categoryid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )

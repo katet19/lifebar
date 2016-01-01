@@ -45,7 +45,7 @@ function ShowUserContent(userid, mine, browserNav){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -168,7 +168,7 @@ function DisplayTracking(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -193,7 +193,7 @@ function DisplayLeadership(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -214,7 +214,7 @@ function DisplayCharisma(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -239,7 +239,7 @@ function DisplaySpy(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -270,7 +270,7 @@ function DisplayAbilitiesViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -296,7 +296,7 @@ function DisplayKnowledgeViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -322,7 +322,7 @@ function DisplayKnowledgeDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -356,7 +356,7 @@ function DisplayGearViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -382,7 +382,7 @@ function DisplayGearDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 }
@@ -412,7 +412,7 @@ function DisplayBestViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -438,7 +438,7 @@ function DisplayDeveloperViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -465,7 +465,7 @@ function DisplayDeveloperDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -594,7 +594,7 @@ function AttachFloatingIconWeaveButtonEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	});
 	$(".user-set-title").on("click", function(){
@@ -615,7 +615,7 @@ function AttachFloatingIconWeaveButtonEvents(){
 				            ToastError(t);
 				        }
 			    	},
-			    	timeout:30000
+			    	timeout:45000
 				});
 			});
 	});
@@ -660,7 +660,7 @@ function FollowUserFromFab(followid, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -678,7 +678,7 @@ function UnfollowUserFromFab(followid, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
