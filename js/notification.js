@@ -5,6 +5,12 @@ function ShowNotificationsHome(){
 function ShowNotificationMainContent(){
 	$("#notifications").css({"display":"block"});
   	ShowLoader($("#notificationsInnerContainer"), 'big', "<br><br><br>");
+    var windowWidth = $(window).width();
+    $("#notifications").css({"display":"inline-block", "left": -windowWidth});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").css({"display":"none"});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#notifications").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+  	
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayNotificationHome" },
      type: 'post',
