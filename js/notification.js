@@ -42,6 +42,11 @@ function AttachNotificationEvents(){
 		if($("#notification-header-nav").is(":visible"))
 			$("#notification-header-nav").hide(250);
 	});
+	$(".user-avatar").unbind();
+  	$(".user-avatar").on("click", function(e){
+    	e.stopPropagation();
+ 		ShowUserPreviewCard($(this).parent().find(".user-preview-card"));
+ 	});
 	$("#notification-header-nav li a").on('click', function(e){
 		e.stopPropagation();
 		$(".notificiation-filter-selected").removeClass("notificiation-filter-selected");
