@@ -821,8 +821,6 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 			$hiddenusername = '';
 			if($user->_security == "Journalist")
 				 $hiddenusername = $user->_first." ".$user->_last;
-			else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
-				$hiddenusername = $user->_first." ".$user->_last; 
 			else
 				$hiddenusername = $user->_username;	
 			
