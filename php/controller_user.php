@@ -291,7 +291,7 @@ function GetPublishersJournalistList($PubID){
 function GetConnectedTo($userid){
 	$users = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` order by `Username`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `Username`")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Privacy"] != "Private"){
 				$user= new User($row["Celebrity"], 
