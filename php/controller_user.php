@@ -325,7 +325,7 @@ function GetConnectedTo($userid){
 function GetConnectedToList($userid){
 	$users = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` order by `First`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
