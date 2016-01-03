@@ -268,7 +268,7 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 <!-- First Row -->
 <div class="row" style="margin-bottom: 30px;">
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(http://www.gravatar.com/avatar/307764885528a03bdac67d74b85112f4?s=100&amp;d=mm&amp;r=g) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(http://lifebar.io/Images/LandingPage/mgs.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		</div>
 		<div class="feed-activity-icon-col">
 			<div class="feed-activity-icon-xp" style="background-color:#2196F3;"><i class="mdi-action-description"></i></div>
