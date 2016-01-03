@@ -119,6 +119,7 @@ function VerifyUniqueEmail($email){
 	Close($mysqli, $result);
 }
 
+//CreateDefaultFollowingConnections(7);
 function CreateDefaultFollowingConnections($userid){
 	$journalist = array();
 	$mysqli = Connect();
@@ -481,7 +482,7 @@ function SearchForUser($search){
 	}else{
 		$query = "select * from `Users` where `Username` like '%".$search."%' or (`First` like '%".$search."%' or `Last` like '%".$search."%') order by `First`";
 	}*/
-	$query = "select * from `Users` where `Username` like '%".$search."%' or (`Access` = 'Journalist' and (`First` like '%".$search."%' or `Last` like '%".$search."%')) order by `Username`";
+	$query = "select * from `Users` where `Username` like '%".$search."%' or (`Access` = 'Journalist' and (`First` like '%".$search."%' or `Last` like '%".$search."%' or `First` like '%".$namedivided[0]."%' and `Last` like '%".$namedivided[1]."%')) order by `Username`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Privacy"] != "Private"){
