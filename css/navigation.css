@@ -71,6 +71,14 @@
     position:relative;
 }
 
+.landinglogoContainer{
+    font-size: 1.5em;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1px;
+    position:relative;
+}
+
 .logoImage img{
     height: 43px;
     margin-top: 6px;
@@ -187,6 +195,15 @@
 }
 
 .userNotificiations{
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 2em;
+  vertical-align: middle;
+  cursor:pointer;
+  position: relative;
+}
+
+.userBug{
   display: inline-block;
   margin-right: 10px;
   font-size: 2em;

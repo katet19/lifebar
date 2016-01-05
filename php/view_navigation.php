@@ -37,6 +37,7 @@ function DisplayHeaderNavigation(){ ?>
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							</div>
 						<?php } ?>
+						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
 						<div class="userNotificiations"><i class="mdi-social-notifications-none"></i></div>
 						<div class="userAvatar" style="background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 						<div class="userNameTitle" style="display:none;"><?php $_SESSION['logged-in']->_username; ?> </div>
@@ -47,7 +48,7 @@ function DisplayHeaderNavigation(){ ?>
 							<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 							<li><a href="#!" class="adminButton">Admin</a></li>
 							<?php } ?>
-							<li><a href="#!" class="supportButton">Report Bug</a></li>
+							<!--<li><a href="#!" class="supportButton">Report Bug</a></li>-->
 							<li><a href="#!" class="signOutButton">Sign out</a></li>
 						  </ul>
 					</div>
@@ -90,7 +91,7 @@ function DisplaySideDrawer(){ ?>
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 			<li><a href="#!" class="adminButton">Admin</a></li>
 		<?php } ?>
-		<li><a href="#!" class="supportButton">Support</a></li>
+		<li><a href="#!" class="supportButton">Report Bug</a></li>
 		<li><a href="#!" class="signOutButton">Sign out</a></li>
 	<?php } ?>
   </ul>
