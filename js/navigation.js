@@ -36,7 +36,7 @@ function AttachTabLoadingEvents(){
 	  	window.open("http://talk.polygonalweave.com");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
-	  	window.open("http://talk.polygonalweave.com/c/support/polygonal-weave");
+	  	window.open("http://tidbits.io/c/support/lifebar");
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){
