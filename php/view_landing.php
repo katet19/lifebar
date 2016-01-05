@@ -147,7 +147,7 @@
         	 			</span>
 			            <ul class="landing-features">
 			                <li style='font-size:1.5em;margin-bottom: 0.25em;'>You can easily<strong> follow your friends and popular personalities.</strong></li>
-			                <li style='font-size:1.5em;margin-bottom: 0.25em;'>Access over <strong>3,000 critic experiences and counting!</strong></li>
+			                <li style='font-size:1.5em;margin-bottom: 0.25em;'>Access over <strong>10,000 critic experiences and counting!</strong></li>
 			                <li style='font-size:1.5em;margin-bottom: 0.25em;'>Get the scoop on the<strong> latest AAA releases</strong> and <strong>unknown indie darlings.</strong></li>
 			            </ul>
           			</div>
