@@ -455,6 +455,7 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
  			});
   			Waves.displayEffect();
   			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
+  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
