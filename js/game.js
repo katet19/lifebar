@@ -382,7 +382,7 @@ function SaveAgree(gameid, agreedwith, expid, username){
      data: {action: 'SaveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
      type: 'post',
      success: function(output) {
-		Toast("Agreed with "+username+"'s thoughts ");
+		Toast("You appreciated "+username+"'s thoughts ");
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -400,7 +400,7 @@ function RemoveAgree(gameid, agreedwith, expid, username){
      data: {action: 'RemoveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
      type: 'post',
      success: function(output) {
-		Toast("You no longer agree with "+username+"'s thoughts ");
+		Toast("You no longer appreciate "+username+"'s thoughts ");
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
