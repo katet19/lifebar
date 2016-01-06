@@ -112,7 +112,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l9">
 			<div class="row" style='margin-bottom: 0;'>
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:550px;">
-					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Best</div>
+					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Favorites</div>
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
@@ -274,7 +274,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l9">
 			<div class="row" style='margin-bottom: 0;'>
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:550px;">
-					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Best</div>
+					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Favorites</div>
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
@@ -784,13 +784,13 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 	if($newuser){
 		?>
 		<div class="newprofile-overlay-container">
-			<div class="newprofile-header" style='margin: 20px 0px 35px 47px;'>Best</div>
+			<div class="newprofile-header" style='margin: 20px 0px 35px 47px;'>Favorites</div>
 			<div class="newprofile-skills"> 
 				<div class="newprofile-leftside">
 				All of your favorite experiences will be showcased for others to get a better idea of what you like.
 				</div>
 				<div class="newprofile-skills-list newprofile-rightside">
-					<div class="newprofile-sub-header" style='margin-top:0;'>Top Experiences:</div>
+					<div class="newprofile-sub-header" style='margin-top:0;'>Favorite Experiences:</div>
 					<ol>
 						<li class="newprofile-best-item" data-id="1539"><?php echo "Half-life 2";?></li>
 						<li class="newprofile-best-item" data-id="36989"><?php echo "The Last of Us";?></li>
@@ -1797,7 +1797,7 @@ function DisplayBest($userid){
 	$user = GetUser($userid);
 	$name = "";
 	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
-	DisplayBackButton($name."'s Best");
+	DisplayBackButton($name."'s Favorites");
 	?>
 	<div class="row" style='margin-top:4em;text-align:left;'>
 		<div class="col s12">
