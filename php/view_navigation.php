@@ -48,7 +48,7 @@ function DisplayHeaderNavigation(){ ?>
 							<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 							<li><a href="#!" class="adminButton">Admin</a></li>
 							<?php } ?>
-							<!--<li><a href="#!" class="supportButton">Report Bug</a></li>-->
+							<li><a href="#!" class="supportForumButton">Support</a></li>
 							<li><a href="#!" class="signOutButton">Sign out</a></li>
 						  </ul>
 					</div>
@@ -91,6 +91,7 @@ function DisplaySideDrawer(){ ?>
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 			<li><a href="#!" class="adminButton">Admin</a></li>
 		<?php } ?>
+		<li><a href="#!" class="supportForumButton">Support</a></li>
 		<li><a href="#!" class="supportButton">Report Bug</a></li>
 		<li><a href="#!" class="signOutButton">Sign out</a></li>
 	<?php } ?>

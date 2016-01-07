@@ -36,7 +36,10 @@ function AttachTabLoadingEvents(){
 	  	window.open("http://talk.polygonalweave.com");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
-	  	window.open("https://gitreports.com/issue/rewphus/support");
+	  	window.open("https://gitreports.com/issue/Lifebario/support ");
+	  });
+  	  $(".supportForumButton").on("click", function(){
+	  	window.open("https://github.com/Lifebar/support");
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){
