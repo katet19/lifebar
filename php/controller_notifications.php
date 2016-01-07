@@ -296,6 +296,14 @@ function AddIntroNotifications($userid){
 	$color = "#66BB6A";
 	$icon = "mdi-social-group-add";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$valueone','$actionone','$color','$icon')");
+	//Bugs
+	$type = "info";
+	$category = "General";
+	$title = "Early access";
+	$caption = "Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. If you find any bugs or have feedback please click on the bug at the top right and please let us know!";
+	$color = "#66BB6A";
+	$icon = "mdi-action-bug-report";
+	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	Close($mysqli, $result);
 	UpdateTotalNew($userid, 10);
 }
