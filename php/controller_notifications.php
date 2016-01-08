@@ -290,7 +290,7 @@ function AddIntroNotifications($userid){
 	$type = "info";
 	$category = "General";
 	$title = "Follow your friends!";
-	$caption = "Find your friends and follow them. By following someone, thier most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Users tab.  We have tacken the liberty to have you follow the top 10 current personalities, which you will seee below.  Feel free to unfollow them if you like, but who knows, you may find someone with tastes similar to yours.";
+	$caption = "Find your friends and follow them. By following someone, their most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Users tab. We have taken the liberty to have you follow the top 10 current personalities, which you will see below. Feel free to un-follow them if you like, but who knows, you may find someone with tastes similar to yours.";
 	$valueone="Find Users";
 	$actionone="Trigger,#NavConnections";
 	$color = "#66BB6A";
