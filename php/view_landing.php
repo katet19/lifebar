@@ -179,7 +179,7 @@
 				<div style='margin-bottom:15px;'>
 					<a href='https://twitter.com/lifebario' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/twitter-box.png'></a>
 					<a href='https://www.facebook.com/lifebario' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/facebook-box.png'></a>
-					<a href='https://www.tumblr.com/blog/lifebar' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/tumblr.png'></a>
+					<a href='http://lifebar.tumblr.com' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/tumblr.png'></a>
 				</div>
 				<div>Copyright 2016 | LifeBar.io</div>
 			</div>
