@@ -37,7 +37,7 @@
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
-        <h1 class="header center text-white">YOUR LIFE WITH VIDEO GAMES</h1>
+        <h1 class="header center text-white main-header">YOUR LIFE WITH VIDEO GAMES</h1>
         <div class="row center">
 
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
