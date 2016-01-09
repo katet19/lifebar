@@ -61,6 +61,9 @@ p {
 	.landing-manFront{
 		left:-10% !important;
 	}
+	.landing-lifebar-container.smaller .landing-lifebar-bar{
+		max-width:700px;
+	}
 }
 
 @media only screen and (max-width : 992px) {
