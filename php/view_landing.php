@@ -37,7 +37,7 @@
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
-        <h1 class="header center text-white">YOUR LIFE WITH VIDEO GAMES</h1>
+        <h1 class="header center text-white main-header">YOUR LIFE WITH VIDEO GAMES</h1>
         <div class="row center">
 
           <h5 class="header col s12 light">Discover, share and visualize gaming as never before</h5>
@@ -179,7 +179,7 @@
 				<div style='margin-bottom:15px;'>
 					<a href='https://twitter.com/lifebario' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/twitter-box.png'></a>
 					<a href='https://www.facebook.com/lifebario' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/facebook-box.png'></a>
-					<a href='https://www.tumblr.com/blog/lifebar' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/tumblr.png'></a>
+					<a href='http://lifebar.tumblr.com' target='_blank' style='display:inline-block;'><img src='http://lifebar.io/Images/LandingPage/tumblr.png'></a>
 				</div>
 				<div>Copyright 2016 | LifeBar.io</div>
 			</div>

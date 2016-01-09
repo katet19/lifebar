@@ -21,6 +21,9 @@ p {
   padding-top: 300px;
   opacity:1;
 }
+.main-header{
+	font-size: 4em;
+}
 
 .button-collapse {
   color: #26a69a;
@@ -45,6 +48,23 @@ p {
     width: 100% !important;
   }
 
+@media only screen and (max-width : 1330px) {
+	.main-header{
+    	font-size: 3.2em !important;
+	}
+	.landing-macbook{
+		left:-10% !important;
+	}
+	.landing-gameGif{
+		left:-10% !important;
+	}
+	.landing-manFront{
+		left:-10% !important;
+	}
+	.landing-lifebar-container.smaller .landing-lifebar-bar{
+		max-width:700px;
+	}
+}
 
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
