@@ -207,7 +207,7 @@ function DisplayGameDiscoverGrid(){
 <?php }
 
 function DisplayDiscoverCategory($category, $catid){ 
-		DisplayDiscoverBackNav();
+		DisplayDiscoverBackNav("");
 		if($category == "Recent Releases")
 			DisplayCategoryRecentReleases();
 		else if($category == "Active Personalities")

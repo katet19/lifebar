@@ -77,7 +77,7 @@ function Search(searchstring){
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function FilterCategories(){
@@ -183,19 +183,22 @@ function OpenSearch(){
 		$(".userAvatar").hide();
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".mobileTab, .mobileNav").css({"opacity":"0"});
+		$(".mobileTab, .mobileNav").hide();
 		$(".searchInput").css({"left":"3em"});
 		$(".closeMobileSearch").show();
+		$(".closeMobileSearch").on('click', function(e){
+			e.stopPropagation();
+			CloseSearch();
+		});
+		$(".searchInput").on('click', function(e){
+			e.stopPropagation();
+		});
 	}
 	$(".searchInput").css({"display":"inline-block"});
 	$(".searchInput input").focus();
 	$(".loginContainer").hide();
 	$('html').on('click', function(){
 		CloseSearch();	
-	});
-	$(".closeMobileSearch").on('click', function(e){
-		e.stopPropagation();
-		CloseSearch();
 	});
 }
 
@@ -209,7 +212,7 @@ function CloseSearch(){
 		//$(".userContainer").parent().css({"width":"25%"});
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
-		$(".mobileTab, .mobileNav").css({"opacity":"1"});
+		$(".mobileTab, .mobileNav").show();
 		$(".searchInput").css({"left":"1em"});
 		$(".closeMobileSearch").hide();
 		$(".searchInput input").val("");
@@ -373,7 +376,7 @@ function AttachDiscoverHomeEvents(){
 		});
 		
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-			HideMobileSearch();
+			CloseSearch();
 	});
 }
 
@@ -481,7 +484,7 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function CustomCategory(categoryid){
@@ -518,7 +521,7 @@ function CustomCategory(categoryid){
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function AdvancedSearchFilterEvents(){
