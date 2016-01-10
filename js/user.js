@@ -6,6 +6,7 @@ function ShowUserSettings(){
          success: function(output) {
 			$("#BattleProgess").html(output); 
             AttachUserSettingEvents();
+            GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
 	        if(t==="timeout") {

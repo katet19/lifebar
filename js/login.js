@@ -39,6 +39,7 @@ function Signup(username, password, email, first, last, birthyear){
          data: {action: "Signup", username: username, password: password, email: email, first: first, last: last, birthyear: birthyear },
          type: 'post',
          success: function(output) {
+         			GAEvent('Signup', email);
          			setCookie("RememberMe", $.trim(output), 14);
           			window.location.hash = "#notifications";
 					window.location.reload(true);
@@ -151,6 +152,7 @@ function Login(user, pw){
 	         			if(output.indexOf("INCORRECT USERNAME OR PASSWORD") >= 0){
 	         				DisplayLoginValidation(1);
 	         			}else{
+	         				GAEvent('Login', user);
 	         				setCookie("RememberMe", $.trim(output), 14);
 	         				location.hash = "#activity";
 	         				location.reload();
@@ -188,6 +190,7 @@ function RequestLoginReset(email){
      data: {action: "ForgotPassword", email: email },
      type: 'post',
      success: function(output) {
+     			GAEvent('Login', 'Reset Password:'+email);
 	 			$(".forgotPassword").html("<div style='text-align:center'>Please check your email to reset your password</div>");
  				$(".forgotPasswordBtn div").remove();
       },

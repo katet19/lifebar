@@ -37,6 +37,10 @@ function ShowUserContent(userid, mine, browserNav){
 				AttachFloatingIconWeaveButtonEvents();
 	 	 		if(browserNav)
  	 				GLOBAL_HASH_REDIRECT = "";
+  				if(!mine)
+  					GAPage('Profile', '/profile/'+name);
+  				else
+  					GAPage('Profile', '/profile/personal/'+name);
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
