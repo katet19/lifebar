@@ -67,7 +67,6 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-52980217-1', 'auto');
-  ga('send', 'pageview');
 
 </script>
 </body>
