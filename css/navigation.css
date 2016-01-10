@@ -15,6 +15,10 @@
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+.identificationContainer{
+	display:none;
+}
+
 .mainNav, .mainNav .tab{
 	height:60px !important;
 }
@@ -325,7 +329,7 @@
 }
 
 .side-nav-logo{
-	padding: 2em 1.25em !important;
+	padding: 0; /*2em 1.25em !important;*/
 }
 
 .side-nav-logo:hover{
@@ -469,6 +473,7 @@
 	}
 	.searchInput{
 		display:none;
+	    font-size: 1.2em;
 	}
 	.searchContainer, .searchContainerAnonymous{
 		background-color:transparent;
@@ -483,7 +488,7 @@
 	    left: auto;
 	    position: absolute;
 	    right: 0;
-	    top: 1em;
+	    top: 1.2em;
 	}
 	
 	.searchContainer:hover, .searchContainerAnonymous:hover, .searchContainerMobile:hover{
@@ -525,5 +530,9 @@
 	
 	.backButton{
 		padding: 16px 0 17px 0;
+	}
+	.identificationContainer{
+		height:75px;
+		display:block;
 	}
 }

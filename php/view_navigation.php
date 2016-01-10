@@ -8,11 +8,11 @@ function DisplayHeaderNavigation(){ ?>
 		<div class="mobileContainer" data-activates="slide-out">
 			<div class="mobileNav"><i class="mdi-navigation-menu small" style='color:white'></i></div>
 			<div class="mobileTab"></div>
-			<div class="searchContainerMobile">
-				<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
-				<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-				<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.5em;"></i>
-			</div>
+		</div>
+		<div class="searchContainerMobile">
+			<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+			<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+			<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 		</div>
 	</div>
 	<div id="navigation-header">
