@@ -276,6 +276,23 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+function GAEvent(category, action){
+	ga('send', {
+	  hitType: 'event',
+	  eventCategory: category,
+	  eventAction: action,
+	  eventLabel: 'Alpha'
+	});
+}
+
+function GAPage(title, page){
+	ga('send', {
+	  hitType: 'pageview',
+	  page: page,
+      title: title
+	});
+}
+
 //Globals
 var GLOBAL_TAB_REDIRECT = "";
 var GLOBAL_HASH_REDIRECT = "";

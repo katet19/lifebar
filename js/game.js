@@ -32,6 +32,7 @@ function LoadGame(gbid, currentTab, isID, browserNav){
  	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 	 		GLOBAL_TAB_REDIRECT = "";
+	 		GAPage('Game', '/game/'+title);
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -58,6 +59,7 @@ function LoadGame(gbid, currentTab, isID, browserNav){
   	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 		 	GLOBAL_TAB_REDIRECT = "";
+		 	GAPage('Game', '/game/'+title);
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -96,6 +98,7 @@ function LoadGameDirect(gbid, currentTab, type){
  		}else{
  			AddWatchedFabEvent();
  		}
+ 		GAPage('Game', '/game/'+title);
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -174,11 +177,13 @@ function SubmitBookmark(serviceValue, gameid){
 			$(".game-remove-bookmark-btn").show();
 			$(".game-add-bookmark-btn").hide();
 			$(".GameMyStatusIcons .mybookmark").show();
+			GAEvent('Game', 'Add Bookmark');
 		}else{
 			ToastError("Removed Bookmark");
 			$(".game-remove-bookmark-btn").hide();
 			$(".game-add-bookmark-btn").show();
 			$(".GameMyStatusIcons .mybookmark").hide();
+			GAEvent('Game', 'Remove Bookmark');
 		}
      },
         error: function(x, t, m) {
@@ -202,11 +207,13 @@ function SubmitOwned(serviceValue, gameid){
 			$(".game-remove-owned-btn").show();
 			$(".game-add-owned-btn").hide();
 			$(".GameMyStatusIcons .myowned").show();
+			GAEvent('Game', 'Add to Owned');
 		}else{
 			Toast("Removed from your owned library");
 			$(".game-remove-owned-btn").hide();
 			$(".game-add-owned-btn").show();
 			$(".GameMyStatusIcons .myowned").hide();
+			GAEvent('Game', 'Remove from Owned');
 		}
      },
         error: function(x, t, m) {
@@ -275,6 +282,7 @@ function AttachFloatingIconButtonEvents(){
 	});
 	$(".fab-login").on('click', function(){
 		 $('#signupModal').openModal();
+		 GAEvent('Game', 'Login');
 	});
 	$(".game-set-fav-btn").on("click", function(){
 		if($(".game-set-fav-btn").css("opacity") == 1){
@@ -352,6 +360,7 @@ function AttachAgree(){
 		$(this).html("- 1up");
 		MoveUpPostAgree($(this).parent().parent(), total);
 		AttachAgrees();
+		GAEvent('Game', 'Add 1up to User');
 	});
 }
 
@@ -374,6 +383,7 @@ function AttachDisagree(){
 		$(this).html("+ 1up");
 		MoveDownPostAgree($(this).parent().parent(), total);
 		AttachAgrees();
+		GAEvent('Game', 'Remove 1up from User');
 	});
 }
 

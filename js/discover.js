@@ -65,6 +65,7 @@ function Search(searchstring){
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
  			});
+ 			GAPage('Search', '/search');
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -246,6 +247,7 @@ function ShowDiscoverHome(){
  				AttachDiscoverHomeEvents();
  				AttachDiscoverSecondaryEvents();
       			Waves.displayEffect();
+      			GAPage('Discover', '/discover');
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -364,6 +366,7 @@ function AttachDiscoverHomeEvents(){
 	 			DisplayGraphs();
 	 			AttachDiscoverSecondaryEvents();
 	  			Waves.displayEffect();
+	  			GAPage('Discover - '+customName, '/discover/'+customName);
 	     	},
 	        error: function(x, t, m) {
 		        if(t==="timeout") {

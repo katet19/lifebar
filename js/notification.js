@@ -15,10 +15,15 @@ function ShowNotificationMainContent(){
      data: {action: "DisplayNotificationHome" },
      type: 'post',
      success: function(output) {
-     			$("#notificationsInnerContainer").html(output);
-     			 $(".indicator").css({"display":"none"});
-     			AttachNotificationEvents();
-      			Waves.displayEffect();
+     	if($(".notifications-new-badge").length > 0)
+     		GAPage('Notifications', '/notifications/new');
+     	else
+     		GAPage('Notifications', '/notifications/old');
+     		
+ 		$("#notificationsInnerContainer").html(output);
+ 		 $(".indicator").css({"display":"none"});
+ 		AttachNotificationEvents();
+  		Waves.displayEffect();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

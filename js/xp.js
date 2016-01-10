@@ -444,6 +444,7 @@ function SaveXPEntry(){
 		         data: {action: "SavePlayedFull", gameid: gameid, quote: quote, tier: tier, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
 		         type: 'post',
 		         success: function(output) {
+		         	GAEvent('XP', 'New Played Full');
 	         		DisplayBattleProgress(output);
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
@@ -464,6 +465,7 @@ function SaveXPEntry(){
 		         data: {action: "SaveWatchedFull", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter  },
 		         type: 'post',
 		         success: function(output) {
+		         	GAEvent('XP', 'New Watched Full');
 	         		DisplayBattleProgress(output);
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
@@ -484,6 +486,7 @@ function SaveXPEntry(){
 		         data: {action: "SavePlayed", gameid: gameid, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
 		         type: 'post',
 		         success: function(output) {
+		         	GAEvent('XP', 'Add Played');
 	         		DisplayBattleProgress(output);
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
@@ -506,6 +509,7 @@ function SaveXPEntry(){
 			         data: {action: "UpdateWatched", subxpid: update, gameid: gameid, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter  },
 			         type: 'post',
 			         success: function(output) {
+			         	GAEvent('XP', 'Update Watched');
 			         	DisplayBattleProgress(output);
 		         		$("#game-myxp-tab").html(output);
 		         		GetGameFAB();
@@ -527,6 +531,7 @@ function SaveXPEntry(){
 			         data: {action: "SaveWatched", gameid: gameid, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter  },
 			         type: 'post',
 			         success: function(output) {
+			         	GAEvent('XP', 'New Watched');
 		         		DisplayBattleProgress(output);
 		         		GetGameFAB();
 			         	window.scrollTo(0, 0);
@@ -548,6 +553,7 @@ function SaveXPEntry(){
 		         data: {action: "SaveTierQuote", gameid: gameid, quote: quote, tier: tier  },
 		         type: 'post',
 		         success: function(output) {
+		         	GAEvent('XP', 'Update Tier-Quote');
 	         		DisplayBattleProgress(output);
 	         		AttachEditEvents();
 					Waves.displayEffect();

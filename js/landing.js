@@ -73,6 +73,13 @@ function ShowLanding(){
 			AnimateLanding();
 			$('select').material_select();
 			$('.tooltipped').tooltip({delay: 30});
+			GAPage('Landing', '/landing');
+            var formStarted = false;
+            $("#signup_username").on('keypress keyup', function (e) {
+                if (formStarted == false) { 
+                    GAEvent('Landing', 'Begin-Signup');
+                } 
+            });
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
