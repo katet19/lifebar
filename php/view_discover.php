@@ -153,30 +153,48 @@ function DisplayGameDiscoverGrid(){
 		?>
     </div>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
-    	<?php $custcat = $cat[1]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
-      		<i class="mdi-content-flag categoryIcon" style="background-color: #2E7D32;"></i>
-    		<?php if($custcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $custcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $custcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $custcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
-      	</div>
-      	<?php 
-      	$i = 0;
-  		while($i < 7){
-			if(isset($custcat[1][$i]))
-  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
-  			$i++;
-		} ?>
-    </div>
+    <?php
+    	$newusers = GetNewUsersCategory(6);
+	if(sizeof($newusers) > 2){ ?>
+	    <div class="col s12 discoverCategory">
+	      	<div class="discoverCategoryHeader" data-category="New Users">
+	      		<i class="mdi-social-people categoryIcon" style="background-color:#2E7D32;"></i>
+	      		New Users
+	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
+	      	</div>
+	    	<?php 
+	      	$count = 1;
+	  		foreach($newusers as $user){
+	  			DisplayUserCard($user, $count, "categoryResults", $connections);
+				$count++; 
+			} ?>
+	    </div>
+    <?php }else{ ?>
+	    <div class="col s12 discoverCategory">
+	    	<?php $custcat = $cat[1]; ?>
+	      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
+	      		<i class="mdi-content-flag categoryIcon" style="background-color: #2E7D32;"></i>
+	    		<?php if($custcat[0]["Description"] != ""){ ?>
+	      		<div class="discoverCatName">
+	      			<?php echo $custcat[0]["Name"]; ?>
+	      			<div class="discoverCatSubName">
+	      				<?php echo $custcat[0]["Description"]; ?>
+	      			</div>
+	  			</div>
+	  			<?php }else{ ?>
+	  				<?php echo $custcat[0]["Name"]; ?>
+	  			<?php } ?>
+	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
+	      	</div>
+	      	<?php 
+	      	$i = 0;
+	  		while($i < 7){
+				if(isset($custcat[1][$i]))
+	  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
+	  			$i++;
+			} ?>
+	    </div>
+    <? } ?>
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory">
     	<?php $custcat = $cat[2]; ?>
@@ -212,6 +230,8 @@ function DisplayDiscoverCategory($category, $catid){
 			DisplayCategoryRecentReleases();
 		else if($category == "Active Personalities")
 			DisplayCategoryActivePersonalities();
+		else if($category == "New Users")
+			DisplayCategoryNewUsers();
 		else if($category == "Trending Games")
 			DisplayCategoryPopularGames();
 		else if($category == "Experienced Users")
@@ -259,7 +279,21 @@ function DisplayCategoryActivePersonalities(){
 	 	<div class="row discover-row CategoryDetailsContainer" >
 	<?php
 	foreach($users as $user){
-		$xps = Get3LatestXPForUser($user->_id);
+		DisplayUserCard($user, $count, "categoryResults", $connections);
+		$count++;
+	}
+	?>
+	</div>
+	<?php
+}
+
+function DisplayCategoryNewUsers(){
+	$users = GetNewUsersCategory(15);
+	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
+	$count = 1;?>
+	 	<div class="row discover-row CategoryDetailsContainer" >
+	<?php
+	foreach($users as $user){
 		DisplayUserCard($user, $count, "categoryResults", $connections);
 		$count++;
 	}
