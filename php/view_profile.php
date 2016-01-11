@@ -671,11 +671,11 @@ function DisplayProfileTierGraph($user){
 
 		?>
 	<canvas class="GraphCriticUsers" style='margin:0.5em 20px 1em' data-t1Y="<?php echo $curryear[0] ;?>" data-t2Y="<?php echo $curryear[1] ;?>" data-t3Y="<?php echo $curryear[2] ;?>" data-t4Y="<?php echo $curryear[3] ;?>" data-t5Y="<?php echo $curryear[4] ;?>"  data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"></canvas>
-	<div class="graphTierBadges">Tier 1</div>
-	<div class="graphTierBadges" style='left:26%;'>Tier 2</div>
+	<div class="graphTierBadges">Tier 5</div>
+	<div class="graphTierBadges" style='left:26%;'>Tier 4</div>
 	<div class="graphTierBadges" style='left:50%;'>Tier 3</div>
-	<div class="graphTierBadges" style='left:72%;'>Tier 4</div>
-	<div class="graphTierBadges" style='left:93%;'>Tier 5</div>
+	<div class="graphTierBadges" style='left:72%;'>Tier 2</div>
+	<div class="graphTierBadges" style='left:93%;'>Tier 1</div>
 	<?php
 }
 
