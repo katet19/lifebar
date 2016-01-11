@@ -692,16 +692,16 @@ function DisplayTierPieChart(){
 			var experiencedUsersGraph = $(this).get(0).getContext("2d");
 			var data = [
 					    {
-					        value: parseInt($(this).attr("data-t1")),
+					        value: parseInt($(this).attr("data-t5")),
 					        color:"#0A67A3",
 					        highlight: "#1398f0",
-					        label: "Tier 1"
+					        label: "Tier 5"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t2")),
+					        value: parseInt($(this).attr("data-t4")),
 					        color:"#00B25C",
 					        highlight: "#00d771",
-					        label: "Tier 2"
+					        label: "Tier 4"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t3")),
@@ -710,16 +710,16 @@ function DisplayTierPieChart(){
 					        label: "Tier 3"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t4")),
+					        value: parseInt($(this).attr("data-t2")),
 					        color:"#FF4100",
 					        highlight: "#ff632f",
-					        label: "Tier 4"
+					        label: "Tier 2"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t5")),
+					        value: parseInt($(this).attr("data-t1")),
 					        color:"#DB0058",
 					        highlight: "#ff247b",
-					        label: "Tier 5"
+					        label: "Tier 1"
 					    }
 		    ];
 	    if($(window).width() >=600){
