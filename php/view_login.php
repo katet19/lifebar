@@ -43,6 +43,9 @@ function DisplayLandingSignup(){
 	?>
   <div>
     <div class="row" style="margin-top:40px">
+    	<div class="col s12">
+    		<div style='font-size: 2em;margin-bottom: 40px;font-weight: 400;'>Sign up for the public alpha to start building your lifebar today!</div>
+    	</div>
 	  <form class="col s12">
 	    <div class="row">
 	      <div class="input-field col s12">
