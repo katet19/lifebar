@@ -467,6 +467,65 @@
 }
 
 /*
+* My Library
+*/
+.mylibrary-total{
+	font-size:6em;
+	width:100%;
+	font-weight:500;
+	margin-top:30px;
+	text-align:center;
+	color:white;
+}
+
+.mylibrary-label{
+	font-weight:400;
+	width:100%;
+	font-size:1.5em;
+	text-align:center;
+	color:white;
+	margin-top: -25px;
+}
+
+.mylibrary-container{
+    width: 75% !important;
+    padding-left: 200px !important;
+    margin-top:45px !important;
+}
+
+.mylibrary-divider{
+    font-size: 2em;
+    font-weight: 300;
+    text-align: left;
+    width: 125px;
+    float: left;
+    display: inline-block;
+    margin: 10px 0;
+    margin-left: -125px;
+}
+
+.mylibrary-vert-line{
+    position: absolute;
+    z-index: 0;
+    border-left: 2px solid #ddd;
+    top: 80px;
+    display: block;
+    height: 100%;
+    left: 160px;
+}
+
+.mylibrary-divider-bullet{
+	border-radius: 50%;
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    background-color: #ddd;
+    left: 157px;
+    margin-top: 30px;
+}
+
+
+/*
 * Abilities
 */
 .ability-container{
@@ -1609,6 +1668,18 @@
 }
 
 @media only screen and (max-width : 600px) {
+	.mylibrary-vert-line, .mylibrary-divider-bullet{
+		display:none;
+	}
+	.mylibrary-container{
+		width: 100% !important;
+	    padding-left: 50px !important;
+	    margin-top: 20px !important;
+	}
+	.mylibrary-divider{
+	    margin-left: -45px;
+		
+	}
 	.gear-container{
 		height:425px !important;
 	}
