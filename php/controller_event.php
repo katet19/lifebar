@@ -76,6 +76,8 @@ function GetMyFeed($userid, $page, $filter){
 			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
 		}
 	}	
+	
+	if($result->num_rows > 0){
 		while($row = mysqli_fetch_array($result)){
 			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
@@ -202,6 +204,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeed[] = $myfeeditem;
 			}
 		}
+	}
 	
 	Close($mysqli, $result);
 	return $myfeed;
