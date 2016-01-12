@@ -508,10 +508,10 @@
     position: absolute;
     z-index: 0;
     border-left: 2px solid #ddd;
-    top: 80px;
+    top: 40px;
     display: block;
     height: 100%;
-    left: 160px;
+    left: 161px;
 }
 
 .mylibrary-divider-bullet{

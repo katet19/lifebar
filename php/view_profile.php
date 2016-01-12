@@ -2061,10 +2061,10 @@ function DisplayMyLibrary($userid, $filter){
 function DisplayMainMyLibrary($userid, $filter){
 	$mylib = GetMyLibrary($userid, $filter, 0);
 	
-	if($filter == 'Alpha'){
+	if($filter == 'Alpha' && sizeof($mylib) > 0){
 		$groupfeed = array();
 		$group = array();
-		$curr_char = "#";
+		$curr_char = "";
 		foreach($mylib as $libitem){
 			$temp_char = substr($libitem[1],0,1);
 			if(!ctype_alpha($temp_char))
@@ -2074,46 +2074,13 @@ function DisplayMainMyLibrary($userid, $filter){
 					$groupfeed[] = $group;
 				$curr_char = $temp_char;
 				unset($group);
+				$group[] = $libitem;
 			}else{
 				$group[] = $libitem;
 			}
 		}
-	}else if($filter == "Experienced"){
-		$curr_date_array = explode(" ", $myfeed[0][0]->_date);
-		$curr_date = $curr_date_array[0];
-		$last_type = "";
-		$groupfeed = array();
-		$group = array();
-		foreach($myfeed as $feeditem){
-			$temp_date_array = explode(" ", $feeditem[0]->_date);
-			$temp_date = $temp_date_array[0];
-			if($temp_date != $curr_date){
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				$curr_date = $temp_date;
-				unset($group);
-				$last_type = "";
-			}
-			
-			if($feeditem[5] == $last_type){
-				if($last_user == $feeditem[0]->_userid){
-					$group[] = $feeditem;
-				}else{
-					if(sizeof($group) > 0)
-						$groupfeed[] = $group;
-					unset($group);
-					$group[] = $feeditem;
-					$last_type = $feeditem[5];
-				}
-			}else{
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				unset($group);
-				$group[] = $feeditem;
-				$last_type = $feeditem[5];
-			}
-		}
 	}
+	
 	//The last group will get missed in the loop
 	if(sizeof($group) > 0)
 		$groupfeed[] = $group;
@@ -2140,8 +2107,9 @@ function DisplayMainMyLibrary($userid, $filter){
 				}
 			}
 		?>
-		<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="51" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>
-		</div>
+		<?php if(sizeof($mylib) == 50){ ?>
+			<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="51" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>
+		<?php } ?>
 		<div class="mylibrary-vert-line"></div>
 	<?php
 }
@@ -2162,6 +2130,7 @@ function DisplayMyLibraryEndless($userid, $page, $current_group, $filter){
 					$groupfeed[] = $group;
 				$curr_char = $temp_char;
 				unset($group);
+				$group[] = $libitem;
 			}else{
 				$group[] = $libitem;
 			}
