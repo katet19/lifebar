@@ -1,16 +1,12 @@
 function ShowUserSettings(){
+	ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
 	$.ajax({ url: '../php/webService.php',
          data: {action: "UserSettings" },
          type: 'post',
          success: function(output) {
-     		$("#universalPopUp").html(output);
-			$("#universalPopUp").openModal();
-		  	$(".closeDetailsModal").unbind();
-		  	$(".closeDetailsModal").on('click', function(){
-		  		$("#universalPopUp").closeModal();
-		  		HideFocus();
-		  	});
+			$("#BattleProgess").html(output); 
             AttachUserSettingEvents();
+            GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -19,12 +15,13 @@ function ShowUserSettings(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
 function AttachUserSettingEvents(){
-    $("#SaveUserSettingsSubmitBtn").on('click', function(){
+    $("#SaveUserSettingsSubmitBtn").on('click', function(e){
+    	e.stopPropagation();
     	UserSettingsValidation();	
     });
     
@@ -75,7 +72,7 @@ function VerifyUserData(username, email){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -87,8 +84,6 @@ function SaveUserSettings(userid, username, password, email, first, last, birthy
          type: 'post',
          success: function(output) {
          	$("#userSettings").find(".validation").hide();
-         	$("#universalPopUp").closeModal();
-		  	HideFocus();
          	Toast("User Settings Saved");
          },
         error: function(x, t, m) {
@@ -98,7 +93,7 @@ function SaveUserSettings(userid, username, password, email, first, last, birthy
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -132,7 +127,7 @@ function FollowUser(followid, elem, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

@@ -36,10 +36,19 @@ function AttachTabLoadingEvents(){
 	  	window.open("http://talk.polygonalweave.com");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
-	  	window.open("http://talk.polygonalweave.com/c/support/polygonal-weave");
+	  	GAEvent('Support', 'Bug Reporting');
+	  	window.open("https://gitreports.com/issue/Lifebario/support ");
+	  });
+  	  $(".supportForumButton").on("click", function(){
+  	  	GAEvent('Support', 'Forum');
+	  	window.open("https://github.com/Lifebar/support");
 	  });
 	  $(".logoContainer").on("click", function(){
-  		ShowLanding();
+	  	if($("#userAccountNav").length > 0){
+			ManuallyNavigateToTab("#profile");
+	  	}else{
+  			ShowLanding();
+	  	}
 	  });
 }
 
@@ -210,11 +219,11 @@ function CheckForNotifications(){
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
-	            ToastError("Server Timeout");
+	            //ToastError("Server Timeout");
 	        } else {
-	            ToastError(t);
+	            //ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }

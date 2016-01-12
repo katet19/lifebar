@@ -1,13 +1,18 @@
 <?php 
 function DisplayNavigation(){
 	DisplayHeaderNavigation();
-} ?>
+}
 
-<?php function DisplayHeaderNavigation(){ ?>
+function DisplayHeaderNavigation(){ ?>
 	<div class="identificationContainer">
 		<div class="mobileContainer" data-activates="slide-out">
 			<div class="mobileNav"><i class="mdi-navigation-menu small" style='color:white'></i></div>
 			<div class="mobileTab"></div>
+		</div>
+		<div class="searchContainerMobile">
+			<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+			<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+			<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 		</div>
 	</div>
 	<div id="navigation-header">
@@ -37,6 +42,7 @@ function DisplayNavigation(){
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							</div>
 						<?php } ?>
+						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
 						<div class="userNotificiations"><i class="mdi-social-notifications-none"></i></div>
 						<div class="userAvatar" style="background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 						<div class="userNameTitle" style="display:none;"><?php $_SESSION['logged-in']->_username; ?> </div>
@@ -47,7 +53,7 @@ function DisplayNavigation(){
 							<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 							<li><a href="#!" class="adminButton">Admin</a></li>
 							<?php } ?>
-							<li><a href="#!" class="supportButton">Support</a></li>
+							<li><a href="#!" class="supportForumButton">Support</a></li>
 							<li><a href="#!" class="signOutButton">Sign out</a></li>
 						  </ul>
 					</div>
@@ -60,9 +66,9 @@ function DisplayNavigation(){
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplaySideDrawer(){ ?>
+function DisplaySideDrawer(){ ?>
   <ul id="slide-out" class="side-nav full">
 	<li class="side-nav-logo" style="display:none">
 		<div class="logoIcon"><img src="http://polygonalweave.com/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
@@ -90,19 +96,19 @@ function DisplayNavigation(){
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 			<li><a href="#!" class="adminButton">Admin</a></li>
 		<?php } ?>
-		<li><a href="#!" class="supportButton">Support</a></li>
+		<li><a href="#!" class="supportForumButton">Support</a></li>
+		<li><a href="#!" class="supportButton">Report Bug</a></li>
 		<li><a href="#!" class="signOutButton">Sign out</a></li>
 	<?php } ?>
   </ul>
-<?php } ?>
+<?php }
 
-<?php function DisplayMobileBackNav(){ ?>
+function DisplayMobileBackNav(){ ?>
 	<div id="MobileBackContainer">
 		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0 2em;font-size: 1.5em;vertical-align: middle;" >Back</a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php 
 function DisplayUniversalPopUp(){ ?>
 	<div id="universalPopUp" class="modal" style="background-color:white;"></div>
 <?php }

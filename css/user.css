@@ -1,6 +1,8 @@
 #userSettings{
 	background-color:white;
 	margin: 1em 0 5em;
+	overflow: auto;
+  height: 100%;
 }
 
 .user-discover-card{

@@ -59,6 +59,7 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id);
 		CreateDefaultFollowingConnections($user->_id);
+		SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -119,6 +120,7 @@ function VerifyUniqueEmail($email){
 	Close($mysqli, $result);
 }
 
+//CreateDefaultFollowingConnections(7);
 function CreateDefaultFollowingConnections($userid){
 	$journalist = array();
 	$mysqli = Connect();
@@ -290,7 +292,7 @@ function GetPublishersJournalistList($PubID){
 function GetConnectedTo($userid){
 	$users = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` order by `Username`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `Username`")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Privacy"] != "Private"){
 				$user= new User($row["Celebrity"], 
@@ -324,7 +326,7 @@ function GetConnectedTo($userid){
 function GetConnectedToList($userid){
 	$users = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` order by `First`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
@@ -481,7 +483,7 @@ function SearchForUser($search){
 	}else{
 		$query = "select * from `Users` where `Username` like '%".$search."%' or (`First` like '%".$search."%' or `Last` like '%".$search."%') order by `First`";
 	}*/
-	$query = "select * from `Users` where `Username` like '%".$search."%' or (`Access` = 'Journalist' and (`First` like '%".$search."%' or `Last` like '%".$search."%')) order by `Username`";
+	$query = "select * from `Users` where `Username` like '%".$search."%' or (`Access` = 'Journalist' and (`First` like '%".$search."%' or `Last` like '%".$search."%' or `First` like '%".$namedivided[0]."%' and `Last` like '%".$namedivided[1]."%')) order by `Username`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Privacy"] != "Private"){
@@ -563,6 +565,19 @@ function GetActivePersonalities(){
 }
 
 
+function GetNewUsersCategory($limit){
+	$users = array();
+	$mysqli = Connect();
+	$thisquarter = date('Y-m-d', strtotime("now -2 days") );
+	if ($result = $mysqli->query("select * from `Users` usr where usr.`Access` != 'Journalist' and usr.`Established` >= '".$thisquarter."' ORDER BY `ID` DESC LIMIT ".$limit)) {
+		while($row = mysqli_fetch_array($result)){
+			$users[] = GetUser($row["ID"]);
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $users;
+}
 
 function GetActiveUsers(){
 	$users = array();

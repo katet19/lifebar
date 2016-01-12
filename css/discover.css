@@ -107,7 +107,8 @@
 
 .game-discover-card .card-content .card-title{
 	font-size: 1em;
-	line-height: 22px;
+	line-height: 25px;
+	position:absolute;
 }
 
 .game-discover-card .card-reveal .card-title{

@@ -1599,11 +1599,7 @@
 	}
 	#recent-bookmarks-card{
 		display:none;
-	}
-	.badge-card-container{
-		height:131px;
-	}
-	
+	}	
 	.profile-this-or-that-container{
 		height:422px;
 	}
@@ -1614,7 +1610,7 @@
 
 @media only screen and (max-width : 600px) {
 	.gear-container{
-		height:auto !important;
+		height:425px !important;
 	}
 	.no-right-padding{
 		padding-right:initial;

@@ -222,7 +222,7 @@ function AddIntroNotifications($userid){
 	$type = "info";
 	$category = "General";
 	$title = "Welcome to Lifebar!";
-	$caption = "A place where you can document all of your gaming experiences whether you watched someone play a game, played it yourself or did both. Combe back here often and review your notifications when you are not sure what to do next.";
+	$caption = "A place where you can document all of your gaming experiences whether you watched someone play a game, played it yourself or did both. Fill out your history of playing gaming and track your present experiences.";
 	$color = "#66BB6A";
 	$icon = "mdi-action-thumb-up";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
@@ -237,65 +237,73 @@ function AddIntroNotifications($userid){
 	$icon = "mdi-content-add-box";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$valueone','$actionone','$color','$icon')");
 	//Experiences
-	$type = "info";
-	$category = "General";
-	$title = "The 3 parts of entering your experiences";
-	$caption = "<ol><li>- A short tweet sized summary of your feelings about your time with the game</li><li>- What Tier the game falls into (Tier 1 being the highest and Tier 5 the lowest)</li><li>- The type of experience, whether it was something you played or watched and its related details</li></ol>";
-	$color = "#66BB6A";
-	$icon = "mdi-image-edit";
-	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
+	//$type = "info";
+	//$category = "General";
+	//$title = "The 3 parts of entering your experiences";
+	//$caption = "<ol><li>- A short tweet sized summary of your feelings about your time with the game</li><li>- What Tier the game falls into (Tier 1 being the highest and Tier 5 the lowest)</li><li>- The type of experience, whether it was something you played or watched and its related details</li></ol>";
+	//$color = "#66BB6A";
+	//$icon = "mdi-image-edit";
+	//$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	//Tier
-	$type = "info";
-	$category = "General";
-	$title = "The Tier System";
-	$caption = "Instead of assigning a score to a game, you do the inverse, you assign a game to a tier. Whenever you place a game into a tier, you should ask yourself, do you agree with the company it finds itself in? While it might be a small distinction, its important!";
-	$color = "#66BB6A";
-	$icon = "mdi-image-filter-1";
-	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
+	//$type = "info";
+	//$category = "General";
+	//$title = "The Tier System";
+	//$caption = "Instead of assigning a score to a game, you do the inverse, you assign a game to a tier. Whenever you place a game into a tier, you should ask yourself, do you agree with the company it finds itself in? While it might be a small distinction, its important!";
+	//$color = "#66BB6A";
+	//$icon = "mdi-image-filter-1";
+	//$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	//Bookmarking
-	$type = "info";
-	$category = "Releases";
-	$title = "Bookmarking games";
-	$caption = "Every game can be bookmarked to signify that you have a vested interest in that game. When looking at a game, go to the action button and click on the bookmark. Now relevant cards, like a release countdown if it has not been released yet, will appear over time for the game you just bookmarked.";
-	$color = "#66BB6A";
-	$icon = "mdi-action-bookmark";
-	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
+	//$type = "info";
+	//$category = "Releases";
+	//$title = "Bookmarking games";
+	//$caption = "Every game can be bookmarked to signify that you have a vested interest in that game. When looking at a game, go to the action button and click on the bookmark. Now relevant cards, like a release countdown if it has not been released yet, will appear over time for the game you just bookmarked.";
+	//$color = "#66BB6A";
+	//$icon = "mdi-action-bookmark";
+	//$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	//Following Critics
-	$type = "link";
-	$category = "Personalities";
-	$title = "Follow popular personalites to keep up with the word on the street";
-	$caption = "After reviews are published online, we collect them and add them to special curated profiles for the critic writing the review. Search for personalities and follow them to add have their most recent reviews and thoughts show up in your Activity feed.";
-	$valueone="Find Critics";
-	$actionone="Method,ShowJournalistConnect()";
-	$color = "#66BB6A";
-	$icon = "mdi-maps-person_pin";
-	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$valueone','$actionone','$color','$icon')");
+	//$type = "link";
+	//$category = "Personalities";
+	//$title = "Follow popular personalites to keep up with the word on the street";
+	//$caption = "After reviews are published online, we collect them and add them to special curated profiles for the critic writing the review. Search for personalities and follow them to add have their most recent reviews and thoughts show up in your Activity feed.";
+	//$valueone="Find Critics";
+	//$actionone="Method,ShowJournalistConnect()";
+	//$color = "#66BB6A";
+	//$icon = "mdi-maps-person_pin";
+	//$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$valueone','$actionone','$color','$icon')");
 	//Archive of reviews
 	$type = "info";
-	$category = "Critics";
+	$category = "General";
 	$title = "An archive of historical reviews";
-	$caption = "While new reviews are always being added, there is also a growing backlog of critic reviews. There are thousands of reviews going back to the 90s already archived with additional being added each day. You can find them by going to a game and viewing the Critics tab or finding the critic who originally reviewed it and browsing their profile.";
+	$caption = "While new reviews are always being added, there is also a growing backlog of critic reviews. There are thousands of reviews going back to the 90s already archived with additional ones being added each day. You can find them by going to a game and viewing the Critics tab or finding the critic who originally reviewed it and browsing their profile.";
 	$color = "#66BB6A";
 	$icon = "mdi-action-description";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	//Similar Games
-	$type = "info";
-	$category = "General";
-	$title = "Suggested games";
-	$caption = "After entering an experience for a game, we check to see if there are other similar games that you might be interested in. If we find any games that are similar, we add a card in the Suggestions category. The next time you are not sure what game to add next, you can stop here and see if we found something that might tickle your fancy.";
-	$color = "#66BB6A";
-	$icon = "mdi-action-class";
-	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
+	//$type = "info";
+	//$category = "General";
+	//$title = "Suggested games";
+	//$caption = "After entering an experience for a game, we check to see if there are other similar games that you might be interested in. If we find any games that are similar, we add a card in the Suggestions category. The next time you are not sure what game to add next, you can stop here and see if we found something that might tickle your fancy.";
+	//$color = "#66BB6A";
+	//$icon = "mdi-action-class";
+	//$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	//Following Users
 	$type = "info";
-	$category = "Users";
+	$category = "General";
 	$title = "Follow your friends!";
-	$caption = "Find your friends and follow them. By following someone, thier most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Users tab.  We have tacken the liberty to have you follow the top 10 current personalities, which you will seee below.  Feel free to unfollow them if you like, but who knows, you may find someone with tastes similar to yours.";
+	$caption = "Find your friends and follow them. By following someone, their most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Users tab. We have taken the liberty to have you follow the top 10 current personalities, which you will see below. Feel free to un-follow them if you like, but who knows, you may find someone with tastes similar to yours.";
 	$valueone="Find Users";
 	$actionone="Trigger,#NavConnections";
 	$color = "#66BB6A";
 	$icon = "mdi-social-group-add";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$valueone','$actionone','$color','$icon')");
+	//Bugs
+	$type = "info";
+	$category = "General";
+	$title = "Early access";
+	$caption = "Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. If you find any bugs or have feedback please click on the bug at the top right and please let us know!";
+	$color = "#66BB6A";
+	$icon = "mdi-action-bug-report";
+	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
 	Close($mysqli, $result);
 	UpdateTotalNew($userid, 10);
 }
@@ -368,7 +376,7 @@ function AddAutoNotificationCard($userid, $criticid){
 	}
 	if(!$cardexists){
 		$type = "criticlink";
-		$category = "Critics";
+		$category = "Users";
 		$coreid = $criticid;
 		$critic = GetUser($criticid);
 		$title = "You are now following ".$critic->_first." ".$critic->_last;

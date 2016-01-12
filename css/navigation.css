@@ -15,6 +15,10 @@
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+.identificationContainer{
+	display:none;
+}
+
 .mainNav, .mainNav .tab{
 	height:60px !important;
 }
@@ -64,6 +68,14 @@
 }
 
 .logoContainer{
+    font-size: 1.5em;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1px;
+    position:relative;
+}
+
+.landinglogoContainer{
     font-size: 1.5em;
     display: inline-block;
     cursor: pointer;
@@ -195,6 +207,15 @@
   position: relative;
 }
 
+.userBug{
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 2em;
+  vertical-align: middle;
+  cursor:pointer;
+  position: relative;
+}
+
 .userPTalkHelp{
   display: inline-block;
   margin-right: 10px;
@@ -247,7 +268,7 @@
 }
 
 
-.searchContainer, .searchContainerAnonymous{
+.searchContainer, .searchContainerAnonymous, .searchContainerMobile{
     background-color: transparent;
     display: inline-block;
     width: 150px;
@@ -308,7 +329,7 @@
 }
 
 .side-nav-logo{
-	padding: 2em 1.25em !important;
+	padding: 0; /*2em 1.25em !important;*/
 }
 
 .side-nav-logo:hover{
@@ -368,6 +389,10 @@
 .backContainer .backButton{
 	font-size: 1.4em;
 	padding: 10px 0 3px 0;
+}
+
+.closeMobileSearch{
+	display:none;
 }
 
 
@@ -448,6 +473,7 @@
 	}
 	.searchInput{
 		display:none;
+	    font-size: 1.2em;
 	}
 	.searchContainer, .searchContainerAnonymous{
 		background-color:transparent;
@@ -455,7 +481,17 @@
 		left:auto;
 		right:1em;
 	}
-	.searchContainer:hover, .searchContainerAnonymous:hover{
+	
+	.searchContainerMobile{
+	    background-color: transparent;
+	    width: auto;
+	    left: auto;
+	    position: absolute;
+	    right: 0;
+	    top: 1.2em;
+	}
+	
+	.searchContainer:hover, .searchContainerAnonymous:hover, .searchContainerMobile:hover{
 		background-color:transparent;
 	}
 	.mobileContainer{
@@ -483,6 +519,10 @@
 		top: 75px;
 	}
 	
+	.backContainer .backButton .small, .backContainer .backButton .backButtonLabel{
+		color:white !important;
+	}
+	
 	.backContainerSideContent{
 		top:0;
 		height:60px;
@@ -490,5 +530,9 @@
 	
 	.backButton{
 		padding: 16px 0 17px 0;
+	}
+	.identificationContainer{
+		height:75px;
+		display:block;
 	}
 }

@@ -512,5 +512,3 @@ function DisplayMilestoneManagement(){ ?>
 <?php
 }
 ?>
-
-

@@ -2,7 +2,7 @@
 function DisplayUserSettings(){
 	?>
 	<div id="userSettings" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
-    <div class="row">
+    <div class="row" style=' margin-top: 1em;'>
 	  <form class="col s12">
 	    <div class="row">
 	      <div class="input-field col s12">
@@ -15,12 +15,12 @@ function DisplayUserSettings(){
   	      <div class="input-field col s12 m12 l6">
 	        <i class="mdi-action-lock prefix"></i>
 	        <input id="settings_password" type="password">
-	        <label for="settings_password">Password</label>
+	        <label for="settings_password">Change Password</label>
 	      </div>
   	      <div class="input-field col s12 m12 l6">
 	        <i class="mdi-action-lock-outline prefix"></i>
 	        <input id="settings_confirm_password" type="password">
-	        <label for="settings_confirm_password">Confirm</label>
+	        <label for="settings_confirm_password">Confirm Change Password</label>
 	      </div>
       	</div>
   	    <div class="row">
@@ -44,18 +44,14 @@ function DisplayUserSettings(){
       	</div>
 	    <div class="row">
 	      <div class="col s12">
-        	<div class="col s3 valign-wrapper">
-        		<div class="user-avatar" style="width:4em;border-radius:50%;margin-left: auto;margin-right: auto;height:4em;background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-        	</div>
-        	<div class="col s9">
-        		This is your current profile image. Go to <a href="http://gravatar.com" target="_blank">Gravatar</a> to personalize your image, it's free and easy to use.
-        	</div>
+        		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: 25px;margin-right: auto;height:90px;text-align:left;display:inline-block;background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	      		<div style='display: inline-block;text-align: left;height: 90px;float: left;margin-left: 50px;margin-top: 50px;margin-right: 25px;'>Change your Profile image at <a href="http://gravatar.com" target="_blank">Gravatar</a></div>
 	      </div>
       	</div>
 	    <div class="row">
 	    	<div class="col s12">
 		    	<div class="row">
-		    		<div class="col s3 m2" style='padding: 1em 0.2em;'>
+		    		<div class="col s1" style='padding: 1em 0.2em;text-align:center;'>
 		    			<i class="mdi-social-cake small"></i>
 		    		</div>
 			    	<div class="col s9 m6">
@@ -72,10 +68,10 @@ function DisplayUserSettings(){
 	    <div class="row">
 	    	<div class="col s12">
 		    	<div class="row">
-		    		<div class="col s3 m2" style='padding: 1em 0.2em;'>
+		    		<div class="col s1" style='padding: 1em 0.2em;text-align:center;'>
 		    			<i class="mdi-action-visibility small"></i>
 		    		</div>
-			    	<div class="col s9 m8">
+			    	<div class="col s9 m6">
 			    	  <label>Default Watched Source</label>
 					  <select id="defaultWatchedSource" class="browser-default">
 						<option  value='Destructoid' <?php if($_SESSION['logged-in']->_defaultwatched == 'Destructoid'){ echo "selected"; $found = true; } ?>>Destructoid</option>

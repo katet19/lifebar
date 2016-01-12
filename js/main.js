@@ -89,12 +89,12 @@ function Toast(msg){
 }
 
 function ToastProgress(msg){
-	toast(msg, 10000);
+	toast(msg, 5000);
 }
 
 
 function ToastError(msg){
-	toast(msg, 120000);
+	toast(msg, 5000);
 }
 
 function ToastRight(msg){
@@ -274,6 +274,23 @@ function getParameterByName(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function GAEvent(category, action){
+	ga('send', {
+	  hitType: 'event',
+	  eventCategory: category,
+	  eventAction: action,
+	  eventLabel: 'Alpha'
+	});
+}
+
+function GAPage(title, page){
+	ga('send', {
+	  hitType: 'pageview',
+	  page: page,
+      title: title
+	});
 }
 
 //Globals

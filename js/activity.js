@@ -21,6 +21,7 @@ function ShowActivityContent(filter){
 				AttachActivityEvents();
 				AttachSecondaryEvents();
       			Waves.displayEffect();
+      			GAPage('Activity - '+filter, '/activity');
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -29,7 +30,7 @@ function ShowActivityContent(filter){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -42,6 +43,7 @@ function RefreshActivity(filter){
      			$(".activity-top-level").html(output);
 				AttachActivityEvents();
       			Waves.displayEffect();
+      			GAPage('Activity - '+filter, '/activity');
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -50,7 +52,7 @@ function RefreshActivity(filter){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -116,6 +118,7 @@ function EndlessLoader(){
 		var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
 		$("#feed-endless-loader").attr("data-date", lastdate);
 		AttachActivityEvents();
+		GAPage('ActivityEndlessLoader - '+filter, '/activity');
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -124,7 +127,7 @@ function EndlessLoader(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 

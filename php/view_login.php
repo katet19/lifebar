@@ -43,6 +43,9 @@ function DisplayLandingSignup(){
 	?>
   <div>
     <div class="row" style="margin-top:40px">
+    	<div class="col s12">
+    		<div style='font-size: 2em;margin-bottom: 40px;font-weight: 400;'>Sign up for the public alpha to start building your lifebar today!</div>
+    	</div>
 	  <form class="col s12">
 	    <div class="row">
 	      <div class="input-field col s12">
@@ -52,16 +55,16 @@ function DisplayLandingSignup(){
 	      </div>
       	</div>
     	<div class="row">
-  	      <div class="input-field col s12 m6">
+  	      <div class="input-field col s12">
 	        <i class="mdi-action-lock prefix"></i>
 	        <input id="signup_password" type="password">
 	        <label for="signup_password">Password</label>
 	      </div>
-  	      <div class="input-field col s12 m6">
+  	      <!--<div class="input-field col s12 m6">
 	        <i class="mdi-action-lock-outline prefix"></i>
 	        <input id="signup_confirm_password" type="password">
 	        <label for="signup_confirm_password">Confirm Password</label>
-	      </div>
+	      </div>-->
       	</div>
   	    <div class="row">
 	      <div class="input-field col s12">
@@ -85,12 +88,13 @@ function DisplayLandingSignup(){
 	    <div class="row">
 	    	<div class="col s6">
 		    	<div class="row">
-		    		<div class="col s3 m1" style='padding: 1em 0.2em;'>
+		    		<div class="col s3 m1" style='padding: 1em 0em;'>
 		    			<i class="mdi-social-cake small"></i>
 		    		</div>
 			    	<div class="col s9 m6">
-			    	  <label>Birth year</label>
-					  <select id="birthyear" class="browser-default">
+			    	  <label style='float:left;font-size:1em;'>Birth Year</label>
+			    	  <div style="float: right;font-size: 0.7em;cursor: default;" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="It's not required, but your birth year is used to provide meaningful graphs and simplify entering your gaming experiences.">Why my birth year?</div>
+					  <select id="birthyear">
 					    <?php for($i = date("Y"); $i > 1930; $i--){ ?>
 					    	<option value="<?php echo $i; ?>" <?php if($i == "1983"){ echo "selected"; } ?>><?php echo $i; ?></option>
 					    <?php } ?>
@@ -99,7 +103,7 @@ function DisplayLandingSignup(){
 				</div>
 			</div>
 		    <div class="col s6" style='text-align: center;font-size: 1.5em;margin-top:1em;'>
-		    	<div class="waves-effect btn-large" id="SignupSubmitBtnLanding" style='font-weight:bold'>Signup</div>
+		    	<div class="waves-effect btn-large" id="SignupSubmitBtnLanding">SIGN UP</div>
 		    </div>
 		    <div class="col s12 validation" style='text-align: center;color:red;display:none;'></div>
       	</div>

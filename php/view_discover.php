@@ -3,9 +3,9 @@
 		<?php DisplayGameDiscoverGrid(); ?>
 	</div>
 	<?php
-} ?>
+}
 
-<?php function DisplayGameDiscoverGrid(){ 
+function DisplayGameDiscoverGrid(){ 
 	$cat = GetDiscoverCategories();
 ?>
  <div class="row discover-row">
@@ -153,30 +153,48 @@
 		?>
     </div>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
-    	<?php $custcat = $cat[1]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
-      		<i class="mdi-content-flag categoryIcon" style="background-color: #2E7D32;"></i>
-    		<?php if($custcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $custcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $custcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $custcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
-      	</div>
-      	<?php 
-      	$i = 0;
-  		while($i < 7){
-			if(isset($custcat[1][$i]))
-  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
-  			$i++;
-		} ?>
-    </div>
+    <?php
+    	$newusers = GetNewUsersCategory(6);
+	if(sizeof($newusers) > 2){ ?>
+	    <div class="col s12 discoverCategory">
+	      	<div class="discoverCategoryHeader" data-category="New Users">
+	      		<i class="mdi-social-people categoryIcon" style="background-color:#2E7D32;"></i>
+	      		New Users
+	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
+	      	</div>
+	    	<?php 
+	      	$count = 1;
+	  		foreach($newusers as $user){
+	  			DisplayUserCard($user, $count, "categoryResults", $connections);
+				$count++; 
+			} ?>
+	    </div>
+    <?php }else{ ?>
+	    <div class="col s12 discoverCategory">
+	    	<?php $custcat = $cat[1]; ?>
+	      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
+	      		<i class="mdi-content-flag categoryIcon" style="background-color: #2E7D32;"></i>
+	    		<?php if($custcat[0]["Description"] != ""){ ?>
+	      		<div class="discoverCatName">
+	      			<?php echo $custcat[0]["Name"]; ?>
+	      			<div class="discoverCatSubName">
+	      				<?php echo $custcat[0]["Description"]; ?>
+	      			</div>
+	  			</div>
+	  			<?php }else{ ?>
+	  				<?php echo $custcat[0]["Name"]; ?>
+	  			<?php } ?>
+	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
+	      	</div>
+	      	<?php 
+	      	$i = 0;
+	  		while($i < 7){
+				if(isset($custcat[1][$i]))
+	  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
+	  			$i++;
+			} ?>
+	    </div>
+    <? } ?>
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory">
     	<?php $custcat = $cat[2]; ?>
@@ -204,14 +222,16 @@
     </div>
 </div>
 		    
-<?php } ?>
+<?php }
 
-<?php function DisplayDiscoverCategory($category, $catid){ 
-		DisplayDiscoverBackNav();
+function DisplayDiscoverCategory($category, $catid){ 
+		DisplayDiscoverBackNav("");
 		if($category == "Recent Releases")
 			DisplayCategoryRecentReleases();
 		else if($category == "Active Personalities")
 			DisplayCategoryActivePersonalities();
+		else if($category == "New Users")
+			DisplayCategoryNewUsers();
 		else if($category == "Trending Games")
 			DisplayCategoryPopularGames();
 		else if($category == "Experienced Users")
@@ -221,9 +241,9 @@
 		else if($category == "Custom Category")
 			DisplayCustomQuery($catid);
 		
-} ?>
+}
 
-<?php function DisplayCategoryRecentReleases(){
+function DisplayCategoryRecentReleases(){
 	$games = RecentlyReleased();
 	$dateGroup = "";
 	$count = 1;
@@ -250,25 +270,39 @@
 	?>
 	</div>
 	<?php
-} ?>
+}
 
-<?php function DisplayCategoryActivePersonalities(){
+function DisplayCategoryActivePersonalities(){
 	$users = GetActivePersonalities();
 	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
 	$count = 1;?>
 	 	<div class="row discover-row CategoryDetailsContainer" >
 	<?php
 	foreach($users as $user){
-		$xps = Get3LatestXPForUser($user->_id);
 		DisplayUserCard($user, $count, "categoryResults", $connections);
 		$count++;
 	}
 	?>
 	</div>
 	<?php
-} ?>
+}
 
-<?php function DisplayCategoryPopularGames(){
+function DisplayCategoryNewUsers(){
+	$users = GetNewUsersCategory(15);
+	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
+	$count = 1;?>
+	 	<div class="row discover-row CategoryDetailsContainer" >
+	<?php
+	foreach($users as $user){
+		DisplayUserCard($user, $count, "categoryResults", $connections);
+		$count++;
+	}
+	?>
+	</div>
+	<?php
+}
+
+function DisplayCategoryPopularGames(){
 	$games = GetTrendingGames();
 	$count = 1;?>
 	 	<div class="row discover-row CategoryDetailsContainer" >
@@ -280,9 +314,9 @@
 	?>
 	</div>
 	<?php
-} ?>
+}
 
-<?php function DisplayCategoryExperienceUsers(){
+function DisplayCategoryExperienceUsers(){
 	$users = GetExperiencedUsers();
 	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
 	$count = 1;?>
@@ -296,9 +330,9 @@
 	</div>
 	<?php
 	
-} ?>
+}
 
-<?php function DisplayCategoryBestExperiences(){
+function DisplayCategoryBestExperiences(){
 	$games = GetBestExperiences();
 	$count = 1;
 	?>
@@ -311,9 +345,9 @@
 	?>
 	</div>
 <?php 	
-} ?>
+}
 
-<?php function DisplayDiscoverNavigation(){ ?>
+function DisplayDiscoverNavigation(){ ?>
 	<div id="discover-header">
 		<div class="row" style='margin:0;'>
 		    <div class="col s12" style="padding:0">
@@ -326,9 +360,8 @@
 	</div>
 <?php
 }
-?>
 
-<?php function DisplaySearchResults($searchstring){
+function DisplaySearchResults($searchstring){
 	$games = SearchForGame($searchstring); 
 	$users = SearchForUser($searchstring);
 	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
@@ -338,7 +371,7 @@
 	?>
 	 <div class="row discover-row searchResultsContainer">
       	<?php foreach($games as $game){ 
-			if($first){ $first = false; ?>
+			if($first && $game->_gbid > 0){ $first = false; ?>
 	        <div class="col s12">
 		      	<div class="searchHeader" style='margin-top:0em;'>
 		      		Games <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($games); ?>)</span>
@@ -346,8 +379,10 @@
 		      	</div>
 	        </div>
 			<?php }
-			DisplayGameCard($game, $count, "gameResults");
-			$count++;
+            if($game->_gbid > 0){
+			 DisplayGameCard($game, $count, "gameResults");
+			 $count++;
+            }
       	} ?>
       	
       	
@@ -380,15 +415,14 @@
   	</div>
 <?php
 } 
-?>
 
-<?php function DisplayDiscoverBackNav($searchstring){ ?>
+function DisplayDiscoverBackNav($searchstring){ ?>
 	<div class="backContainer">
 		<div class="backButton waves-effect"><i class="mdi-navigation-arrow-back small" style="color:rgba(0,0,0,0.7);vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:rgba(0,0,0,0.7);margin: 0;padding: 0 2em;" >Search results <?php if($searchstring != ""){ echo "for '".$searchstring."'"; } ?></a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php function DisplayDiscoverSecondaryContent(){ ?>
+function DisplayDiscoverSecondaryContent(){ ?>
 	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
 	    <div class="row" style="margin-top:40px;">
 	    	<?php if($_SESSION['logged-in']->_id != 0){ ?>
@@ -436,16 +470,15 @@
 	    	</div>-->
 	    </div>
     </div>
-<?php } ?>
+<?php }
 
-
-<?php function DisplayAdvancedSearchBackNav(){ ?>
+function DisplayAdvancedSearchBackNav(){ ?>
 	<div class="backContainerSideContent">
 		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:#474747;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:#474747;margin: 0;padding: 0 2em;" >Advanced Search</a></div>
 	</div>
-<?php }?>
+<?php }
 
-<?php function DisplayAdvancedSearch(){ 
+function DisplayAdvancedSearch(){ 
 	DisplayAdvancedSearchBackNav();
 ?>
 	<div class="row" style="margin-top:5em;">
@@ -512,9 +545,9 @@
     <?php LoadPublishers(); ?>
     <?php LoadDevelopers(); ?>
     <?php LoadGenres(); ?>
-<?php } ?>
+<?php } 
 
-<?php function DisplayAdvancedSearchResults($searchstring, $platform, $year, $publisher, $developer, $genre, $franchise){
+function DisplayAdvancedSearchResults($searchstring, $platform, $year, $publisher, $developer, $genre, $franchise){
 	$games = AdvancedSearchForGame($searchstring, $platform, $year, $publisher, $developer, $genre, $franchise);
 	$first = true; $count = 1;
 	?>
@@ -538,9 +571,8 @@
   	</div>
 <?php
 } 
-?>
 
-<?php function DisplayCustomQuery($id){
+function DisplayCustomQuery($id){
 	$games = CustomDiscoverQuery($id);
 	$count = 1;
 	?>

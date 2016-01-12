@@ -6,14 +6,13 @@ function DisplayMyNotifications($userid){
 		</div>
 		<?php DisplayNotificationSecondaryContent();
 }
-?>
 
-<?php function DisplayNotificationSecondaryContent(){
+function DisplayNotificationSecondaryContent(){
 	$notifications = GetUserNotifications($_SESSION['logged-in']->_id);
 	DisplayNotificationCategories($notifications);
-} ?>
+}
 
-<?php function DisplayNotificationCategories($notifications){ 
+function DisplayNotificationCategories($notifications){ 
 	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
 	
 	foreach($notifications as $notification){
@@ -48,7 +47,7 @@ function DisplayMyNotifications($userid){
 			</div>
 			<div class="col s12">
 				<div class="notification-category-box">
-					<div id="notification-user" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-social-people left"></i> Followers</div>
+					<div id="notification-user" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-social-people left"></i> Connections</div>
 					<div class="notification-category-total"><?php echo $users; ?></div><?php if($newusers > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
 				</div>
 			</div>
@@ -72,9 +71,9 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayNotificationList($notifications){ 
+function DisplayNotificationList($notifications){ 
 	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
 	
 	UpdateLastTimeVisited($_SESSION['logged-in']->_id);
@@ -90,7 +89,7 @@ function DisplayMyNotifications($userid){
 						<li><a href="#!" class="notification-all notificiation-filter-selected" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-notifications">All</a></li>
 						<li><a href="#!" class="notification-general" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-settings">General</a></li>
 						<li><a href="#!" class="notification-agree" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-favorite">1ups</a></li>
-						<li><a href="#!" class="notification-user" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-people">Followers</a></li>
+						<li><a href="#!" class="notification-user" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-people">Connections</a></li>
 						<li><a href="#!" class="notification-critic" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-subject">Reviews</a></li>
 						<li><a href="#!" class="notification-game" style='color:rgba(0,0,0,0.8);' data-icon="mdi-hardware-gamepad">Suggestions</a></li>
 						<li><a href="#!" class="notification-release" style='color:rgba(0,0,0,0.8);' data-icon="mdi-editor-insert-invitation">Releases</a></li>
@@ -116,15 +115,15 @@ function DisplayMyNotifications($userid){
 			} ?>
 		</div>
 	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayGeneralNotification($details, $lastvisit){ ?>
+function DisplayGeneralNotification($details, $lastvisit){ ?>
 		<?php if($details->_type == "info" || $details->_type == "link"){ ?>
 			<div class="notification-card notification-general">
 				<div class="row" style="margin: 10px 0 0;">
 					<div class="col s3 m2">
-						<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-							<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+						<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+							<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
 						</div>
 					</div>
 					<div class="col s9 m10">
@@ -139,15 +138,15 @@ function DisplayMyNotifications($userid){
 				</div>
 			</div>	
 		<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayReleaseNotification($details, $lastvisit){ ?>
+function DisplayReleaseNotification($details, $lastvisit){ ?>
 		<?php if($details->_type == "info"){ ?>
 			<div class="notification-card notification-release">
 				<div class="row" style="margin: 10px 0 0;">
 					<div class="col s3 m2">
-						<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-							<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+						<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+							<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
 						</div>
 					</div>
 					<div class="col s9 m10">
@@ -160,7 +159,7 @@ function DisplayMyNotifications($userid){
 						</div>
 					</div>
 				</div>
-			</div>	
+			</div>		
 		<?php }else if($details->_type == "linkwithbg"){ 
 				if($details->_valtwo == "Release"){
 					$today = new DateTime(date("Y-m-d"));
@@ -200,9 +199,9 @@ function DisplayMyNotifications($userid){
 				</div>
 			</div>
 		<?php } ?>
-<?php } ?>
+<?php } 
 
-<?php function DisplayGameNotification($details, $lastvisit){ 
+function DisplayGameNotification($details, $lastvisit){ 
 	if($details->_type == "gamewithbg"){
 	?>
 	<div class="notification-card notification-game">
@@ -226,8 +225,8 @@ function DisplayMyNotifications($userid){
 		<div class="notification-card notification-game">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-						<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+					<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+						<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
 					</div>
 				</div>
 				<div class="col s9 m10">
@@ -242,15 +241,15 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>	
 	<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayCriticNotification($details, $lastvisit){ ?>
+function DisplayCriticNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info" || $details->_type == "link"){ ?>
 		<div class="notification-card notification-critic">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-						<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+					<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+						<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
 					</div>
 				</div>
 				<div class="col s9 m10">
@@ -263,13 +262,17 @@ function DisplayMyNotifications($userid){
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>	
 	<?php }else if($details->_type == "criticlink"){
-		$user = GetUser($details->_coreid); ?>
+		$user = GetUser($details->_coreid);
+		$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+		$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	?>
 		<div class="notification-card notification-critic">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
 					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+					<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -301,39 +304,43 @@ function DisplayMyNotifications($userid){
 			</div>
 		</div>	
 	<?php } ?>
-<?php } ?>
+<?php }
 
-<?php function DisplayUserNotification($details, $lastvisit){ ?>
+function DisplayUserNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info"){ ?>
-		<div class="notification-card notification-user">
-			<div class="row" style="margin: 10px 0 0;">
-				<div class="col s3 m2">
-					<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-						<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+			<div class="notification-card notification-user">
+				<div class="row" style="margin: 10px 0 0;">
+					<div class="col s3 m2">
+						<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+							<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
+						</div>
+					</div>
+					<div class="col s9 m10">
+						<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
+						<div class="notification-card-game-caption"><?php echo $details->_desc; ?></div>
+						<div class="notification-card-time"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($details->_date); ?> - #connections</div>
+						<?php if($details->_date > $lastvisit){ ?><div class="notification-card-new-label">NEW</div><?php } ?>
+						<div class="notification-card-actions">
+							<div class="notification-card-action btn-flat waves-effect notification-dismiss" data-id="<?php echo $details->_id; ?>">DISMISS</div>
+						</div>
 					</div>
 				</div>
-				<div class="col s9 m10">
-					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
-					<div class="notification-card-game-caption"><?php echo $details->_desc; ?></div>
-					<div class="notification-card-time"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($details->_date); ?> - #review</div>
-					<?php if($details->_date > $lastvisit){ ?><div class="notification-card-new-label">NEW</div><?php } ?>
-					<div class="notification-card-actions">
-						<div class="notification-card-action btn-flat waves-effect notification-dismiss" data-id="<?php echo $details->_id; ?>">DISMISS</div>
-					</div>
-				</div>
-			</div>
-		</div>	
+			</div>	
 	<?php }else if($details->_type == "link"){ 
-		$user = GetUser($details->_coreid); ?>
+		$user = GetUser($details->_coreid); 
+        $conn = GetConnectedToList($_SESSION['logged-in']->_id);
+		$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+        ?>
 		<div class="notification-card notification-user">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
 					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+                    <?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
 					<div class="notification-card-game-caption"><?php echo $details->_desc; ?></div>
-					<div class="notification-card-time"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($details->_date); ?> - #review</div>
+					<div class="notification-card-time"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($details->_date); ?> - #connections</div>
 					<?php if($details->_date > $lastvisit){ ?><div class="notification-card-new-label">NEW</div><?php } ?>
 					<div class="notification-card-actions">
 						<div class="notification-card-action btn-flat waves-effect notification-dismiss" data-id="<?php echo $details->_id; ?>">DISMISS</div>
@@ -341,16 +348,38 @@ function DisplayMyNotifications($userid){
 				</div>
 			</div>
 		</div>	
-	<?php } ?>
-<?php } ?>
+	<?php }else if($details->_type == "criticlink"){
+		$user = GetUser($details->_coreid);
+		$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+		$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	?>
+		<div class="notification-card notification-user">
+			<div class="row" style="margin: 10px 0 0;">
+				<div class="col s3 m2">
+					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+					<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+				</div>
+				<div class="col s9 m10">
+					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
+					<div class="notification-card-game-caption"><?php echo $details->_desc; ?></div>
+					<div class="notification-card-time"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($details->_date); ?> - #connections</div>
+					<?php if($details->_date > $lastvisit){ ?><div class="notification-card-new-label">NEW</div><?php } ?>
+					<div class="notification-card-actions">
+						<div class="notification-card-action btn-flat waves-effect notification-dismiss" data-id="<?php echo $details->_id; ?>">DISMISS</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php }
+}
 
-<?php function DisplayAgreeNotification($details, $lastvisit){ ?>
+function DisplayAgreeNotification($details, $lastvisit){ ?>
 	<?php if($details->_type == "info"){ ?>
 		<div class="notification-card notification-agree">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="notification-card-icon" style="color:<?php echo $details->_color; ?>;">
-						<i class="<?php echo $details->_icon; ?>" style='line-height: 90px;'> </i>
+					<div class="notification-card-icon" style="background-color:<?php echo $details->_color; ?>;color:white;font-size:70px;height:100px;border-radius:10px;">
+						<i class="<?php echo $details->_icon; ?>" style='line-height: 100px;'> </i>
 					</div>
 				</div>
 				<div class="col s9 m10">

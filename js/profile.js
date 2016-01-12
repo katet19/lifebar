@@ -37,6 +37,10 @@ function ShowUserContent(userid, mine, browserNav){
 				AttachFloatingIconWeaveButtonEvents();
 	 	 		if(browserNav)
  	 				GLOBAL_HASH_REDIRECT = "";
+  				if(!mine)
+  					GAPage('Profile', '/profile/'+name);
+  				else
+  					GAPage('Profile', '/profile/personal/'+name);
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -45,7 +49,7 @@ function ShowUserContent(userid, mine, browserNav){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -168,7 +172,7 @@ function DisplayTracking(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -193,7 +197,7 @@ function DisplayLeadership(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -214,7 +218,7 @@ function DisplayCharisma(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -239,7 +243,7 @@ function DisplaySpy(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -270,7 +274,7 @@ function DisplayAbilitiesViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -296,7 +300,7 @@ function DisplayKnowledgeViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -322,7 +326,7 @@ function DisplayKnowledgeDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -356,7 +360,7 @@ function DisplayGearViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -382,7 +386,7 @@ function DisplayGearDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 }
@@ -412,7 +416,7 @@ function DisplayBestViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -438,7 +442,7 @@ function DisplayDeveloperViewMore(userid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -465,7 +469,7 @@ function DisplayDeveloperDetails(userid, objectid, progressid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -594,7 +598,7 @@ function AttachFloatingIconWeaveButtonEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 	});
 	$(".user-set-title").on("click", function(){
@@ -615,7 +619,7 @@ function AttachFloatingIconWeaveButtonEvents(){
 				            ToastError(t);
 				        }
 			    	},
-			    	timeout:30000
+			    	timeout:45000
 				});
 			});
 	});
@@ -660,7 +664,7 @@ function FollowUserFromFab(followid, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -678,7 +682,7 @@ function UnfollowUserFromFab(followid, name){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -688,16 +692,16 @@ function DisplayTierPieChart(){
 			var experiencedUsersGraph = $(this).get(0).getContext("2d");
 			var data = [
 					    {
-					        value: parseInt($(this).attr("data-t1")),
+					        value: parseInt($(this).attr("data-t5")),
 					        color:"#0A67A3",
 					        highlight: "#1398f0",
-					        label: "Tier 1"
+					        label: "Tier 5"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t2")),
+					        value: parseInt($(this).attr("data-t4")),
 					        color:"#00B25C",
 					        highlight: "#00d771",
-					        label: "Tier 2"
+					        label: "Tier 4"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t3")),
@@ -706,16 +710,16 @@ function DisplayTierPieChart(){
 					        label: "Tier 3"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t4")),
+					        value: parseInt($(this).attr("data-t2")),
 					        color:"#FF4100",
 					        highlight: "#ff632f",
-					        label: "Tier 4"
+					        label: "Tier 2"
 					    },
 					     {
-					        value: parseInt($(this).attr("data-t5")),
+					        value: parseInt($(this).attr("data-t1")),
 					        color:"#DB0058",
 					        highlight: "#ff247b",
-					        label: "Tier 5"
+					        label: "Tier 1"
 					    }
 		    ];
 	    if($(window).width() >=600){
@@ -743,7 +747,7 @@ function DisplayCriticGraph(){
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
-		            data: [$(this).attr("data-t1"), $(this).attr("data-t2"), $(this).attr("data-t3"), $(this).attr("data-t4"), $(this).attr("data-t5")]
+		            data: [$(this).attr("data-t5"), $(this).attr("data-t4"), $(this).attr("data-t3"), $(this).attr("data-t2"), $(this).attr("data-t1")]
 		        }
 		    ]
 		};

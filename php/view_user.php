@@ -3,7 +3,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 ?>
-   <div class="col s6 m3 l2">
+   <div class="col <?php if($count == -1){ echo "s6 m5 l4"; }else{ echo "s6 m3 l2"; } ?>" >
       <div class="card user-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-id="<?php echo $user->_id; ?>" >
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
@@ -20,9 +20,8 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         </div>
       </div>
   </div>
-<?php } ?>
+<?php }
 
-<?php
 function DisplayCriticQuoteCard($exp){ 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
@@ -33,8 +32,6 @@ function DisplayCriticQuoteCard($exp){
 	$hiddenusername = '';
 	if($user->_security == "Journalist")
 		 $hiddenusername = $user->_first." ".$user->_last;
-	else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
-		$hiddenusername = $user->_first." ".$user->_last; 
 	else
 		$hiddenusername = $user->_username;
 ?>
@@ -65,9 +62,9 @@ function DisplayCriticQuoteCard($exp){
 			<?php } ?>
 		</div>
   	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayUserQuoteCard($exp){
+function DisplayUserQuoteCard($exp){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
@@ -77,8 +74,6 @@ function DisplayCriticQuoteCard($exp){
 	$hiddenusername = '';
 	if($user->_security == "Journalist")
 		 $hiddenusername = $user->_first." ".$user->_last;
-	else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
-		$hiddenusername = $user->_first." ".$user->_last; 
 	else
 		$hiddenusername = $user->_username;
 ?>
@@ -127,9 +122,9 @@ function DisplayCriticQuoteCard($exp){
 			<?php } ?>
 		</div>
   	</div>
-<?php } ?>
+<?php }
 
-<?php function DisplayGlobalLatestXP(){ 
+function DisplayGlobalLatestXP(){ 
 	$exps = GetGlobalLatestXP();
 	$count = 1;
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
@@ -142,8 +137,6 @@ function DisplayCriticQuoteCard($exp){
 		$hiddenusername = '';
 		if($user->_security == "Journalist")
 			 $hiddenusername = $user->_first." ".$user->_last;
-		else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
-			$hiddenusername = $user->_first." ".$user->_last; 
 		else
 			$hiddenusername = $user->_username;
 		?>
@@ -314,5 +307,3 @@ function BuildWatchedSentence($exp){
 }
 
 ?>
-	 
-	 

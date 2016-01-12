@@ -6,17 +6,18 @@ function InitializeDiscover(){
 }
 
 function AttachSearchEvents(){
-	$(".SearchBtn").on('click', function(e){ 
+	$(".SearchBtn").on('click', function(e){
+		var parent = $(this).parent();
 		e.stopPropagation(); 
-		if($(".searchInput").is(":visible"))
-			Search($(".searchInput input").val());
+		if(parent.find(".searchInput").is(":visible"))
+			Search(parent.find(".searchInput input").val());
 		else
-			DisplayMobileSearch();
+			OpenSearch();
 	});
 	$(".searchInput input").on('keypress keyup', function (e) {
 		if (e.keyCode === 13) { 
 			e.stopPropagation(); 	
-			Search($(".searchInput input").val());
+			Search($(this).val());
 		} 
 		
 	});
@@ -64,6 +65,7 @@ function Search(searchstring){
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
  			});
+ 			GAPage('Search', '/search');
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -72,11 +74,11 @@ function Search(searchstring){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function FilterCategories(){
@@ -173,33 +175,48 @@ function FilterResults(){
 	}
 }
 
-function DisplayMobileSearch(){
+function OpenSearch(){
 	if($(window).width() >= 993){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"40%", "background-color" : "rgba(255,255,255,0.2)"});
-	}else{
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"200px", "background-color" : "rgba(255,255,255,0.2)"});
+	}else if($(window).width() >= 600){
+		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"200px", "background-color" : "rgba(255,255,255,0.2)"});
 		$(".userAccountNavButton").hide();
 		$(".userAvatar").hide();
-		//$(".logoContainer").parent().hide();
-		//$(".mainNav").parent().hide();
-		//$(".userContainer").parent().css({"width":"100%"});
+	}else{
+		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
+		$(".mobileTab, .mobileNav").hide();
+		$(".searchInput").css({"left":"3em"});
+		$(".closeMobileSearch").show();
+		$(".closeMobileSearch").on('click', function(e){
+			e.stopPropagation();
+			CloseSearch();
+		});
+		$(".searchInput").on('click', function(e){
+			e.stopPropagation();
+		});
 	}
 	$(".searchInput").css({"display":"inline-block"});
 	$(".searchInput input").focus();
 	$(".loginContainer").hide();
 	$('html').on('click', function(){
-		HideMobileSearch();	
+		CloseSearch();	
 	});
 }
 
-function HideMobileSearch(){
+function CloseSearch(){
 	if($(window).width() >= 993){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"150px", "background-color" : ""});
-	}else{
+	}else if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"100px", "background-color" : ""});
 		$(".userAccountNavButton").show();
 		$(".userAvatar").show();
 		//$(".userContainer").parent().css({"width":"25%"});
+	}else{
+		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
+		$(".mobileTab, .mobileNav").show();
+		$(".searchInput").css({"left":"1em"});
+		$(".closeMobileSearch").hide();
+		$(".searchInput input").val("");
 	}
 	$(".searchInput").css({"display":""});
 	$(".loginContainer").show();
@@ -230,6 +247,7 @@ function ShowDiscoverHome(){
  				AttachDiscoverHomeEvents();
  				AttachDiscoverSecondaryEvents();
       			Waves.displayEffect();
+      			GAPage('Discover', '/discover');
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -238,7 +256,7 @@ function ShowDiscoverHome(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -297,7 +315,7 @@ function ShowAdvancedSearch(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -348,6 +366,7 @@ function AttachDiscoverHomeEvents(){
 	 			DisplayGraphs();
 	 			AttachDiscoverSecondaryEvents();
 	  			Waves.displayEffect();
+	  			GAPage('Discover - '+customName, '/discover/'+customName);
 	     	},
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -356,11 +375,11 @@ function AttachDiscoverHomeEvents(){
 		            ToastError(t);
 		        }
 	    	},
-	    	timeout:30000
+	    	timeout:45000
 		});
 		
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-			HideMobileSearch();
+			CloseSearch();
 	});
 }
 
@@ -455,6 +474,7 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
  			});
   			Waves.displayEffect();
   			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
+  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -463,11 +483,11 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function CustomCategory(categoryid){
@@ -500,11 +520,11 @@ function CustomCategory(categoryid){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 	if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
-		HideMobileSearch();
+		CloseSearch();
 }
 
 function AdvancedSearchFilterEvents(){

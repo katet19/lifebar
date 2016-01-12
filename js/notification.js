@@ -5,14 +5,25 @@ function ShowNotificationsHome(){
 function ShowNotificationMainContent(){
 	$("#notifications").css({"display":"block"});
   	ShowLoader($("#notificationsInnerContainer"), 'big', "<br><br><br>");
+    var windowWidth = $(window).width();
+    $("#notifications").css({"display":"inline-block", "left": -windowWidth});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").css({"display":"none"});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#notifications").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+  	
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayNotificationHome" },
      type: 'post',
      success: function(output) {
-     			$("#notificationsInnerContainer").html(output);
-     			 $(".indicator").css({"display":"none"});
-     			AttachNotificationEvents();
-      			Waves.displayEffect();
+     	if($(".notifications-new-badge").length > 0)
+     		GAPage('Notifications', '/notifications/new');
+     	else
+     		GAPage('Notifications', '/notifications/old');
+     		
+ 		$("#notificationsInnerContainer").html(output);
+ 		 $(".indicator").css({"display":"none"});
+ 		AttachNotificationEvents();
+  		Waves.displayEffect();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -21,7 +32,7 @@ function ShowNotificationMainContent(){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 }
 
@@ -42,6 +53,11 @@ function AttachNotificationEvents(){
 		if($("#notification-header-nav").is(":visible"))
 			$("#notification-header-nav").hide(250);
 	});
+	$(".user-avatar").unbind();
+  	$(".user-avatar").on("click", function(e){
+    	e.stopPropagation();
+ 		ShowUserPreviewCard($(this).parent().find(".user-preview-card"));
+ 	});
 	$("#notification-header-nav li a").on('click', function(e){
 		e.stopPropagation();
 		$(".notificiation-filter-selected").removeClass("notificiation-filter-selected");
@@ -98,7 +114,7 @@ function DismissNotification(notificationid, notification){
 	            ToastError(t);
 	        }
     	},
-    	timeout:30000
+    	timeout:45000
 	});
 	
 }

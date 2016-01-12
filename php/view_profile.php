@@ -73,28 +73,30 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 			</div>
 		</div>
 		
-		<!-- Abilities -->
-		<div class="col s12 m6 l8 no-right-padding">
-			<div class="row" style='margin-bottom:0'>
-				<div class="profile-card badge-card-container col s12 z-depth-1 ability-critic-height" style="height:170px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
-					<?php DisplayAbilitiesCritic($userid); ?>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Knowledge -->
-		<div class="col s12 m6 l8 no-right-padding">
-			<div class="row">
-				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:260px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
-					<?php $total = DisplayKnowledgeHighlightsCritic($userid); ?>
-					<?php if($total > 6){ ?>
-						<div class="badge-card-container-view-more knowledge-view-more">View More</div>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
+		<!-- Abilities, Knowledge -->
+        <div class="col s12 m6 l8 no-right-padding" style="padding-right: 0;">
+            <div class="row">
+        		<div class="col s12 no-right-padding">
+        			<div class="row" style='margin-bottom:0'>
+        				<div class="profile-card badge-card-container col s12 z-depth-1 ability-critic-height" style="height:170px;">
+        					<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
+        					<?php DisplayAbilitiesCritic($userid); ?>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="col s12 no-right-padding">
+        			<div class="row">
+        				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:260px;">
+        					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
+        					<?php $total = DisplayKnowledgeHighlightsCritic($userid); ?>
+        					<?php if($total > 6){ ?>
+        						<div class="badge-card-container-view-more knowledge-view-more">View More</div>
+        					<?php } ?>
+        				</div>
+        			</div>
+        		</div>
+            </div>
+        </div>
 		
 		<!-- Checkpoints -->
 		<div class="col s12 m12 l3">
@@ -110,11 +112,11 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l9">
 			<div class="row" style='margin-bottom: 0;'>
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:550px;">
-					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Best</div>
+					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Favorites</div>
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
-				<div class="col s12 m12 l12" style="padding-left:0 !important;">
+				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style='height: 508px;'>
 							<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
@@ -238,7 +240,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		</div>
 		
 		<!-- Knowledge -->
-		<div class="col s12 m6 l5 no-right-padding">
+		<div class="col s12 m12 l5 no-right-padding">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
 					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
@@ -272,11 +274,11 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l9">
 			<div class="row" style='margin-bottom: 0;'>
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:550px;">
-					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Best</div>
+					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Favorites</div>
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
 				</div>
-				<div class="col s12 m12 l12" style="padding-left:0 !important;">
+				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:508px;">
 							<div class="badge-card-container-header" style="height:initial;width:100%;">Upcoming Quests <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Upcoming Quests are games that have been bookmarked but haven't been released yet"><i class="mdi-action-info"></i></span></div>
@@ -669,11 +671,11 @@ function DisplayProfileTierGraph($user){
 
 		?>
 	<canvas class="GraphCriticUsers" style='margin:0.5em 20px 1em' data-t1Y="<?php echo $curryear[0] ;?>" data-t2Y="<?php echo $curryear[1] ;?>" data-t3Y="<?php echo $curryear[2] ;?>" data-t4Y="<?php echo $curryear[3] ;?>" data-t5Y="<?php echo $curryear[4] ;?>"  data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"></canvas>
-	<div class="graphTierBadges">Tier 1</div>
-	<div class="graphTierBadges" style='left:26%;'>Tier 2</div>
+	<div class="graphTierBadges">Tier 5</div>
+	<div class="graphTierBadges" style='left:26%;'>Tier 4</div>
 	<div class="graphTierBadges" style='left:50%;'>Tier 3</div>
-	<div class="graphTierBadges" style='left:72%;'>Tier 4</div>
-	<div class="graphTierBadges" style='left:93%;'>Tier 5</div>
+	<div class="graphTierBadges" style='left:72%;'>Tier 2</div>
+	<div class="graphTierBadges" style='left:93%;'>Tier 1</div>
 	<?php
 }
 
@@ -782,13 +784,13 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 	if($newuser){
 		?>
 		<div class="newprofile-overlay-container">
-			<div class="newprofile-header" style='margin: 20px 0px 35px 47px;'>Best</div>
+			<div class="newprofile-header" style='margin: 20px 0px 35px 47px;'>Favorites</div>
 			<div class="newprofile-skills"> 
 				<div class="newprofile-leftside">
 				All of your favorite experiences will be showcased for others to get a better idea of what you like.
 				</div>
 				<div class="newprofile-skills-list newprofile-rightside">
-					<div class="newprofile-sub-header" style='margin-top:0;'>Top Experiences:</div>
+					<div class="newprofile-sub-header" style='margin-top:0;'>Favorite Experiences:</div>
 					<ol>
 						<li class="newprofile-best-item" data-id="1539"><?php echo "Half-life 2";?></li>
 						<li class="newprofile-best-item" data-id="36989"><?php echo "The Last of Us";?></li>
@@ -819,8 +821,6 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 			$hiddenusername = '';
 			if($user->_security == "Journalist")
 				 $hiddenusername = $user->_first." ".$user->_last;
-			else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
-				$hiddenusername = $user->_first." ".$user->_last; 
 			else
 				$hiddenusername = $user->_username;	
 			
@@ -978,9 +978,9 @@ function DisplayUserProfileGameCard($game, $quote, $tier, $played, $watched, $li
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php } 
 
-<?php function DisplayUpcomingQuests($userid){
+function DisplayUpcomingQuests($userid){
 	$xps = GetAnticipatedGames($userid, 4);
 	$newuser = false;
 	if(sizeof($xps) == 0 ){
@@ -1045,9 +1045,9 @@ function DisplayUserProfileGameCard($game, $quote, $tier, $played, $watched, $li
 		  </div>
 	<?php
 	}
-} ?>
+} 
 
-<?php function DisplayEquipXP($gameid, $showtitle){
+function DisplayEquipXP($gameid, $showtitle){
 	$user = GetUser($_SESSION['logged-in']->_id);
 	$equip1 = $user->_weave->_preferredXP;
 	$equip2 = $user->_weave->_subpreferredXP1;
@@ -1339,7 +1339,7 @@ function DisplayKnowledge($knowledge, $size){
 		$percentage = round(($progress / $max) * 100);
 		?>
 		<div class="col <?php if($size == "relative"){ echo "s4"; }else{ echo "knowledge-fixed"; } ?>">
-			<div class="knowledge-container" data-progid="<?php echo $knowledge->_progress->_id; ?>" data-id="<?php echo $knowledge->_id; ?>" data-objectid="<?php echo $knowledge->_objectid; ?>">
+			<div class="knowledge-container" <?php if($size == "fixed"){ echo "style='margin-bottom: 28px;'"; } ?> data-progid="<?php echo $knowledge->_progress->_id; ?>" data-id="<?php echo $knowledge->_id; ?>" data-objectid="<?php echo $knowledge->_objectid; ?>">
 				<?php if($knowledge->_image == ""){ ?>
 					<div class="knowledge-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
 				<?php }else{ ?>
@@ -1797,7 +1797,7 @@ function DisplayBest($userid){
 	$user = GetUser($userid);
 	$name = "";
 	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
-	DisplayBackButton($name."'s Best");
+	DisplayBackButton($name."'s Favorites");
 	?>
 	<div class="row" style='margin-top:4em;text-align:left;'>
 		<div class="col s12">
