@@ -401,7 +401,7 @@ function CalculateLifetimeGraph($userid){
 
 function GetLastestXPForUser($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' and `Event` = 'ADDED' order by eve.`Date` DESC, eve.`GameID` limit 0,6")) {
+	if ($result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' and (`Event` = 'ADDED' or `Event` = 'FINISHED' or `Event` = 'TIERCHANGED') order by eve.`Date` DESC, eve.`GameID` limit 0,6")) {
 		while($row = mysqli_fetch_array($result)){
 			$event = new Event($row["ID"],
 				$row["UserID"],
