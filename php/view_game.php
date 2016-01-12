@@ -228,7 +228,7 @@ function DisplayGameInfo($game){	?>
 	</div>
 	<div class="row">
 		<div class="col s12" style='text-align:left;'>
-			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANTBOMB</a></div>
+			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
 		</div>
 	</div>
 </div>
@@ -275,7 +275,7 @@ function DisplayGameInfo($game){	?>
 		</div>
 		<div class="row">
 			<div class="col s12">
-				<div class="btn-flat"><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANTBOMB</a></div>
+				<div class="btn-flat"><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
 			</div>
 		</div>
 	</div>
