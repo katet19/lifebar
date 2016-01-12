@@ -420,6 +420,8 @@ function ShowEditWatched($exp, $watchid){
 function ShowTierGraphSelection($exp){
 	$tiertally = GetTierBreakdownLight($_SESSION['logged-in']->_id, $exp->_game->_year);
 	$total = $tiertally[0];
+	if($total == "")
+		$total = 0;
 	$t1 = $tiertally[1];
 	$t2 = $tiertally[2];
 	$t3 = $tiertally[3];
@@ -447,6 +449,9 @@ function ShowTierGraphSelection($exp){
 	else
 		$relativeT5 = 0;
 	?>
+	<div style="float: left; margin-left: 4rem; font-weight: 500;margin-bottom: 15px;">
+		<?php if($total == 0){ echo "Best"; } ?>
+	</div>
 	<div class="myxp-GraphBarContainer firsttier" data-total="<?php echo $total; ?>">
 		<div data-tier="1" data-count="<?php echo $t1; ?>" class="myxp-GraphLabel btn-flat waves-effect waves-light <?php if($exp->_tier == 1){ echo "myxp-selected-tier tier1BG"; }?>"><i class="mdi-content-add left" style='vertical-align: sub;font-size: 1em;'></i>Tier 1</div>
 		<div class="myxp-GraphBar tier1BG" style="width:<?php echo $relativeT1; ?>%;"></div>
@@ -466,6 +471,9 @@ function ShowTierGraphSelection($exp){
 	<div class="myxp-GraphBarContainer">
 		<div data-tier="5" data-count="<?php echo $t5; ?>" class="myxp-GraphLabel btn-flat waves-effect waves-light <?php if($exp->_tier == 5){ echo "myxp-selected-tier tier5BG"; }?>"><i class="mdi-content-add left" style='vertical-align: sub;font-size: 1em;'></i>Tier 5</div>
 		<div class="myxp-GraphBar tier5BG" style="width:<?php echo $relativeT5; ?>%;"></div>
+	</div>
+	<div style="float: left; margin-left: 4rem; font-weight: 500;">
+		<?php if($total == 0){ echo "Worst"; } ?>
 	</div>
 	<?php
 }
