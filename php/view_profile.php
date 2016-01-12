@@ -2102,7 +2102,7 @@ function DisplayMainMyLibrary($userid, $filter){
 							FeedDivider($temp_char, $filter);
 							$curr_char = $temp_char;
 						}
-						DisplaySmallGameCard(GetExperienceForUserComplete($userid, $libitem[0]));
+						DisplayGameInList(GetExperienceForUserComplete($userid, $libitem[0]));
 					}
 				}
 			}
@@ -2154,7 +2154,7 @@ function DisplayMyLibraryEndless($userid, $page, $current_group, $filter){
 					FeedDivider($temp_char, $filter);
 					$curr_char = $temp_char;
 				}
-				DisplaySmallGameCard(GetExperienceForUserComplete($userid, $libitem[0]));
+				DisplayGameInList(GetExperienceForUserComplete($userid, $libitem[0]));
 			}
 		}
 	}

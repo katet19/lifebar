@@ -430,6 +430,18 @@ function DisplaySmallGameCard($xp){
       </div>
 <?php }
 
+function DisplayGameInList($xp){
+	$game = $xp->_game; ?>
+	<div class="col s12">
+	      <div class="card card-game-small" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" style='background-color:white;'>
+	        <div class="card-image-list" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	        <div class="card-game-tier-vert tier<?php echo $xp->_tier; ?>BG"></div>
+	        <div class="card-game-list-title"><?php echo $game->_title; ?></div>
+	        <div class="card-game-list-details"><?php echo $game->_year; ?></div>
+	      </div>
+      </div>
+<?php }
+
 function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview){
 	$game = $xp->_game;?>
 	<div class="col s6 m4 l3">
