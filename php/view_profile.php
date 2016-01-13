@@ -2047,7 +2047,7 @@ function DisplayMyLibrary($userid, $filter){
 			<?php 
 				$name = "";
 				if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
-				DisplayBackButton($name."'s Library");
+				DisplayBackButton($name."'s Inventory");
 				DisplayMainMyLibrary($userid, $filter);
 			?>
 		</div>
