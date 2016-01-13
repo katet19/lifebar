@@ -97,5 +97,26 @@ class SubExperience
 		
 }
 
+class LibraryExperience
+{
+	public $_gameid;
+	public $_title;
+	public $_image;
+	public $_gbid;
+	public $_tier;
+	public $_year;
+	public $_experienced;
+
+	function __construct($gameid, $gbid, $title, $image, $tier, $year, $experienced){
+		$this->_gameid = $gameid;
+		$this->_gbid = $gbid;
+		$this->_title = $title;
+		$this->_image = $image;
+		$this->_tier = $tier;
+		$this->_year = $year;
+		$this->_experienced = $experienced;
+		
+	}
+}
 
 ?>

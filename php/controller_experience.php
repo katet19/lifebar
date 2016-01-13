@@ -1505,17 +1505,8 @@ function GetMyLibraryCount($userid){
 }
 
 function GetMyLibrary($userid, $filter, $pos){
-	if($pos == "")
-		$pos = 0;
 	$mysqli = Connect();
-	if($filter == "Alpha")
-		$query = "select `GameID`, `Title`, `Year` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID` order by `Title` limit ".$pos.", 50";
-	else if($filter == "Release")
-		$query = "select `GameID`, `Title`, `Year` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID` order by `Released` DESC limit ".$pos.", 50";
-	else if($filter == "Experienced")
-		$query = "select `GameID` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID`  order by `ExperienceDate` DESC limit ".$pos.", 50";
-	else
-		$query = "select `GameID`, `Title`, `Year` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID` order by `Title` limit ".$pos.", 50";
+	$query = "select `GameID`, `Title`, `Year`, `ExperienceDate`, `ImageSmall`, `GBID`, `Tier`, `ImageLarge` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID` order by `Title`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			unset($game);
@@ -1523,6 +1514,12 @@ function GetMyLibrary($userid, $filter, $pos){
 			$game[] = $row["Title"];
 			$game[] = $row["Year"];
 			$game[] = $row["ExperienceDate"];
+			if($row["ImageSmall"] != "")
+				$game[] = $row["ImageSmall"];
+			else
+				$game[] = $row["ImageLarge"];
+			$game[] = $row["GBID"];
+			$game[] = $row['Tier'];
 			$mylib[] = $game;
 		}
 	}

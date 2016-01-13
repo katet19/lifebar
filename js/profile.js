@@ -164,7 +164,7 @@ function EndlessMyLibraryLoader(userid){
      success: function(output) {
 		$("#mylibrary-endless-loader").before(output);
 		$("#mylibrary-endless-loader").html("");
-		$("#mylibrary-endless-loader").attr("data-page", parseInt(page) + 50);
+		$("#mylibrary-endless-loader").attr("data-page", parseInt(page) + 100);
 		var lastdate = $("#mylibrary-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
 		$("#mylibrary-endless-loader").attr("data-date", lastdate);
 		AttachMyLibraryEvents(userid);
@@ -331,7 +331,7 @@ function DisplayMyLibrary(userid){
 }
 
 function AttachMyLibraryEvents(userid){
- 	$(".card-game-small").on("click", function(e){
+ 	$(".card-game-list").on("click", function(e){
  		e.stopPropagation();
   		var game = $(this).attr("data-gbid");
  		ShowGame(game, $("#profile"));
@@ -346,6 +346,25 @@ function AttachMyLibraryEvents(userid){
 	  			EndlessMyLibraryLoader(userid);
 	 	}
 	 });
+ 	$('.mylib-tier').change(function() {
+		if(this.checked){
+			MyLibraryToggleTier(true, $(this).attr("data-tier"));
+		}else{
+			MyLibraryToggleTier(false, $(this).attr("data-tier"));
+		}
+ 	});
+}
+
+function MyLibraryToggleTier(display, tier){
+	$(".game-list-item").each( function(e){
+		var tempTier = $(this).attr("data-tier");
+		if(tier == tempTier){
+			if(display)
+				$(this).show();
+			else
+				$(this).hide();
+		}
+	});
 }
 
 function DisplayKnowledgeViewMore(userid){

@@ -430,14 +430,15 @@ function DisplaySmallGameCard($xp){
       </div>
 <?php }
 
-function DisplayGameInList($xp){
-	$game = $xp->_game; ?>
-	<div class="col s12">
-	      <div class="card card-game-small" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" style='background-color:white;'>
-	        <div class="card-image-list" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-	        <div class="card-game-tier-vert tier<?php echo $xp->_tier; ?>BG"></div>
-	        <div class="card-game-list-title"><?php echo $game->_title; ?></div>
-	        <div class="card-game-list-details"><?php echo $game->_year; ?></div>
+function DisplayGameInList($libraryxp){ ?>
+	<div class="col s12 game-list-item" data-tier='<?php echo $libraryxp->_tier; ?>' data-year='<?php echo $libraryxp->_year; ?>' data-title="<?php echo $libraryxp->_title; ?>" >
+	      <div class="card card-game-list" data-gameid="<?php echo $libraryxp->_gameid; ?>" data-gbid="<?php echo $libraryxp->_gbid; ?>" style='background-color:white;'>
+	        <div class="card-image-list" style="width:100%;background:url(<?php echo $libraryxp->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	        <div class="card-game-tier-vert tier<?php echo $libraryxp->_tier; ?>BG"></div>
+	        <div class="card-game-list-title">
+	        	<?php echo $libraryxp->_title; ?> 
+	        	<div class="card-game-list-details"><?php if($libraryxp->_year > 0){ echo $libraryxp->_year; } ?></div>
+        	</div>
 	      </div>
       </div>
 <?php }

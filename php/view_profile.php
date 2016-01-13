@@ -2066,7 +2066,7 @@ function DisplayMainMyLibrary($userid, $filter){
 		$group = array();
 		$curr_char = "";
 		foreach($mylib as $libitem){
-			$temp_char = substr($libitem[1],0,1);
+			$temp_char = strtoupper(substr($libitem[1],0,1));
 			if(!ctype_alpha($temp_char))
 					$temp_char = "#";
 			if($temp_char != $curr_char){
@@ -2089,27 +2089,28 @@ function DisplayMainMyLibrary($userid, $filter){
 		<div class="col s12 mylibrary-container" style='position: relative;'> 
 		<?php
 			if($filter == "Alpha"){
-				$curr_char = substr($groupfeed[0][0][1],0,1);
+				$curr_char = strtoupper(substr($groupfeed[0][0][1],0,1));
 				if(!ctype_alpha($curr_char))
 					$curr_char = "#";
 				FeedDivider($curr_char, $filter);
 				foreach($groupfeed as $groupitem){
 					foreach($groupitem as $libitem){
-						$temp_char = substr($libitem[1],0,1);
+						$temp_char = strtoupper(substr($libitem[1],0,1));
 						if(!ctype_alpha($temp_char))
 							$temp_char = "#";
 						if($temp_char != $curr_char){
 							FeedDivider($temp_char, $filter);
 							$curr_char = $temp_char;
 						}
-						DisplayGameInList(GetExperienceForUserComplete($userid, $libitem[0]));
+						$libxp = new LibraryExperience($libitem[0], $libitem[5], $libitem[1], $libitem[4], $libitem[6], $libitem[2], $libitem[3]);
+						DisplayGameInList($libxp);
 					}
 				}
 			}
 		?>
-		<?php if(sizeof($mylib) == 50){ ?>
-			<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="51" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>
-		<?php } ?>
+		<?php /*if(sizeof($mylib) == 100){ ?>
+			<!--<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="101" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>-->
+		<?php } */ ?>
 		<div class="mylibrary-vert-line"></div>
 	<?php
 }
@@ -2187,14 +2188,33 @@ function DisplayMyLibrarySecondaryContent($userid){ ?>
 			</div>
 			<div class="col s12">
 				<div class="activity-category-box">
-			  	    <div id="activity-people-i-follow" class="activity-category-selector activity-category-selected" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-social-people left"></i>Alphabetical</div>
+			  	    <div id="activity-filter-label" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-content-filter-list left"></i>Library Filter</div>
 				</div>
 			</div>
-			<!--<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-only-users-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Users I Follow"><i class="mdi-social-people-outline left"></i>Only Users I Follow</div>
-				</div>
-			</div>-->
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="1" id="tier1" checked />
+				<label for="tier1">Tier 1</label>
+			</div>
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="2" id="tier2" checked />
+				<label for="tier2">Tier 2</label>
+			</div>
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="3" id="tier3" checked />
+				<label for="tier3">Tier 3</label>
+			</div>
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="4" id="tier4" checked />
+				<label for="tier4">Tier 4</label>
+			</div>
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="5" id="tier5" checked />
+				<label for="tier5">Tier 5</label>
+			</div>
+			<div style="display:block;margin:15px;float:left;">
+			    <input class='mylib-tier' type="checkbox" data-tier="0" id="tier0" checked />
+				<label for="tier0">Tier ?</label>
+			</div>
 		</div>
 	</div>
 <?php 
