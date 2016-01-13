@@ -909,7 +909,7 @@ function DisplayMyLibraryChicklet($userid){
 		$total = GetMyLibraryCount($userid);
 		?>
 	<div class="profile-card badge-card-container col s12 z-depth-1  waves-effect waves-block mylibrary" style="height:303px;background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">My Library</div>
+		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">My Inventory</div>
 		<div class="mylibrary-total"><?php echo $total; ?></div>
 		<div class="mylibrary-label">games</div>
 	</div>
@@ -2184,11 +2184,11 @@ function DisplayMyLibrarySecondaryContent($userid){ ?>
 	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
 		<div class="row activity-secondary-content" style='margin-top: 6em;'>
 			<div class="col s12">
-				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Library Sort</div>
+				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Inventory Sort</div>
 			</div>
 			<div class="col s12">
 				<div class="activity-category-box">
-			  	    <div id="activity-filter-label" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-content-filter-list left"></i>Library Filter</div>
+			  	    <div id="activity-filter-label" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-content-filter-list left"></i>Inventory Filter</div>
 				</div>
 			</div>
 			<div style="display:block;margin:15px;float:left;">
