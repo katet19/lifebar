@@ -1491,6 +1491,43 @@ function GetExperiencedList($userid){
 	return $exp;
 }
 
+function GetMyLibraryCount($userid){
+	$total = 0;
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select count(*) as cnt from `Experiences` where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes')")) {
+		while($row = mysqli_fetch_array($result)){
+			$total = $row["cnt"];
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $total;
+}
+
+function GetMyLibrary($userid, $filter, $pos){
+	$mysqli = Connect();
+	$query = "select `GameID`, `Title`, `Year`, `ExperienceDate`, `ImageSmall`, `GBID`, `Tier`, `ImageLarge` from `Experiences` e, `Games` g where `UserID` = '".$userid."' and (`Tier` > 0 or `Owned` = 'Yes' or `BucketList` = 'Yes') and g.`ID` = e.`GameID` order by `Title`";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			unset($game);
+			$game[] = $row["GameID"];
+			$game[] = $row["Title"];
+			$game[] = $row["Year"];
+			$game[] = $row["ExperienceDate"];
+			if($row["ImageSmall"] != "")
+				$game[] = $row["ImageSmall"];
+			else
+				$game[] = $row["ImageLarge"];
+			$game[] = $row["GBID"];
+			$game[] = $row['Tier'];
+			$mylib[] = $game;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $mylib;
+}
+
 
 function GetSubExperiences($userid, $gameid, $type){
 	$sexp = array();

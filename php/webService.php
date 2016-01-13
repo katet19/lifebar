@@ -45,6 +45,13 @@
 			else
 				DisplayMilestonesTree($_SESSION['logged-in']->_id);
 		}
+		if($_POST['action'] == "DisplayMyLibrary"){
+			DisplayMyLibrary($_POST["userid"], $_POST["filter"]);
+		}
+		if($_POST['action'] == "DisplayMyLibraryEndless"){
+			DisplayMyLibraryEndless($_POST["userid"], $_POST["page"], $_POST["group"], $_POST["filter"]);
+		}
+		
 	}
 	
 	

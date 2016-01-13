@@ -167,8 +167,8 @@ function ShowMyGameFAB($gameid){
     	  	<li><span class="GameHiddenActionLabel">Remove bookmark</span><a class="btn-floating grey darken-1 game-remove-bookmark-btn" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Bookmark this game</span><a class="btn-floating red darken-4 game-add-bookmark-btn" <?php if($myxp->_bucketlist == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	
-	      	<li><span class="GameHiddenActionLabel">Remove from owned games</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
-	      	<li><span class="GameHiddenActionLabel">Add to owned games</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Don't save for later</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Save for later</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
 	      	<?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
 	      	<li><span class="GameHiddenActionLabelBigFab">Add a watched XP</span><a class="btn-floating game-add-watched-btn" style='width: 55.5px; height: 55.5px;'><i class="mdi-action-visibility" style='line-height: 55.5px;font-size: 1.6rem;'></i></a></li>
 	      	<?php } ?>
@@ -426,6 +426,19 @@ function DisplaySmallGameCard($xp){
 	        <div class="card-image-small" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        	<div class="card-game-small-title tier<?php echo $xp->_tier; ?>BG"><?php echo $game->_title; ?></div>
 	        </div>
+	      </div>
+      </div>
+<?php }
+
+function DisplayGameInList($libraryxp){ ?>
+	<div class="col s12 game-list-item" data-tier='<?php echo $libraryxp->_tier; ?>' data-year='<?php echo $libraryxp->_year; ?>' data-title="<?php echo $libraryxp->_title; ?>" >
+	      <div class="card card-game-list" data-gameid="<?php echo $libraryxp->_gameid; ?>" data-gbid="<?php echo $libraryxp->_gbid; ?>" style='background-color:white;'>
+	        <div class="card-image-list" style="width:100%;background:url(<?php echo $libraryxp->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	        <div class="card-game-tier-vert tier<?php echo $libraryxp->_tier; ?>BG"></div>
+	        <div class="card-game-list-title">
+	        	<?php echo $libraryxp->_title; ?> 
+	        	<div class="card-game-list-details"><?php if($libraryxp->_year > 0){ echo $libraryxp->_year; } ?></div>
+        	</div>
 	      </div>
       </div>
 <?php }
