@@ -12,12 +12,14 @@ require_once 'php/model_weave.php';
 $GLOBALS["AllowNewUsers"] = false; 
 $GLOBALS["DownForMaintenance"] = false; 
 session_save_path('php/temp/');
-//error_reporting(E_ERROR | E_PARSE);
 ini_set('session.gc_maxlifetime', 60*60); // 1 hour
 ini_set('session.gc_probability', 1);
 ini_set('session.gc_divisor', 100);
 ini_set('session.cookie_secure', FALSE);
 ini_set('session.use_only_cookies', TRUE);
+//ini_set("log_errors" , "1");
+//ini_set("error_log" , "php/Errors.log.txt");
+//ini_set("display_errors" , "0");
 session_start();
 require_once 'php/webService.php';
 require_once 'php/controller_database.php';
@@ -45,6 +47,9 @@ require_once 'php/controller_giantbomb.php';
 require_once 'php/controller_notifications.php';
 require_once 'php/controller_profile.php';
 require_once 'php/controller_user.php';
+//Errors
+require_once 'php/error_handler.php';
+set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING); 
 //Views
 require_once 'php/view_admin.php';
 require_once 'php/view_activity.php';
