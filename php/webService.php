@@ -1,5 +1,4 @@
 <?php require_once 'includes.php';
-	
 	if(isset($_POST['action'])){
 		LoginServices();
 		SignupServices();
@@ -14,8 +13,6 @@
 		MilestoneServices();
 		GeneralServices();
 	}
-	
-	
 	function MilestoneServices(){
 		if($_POST['action'] == 'SaveBadge' ){
 			if(TestScript($_POST["validation"])){
@@ -53,8 +50,6 @@
 		}
 		
 	}
-	
-	
 	function WeaveServices(){
 		if($_POST['action'] == 'DisplayWeave' ){
 			DisplayWeave($_POST["userid"]);
@@ -111,8 +106,6 @@
 			DisplayDevelopervViewMore($_POST['userid']);
 		}
 	}
-	
-
 	function AdminServices(){
 		if($_POST['action'] == 'DisplayAdmin' ){
 			DisplayAdmin($_SESSION['logged-in']->_id);
@@ -170,7 +163,6 @@
 			DisplayMilestoneManagement();
 		}
 	}
-	
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){
 			DisplayActivity($_SESSION['logged-in']->_id, $_POST['filter']);
@@ -182,7 +174,6 @@
 			DisplayActivityEndless($_SESSION['logged-in']->_id, $_POST['page'], $_POST['date'], $_POST['filter']);
 		}
 	}
-	
 	function NotificationServices(){
 		if($_POST['action'] == 'DisplayNotificationHome' ){
 			DisplayMyNotifications($_SESSION['logged-in']->_id);
@@ -194,7 +185,6 @@
 			CheckForAsyncNotifications();
 		}
 	}
-	
 	function XPServices(){
 		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['expid']) && $_SESSION['logged-in']->_id > 0){
 			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['expid']);
@@ -283,7 +273,6 @@
 			DisplayMyXP($_POST['gameid']);
 		}
 	}
-	
 	function GameServices(){
 		if($_POST['action'] == 'DisplayGame' && isset($_POST['gbid'])){
 			DisplayGame($_POST['gbid']);
@@ -307,7 +296,6 @@
 			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
 		}
 	}
-	
 	function UserServices(){
 		if($_POST['action'] == 'FollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){
 			AddConnection($_SESSION['logged-in']->_id, $_POST['followid']);
@@ -325,7 +313,6 @@
 			SaveUserTitle($_POST['userid'], $_POST['title']);
 		}
 	}
-	
 	function DiscoverServices(){
 		if($_POST['action'] == 'Search' && isset($_POST['search'])){
 			DisplaySearchResults($_POST['search']);
@@ -349,7 +336,6 @@
 			DisplayDiscoverCategory($_POST['category'], $_POST['catid']);
 		}
 	}
-	
 	function SignupServices(){
 		if($_POST['action'] == 'VerifyNewUser' && isset($_POST['username']) && isset($_POST['email'])){
 			VerifyUniqueUsername($_POST['username']);
@@ -359,7 +345,6 @@
 			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear']."-01-01","Public");
 		}
 	}
-
 	function LoginServices(){
 		if($_POST['action'] == 'Login' && isset($_POST['user']) && isset($_POST['pw']))
 			Login($_POST['user'], $_POST['pw']);	
@@ -377,7 +362,6 @@
 			ShowLanding();
 		}
 	}
-	
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){
 			if($_SESSION['logged-in']->_security == "Admin"){
@@ -385,5 +369,4 @@
 			}
 		}
 	}
-	
 ?>
