@@ -9,15 +9,16 @@ function AttachSearchEvents(){
 	$(".SearchBtn").on('click', function(e){
 		var parent = $(this).parent();
 		e.stopPropagation(); 
-		if(parent.find(".searchInput").is(":visible"))
+		if(parent.find(".searchInput").is(":visible") && $(this).val() !== "")
 			Search(parent.find(".searchInput input").val());
 		else
 			OpenSearch();
 	});
 	$(".searchInput input").on('keypress keyup', function (e) {
 		if (e.keyCode === 13) { 
-			e.stopPropagation(); 	
-			Search($(this).val());
+			e.stopPropagation(); 
+			if($(this).val() !== "")
+				Search($(this).val());
 		} 
 		
 	});
@@ -191,11 +192,11 @@ function OpenSearch(){
 			e.stopPropagation();
 			CloseSearch();
 		});
-		$(".searchInput").on('click', function(e){
-			e.stopPropagation();
-		});
 	}
 	$(".searchInput").css({"display":"inline-block"});
+	$(".searchInput").on('click', function(e){
+		e.stopPropagation();
+	});
 	$(".searchInput input").focus();
 	$(".loginContainer").hide();
 	$('html').on('click', function(){
