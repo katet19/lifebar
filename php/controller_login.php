@@ -134,7 +134,7 @@ function GetOAuthConfig(){
 	$googlearray = array();
 	$keys = array();
 	
-	$config["base_url"] = "http://material.polygonalweave.com/php/library/Hybrid";
+	$config["base_url"] = "http://lifebar.io/php/library/Hybrid";
 	
 	//Google
 	unset($keys);

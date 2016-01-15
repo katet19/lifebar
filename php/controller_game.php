@@ -912,8 +912,7 @@ function GetDevelopers(){
 
 function MarkGameReviewed($gameid, $year){
 	$mysqli = Connect();
-	//$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://polygonalweave.com/Images/".$year."/".$gameid.".jpg', `ImageSmall` = 'http://polygonalweave.com/Images/".$year."/".$gameid."s.jpg' where `ID` = '".$gameid."'");
-	$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://polygonalweave.com/Images/".$year."/".$gameid.".jpg' where `ID` = '".$gameid."'");
+	$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://lifebar.io/Images/".$year."/".$gameid.".jpg' where `ID` = '".$gameid."'");
 	Close($mysqli, $result);
 }
 

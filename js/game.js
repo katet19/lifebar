@@ -153,7 +153,7 @@ function AttachGameEvents(currentTab){
  	});
  	
  	$(".ptalk-link-games").on("click", function(){
- 		window.open("http://talk.polygonalweave.com/c/games");
+ 		window.open("http://tidbits.io/c/games");
  	});
  	
  	AttachFloatingIconEvent(iconOnHover);
@@ -277,7 +277,7 @@ function AttachFloatingIconButtonEvents(){
 		RequestUpdateFromGiantBomb($(this).attr("data-gameid"));	
 	});
 	$(".game-add-image-btn").on('click', function(){
-		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://polygonalweave.com/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
 	$(".fab-login").on('click', function(){

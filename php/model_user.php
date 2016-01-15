@@ -49,10 +49,10 @@ class User
 		
 		//Image Handling
 		if($security == "Journalist"){
-			$filepath = "http://polygonalweave.com/Images/CriticAvatars/".$id.".png";
+			$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".png";
 			$filepathtest = "../Images/CriticAvatars/".$id.".png";
 			if(!file_exists($filepathtest)){
-				$filepath = "http://polygonalweave.com/Images/CriticAvatars/".$id.".jpg";
+				$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".jpg";
 				$filepathtest = "../Images/CriticAvatars/".$id.".jpg";
 			}
 		}
@@ -64,10 +64,10 @@ class User
 			
 		
 		if($security == "Journalist"){
-			$filepathT = "http://polygonalweave.com/Images/CriticAvatars/".$id."s.png";
+			$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.png";
 			$filepathtestT = "../Images/CriticAvatars/".$id."s.png";
 			if(!file_exists($filepathtestT)){
-				$filepathT = "http://polygonalweave.com/Images/CriticAvatars/".$id."s.jpg";
+				$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.jpg";
 				$filepathtestT = "../Images/CriticAvatars/".$id."s.jpg";
 			}
 		}
