@@ -1,8 +1,21 @@
 <?php
 function Connect(){
-	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave") or die('Error: '.mysql_error());
-	if($mysqli->connect_error) 
-     		die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
+	if($mysqli->connect_error){ 
+		usleep(50);
+		$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
+		if($mysqli->connect_error){ 
+			usleep(50);
+			$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
+			if($mysqli->connect_error){ 
+				usleep(400);
+				$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
+				if($mysqli->connect_error){ 
+					die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+				}
+			}
+		}
+	}
      		
 	return $mysqli;
 }
