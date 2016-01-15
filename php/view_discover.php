@@ -352,7 +352,7 @@ function DisplayDiscoverNavigation(){ ?>
 		<div class="row" style='margin:0;'>
 		    <div class="col s12" style="padding:0">
 		      <ul class="tabs">
-  		        <li class="tab col s6"><a href="#gameContainer" id='gameContainerTab' class="active"><img src="http://polygonalweave.com/Images/Generic/played.png" style='width: 1.75em;margin-top: 0.75em;'></a></li>
+  		        <li class="tab col s6"><a href="#gameContainer" id='gameContainerTab' class="active"><img src="http://lifebar.io/Images/Generic/played.png" style='width: 1.75em;margin-top: 0.75em;'></a></li>
 		        <li class="tab col s6"><a href="#peopleContainer" id='peopleContainerTab'><i class="mdi-social-people small"></i></a></li>
 		      </ul>
 			</div>

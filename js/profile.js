@@ -665,11 +665,11 @@ function AttachFabHoverEvent(){
 
 function AttachFloatingIconWeaveButtonEvents(){
 	$(".user-add-small-image-btn").on('click', function(){
-		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://polygonalweave.com/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
 	$(".user-add-large-image-btn").on('click', function(){
-		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://polygonalweave.com/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);
 	});
 	$(".user-run-weave-cal-btn").on('click', function(){

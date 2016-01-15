@@ -33,7 +33,7 @@ function AttachTabLoadingEvents(){
 	  	ManuallyNavigateToTab("#notifications");
 	  });
 	  $(".userPTalk").on("click", function(){
-	  	window.open("http://talk.polygonalweave.com");
+	  	window.open("http://tidbits.io/");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
 	  	GAEvent('Support', 'Bug Reporting');

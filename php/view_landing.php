@@ -206,7 +206,7 @@
 function DisplayLifeBarLogoLanding($showtag){ ?>
 	<div class="landinglogoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
-			<img src='http://polygonalweave.com/Images/Generic/LifebarLogoTestTopDull.png' />
+			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
 			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
 		</div>
 	</div>
@@ -338,7 +338,7 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 <!-- Third Row -->
 <div class="row" style="margin-bottom: 30px;">
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(http://polygonalweave.com/Images/CriticAvatars/82s.png) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(http://lifebar.io/Images/CriticAvatars/82s.png) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		</div>
 		<div class="feed-activity-icon-col">
 									<div class="feed-activity-icon-xp" style="background-color:#2196F3;"><i class="mdi-action-subject"></i></div>

@@ -332,7 +332,7 @@ function GetPlatformMilestone($userid, $platform){
 function GetPlatformGames($platformid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = "select * from `Sub-Experiences` e where e.`PlatformIDs` like '%".$platformid."%' and e.`Type` = 'Played' and e.`UserID` = '".$userid."' and e.`Archived` = 'No'";
+	$query = "select * from `Sub-Experiences` e where (e.`PlatformIDs` = '".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid."' OR e.`PlatformIDs` LIKE '%".$platformid.",%' OR e.`PlatformIDs` LIKE '".$platformid.",%') and e.`Type` = 'Played' and e.`UserID` = '".$userid."' and e.`Archived` = 'No'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$xp = GetExperienceForUserComplete($userid, $row['GameID']);

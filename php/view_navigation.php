@@ -71,7 +71,7 @@ function DisplayHeaderNavigation(){ ?>
 function DisplaySideDrawer(){ ?>
   <ul id="slide-out" class="side-nav full">
 	<li class="side-nav-logo" style="display:none">
-		<div class="logoIcon"><img src="http://polygonalweave.com/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
+		<div class="logoIcon"><img src="http://lifebar.io/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
 		<div class="logoTitle">Save Game</div>
   	</li>
   	<li class="side-nav-logo">
@@ -126,7 +126,7 @@ function DisplayBattleProgressSheet(){ ?>
 function DisplayLifeBarLogo($showtag){ ?>
 	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
-			<img src='http://polygonalweave.com/Images/Generic/LifebarLogoTestTopDull.png' />
+			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
 			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
 		</div>
 	</div>

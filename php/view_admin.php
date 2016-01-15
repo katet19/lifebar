@@ -423,7 +423,7 @@ function DisplayNewMilestoneForm(){ ?>
 					        </div>
 					        <div class='col s10 m8' style="margin-top:2em;">
 					        	<b>Image:</b>
-					        	<input value='http://polygonalweave.com/Images/Badges/PASTENAMEHERE.jpg' type="text" name='badge_custom_image' id='badge_custom_image' />
+					        	<input value='http://lifebar.io/Images/Badges/PASTENAMEHERE.jpg' type="text" name='badge_custom_image' id='badge_custom_image' />
 					        </div>
 				          	<div class='col s2 m4'>
 				          		<div class='btn badge-file-upload' style='margin-top: 4em;'><i class="mdi-file-file-upload small"></i></div>	
