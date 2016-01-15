@@ -9,7 +9,7 @@
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
-<link rel="shortcut icon" href="http://polygonalweave.com/fav.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/deployed.css" rel="stylesheet" type="text/css" />
 </head>
