@@ -244,7 +244,7 @@ function GetKnowledgeGames($knowledgeid, $userid){
 	$query = "select * from `Game_Franchises` f, `Games` g where f.`FranchiseID` = '".$knowledgeid."' and g.`GBID` = f.`GBID`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID']);
+			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
 			if($xp->_id == ""){
 				$user = GetUser($userid);
 				$experience = new Experience(-1,
@@ -253,7 +253,7 @@ function GetKnowledgeGames($knowledgeid, $userid){
 					$user->_username,
 					$userid,
 					$row["ID"],
-					GetGame($row["ID"]),
+					GetGame($row["ID"], $mysqli),
 					0,
 					'',
 					'',
@@ -335,7 +335,7 @@ function GetPlatformGames($platformid, $userid){
 	$query = "select * from `Sub-Experiences` e where (e.`PlatformIDs` = '".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid.",%' OR e.`PlatformIDs` LIKE '".$platformid.",%') and e.`Type` = 'Played' and e.`UserID` = '".$userid."' and e.`Archived` = 'No'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['GameID']);
+			$xp = GetExperienceForUserComplete($userid, $row['GameID'], $mysqli);
 			$myxp[] = $xp;
 		}
 	}
@@ -418,7 +418,7 @@ function GetDeveloperGames($devid, $userid){
 	$query = "select * from `Game_Developers` f, `Games` g where f.`DeveloperID` = '".$devid."' and g.`GBID` = f.`GBID`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID']);
+			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
 			if($xp->_id == ""){
 				$user = GetUser($userid);
 				$experience = new Experience(-1,
@@ -427,7 +427,7 @@ function GetDeveloperGames($devid, $userid){
 					$user->_username,
 					$userid,
 					$row["ID"],
-					GetGame($row["ID"]),
+					GetGame($row["ID"], $mysqli),
 					0,
 					'',
 					'',
@@ -455,7 +455,7 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 	}
 	
 	if($gameid > 0){
-		$game = GetGame($gameid);
+		$game = GetGame($gameid, $mysqli);
 		$gamemeta = GetGameMetaDataIDs($game->_gbid);
 		$objectchecks = "and (";
 		$objectarray = array();

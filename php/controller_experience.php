@@ -42,8 +42,8 @@ function GetGlobalLatestXP(){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select `UserID`, `GameID`, `DateEntered` from `Sub-Experiences` ORDER BY `DateEntered` DESC, `UserID` LIMIT 0,8")){
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
-			$user = GetUser($row['UserID']);
+			$game = GetGame($row["GameID"], $mysqli);
+			$user = GetUser($row['UserID'], $mysqli);
 			if($lastuser != $row['UserID']){
 				$lastuser = $row['UserID'];
 				if ($result2 = $mysqli->query("select * from `Experiences` where `UserID` = '".$row['UserID']."' and `GameID` = '".$row['GameID']."' ")){
@@ -427,7 +427,7 @@ function GetPopularFilterBy($filter){
 	if ($result = $mysqli->query("select *, Count(`GameID`) as TotalRows from `Sub-Experiences` exp where ".$filter)) {
 		$user = GetUser($userid);
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 			$totalcount[] = $row["TotalRows"];
 		}
 	}
@@ -446,25 +446,25 @@ function GetPopularGamesData(){
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `Type` LIKE  'Played' and `Date` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 1")) {
 		$user = GetUser($userid);
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `Type` LIKE  'Watched' and `Date` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 1")) {
 		$user = GetUser($userid);
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `Type` LIKE  'Played' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 1")) {
 		$user = GetUser($userid);
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `Type` LIKE  'Watched' GROUP BY `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 1")) {
 		$user = GetUser($userid);
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -478,7 +478,7 @@ function GetTrendingGamesCategory(){
 	$thisquarter = date('Y-m-d', strtotime("now -30 days") );
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 6")) {
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -502,7 +502,7 @@ function GetTrendingGames(){
 	}
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 10")) {
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -527,7 +527,7 @@ function GetTrendingGamesLandingPage(){
 	//echo "select *, (".$tier1Query.") as tier1, (".$tier2Query.") as tier2, (".$tier3Query.") as tier3, (".$tier4Query.") as tier4, (".$tier5Query.") as tier5 from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 10";
 	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 6")) {
 		while($row = mysqli_fetch_array($result)){
-			$games[] = GetGame($row["GameID"]);
+			$games[] = GetGame($row["GameID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -632,7 +632,7 @@ function GetAnticipatedGames($userid, $limit){
 	$now = date('Y-m-d');
 	if ($result = $mysqli->query("select * from `Experiences` exp, `Games` g where `UserID` = '".$userid."' and exp.`GameID` = g.`ID` and g.`Released` > '".$now."' and exp.`BucketList` = 'Yes' ORDER BY g.`Released` ASC LIMIT 0,".$limit)) {
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
+			$game = GetGame($row["GameID"], $mysqli);
 			
 			$experience = new Experience($row["ID"],
 						$user->_first,
@@ -647,9 +647,9 @@ function GetAnticipatedGames($userid, $limit){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -664,7 +664,7 @@ function GetAnticipatedGamesAbilities($userid, $limit){
 	$now = date('Y-m-d');
 	if ($result = $mysqli->query("select * from `Experiences` exp, `Games` g where `UserID` = '".$userid."' and exp.`GameID` = g.`ID` and (g.`Released` > '".$now."' or g.`Year` = '0') and exp.`BucketList` = 'Yes' ORDER BY g.`Released` DESC LIMIT 0,".$limit)) {
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
+			$game = GetGame($row["GameID"], $mysqli);
 			
 			$experience = new Experience($row["ID"],
 						$user->_first,
@@ -679,9 +679,9 @@ function GetAnticipatedGamesAbilities($userid, $limit){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -697,7 +697,7 @@ function GetAnticipatedGamesThisYear($userid, $limit){
 	$year = date('Y');
 	if ($result = $mysqli->query("select * from `Experiences` exp, `Games` g where `UserID` = '".$userid."' and exp.`GameID` = g.`ID` and g.`Released` < '".$now."' and g.`Year` = '".$year."' and exp.`BucketList` = 'Yes' ORDER BY g.`Released` ASC LIMIT 0,".$limit)) {
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
+			$game = GetGame($row["GameID"], $mysqli);
 			
 			$experience = new Experience($row["ID"],
 						$user->_first,
@@ -712,9 +712,9 @@ function GetAnticipatedGamesThisYear($userid, $limit){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -730,7 +730,7 @@ function GetAnticipatedGamesInPast($userid, $limit){
 	$year = date('Y');
 	if ($result = $mysqli->query("select * from `Experiences` exp, `Games` g where `UserID` = '".$userid."' and exp.`GameID` = g.`ID` and g.`Released` < '".$now."' and g.`Year` != '".$year."' and `Year` != '0' and exp.`BucketList` = 'Yes' ORDER BY g.`Released` ASC LIMIT 0,".$limit)) {
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
+			$game = GetGame($row["GameID"], $mysqli);
 			
 			$experience = new Experience($row["ID"],
 						$user->_first,
@@ -745,9 +745,9 @@ function GetAnticipatedGamesInPast($userid, $limit){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -762,7 +762,7 @@ function Get3LatestXPForUser($userid){
 	$thisquarter = date('Y-m-d', strtotime("now -120 days") );
 	if ($result = $mysqli->query("select * from `Experiences` exp where `UserID` = '".$userid."' ORDER BY `ExperienceDate` DESC LIMIT 3")) {
 		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row["GameID"]);
+			$game = GetGame($row["GameID"], $mysqli);
 			
 			$experience = new Experience($row["ID"],
 						$user->_first,
@@ -777,9 +777,9 @@ function Get3LatestXPForUser($userid){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -924,16 +924,16 @@ function GetExperienceForGame($gameid){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -956,16 +956,16 @@ function GetExperienceForUser($userid){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -986,7 +986,7 @@ function GetExperienceForUserSurfaceLevel($userid, $gameid){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
@@ -1000,10 +1000,10 @@ function GetExperienceForUserSurfaceLevel($userid, $gameid){
 	return $experience;
 }
 
-function GetExperienceForUserSubset($userid, $subset){
+function GetExperienceForUserSubset($userid, $subset, $pconn = null){
 	$exp = array();
-	$user = GetUser($userid);
-	$mysqli = Connect();
+    $mysqli = Connect($pconn);
+	$user = GetUser($userid, $mysqli);
 	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` > 0 ORDER BY `ID` DESC LIMIT ".$subset.",20")) {
 		while($row = mysqli_fetch_array($result)){
 			$experience = new Experience($row["ID"],
@@ -1012,28 +1012,29 @@ function GetExperienceForUserSubset($userid, $subset){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	
 	return $exp;
 }
 
-function GetExperienceForUserComplete($userid, $gameid){
-	$mysqli = Connect();
+function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$experience = new Experience($row["ID"],
@@ -1042,51 +1043,53 @@ function GetExperienceForUserComplete($userid, $gameid){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	
 	return $experience;
 }
 
-function GetExperienceForFeed($gameid, $filter){
+function GetExperienceForFeed($gameid, $filter, $pconn = null){
 	$exp = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Experiences` where `GameID` = '".$gameid."' and ".$filter)) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	
 	return $exp;
 }
@@ -1096,23 +1099,23 @@ function GetUsersXPForGame($gameid, $userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select exp.*, exp.ID as 'THEEXPID', gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["THEEXPID"],
 						$user->_first,
 						$user->_last,
 						$user,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 			if(sizeof($experience->_playedxp) > 0 || sizeof($experience->_watchedxp) > 0)
 				$exp[$row["THEEXPID"]] = $experience;
 
@@ -1135,23 +1138,23 @@ function GetBestXPForUser($userid, $latestxp){
 		$ids[] = 0;
 	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` = '1' and `GameID` not in (".implode(",",$ids).") order by rand() limit 0,3")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1161,23 +1164,23 @@ function GetBestXPForUser($userid, $latestxp){
 		$size = 3 - sizeof($exp); 
 		if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` = '2' and `GameID` not in (".implode(",",$ids).") order by rand() limit 0,".$size)) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1190,7 +1193,7 @@ function GetBestXPForUser($userid, $latestxp){
 
 function GetBestXPForUserAll($userid, $type){
 	$mysqli = Connect();
-	$user = GetUser($userid);
+	$user = GetUser($userid, $mysqli);
 	$year = date('Y');
 	if($type == "year"){
 		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` and g.`Year` = '".$year."' order by e.`Tier` ASC, g.`Year` DESC limit 6,56";
@@ -1207,16 +1210,16 @@ function GetBestXPForUserAll($userid, $type){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1237,23 +1240,23 @@ function GetWorstXPForUser($userid, $latestxp){
 		$ids[] = 0;
 	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` = '5' and `GameID` not in (".implode(",",$ids).") order by rand() limit 0,3")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1263,23 +1266,23 @@ function GetWorstXPForUser($userid, $latestxp){
 		$size = 3 - sizeof($exp); 
 		if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` = '4' and `GameID` not in (".implode(",",$ids).") order by rand() limit 0,".$size)) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1294,14 +1297,14 @@ function GetRecentlyBookmarked($userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Experiences` where `BucketList`='Yes' and `UserID` = '$userid' order by `ID` DESC limit 0,6")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
@@ -1325,23 +1328,23 @@ function GetExperienceForGamePopUsers($gameid, $userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select exp.*, gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by rand() limit 0,10")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1357,23 +1360,23 @@ function GetExperienceForGameByEvents($gameid, $userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select exp.*, gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Journalist') order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1389,7 +1392,7 @@ function GetCriticXPForGame($gameid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Journalist') order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
 						$user->_first,
 						$user->_last,
@@ -1432,9 +1435,9 @@ function GetExperienceForUserByGame($userid, $gameid, $pconn = null){
 						$row["Link"],
 						$row["Owned"],
 						$row["BucketList"]);
-			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played');
-			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched');
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early');	
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);	
 
 		}
 	}
@@ -1531,9 +1534,9 @@ function GetMyLibrary($userid, $filter, $pos){
 }
 
 
-function GetSubExperiences($userid, $gameid, $type){
+function GetSubExperiences($userid, $gameid, $type, $pconn = null){
 	$sexp = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' and `Type` = '".$type."' order by `ID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$subexp = "";
@@ -1565,7 +1568,8 @@ function GetSubExperiences($userid, $gameid, $type){
 					$sexp[] = $subexp;
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	
 	return $sexp;
 }

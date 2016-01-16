@@ -430,7 +430,7 @@ function AddCriticCardsToBookmarkedUsers($gameid){
 			$type = "criticreviews";
 			$category = "Critics";
 			$coreid = $gameid;
-			$game = GetGame($gameid);
+			$game = GetGame($gameid, $mysqli);
 			$title = "Critics have published new reviews for ".$game->_title;
 			$caption = $game->_title." was recently released and the critics are weighing in. Check out what they have to say!";	
 			$valueone= "View Critic Experiences";
@@ -447,7 +447,7 @@ function AddCriticCardsToBookmarkedUsers($gameid){
 
 function AddSimilarGames($userid, $gameid){
 	$mysqli = Connect();
-	$gameinfo = GetGame($gameid);
+	$gameinfo = GetGame($gameid, $mysqli);
 	$mysqli->query("Delete from `Quests` where `Category` = 'Games' && `CoreID` = '".$gameid."' && `UserID` = '".$userid."' ");	
 	$addcards =  array();
 	$simgames = explode(",", $gameinfo->_similar);
@@ -512,8 +512,8 @@ function AddAgreedNotification($gameid, $userid, $agreedwith, $expid){
 			$type = "agree";
 			$category = "Agree";
 			$coreid = $expid;
-			$game = GetGame($gameid);
-			$user = GetUser($userid);
+			$game = GetGame($gameid, $mysqli);
+			$user = GetUser($userid, $mysqli);
 			$title = "Your XP has been given ".$count."up's!";
 			if($count == 2){
 				$caption = DisplayNameReturn($user)." and 1 other have liked your thoughts on ".$game->_title;	
@@ -533,8 +533,8 @@ function AddAgreedNotification($gameid, $userid, $agreedwith, $expid){
 		$type = "agree";
 		$category = "Agree";
 		$coreid = $expid;
-		$game = GetGame($gameid);
-		$user = GetUser($userid);
+		$game = GetGame($gameid, $mysqli);
+		$user = GetUser($userid, $mysqli);
 		$title = "Your XP has been given a 1up!";
 		$caption = DisplayNameReturn($user)." liked your thoughts on ".$game->_title." and gave you a 1up.";	
 		$valueone= $userid;
