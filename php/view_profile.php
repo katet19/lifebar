@@ -438,21 +438,21 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
         	<div class="lifebar-fill-min-circle" data-position="bottom" style='width: <?php if($lifebar[1] > 6){ echo $lifebar[1]; }else{ echo '6'; } ?>%;'></div>
         	<div class="lifebar-dmg-min" data-position="bottom"></div>
 	    	<div class='lifebar-1ups-min' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+	    		<?php if($user->_psn != "" || $user->_xbox != "" || $user->_steam != ""){ ?>
+			    	<div class='lifebar-usernames'>
+			    		 <?php if($user->_psn != ""){ ?>
+			    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_psn; ?>" ><img src='http://lifebar.io/Images/Generic/playstation-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    		<?php if($user->_xbox != ""){ ?>
+			    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_xbox; ?>"><img src='http://lifebar.io/Images/Generic/xbox-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    		<?php if($user->_steam != ""){ ?>
+			    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_steam; ?>"><img src='http://lifebar.io/Images/Generic/steam-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    	</div>
+		    	<?php } ?>
     			<div class="lifebar-1up-count"><i class='mdi-action-accessibility'></i> x <?php if($user->_weave->_totalAgrees > 0){ echo $user->_weave->_totalAgrees; }else{ echo "0"; } ?></div>
 	    	</div>
-	    	<?php if($user->_psn != "" || $user->_xbox != "" || $user->_steam != ""){ ?>
-	    	<div class='lifebar-usernames'>
-	    		 <?php if($user->_psn != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_psn; ?>" ><img src='http://lifebar.io/Images/Generic/playstation-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    		<?php if($user->_xbox != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_xbox; ?>"><img src='http://lifebar.io/Images/Generic/xbox-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    		<?php if($user->_steam != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_steam; ?>"><img src='http://lifebar.io/Images/Generic/steam-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    	</div>
-	    	<?php } ?>
         </div>
         <div class="lifebar-username-min" style='top:35px;'>
         	<?php if($user->_security == "Journalist"){ ?>
