@@ -2088,7 +2088,7 @@ function DisplayMainMyLibrary($userid, $filter){
 	?>
 		<div class="col s12 mylibrary-container" style='position: relative;'> 
 		<?php
-			if($filter == "Alpha"){
+			if($filter == "Alpha" && sizeof($groupfeed) > 0){
 				$curr_char = strtoupper(substr($groupfeed[0][0][1],0,1));
 				if(!ctype_alpha($curr_char))
 					$curr_char = "#";
