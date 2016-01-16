@@ -615,8 +615,8 @@ function GetBestExperiences(){
 function GetExperiencedUsersCategory(){
 	$users = array();
 	$mysqli = Connect();
-	$thisquarter = date('Y-m-d', strtotime("now -120 days") );
-	if ($result = $mysqli->query("select * from `Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and exp.`ExperienceDate` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6")) {
+	$thisquarter = date('Y-m-d', strtotime("now -3 days") );
+	if ($result = $mysqli->query("select * from `Sub-Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and exp.`DateEntered` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6")) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["UserID"], $mysqli);
 		}
@@ -791,8 +791,8 @@ function Get3LatestXPForUser($userid){
 function GetExperiencedUsers(){
 	$users = array();
 	$mysqli = Connect();
-	$thisquarter = date('Y-m-d', strtotime("now -120 days") );
-	if ($result = $mysqli->query("select * from `Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and exp.`ExperienceDate` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15")) {
+	$thisquarter = date('Y-m-d', strtotime("now -3 days") );
+	if ($result = $mysqli->query("select * from `Sub-Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and exp.`DateEntered` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15")) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["UserID"], $mysqli);
 		}

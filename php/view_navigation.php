@@ -30,7 +30,7 @@ function DisplayHeaderNavigation(){ ?>
 			</div>
 			<div class="col s4 m4 l4">
 				<?php if($_SESSION['logged-in'] != null){ ?>
-					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
+					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
 						<?php if($_SESSION['logged-in'] != null){ ?>
 							<div class="searchContainer">
 								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>

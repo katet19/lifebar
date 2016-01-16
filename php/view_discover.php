@@ -103,9 +103,9 @@ function DisplayGameDiscoverGrid(){
     </div>
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory">
-      	<div class="discoverCategoryHeader" data-category="Experienced Users">
+      	<div class="discoverCategoryHeader" data-category="Active Users">
       		<i class="mdi-social-people categoryIcon" style="background-color: rgb(255, 0, 97);"></i>
-      		Experienced Users
+      		Active Users
       		<div class="ViewBtn"><a class="waves-effect waves-light btn" style="background-color: rgb(255, 0, 97);">View</a></div>
       	</div>
     	<?php $experiencedUsers = GetExperiencedUsersCategory();
@@ -234,7 +234,7 @@ function DisplayDiscoverCategory($category, $catid){
 			DisplayCategoryNewUsers();
 		else if($category == "Trending Games")
 			DisplayCategoryPopularGames();
-		else if($category == "Experienced Users")
+		else if($category == "Active Users")
 			DisplayCategoryExperienceUsers();
 		else if($category == "Best Experiences")
 			DisplayCategoryBestExperiences();

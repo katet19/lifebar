@@ -273,7 +273,7 @@ function GetKnowledgeGames($knowledgeid, $userid){
 function GetPlatformMilestones($userid){
 	$mysqli = Connect();
 	$milestones = array();
-	if ($result = $mysqli->query("select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and b.`ID` = p.`MilestoneID` and b.`Category` = 'Platform' ORDER BY p.`Level1` DESC,p.`Level2` DESC,p.`Level3` DESC,p.`Level4` DESC,p.`Level5` DESC LIMIT 0,50")) {
+	if ($result = $mysqli->query("select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and b.`ID` = p.`MilestoneID` and b.`Category` = 'Platform' ORDER BY p.`Level4` DESC,p.`Level5` DESC,p.`Level3` DESC,p.`Level2` DESC,p.`Level1` DESC LIMIT 0,50")) {
 		while($row = mysqli_fetch_array($result)){
 			$milestone = new Milestone($row[0],
 			$row['Name'],
@@ -661,6 +661,7 @@ function UpdateMilestoneProgress($milestoneid, $userid, $level1, $level2, $level
 		$mysqli->query("insert into `Milestone_Progression` (`UserID`,`MilestoneID`,`Level1`,`Level2`,`Level3`,`Level4`,`Level5`,`PercentLevel1`,`PercentLevel2`,`PercentLevel3`,`PercentLevel4`,`PercentLevel5`,`FinishLevel1`,`FinishLevel2`,`FinishLevel3`,`FinishLevel4`,`FinishLevel5`,`LastUpdate`) values ('$userid','$milestoneid','$level1','$level2','$level3','$level4','$level5','$percentlevel1','$percentlevel2','$percentlevel3','$percentlevel4','$percentlevel5','$finishlevel1','$finishlevel2','$finishlevel3','$finishlevel4','$finishlevel5','$updated')");
 	else
 		$mysqli->query("update `Milestone_Progression` set `Level1` = '$level1', `Level2` = '$level2', `Level3` = '$level3', `Level4` = '$level4', `Level5` = '$level5', `PercentLevel1` = '$percentlevel1', `PercentLevel2` = '$percentlevel2', `PercentLevel3` = '$percentlevel3', `PercentLevel4` = '$percentlevel4', `PercentLevel5` = '$percentlevel5', `FinishLevel1` = '$finishlevel1', `FinishLevel2` = '$finishlevel2', `FinishLevel3` = '$finishlevel3', `FinishLevel4` = '$finishlevel4', `FinishLevel5` = '$finishlevel5', `LastUpdate` = '$updated' where `UserID` = '$userid' and `MilestoneID` = '$milestoneid'");
+
     if($pconn == null)
 	   Close($mysqli, $result);
 }
