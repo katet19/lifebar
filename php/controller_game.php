@@ -42,9 +42,9 @@ function FindGamesSmallImage(){
 }
 
 
-function GetGame($gameid){
+function GetGame($gameid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `ID` = ".$gameid)) {
 		while($row = mysqli_fetch_array($result)){
 			$game = new Game($row["ID"], 
@@ -72,15 +72,16 @@ function GetGame($gameid){
 				);
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 
 	return $game;
 }
 
 //DONT USE UNLESS YOU KNOW IT EXISTS, THERE IS A BETTER METHOD THAT ADDS
-function GetGameByGBID($gbid){
+function GetGameByGBID($gbid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
@@ -110,14 +111,15 @@ function GetGameByGBID($gbid){
 			}
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	
 	return $game;
 }
 
-function GetGameByGBIDFull($gbid){
+function GetGameByGBIDFull($gbid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
@@ -146,12 +148,13 @@ function GetGameByGBIDFull($gbid){
 					);
 			}
 		}
-		
-		if($game == ""){
-			$game = RequestGameFromGiantBombByID($gbid);
-		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
+	
+	if($game == ""){
+		$game = RequestGameFromGiantBombByID($gbid);
+	}
 
 	return $game;
 }

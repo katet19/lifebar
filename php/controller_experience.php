@@ -1412,10 +1412,11 @@ function GetCriticXPForGame($gameid){
 	return $exp;
 }
 
-function GetExperienceForUserByGame($userid, $gameid){
+function GetExperienceForUserByGame($userid, $gameid, $pconn = null){
 	$experience = "";
-	$user = GetUser($userid);
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
+	$user = GetUser($userid, $mysqli);
+
 	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$experience = new Experience($row["ID"],
@@ -1424,7 +1425,7 @@ function GetExperienceForUserByGame($userid, $gameid){
 						$user->_username,
 						$row["UserID"],
 						$row["GameID"],
-						GetGame($row["GameID"]),
+						GetGame($row["GameID"], $mysqli),
 						$row["Tier"],
 						$row["Quote"],
 						$row["ExperienceDate"],
@@ -1445,7 +1446,7 @@ function GetExperienceForUserByGame($userid, $gameid){
 			$user->_username,
 			$userid,
 			$gameid,
-			GetGame($gameid),
+			GetGame($gameid, $mysqli),
 			0,
 			"",
 			"",
@@ -1453,7 +1454,8 @@ function GetExperienceForUserByGame($userid, $gameid){
 			"",
 			"");
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	
 	return $experience;
 }

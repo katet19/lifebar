@@ -136,9 +136,9 @@ function CreateDefaultFollowingConnections($userid){
 	Close($mysqli, $result);
 }
 
-function GetUser($userid){
+function GetUser($userid, $pconn = null){
 	$myuser = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Users` where `ID` = '".$userid."'")) {
 		while($row = mysqli_fetch_array($result)){
 				$user= new User($row["ID"], 
@@ -164,7 +164,8 @@ function GetUser($userid){
 
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $myuser;
 }
 
@@ -323,39 +324,42 @@ function GetConnectedTo($userid){
 	return $users;
 }
 
-function GetConnectedToList($userid){
+function GetConnectedToList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 
-function GetConnectedToUsersList($userid){
+function GetConnectedToUsersList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` != 'Journalist' order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 
-function GetConnectedToCriticsList($userid){
+function GetConnectedToCriticsList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` = 'Journalist' order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 

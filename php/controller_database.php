@@ -1,22 +1,40 @@
 <?php
-function Connect(){
+function Connect($mysqli = null){
+	if($mysqli != null){
+		return $mysqli;
+	}else{
+		$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
+		if($mysqli->connect_error){ 
+			usleep(50);
+			ConnectTryTwo();
+		}
+	     		
+		return $mysqli;
+	}
+}
+function ConnectTryTwo(){
 	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
 	if($mysqli->connect_error){ 
 		usleep(50);
-		$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
-		if($mysqli->connect_error){ 
-			usleep(50);
-			$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
-			if($mysqli->connect_error){ 
-				usleep(400);
-				$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
-				if($mysqli->connect_error){ 
-					die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-				}
-			}
-		}
+		ConnectTryThree();
 	}
      		
+	return $mysqli;
+}
+function ConnectTryThree(){
+	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
+	if($mysqli->connect_error){ 
+		usleep(400);
+		ConnectTryFour();
+	}
+     		
+	return $mysqli;
+}
+function ConnectTryFour(){
+	$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); 
+	if($mysqli->connect_error){ 
+		die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+	}
 	return $mysqli;
 }
 function Close($mysqli, $result){
