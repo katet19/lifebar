@@ -219,7 +219,7 @@ function GetMyEvents($userid){
 			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -239,7 +239,7 @@ function GetMyEvents($userid){
 			}else if($row["Event"] == "BUCKETLIST"){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -278,7 +278,7 @@ function GetMyEvents($userid){
 			}else if($row["Event"] == "TIERCHANGED"){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -298,7 +298,7 @@ function GetMyEvents($userid){
 			}else if($row["Event"] == "QUOTECHANGED"){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -361,8 +361,9 @@ function CalculateLifetimeGraph($userid){
 			
 		}
 	}
-	Close($mysqli, $result);
-	$user = GetUser($userid);
+
+	$user = GetUser($userid, $mysqli);
+    Close($mysqli, $result);
 	$birthyear = substr($user->_birthdate,0,4); 
 	$year = date("Y");  
 	$y = $birthyear;

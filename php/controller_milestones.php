@@ -456,7 +456,7 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 	
 	if($gameid > 0){
 		$game = GetGame($gameid, $mysqli);
-		$gamemeta = GetGameMetaDataIDs($game->_gbid);
+		$gamemeta = GetGameMetaDataIDs($game->_gbid, $mysqli);
 		$objectchecks = "and (";
 		$objectarray = array();
 		if(sizeof($gamemeta->_franchises) > 0)
@@ -618,7 +618,7 @@ function TestMilestones($userid, $gameid, $query, $mysqli){
 				}
 				
 				//Comment this out to do testing with BattleProgress
-				UpdateMilestoneProgress($row['ID'], $userid, $level1, $level2, $level3, $level4, $level5, $percentlevel1, $percentlevel2, $percentlevel3, $percentlevel4, $percentlevel5, $finishlevel1, $finishlevel2, $finishlevel3, $finishlevel4, $finishlevel5);
+				UpdateMilestoneProgress($row['ID'], $userid, $level1, $level2, $level3, $level4, $level5, $percentlevel1, $percentlevel2, $percentlevel3, $percentlevel4, $percentlevel5, $finishlevel1, $finishlevel2, $finishlevel3, $finishlevel4, $finishlevel5, $mysqli);
 			}
 		}
 	}
@@ -639,14 +639,14 @@ function TestSpecificMilestone($milestoneid, $userid){
 				}
 			}
 
-			UpdateMilestoneProgress($row['ID'], $userid, $total, $percentage);
+			UpdateMilestoneProgress($row['ID'], $userid, $total, $percentage, $mysqli);
 		}
 	}
 	Close($mysqli, $result);
 }
 
-function UpdateMilestoneProgress($milestoneid, $userid, $level1, $level2, $level3, $level4, $level5, $percentlevel1, $percentlevel2, $percentlevel3, $percentlevel4, $percentlevel5, $finishlevel1, $finishlevel2, $finishlevel3, $finishlevel4, $finishlevel5){
-	$mysqli = Connect();
+function UpdateMilestoneProgress($milestoneid, $userid, $level1, $level2, $level3, $level4, $level5, $percentlevel1, $percentlevel2, $percentlevel3, $percentlevel4, $percentlevel5, $finishlevel1, $finishlevel2, $finishlevel3, $finishlevel4, $finishlevel5, $pconn = null){
+	$mysqli = Connect($pconn);
 	$new = true;
 	
 	if ($result = $mysqli->query("select * from `Milestone_Progression` where `MilestoneID` = '".$milestoneid."' and `UserID` = '".$userid."'")) {
@@ -661,8 +661,8 @@ function UpdateMilestoneProgress($milestoneid, $userid, $level1, $level2, $level
 		$mysqli->query("insert into `Milestone_Progression` (`UserID`,`MilestoneID`,`Level1`,`Level2`,`Level3`,`Level4`,`Level5`,`PercentLevel1`,`PercentLevel2`,`PercentLevel3`,`PercentLevel4`,`PercentLevel5`,`FinishLevel1`,`FinishLevel2`,`FinishLevel3`,`FinishLevel4`,`FinishLevel5`,`LastUpdate`) values ('$userid','$milestoneid','$level1','$level2','$level3','$level4','$level5','$percentlevel1','$percentlevel2','$percentlevel3','$percentlevel4','$percentlevel5','$finishlevel1','$finishlevel2','$finishlevel3','$finishlevel4','$finishlevel5','$updated')");
 	else
 		$mysqli->query("update `Milestone_Progression` set `Level1` = '$level1', `Level2` = '$level2', `Level3` = '$level3', `Level4` = '$level4', `Level5` = '$level5', `PercentLevel1` = '$percentlevel1', `PercentLevel2` = '$percentlevel2', `PercentLevel3` = '$percentlevel3', `PercentLevel4` = '$percentlevel4', `PercentLevel5` = '$percentlevel5', `FinishLevel1` = '$finishlevel1', `FinishLevel2` = '$finishlevel2', `FinishLevel3` = '$finishlevel3', `FinishLevel4` = '$finishlevel4', `FinishLevel5` = '$finishlevel5', `LastUpdate` = '$updated' where `UserID` = '$userid' and `MilestoneID` = '$milestoneid'");
-
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 }
 
 function GetMilestoneProgression($milestoneid, $userid, $mysqli){

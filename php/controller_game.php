@@ -615,7 +615,7 @@ function GetGameFeedByFilter($filter){
 	if ($result = $mysqli->query("select * from `Games` ".$filter)) {
 		while($row = mysqli_fetch_array($result)){
 			$feed = array();
-			$feed[] = GetExperienceForGame($row['ID']);
+			$feed[] = GetExperienceForGame($row['ID'], $mysqli);
 			if($row["Title"] != ""){
 				$game = new Game($row["ID"], 
 					$row["GBID"],
@@ -715,7 +715,7 @@ function FindGamesToBeUpdated(){
 	if ($result = $mysqli->query("select * from `Games` where `CrawlerUpdated` = 0 LIMIT 0,30")) {
 		while($row = mysqli_fetch_array($result)){
 			if($nothing){ echo "Starting ID: ".$row["ID"]."<BR>"; }
-			 UpdateGameFromGiantBombByID($row['GBID'], $row['Reviewed']);
+			 UpdateGameFromGiantBombByID($row['GBID'], $row['Reviewed'], $mysqli);
 			 $nothing = false;
 		}
 	}
@@ -796,8 +796,8 @@ function GetGameReleaseYears(){
 	return $years;
 }
 
-function GetGameMetaDataIDs($gbid){
-	$mysqli = Connect();
+function GetGameMetaDataIDs($gbid, $pconn = null){
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select `ConceptID` from `Game_Concepts` where `GBID` = '".$gbid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$concepts[] = $row['ConceptID'];
@@ -829,7 +829,8 @@ function GetGameMetaDataIDs($gbid){
 							$people, 
 							$platforms, 
 							$themes);
-	Close($mysqli, $result);
+	if($pconn == null)
+        Close($mysqli, $result);
 	return $metadata;
 }
 
@@ -866,14 +867,15 @@ function GetGenres(){
 	return $genre;
 }
 
-function GetGenreByID($id){
-	$mysqli = Connect();
+function GetGenreByID($id, $pconn = null){
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Link_Genre` where `GBID` = '".$id."'")) {
 		while($row = mysqli_fetch_array($result)){
 				$name = $row["Name"];
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	return $name;
 }
 

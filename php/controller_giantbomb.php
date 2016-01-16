@@ -501,7 +501,7 @@ function RequestGameFromGiantBombByID($gameid){
 }
 
 
-function UpdateGameFromGiantBombByID($gameid, $reviewed){
+function UpdateGameFromGiantBombByID($gameid, $reviewed, $pconn = null){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
 	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
@@ -596,7 +596,7 @@ function UpdateGameFromGiantBombByID($gameid, $reviewed){
 			$similar_games = $similar_games.$similar_game->id.",";
 		}
 	}
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if($alreadyout){
 		UpdateGame($gameid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release, mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $game->expected_release_year,mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
 	}else{
@@ -609,7 +609,8 @@ function UpdateGameFromGiantBombByID($gameid, $reviewed){
 	//		InsertVideoForGame($gameid, 'GiantBomb', $viddetails->site_detail_url, $viddetails->name, $viddetails->id, 'GiantBomb', $viddetails->image->screen_url, 0, $viddetails->length_seconds);
 	//	}
 	//}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	if($reviewed == "Sorta"){
 		AddSmallImage($gameid);
 		//AddImage($gameid);	
