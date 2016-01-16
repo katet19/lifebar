@@ -46,8 +46,8 @@ function GetTotalNew($userid){
 	return $totalnew;
 }
 
-function UpdateTotalNew($userid, $added){
-	$mysqli = Connect();
+function UpdateTotalNew($userid, $added, $pconn = null){
+	$mysqli = Connect($pconn);
 	if($added == 0){
 		$total = 0;
 	}else{
@@ -60,7 +60,8 @@ function UpdateTotalNew($userid, $added){
 	}
 	
 	$mysqli->query("Update `Users` SET `NewCards`='".$total."' WHERE `ID` = '".$userid."'");
-	Close($mysqli, $result);
+	if($pconn == null)
+        Close($mysqli, $result);
 	return $total;
 }
 
@@ -216,8 +217,8 @@ function CheckForNotifications($type,$user,$gameid){
 //AddAllBookmarked(7588);
 
 
-function AddIntroNotifications($userid){
-	$mysqli = Connect();
+function AddIntroNotifications($userid, $pconn = null){
+	$mysqli = Connect($pconn);
 	//Welcome Card
 	$type = "info";
 	$category = "General";
@@ -304,8 +305,9 @@ function AddIntroNotifications($userid){
 	$color = "#66BB6A";
 	$icon = "mdi-action-bug-report";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
-	Close($mysqli, $result);
-	UpdateTotalNew($userid, 10);
+    UpdateTotalNew($userid, 10, $mysqli);
+    if($pconn == null)
+        Close($mysqli, $result);
 }
 
 function AddAllBookmarked($userid){
@@ -337,8 +339,8 @@ function AddComingSoon($userid, $gameid){
 		$actiontwo=$game->_released;
 		$color = "#000";
 		$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`,`Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','".$game->_imagesmall."')") or die;
-		Close($mysqli, $result);
-		UpdateTotalNew($userid, 1);
+        UpdateTotalNew($userid, 1, $mysqli);
+        Close($mysqli, $result);
 	}
 }
 
@@ -361,13 +363,13 @@ function AddNewFollower($fan, $celeb){
 		$actionone="Method,ShowUser(".$fan.")";
 		$color = "#68204E";
 		$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`Color`, `Icon`) values ('$celeb','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$color','$icon')") or die;
-		UpdateTotalNew($celeb, 1);
+		UpdateTotalNew($celeb, 1, $mysqli);
 	}
 	Close($mysqli, $result);
 }
 
-function AddAutoNotificationCard($userid, $criticid){
-	$mysqli = Connect();
+function AddAutoNotificationCard($userid, $criticid, $pconn = null){
+	$mysqli = Connect($pconn);
 	$cardexists = false;	
 	if ($result = $mysqli->query("select * from `Quests` where `UserID` = '".$userid."' and `CoreID` = '".$criticid."' and `Category` = 'Critics'")) {
 		while($row = mysqli_fetch_array($result)){
@@ -378,7 +380,7 @@ function AddAutoNotificationCard($userid, $criticid){
 		$type = "criticlink";
 		$category = "Users";
 		$coreid = $criticid;
-		$critic = GetUser($criticid);
+		$critic = GetUser($criticid, $mysqli);
 		$title = "You are now following ".$critic->_first." ".$critic->_last;
 		$caption = $critic->_first." was added to your connections to help flesh out your activity feed. Follow other users and personalities to make your feed more relevant to you.";	
 		$valueone= "View ".$critic->_first."\'s Profile";
@@ -388,9 +390,10 @@ function AddAutoNotificationCard($userid, $criticid){
 		$color = "#68204E";
 		$icon = $critic->_avatar;
 		$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`, `Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','$icon')") or die;
-		UpdateTotalNew($userid, 1);
+		UpdateTotalNew($userid, 1, $mysqli);
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 }
 
 function AddWatchLaterCard($userid, $video, $game){
@@ -415,7 +418,7 @@ function AddWatchLaterCard($userid, $video, $game){
 		$icon = $game->_imagesmall;
 		$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`, `Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','$icon')") or die;
 		echo $video->_desc." video card was added to Build your Lifebar";
-		UpdateTotalNew($userid, 1);
+		UpdateTotalNew($userid, 1, $mysqli);
 	}
 	Close($mysqli, $result);
 }
@@ -490,8 +493,8 @@ function AddSimilarGames($userid, $gameid){
 			}
 		}
 	}
+    UpdateTotalNew($userid, $totalsim, $mysqli);
 	Close($mysqli, $result);
-	UpdateTotalNew($userid, $totalsim);
 	
 	return $questgames;
 }

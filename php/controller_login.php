@@ -1,7 +1,7 @@
 <?php require_once "includes.php";
-function Login($username, $password){
+function Login($username, $password, $pconn = null){
 	$myuser = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 		if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."' or `Email` = '".$username."'")) {
 		while($row = mysqli_fetch_array($result)){
 			if (crypt($password, $row['Hash']) == $row['Hash']) {
@@ -33,7 +33,8 @@ function Login($username, $password){
 		}
 		if($myuser == ""){ echo "INCORRECT USERNAME OR PASSWORD"; }
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	return $myuser;
 }
 function FastLogin($id, $pconn = null){
