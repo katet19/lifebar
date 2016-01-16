@@ -11,7 +11,7 @@ function MilestonesForCritics($i){
 			if ($result2 = $mysqli->query("select * from `Experiences` where `UserID` = '".$row['ID']."'")) {
 				while($row2 = mysqli_fetch_array($result2)){
 					echo $row2['GameID']." - ";
-					$gbid = GetGameByGBIDFull($row['GameID']);
+					$gbid = GetGameByGBIDFull($row['GameID'], $mysqli);
 					CalculateMilestones($row['ID'], $gbid, '', "Played XP", true);
 				}
 			}

@@ -690,7 +690,7 @@ function GetGamesByFilter($filter){
 function InsertGame($gbid, $title, $rated, $released, $genre, $platforms, $year, $publisher, $developer, $alias, $theme, $franchise, $similar, $imagelarge, $imagesmall){
 	$mysqli = Connect();
 	$result = $mysqli->query("insert into `Games` (`GBID`,`Title`,`Rated`,`Released`,`Platforms`,`Year`,`Genre`,`Publisher`,`Developer`,`Alias`,`Theme`,`Franchise`,`Similar`,`ImageLarge`,`ImageSmall`) values ('$gbid','$title','$rated','$released','$platforms','$year','$genre','$publisher','$developer','$alias','$theme','$franchise','$similar','$imagelarge','$imagesmall')");
-	$game = GetGameByGBID($gbid);
+	$game = GetGameByGBID($gbid, $mysqli);
 	Close($mysqli, $result);
 	return $game;
 }

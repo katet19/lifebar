@@ -470,7 +470,7 @@ function AddSimilarGames($userid, $gameid){
 				}
 			}
 			if(!$found && $totalsim <= $max){
-				$game = GetGameByGBID($gameid);
+				$game = GetGameByGBID($gameid, $mysqli);
 				$gameyear = explode("-",$game->_released);
 				if($game->_title != "" && $gameyear[0] > "0000"){
 					$questgames[] = $game;
