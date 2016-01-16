@@ -121,9 +121,9 @@ function SubmitPWReset($key, $pw){
 	Close($mysqli, $result);
 }
 function Logout(){
-	setcookie("RememberMe", "", time()-3600, '/');
-	if ( isset( $_COOKIE[session_name()] ) )
-		setcookie( session_name(), “”, time()-3600, “/” );
+	//setcookie("RememberMe", "", time()-3600, '/');
+	//if ( isset( $_COOKIE[session_name()] ) )
+	//	setcookie( session_name(), “”, time()-3600, “/” );
 	$_SESSION = array();
 	$_SESSION['logged-in'] = null;
 	session_destroy();

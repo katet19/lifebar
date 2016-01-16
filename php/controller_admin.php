@@ -8,6 +8,22 @@ require_once "includes.php";
 //foreach($list as $old){
 	//UpdateUser($old,8146);
 //}
+
+
+function FixPlatformMilestones(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Milestones` where `Category` = 'Platform'")) {
+		while($row = mysqli_fetch_array($result)){
+			$validation = $row['Validation'];
+			
+			$newvalidation = str_replace("`PlatformIDs` like '%", "`PlatformIDs` like '%,", $validation);
+			$newvalidation = str_replace(",,", ",", $newvalidation);
+			$newvalidation = mysqli_real_escape_string($mysqli, $newvalidation);
+			$mysqli->query("update `Milestones` set `Validation` = '".$newvalidation."' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
+
 function UpdateUser($old, $truth){
 	$mysqli = Connect();
 	$mysqli->query("update `Experiences` set `UserID` = '".$truth."' where `UserID` = '".$old."'");

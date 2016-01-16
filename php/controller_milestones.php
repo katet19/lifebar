@@ -273,7 +273,7 @@ function GetKnowledgeGames($knowledgeid, $userid){
 function GetPlatformMilestones($userid){
 	$mysqli = Connect();
 	$milestones = array();
-	if ($result = $mysqli->query("select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and b.`ID` = p.`MilestoneID` and b.`Category` = 'Platform' ORDER BY `PercentLevel1` DESC,`PercentLevel2` DESC,`PercentLevel3` DESC,`PercentLevel4` DESC,`PercentLevel5` DESC LIMIT 0,50")) {
+	if ($result = $mysqli->query("select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and b.`ID` = p.`MilestoneID` and b.`Category` = 'Platform' ORDER BY p.`Level1` DESC,p.`Level2` DESC,p.`Level3` DESC,p.`Level4` DESC,p.`Level5` DESC LIMIT 0,50")) {
 		while($row = mysqli_fetch_array($result)){
 			$milestone = new Milestone($row[0],
 			$row['Name'],
@@ -332,7 +332,7 @@ function GetPlatformMilestone($userid, $platform){
 function GetPlatformGames($platformid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = "select * from `Sub-Experiences` e where (e.`PlatformIDs` = '".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid."' OR e.`PlatformIDs` LIKE '%".$platformid.",%' OR e.`PlatformIDs` LIKE '".$platformid.",%') and e.`Type` = 'Played' and e.`UserID` = '".$userid."' and e.`Archived` = 'No'";
+	$query = "select * from `Sub-Experiences` e where (e.`PlatformIDs` = '".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid."' OR e.`PlatformIDs` LIKE '%,".$platformid.",%' OR e.`PlatformIDs` LIKE '".$platformid.",%') and e.`Type` = 'Played' and e.`UserID` = '".$userid."' and e.`Archived` = 'No'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$xp = GetExperienceForUserComplete($userid, $row['GameID']);
