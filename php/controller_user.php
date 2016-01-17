@@ -50,15 +50,15 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 	if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$founduser = true;
-			$user = Login($username, $password);
+			$user = Login($username, $password, $mysqli);
 		}
 	}
 	if($founduser == false){
 		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
 		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Birthdate`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$birthdate."-01-01','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
-		AddIntroNotifications($user->_id);
-		CreateDefaultFollowingConnections($user->_id);
+		AddIntroNotifications($user->_id, $mysqli);
+		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		SignupEmail($email);
 	}
 	Close($mysqli, $result);
@@ -121,24 +121,25 @@ function VerifyUniqueEmail($email){
 }
 
 //CreateDefaultFollowingConnections(7);
-function CreateDefaultFollowingConnections($userid){
+function CreateDefaultFollowingConnections($userid, $pconn = null){
 	$journalist = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	$date = date('Y-m-d', strtotime("now -30 days") );
 	$query = "select *, Count(`UserID`) as TotalRows from `Events` eve, `Users` usr WHERE eve.`Date` > '".$date."' and usr.`ID` = eve.`UserID` and usr.`Access` = 'Journalist' GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 10";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				$journalist[] = "('".$userid."','".$row['UserID']."')";
-				AddAutoNotificationCard($userid, $row['UserID']);
+				AddAutoNotificationCard($userid, $row['UserID'], $mysqli);
 		}
 		$mysqli->query("INSERT INTO `Connections`  (`Fan`, `Celebrity`) VALUES ".implode(",",$journalist));
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 }
 
-function GetUser($userid){
+function GetUser($userid, $pconn = null){
 	$myuser = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Users` where `ID` = '".$userid."'")) {
 		while($row = mysqli_fetch_array($result)){
 				$user= new User($row["ID"], 
@@ -164,7 +165,8 @@ function GetUser($userid){
 
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $myuser;
 }
 
@@ -323,39 +325,42 @@ function GetConnectedTo($userid){
 	return $users;
 }
 
-function GetConnectedToList($userid){
+function GetConnectedToList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` group by `Username` order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 
-function GetConnectedToUsersList($userid){
+function GetConnectedToUsersList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` != 'Journalist' order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 
-function GetConnectedToCriticsList($userid){
+function GetConnectedToCriticsList($userid, $pconn = null){
 	$users = array();
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` = 'Journalist' order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $users;
 }
 

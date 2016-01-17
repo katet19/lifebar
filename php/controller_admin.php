@@ -437,7 +437,7 @@ function GetJoesRewards(){
 
 function MapReviewToGame($id, $quote, $tier, $links, $gameid, $criticid){
 	$mysqli = Connect();
-	$game = GetGameByGBIDFull($gameid);
+	$game = GetGameByGBIDFull($gameid, $mysqli);
 	$result = $mysqli->query("Update `ImportReview` set `GameID` = '".$game->_id."', `Owner` = '7828' where `ID` = '".$id."'");
 	Close($mysqli, $result);
 	SubmitCriticExperience($criticid,$game->_id,$quote,$tier,$links);

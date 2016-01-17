@@ -211,8 +211,6 @@ function ConvertDateToActivityFormat($date){
 }
 
 function FeedXPItem($feed, $conn, $mutualconn){ 
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
@@ -342,8 +340,6 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 }
 
 function FeedConnectionItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	//quote will be following user id
 	$followinguser = GetUser($feed[0][0]->_quote);
@@ -399,8 +395,6 @@ function FeedConnectionCard($user, $event, $following){
 
 
 function FeedBookmarkItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
@@ -449,8 +443,6 @@ function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
 }
 
 function FeedTierChangedItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
@@ -523,8 +515,6 @@ function FeedTierChangedCard($game, $user, $event, $xp, $multiple){
 }
 
 function FeedQuoteChangedItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>

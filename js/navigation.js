@@ -36,11 +36,12 @@ function AttachTabLoadingEvents(){
 	  	window.open("http://tidbits.io/");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
-	  	GAEvent('Support', 'Bug Reporting');
-	  	window.open("https://gitreports.com/issue/Lifebario/support ");
+	  	var elem = $(".userContainer");
+	  	var name = elem.attr("data-username");
+	  	//var email = elem.attr("data-email");
+	  	window.open("https://gitreports.com/issue/Lifebario/support?name="+name+"&email=Please%20do%20not%20include%20email");
 	  });
   	  $(".supportForumButton").on("click", function(){
-  	  	GAEvent('Support', 'Forum');
 	  	window.open("https://github.com/Lifebar/support");
 	  });
 	  $(".logoContainer").on("click", function(){
