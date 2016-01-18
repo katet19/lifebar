@@ -23,9 +23,10 @@ class User
 	public $_realnames;
 	public $_weave;
 	public $_title;
+	public $_image;
 	
 	
-	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title) {
+	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title, $image) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -76,20 +77,16 @@ class User
 			$this->_thumbnail = $filepathT;
 		else
 			$this->_thumbnail = get_gravatar($this->_email);
-		
-		//Weave Handling
-		$this->_weave = GetWeave($id);
 
 	}
 		
 }
 
-function GetJournalistPublication($id){
+/*function GetJournalistPublication($id){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("SELECT * FROM  `Experiences` where `UserID` = '".$id."' and `Link` != '' ORDER BY `ExperienceDate` DESC LIMIT 0,1")) {
 		while($row = mysqli_fetch_array($result)){
 				$link = $row["Link"];
-				//$link = preg_replace ('/(\.com|\.net|\.org|\.edu).*/','$1',$link);
 				$domain = parse_url($link);
 				if ($result2 = $mysqli->query("SELECT * FROM  `Publications` where `Link` like '%".$domain["host"]."%' LIMIT 0,1")) {
 					while($row2 = mysqli_fetch_array($result2)){
@@ -101,7 +98,7 @@ function GetJournalistPublication($id){
 		}
 	}
 	return $publication;		
-}
+}*/
 
 
 ?>

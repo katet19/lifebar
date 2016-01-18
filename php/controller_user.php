@@ -160,7 +160,9 @@ function GetUser($userid, $pconn = null){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
 		}
@@ -193,7 +195,9 @@ function GetUserByName($username){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
 		}
@@ -225,7 +229,9 @@ function GetJournalists(){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$journalists[] = $user;
 
 		}
@@ -283,7 +289,7 @@ function GetPublishersJournalistList($PubID){
 	$users = array();
 	if ($result = $mysqli->query("SELECT * FROM  `Experiences` exp, `Users` usr where `Link` like '%".$pub[1]."%' and usr.`ID` = exp.`UserID` GROUP BY `First` ASC")) {
 		while($row = mysqli_fetch_array($result)){
-			$user = GetUser($row["UserID"]);
+			$user = GetUser($row["UserID"], $mysqli);
 			$users[] = $user;
 		}
 	}
@@ -315,7 +321,9 @@ function GetConnectedTo($userid){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
 
@@ -428,7 +436,9 @@ function GetConnectedToMe($userid){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
 
@@ -510,7 +520,9 @@ function SearchForUser($search){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
 
@@ -527,7 +539,7 @@ function GetPopularUsers(){
 	$query = "select *, Count(`Celebrity`) as TotalRows from `Connections` GROUP BY `Celebrity` ORDER BY COUNT(  `Celebrity` ) DESC LIMIT 15";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-				$users[] = GetUser($row["Celebrity"]);
+				$users[] = GetUser($row["Celebrity"], $mysqli);
 				$count[] = $row["TotalRows"];
 		}
 	}
@@ -546,7 +558,7 @@ function GetActivePersonalitiesCategory(){
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-				$users[] = GetUser($row["UserID"]);
+				$users[] = GetUser($row["UserID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -562,7 +574,7 @@ function GetActivePersonalities(){
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-				$users[] = GetUser($row["UserID"]);
+				$users[] = GetUser($row["UserID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -576,7 +588,7 @@ function GetNewUsersCategory($limit){
 	$thisquarter = date('Y-m-d', strtotime("now -2 days") );
 	if ($result = $mysqli->query("select * from `Users` usr where usr.`Access` != 'Journalist' and usr.`Established` >= '".$thisquarter."' ORDER BY `ID` DESC LIMIT ".$limit)) {
 		while($row = mysqli_fetch_array($result)){
-			$users[] = GetUser($row["ID"]);
+			$users[] = GetUser($row["ID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
@@ -592,7 +604,7 @@ function GetActiveUsers(){
 	$query = "select *, Count(`UserID`) as TotalRows from `Events` WHERE `Date` > '".$date."' GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-				$users[] = GetUser($row["UserID"]);
+				$users[] = GetUser($row["UserID"],$mysqli);
 				$count[] = $row["TotalRows"];
 		}
 	}
@@ -608,7 +620,7 @@ function GetNewUsers(){
 	$query = "select * from `Users` where `Access` != 'Journalist' ORDER BY `ID` DESC LIMIT 15";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-				$users[] = GetUser($row["ID"]);
+				$users[] = GetUser($row["ID"], $mysqli);
 		}
 	}
 	Close($mysqli, $result);
