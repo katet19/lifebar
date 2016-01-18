@@ -2,7 +2,8 @@
 function DisplayUserSettings(){
 	?>
 	<div id="userSettings" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
-    <div class="row" style=' margin-top: 1em;'>
+    <div class="row" style=' margin-top: 1em;margin-right:1em;'>
+		<div class="col s12 settings-header" style='margin-top:0px;'>Account</div>
 	  <form class="col s12">
 	    <div class="row">
 	      <div class="input-field col s12">
@@ -43,13 +44,52 @@ function DisplayUserSettings(){
 	      </div>
       	</div>
 	    <div class="row">
-	      <div class="col s12">
-        		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: 25px;margin-right: auto;height:90px;text-align:left;display:inline-block;background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-	      		<div style='display: inline-block;text-align: left;height: 90px;float: left;margin-left: 50px;margin-top: 50px;margin-right: 25px;'>Change your Profile image at <a href="http://gravatar.com" target="_blank">Gravatar</a></div>
+    	  <div class="col s12 settings-header">Profile Image</div>
+	      <div class="col s12 m4" style='text-align: center;'>
+	  		  <div class="avatar-item">
+		  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
+			    <label for="gravatar">Use your Profile image from <a href="http://gravatar.com" target="_blank">Gravatar</a></label>
+		  	  </div >
+    		  <div class="user-avatar" style="width:90px;border-radius:50%;margin-left: 25px;margin-right: auto;height:90px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+      	  </div>
+  			<div class="col s12 m4">
+  	    		  <div class="avatar-item">
+			  	    <input name="avatargroup" class="with-gap" type="radio" id="uploaded" <?php if($_SESSION['logged-in']->_image == "Uploaded"){ echo "checked"; } ?> />
+				    <label for="uploaded">Upload your own image</a></label>
+			  	  </div >
+      			<iframe src='http://lifebar.io/php/view_imageUploader.php?id=<?php echo $_SESSION['logged-in']->_id; ?>' style='width:100%;border:none;'></iframe>
+      		</div>
+  			<div class="col s12 m4">
+	    		  <div class="avatar-item">
+			  	    <input name="avatargroup" class="with-gap" type="radio" id="weburlradio" <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "checked"; } ?> />
+				    <label for="weburlradio">Use an web URL</a></label>
+			  	  </div >
+		        <input id="weburl" type="text" value="<?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo $_SESSION['logged-in']->_image; }else{ echo "http://"; } ?>">
+		        <label for="weburl"  <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "class='active'"; } ?>>Web URL</label>
+  			</div>
 	      </div>
       	</div>
-	    <div class="row">
-	    	<div class="col s12">
+	    <div class="row" style='margin-right:1em;'>
+	    	<div class="col s12 settings-header">Gamertags</div>
+	    	<div class="row">
+		      <div class="input-field col s12 m6 l4">
+		        <i class="mdi-hardware-gamepad prefix"></i>
+		        <input id="steam_id" type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
+		        <label for="steam_id"  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
+		      </div>
+	  	      <div class="input-field col s12 m6 l4">
+		        <i class="mdi-hardware-gamepad prefix"></i>
+		        <input id="xbox_id" type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
+		        <label for="xbox_id"  <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
+		      </div>
+		      <div class="input-field col s12 m6 l4">
+		        <i class="mdi-hardware-gamepad prefix"></i>
+		        <input id="psn_id" type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
+		        <label for="psn_id"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
+		      </div>
+	      	</div>
+	    	<div class="col s12 settings-header">Lifebar configuration</div>
+	    	<div class="col s12 m6">
 		    	<div class="row">
 		    		<div class="col s1" style='padding: 1em 0.2em;text-align:center;'>
 		    			<i class="mdi-social-cake small"></i>
@@ -64,9 +104,7 @@ function DisplayUserSettings(){
 					</div>
 				</div>
 			</div>
-      	</div>
-	    <div class="row">
-	    	<div class="col s12">
+	    	<div class="col s12 m6">
 		    	<div class="row">
 		    		<div class="col s1" style='padding: 1em 0.2em;text-align:center;'>
 		    			<i class="mdi-action-visibility small"></i>
@@ -81,7 +119,7 @@ function DisplayUserSettings(){
 						<option  value='Game Informer' <?php if($_SESSION['logged-in']->_defaultwatched == 'Game Informer'){echo "selected"; $found = true; } ?>>Game Informer</option>
 						<option  value='Gamesradar' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamesradar'){echo "selected"; $found = true; } ?>>Gamesradar</option>
 						<option  value='Gamespot' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamespot'){echo "selected"; $found = true; } ?>>Gamespot</option>
-						<option  value='Giantbomb' <?php if($_SESSION['logged-in']->_defaultwatched == 'Giantbomb'){echo "selected"; $found = true; } ?>>Giantbomb</option>
+						<option  value='Giant Bomb' <?php if($_SESSION['logged-in']->_defaultwatched == 'Giantbomb' || $_SESSION['logged-in']->_defaultwatched == 'Giant Bomb'){echo "selected"; $found = true; } ?>>Giant Bomb</option>
 						<option  value='IGN' <?php if($_SESSION['logged-in']->_defaultwatched == 'IGN'){echo "selected"; $found = true; } ?>>IGN</option>
 						<option  value='Joystiq' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamespot'){echo "selected"; $found = true; } ?>>Joystiq</option>
 						<option  value='Other' <?php if($_SESSION['logged-in']->_defaultwatched == 'Other'){echo "selected"; $found = true; } ?>>Other</option>
@@ -95,32 +133,14 @@ function DisplayUserSettings(){
 				</div>
 			</div>
       	</div>
-    	<div class="row">
-	      <div class="input-field col s12 m12 l6">
-	        <i class="mdi-hardware-gamepad prefix"></i>
-	        <input id="steam_id" type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
-	        <label for="steam_id"  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
+	  	<div class="row">
+	       	<div class="col s12 validation" style='text-align: center;color:red;display:none;'></div>
+	  	</div>
+	  	<div class="row">
+	      <div class="col s12" style='text-align: center;font-size: 1.5em;'>
+	    	<a href="#" class="waves-effect btn-flat" id="SaveUserSettingsSubmitBtn">Save</a>
 	      </div>
-  	      <div class="input-field col s12 m12 l6">
-	        <i class="mdi-hardware-gamepad prefix"></i>
-	        <input id="xbox_id" type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
-	        <label for="xbox_id"  <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
-	      </div>
-	      <div class="input-field col s12 m12 l6">
-	        <i class="mdi-hardware-gamepad prefix"></i>
-	        <input id="psn_id" type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
-	        <label for="psn_id"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
-	      </div>
-      	</div>
-  	</div>
-  	<div class="row">
-       	<div class="col s12 validation" style='text-align: center;color:red;display:none;'></div>
-  	</div>
-  	<div class="row">
-      <div class="col s12" style='text-align: center;font-size: 1.5em;'>
-    	<a href="#" class="waves-effect btn-flat" id="SaveUserSettingsSubmitBtn">Save</a>
-      </div>
-	</div>
+		</div>
   </div>
 	
 	<?php

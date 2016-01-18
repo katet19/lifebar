@@ -127,9 +127,9 @@ function CalculateWeave($userid){
 }
 
 
-function GetWeave($userid){
+function GetWeave($userid, $pconn = null){
 	$weave = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Weave` where `UserID` = ".$userid)) {
 		while($row = mysqli_fetch_array($result)){
 			$weave = new Weave($row["ID"], 
@@ -149,7 +149,8 @@ function GetWeave($userid){
 				);
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	return $weave;
 }
 
@@ -195,7 +196,7 @@ function UpdatePreferredXP($gameid, $userid, $slot){
 		else if($slot == 3)
 			$result = $mysqli->query("update `Weave` SET `SubPreferredXP2`='".$gameid."' where `UserID` = '".$userid."'");
 		else{
-			$weave = GetWeave($userid);
+			$weave = GetWeave($userid, $mysqli);
 			if($weave->_preferredXP <= 0)
 				$result = $mysqli->query("update `Weave` SET `PreferredXP`='".$gameid."' where `UserID` = '".$userid."'");
 			else if($weave->_subpreferredXP1 <= 0)

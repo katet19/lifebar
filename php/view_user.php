@@ -202,6 +202,9 @@ function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
 				<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
 	        </div>
 	        <div class="card-action">
+	        	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+	        		<div style='float: left;color: rgba(0,0,0,0.4);margin: 5px 1em 5px;padding: 0 5% 0 0;line-height: 36px;'><?php echo $user->_email; ?></div>
+	        	<?php } ?>
 	        	<?php if(in_array($user->_id, $conn) || $user->_id == $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id < 1){ ?>
 	        		
 	        	<?php }else{ ?>

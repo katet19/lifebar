@@ -23,9 +23,10 @@ class User
 	public $_realnames;
 	public $_weave;
 	public $_title;
+	public $_image;
 	
 	
-	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title) {
+	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title, $image) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -46,50 +47,67 @@ class User
 		$this->_privacy = $privacy;
 		$this->_realnames = $realnames;
 		$this->_title = $title;
+		$this->_image = $image;
 		
-		//Image Handling
+		
 		if($security == "Journalist"){
+			//Big Image
 			$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".png";
 			$filepathtest = "../Images/CriticAvatars/".$id.".png";
 			if(!file_exists($filepathtest)){
 				$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".jpg";
 				$filepathtest = "../Images/CriticAvatars/".$id.".jpg";
 			}
-		}
 			
-		if(file_exists($filepathtest))
-			$this->_avatar = $filepath;
-		else
-			$this->_avatar = get_gravatar($this->_email);
+			if(file_exists($filepathtest))
+				$this->_avatar = $filepath;
+			else
+				$this->_avatar = get_gravatar($this->_email);
 			
-		
-		if($security == "Journalist"){
+			//Little Image
 			$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.png";
 			$filepathtestT = "../Images/CriticAvatars/".$id."s.png";
 			if(!file_exists($filepathtestT)){
 				$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.jpg";
 				$filepathtestT = "../Images/CriticAvatars/".$id."s.jpg";
 			}
-		}
 			
-		if(file_exists($filepathtestT))
-			$this->_thumbnail = $filepathT;
-		else
-			$this->_thumbnail = get_gravatar($this->_email);
-		
-		//Weave Handling
-		$this->_weave = GetWeave($id);
-
+			if(file_exists($filepathtestT))
+				$this->_thumbnail = $filepathT;
+			else
+				$this->_thumbnail = get_gravatar($this->_email);
+		}else{
+			if($image == "Gravatar"){
+				$this->_thumbnail = get_gravatar($this->_email);
+				$this->_avatar = $this->_thumbnail;
+			}else if($image == "Uploaded"){
+				$filepath = "http://lifebar.io/Images/Avatars/".$id.".jpg";
+				$filepathtest = "../Images/Avatars/".$id.".jpg";
+				if(!file_exists($filepathtest)){
+					$filepath = "http://lifebar.io/Images/Avatars/".$id.".png";
+					$filepathtest = "../Images/Avatars/".$id.".png";
+				}
+				
+				if(file_exists($filepathtest))
+					$this->_avatar = $filepath;
+				else
+					$this->_avatar = get_gravatar($this->_email);
+				
+				$this->_thumbnail = $this->_avatar;
+			}else{
+				$this->_avatar = $image;
+				$this->_thumbnail = $this->_avatar;
+			}
+		}
 	}
 		
 }
 
-function GetJournalistPublication($id){
+/*function GetJournalistPublication($id){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("SELECT * FROM  `Experiences` where `UserID` = '".$id."' and `Link` != '' ORDER BY `ExperienceDate` DESC LIMIT 0,1")) {
 		while($row = mysqli_fetch_array($result)){
 				$link = $row["Link"];
-				//$link = preg_replace ('/(\.com|\.net|\.org|\.edu).*/','$1',$link);
 				$domain = parse_url($link);
 				if ($result2 = $mysqli->query("SELECT * FROM  `Publications` where `Link` like '%".$domain["host"]."%' LIMIT 0,1")) {
 					while($row2 = mysqli_fetch_array($result2)){
@@ -101,7 +119,7 @@ function GetJournalistPublication($id){
 		}
 	}
 	return $publication;		
-}
+}*/
 
 
 ?>

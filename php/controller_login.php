@@ -1,7 +1,7 @@
 <?php require_once "includes.php";
-function Login($username, $password, $pconn = null){
+function Login($username, $password){
 	$myuser = "";
-	$mysqli = Connect($pconn);
+	$mysqli = Connect();
 		if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."' or `Email` = '".$username."'")) {
 		while($row = mysqli_fetch_array($result)){
 			if (crypt($password, $row['Hash']) == $row['Hash']) {
@@ -23,7 +23,9 @@ function Login($username, $password, $pconn = null){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
 				echo $row["SessionID"];
@@ -33,13 +35,12 @@ function Login($username, $password, $pconn = null){
 		}
 		if($myuser == ""){ echo "INCORRECT USERNAME OR PASSWORD"; }
 	}
-    if($pconn == null)
-	   Close($mysqli, $result);
+	Close($mysqli, $result);
 	return $myuser;
 }
-function FastLogin($id, $pconn = null){
+function FastLogin($id){
 	$myuser = "";
-	$mysqli = Connect($pconn);
+	$mysqli = Connect();
 		if ($result = $mysqli->query("select * from `Users` where `ID` = '".$id."'")) {
 		while($row = mysqli_fetch_array($result)){
 				$user= new User($row["ID"], 
@@ -60,13 +61,14 @@ function FastLogin($id, $pconn = null){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
 		}
 	}
-    if($pconn == null)
-	   Close($mysqli, $result);
+	Close($mysqli, $result);
 }
 function LoginWithCookie($cookieID){
 	$myuser = "";
@@ -91,7 +93,9 @@ function LoginWithCookie($cookieID){
 					$row["SessionID"],
 					$row["Privacy"],
 					$row["RealNames"],
-					$row["Title"]);
+					$row["Title"],
+					$row["Image"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
 			$_SESSION['logged-in'] = $myuser;
 		}
@@ -118,7 +122,7 @@ function SubmitPWReset($key, $pw){
 		$hashedpw = crypt($pw, $CryptSalt);
 		$mysqli->query("Update `Users` SET `Hash`='".$hashedpw."', `Key`='ACTIVE' WHERE `Key` = '".$key."'");
 		if($id > 0)
-			FastLogin($id, $mysqli);
+			FastLogin($id);
 	}
 	Close($mysqli, $result);
 }
