@@ -47,37 +47,58 @@ class User
 		$this->_privacy = $privacy;
 		$this->_realnames = $realnames;
 		$this->_title = $title;
+		$this->_image = $image;
 		
-		//Image Handling
+		
 		if($security == "Journalist"){
+			//Big Image
 			$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".png";
 			$filepathtest = "../Images/CriticAvatars/".$id.".png";
 			if(!file_exists($filepathtest)){
 				$filepath = "http://lifebar.io/Images/CriticAvatars/".$id.".jpg";
 				$filepathtest = "../Images/CriticAvatars/".$id.".jpg";
 			}
-		}
 			
-		if(file_exists($filepathtest))
-			$this->_avatar = $filepath;
-		else
-			$this->_avatar = get_gravatar($this->_email);
+			if(file_exists($filepathtest))
+				$this->_avatar = $filepath;
+			else
+				$this->_avatar = get_gravatar($this->_email);
 			
-		
-		if($security == "Journalist"){
+			//Little Image
 			$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.png";
 			$filepathtestT = "../Images/CriticAvatars/".$id."s.png";
 			if(!file_exists($filepathtestT)){
 				$filepathT = "http://lifebar.io/Images/CriticAvatars/".$id."s.jpg";
 				$filepathtestT = "../Images/CriticAvatars/".$id."s.jpg";
 			}
-		}
 			
-		if(file_exists($filepathtestT))
-			$this->_thumbnail = $filepathT;
-		else
-			$this->_thumbnail = get_gravatar($this->_email);
-
+			if(file_exists($filepathtestT))
+				$this->_thumbnail = $filepathT;
+			else
+				$this->_thumbnail = get_gravatar($this->_email);
+		}else{
+			if($image == "Gravatar"){
+				$this->_thumbnail = get_gravatar($this->_email);
+				$this->_avatar = $this->_thumbnail;
+			}else if($image == "Uploaded"){
+				$filepath = "http://lifebar.io/Images/Avatars/".$id.".jpg";
+				$filepathtest = "../Images/Avatars/".$id.".jpg";
+				if(!file_exists($filepathtest)){
+					$filepath = "http://lifebar.io/Images/Avatars/".$id.".png";
+					$filepathtest = "../Images/Avatars/".$id.".png";
+				}
+				
+				if(file_exists($filepathtest))
+					$this->_avatar = $filepath;
+				else
+					$this->_avatar = get_gravatar($this->_email);
+				
+				$this->_thumbnail = $this->_avatar;
+			}else{
+				$this->_avatar = $image;
+				$this->_thumbnail = $this->_avatar;
+			}
+		}
 	}
 		
 }

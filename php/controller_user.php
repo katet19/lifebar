@@ -13,7 +13,7 @@ function SetTitles(){
 	}
 }
 
-function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox){
+function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $image){
 	$mysqli = Connect();
 	if($password != ""){
 		$Salt = uniqid();
@@ -21,9 +21,9 @@ function SaveAccountChanges($id, $username, $password, $first, $last, $email, $b
 		$Rounds = '5000';
 		$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
 		$hashedpw = crypt($password, $CryptSalt);
-		$mysqli->query("Update `Users` SET `Username`='".$username."', `Hash`='".$hashedpw."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
+		$mysqli->query("Update `Users` SET `Username`='".$username."', `Hash`='".$hashedpw."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Image`='".$image."' WHERE `ID` = '".$id."'");
 	}else{
-		$mysqli->query("Update `Users` SET `Username`='".$username."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
+		$mysqli->query("Update `Users` SET `Username`='".$username."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Image`='".$image."' WHERE `ID` = '".$id."'");
 	}
 	Close($mysqli, $result);
 	FastLogin($id);

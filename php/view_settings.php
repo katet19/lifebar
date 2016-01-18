@@ -45,29 +45,28 @@ function DisplayUserSettings(){
       	</div>
 	    <div class="row">
     	  <div class="col s12 settings-header">Profile Image</div>
-	      <div class="col s12 m4">
+	      <div class="col s12 m4" style='text-align: center;'>
 	  		  <div class="avatar-item">
-		  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" <?php if($date[1] == 1){ echo "checked"; }else if($quarter == 1){ echo "checked"; } ?>  />
+		  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
 			    <label for="gravatar">Use your Profile image from <a href="http://gravatar.com" target="_blank">Gravatar</a></label>
 		  	  </div >
-    		  <div class="user-avatar" style="width:90px;border-radius:50%;margin-left: 25px;margin-right: auto;height:90px;text-align:left;display:inline-block;background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		  <div class="user-avatar" style="width:90px;border-radius:50%;margin-left: 25px;margin-right: auto;height:90px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
       	  </div>
   			<div class="col s12 m4">
-	    		  <div class="avatar-item">
-			  	    <input name="avatargroup" class="with-gap" type="radio" id="weburlradio" />
-				    <label for="weburlradio">Use an web URL</a></label>
-			  	  </div >
-  		        <i class="mdi-hardware-gamepad prefix"></i>
-		        <input id="weburl" type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
-		        <label for="weburl"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>URL</label>
-  			</div>
-  			<div class="col s12 m4">
   	    		  <div class="avatar-item">
-			  	    <input name="avatargroup" class="with-gap" type="radio" id="uploaded" />
+			  	    <input name="avatargroup" class="with-gap" type="radio" id="uploaded" <?php if($_SESSION['logged-in']->_image == "Uploaded"){ echo "checked"; } ?> />
 				    <label for="uploaded">Upload your own image</a></label>
 			  	  </div >
       			<iframe src='http://lifebar.io/php/view_imageUploader.php' style='width:100%;border:none;'></iframe>
       		</div>
+  			<div class="col s12 m4">
+	    		  <div class="avatar-item">
+			  	    <input name="avatargroup" class="with-gap" type="radio" id="weburlradio" <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "checked"; } ?> />
+				    <label for="weburlradio">Use an web URL</a></label>
+			  	  </div >
+		        <input id="weburl" type="text" value="<?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo $_SESSION['logged-in']->_image; }else{ echo "http://"; } ?>">
+		        <label for="weburl"  <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "class='active'"; } ?>>Web URL</label>
+  			</div>
 	      </div>
       	</div>
 	    <div class="row" style='margin-right:1em;'>
