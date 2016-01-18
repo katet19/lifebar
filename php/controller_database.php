@@ -38,11 +38,11 @@ function ConnectTryFour(){
 	return $mysqli;
 }
 function Close($mysqli, $result){
-	if($result != '' && $result != null && $result != false && $result != true){
+	if($result != '' && $result != null && $result != false && $result != true)
 		mysqli_free_result($result);
-	}
-		
-	mysqli_close($mysqli);
+
+	if($mysqli != null)	
+	   mysqli_close($mysqli);
 }
 function getIp() {
     $ip = $_SERVER['REMOTE_ADDR'];
