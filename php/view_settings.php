@@ -57,6 +57,12 @@ function DisplayUserSettings(){
 			  	    <input name="avatargroup" class="with-gap" type="radio" id="uploaded" <?php if($_SESSION['logged-in']->_image == "Uploaded"){ echo "checked"; } ?> />
 				    <label for="uploaded">Upload your own image</a></label>
 			  	  </div >
+				<div style='color: rgba(0,0,0,0.75);margin-left: 50px;'>
+  					<ul>
+  						<li style='list-style-type: disc;'>JPGs only</li>
+  						<li style='list-style-type: disc;'>Best size: 90 x 90</li>
+  					</ul>
+  				</div>
       			<iframe src='http://lifebar.io/php/view_imageUploader.php?id=<?php echo $_SESSION['logged-in']->_id; ?>' style='width:100%;border:none;'></iframe>
       		</div>
   			<div class="col s12 m4">

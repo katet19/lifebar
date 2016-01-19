@@ -121,6 +121,18 @@ function GetUnReviewedRSSFeeds(){
 	return $feeds;
 }
 
+function GetEmailList(){
+	$emails = "";
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select `Email` from `Users` where `Access` != 'Journalist'")) {
+		while($row = mysqli_fetch_array($result)){
+			$emails[] = $row['Email'];
+		}
+	}
+	Close($mysqli, $result);
+	return $emails;
+}
+
 function GetUnReviewedRSSVideo(){
 	$myuser = $_SESSION['logged-in'];
 	$feeds = "";
@@ -437,7 +449,7 @@ function GetJoesRewards(){
 
 function MapReviewToGame($id, $quote, $tier, $links, $gameid, $criticid){
 	$mysqli = Connect();
-	$game = GetGameByGBIDFull($gameid, $mysqli);
+	$game = GetGameByGBIDFull($gameid);
 	$result = $mysqli->query("Update `ImportReview` set `GameID` = '".$game->_id."', `Owner` = '7828' where `ID` = '".$id."'");
 	Close($mysqli, $result);
 	SubmitCriticExperience($criticid,$game->_id,$quote,$tier,$links);

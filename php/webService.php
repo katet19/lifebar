@@ -162,6 +162,9 @@
 		if($_POST['action'] == 'DisplayBadgeManagement'){
 			DisplayMilestoneManagement();
 		}
+		if($_POST['action'] == 'DisplayEmailExport'){
+			DisplayEmailExport();
+		}
 	}
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){

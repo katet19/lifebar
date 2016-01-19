@@ -1,7 +1,7 @@
 <?php
 function customError($level, $msg, $file, $line){
 	$subject = "Error: ".$level;
-	$to = "lifebar.ttzfu@zapiermail.com";
+	$to = "lifebar.fjs78@zapiermail.com";
 	$msg = $msg."</b> in ".$file." @ line ".$line."<br>";
 	
 	$trace = array_reverse(debug_backtrace());
