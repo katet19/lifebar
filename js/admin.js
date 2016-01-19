@@ -87,7 +87,30 @@ function AttachAdminEvents(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayBadgeManagement();
 	});
+	$(".admin-export-email").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayEmailExport();
+	});
 	
+}
+
+function DisplayEmailExport(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayEmailExport" },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function DisplayBadgeManagement(){

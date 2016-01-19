@@ -424,14 +424,29 @@ function ConvertTimeStampToRelativeTime($timestamp){
 	$now = new DateTime("now");
 	$old = new DateTime($timestamp);
 	$interval = date_diff($now, $old);
-	if($interval->d > 0)
-		return $interval->d." days ago";
-	else if($interval->h > 0)
-		return $interval->h." hours ago";
-	else if($interval->i > 0)
-		return $interval->i." minutes ago";
-	else
-		return $interval->s." seconds ago";
+	if($interval->d > 0){
+		if($interval->d == 1)
+			return $interval->d." day ago";
+		else
+			return $interval->d." days ago";
+	}
+	else if($interval->h > 0){
+		if($interval->h == 1)
+			return $interval->h." hour ago";
+		else
+			return $interval->h." hours ago";
+	}
+	else if($interval->i > 0){
+		if($interval->h == 1)
+			return $interval->i." minute ago";
+		else
+			return $interval->i." minutes ago";
+	}else{
+		if($interval->s == 1)
+			return $interval->s." second ago";
+		else
+			return $interval->s." seconds ago";
+	}
 }
 
 function ConvertDateToLongRelationalEnglish($date){

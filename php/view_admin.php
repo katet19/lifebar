@@ -59,6 +59,16 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
+			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-communication-email" style='margin: 0 5px;'></i> Export Email List</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-export-email">Get List</a>
+	            </div>
+	          </div>
+  			</div>
   			<?php if($_SESSION['logged-in']->_id == 7 || $_SESSION['logged-in']->_id == 7828){
   				$rewards = GetJoesRewards();?>
 	  			<div class="col s12 m6 l4">
@@ -76,6 +86,15 @@ function DisplayAdmin($userid){
 		<?php DisplayAdminInfo($userid, $admindata, $gamedata, $userdata); ?>
 	</div>
 <?php
+}
+
+function DisplayEmailExport(){
+	$emails = GetEmailList();
+	?>
+	<textarea>
+		<?php echo implode(",",$emails); ?>
+	</textarea>
+	<?php
 }
 
 function DisplayAdminInfo($userid, $data, $gamedata, $userdata){

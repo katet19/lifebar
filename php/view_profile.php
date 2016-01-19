@@ -464,7 +464,9 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
 		<div class='lifebar-image'>
 			<div class="lifebar-circle-fill"></div>
 			<!--<div class="lifebar-circle-container"></div>-->
-			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<?php if($user->_title == "SRANK"){ ?><div class="srank-badge z-depth-1">S</div><?php } ?>
+			</div>
 	    </div>
     	<div class="lifebar-dots-min" style='top: 10px;'>
     		<?php $bigdots = $lifebar[2];
