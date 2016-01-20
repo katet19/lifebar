@@ -347,6 +347,7 @@
     bottom: 8px;
     margin-left: 55px;
     text-align:center;
+    display:none;
 }
 
 .srank-badge-lifebar{
@@ -362,6 +363,7 @@
 	bottom: 0px;
     margin-left: 55px;
     text-align:center;
+    display:none;
 }
 
 .srank-badge-review{
@@ -378,6 +380,7 @@
     bottom: 0px;
     margin-left: 30px;
     text-align: center;
+    display:none;
 }
 
 .srank-badge-activity{
@@ -394,6 +397,7 @@
     bottom: 0px;
     margin-left: 43px;
     text-align: center;
+    display:none;
 }
 
 
