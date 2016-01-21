@@ -92,7 +92,7 @@ function DisplayEmailExport(){
 	$emails = GetEmailList();
 	?>
 	<textarea>
-		<?php echo implode(",",$emails); ?>
+		<?php echo implode("\n",$emails); ?>
 	</textarea>
 	<?php
 }

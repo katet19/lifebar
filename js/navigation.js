@@ -216,7 +216,7 @@ function CheckForNotifications(){
      		}else{
      			$(".userNotificiations").html("<i class='mdi-social-notifications-none'></i>");
      		}
-  			setTimeout(CheckForNotifications,60000);
+  			setTimeout(CheckForNotifications,300000);
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
