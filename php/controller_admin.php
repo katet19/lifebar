@@ -136,6 +136,17 @@ function GetUnReviewedRSSFeeds(){
 	return $feeds;
 }
 
+function GetDBThreads(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("SHOW STATUS WHERE variable_name LIKE 'Threads_%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$threads[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $threads;
+}
+
 function GetEmailList(){
 	$emails = "";
 	$mysqli = Connect();
