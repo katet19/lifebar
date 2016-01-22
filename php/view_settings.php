@@ -125,7 +125,8 @@ function DisplayUserSettings(){
 						<option  value='Game Informer' <?php if($_SESSION['logged-in']->_defaultwatched == 'Game Informer'){echo "selected"; $found = true; } ?>>Game Informer</option>
 						<option  value='Gamesradar' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamesradar'){echo "selected"; $found = true; } ?>>Gamesradar</option>
 						<option  value='Gamespot' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamespot'){echo "selected"; $found = true; } ?>>Gamespot</option>
-						<option  value='Giant Bomb' <?php if($_SESSION['logged-in']->_defaultwatched == 'Giantbomb' || $_SESSION['logged-in']->_defaultwatched == 'Giant Bomb'){echo "selected"; $found = true; } ?>>Giant Bomb</option>
+						<option  value='Gametrailers' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gametrailers'){echo "selected"; $found = true; } ?>>Gametrailers</option>
+                        <option  value='Giant Bomb' <?php if($_SESSION['logged-in']->_defaultwatched == 'Giantbomb' || $_SESSION['logged-in']->_defaultwatched == 'Giant Bomb'){echo "selected"; $found = true; } ?>>Giant Bomb</option>
 						<option  value='IGN' <?php if($_SESSION['logged-in']->_defaultwatched == 'IGN'){echo "selected"; $found = true; } ?>>IGN</option>
 						<option  value='Joystiq' <?php if($_SESSION['logged-in']->_defaultwatched == 'Gamespot'){echo "selected"; $found = true; } ?>>Joystiq</option>
 						<option  value='Other' <?php if($_SESSION['logged-in']->_defaultwatched == 'Other'){echo "selected"; $found = true; } ?>>Other</option>
