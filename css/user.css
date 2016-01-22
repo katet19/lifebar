@@ -336,68 +336,74 @@
 
 .srank-badge{
     border-radius: 50%;
-    padding: 1px 0px;
-    font-size:1.25em;
+    font-size: 1.3em;
     background-color: #0A67A3;
-    color: white;
-    font-weight: 400;
+    color: yellow;
+    font-weight: bold;
+    line-height: 26px;
+    font-family: sans-serif;
     width: 30px;
     height: 30px;
     position: absolute;
     bottom: 8px;
     margin-left: 55px;
-    text-align:center;
-    display:none;
+    border: 2px solid yellow;
+    text-align: left;
+    padding-left: 6px;
 }
 
 .srank-badge-lifebar{
     border-radius: 50%;
-    padding: 1px 0px;
-    font-size:1.25em;
+    font-size: 1.3em;
     background-color: #0A67A3;
-    color: white;
-    font-weight: 400;
+    color: yellow;
+    font-weight: bold;
+    line-height: 26px;
+    font-family: sans-serif;
     width: 30px;
     height: 30px;
     position: absolute;
-	bottom: 0px;
+    bottom: 0px;
     margin-left: 55px;
-    text-align:center;
-    display:none;
+    border: 2px solid yellow;
+    text-align: left;
+    padding-left: 6px;
 }
 
 .srank-badge-review{
     border-radius: 50%;
-    padding: 0px;
     font-size: 1em;
     background-color: #0A67A3;
-    color: white;
-    font-weight: 400;
+    color: yellow;
+    font-weight: bold;
+    line-height: 20px;
+    font-family: sans-serif;
     width: 20px;
     height: 20px;
-    line-height: 20px;
     position: absolute;
     bottom: 0px;
-    margin-left: 30px;
-    text-align: center;
-    display:none;
+    margin-left: 35px;
+    border: 1px solid yellow;
+    text-align: left;
+    padding-left: 3px;
 }
 
 .srank-badge-activity{
-	border-radius: 50%;
-    padding: 0px;
+    border-radius: 50%;
     font-size: 1em;
     background-color: #0A67A3;
-    color: white;
-    font-weight: 400;
+    color: yellow;
+    font-weight: bold;
+    line-height: 20px;
+    font-family: sans-serif;
     width: 20px;
     height: 20px;
-    line-height: 20px;
     position: absolute;
     bottom: 0px;
     margin-left: 43px;
-    text-align: center;
-    display:none;
+    border: 1px solid yellow;
+    text-align: left;
+    padding-left: 3px;
 }
 
 
