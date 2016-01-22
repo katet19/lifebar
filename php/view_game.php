@@ -20,7 +20,7 @@ function DisplayGameViaID($gameid){
 function ShowGameContent($game, $critics, $users, $myxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $game); ?></div>
+		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $game, $myxp); ?></div>
 		<div id="game-user-tab" class="col s12 game-tab"><?php ShowUsers($users); ?></div>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab"><?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?></div>
@@ -29,7 +29,7 @@ function ShowGameContent($game, $critics, $users, $myxp){
 	<?php DisplayGameInfo($game); ?>
 <?php }
 
-function ShowCritics($critics, $game){
+function ShowCritics($critics, $game, $myxp){
 	$count = 1;?>
 		<?php 
 		$allcritics = array();
@@ -46,31 +46,26 @@ function ShowCritics($critics, $game){
 				$count++;
 			}
 		}else{ 
-			if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
-				<div class="row info-container">
-					<div class="col s12">
-						<div class="info-label">Bookmark this game to keep track of your favorites</div>
-						<?php if($_SESSION['logged-in']->_id > 0){ ?>
-							<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-						<?php }else{ ?>
-							<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-						<?php } ?>
-					</div>
-				</div>
-			<?php
-			}else{
 			?>
-				<div class="row info-container">
-					<div class="col s12">
-						<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
+			<div class="row info-container">
+				<div class="col s12">
+					<?php if($myxp->_bucketlist != "Yes"){ ?>
+						<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
+							<div class="info-label">Bookmark this game to keep track of your favorites</div>
+						<?php }else{ ?>
+							<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
+						<?php } ?>
 						<?php if($_SESSION['logged-in']->_id > 0){ ?>
 							<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
 						<?php }else{ ?>
 							<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
 						<?php } ?>
-					</div>
+					<?php }else{ ?>
+						<div class="info-label">Critics haven't published reviews for this game yet</div>
+					<?php } ?>
 				</div>
-			<?php }
+			</div>
+		<?php
 		}
 }
 
