@@ -9,6 +9,21 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
+//FixGameImageURLS();
+function FixGameImageURLS(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select `ImageLarge`, `ID`, `ImageSmall` from `Games` where `ImageLarge` like '%polygonalweave%' or `ImageSmall` like '%polygonalweave%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$small = $row['ImageSmall'];
+			$large = $row['ImageLarge'];
+			
+			$small = str_replace("polygonalweave.com","lifebar.io", $small);
+			$large = str_replace("polygonalweave.com","lifebar.io", $large);
+			echo $small." || ".$large."<BR>";
+			$mysqli->query("update `Games` set `ImageLarge` = '".$large."', `ImageSmall` = '".$small."' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
 
 function FixPlatformMilestones(){
 	$mysqli = Connect();
@@ -124,7 +139,8 @@ function GetUnReviewedRSSFeeds(){
 function GetEmailList(){
 	$emails = "";
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select `Email` from `Users` where `Access` != 'Journalist'")) {
+    $date = date('Y-m-d', strtotime("now -7 days") );
+	if ($result = $mysqli->query("select `Email` from `Users` where `Access` != 'Journalist' AND `Established` >= '".$date."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$emails[] = $row['Email'];
 		}
