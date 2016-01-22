@@ -596,7 +596,7 @@ function GetActivePersonalities(){
 function GetNewUsersCategory($limit){
 	$users = array();
 	$mysqli = Connect();
-	$thisquarter = date('Y-m-d', strtotime("now -2 days") );
+	$thisquarter = date('Y-m-d', strtotime("now -5 days") );
 	if ($result = $mysqli->query("select * from `Users` usr where usr.`Access` != 'Journalist' and usr.`Established` >= '".$thisquarter."' ORDER BY `ID` DESC LIMIT ".$limit)) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["ID"], $mysqli);
