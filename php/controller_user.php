@@ -477,10 +477,21 @@ function RemoveConnection($userid, $removeid){
 
 function AddConnection($userid, $addid){
 	$mysqli = Connect();
-	$mysqli->query("INSERT INTO `Connections`  (`Fan`, `Celebrity`) VALUES ('".$userid."', '".$addid."')");
-	$result = $mysqli->query("insert into `Events` (`UserID`,`Event`,`Quote`) values ('$userid','CONNECTIONS','$addid')");
-	Close($mysqli, $result);
-	AddNewFollower($userid, $addid);
+    $brandnew = true;
+    if ($result = $mysqli->query("select * from `Connections` where `Celebrity` = '".$addid."' and `Fan` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row['ID'] > 0)
+                $brandnew = false;
+        }
+    }
+    if($brandnew){
+        $mysqli->query("INSERT INTO `Connections`  (`Fan`, `Celebrity`) VALUES ('".$userid."', '".$addid."')");
+        $result = $mysqli->query("insert into `Events` (`UserID`,`Event`,`Quote`) values ('$userid','CONNECTIONS','$addid')");
+        Close($mysqli, $result);
+        AddNewFollower($userid, $addid);
+    }else{
+        Close($mysqli, $result);
+    }
 }
 
 function MakeRequest($name, $id){
