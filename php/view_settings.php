@@ -68,7 +68,7 @@ function DisplayUserSettings(){
   			<div class="col s12 m4">
 	    		  <div class="avatar-item">
 			  	    <input name="avatargroup" class="with-gap" type="radio" id="weburlradio" <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "checked"; } ?> />
-				    <label for="weburlradio">Use an web URL</a></label>
+				    <label for="weburlradio">Use a web URL</a></label>
 			  	  </div >
 		        <input id="weburl" type="text" value="<?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo $_SESSION['logged-in']->_image; }else{ echo "http://"; } ?>">
 		        <label for="weburl"  <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "class='active'"; } ?>>Web URL</label>
