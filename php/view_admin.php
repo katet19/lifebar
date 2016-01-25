@@ -69,6 +69,16 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
+  			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-device-data-usage" style='margin: 0 5px;'></i> See Database Threads</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-db-threads">See Live Threads</a>
+	            </div>
+	          </div>
+  			</div>
   			<?php if($_SESSION['logged-in']->_id == 7 || $_SESSION['logged-in']->_id == 7828){
   				$rewards = GetJoesRewards();?>
 	  			<div class="col s12 m6 l4">
@@ -95,6 +105,15 @@ function DisplayEmailExport(){
 		<?php echo implode("\n",$emails); ?>
 	</textarea>
 	<?php
+}
+
+function DisplayDBThreads(){
+	$threads = GetDBThreads();
+	foreach($threads as $thread){ ?>
+	<div>
+		<div><b><?php echo $thread[0]; ?>:</b> <?php echo $thread[1]; ?></div>	
+	</div>
+	<?php }
 }
 
 function DisplayAdminInfo($userid, $data, $gamedata, $userdata){

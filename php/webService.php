@@ -165,6 +165,9 @@
 		if($_POST['action'] == 'DisplayEmailExport'){
 			DisplayEmailExport();
 		}
+		if($_POST['action'] == 'DisplayDBThreads'){
+			DisplayDBThreads();
+		}
 	}
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){

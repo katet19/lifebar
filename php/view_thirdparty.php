@@ -1,6 +1,7 @@
 <?php
 function LoadThirdPartyTools(){
 	//LoadGoogleAnalytics();
+	//LoadFreshDeskWidget();
 }
 
 function LoadGoogleAnalytics(){ ?>
@@ -18,7 +19,7 @@ function LoadGoogleAnalytics(){ ?>
 function LoadFreshDeskWidget(){?>
 	<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 	<script type="text/javascript">
-		FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Feedback+%26+Support&helpdesk_ticket[requester]=<?php echo $myuser->_email; ?>", "widgetType": "popup", "buttonType": "text", "buttonText": "Feedback", "buttonColor": "#FFF", "buttonBg": "#474747", "alignment": "2", "offset": "45%", "formHeight": "500px", "url": "https://polygonalweave.freshdesk.com"} );
+	    FreshWidget.init("", {"queryString": "&widgetType=popup", "utf8": "✓", "widgetType": "popup", "buttonType": "text", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#0a67a3", "alignment": "4", "offset": "235px", "formHeight": "500px", "url": "https://lifebar.freshdesk.com"} );
 	</script>
 <?php
 }

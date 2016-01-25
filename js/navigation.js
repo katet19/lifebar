@@ -38,11 +38,13 @@ function AttachTabLoadingEvents(){
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
 	  	var elem = $(".userContainer");
 	  	var name = elem.attr("data-username");
-	  	//var email = elem.attr("data-email");
-	  	window.open("https://gitreports.com/issue/Lifebario/support?name="+name+"&email=Please%20do%20not%20include%20email");
+	  	var email = elem.attr("data-email");
+	  	//$(".freshwidget-button").trigger("click");
+	  	ShowFreshDesk(name, email);
+	  	//window.open("https://gitreports.com/issue/Lifebario/support?name="+name+"&email=Please%20do%20not%20include%20email");
 	  });
   	  $(".supportForumButton").on("click", function(){
-	  	window.open("https://github.com/Lifebar/support");
+	  	window.open("https://lifebar.freshdesk.com");
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){
@@ -51,6 +53,11 @@ function AttachTabLoadingEvents(){
   			ShowLanding();
 	  	}
 	  });
+}
+
+function ShowFreshDesk(name, email){
+	window.open("https://lifebar.freshdesk.com/widgets/feedback_widget/new?&widgetType=embedded&screenshot=no&helpdesk_ticket[requester]="+email+"&formTitle=Lifebar+Help+%26+Support&helpdesk_ticket[name]="+name);
+	//ShowPopUp("<iframe title='Feedback Form' class='freshwidget-embedded-form' id='freshwidget-embedded-form' src='https://lifebar.freshdesk.com/widgets/feedback_widget/new?&widgetType=embedded&screenshot=no' scrolling='no' height='500px' width='100%'' frameborder='0' ></iframe>");
 }
 
 /*

@@ -4,6 +4,10 @@ body{
 	 overflow-y: scroll;
 }
 
+.feedback-wrapper{
+	overflow:auto !important;
+}
+
 .error_msg{
     position: fixed;
     top: 25%;
