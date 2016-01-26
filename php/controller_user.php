@@ -403,10 +403,10 @@ function DisplayNameReturn($user){
 	$conn = GetMutalConnections($myuser->_id);
 	if($user->_security == "Journalist"){
 		return $user->_first." ".$user->_last;
-	}else if($myuser->_id == $user->_id && $user->_first != "" && $user->_last != ""){
-		return $user->_first." ".$user->_last;
-	}else if($myuser->_realnames == "True" && in_array($user->_id, $conn)){
-		return $user->_username." (".$user->_first." ".$user->_last.")";
+	//}else if($myuser->_id == $user->_id && $user->_first != "" && $user->_last != ""){
+	//	return $user->_first." ".$user->_last;
+	//}else if($myuser->_realnames == "True" && in_array($user->_id, $conn)){
+	//	return $user->_username." (".$user->_first." ".$user->_last.")";
 	}else{
 		return $user->_username;
 	}	
