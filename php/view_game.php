@@ -2,26 +2,28 @@
 function DisplayGame($gbid){
 	$game = GetGameByGBIDFull($gbid);
 	$critics = GetCriticXPForGame($game->_id);
-	$users = GetUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $users, $myxp);
-	ShowGameContent($game, $critics, $users, $myxp);
+	ShowGameHeader($game, $critics, $myusers, $otherusers, $myxp);
+	ShowGameContent($game, $critics, $myusers, $otherusers, $myxp);
 }
 
 function DisplayGameViaID($gameid){
 	$game = GetGame($gameid);
 	$critics = GetCriticXPForGame($game->_id);
-	$users = GetUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $users, $myxp);
-	ShowGameContent($game, $critics, $users, $myxp);
+	ShowGameHeader($game, $critics, $myusers, $otherusers, $myxp);
+	ShowGameContent($game, $critics, $myusers, $otherusers, $myxp);
 }
 
-function ShowGameContent($game, $critics, $users, $myxp){ 
+function ShowGameContent($game, $critics, $users, $otherusers, $myxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $game, $myxp); ?></div>
-		<div id="game-user-tab" class="col s12 game-tab"><?php ShowUsers($users); ?></div>
+		<div id="game-user-tab" class="col s12 game-tab"><?php ShowUsers($users, $otherusers); ?></div>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab"><?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?></div>
 		<?php } ?>
@@ -69,7 +71,7 @@ function ShowCritics($critics, $game, $myxp){
 		}
 }
 
-function ShowUsers($users){
+function ShowUsers($users, $otherusers){
 	$count = 1;?>
 		<?php
 		$allusers = array();
@@ -79,25 +81,45 @@ function ShowUsers($users){
 		
 		arsort($allusers);
 		$allusers = array_keys($allusers);
-		
+		?>
+		<div class="row game-tab-subheader-container" >
+			<div class="col s12">
+				<div class="game-tab-subheader">Following</div>
+			</div>
+		</div>
+		<?php
 		if(sizeof($allusers) > 0){
 			while($count <= sizeof($allusers)){
 				DisplayUserQuoteCard($users[$allusers[$count-1]]);
 				$count++;
 			}
-			?>
-			<div class="row info-container" >
-				<div class="col s12" style="margin-top:4em !important;">
-					<!--<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>-->
-				</div>
-			</div>
-			<?php
 		}else{
 			?>
 			<div class="row info-container" >
 				<div class="col s12">
 					<div class="info-label">None of the users you follow have XP for this game yet</div>
-					<!--<div class="info-label ptalk-link-games" style='font-weight: bold; font-size: 1.25em; color: #1E88E5; cursor: pointer;'>DISCUSS @ POLYGONAL TALK</div>-->
+				</div>
+			</div>
+			<?php
+		}
+		
+		?>
+		<div class="row game-tab-subheader-container" >
+			<div class="col s12">
+				<div class="game-tab-subheader" style='margin-top: 4em;'>Other Users</div>
+			</div>
+		</div>
+		<?php
+		if(sizeof($otherusers) > 0){
+			foreach($otherusers as $usr){
+				if($usr->_userid != $_SESSION['logged-in']->_id)
+					DisplayUserQuoteCard($usr);
+			}
+		}else{
+			?>
+			<div class="row info-container" >
+				<div class="col s12">
+					<div class="info-label">No one outside of the people you follow have XP for this game yet</div>
 				</div>
 			</div>
 			<?php
@@ -120,7 +142,7 @@ function ShowGameTabs($critics, $users, $myxp){
 	<?php
 }
 
-function ShowGameHeader($game, $critics, $users, $myxp){
+function ShowGameHeader($game, $critics, $users, $otherusers, $myxp){
 	?>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
