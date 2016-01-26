@@ -562,7 +562,7 @@ function BackOutOfGame(currentTab){
 	if(method != undefined)
 		method();
 	GLOBAL_HASH_REDIRECT = "NO";
-	location.hash = "";
+	//location.hash = "";
 }
 
 function HideGameContainer(){
