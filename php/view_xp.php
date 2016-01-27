@@ -451,7 +451,7 @@ function ShowTierGraphSelection($exp){
 		$relativeT5 = 0;
 	?>
 	<div style="float: left; margin-left: 4rem; font-weight: 500;margin-bottom: 15px;">
-		<?php if($total == 0){ echo "Best"; } ?>
+		<?php echo "Best"; ?>
 	</div>
 	<div class="myxp-GraphBarContainer firsttier" data-total="<?php echo $total; ?>">
 		<div data-tier="1" data-count="<?php echo $t1; ?>" class="myxp-GraphLabel btn-flat waves-effect waves-light <?php if($exp->_tier == 1){ echo "myxp-selected-tier tier1BG"; }?>"><i class="mdi-content-add left" style='vertical-align: sub;font-size: 1em;'></i>Tier 1</div>
@@ -474,7 +474,7 @@ function ShowTierGraphSelection($exp){
 		<div class="myxp-GraphBar tier5BG" style="width:<?php echo $relativeT5; ?>%;"></div>
 	</div>
 	<div style="float: left; margin-left: 4rem; font-weight: 500;">
-		<?php if($total == 0){ echo "Worst"; } ?>
+		<?php echo "Worst"; ?>
 	</div>
 	<?php
 }

@@ -72,8 +72,8 @@ function ShowCritics($critics, $game, $myxp){
 }
 
 function ShowUsers($users, $otherusers){
-	$count = 1;?>
-		<?php
+	if($_SESSION['logged-in']->_id > 0){
+		$count = 1;
 		$allusers = array();
 		foreach($users as $user){
 			$allusers[$user->_id] = GetTotalAgreesForXP($user->_id);
@@ -103,37 +103,55 @@ function ShowUsers($users, $otherusers){
 			<?php
 		}
 		
-		?>
-		<div class="row game-tab-subheader-container" >
-			<div class="col s12">
-				<div class="game-tab-subheader" style='margin-top: 4em;'>Other Users</div>
-			</div>
-		</div>
-		<?php
-		if(sizeof($otherusers) > 0){
-			foreach($otherusers as $usr){
-				if($usr->_userid != $_SESSION['logged-in']->_id)
-					DisplayUserQuoteCard($usr);
-			}
-		}else{
 			?>
-			<div class="row info-container" >
+			<div class="row game-tab-subheader-container" >
 				<div class="col s12">
-					<div class="info-label">No one outside of the people you follow have XP for this game yet</div>
+					<div class="game-tab-subheader" style='margin-top: <?php if(sizeof($allusers) > 0){ echo "4em"; }else{ echo "0em"; } ?>'>Other Users</div>
 				</div>
 			</div>
 			<?php
+			
+			if(sizeof($otherusers) > 0){
+				foreach($otherusers as $usr){
+						DisplayUserQuoteCard($usr);
+				}
+			}else{
+				?>
+				<div class="row info-container" >
+					<div class="col s12">
+						<div class="info-label">No one outside of the people you follow have XP for this game yet</div>
+					</div>
+				</div>
+				<?php
+			}
+		}else{
+			if(sizeof($otherusers) > 0){
+				foreach($otherusers as $usr){
+						DisplayUserQuoteCard($usr);
+				}
+			}else{
+				?>
+				<div class="row info-container" >
+					<div class="col s12">
+						<div class="info-label">No one has entered XP for this game yet</div>
+					</div>
+				</div>
+				<?php	
+			}
 		}
 }
 
-function ShowGameTabs($critics, $users, $myxp){
+function ShowGameTabs($critics, $users, $otherusers, $myxp){
+	$totalusers = sizeof($users) + sizeof($otherusers);
+	if(sizeof($otherusers) > 50)
+		$totalusers = $totalusers."+";
 	?>
 	<div id="game-navigation-header">
 		<div class="row" style='margin:0;'>
 		    <div class="col s12 m8" style="padding:0;">
 		      <ul class="tabs gameNav" style="background-color:transparent">
 		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-critic-tab" class="active waves-effect waves-light">Critics <?php if(sizeof($critics) > 0){ echo "<div class='HideForMobile'>(".sizeof($critics).")</div>"; } ?></a></li>
-		        <li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($users) > 0){ echo "<div class='HideForMobile'>(".sizeof($users).")</div>"; } ?></a></li>
+		        <li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($totalusers) > 0){ echo "<div class='HideForMobile'>(".$totalusers.")</div>"; } ?></a></li>
 		        <li class="tab col s3 userGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
 		      </ul>
 			</div>
@@ -153,7 +171,7 @@ function ShowGameHeader($game, $critics, $users, $otherusers, $myxp){
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
-		<?php ShowGameTabs($critics, $users, $myxp); ?>
+		<?php ShowGameTabs($critics, $users, $otherusers, $myxp); ?>
 		<div class="fixed-action-btn" id="game-fab">
 			<?php ShowMyGameFAB($game->_id); ?>
 		</div>
