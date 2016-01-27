@@ -1707,7 +1707,6 @@ function SubmitOwned($user,$gameid,$owned){
 
 function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year, $single, $multi, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed){
 	$mysqli = Connect();
-	$quote = mysqli_real_escape_string($mysqli, $quote);
 	$completed = str_replace("%","",$completed);
 	
 	if($tier <= 0 || $quote == ""){
@@ -1715,6 +1714,8 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$tier = $quickxp->_tier;
 		$quote = $quickxp->_quote;
 	}
+	
+	$quote = mysqli_real_escape_string($mysqli, $quote);
 	
 	if($completed == "Multiple Playthroughs"){
 		$completed = "101";
