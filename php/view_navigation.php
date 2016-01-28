@@ -35,11 +35,13 @@ function DisplayHeaderNavigation(){ ?>
 							<div class="searchContainer">
 								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 							</div>
 						<?php }else{ ?>
 							<div class="searchContainerAnonymous">
 								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 							</div>
 						<?php } ?>
 						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
