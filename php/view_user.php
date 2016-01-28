@@ -280,7 +280,11 @@ function BuildPlayedSentence($exp){
 		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2 (Apr/May/Jun)"; }
 		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3 (Jul/Aug/Sep)"; }
 		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4 (Oct/Nov/Dec)"; }
-		$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else if($date[1] == 0){ $quarter = ""; }
+		if($quarter != "")
+			$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else
+			$sentence = $sentence." in ".$date[0];
 	}
 	if($exp->_platform != ""){
 		$myplatforms = str_replace("\n", " ", $exp->_platform);
@@ -301,7 +305,11 @@ function BuildWatchedSentence($exp){
 		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2 (Apr/May/Jun)"; }
 		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3 (Jul/Aug/Sep)"; }
 		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4 (Oct/Nov/Dec)"; }
-		$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else if($date[1] == 0){ $quarter = ""; }
+		if($quarter != "")
+			$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else
+			$sentence = $sentence." in ".$date[0];
 	}
 	if($exp->_source != ""){
 		$sentence = $sentence." on ".$exp->_source;
