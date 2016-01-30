@@ -373,18 +373,10 @@
 
 @media only screen and (max-width : 600px) {
 	.srank-badge-activity{
-	    width: 22px;
-	    height: 22px;
-	    bottom: 0px;
-	    margin-left: 33px;
-	    padding-left: 4px;
+		left: 38px !important;
 	}
 	.srank-badge{
 		padding-left:7px;
-	}
-	.srank-badge-review{
-	    padding-left: 4px;
-        line-height: 18px;
 	}
 	#userSettings{
 		margin:1em 0 5em;
