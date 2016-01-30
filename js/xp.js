@@ -217,6 +217,7 @@ function ToggleQuarter(year){
 	var currentYear = (new Date).getFullYear();
 	if(year == currentYear -1){
 		$(".myxp-quarter").show(100);
+		$(".myxp-quarter").find(".myxp-form-box-header").html("Experienced Quarter <span style='margin-left:10px;font-weight:bold;font-size: 0.8em;'>optional</span>");
 		$(".myxp-sentence-quarter").html("");
 		$("#q0").prop("checked", true);
 	}else if(year != currentYear){
@@ -225,6 +226,7 @@ function ToggleQuarter(year){
 		$("#q0").prop("checked", true);
 	}else{
 		$(".myxp-quarter").show(100);
+		$(".myxp-quarter").find(".myxp-form-box-header").html("Experienced Quarter");
 	}
 }
 
