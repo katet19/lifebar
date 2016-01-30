@@ -4,6 +4,7 @@ function InitializeNavigation(){
 	UserAccountNav();
 	AttachTabLoadingEvents();
 	CheckForNotifications();
+	CheckForUpdates();
 }
 
 function ManuallyNavigateToTab(tab){
@@ -224,6 +225,29 @@ function CheckForNotifications(){
      			$(".userNotificiations").html("<i class='mdi-social-notifications-none'></i>");
      		}
   			setTimeout(CheckForNotifications,300000);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            //ToastError("Server Timeout");
+	        } else {
+	            //ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function CheckForUpdates(){
+	var version = GLOBAL_VERSION;
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "CheckVersion", version: version },
+     type: 'post',
+     success: function(output) {
+     		if($.trim(output) == "UPDATE"){
+     			ToastUpdate();
+     		}else{
+  				setTimeout(CheckForUpdates,3660000);
+     		}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
