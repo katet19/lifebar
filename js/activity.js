@@ -74,6 +74,7 @@ function AttachActivityEvents(){
 	 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
 	 })
 	 AttachAgreesFromActivity();
+	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
 	 	if(isScrolledIntoView($("#feed-endless-loader"))){
 	 		if($("#feed-endless-loader").html() == "")

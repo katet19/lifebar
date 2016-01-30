@@ -2219,5 +2219,70 @@ function DisplayMyLibrarySecondaryContent($userid){ ?>
 			</div>
 		</div>
 	</div>
-<?php 
+<?php
 }
+
+function DisplayProfileActivity($userid){
+	$user = GetUser($userid);
+	$name = "";
+	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
+	DisplayBackButton($name."'s activity");
+	?>	
+	<div class='row' style='margin-top:80px'>
+		<div class="activity-top-level" data-id='<?php echo $user->_id; ?>' >
+			<?php 
+				DisplayMainActivity($userid, "My Activity");
+			?>
+		</div>
+		<?php
+			DisplayProfileActivitySecondaryContent($user);
+		?>
+	</div>
+<?php	
+}
+
+function DisplayProfileActivityEndless($userid, $page, $date){
+	DisplayActivityEndless($userid, $page, $date, "My Activity");
+}
+
+function DisplayProfileActivitySecondaryContent($user){ ?>
+	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;margin-top: 60px;'>
+		<div class="row activity-secondary-content">
+			<div class="col s12">
+				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Filter Activity Feed</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+			  	    <div id="activity-people-i-follow" class="activity-category-selector activity-category-selected" style='font-size:1.25rem;' data-filter="All"><i class="mdi-social-people left"></i>People I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-only-users-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Users I Follow"><i class="mdi-social-people-outline left"></i>Only Users I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-all-users" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Users"><i class="mdi-social-public left"></i>All Users</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-only-critic-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Critics I Follow"><i class="mdi-action-subject left"></i>Only Personalities I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-all-critics" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Critics"><i class="mdi-social-location-city left"></i>All Personalities</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+			  	    <div id="activity-mine" class="activity-category-selector" style='font-size:1.25rem;' data-filter="My Activity"><i class="mdi-social-person left"></i> My Activity</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+}
+?>

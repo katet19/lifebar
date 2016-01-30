@@ -942,3 +942,89 @@ function DisplayLifeTimeChart(){
 		});
 	}
 }
+
+function ShowUserActivity(userid){
+  	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
+  	var windowWidth = $(window).width();
+    $("#activity").css({"display":"inline-block", "left": -windowWidth});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	if($(window).width() > 599){
+		$("#navigation-header").css({"display":"block"});
+		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	}
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowUserProfileActivity", userid: userid },
+     type: 'post',
+     success: function(output) {
+     			$("#activityInnerContainer").html(output);
+     			window.scrollTo(0, 0);
+      			Waves.displayEffect();
+				AttachShowUserActivityEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachShowUserActivityEvents(){
+		 $(".user-discover-card").on("click", function(e){
+		  	e.stopPropagation();
+		 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		 });
+	 	 $(".feed-avatar, .user-avatar").on("click", function(e){
+		  	e.stopPropagation();
+		 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+		 });
+		 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
+		 	e.stopPropagation(); 
+		 	ShowGame($(this).attr("data-gbid"), $("#activity"));
+		 })
+		 $(".feed-card-image").on("click", function(e){
+		 	e.stopPropagation(); 
+		 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
+		 })
+		 AttachAgreesFromActivity();
+		 $(window).unbind("scroll");
+		 $(window).scroll(function(){
+		 	if(isScrolledIntoView($("#feed-endless-loader"))){
+		 		if($("#feed-endless-loader").html() == "")
+	      			EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
+		 	}
+	     }); 
+}
+
+function EndlessUserAcitivtyLoader(userid){
+	ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
+	$("#feed-endless-loader").append("<br><br><br>");
+	var page = $("#feed-endless-loader").attr("data-page");
+	var date = $("#feed-endless-loader").attr("data-date");
+	var filter = $("#feed-endless-loader").attr("data-filter");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
+     type: 'post',
+     success: function(output) {
+		$("#feed-endless-loader").before(output);
+		$("#feed-endless-loader").html("");
+		$("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+		var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+		$("#feed-endless-loader").attr("data-date", lastdate);
+		AttachShowUserActivityEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}

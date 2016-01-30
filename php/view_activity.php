@@ -20,8 +20,8 @@ function DisplayMainActivity($userid, $filter){
 	else
 		$myfeed = GetMyFeed(0, 0, $filter);
 		
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$conn = GetConnectedToList($userid);
+	$mutualconn = GetMutalConnections($userid);
 	
 	$curr_date_array = explode(" ", $myfeed[0][0]->_date);
 	$curr_date = $curr_date_array[0];
@@ -106,8 +106,8 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 	else
 		$myfeed = GetMyFeed(0, $page, $filter);
 		
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$conn = GetConnectedToList($userid);
+	$mutualconn = GetMutalConnections($userid);
 	
 	$last_user = 0;
 	$last_type = "";

@@ -117,6 +117,12 @@ function ShowUserPreviewCard(usercard, element){
 		ShowUserProfile($(this).attr("data-userid"));
 		$("#universalUserPreview").closeModal();
 	});
+	$(".user-preview-card-view-activity").on('click', function(e){
+		if(element == undefined)
+			element = $("#discover");
+		ShowUserActivity($(this).attr("data-userid"));
+		$("#universalUserPreview").closeModal();
+	});
 }
 
 function FollowUser(followid, elem, name){
