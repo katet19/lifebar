@@ -1,5 +1,6 @@
 <?php
-function DeployJS(){
+function DeployJS($version){
+	$newversion = $version + 1;
 	$deployed = fopen("js/deployed.js", 'w+');
 	if($deployed){
 		echo "Opened deployed js file <br>";
@@ -38,6 +39,9 @@ function DeployJS(){
 		
 		$main = file_get_contents("js/main.js");
 		fwrite($deployed, $main);
+		
+		$updateVer = "var GLOBAL_VERSION=".$newversion.";";
+		fwrite($deployed, $updateVer);
 		
 		$navigation = file_get_contents("js/navigation.js");
 		fwrite($deployed, $navigation);
