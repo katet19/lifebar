@@ -494,4 +494,17 @@ function SaveIGNImportForLater($id){
 	Close($mysqli, $result);
 }
 
+function CheckVersion($myver){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Version` ORDER BY `ID` DESC LIMIT 0,1");
+	while($row = mysqli_fetch_array($result)){
+		$version = $row["ID"];
+	}
+	if($version > $myver){
+		echo "UPDATE";
+	}else{
+		echo "CURRENT";
+	}
+}
+
 ?>

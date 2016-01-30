@@ -105,6 +105,12 @@
 		if($_POST['action'] == 'DisplayDeveloperViewMore'){
 			DisplayDevelopervViewMore($_POST['userid']);
 		}
+		if($_POST['action'] == 'ShowUserProfileActivity'){
+			DisplayProfileActivity($_POST['userid']);
+		}
+		if($_POST['action'] == 'ShowUserProfileActivityEndless' ){
+			DisplayProfileActivityEndless($_POST['userid'], $_POST['page'], $_POST['date']);
+		}
 	}
 	function AdminServices(){
 		if($_POST['action'] == 'DisplayAdmin' ){
@@ -167,6 +173,9 @@
 		}
 		if($_POST['action'] == 'DisplayDBThreads'){
 			DisplayDBThreads();
+		}
+		if($_POST['action'] == 'CheckVersion'){
+			CheckVersion($_POST['version']);
 		}
 	}
 	function ActivityServices(){

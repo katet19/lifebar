@@ -20,8 +20,8 @@ function DisplayMainActivity($userid, $filter){
 	else
 		$myfeed = GetMyFeed(0, 0, $filter);
 		
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$conn = GetConnectedToList($userid);
+	$mutualconn = GetMutalConnections($userid);
 	
 	$curr_date_array = explode(" ", $myfeed[0][0]->_date);
 	$curr_date = $curr_date_array[0];
@@ -106,8 +106,8 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 	else
 		$myfeed = GetMyFeed(0, $page, $filter);
 		
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$conn = GetConnectedToList($userid);
+	$mutualconn = GetMutalConnections($userid);
 	
 	$last_user = 0;
 	$last_type = "";
@@ -217,7 +217,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-activity z-depth-1">S</div><?php } ?>
+    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -351,7 +351,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-activity z-depth-1">S</div><?php } ?>
+    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -405,7 +405,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-activity z-depth-1">S</div><?php } ?>
+    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -455,7 +455,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-activity z-depth-1">S</div><?php } ?>
+    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -529,7 +529,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-activity z-depth-1">S</div><?php } ?>
+    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
