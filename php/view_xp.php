@@ -122,7 +122,7 @@ function ShowEditPlayed($exp){
 			</select>
 		 </div>
 	 </div>
-	 <div class="row myxp-form-box">
+	 <div class="row myxp-form-box myxp-quarter" >
 		 <div class="col s12 m12 l8" style="padding:0;">
 		 	<?php $month = date('n');
 	 			if($month > '0' && $month <= '3'){
@@ -133,9 +133,14 @@ function ShowEditPlayed($exp){
 					$quarter = "3";
 				}else if($month > '9' && $month <= '12'){
 					$quarter = "4";
+				}else if($month == 0){
+					$quarter = "0";
 				}
 		 	?>
 			  <label class="myxp-form-box-header">Experienced Quarter</label>
+			  <div class="myxp-form-select-item" style="display:none">
+		  	    <input name="dategroup" class="with-gap" type="radio" id="q0" <?php if($date[1] == 0){ echo "checked"; }else if($quarter == 0){ echo "checked"; } ?> data-text="" />
+		  	  </div >
 			  <div class="myxp-form-select-item">
 		  	    <input name="dategroup" class="with-gap" type="radio" id="q1" <?php if($date[1] == 1){ echo "checked"; }else if($quarter == 1){ echo "checked"; } ?> data-text="<b style='opacity:0.7;'>Q1</b> (Jan/Feb/Mar)" />
 			    <label for="q1"><b>Q1</b> (Jan/Feb/Mar)</label>
@@ -335,7 +340,7 @@ function ShowEditWatched($exp, $watchid){
 			</select>
 		 </div>
 	 </div>
-	 <div class="row myxp-form-box">
+	 <div class="row myxp-form-box myxp-quarter">
 		 <div class="col s12 m12 l8" style="padding:0;">
 		 	<?php $month = date('n');
 	 			if($month > '0' && $month <= '3'){
@@ -346,9 +351,14 @@ function ShowEditWatched($exp, $watchid){
 					$quarter = "3";
 				}else if($month > '9' && $month <= '12'){
 					$quarter = "4";
+				}else if($month == 0){
+					$quarter = "0";
 				}
 		 	?>
 			  <label class="myxp-form-box-header">Experienced Quarter</label>
+  			  <div class="myxp-form-select-item" style="display:none">
+		  	    <input name="dategroup" class="with-gap" type="radio" id="q0" <?php if($date[1] == 0){ echo "checked"; }else if($quarter == 0){ echo "checked"; } ?> data-text="" />
+		  	  </div >
 			  <div class="myxp-form-select-item">
 		  	    <input name="dategroup" class="with-gap" type="radio" id="q1" <?php if($date[1] == 1){ echo "checked"; }else if($quarter == 1){ echo "checked"; } ?> data-text="<b style='opacity:0.7;'>Q1</b> (Jan/Feb/Mar)" />
 			    <label for="q1"><b>Q1</b> (Jan/Feb/Mar)</label>

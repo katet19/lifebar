@@ -44,8 +44,15 @@ function AttachXPEvents(){
 }
 
 function BuildSentenceOnLoad(){
-	$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-	$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+	ToggleQuarter($("#myxp-year").val());
+	var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+	if(quarter == "q0"){
+		$(".myxp-sentence-quarter").html("");
+		$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+	}else{
+		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+	}
 	
 	if($("#myxp-percent-completed").length > 0){
 		$(".myxp-sentence-intro").html("I played");
@@ -89,11 +96,22 @@ function BuildSentenceOnLoad(){
 function ListenAndBuildPlayedSentence(){
 	$('select').material_select();
 	$("#myxp-year").on('change', function() { 
-		$(".myxp-sentence-year").html(" of "+$(this).val());
+		ToggleQuarter($(this).val());
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0")
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+		else
+			$(".myxp-sentence-year").html(" of "+$(this).val());
 		ValidateXPEntry();
 	});
 	$("input[type=radio][name=dategroup]").change(function() {
-		$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));	
+		if($(this).attr("data-text") != ""){
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		}else{
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}
 		ValidateXPEntry();
 	});
 	$('.myxp-platforms').change(function() {
@@ -123,8 +141,14 @@ function ListenAndBuildPlayedSentence(){
 			$(".myxp-sentence-intro").html("I played");
 			$(".myxp-sentence-completion").html("through "+$(this).val()+"%");
 		}
-		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0"){
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}else{
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		}
 		ValidateXPEntry();
 	});
 	
@@ -143,18 +167,35 @@ function ListenAndBuildWatchedSentence(){
 	$('input[type=radio][name=viewingitemgroup]').change(function() {
 		$(".myxp-sentence-intro").html("I watched");
 		$(".myxp-sentence-exp").html($(this).attr("data-text"));
-		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0"){
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+			$(".myxp-sentence-quarter").html("");
+		}else{
+			$(".myxp-sentence-year").html(" of "+$(this).val());
+			$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		}
 		if($("#myxp-view-source").val() !== "")
 			$(".myxp-sentence-src").html("on "+$("#myxp-view-source").val());
 		ValidateXPEntry();
 	});
 	$("#myxp-year").on('change', function() { 
-		$(".myxp-sentence-year").html(" of "+$(this).val());
+		ToggleQuarter($(this).val());
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0")
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+		else
+			$(".myxp-sentence-year").html(" of "+$(this).val());
 		ValidateXPEntry();
 	});
 	$("input[type=radio][name=dategroup]").change(function() {
-		$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		if($(this).attr("data-text") != ""){
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		}else{
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}
 		ValidateXPEntry();
 	});
 	$("#myxp-form-url").on('keyup', function(){
@@ -171,6 +212,21 @@ function ListenAndBuildWatchedSentence(){
 	});
 }
 
+
+function ToggleQuarter(year){
+	var currentYear = (new Date).getFullYear();
+	if(year == currentYear -1){
+		$(".myxp-quarter").show(100);
+		$(".myxp-sentence-quarter").html("");
+		$("#q0").prop("checked", true);
+	}else if(year != currentYear){
+		$(".myxp-quarter").hide(100);
+		$(".myxp-sentence-quarter").html("");
+		$("#q0").prop("checked", true);
+	}else{
+		$(".myxp-quarter").show(100);
+	}
+}
 
 function AddWatchedFabEvent(){
 	HideFab();

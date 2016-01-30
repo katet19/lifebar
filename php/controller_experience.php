@@ -1641,6 +1641,8 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year){
 		$dates = $year."-07-01";
 	else if($quarter == "q4")
 		$dates = $year."-10-01";
+	else if($quarter == "q0")
+		$date = $year."-00-00";
 	
 	if(HasUserExperienced($user, $gameid, $mysqli))
 		$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates' where `UserID` = '$user' and `GameID` = '$gameid'");
@@ -1739,6 +1741,8 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$date = $year."-07-01";
 	else if($quarter == "q4")
 		$date = $year."-10-01";
+	else if($quarter == "q0")
+		$date = $year."-00-00";
 		
 	$data = HasUserPlayedXP($user, $gameid, $completed);
 	if ($data == -1){
@@ -1818,6 +1822,8 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 		$date = $year."-07-01";
 	else if($quarter == "q4")
 		$date = $year."-10-01";
+	else if($quarter == "q0")
+		$date = $year."-00-00";
 	
 	CreateEventForWatchedXP($user, $gameid, $tier, $quote);
 	$result = $mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`URL`,`Date`,`Length`,`Source`) values ('$user','$expid','$gameid','$quote','$tier','Watched','$url','$date', '$length', '$source')");
@@ -1856,6 +1862,8 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 		$date = $year."-07-01";
 	else if($quarter == "q4")
 		$date = $year."-10-01";
+	else if($quarter == "q0")
+		$date = $year."-00-00";
 		
 	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length',`Source`='$source' where `ID` = '$id'");
 	Close($mysqli, $result);
