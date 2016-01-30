@@ -8,7 +8,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
         		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-        			<?php if($user->_title == "SRANK"){ ?><div class="srank-badge z-depth-1">S</div><?php } ?>
+        			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
         		</div>
         		<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
         	</div>
@@ -83,7 +83,7 @@ function DisplayUserQuoteCard($exp){
    		<div class="critic-name-container col s12 m4 l3" data-id="<?php echo $user->_id; ?>">
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-				<?php if($user->_title == "SRANK"){ ?><div class="srank-badge-review z-depth-1">S</div><?php } ?>
+				<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
 			</div>
 	        <div class="user-name">
 	        	<?php if($user->_security == "Journalist"){ ?>
@@ -215,7 +215,7 @@ function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
 	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
 	        		
 	        	<?php } ?>
-	        	<!--<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">VIEW ACTIVITY</div>-->
+	        	<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">VIEW ACTIVITY</div>
 	        	<div class="btn-flat user-preview-card-view-profile" data-userid="<?php echo $user->_id; ?>">VIEW PROFILE</div>
 	        </div>
 	      </div>

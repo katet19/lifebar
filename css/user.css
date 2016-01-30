@@ -335,75 +335,39 @@
 }
 
 .srank-badge{
-    border-radius: 50%;
-    font-size: 1.3em;
-    background-color: #0A67A3;
-    color: yellow;
-    font-weight: bold;
-    line-height: 26px;
-    font-family: sans-serif;
-    width: 30px;
+    position: absolute !important;
     height: 30px;
-    position: absolute;
-    bottom: 8px;
-    margin-left: 55px;
-    border: 2px solid yellow;
-    text-align: left;
-    padding-left: 6px;
+    bottom: 8px !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: -30px !important;
 }
 
 .srank-badge-lifebar{
-    border-radius: 50%;
-    font-size: 1.3em;
-    background-color: #0A67A3;
-    color: yellow;
-    font-weight: bold;
-    line-height: 26px;
-    font-family: sans-serif;
-    width: 30px;
+    position: absolute !important;
     height: 30px;
-    position: absolute;
-    bottom: 0px;
-    margin-left: 55px;
-    border: 2px solid yellow;
-    text-align: left;
-    padding-left: 6px;
+    bottom: 0px !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: -10px !important;
 }
 
 .srank-badge-review{
-    border-radius: 50%;
-    font-size: 1em;
-    background-color: #0A67A3;
-    color: yellow;
-    font-weight: bold;
-    line-height: 20px;
-    font-family: sans-serif;
-    width: 20px;
+    position: absolute !important;
     height: 20px;
-    position: absolute;
-    bottom: 0px;
-    margin-left: 35px;
-    border: 1px solid yellow;
-    text-align: left;
-    padding-left: 3px;
+    bottom: 0px !important;
+    top: inherit !important;
+    left: 50px !important;
+    right: inherit !important;
 }
 
 .srank-badge-activity{
-    border-radius: 50%;
-    font-size: 1em;
-    background-color: #0A67A3;
-    color: yellow;
-    font-weight: bold;
-    line-height: 20px;
-    font-family: sans-serif;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    bottom: 0px;
-    margin-left: 43px;
-    border: 1px solid yellow;
-    text-align: left;
-    padding-left: 3px;
+    position: absolute !important;
+    height: 22px;
+    bottom: -2px !important;
+    top: inherit !important;
+    left: 75px !important;
+    right: inherit !important;
 }
 
 
