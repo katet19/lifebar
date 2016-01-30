@@ -97,6 +97,11 @@ function ToastError(msg){
 	toast(msg, 5000);
 }
 
+function ToastUpdate(){
+	var msg = "New updates available! <span onclick='location.reload(true);' style='cursor:pointer;color:#FF8E00;font-weight: bold;padding: 0 10px 0 20px;'>REFRESH</span>";
+	toast(msg, 3540000);
+}
+
 function ToastRight(msg){
 		toastr.options = {
 		  "debug": false,
