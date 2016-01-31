@@ -20,8 +20,8 @@ function DisplayMainActivity($userid, $filter){
 	else
 		$myfeed = GetMyFeed(0, 0, $filter);
 		
-	$conn = GetConnectedToList($userid);
-	$mutualconn = GetMutalConnections($userid);
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	
 	$curr_date_array = explode(" ", $myfeed[0][0]->_date);
 	$curr_date = $curr_date_array[0];
