@@ -328,6 +328,7 @@ function ShowEditWatched($exp, $watchid){
 				$date = explode('-',$watchedxp->_date);
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
+				$releaseyear = $releaseyear - 5;
 				$isaccurate = true;
 				$birthyear = substr($myuser->_birthdate,0,4); 
 				if(($year - $birthyear) <= 10 || $birthyear == 0){ $isaccurate = false; $birthyear = 1975; }  
