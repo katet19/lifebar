@@ -215,8 +215,8 @@ function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
 	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
 	        		
 	        	<?php } ?>
-	        	<!--<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">VIEW ACTIVITY</div>-->
-	        	<div class="btn-flat user-preview-card-view-profile" data-userid="<?php echo $user->_id; ?>">VIEW PROFILE</div>
+	        	<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">ACTIVITY</div>
+	        	<div class="btn-flat user-preview-card-view-profile" data-userid="<?php echo $user->_id; ?>">PROFILE</div>
 	        </div>
 	      </div>
       </div>
