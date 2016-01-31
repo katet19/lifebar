@@ -198,7 +198,7 @@ function DisplayBattleProgress($user, $myprogress, $gameid){ ?>
 			</div>
 			<?php 
 				$games = AddSimilarGames($_SESSION['logged-in']->_id, $gameid); 
-				if(isset($games)){ ?>
+				if(isset($games) && sizeof($myprogress) > 0){ ?>
 					<div class="bp-similar col s12 m4">
 						<div class="bp-quick-header">New Quests Found</div>
 		
@@ -210,6 +210,20 @@ function DisplayBattleProgress($user, $myprogress, $gameid){ ?>
 									</div>
 								<?php
 								} ?>
+					</div>
+				<?php }else if(isset($games)){ ?>
+					<div class="bp-similar col s12">
+						<div class="bp-quick-header">New Quests Found</div>
+						<div class="row">
+							<?php foreach($games as $game){ ?>
+								<div class="col s12 m5 l3"> 
+									<div class="bp-related-quests-image z-depth-1" data-gbid="<?php echo $game->_gbid; ?>" style="width:90%;margin-left:2.5%;margin-right:2.5%;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;margin-bottom:5px">
+									<div class="bp-related-game-title"><?php echo $game->_title; ?></div>
+								</div>
+								</div>
+							<?php
+							} ?>
+						</div>
 					</div>
 				<?php } ?>
 			<div class="bp-equip col s12">
