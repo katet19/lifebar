@@ -155,7 +155,7 @@ function DisplayGameDiscoverGrid(){
     <div class="col discoverDivider"></div>
     <?php
     	$newusers = GetNewUsersCategory(6);
-	if(sizeof($newusers) > 2){ ?>
+	if(sizeof($newusers) > 5){ ?>
 	    <div class="col s12 discoverCategory">
 	      	<div class="discoverCategoryHeader" data-category="New Users">
 	      		<i class="mdi-social-people categoryIcon" style="background-color:#2E7D32;"></i>
