@@ -424,7 +424,19 @@ function ConvertTimeStampToRelativeTime($timestamp){
 	$now = new DateTime("now");
 	$old = new DateTime($timestamp);
 	$interval = date_diff($now, $old);
-	if($interval->d > 0){
+	if($interval->y > 0){
+		if($interval->y == 1)
+			return $interval->y." year ago";
+		else
+			return $interval->y." years ago";
+	}
+	else if($interval->m > 0){
+		if($interval->m == 1)
+			return $interval->m." month ago";
+		else
+			return $interval->m." months ago";
+	}
+	else if($interval->d > 0){
 		if($interval->d == 1)
 			return $interval->d." day ago";
 		else

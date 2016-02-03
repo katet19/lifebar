@@ -175,19 +175,34 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 
 function FeedDateDivider($date){
 	$datetime = explode(" ", ConvertDateToActivityFormat($date));
-	?>
-	<div class="row feed-date-divider" data-date="<?php echo $date; ?>">
-		<div class="col s12">
-			<div class="feed-date-divider-month">
-				<?php echo $datetime[0]; ?>
-			</div>
-			<div class="feed-date-divider-bullet"></div>
-			<div class="feed-date-divider-day">
-				<?php echo $datetime[1]; ?>
+	$year = explode('-',$date);
+	$now = date('Y');
+	if($date != ''){
+		?>
+		<div class="row feed-date-divider" data-date="<?php echo $date; ?>">
+			<div class="col s12">
+				<?php 	if($year[0] != $now){ ?>
+					<div class="feed-date-divider-month">
+						<?php echo $datetime[0]; ?>
+					</div>
+					<div class="feed-date-divider-bullet"></div>
+					<div class="feed-date-divider-day">
+						<?php echo $datetime[1]; ?>
+						<span style='color:#D32F2F'>/</span>
+						<span style="font-weight:100;"><?php echo $year[0]; ?></span>
+					</div>
+				<?php }else{ ?>
+					<div class="feed-date-divider-month">
+						<?php echo $datetime[0]; ?>
+					</div>
+					<div class="feed-date-divider-bullet"></div>
+					<div class="feed-date-divider-day">
+						<?php echo $datetime[1]; ?>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
-	</div>
-	<?php
+	<?php }
 }
 
 function ConvertDateToActivityFormat($date){
@@ -212,7 +227,7 @@ function ConvertDateToActivityFormat($date){
 
 function FeedXPItem($feed, $conn, $mutualconn){ 
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
@@ -245,7 +260,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					<?php if(sizeof($feed) > 1){ ?>
 						 added <?php echo sizeof($feed); ?> new experiences
-					<?php }else if($user->_security == "Journalist"){ ?>
+					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
 					<?php }else if(sizeof($feed) > 1){ ?>
 						 added <?php echo sizeof($feed); ?> new experiences
@@ -290,7 +305,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 }
 
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	?>
   <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
     <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
@@ -310,6 +325,9 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
+      	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+      		<div class='authenticated-mark mdi-action-done'></div>
+  		<?php } ?>
       </div>
       <div class="feed-action-container">
       		<?php if($xp->_link != ''){ ?>
@@ -345,7 +363,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 	$user = GetUser($feed[0][0]->_userid);
 	//quote will be following user id
 	$followinguser = GetUser($feed[0][0]->_quote);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; }
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; }
 	if($followinguser->_security == "Journalist"){ $followingusername = $followinguser->_first." ".$followinguser->_last; }else{ $followingusername = $followinguser->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
@@ -400,7 +418,7 @@ function FeedConnectionCard($user, $event, $following){
 
 function FeedBookmarkItem($feed, $conn, $mutualconn){
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
@@ -450,7 +468,7 @@ function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
 
 function FeedTierChangedItem($feed, $conn, $mutualconn){
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
@@ -496,7 +514,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 }
 
 function FeedTierChangedCard($game, $user, $event, $xp, $multiple){ 
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	$tierdata = explode(",",$event->_quote);
 	$before = $tierdata[0];
 	$after = $tierdata[1];
@@ -524,7 +542,7 @@ function FeedTierChangedCard($game, $user, $event, $xp, $multiple){
 
 function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
@@ -570,7 +588,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 }
 
 function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	?>
   <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
     <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
@@ -581,6 +599,9 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
+    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+      		<div class='authenticated-mark mdi-action-done'></div>
+  		<?php } ?>
       </div>
     </div>
   </div>

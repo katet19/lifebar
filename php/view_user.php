@@ -32,7 +32,7 @@ function DisplayCriticQuoteCard($exp){
 	$agreedcount = array_shift($agrees);
 	
 	$hiddenusername = '';
-	if($user->_security == "Journalist")
+	if($user->_security == "Journalist" || $user->_security == "Authenticated")
 		 $hiddenusername = $user->_first." ".$user->_last;
 	else
 		$hiddenusername = $user->_username;
@@ -42,7 +42,7 @@ function DisplayCriticQuoteCard($exp){
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 	        <div class="user-name">
-	        	<?php if($user->_security == "Journalist"){ ?>
+	        	<?php if($user->_security == "Journalist" || $user->_security == 'Authenticated'){ ?>
 	          	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title; ?></span></span>
 	        	<?php }else{ ?>
 	        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
@@ -54,10 +54,34 @@ function DisplayCriticQuoteCard($exp){
 				<div class="critic-quote-icon"><i class="mdi-editor-format-quote tierTextColor<?php echo $exp->_tier; ?>"></i></div>
 				<span class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ echo "style='display:inline-block'"; } ?> ><?php if($agreedcount > 0){ echo $agreedcount;  } ?></span>
 				<?php echo $exp->_quote;?>
-				
+		      	<?php if($user->_security == "Authenticated" && $exp->_authenticxp == "Yes"){ ?> 
+		      		<div class='authenticated-mark mdi-action-done'></div>
+		  		<?php } ?>
 			</div>
 		</div>
 		<div class="critic-action-container col s12">
+			<?php if($user->_security == 'Authenticated'){ ?>
+				<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $exp->_game->_id."-".$user->_id; ?>">
+					<?php $watched = false; $played = false; unset($details);
+						foreach($exp->_playedxp as $playedxp){
+							$played = true;
+							$details[] = "<i class='mdi-hardware-gamepad left tierTextColor".$exp->_tier."'></i> ".BuildPlayedSentence($playedxp);
+						}
+						foreach($exp->_watchedxp as $watchedxp){
+							$watched = true;
+							$details[] = "<i class='mdi-action-visibility left tierTextColor".$exp->_tier."'></i> ".BuildWatchedSentence($watchedxp);
+						}
+					?>
+					<?php BuildDetailsPopUp($exp, $details, $conn); ?>
+					<?php if($watched){?>
+						<i class="mdi-action-visibility left tierTextColor<?php echo $exp->_tier; ?>"></i>
+					<?php } ?>
+					<?php if($played){?>
+						<i class="mdi-hardware-gamepad left tierTextColor<?php echo $exp->_tier; ?>"></i>
+					<?php } ?>
+					DETAILS
+				</div>
+			<?php } ?>
 			<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
@@ -212,7 +236,7 @@ function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
 	        	<?php if(in_array($user->_id, $conn) || $user->_id == $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id < 1){ ?>
 	        		
 	        	<?php }else{ ?>
-	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
+	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
 	        		
 	        	<?php } ?>
 	        	<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">ACTIVITY</div>
@@ -231,7 +255,7 @@ function BuildDetailsPopUp($exp, $details, $conn){
 	   		<div class="latest-xp-name-container col s10">
 				<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		        <div class="user-name">
-		        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?> <span class="subNameInfo" style="display:inline-block"><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn)) || $user->_id == $_SESSION['logged-in']->_id){ echo "(".$user->_first." ".$user->_last.")"; } ?></span><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
+		        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php if($user->_security == 'Authenticated'){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?> <span class="subNameInfo" style="display:inline-block"><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
 		        </div>
 	        </div>
 	        <div class="col s2 closeDetailsModal">
@@ -243,6 +267,9 @@ function BuildDetailsPopUp($exp, $details, $conn){
 				<div class="latest-xp-quote">
 					<div class="critic-quote-icon"><i class="mdi-editor-format-quote tierTextColor<?php echo $exp->_tier; ?>"></i></div>
 					<?php echo $exp->_quote;?>
+					<?php if($exp->_authenticxp == "Yes"){ ?> 
+			      		<div class='authenticated-mark mdi-action-done'></div>
+			  		<?php } ?>
 				</div>
 			</div>
 		</div>

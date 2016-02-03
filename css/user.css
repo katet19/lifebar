@@ -370,6 +370,45 @@
     right: inherit !important;
 }
 
+.authenticated-mark{
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 0.9em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+
+}
+
+.authenticated-mark-lifebar{
+	height: 20px;
+    width: 20px;
+    line-height: 18px;
+    font-size: 0.8em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.authenticated-mark-lifebar-slot1{
+    height: 33px;
+    width: 33px;
+    line-height: 33px;
+    font-size: 0.7em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+}
 
 @media only screen and (max-width : 600px) {
 	.srank-badge-activity{
@@ -423,5 +462,10 @@
 	}
 	.user-preview-card-xp{
 		  font-size: 18px;
+	}
+	.authenticated-mark-lifebar-slot1{
+	    height: 23px;
+	    width: 23px;
+	    line-height: 23px;
 	}
 }
