@@ -14,11 +14,12 @@ class Experience
 	public $_link;
 	public $_owned;
 	public $_bucketlist;
+	public $_authenticxp;
 	public $_playedxp;
 	public $_watchedxp;
 	public $_earlyxp;
 	
-	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist) {
+	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -32,6 +33,7 @@ class Experience
 		$this->_link= $link;
 		$this->_owned = $owned;
 		$this->_bucketlist = $bucketlist;
+		$this->_authenticxp = $authenticxp;
 		$this->_playedxp = array();
 		$this->_watchedxp = array();
 		$this->_early = array();
@@ -65,11 +67,11 @@ class SubExperience
 	public $_demo;
 	public $_streamed;
 	public $_archived;
+	public $_authenticxp;
 	
 	
 	
-	
-	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived) {
+	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived, $authenticxp) {
 		$this->_id = $id;
 		$this->_expid = $expid;
 		$this->_userid= $userid;
@@ -93,6 +95,7 @@ class SubExperience
 		$this->_demo = $demo;
 		$this->_streamed = $streamed;
 		$this->_archived = $archived;
+		$this->_authenticxp = $authenticxp;
 	}
 		
 }

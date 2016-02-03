@@ -457,6 +457,10 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
         <div class="lifebar-username-min" style='top:35px;'>
         	<?php if($user->_security == "Journalist"){ ?>
           	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> <span><?php echo $user->_title; ?></span></span>
+        	<?php }else if($user->_security == "Authenticated"){ ?>
+          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> <span><?php echo $user->_title; ?></span>
+  				<span class='authenticated-mark-lifebar mdi-action-done'></span>
+          	</span>
         	<?php }else{ ?>
         	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
         	<?php } ?>
@@ -512,6 +516,9 @@ function DisplaySlot1Game($xp){
 		      	</div>
 	      	</div>
 			<?php echo $xp->_quote; ?>
+	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark-lifebar-slot1 mdi-action-done'></div>
+	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
 			<?php echo $highlightedgame->_title; ?>
@@ -537,6 +544,9 @@ function DisplayEquippedGame($xp){
 		      	</div>
 	      	</div>
 			<?php echo $xp->_quote; ?>
+	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done'></div>
+	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
 			<?php echo $highlightedgame->_title; ?>
@@ -772,7 +782,7 @@ function DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername){
 				else
 					$hiddenusername = $user->_username;	
 			
-			DisplayCheckpoint($exp->_game, $exp->_quote, $exp->_tier, $played, $watched, $exp->_link, $agrees, $userid, $hiddenusername, $exp->_id, $agreedcount, false, true);
+			DisplayCheckpoint($exp->_game, $exp->_quote, $exp->_tier, $played, $watched, $exp->_link, $agrees, $userid, $hiddenusername, $exp->_id, $agreedcount, false, true, $exp->_authenticxp);
 		}
 	}
 	return $latestxp;
@@ -847,6 +857,9 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 			      	</div>
 		      	</div>
 				<?php echo $exp->_quote; ?>
+		    	<?php if( $exp->_authenticxp == "Yes"){ ?> 
+		      		<div class='authenticated-mark-lifebar mdi-action-done' style='font-size: 0.7em;'></div>
+		  		<?php } ?>
 			</div> 
 			<?php $first = false; 
 		}else{ ?>
@@ -917,7 +930,7 @@ function DisplayMyLibraryChicklet($userid){
 	</div>
 <?php }
 
- function DisplayCheckpoint($game, $quote, $tier, $played, $watched, $link, $agrees, $userid, $hiddenusername, $expid, $agreedcount, $depth, $responsive){ ?>
+ function DisplayCheckpoint($game, $quote, $tier, $played, $watched, $link, $agrees, $userid, $hiddenusername, $expid, $agreedcount, $depth, $responsive, $authenticxp){ ?>
  	<div class="col s12 checkpoint-container waves-effect waves-block" data-gbid='<?php echo $game->_gbid; ?>'>
       <div class="checkpoint-tier tier<?php echo $tier; ?>BG">
       		<?php if($link != ''){ ?>
@@ -935,6 +948,9 @@ function DisplayMyLibraryChicklet($userid){
 		</div>
 		<div class="checkpoint-quote">
 			<?php echo $quote; ?>
+	    	<?php if( $authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done'></div>
+	  		<?php } ?>
 		</div>
 	</div>
  <?php }

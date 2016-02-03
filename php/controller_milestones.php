@@ -259,7 +259,8 @@ function GetKnowledgeGames($knowledgeid, $userid){
 					'',
 					'',
 					$row["Owned"],
-					$row["BucketList"]);
+					$row["BucketList"],
+					$row["AuthenticXP"]);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
@@ -433,7 +434,8 @@ function GetDeveloperGames($devid, $userid){
 					'',
 					'',
 					$row["Owned"],
-					$row["BucketList"]);
+					$row["BucketList"],
+					$row["AuthenticXP"]);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
