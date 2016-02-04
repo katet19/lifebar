@@ -1523,7 +1523,8 @@ function GetExperienceForUserByGame($userid, $gameid, $pconn = null){
 			"",
 			"",
 			"",
-			"");
+			"",
+            "");
 	}
 	if($pconn == null)
 		Close($mysqli, $result);
