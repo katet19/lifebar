@@ -1665,7 +1665,7 @@ function SubmitCriticExperience($user,$gameid,$quote,$tier,$links){
 	Close($mysqli, $result);
 }
 
-function SaveXP($user,$gameid,$quote,$tier,$quarter, $year){
+function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	$mysqli = Connect();
 	$quote = mysqli_real_escape_string($mysqli, $quote);
 	
@@ -1680,16 +1680,21 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year){
 	else if($quarter == "q0")
 		$date = $year."-00-00";
 	
-	if(HasUserExperienced($user, $gameid, $mysqli))
-		$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates' where `UserID` = '$user' and `GameID` = '$gameid'");
+	if($_SESSION['logged-in']->_security == "Authenticated")
+		$authentic = "Yes";
 	else
-		$result = $mysqli->query("insert into `Experiences` (`UserID`,`GameID`,`Quote`,`Tier`,`ExperienceDate`) values ('$user','$gameid','$quote','$tier','$dates')");
+		$authentic = "No";
+		
+	if(HasUserExperienced($user, $gameid, $mysqli))
+		$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
+	else
+		$result = $mysqli->query("insert into `Experiences` (`UserID`,`GameID`,`Quote`,`Tier`,`ExperienceDate`,`Link`,`AuthenticXP`) values ('$user','$gameid','$quote','$tier','$dates','$link','$authentic')");
 	
 	Close($mysqli, $result);
 	CalculateGameTierData($gameid);
 }
 
-function UpdateXP($user,$gameid,$quote,$tier){
+function UpdateXP($user,$gameid,$quote,$tier,$link){
 	$mysqli = Connect();
 	$data = HasUserGivenXP($user, $gameid);
 	$quote = mysqli_real_escape_string($mysqli, $quote);
@@ -1705,7 +1710,12 @@ function UpdateXP($user,$gameid,$quote,$tier){
 		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','TIERCHANGED','$tier','".$data["Tier"].",".$tier."')");
 	}
 	
-	$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier' where `UserID` = '$user' and `GameID` = '$gameid'");
+	if($_SESSION['logged-in']->_security == "Authenticated")
+		$authentic = "Yes";
+	else
+		$authentic = "No";
+	
+	$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
 	
 	Close($mysqli, $result);
 	CalculateGameTierData($gameid);

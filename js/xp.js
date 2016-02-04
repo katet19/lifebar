@@ -496,10 +496,11 @@ function SaveXPEntry(){
 		if((viewsrc == "YouTube" || viewsrc == "Twitch" || viewsrc == "UStream" || viewsrc == "Other") && $.trim($("#myxp-source-link").val()) != "")
 			viewsrc = $("#myxp-source-link").val();
 		var viewurl = $("#myxp-form-url").val();
+		var criticlink = $("#myxp-form-critic-link").val();
 		
 		if($("#myxp-quote").length > 0 && $(".myxp-platforms").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SavePlayedFull", gameid: gameid, quote: quote, tier: tier, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
+		         data: {action: "SavePlayedFull", gameid: gameid, quote: quote, tier: tier, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'New Played Full');
@@ -520,7 +521,7 @@ function SaveXPEntry(){
 			});
 		}else if($("#myxp-quote").length > 0 && $('input[type=radio][name=viewingitemgroup]').length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SaveWatchedFull", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter  },
+		         data: {action: "SaveWatchedFull", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'New Watched Full');
@@ -608,7 +609,7 @@ function SaveXPEntry(){
 			}
 		}else if($("#myxp-quote").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SaveTierQuote", gameid: gameid, quote: quote, tier: tier  },
+		         data: {action: "SaveTierQuote", gameid: gameid, quote: quote, tier: tier, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Update Tier-Quote');
