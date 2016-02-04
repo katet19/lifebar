@@ -50,6 +50,23 @@ function ShowTierQuote($exp, $gameid, $edit){
 				ShowDelete($exp->_id);
 	    	} ?>
 	</div>
+	<?php 
+	if($_SESSION['logged-in']->_security == "Authenticated"){ ?>
+	<br>
+	<div class="myxp-edit-container z-depth-1">
+		<div class="row">
+			<div class="col s12 myxp-sentence" style="margin-left: 20px;">
+					Link to published review
+			</div>
+		</div>
+		<div class="row myxp-form-box">
+			<div class="input-field col s12 m12 l8">
+		        <input id="myxp-form-critic-link" type="text" <?php if($exp->_link != ""){ ?> value="<?php echo $exp->_link; ?>" <?php } ?> >
+	        	<label for="myxp-form-critic-link" <?php if($exp->_link != ""){ ?> class="active"<?php } ?>>Source your review</label>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
 	<?php
 	if($edit){
 		ShowMyXPFAB();

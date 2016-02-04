@@ -224,7 +224,7 @@
 		}
 		if($_POST['action'] =='SavePlayedFull' && $_SESSION['logged-in']->_id > 0){
 			SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year']);
+			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
 			echo "|**|";
@@ -232,7 +232,7 @@
 		}
 		if($_POST['action'] =='SaveWatchedFull' && $_SESSION['logged-in']->_id > 0){
 			SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year']);
+			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
 			echo "|**|";
@@ -260,7 +260,7 @@
 			DisplayMyXP($_POST['gameid']);
 		}
 		if($_POST['action'] =='SaveTierQuote' && $_SESSION['logged-in']->_id > 0){
-			UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier']);
+			UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
 			echo "|**|";

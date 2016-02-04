@@ -349,7 +349,7 @@ function GetConnectedToList($userid, $pconn = null){
 function GetConnectedToUsersList($userid, $pconn = null){
 	$users = array();
 	$mysqli = Connect($pconn);
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` != 'Journalist' order by `First`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and (usr.`Access` != 'Journalist' && usr.`Access` != 'Authenticated') order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}
@@ -362,7 +362,7 @@ function GetConnectedToUsersList($userid, $pconn = null){
 function GetConnectedToCriticsList($userid, $pconn = null){
 	$users = array();
 	$mysqli = Connect($pconn);
-	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and usr.`Access` = 'Journalist' order by `First`")) {
+	if ($result = $mysqli->query("SELECT * FROM  `Users` usr,  `Connections` con WHERE con.`Fan` = '".$userid."' AND con.`Celebrity` = usr.`ID` and (usr.`Access` = 'Journalist' || usr.`Access` = 'Authenticated') order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = $row["Celebrity"];
 		}

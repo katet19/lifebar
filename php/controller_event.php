@@ -50,9 +50,9 @@ function GetMyFeed($userid, $page, $filter){
 		}else if($filter == "My Activity"){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Users"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Critics"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Popular XP"){
 			$result = $mysqli->query("select eve.* from `Events` eve, `Liked` lk where eve.`UserID` = lk.`UserQuoted` and eve.`GameID` = lk.`GameID` order by eve.`Date` DESC limit ".$page.",45");
 		}else{
@@ -65,15 +65,15 @@ function GetMyFeed($userid, $page, $filter){
 		}
 	}else{
 		if($filter == "All"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Users"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Critics"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Popular XP"){
 			$result = $mysqli->query("select eve.* from `Events` eve, `Liked` lk where eve.`UserID` = lk.`UserQuoted` and eve.`GameID` = lk.`GameID` order by eve.`Date` DESC limit ".$page.",45");
 		}else{
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}
 	}	
 	
