@@ -542,7 +542,7 @@ function SaveXPEntry(){
 			});
 		}else if($(".myxp-platforms").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SavePlayed", gameid: gameid, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
+		         data: {action: "SavePlayed", gameid: gameid, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Add Played');
