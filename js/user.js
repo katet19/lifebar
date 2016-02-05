@@ -69,7 +69,7 @@ function VerifyUserData(username, email){
      						image = "Uploaded";
  						else if(image == "weburlradio")
  							image = $("#weburl").val();
-         				SaveUserSettings($("#userSettings").attr("data-id"), $("#settings_username").val(), $("#settings_password").val(), $("#settings_email").val(), $("#first_name").val(), $("#last_name").val(), $("#birthyear").val(), $("#defaultWatchedSource").val(), $("#steam_id").val(), $("#psn_id").val(), $("#xbox_id").val(), image);
+         				SaveUserSettings($("#userSettings").attr("data-id"), $("#settings_username").val(), $("#settings_password").val(), $("#settings_email").val(), $("#first_name").val(), $("#last_name").val(), $("#birthyear").val(), $("#defaultWatchedSource").val(), $("#steam_id").val(), $("#psn_id").val(), $("#xbox_id").val(), $("#title_id").val(), $("#personalweb_id").val(), $("#twitter_id").val(), image);
          			}
         },
         error: function(x, t, m) {
@@ -83,11 +83,11 @@ function VerifyUserData(username, email){
 	});
 }
 
-function SaveUserSettings(userid, username, password, email, first, last, birthyear, source, steam, psn, xbox, image){
+function SaveUserSettings(userid, username, password, email, first, last, birthyear, source, steam, psn, xbox, title, weburl, twitter, image){
 	$("#userSettings").find(".validation").show();
 	ShowLoader($("#userSettings").find(".validation"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
-         data: {action: "SaveUserSettings", userid: userid, username: username, email: email, password: password, first: first, last: last, birthyear: birthyear, source: source, steam: steam, psn: psn, xbox: xbox, image: image },
+         data: {action: "SaveUserSettings", userid: userid, username: username, email: email, password: password, first: first, last: last, birthyear: birthyear, source: source, steam: steam, psn: psn, xbox: xbox, title: title, weburl: weburl, twitter: twitter, image: image },
          type: 'post',
          success: function(output) {
          	$("#userSettings").find(".validation").hide();

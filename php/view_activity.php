@@ -364,7 +364,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 	//quote will be following user id
 	$followinguser = GetUser($feed[0][0]->_quote);
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; }
-	if($followinguser->_security == "Journalist"){ $followingusername = $followinguser->_first." ".$followinguser->_last; }else{ $followingusername = $followinguser->_username; } 
+	if($followinguser->_security == "Journalist" || $followinguser->_security == "Authenticated"){ $followingusername = $followinguser->_first." ".$followinguser->_last; }else{ $followingusername = $followinguser->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">

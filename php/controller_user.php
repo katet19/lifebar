@@ -13,7 +13,7 @@ function SetTitles(){
 	}
 }
 
-function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $image){
+function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $title, $weburl, $twitter, $image){
 	$mysqli = Connect();
 	if($password != ""){
 		$Salt = uniqid();
@@ -21,9 +21,9 @@ function SaveAccountChanges($id, $username, $password, $first, $last, $email, $b
 		$Rounds = '5000';
 		$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
 		$hashedpw = crypt($password, $CryptSalt);
-		$mysqli->query("Update `Users` SET `Username`='".$username."', `Hash`='".$hashedpw."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Image`='".$image."' WHERE `ID` = '".$id."'");
+		$mysqli->query("Update `Users` SET `Username`='".$username."', `Hash`='".$hashedpw."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Image`='".$image."', `Title`='".$title."', `Website`='".$weburl."', `Twitter`='".$twitter."' WHERE `ID` = '".$id."'");
 	}else{
-		$mysqli->query("Update `Users` SET `Username`='".$username."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Image`='".$image."' WHERE `ID` = '".$id."'");
+		$mysqli->query("Update `Users` SET `Username`='".$username."', `Email`='".$email."', `First`='".$first."', `Last`='".$last."', `Birthdate`='".$birthdate."-01-01', `DefaultWatched`='".$watchedsource."', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."', `Title`='".$title."', `Website`='".$weburl."', `Twitter`='".$twitter."', `Image`='".$image."' WHERE `ID` = '".$id."'");
 	}
 	Close($mysqli, $result);
 	FastLogin($id);
@@ -161,7 +161,8 @@ function GetUser($userid, $pconn = null){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -196,7 +197,8 @@ function GetUserByName($username){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -230,7 +232,8 @@ function GetJournalists(){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$journalists[] = $user;
 
@@ -322,7 +325,8 @@ function GetConnectedTo($userid){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -437,7 +441,8 @@ function GetConnectedToMe($userid){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -532,7 +537,8 @@ function SearchForUser($search){
 						$row["Privacy"],
 						$row["RealNames"],
 						$row["Title"],
-						$row["Image"]);
+						$row["Image"],
+						$row["Website"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
