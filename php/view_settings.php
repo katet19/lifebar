@@ -94,6 +94,26 @@ function DisplayUserSettings(){
 		        <label for="psn_id"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
 		      </div>
 	      	</div>
+	      	<?php if($_SESSION['logged-in']->_security == "Authenticated"){ ?>
+      		<div class="col s12 settings-header">Critic Configuration</div>
+		    	<div class="row">
+			      <div class="input-field col s12 m6 l4">
+			        <i class="mdi-action-wallet-membership prefix"></i>
+			        <input id="title_id" type="text" value="<?php echo $_SESSION['logged-in']->_title; ?>">
+			        <label for="title_id"  <?php if($_SESSION['logged-in']->_title != ""){ echo "class='active'"; } ?>>Publication / Website Name / Title</label>
+			      </div>
+  			      <div class="input-field col s12 m6 l4">
+			        <i class="mdi-social-domain prefix"></i>
+			        <input id="personalweb_id" type="text" value="<?php echo $_SESSION['logged-in']->_website; ?>">
+			        <label for="personalweb_id"  <?php if($_SESSION['logged-in']->_website != ""){ echo "class='active'"; } ?>>URL to publication or website</label>
+			      </div>
+		  	      <div class="input-field col s12 m6 l4">
+			        <i class="mdi-social-share prefix"></i>
+			        <input id="twitter_id" type="text" value="<?php echo $_SESSION['logged-in']->_twitter; ?>">
+			        <label for="twitter_id"  <?php if($_SESSION['logged-in']->_twitter != ""){ echo "class='active'"; } ?>>Twitter</label>
+			      </div>
+		      	</div>
+	      	<?php } ?>
 	    	<div class="col s12 settings-header">Lifebar configuration</div>
 	    	<div class="col s12 m6">
 		    	<div class="row">

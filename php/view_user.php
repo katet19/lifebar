@@ -14,7 +14,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         	</div>
         </div>
         <div class="card-content">
-        	<?php if($user->_security == "Journalist"){ ?>
+        	<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ ?>
           	<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
         	<?php }else{ ?>
         	<span class="card-title activator grey-text text-darken-4"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
@@ -273,14 +273,16 @@ function BuildDetailsPopUp($exp, $details, $conn){
 				</div>
 			</div>
 		</div>
-		<div class="row" class="details-pop-up-text" style='margin: 0 20px 20px;text-align:left;'>
-			<div class="col s12">
-				<?php foreach( $details as $detail){
-					echo $detail."<br><br>";
-				}
-				?>		
+		<?php if(sizeof($details) > 0){ ?>
+			<div class="row" class="details-pop-up-text" style='margin: 0 20px 20px;text-align:left;'>
+				<div class="col s12">
+					<?php foreach( $details as $detail){
+						echo $detail."<br><br>";
+					}
+					?>		
+				</div>
 			</div>
-		</div>
+		<?php } ?>
 	</div>
 	<?php
 }
