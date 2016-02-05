@@ -322,7 +322,7 @@
 			DisplayUserSettings();
 		}
 		if($_POST['action'] == 'SaveUserSettings'){
-			SaveAccountChanges($_POST['userid'], $_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear'], $_POST['source'], $_POST['steam'], $_POST['psn'], $_POST['xbox'], $_POST['image']);
+			SaveAccountChanges($_POST['userid'], $_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear'], $_POST['source'], $_POST['steam'], $_POST['psn'], $_POST['xbox'], $_POST['title'], $_POST['weburl'], $_POST['twitter'], $_POST['image']);
 		}
 		if($_POST['action'] == "SaveTitle"){
 			SaveUserTitle($_POST['userid'], $_POST['title']);
