@@ -1619,6 +1619,22 @@
     vertical-align: top;
 }
 
+.lifebar-twitter{
+    display: inline-block;
+    font-size: 0.5em;
+    position: relative;
+    height: 20px;
+    line-height: 20px;
+    padding: 0px 8px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    background-color: #1b95e0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
 @media only screen and (max-width : 992px) {
 	.profile-best-left-card-container > .col > .userprofile-discover-card{
 		display:none;
