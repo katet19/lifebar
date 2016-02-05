@@ -459,7 +459,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
           		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
           			<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?></span> 
           			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></span>
+          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
@@ -468,7 +468,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
 	          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
 	          		<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> 
         			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></span>
+          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
