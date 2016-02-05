@@ -456,13 +456,31 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
         </div>
         <div class="lifebar-username-min" style='top:35px;'>
         	<?php if($user->_security == "Journalist"){ ?>
-          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> <span><?php echo $user->_title; ?></span></span>
+          		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+          			<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?></span> 
+          			<?php if($user->_website != ''){ ?>
+          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></span>
+      				<?php }else{ ?>
+      					<span><?php echo $user->_title; ?></span>
+      				<?php } ?>
+          		</span>
         	<?php }else if($user->_security == "Authenticated"){ ?>
-          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> <span><?php echo $user->_title; ?></span>
-  				<span class='authenticated-mark-lifebar mdi-action-done'></span>
-          	</span>
+	          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+	          		<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> 
+        			<?php if($user->_website != ''){ ?>
+          				<a href='<?php echo $user->_website; ?>' style='color:white;cursor:pointer;' target="_blank"><?php echo $user->_title; ?></span>
+      				<?php }else{ ?>
+      					<span><?php echo $user->_title; ?></span>
+      				<?php } ?>
+	  				<span class='authenticated-mark-lifebar mdi-action-done'></span>
+	          	</span>
         	<?php }else{ ?>
-        	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
+        		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
+        	<?php } ?>
+        	<?php if($user->_twitter != "" && !$light){ ?>
+        		<div style='margin-top: -5px;'>
+        			<a class="lifebar-twitter" href='https://twitter.com/<?php echo $user->_twitter; ?>'>@<?php echo $user->_twitter; ?></a>
+        		</div>
         	<?php } ?>
         </div>
 		<div class='lifebar-image'>
