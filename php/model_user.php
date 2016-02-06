@@ -105,23 +105,4 @@ class User
 		
 }
 
-/*function GetJournalistPublication($id){
-	$mysqli = Connect();
-	if ($result = $mysqli->query("SELECT * FROM  `Experiences` where `UserID` = '".$id."' and `Link` != '' ORDER BY `ExperienceDate` DESC LIMIT 0,1")) {
-		while($row = mysqli_fetch_array($result)){
-				$link = $row["Link"];
-				$domain = parse_url($link);
-				if ($result2 = $mysqli->query("SELECT * FROM  `Publications` where `Link` like '%".$domain["host"]."%' LIMIT 0,1")) {
-					while($row2 = mysqli_fetch_array($result2)){
-						$publication[] = $row2["Title"];
-						$publication[] = $row2["Link"];
-					}
-				}
-
-		}
-	}
-	return $publication;		
-}*/
-
-
 ?>
