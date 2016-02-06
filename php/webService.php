@@ -177,6 +177,14 @@
 		if($_POST['action'] == 'CheckVersion'){
 			CheckVersion($_POST['version']);
 		}
+		if($_POST['action'] == "DisplayRoleManagement"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				DisplayRoleManagement($_POST['userid']);
+		}
+		if($_POST['action'] == "UpdateRoleManagement"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				UpdateRoleManagement($_POST['userid'], $_POST['role']);
+		}
 	}
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){

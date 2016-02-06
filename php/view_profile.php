@@ -737,8 +737,9 @@ function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
 	      		<?php if($critic){ ?>
 	      			<li><span class="GameHiddenActionLabel">Upload smaller image</span><a class="btn-floating light-green darken-3 user-add-small-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	        		<li><span class="GameHiddenActionLabel">Upload larger image</span><a class="btn-floating orange darken-3 user-add-large-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
-	        		<li><span class="GameHiddenActionLabel">Change users title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<?php } ?>
+        		<li><span class="GameHiddenActionLabel">Change users Title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment"></i></a></li>
+        		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<?php } ?>
 	    </ul>

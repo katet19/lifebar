@@ -712,6 +712,10 @@ function AttachFloatingIconWeaveButtonEvents(){
 				});
 			});
 	});
+	$(".user-set-role").on("click", function(){
+		var userid = $(this).attr("data-userid");
+		DisplayRoleManagement(userid);
+	});
 	AttachFollowFABEvents();
 }
 
@@ -736,6 +740,48 @@ function AttachFollowFABEvents(){
 		$(this).find(".large").addClass("mdi-social-group");
 		AttachFabHoverEvent();
 		AttachFollowFABEvents();
+	});
+}
+
+function DisplayRoleManagement(userid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRoleManagement", userid: userid },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+ 		AttachRoleManagementEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachRoleManagementEvents(userid){
+	$(".save-role-change").on('click', function(){
+		var role = $("input[type=radio][name=rolegroup]:checked").attr("id");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "UpdateRoleManagement", userid: userid, role: role },
+	     type: 'post',
+	     success: function(output) {
+			Toast('Role has been updated');
+	  		$("#universalPopUp").closeModal();
+  			HideFocus();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
 	});
 }
 
