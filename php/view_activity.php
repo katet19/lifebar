@@ -232,7 +232,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -369,7 +369,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -423,7 +423,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -473,7 +473,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
@@ -547,7 +547,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
     		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    			<?php if($user->_title == "SRANK"){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/SBadge.svg'></img><?php } ?>
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>

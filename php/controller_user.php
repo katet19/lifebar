@@ -178,7 +178,8 @@ function GetUser($userid, $pconn = null){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -214,7 +215,8 @@ function GetUserByName($username){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -249,7 +251,8 @@ function GetJournalists(){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$journalists[] = $user;
 
@@ -342,7 +345,8 @@ function GetConnectedTo($userid){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -458,7 +462,8 @@ function GetConnectedToMe($userid){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -554,7 +559,8 @@ function SearchForUser($search){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}

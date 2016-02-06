@@ -337,10 +337,12 @@
 .srank-badge{
     position: absolute !important;
     height: 30px;
-    bottom: 8px !important;
+    bottom: 10px !important;
     top: inherit !important;
     left: inherit !important;
-    right: -30px !important;
+    width: 30px !important;
+    right: inherit !important;
+    margin-left: 60px;
 }
 
 .srank-badge-lifebar{

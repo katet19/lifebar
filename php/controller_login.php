@@ -25,7 +25,8 @@ function Login($username, $password){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
@@ -64,7 +65,8 @@ function FastLogin($id){
 						$row["RealNames"],
 						$row["Title"],
 						$row["Image"],
-						$row["Website"]);
+						$row["Website"],
+						$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
@@ -97,7 +99,8 @@ function LoginWithCookie($cookieID){
 					$row["RealNames"],
 					$row["Title"],
 					$row["Image"],
-					$row["Website"]);
+					$row["Website"],
+					$row["Badge"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
 			$_SESSION['logged-in'] = $myuser;
