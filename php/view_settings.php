@@ -94,7 +94,7 @@ function DisplayUserSettings(){
 		        <label for="psn_id"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
 		      </div>
 	      	</div>
-	      	<?php if($_SESSION['logged-in']->_security == "Authenticated"){ ?>
+	      	<?php if($_SESSION['logged-in']->_security == "Authenticated" || $_SESSION['logged-in']->_security == "Journalist"){ ?>
       		<div class="col s12 settings-header">Critic Configuration</div>
 		    	<div class="row">
 			      <div class="input-field col s12 m6 l4">
