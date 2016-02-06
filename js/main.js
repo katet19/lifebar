@@ -7,9 +7,9 @@ $(function() {
 	$(window).resize(function() {
 		ResizeEvents();
 	});
-	$(window).bind('hashchange', function(){
-		ManageHashEvents();
-	});
+	//$(window).bind('hashchange', function(){
+	//	ManageHashEvents();
+	//});
 });
 
 
@@ -299,6 +299,7 @@ function GAPage(title, page){
 }
 
 //Globals
+var GLOBAL_VERSION = 100000;
 var GLOBAL_TAB_REDIRECT = "";
 var GLOBAL_HASH_REDIRECT = "";
 var SIDE_CONTENT_EVENTS = new Array();
