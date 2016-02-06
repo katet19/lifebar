@@ -51,7 +51,7 @@ function ShowTierQuote($exp, $gameid, $edit){
 	    	} ?>
 	</div>
 	<?php 
-	if($_SESSION['logged-in']->_security == "Authenticated"){ ?>
+	if($_SESSION['logged-in']->_security == "Authenticated" || $_SESSION['logged-in']->_security == "Journalist"){ ?>
 	<br>
 	<div class="myxp-edit-container z-depth-1">
 		<div class="row">
