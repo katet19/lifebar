@@ -14,6 +14,9 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         	</div>
         </div>
         <div class="card-content">
+	      	<?php if($user->_security == "Authenticated"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done' style='float:right;'></div>
+	  		<?php } ?>
         	<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ ?>
           	<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
         	<?php }else{ ?>

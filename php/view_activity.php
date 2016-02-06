@@ -312,7 +312,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
     </div>
     <div class="feed-card-content">
       <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
-      	<?php if($user->_security == "Journalist"){ ?>
+      	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
       		<i class="mdi-editor-format-quote"></i>
       	<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
       		<i class="mdi-hardware-gamepad"></i>

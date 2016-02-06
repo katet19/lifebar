@@ -110,7 +110,7 @@ function DisplayUserSettings(){
 		  	      <div class="input-field col s12 m6 l4">
 			        <i class="mdi-social-share prefix"></i>
 			        <input id="twitter_id" type="text" value="<?php echo $_SESSION['logged-in']->_twitter; ?>">
-			        <label for="twitter_id"  <?php if($_SESSION['logged-in']->_twitter != ""){ echo "class='active'"; } ?>>Twitter</label>
+			        <label for="twitter_id"  <?php if($_SESSION['logged-in']->_twitter != ""){ echo "class='active'"; } ?>>Twitter Handle</label>
 			      </div>
 		      	</div>
 	      	<?php } ?>
