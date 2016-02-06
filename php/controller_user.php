@@ -13,6 +13,22 @@ function SetTitles(){
 	}
 }
 
+function UpdateRoleManagement($userid, $role){
+	$mysqli = Connect();
+	
+	if($role == 'journalist-role')
+		$access = 'Journalist';
+	else if($role == 'authenticated-role')
+		$access = 'Authenticated';
+	else if($role == 'user-role')
+		$access = 'User';
+	else
+		$access = 'User';
+		
+	$mysqli->query("UPDATE `Users` SET `Access` = '".$access."' WHERE `ID` = '".$userid."'");
+	Close($mysqli, $result);
+}
+
 function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $title, $weburl, $twitter, $image){
 	$mysqli = Connect();
 	if($password != ""){
@@ -571,7 +587,7 @@ function GetActivePersonalitiesCategory(){
 	$count = array();
 	$mysqli = Connect();
 	$date = date('Y-m-d', strtotime("now -30 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and (`Access` = 'Journalist' or `Access` = 'Authenticated') and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -587,7 +603,7 @@ function GetActivePersonalities(){
 	$count = array();
 	$mysqli = Connect();
 	$date = date('Y-m-d', strtotime("now -30 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and (`Access` = 'Journalist' or `Access` = 'Authenticated') and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){

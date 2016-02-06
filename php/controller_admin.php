@@ -10,6 +10,32 @@ require_once "includes.php";
 //}
 
 //FixGameImageURLS();
+//FindMissingNames();
+function FindMissingNames(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Users` where `Username` like '%[CRITIC]%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$name = str_replace('[CRITIC]','',$row['Username']);
+			$name = preg_split('/(?=[A-Z])/', $name, -1, PREG_SPLIT_NO_EMPTY);
+			$first = $name[0];
+			$last = '';
+			if(sizeof($name) > 2){
+				$i = 1;
+				while($i < sizeof($name)){
+					$last = $last.$name[$i];
+					$i++;
+				}
+			}else{
+				$last = $name[1];
+			}
+			
+			//echo $first." ".$last."<BR>";
+			$mysqli->query("update `Users` set `First` = '".$first."', `Last` = '".$last."', `Birthdate` = '1983-01-01' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
+
+
 function FixGameImageURLS(){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select `ImageLarge`, `ID`, `ImageSmall` from `Games` where `ImageLarge` like '%polygonalweave%' or `ImageSmall` like '%polygonalweave%'")) {
