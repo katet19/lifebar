@@ -1,29 +1,43 @@
 <?php
 
 //Controllers
-require_once 'Controller_Database.php';
+require_once 'controller_database.php';
 
 LoopThroughPubs();
 
+//CollectRSSFeeds('http://rss2json.com/api.json?rss_url=http%3A%2F%2Fattackofthefanboy.com%2Freviews%2Ffeed%2F', 'AttackOfTheFanboy');
+
 function CollectRSSFeeds($url, $pub){
 	if($url != "" && $url != null){
-		$thefeed = simplexml_load_file($url);
-		
-		if($pub == "GiantBomb" || $pub == "Gamespot" || $pub == "IGN" || $pub == "Joystiq" || $pub == "Escapist" || $pub == "The Guardian" || $pub == "GameInformer" || $pub == "GamesRadar"){
-			echo "<hr><br>******".$pub." reviews: <br>";
-			foreach($thefeed->channel->item as $feeditem){
+		if($pub == "Gamespot" || $pub == "GameInformer" || $pub == "GameGrin" || $pub == "AttackOfTheFanboy"){
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_URL, $url);
+			$result = curl_exec($ch);
+			curl_close($ch);
+			
+			echo "<hr><h4>".$pub."************</h4>";
+			$obj = json_decode($result);
+			foreach($obj->items as $feeditem){
+				//echo $feeditem->title;
+				//echo $feeditem->link."<br>";
 				SaveReview($feeditem->title, $feeditem->link, $pub);
 			}
-		}else if($pub == "Polygon" || $pub == "Destructoid"){
-			echo "<hr><br>******".$pub." reviews: <br>";
-			foreach($thefeed->entry as $feeditem){
-				SaveReview($feeditem->title, $feeditem->link->attributes()->href, $pub);
-			}
 		}else{
-			/*print_r($thefeed);
-			foreach($thefeed->channel->item as $feeditem){
-				echo "Title: ".$feeditem->title. "|| Link: ".$feeditem->link."<BR>";
-			}*/
+			$thefeed = simplexml_load_file($url);
+		
+			if($pub == "GiantBomb" || $pub == "IGN" || $pub == "Joystiq" || $pub == "Escapist" || $pub == "The Guardian" || $pub == "GamesRadar" || $pub == "N3rdabl3"){
+				echo "<hr><h4>".$pub."************</h4>";
+				foreach($thefeed->channel->item as $feeditem){
+					SaveReview($feeditem->title, $feeditem->link, $pub);
+				}
+			}else if($pub == "Polygon" || $pub == "Destructoid"){
+				echo "<hr><h4>".$pub."************</h4>";
+				foreach($thefeed->entry as $feeditem){
+					SaveReview($feeditem->title, $feeditem->link->attributes()->href, $pub);
+				}
+			}
 		}
 		echo " \n\r \n\r";
 	}
@@ -36,15 +50,14 @@ function SaveReview($title, $rss, $publication){
 	$indb = false;
 	while($row = mysqli_fetch_array($result)){
 		//We already have this in the DB
-		echo "'".$title."' has already been added <br>";
+		echo "<b>SKIP:</b> <span style='color:darkgray;'>".$title."</span><br>";
 		$indb = true;
 	}
 	
 	if($indb == false){	
-		echo "NEW!! '".$title."' was added from ".$publication." <br>";
+		echo "<b>NEW:</b> <span style='color:darkgreen;'>".$title."</span><br>";
 		$result = $mysqli->query("insert into `PublisherReviews` (`Title`, `RSS`,`Publication`) values ('".$title."','".$rss."','".$publication."')");	
 	}
-	Close($mysqli, $result);
 }
 
 //CollectVideoFeeds("http://www.joystiq.com/tag/@video/rss.xml", "Joystiq");
@@ -118,15 +131,14 @@ function SaveRssVideo($title, $rss, $publication, $image, $duration){
 	$result = $mysqli->query("select * from `PublisherVideos` where `Title` = '".$title."' and `Publication` = '".$publication."'");
 	$indb = false;
 	while($row = mysqli_fetch_array($result)){
-		echo "'".$title."' has already been added <br>";
+		echo "<b>SKIP:</b> '".$title."' was already added<br>";
 		$indb = true;
 	}
 	
 	if($indb == false){	
-		echo "NEW!! '".$title."' was added from ".$publication." <br>";
+		echo "<b>NEW:</b> <span style='color:darkgreen;'>".$title."' was added from ".$publication." </span><br>";
 		$result = $mysqli->query("insert into `PublisherVideos` (`Title`, `RSS`,`Publication`, `Image`, `Duration`) values ('".$title."','".$rss."','".$publication."','".$image."', '".$duration."')");	
 	}
-	Close($mysqli, $result);
 }
 
 function LoopThroughPubs(){
@@ -134,8 +146,8 @@ function LoopThroughPubs(){
 	$pubs = GetPubFeeds();
 	foreach($pubs as $pub){
 		CollectRSSFeeds($pub[2], $pub[1]);
-		if($pub[3] != "")
-			CollectVideoFeeds($pub[3], $pub[1]);
+		//if($pub[3] != "")
+			//CollectVideoFeeds($pub[3], $pub[1]);
 	}
 }
 
@@ -154,7 +166,6 @@ function GetPubFeeds(){
 			$pubs[] = $pub;
 		}
 	}
-	Close($mysqli, $result);
 	return $pubs;	
 }
 
