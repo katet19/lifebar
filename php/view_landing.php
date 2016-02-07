@@ -100,7 +100,7 @@
         </div>
         <div class="landing-macbook" ><img src="http://lifebar.io/Images/LandingPage/mackbook-pro-retina.png" /></div>
         <div class="landing-gameGif"><img src="http://lifebar.io/Images/LandingPage/fallout4.gif" /></div>
-        <div class="landing-manFront"><img src="http://lifebar.io/Images/LandingPage/manfront.png" /></div>
+        <div class="landing-manFront"><img src="http://lifebar.io/Images/LandingPage/manfront2.png" /></div>
       </section>
       
       <!-- Numbers Section -->
