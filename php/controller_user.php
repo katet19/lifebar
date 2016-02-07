@@ -229,7 +229,7 @@ function GetUserByName($username){
 function GetJournalists(){
 	$journalists = "";
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Users` where `Access` = 'Journalist' order by `First`")) {
+	if ($result = $mysqli->query("select * from `Users` where `Access` = 'Journalist' or `Access` = 'Authenticated' order by `First`")) {
 		while($row = mysqli_fetch_array($result)){
 				$user= new User($row["ID"], 
 						$row["First"],
