@@ -208,7 +208,7 @@ function DisplayPendingReviews(){
 	  								<option value="NO" selected>Please select critic</option>
 								  <?php 
 								  foreach ($alljournalists as $journalist) { ?>
-								  	<option value="<?php echo $journalist->_id; ?>"><?php echo $journalist->_first." ".$journalist->_last; ?></option>
+								  	<option value="<?php echo $journalist->_id; ?>"><?php echo $journalist->_first." ".$journalist->_last; if($journalist->_security == "Authenticated"){ echo " (Authenticated)"; }  ?></option>
 								  <?php }?>
 								</select>
 			          		</div>
