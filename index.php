@@ -9,6 +9,7 @@
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
+<meta name="Description" content="Lifebar represents your life playing and watching video games. With Lifebar you will be able to discover new games, share your experiences and visualize a lifetime of gaming.">
 <link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/deployed.css" rel="stylesheet" type="text/css" />
