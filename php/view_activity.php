@@ -258,12 +258,23 @@ function FeedXPItem($feed, $conn, $mutualconn){
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
-					<?php if(sizeof($feed) > 1){ ?>
-						 added <?php echo sizeof($feed); ?> new experiences
+					<?php if(sizeof($feed) > 1){ 
+                            if($user->_security == "Journalist" || ($user->_security == "Authenticated")){
+                                $allreviews = true;
+                                foreach($feed as $card){
+                                    if($card[3]->_link == ''){
+                                        $allreviews = false;
+                                    }
+                                }
+                                if($allreviews)
+                                    echo "reviewed ".sizeof($feed)." games";
+                                else
+                                    echo "added ".sizeof($feed)." new experiences";
+                            }else{?>
+						      added <?php echo sizeof($feed); ?> new experiences
+                         <?php } ?>
 					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
-					<?php }else if(sizeof($feed) > 1){ ?>
-						 added <?php echo sizeof($feed); ?> new experiences
 					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?>
 						reminisced about
 					<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
