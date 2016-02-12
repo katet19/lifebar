@@ -802,7 +802,7 @@ function GetExperiencedUsers(){
 	$users = array();
 	$mysqli = Connect();
 	$thisquarter = date('Y-m-d', strtotime("now -3 days") );
-	if ($result = $mysqli->query("select * from `Sub-Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and exp.`DateEntered` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15")) {
+	if ($result = $mysqli->query("select * from `Sub-Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' and exp.`DateEntered` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15")) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["UserID"], $mysqli);
 		}
@@ -1452,7 +1452,7 @@ function GetExperienceForGameByEvents($gameid, $userid){
 function GetCriticXPForGame($gameid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
