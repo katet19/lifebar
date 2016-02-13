@@ -1,28 +1,30 @@
 <?php 
 function DisplayGame($gbid){
 	$game = GetGameByGBIDFull($gbid);
-	$critics = GetCriticXPForGame($game->_id);
+	$critics = GetCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$othercritics = GetOutsideCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $myusers, $otherusers, $myxp);
-	ShowGameContent($game, $critics, $myusers, $otherusers, $myxp);
+	ShowGameHeader($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
+	ShowGameContent($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
 }
 
 function DisplayGameViaID($gameid){
 	$game = GetGame($gameid);
-	$critics = GetCriticXPForGame($game->_id);
+	$critics = GetCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
+	$othercritics = GetOutsideCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $myusers, $otherusers, $myxp);
-	ShowGameContent($game, $critics, $myusers, $otherusers, $myxp);
+	ShowGameHeader($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
+	ShowGameContent($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
 }
 
-function ShowGameContent($game, $critics, $users, $otherusers, $myxp){ 
+function ShowGameContent($game, $critics, $othercritics, $users, $otherusers, $myxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $game, $myxp); ?></div>
+		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $othercritics, $game, $myxp); ?></div>
 		<div id="game-user-tab" class="col s12 game-tab"><?php ShowUsers($users, $otherusers); ?></div>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab"><?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?></div>
@@ -31,9 +33,9 @@ function ShowGameContent($game, $critics, $users, $otherusers, $myxp){
 	<?php DisplayGameInfo($game); ?>
 <?php }
 
-function ShowCritics($critics, $game, $myxp){
-	$count = 1;?>
-		<?php 
+function ShowCritics($critics, $othercritics, $game, $myxp){
+	if($_SESSION['logged-in']->_id > 0){
+		$count = 1;
 		$allcritics = array();
 		foreach($critics as $critic){
 			$allcritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
@@ -41,17 +43,23 @@ function ShowCritics($critics, $game, $myxp){
 		
 		arsort($allcritics);
 		$allcritics = array_keys($allcritics);
-		
+		?>
+		<div class="row game-tab-subheader-container" >
+			<div class="col s12">
+				<div class="game-tab-subheader">Following</div>
+			</div>
+		</div>
+		<?php
 		if(sizeof($allcritics) > 0){
 			while($count <= sizeof($allcritics)){
 				DisplayCriticQuoteCard($critics[$allcritics[$count-1]]);
 				$count++;
 			}
-		}else{ 
+		}else{
 			?>
-			<div class="row info-container">
+			<div class="row info-container" >
 				<div class="col s12">
-					<?php if($myxp->_bucketlist != "Yes"){ ?>
+					<?php if($myxp->_bucketlist != "Yes" && sizeof($othercritics) == 0){ ?>
 						<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
 							<div class="info-label">Bookmark this game to keep track of your favorites</div>
 						<?php }else{ ?>
@@ -63,12 +71,54 @@ function ShowCritics($critics, $game, $myxp){
 							<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
 						<?php } ?>
 					<?php }else{ ?>
-						<div class="info-label">Critics haven't published reviews for this game yet</div>
+						<div class="info-label">None of the Critics you follow have XP for this game yet</div>
 					<?php } ?>
 				</div>
 			</div>
-		<?php
+			<?php
 		}
+		
+			?>
+			<div class="row game-tab-subheader-container" >
+				<div class="col s12">
+					<div class="game-tab-subheader" style='margin-top: <?php if(sizeof($allcritics) > 0){ echo "4em"; }else{ echo "0em"; } ?>'>Other Critics</div>
+				</div>
+			</div>
+			<?php
+			
+			if(sizeof($othercritics) > 0){
+				foreach($othercritics as $usr){
+						DisplayCriticQuoteCard($usr);
+				}
+			}else{
+				?>
+				<div class="row info-container" >
+					<div class="col s12">
+						<?php if(sizeof($allcritics) > 0){ ?>
+							<div class="info-label">No one outside of the Critics you follow have XP for this game yet</div>
+						<?php }else{ ?>
+							<div class="info-label">Critics haven't published reviews for this game yet</div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php
+			}
+		}else{
+			if(sizeof($othercritics) > 0){
+				foreach($othercritics as $usr){
+						DisplayCriticQuoteCard($usr);
+				}
+			}else{
+				?>
+				<div class="row info-container" >
+					<div class="col s12">
+						<div class="info-label">Critics haven't published reviews for this game yet</div>
+					</div>
+				</div>
+				<?php	
+			}
+		}
+		
 }
 
 function ShowUsers($users, $otherusers){
@@ -141,8 +191,9 @@ function ShowUsers($users, $otherusers){
 		}
 }
 
-function ShowGameTabs($critics, $users, $otherusers, $myxp){
+function ShowGameTabs($critics, $othercritics, $users, $otherusers, $myxp){
 	$totalusers = sizeof($users) + sizeof($otherusers);
+	$totalcritics = sizeof($critics) + sizeof($othercritics);
 	if(sizeof($otherusers) > 50)
 		$totalusers = $totalusers."+";
 	?>
@@ -150,7 +201,7 @@ function ShowGameTabs($critics, $users, $otherusers, $myxp){
 		<div class="row" style='margin:0;'>
 		    <div class="col s12 m8" style="padding:0;">
 		      <ul class="tabs gameNav" style="background-color:transparent">
-		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-critic-tab" class="active waves-effect waves-light">Critics <?php if(sizeof($critics) > 0){ echo "<div class='HideForMobile'>(".sizeof($critics).")</div>"; } ?></a></li>
+		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-critic-tab" class="active waves-effect waves-light">Critics <?php if($totalcritics > 0){ echo "<div class='HideForMobile'>(".$totalcritics.")</div>"; } ?></a></li>
 		        <li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($totalusers) > 0){ echo "<div class='HideForMobile'>(".$totalusers.")</div>"; } ?></a></li>
 		        <li class="tab col s3 userGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
 		      </ul>
@@ -160,7 +211,7 @@ function ShowGameTabs($critics, $users, $otherusers, $myxp){
 	<?php
 }
 
-function ShowGameHeader($game, $critics, $users, $otherusers, $myxp){
+function ShowGameHeader($game, $critics, $othercritics, $users, $otherusers, $myxp){
 	?>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -171,7 +222,7 @@ function ShowGameHeader($game, $critics, $users, $otherusers, $myxp){
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
-		<?php ShowGameTabs($critics, $users, $otherusers, $myxp); ?>
+		<?php ShowGameTabs($critics, $othercritics, $users, $otherusers, $myxp); ?>
 		<div class="fixed-action-btn" id="game-fab">
 			<?php ShowMyGameFAB($game->_id); ?>
 		</div>
