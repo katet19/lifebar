@@ -337,7 +337,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
       	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-      		<div class='authenticated-mark mdi-action-done'></div>
+      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
   		<?php } ?>
       </div>
       <div class="feed-action-container">
@@ -611,7 +611,7 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
     	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-      		<div class='authenticated-mark mdi-action-done'></div>
+      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
   		<?php } ?>
       </div>
     </div>

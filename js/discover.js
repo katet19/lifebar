@@ -66,6 +66,7 @@ function Search(searchstring){
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
  			});
+ 			$('.tooltipped').tooltip({delay: 30});
  			GAPage('Search', '/search');
      	},
         error: function(x, t, m) {
@@ -378,6 +379,7 @@ function AttachDiscoverHomeEvents(){
 	 			DisplayGraphs();
 	 			AttachDiscoverSecondaryEvents();
 	  			Waves.displayEffect();
+	  			$('.tooltipped').tooltip({delay: 30});
 	  			GAPage('Discover - '+customName, '/discover/'+customName);
 	     	},
 	        error: function(x, t, m) {
@@ -519,6 +521,7 @@ function CustomCategory(categoryid){
  				$("#discoverInnerContainer .backContainer").delay(200).velocity({"opacity":"0"});
  			  	ManuallyNavigateToTab("#discover");
  				ShowDiscoverHome();
+ 				$('.tooltipped').tooltip({delay: 30});
  				$(".searchInput input").val("");
  			});
   			Waves.displayEffect();

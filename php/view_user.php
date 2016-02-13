@@ -15,7 +15,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         </div>
         <div class="card-content">
 	      	<?php if($user->_security == "Authenticated"){ ?> 
-	      		<div class='authenticated-mark mdi-action-done' style='float:right;'></div>
+	      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account" style='float:right;'></div>
 	  		<?php } ?>
         	<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ ?>
           	<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
@@ -59,7 +59,7 @@ function DisplayCriticQuoteCard($exp){
 				<span class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ echo "style='display:inline-block'"; } ?> ><?php if($agreedcount > 0){ echo $agreedcount;  } ?></span>
 				<?php echo $exp->_quote;?>
 		      	<?php if($user->_security == "Authenticated" && $exp->_authenticxp == "Yes"){ ?> 
-		      		<div class='authenticated-mark mdi-action-done'></div>
+		      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
 		  		<?php } ?>
 			</div>
 		</div>
@@ -274,7 +274,7 @@ function BuildDetailsPopUp($exp, $details, $conn){
 					<div class="critic-quote-icon"><i class="mdi-editor-format-quote tierTextColor<?php echo $exp->_tier; ?>"></i></div>
 					<?php echo $exp->_quote;?>
 					<?php if($exp->_authenticxp == "Yes"){ ?> 
-			      		<div class='authenticated-mark mdi-action-done'></div>
+			      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
 			  		<?php } ?>
 				</div>
 			</div>

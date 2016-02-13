@@ -472,7 +472,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
-	  				<span class='authenticated-mark-lifebar mdi-action-done'></span>
+	  				<span class='authenticated-mark-lifebar mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></span>
 	          	</span>
         	<?php }else{ ?>
         		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
@@ -535,7 +535,7 @@ function DisplaySlot1Game($xp){
 	      	</div>
 			<?php echo $xp->_quote; ?>
 	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
-	      		<div class='authenticated-mark-lifebar-slot1 mdi-action-done'></div>
+	      		<div class='authenticated-mark-lifebar-slot1 mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
 	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
@@ -563,7 +563,7 @@ function DisplayEquippedGame($xp){
 	      	</div>
 			<?php echo $xp->_quote; ?>
 	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
-	      		<div class='authenticated-mark mdi-action-done'></div>
+	      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
 	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
@@ -877,7 +877,7 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 		      	</div>
 				<?php echo $exp->_quote; ?>
 		    	<?php if( $exp->_authenticxp == "Yes"){ ?> 
-		      		<div class='authenticated-mark-lifebar mdi-action-done' style='font-size: 0.7em;'></div>
+		      		<div class='authenticated-mark-lifebar mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account" style='font-size: 0.7em;'></div>
 		  		<?php } ?>
 			</div> 
 			<?php $first = false; 
@@ -968,7 +968,7 @@ function DisplayMyLibraryChicklet($userid){
 		<div class="checkpoint-quote">
 			<?php echo $quote; ?>
 	    	<?php if( $authenticxp == "Yes"){ ?> 
-	      		<div class='authenticated-mark mdi-action-done'></div>
+	      		<div class='authenticated-mark mdi-action-done tooltipped' data-position="bottom" data-delay="30" data-tooltip="Verified Account"></div>
 	  		<?php } ?>
 		</div>
 	</div>
