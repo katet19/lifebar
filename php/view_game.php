@@ -490,7 +490,7 @@ function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview
 	          <div class="card-agree-users">
 	          	<?php foreach($users as $userid){
 	          		$user = GetUser($userid); ?>
-  					<div class="badge-card-ability-avatar tooltipped" data-id="<?php echo $user->_id; ?>" data-position="bottom" data-delay="30" data-tooltip="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>" style="border-radius:50%;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+  					<div class="badge-card-ability-avatar" data-id="<?php echo $user->_id; ?>" title="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>" style="border-radius:50%;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 						<?php if($showpreview){ DisplayUserPreviewCard($user, $conn, $mutualconn); } ?>
 					</div>
 	          	<?php } ?>

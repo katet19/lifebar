@@ -209,8 +209,6 @@ function AttachBadgeManagmentEvents(){
 		}
 	});
 	
-	$('.tooltipped').tooltip({delay: 30});
-	
 	$("#badge_level").on('change', function() { 
 		$(".c100").removeClass("one");
 		$(".c100").removeClass("two");

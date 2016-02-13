@@ -156,8 +156,6 @@ function AttachGameEvents(currentTab){
  		window.open("http://tidbits.io/c/games");
  	});
  	
- 	$('.tooltipped').tooltip({delay: 30});
- 	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();

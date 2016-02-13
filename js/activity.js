@@ -81,7 +81,6 @@ function AttachActivityEvents(){
       			EndlessLoader();
 	 	}
      });
-     $('.tooltipped').tooltip({delay: 30});
 }
 
 function AttachSecondaryEvents(){

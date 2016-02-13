@@ -123,7 +123,6 @@ function ShowUserPreviewCard(usercard, element){
 		ShowUserActivity($(this).attr("data-userid"));
 		$("#universalUserPreview").closeModal();
 	});
-	$('.tooltipped').tooltip({delay: 30});
 }
 
 function FollowUser(followid, elem, name){
