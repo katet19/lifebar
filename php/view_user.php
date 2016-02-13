@@ -86,7 +86,9 @@ function DisplayCriticQuoteCard($exp){
 					DETAILS
 				</div>
 			<?php } ?>
-			<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
+			<?php if($exp->_link != ''){ ?>
+				<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
+			<?php } ?>
 			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } ?>
