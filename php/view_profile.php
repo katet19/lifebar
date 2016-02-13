@@ -1067,12 +1067,12 @@ function DisplayUpcomingQuests($userid){
 		$release = new DateTime($game->_released);
 		$interval = $today->diff($release);
 		$diff = $interval->format("%r%a");
-		if($diff > 365){
+		if($interval->y > 0){
 			if($interval->y > 1)
 				$coming =  $interval->y." years";
 			else
 				$coming =  $interval->y." year"; 
-		}else if($diff > 31){
+		}else if($interval->m > 0){
 			if($interval->m > 1)
 				$coming = $interval->m." months";
 			else
