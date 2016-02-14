@@ -72,7 +72,6 @@ function ShowLanding(){
 			AttachSignUpLandingEvents();
 			AnimateLanding();
 			$('select').material_select();
-			$('.tooltipped').tooltip({delay: 30});
 			GAPage('Landing', '/landing');
             var formStarted = false;
             $("#signup_username").on('keypress keyup', function (e) {

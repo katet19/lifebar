@@ -93,7 +93,7 @@ function DisplayLandingSignup(){
 		    		</div>
 			    	<div class="col s9 m6">
 			    	  <label style='float:left;font-size:1em;'>Birth Year</label>
-			    	  <div style="float: right;font-size: 0.7em;cursor: default;" class="tooltipped" data-position="bottom" data-delay="30" data-tooltip="It's not required, but your birth year is used to provide meaningful graphs and simplify entering your gaming experiences.">Why my birth year?</div>
+			    	  <div style="float: right;font-size: 0.7em;cursor: default;" title="It's not required, but your birth year is used to provide meaningful graphs and simplify entering your gaming experiences.">Why my birth year?</div>
 					  <select id="birthyear">
 					    <?php for($i = date("Y"); $i > 1930; $i--){ ?>
 					    	<option value="<?php echo $i; ?>" <?php if($i == "1983"){ echo "selected"; } ?>><?php echo $i; ?></option>

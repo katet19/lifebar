@@ -74,7 +74,6 @@ function AttachProfileEvents(userid){
 			$(this).parent().parent().parent().parent().find(".card-tier").show();
 		});
 	});
-	$('.tooltipped').tooltip({delay: 30});
 	$(".badge-view-more").on('click', function(){
 		DisplayUserBadges(userid);		
 	});
@@ -215,7 +214,6 @@ function DisplayLeadership(userid){
      type: 'post',
      success: function(output) {
  			$("#BattleProgess").html(output); 
-			$('.tooltipped').tooltip({delay: 30});
 			$(".badge-card-ability-avatar").on("click", function(){
 				ShowUserProfile($(this).attr("data-id"));
 				$("#lean-overlay").trigger("click");
@@ -261,7 +259,6 @@ function DisplaySpy(userid){
      type: 'post',
      success: function(output) {
  			$("#BattleProgess").html(output); 
-			$('.tooltipped').tooltip({delay: 30});
 			$(".badge-card-ability-avatar").on("click", function(){
 				ShowUserProfile($(this).attr("data-id"));
 				$("#lean-overlay").trigger("click");

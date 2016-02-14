@@ -15,7 +15,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
         </div>
         <div class="card-content">
 	      	<?php if($user->_security == "Authenticated"){ ?> 
-	      		<div class='authenticated-mark mdi-action-done' style='float:right;'></div>
+	      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
 	  		<?php } ?>
         	<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ ?>
           	<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
@@ -59,7 +59,7 @@ function DisplayCriticQuoteCard($exp){
 				<span class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ echo "style='display:inline-block'"; } ?> ><?php if($agreedcount > 0){ echo $agreedcount;  } ?></span>
 				<?php echo $exp->_quote;?>
 		      	<?php if($user->_security == "Authenticated" && $exp->_authenticxp == "Yes"){ ?> 
-		      		<div class='authenticated-mark mdi-action-done'></div>
+		      		<div class='authenticated-mark mdi-action-done ' title="Verified Account"></div>
 		  		<?php } ?>
 			</div>
 		</div>
@@ -86,7 +86,9 @@ function DisplayCriticQuoteCard($exp){
 					DETAILS
 				</div>
 			<?php } ?>
-			<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
+			<?php if($exp->_link != ''){ ?>
+				<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
+			<?php } ?>
 			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } ?>
@@ -272,7 +274,7 @@ function BuildDetailsPopUp($exp, $details, $conn){
 					<div class="critic-quote-icon"><i class="mdi-editor-format-quote tierTextColor<?php echo $exp->_tier; ?>"></i></div>
 					<?php echo $exp->_quote;?>
 					<?php if($exp->_authenticxp == "Yes"){ ?> 
-			      		<div class='authenticated-mark mdi-action-done'></div>
+			      		<div class='authenticated-mark mdi-action-done ' title="Verified Account"></div>
 			  		<?php } ?>
 				</div>
 			</div>

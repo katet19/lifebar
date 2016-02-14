@@ -80,7 +80,7 @@ function AttachActivityEvents(){
 	 		if($("#feed-endless-loader").html() == "")
       			EndlessLoader();
 	 	}
-     }); 
+     });
 }
 
 function AttachSecondaryEvents(){

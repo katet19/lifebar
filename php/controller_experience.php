@@ -1449,10 +1449,43 @@ function GetExperienceForGameByEvents($gameid, $userid){
 	return $exp;
 }
 
-function GetCriticXPForGame($gameid){
+function GetCriticXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($row["UserID"], $mysqli);
+			$experience = new Experience($row["ID"],
+						$user->_first,
+						$user->_last,
+						$user,
+						$row["UserID"],
+						$row["GameID"],
+						GetGame($row["GameID"], $mysqli),
+						$row["Tier"],
+						$row["Quote"],
+						$row["ExperienceDate"],
+						$row["Link"],
+						$row["Owned"],
+						$row["BucketList"],
+						$row["AuthenticXP"]);
+						if($user->_security == "Authenticated"){
+							$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+							$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+						}
+				
+			$exp[$row["ID"]] = $experience;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $exp;
+}
+
+function GetOutsideCriticXPForGame($gameid, $userid){
+	$exp = array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
