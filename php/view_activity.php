@@ -53,12 +53,34 @@ function DisplayMainActivity($userid, $filter){
 				$last_user = $feeditem[0]->_userid;
 			}
 		}else{
-			if(sizeof($group) > 0)
+			if(sizeof($group) > 0){
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
+					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
+						if($feeditem[5] == "BUCKETLIST"){
+							$groupfeed[] = $group;
+							unset($group);
+							//Do not add bookmark to feed
+						}else{
+							//Ignore the event before and only add the 2nd event
+							unset($group);
+							$group[] = $feeditem;
+							$last_type = $feeditem[5];
+							$last_user = $feeditem[0]->_userid;
+						}
+				}else{
+					$groupfeed[] = $group;
+					unset($group);
+					$group[] = $feeditem;
+					$last_type = $feeditem[5];
+					$last_user = $feeditem[0]->_userid;
+				}
+			}else{
 				$groupfeed[] = $group;
-			unset($group);
-			$group[] = $feeditem;
-			$last_type = $feeditem[5];
-			$last_user = $feeditem[0]->_userid;
+				unset($group);
+				$group[] = $feeditem;
+				$last_type = $feeditem[5];
+				$last_user = $feeditem[0]->_userid;
+			}
 		}
 	}
 	//The last group will get missed in the loop
@@ -137,12 +159,34 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				$last_user = $feeditem[0]->_userid;
 			}
 		}else{
-			if(sizeof($group) > 0)
+			if(sizeof($group) > 0){
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
+					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
+						if($feeditem[5] == "BUCKETLIST"){
+							$groupfeed[] = $group;
+							unset($group);
+							//Do not add bookmark to feed
+						}else{
+							//Ignore the event before and only add the 2nd event
+							unset($group);
+							$group[] = $feeditem;
+							$last_type = $feeditem[5];
+							$last_user = $feeditem[0]->_userid;
+						}
+				}else{
+					$groupfeed[] = $group;
+					unset($group);
+					$group[] = $feeditem;
+					$last_type = $feeditem[5];
+					$last_user = $feeditem[0]->_userid;
+				}
+			}else{
 				$groupfeed[] = $group;
-			unset($group);
-			$group[] = $feeditem;
-			$last_type = $feeditem[5];
-			$last_user = $feeditem[0]->_userid;
+				unset($group);
+				$group[] = $feeditem;
+				$last_type = $feeditem[5];
+				$last_user = $feeditem[0]->_userid;
+			}
 		}
 	}
 	//The last group will get missed in the loop
