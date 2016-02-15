@@ -1452,7 +1452,7 @@ function GetExperienceForGameByEvents($gameid, $userid){
 function GetCriticXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
@@ -1485,7 +1485,7 @@ function GetCriticXPForGame($gameid, $userid){
 function GetOutsideCriticXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Tier` > 0 and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
