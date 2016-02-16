@@ -265,11 +265,19 @@ function GetJournalists(){
 function RegisterJournalist($first, $last){
 	$mysqli = Connect();
 	$userid = "";
-	$mysqli->query("INSERT INTO `Users` (`Username`,`First`,`Last`,`Access`) VALUES ('".$first.$last."[CRITIC]','".$first."','".$last."','Journalist')");
-	
-	if ($result = $mysqli->query("select * from `Users` where `First` = '".$first."' and `Last` = '".$last."' order by `ID`")) {
+	if ($result = $mysqli->query("select * from `Users` where `First` = '".$first."' and `Last` = '".$last."' and `Access` = 'Journalist'")) {
 		while($row = mysqli_fetch_array($result)){
-			$userid = $row["ID"];
+			$userid = $row["ID"];		
+		}
+	}
+	
+	if($userid == ""){
+		$mysqli->query("INSERT INTO `Users` (`Username`,`First`,`Last`,`Access`) VALUES ('".$first.$last."[CRITIC]','".$first."','".$last."','Journalist')");
+		
+		if ($result = $mysqli->query("select * from `Users` where `First` = '".$first."' and `Last` = '".$last."' and `Access` = 'Journalist' order by `ID`")) {
+			while($row = mysqli_fetch_array($result)){
+				$userid = $row["ID"];
+			}
 		}
 	}
 	Close($mysqli, $result);
@@ -625,7 +633,7 @@ function GetNewUsersCategory($limit){
 	$users = array();
 	$mysqli = Connect();
 	$thisquarter = date('Y-m-d', strtotime("now -5 days") );
-	if ($result = $mysqli->query("select * from `Users` usr where usr.`Access` != 'Journalist' and user.`Access` != 'Authenticated' and usr.`Established` >= '".$thisquarter."' ORDER BY `ID` DESC LIMIT ".$limit)) {
+	if ($result = $mysqli->query("select * from `Users` usr where usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' and usr.`Established` >= '".$thisquarter."' ORDER BY `ID` DESC LIMIT ".$limit)) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["ID"], $mysqli);
 		}
