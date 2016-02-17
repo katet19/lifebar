@@ -328,6 +328,26 @@
 	font-size:1.1em;
 }
 
+.tierInProgress{
+    background-color: transparent !important;
+    width: 25px !important;
+    height: 25px !important;
+    left: 7px !important;
+    top: -36px !important;
+    font-size: 27px !important;
+    cursor: default;
+}
+
+.tierInProgessLarge{
+    background-color: transparent !important;
+    width: 30px !important;
+    height: 30px !important;
+    left: 12px !important;
+    top: -43px !important;
+    font-size: 35px !important;
+    cursor: default;
+}
+
 @media only screen and (max-width : 599px) {
 	.feed-activity-game-container{
 	  margin-top: 15px;

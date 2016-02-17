@@ -366,15 +366,13 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
     <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     </div>
     <div class="feed-card-content">
+  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
       <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
-      	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
       		<i class="mdi-editor-format-quote"></i>
-      	<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-      		<i class="mdi-hardware-gamepad"></i>
-      	<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-      		<i class="mdi-action-visibility"></i>
-      	<?php } ?>
-  	  </div>
+	  </div>
+  	<?php }else{ 
+  			DisplayFeedTierIcon($xp, $event);
+   		} ?>
       <div class="feed-card-title grey-text text-darken-4">
       	<?php if($multiple){ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
@@ -770,6 +768,65 @@ function DisplayActivitySecondaryContent($userid){
 		</div>
 	</div>
 	<?php
+	}
+}
+
+function DisplayFeedTierIcon($xp, $event){ 
+	if(sizeof($xp->_playedxp) > 0){
+		if($xp->_playedxp[0]->_completed == "101")
+			$percent = 100;
+		else
+			$percent = $xp->_playedxp[0]->_completed;
+			
+		if($percent == 100){ ?>
+			<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
+			  	<i class="mdi-hardware-gamepad"></i>
+			</div>
+	  	<?php }else{ ?>
+			<div class="feed-card-icon">
+			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+				  <div class="slice">
+				    <div class="bar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php
+	  	}
+	}else{
+  		$percent = 20;
+    	$length = "";
+		foreach($xp->_watchedxp as $watched){
+			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+				$percent = 101;
+				$length = $watched->_length;
+			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+				$percent = 100;
+				$length = $watched->_length;
+			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+				$percent = 50;
+				$length = $watched->_length;
+			}else{
+				$length = $watched->_length;
+			}
+		}
+		
+		if($percent == 101){ ?>
+	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
+	      		<i class="mdi-action-visibility"></i>
+		  	</div>
+		<?php }else{ ?>
+			<div class="feed-card-icon">
+			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+				  <div class="slice">
+				    <div class="bar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php }
 	}
 }
 ?>
