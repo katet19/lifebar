@@ -453,43 +453,39 @@ function GetDiscoverCategories(){
 
 function SearchForGameLocalFirst($search){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Games` where `Title` = '".$search."' LIMIT 0,1")) {
+	$games = array();
+	if ($result = $mysqli->query("select * from `Games` where `Title` like '%".$search."%' LIMIT 0,25")) {
 		while($row = mysqli_fetch_array($result)){
-			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
-			}
+			unset($game);
+			$game = new Game($row["ID"], 
+				$row["GBID"],
+				$row["Title"],
+				$row["Rated"],
+				$row["Released"],
+				$row["Genre"],
+				$row["Platforms"],
+				$row["Year"],
+				$row["ImageLarge"],
+				$row["ImageSmall"],
+				$row["Highlight"],
+				$row["Publisher"],
+				$row["Developer"],
+				$row["Alias"],
+				$row["Theme"],
+				$row["Franchise"],
+				$row["Similar"],
+				$row["Tier1"],
+				$row["Tier2"],
+				$row["Tier3"],
+				$row["Tier4"],
+				$row["Tier5"]
+				);
+				$games[] = $game;
 		}
 	}
 	
-	/*if($game == ""){
-		$GBgames = RequestGameFromGiantBomb($search);
-		$firsttry = false;
-		if(sizeof($GBgames) > 0){ $game = $GBgames[0]; }
-	}*/
 	Close($mysqli, $result);
-	return $game;
+	return $games;
 }
 
 function RecentlyReleasedCategory(){
