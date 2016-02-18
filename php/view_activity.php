@@ -787,7 +787,7 @@ function DisplayFeedTierIcon($xp, $event){
 			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
 				  <div class="slice">
-				    <div class="bar"></div>
+				    <div class="bar minibar"></div>
 				    <div class="fill"></div>
 				  </div>
 				</div>
@@ -821,7 +821,7 @@ function DisplayFeedTierIcon($xp, $event){
 			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
 				  <div class="slice">
-				    <div class="bar"></div>
+				    <div class="bar minibar"></div>
 				    <div class="fill"></div>
 				  </div>
 				</div>

@@ -115,6 +115,14 @@
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
 }
+.minibar {
+  height: 0.85em !important;
+}
+
+.bigbar {
+  border: 0.09em solid #307bbb !important;
+}
+
 .pie-fill,
 .c100.p51 .bar:after,
 .c100.p51 .fill,
