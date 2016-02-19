@@ -175,4 +175,49 @@ function GoogleLogin(){
        echo "Ooophs, we got an error: " . $e->getMessage();
    }
 }
+function TwitterLogin(){
+	try{
+       $hybridauth = new Hybrid_Auth( GetOAuthConfig() );
+ 
+       $google = $hybridauth->authenticate( "Twitter" );
+ 
+       $user_profile = $google->getUserProfile();
+ 
+       echo "Hi there! " . $user_profile->displayName;
+ 
+   }
+   catch( Exception $e ){
+       echo "Ooophs, we got an error: " . $e->getMessage();
+   }
+}
+function FacebookLogin(){
+	try{
+       $hybridauth = new Hybrid_Auth( GetOAuthConfig() );
+ 
+       $google = $hybridauth->authenticate( "Facebook" );
+ 
+       $user_profile = $google->getUserProfile();
+ 
+       echo "Hi there! " . $user_profile->displayName;
+ 
+   }
+   catch( Exception $e ){
+       echo "Ooophs, we got an error: " . $e->getMessage();
+   }
+}
+function SteamLogin(){
+	try{
+       $hybridauth = new Hybrid_Auth( GetOAuthConfig() );
+ 
+       $google = $hybridauth->authenticate( "Steam" );
+ 
+       $user_profile = $google->getUserProfile();
+ 
+       echo "Hi there! " . $user_profile->displayName;
+ 
+   }
+   catch( Exception $e ){
+       echo "Ooophs, we got an error: " . $e->getMessage();
+   }
+}
 ?>

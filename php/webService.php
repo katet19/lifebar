@@ -384,6 +384,18 @@
 		if($_POST['action'] == 'ShowLanding'){
 			ShowLanding();
 		}
+		if($_POST['action'] == 'LoginGoogle'){
+			GoogleLogin();
+		}
+		if($_POST['action'] == 'LoginTwitter'){
+			TwitterLogin();
+		}
+		if($_POST['action'] == 'LoginFacebook'){
+			FacebookLogin();
+		}
+		if($_POST['action'] == 'LoginSteam'){
+			SteamLogin();
+		}
 	}
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){

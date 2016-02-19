@@ -138,6 +138,78 @@ function AttachLoginEvents(){
 		} 
 		
 	});
+	$(".google-login").on("click", function(e){
+		$.ajax({ url: '../php/webService.php',
+		         data: {action: "LoginGoogle" },
+		         type: 'post',
+		         success: function(output) {
+		  			$("#loginModal").find(".validation").html(output);
+		  			$("#loginModal, #passwordResetModal").find(".validation").show();
+	            },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+			});	
+	});
+	$(".twitter-login").on("click", function(e){
+		$.ajax({ url: '../php/webService.php',
+		         data: {action: "LoginTwitter" },
+		         type: 'post',
+		         success: function(output) {
+		  			$("#loginModal").find(".validation").html(output);
+		  			$("#loginModal, #passwordResetModal").find(".validation").show();
+	            },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+			});	
+	});
+		$(".facebook-login").on("click", function(e){
+		$.ajax({ url: '../php/webService.php',
+		         data: {action: "LoginFacebook" },
+		         type: 'post',
+		         success: function(output) {
+		  			$("#loginModal").find(".validation").html(output);
+		  			$("#loginModal, #passwordResetModal").find(".validation").show();
+	            },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+			});	
+	});
+		$(".steam-login").on("click", function(e){
+		$.ajax({ url: '../php/webService.php',
+		         data: {action: "LoginSteam" },
+		         type: 'post',
+		         success: function(output) {
+		  			$("#loginModal").find(".validation").html(output);
+		  			$("#loginModal, #passwordResetModal").find(".validation").show();
+	            },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+			});	
+	});
 }
 
 function Login(user, pw){
