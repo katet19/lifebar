@@ -2288,7 +2288,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
 				  <div class="slice">
 				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>
-				    <div class="fill"></div>
+				    <div class="fill <?php if($big){ ?>bigbar<?php } ?>"></div>
 				  </div>
 				</div>
 			</div>
@@ -2324,7 +2324,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
 				  <div class="slice">
 				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>
-				    <div class="fill"></div>
+				    <div class="fill <?php if($big){ ?>bigbar<?php } ?>"></div>
 				  </div>
 				</div>
 			</div>
