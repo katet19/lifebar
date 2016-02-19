@@ -21,50 +21,54 @@ function RecentlyReleasedFromGB(){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	foreach($decoded->results as $game){
-		//if($game->original_release_date != ""){
-			$release = explode(" ",$game->original_release_date);
-			$dates = explode("-",$game->original_release_date);
-	
-			$gameplatforms = "";
-			foreach($game->platforms as $platform){
-				$gameplatforms = $gameplatforms.$platform->name."\r\n";
-			}
-			
-			$gamerating = "";
-			if($game->original_game_rating != ""){
-				foreach($game->original_game_rating as $rating){
-					$rated = explode(" ", $rating->name);
-					if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
-							$gamerating = $rated[1];
-					}
+	if($decoded != null && sizeof($decoded->results > 0)){
+		foreach($decoded->results as $game){
+			//if($game->original_release_date != ""){
+				$release = explode(" ",$game->original_release_date);
+				$dates = explode("-",$game->original_release_date);
+		
+				$gameplatforms = "";
+				foreach($game->platforms as $platform){
+					$gameplatforms = $gameplatforms.$platform->name."\r\n";
 				}
-			}			
-			$localgame = GetGameByGBID($game->id);
-			$truegameid = "-1";
-			
-			if($localgame != ""){
-				$truegameid = $localgame->_id;
-			}
-			
-			$game = new Game($truegameid,
-				$game->id, 
-				$game->name,
-				$gamerating,
-				$release[0],
-				"",
-				$gameplatforms,
-				$dates[0],
-				$game->image->super_url,
-				$game->image->small_url,
-				"No",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"");
-			$gameresults[] = $game;
+				
+				$gamerating = "";
+				if($game->original_game_rating != ""){
+					foreach($game->original_game_rating as $rating){
+						$rated = explode(" ", $rating->name);
+						if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
+								$gamerating = $rated[1];
+						}
+					}
+				}			
+				$localgame = GetGameByGBID($game->id);
+				$truegameid = "-1";
+				
+				if($localgame != ""){
+					$truegameid = $localgame->_id;
+				}
+				
+				$game = new Game($truegameid,
+					$game->id, 
+					$game->name,
+					$gamerating,
+					$release[0],
+					"",
+					$gameplatforms,
+					$dates[0],
+					$game->image->super_url,
+					$game->image->small_url,
+					"No",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"");
+				$gameresults[] = $game;
+		}
+	}else{
+		ManualErrorMessage("RecentlyReleasedFromGB() failed to return data from GB");
 	}
 	
 	return $gameresults;
@@ -100,7 +104,7 @@ function RequestGameFromGiantBomb($searchstring){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	if($decoded != ''){
+	if($decoded != null && sizeof($decoded->results > 0)){
 		foreach($decoded->results as $game){
 			if($game->original_release_date != ""){
 				$release = explode(" ",$game->original_release_date);
@@ -242,6 +246,8 @@ function RequestGameFromGiantBomb($searchstring){
 				$gameresults[] = $game;
 			}
 		}
+	}else{
+		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."'");
 	}
 	
 	return $gameresults;

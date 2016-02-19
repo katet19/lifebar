@@ -533,4 +533,10 @@ function CheckVersion($myver){
 	}
 }
 
+function ManualErrorMessage($msg){
+	$subject = "Manual Error";
+	$to = "lifebar.fjs78@zapiermail.com";
+	SendEmail($to, $subject, $msg);
+}
+
 ?>
