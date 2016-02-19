@@ -9,7 +9,7 @@ LoopThroughPubs();
 
 function CollectRSSFeeds($url, $pub){
 	if($url != "" && $url != null){
-		if($pub == "Gamespot" || $pub == "GameInformer" || $pub == "GameGrin" || $pub == "AttackOfTheFanboy" || $pub == "DarkZero" || $pub == "GiantBomb"){
+		if($pub == "Gamespot" || $pub == "GameInformer" || $pub == "GameGrin" || $pub == "AttackOfTheFanboy" || $pub == "DarkZero" || $pub == "GiantBomb" || $pub == "Power Up Gaming"){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
