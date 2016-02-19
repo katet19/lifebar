@@ -367,7 +367,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
     </div>
     <div class="feed-card-content">
   	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
-      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
+      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
       		<i class="mdi-editor-format-quote"></i>
 	  </div>
   	<?php }else{ 
@@ -779,7 +779,7 @@ function DisplayFeedTierIcon($xp, $event){
 			$percent = $xp->_playedxp[0]->_completed;
 			
 		if($percent == 100){ ?>
-			<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
+			<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG"  title="<?php echo "Tier ".$event->_tier." - Completed"; ?>">
 			  	<i class="mdi-hardware-gamepad"></i>
 			</div>
 	  	<?php }else{ ?>
@@ -813,7 +813,7 @@ function DisplayFeedTierIcon($xp, $event){
 		}
 		
 		if($percent == 101){ ?>
-	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
+	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>">
 	      		<i class="mdi-action-visibility"></i>
 		  	</div>
 		<?php }else{ ?>

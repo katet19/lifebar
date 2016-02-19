@@ -62,6 +62,8 @@ body{
 	}
 }
 
+.tier0BG{ background-color:rgba(0,0,0,0.7) !important;   }
+
 .tier1BG{ background-color:#0A67A3 !important;   }
 
 .tier2BG{ background-color:#00B25C !important;  }
@@ -71,6 +73,8 @@ body{
 .tier4BG{ background-color:#FF4100 !important;  }
 
 .tier5BG{ background-color:#DB0058 !important;  }
+
+.tierTextColor0{ color:rgba(0,0,0,0.7) !important;   }
 
 .tierTextColor1{ color:#0A67A3 !important;  }
 

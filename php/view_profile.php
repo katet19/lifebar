@@ -522,9 +522,9 @@ function DisplaySlot1Game($xp){
 	if(isset($xp->_game)){ ?>
 		<div class="profile-highlighted-game waves-effect waves-block waves-light" data-gbid="<?php echo $highlightedgame->_gbid; ?>" style="background:transparent;"></div>	
 		<div class="profile-highlighted-game-quote">
-	      		<?php if($xp->_link != ''){ ?>
+	      		<?php if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
 						<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-					      	<div class="profile-highlighted-game-tier">
+					      	<div class="profile-highlighted-game-tier" title="Tier <?php echo $xp->_tier; ?> - Curated Review">
 			   					<i class="mdi-editor-format-quote"></i>
 			   				</div>
 		   				</div>
@@ -548,9 +548,9 @@ function DisplayEquippedGame($xp){
 	if(isset($xp->_game)){ ?>
 		<div class="profile-highlighted-game waves-effect waves-block waves-light" data-gbid="<?php echo $highlightedgame->_gbid; ?>" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 20%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 20%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 20%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>	
 		<div class="profile-highlighted-game-quote">
-		      		<?php if($xp->_link != ''){ ?>
+		      		<?php if($xp->_link != ''  && $xp->_authenticxp == "No"){ ?>
   					<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-		      			<div class="profile-highlighted-game-tier">
+		      			<div class="profile-highlighted-game-tier" title="Tier <?php echo $xp->_tier; ?> - Curated Review">
 		   					<i class="mdi-editor-format-quote"></i>
    				      	</div>
 	      			</div>
@@ -860,9 +860,9 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 				<?php echo $exp->_game->_title; ?>
 			</div>
 			<div class="profile-best-game-quote">
-	      		<?php if($exp->_link != ''){ ?>
+	      		<?php if($exp->_link != ''  && $exp->_authenticxp == "No"){ ?>
 						<div class="profile-best-game-tier-container tier<?php echo $exp->_tier; ?>BG z-depth-1">
-					      	<div class="profile-highlighted-game-tier" style='margin-left: 3px;'>
+					      	<div class="profile-highlighted-game-tier" title='Tier <?php echo $exp->_tier; ?> - Curated Review' style='margin-left: 3px;'>
 					   				<i class="mdi-editor-format-quote"></i>
 			   				</div>
 		   				</div>
@@ -2278,7 +2278,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 			
 		if($percent == 100){ ?>
 			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	      		<div class="profile-highlighted-game-tier" <?php if(!$slot){ ?>style='margin-left: 3px;' <?php } ?>>
+	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - Completed"; ?>" <?php if(!$slot){ ?>style='margin-left: 3px;' <?php } ?>>
 			  		<i class="mdi-hardware-gamepad"></i>
 		  		</div>
 	  		</div>
@@ -2314,7 +2314,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 		
 		if($percent == 101){ ?>
   			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	      		<div class="profile-highlighted-game-tier" style='margin-left: 3px;'>
+	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='margin-left: 3px;'>
 	      			<i class="mdi-action-visibility"></i>
       			</div>
   			</div>
@@ -2333,9 +2333,9 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 }
 
 function DisplayProfileCheckPointTierIcon($xp){ 
-	if($xp->_link != ''){ ?>
-		<div class="checkpoint-tier tier<?php echo $tier; ?>BG">
-			<div class="checkpoint-icon-xp" style="margin-top:0"><i class="mdi-editor-format-quote"></i></div>
+	if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
+		<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG">
+			<div class="checkpoint-icon-xp" style="margin-top:0" title='Tier <?php echo $xp->_tier; ?> - Curated Review'><i class="mdi-editor-format-quote"></i></div>
 		</div>
 	<?php }else if(sizeof($xp->_playedxp) > 0){
 		if($xp->_playedxp[0]->_completed == "101")
@@ -2345,7 +2345,7 @@ function DisplayProfileCheckPointTierIcon($xp){
 			
 		if($percent == 100){ ?>
 			<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	      		<div class="checkpoint-icon-xp"  style="margin-top:0">
+	      		<div class="checkpoint-icon-xp" title='Tier <?php echo $xp->_tier; ?> - Completed'  style="margin-top:0">
 			  		<i class="mdi-hardware-gamepad"></i>
 		  		</div>
 	  		</div>
@@ -2381,7 +2381,7 @@ function DisplayProfileCheckPointTierIcon($xp){
 		
 		if($percent == 101){ ?>
   			<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	      		<div class="checkpoint-icon-xp"  style="margin-top:0">
+	      		<div class="checkpoint-icon-xp" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>"  style="margin-top:0">
 	      			<i class="mdi-action-visibility"></i>
       			</div>
   			</div>

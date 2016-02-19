@@ -553,9 +553,9 @@ function DisplayGameInList($libraryxp){ ?>
 <?php }
 
 function DisplayGameCardTierIcon($xp){ 
-	if($xp->_link != ''){ ?>
+	if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
 	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	          	<div class="card-game-tier">
+	          	<div class="card-game-tier" title='Tier <?php echo $xp->_tier; ?> - Curated Review'>
    					<i class="mdi-editor-format-quote"></i>
 	          	</div>
   	            <div class="card-tier-details">
@@ -573,7 +573,7 @@ function DisplayGameCardTierIcon($xp){
 					
 				if($percent == 100){ ?>
   	  	       		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-			          	<div class="card-game-tier">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - Completed"; ?>">
 		    				<i class="mdi-hardware-gamepad"></i>
 			          	</div>
 	          	<?php }else{ ?>
@@ -614,7 +614,7 @@ function DisplayGameCardTierIcon($xp){
     		if($percent == 101){
     		?>
 	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	          	<div class="card-game-tier">
+	          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
 	          			<i class="mdi-action-visibility"></i>
 	          	</div>
   	            <div class="card-tier-details">
