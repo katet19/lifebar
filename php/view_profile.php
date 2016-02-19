@@ -2284,7 +2284,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 	  		</div>
 	  	<?php }else{ ?>
 			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> z-depth-1">
-			  <div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;<?php if($big){ ?>font-size:60px;<?php } ?>'>
+			  <div class="c100 mini <?php if($big){ ?>biggerminiTierIcon<?php } ?> <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
 				  <div class="slice">
 				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>
@@ -2320,7 +2320,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
   			</div>
 		<?php }else{ ?>
 			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> z-depth-1">
-			  <div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;<?php if($big){ ?>font-size:60px;<?php } ?>'>
+			  <div class="c100 mini <?php if($big){ ?>biggerminiTierIcon<?php } ?> <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
 				  <div class="slice">
 				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>

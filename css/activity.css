@@ -348,6 +348,10 @@
     cursor: default;
 }
 
+.biggerminiTierIcon{
+	font-size:60px !important;
+}
+
 @media only screen and (max-width : 599px) {
 	.feed-activity-game-container{
 	  margin-top: 15px;
@@ -405,5 +409,17 @@
 	}
 	.feed-agree-box{
 		margin-left:0;
+	}
+	.tierInProgessLarge{
+    	background-color: transparent !important;
+	    width: 15px !important;
+	    height: 15px !important;
+	    left: 5px !important;
+	    top: -35px !important;
+	    font-size: 25px !important;
+	    cursor: default;
+	}
+	.biggerminiTierIcon{
+		font-size:35px !important;
 	}
 }
