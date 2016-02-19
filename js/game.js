@@ -635,12 +635,14 @@ function GameCardActions(element){
 	}else{
 		element.addClass("card-game-tier-container-active");
 		element.parent().parent().find(".card-game-tier").hide();
+		element.parent().parent().find(".c100").hide();
 		element.find(".card-tier-details").addClass("card-tier-details-active");
 		element.find(".mdi-content-clear").on("click", function(e){
 			e.stopPropagation();
 			$(this).parent().parent().parent().removeClass("card-game-tier-container-active");
 			$(this).parent().parent().removeClass("card-tier-details-active");
 			$(this).parent().parent().parent().parent().find(".card-game-tier").show();
+			$(this).parent().parent().parent().parent().find(".c100").show();
 		});
 	}
 }
