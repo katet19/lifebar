@@ -2314,7 +2314,7 @@ function DisplayProfileTierIcon($xp, $big, $slot){
 		
 		if($percent == 101){ ?>
   			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='margin-left: 3px;'>
+	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
 	      			<i class="mdi-action-visibility"></i>
       			</div>
   			</div>
