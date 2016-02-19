@@ -986,8 +986,8 @@
 
 .profile-highlighted-game-container-small .profile-highlighted-game-quote .profile-highlighted-game-tier-container .profile-highlighted-game-tier{
     font-size: 1.2em;
-    width: 35px;
-    margin-top: 2px;
+    width: 40px;
+    margin-top: 4px;
 }
 
 .profile-highlighted-game-container .profile-highlighted-game-quote .profile-highlighted-game-tier-container .profile-highlighted-game-tier{
@@ -1059,8 +1059,8 @@
 
 .profile-highlighted-game-tier-container{
     color: white;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     vertical-align: bottom;
     margin-right:5px;

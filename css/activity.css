@@ -328,6 +328,30 @@
 	font-size:1.1em;
 }
 
+.tierInProgress{
+    background-color: transparent !important;
+    width: 25px !important;
+    height: 25px !important;
+    left: 7px !important;
+    top: -36px !important;
+    font-size: 27px !important;
+    cursor: default;
+}
+
+.tierInProgessLarge{
+    background-color: transparent !important;
+    width: 30px !important;
+    height: 30px !important;
+    left: 13px !important;
+    top: -43px !important;
+    font-size: 35px !important;
+    cursor: default;
+}
+
+.biggerminiTierIcon{
+	font-size:60px !important;
+}
+
 @media only screen and (max-width : 599px) {
 	.feed-activity-game-container{
 	  margin-top: 15px;
@@ -385,5 +409,17 @@
 	}
 	.feed-agree-box{
 		margin-left:0;
+	}
+	.tierInProgessLarge{
+    	background-color: transparent !important;
+	    width: 15px !important;
+	    height: 15px !important;
+	    left: 5px !important;
+	    top: -35px !important;
+	    font-size: 25px !important;
+	    cursor: default;
+	}
+	.biggerminiTierIcon{
+		font-size:35px !important;
 	}
 }

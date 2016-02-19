@@ -9,7 +9,7 @@ LoopThroughPubs();
 
 function CollectRSSFeeds($url, $pub){
 	if($url != "" && $url != null){
-		if($pub == "Gamespot" || $pub == "GameInformer" || $pub == "GameGrin" || $pub == "AttackOfTheFanboy"){
+		if($pub == "Gamespot" || $pub == "GameInformer" || $pub == "GameGrin" || $pub == "AttackOfTheFanboy" || $pub == "DarkZero" || $pub == "GiantBomb" || $pub == "Power Up Gaming"){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -27,7 +27,7 @@ function CollectRSSFeeds($url, $pub){
 		}else{
 			$thefeed = simplexml_load_file($url);
 		
-			if($pub == "GiantBomb" || $pub == "IGN" || $pub == "Joystiq" || $pub == "Escapist" || $pub == "The Guardian" || $pub == "GamesRadar" || $pub == "N3rdabl3"){
+			if($pub == "IGN" || $pub == "Joystiq" || $pub == "Escapist" || $pub == "The Guardian" || $pub == "GamesRadar" || $pub == "N3rdabl3"){
 				echo "<hr><h4>".$pub."************</h4>";
 				foreach($thefeed->channel->item as $feeditem){
 					SaveReview($feeditem->title, $feeditem->link, $pub);

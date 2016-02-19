@@ -115,6 +115,14 @@
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
 }
+.minibar {
+  height: 0.85em !important;
+}
+
+.bigbar {
+  border: 0.09em solid #307bbb !important;
+}
+
 .pie-fill,
 .c100.p51 .bar:after,
 .c100.p51 .fill,
@@ -248,6 +256,9 @@
 }
 .c100.small {
   font-size: 80px;
+}
+.c100.mini {
+  font-size: 40px;
 }
 .c100 > span {
 	position: absolute;
@@ -1130,5 +1141,74 @@
   background-color: #FFF;
 }
 .c100.five:hover > span {
+  color: #FFF;
+}
+
+.c100.tierone .bar,
+.c100.tierone .fill {
+  border-color: #0A67A3 !important;
+}
+.c100.tierone > span {
+  color: #FFF;
+}
+.c100.tierone:after {
+  background-color: #FFF;
+}
+.c100.tierone:hover > span {
+  color: #FFF;
+}
+.c100.tiertwo .bar,
+.c100.tiertwo .fill {
+  border-color: #00B25C !important;
+}
+.c100.tiertwo > span {
+  color: #FFF;
+}
+.c100.tiertwo:after {
+  background-color: #FFF;
+}
+.c100.tiertwo:hover > span {
+  color: #FFF;
+}
+
+.c100.tierthree .bar,
+.c100.tierthree .fill {
+  border-color: #FF8E00 !important;
+}
+.c100.tierthree > span {
+  color: #FFF;
+}
+.c100.tierthree:after {
+  background-color: #FFF;
+}
+.c100.tierthree:hover > span {
+  color: #FFF;
+}
+
+.c100.tierfour .bar,
+.c100.tierfour .fill {
+  border-color: #FF4100 !important;
+}
+.c100.tierfour > span {
+  color: #FFF;
+}
+.c100.tierfour:after {
+  background-color: #FFF;
+}
+.c100.tierfour:hover > span {
+  color: #FFF;
+}
+
+.c100.tierfive .bar,
+.c100.tierfive .fill {
+  border-color: #DB0058 !important;
+}
+.c100.tierfive > span {
+  color: #FFF;
+}
+.c100.tierfive:after {
+  background-color: #FFF;
+}
+.c100.tierfive:hover > span {
   color: #FFF;
 }

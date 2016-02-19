@@ -122,7 +122,7 @@ function DisplayUserSettings(){
 		    		</div>
 			    	<div class="col s9 m6">
 			    	  <label>Birth year</label>
-					  <select id="birthyear" class="browser-default">
+					  <select id="birth_year" class="browser-default">
 					    <?php for($i = date("Y"); $i > 1930; $i--){ ?>
 					    	<option value="<?php echo $i; ?>" <?php if($i == $_SESSION['logged-in']->_birthdate){ echo "selected"; } ?>><?php echo $i; ?></option>
 					    <?php } ?>

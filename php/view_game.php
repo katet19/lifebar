@@ -86,9 +86,19 @@ function ShowCritics($critics, $othercritics, $game, $myxp){
 			</div>
 			<?php
 			
-			if(sizeof($othercritics) > 0){
-				foreach($othercritics as $usr){
-						DisplayCriticQuoteCard($usr);
+			$count = 1;
+			$allothercritics = array();
+			foreach($othercritics as $critic){
+				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
+			}
+			
+			arsort($allothercritics);
+			$allothercritics = array_keys($allothercritics);
+			
+			if(sizeof($allothercritics) > 0){
+				while($count <= sizeof($allothercritics)){
+					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -104,9 +114,19 @@ function ShowCritics($critics, $othercritics, $game, $myxp){
 				<?php
 			}
 		}else{
-			if(sizeof($othercritics) > 0){
-				foreach($othercritics as $usr){
-						DisplayCriticQuoteCard($usr);
+			$count = 1;
+			$allothercritics = array();
+			foreach($othercritics as $critic){
+				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
+			}
+			
+			arsort($allothercritics);
+			$allothercritics = array_keys($allothercritics);
+			
+			if(sizeof($allothercritics) > 0){
+				while($count <= sizeof($allothercritics)){
+					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -160,10 +180,19 @@ function ShowUsers($users, $otherusers){
 				</div>
 			</div>
 			<?php
+			$count = 1;
+			$allotherusers = array();
+			foreach($otherusers as $user){
+				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
+			}
+			
+			arsort($allotherusers);
+			$allotherusers = array_keys($allotherusers);
 			
 			if(sizeof($otherusers) > 0){
-				foreach($otherusers as $usr){
-						DisplayUserQuoteCard($usr);
+				while($count <= sizeof($allotherusers)){
+					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -175,9 +204,19 @@ function ShowUsers($users, $otherusers){
 				<?php
 			}
 		}else{
+			$count = 1;
+			$allotherusers = array();
+			foreach($otherusers as $user){
+				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
+			}
+			
+			arsort($allotherusers);
+			$allotherusers = array_keys($allotherusers);
+			
 			if(sizeof($otherusers) > 0){
-				foreach($otherusers as $usr){
-						DisplayUserQuoteCard($usr);
+				while($count <= sizeof($allotherusers)){
+					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -389,25 +428,9 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
 	        <div class="card-content">
-	          <?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ ?>
-	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	          	<div class="card-game-tier">
-	          		<?php if($xp->_link != ''){ ?>
-       					<i class="mdi-editor-format-quote"></i>
-       				<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-  	          			<i class="mdi-av-games"></i>
-	          		<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-	          			<i class="mdi-action-visibility"></i>
-	          		<?php } ?>
-	          	</div>
-  	            <div class="card-tier-details">
-  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
-		          <p>
-		          	"<?php echo $xp->_quote; ?>"
-		          </p>
-				</div>
-          	  </div>
-          	  <?php }else if($_SESSION['logged-in']->_id > 0){ ?>
+	          <?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ 
+	          			DisplayGameCardTierIcon($xp);
+	           	}else if($_SESSION['logged-in']->_id > 0){ ?>
 		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
 		          	<div class="card-game-tier">
 	          			<i class="mdi-content-add"></i>
@@ -528,6 +551,99 @@ function DisplayGameInList($libraryxp){ ?>
 	      </div>
       </div>
 <?php }
+
+function DisplayGameCardTierIcon($xp){ 
+	if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
+	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	          	<div class="card-game-tier" title='Tier <?php echo $xp->_tier; ?> - Curated Review'>
+   					<i class="mdi-editor-format-quote"></i>
+	          	</div>
+  	            <div class="card-tier-details">
+  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
+		          <p>
+		          	"<?php echo $xp->_quote; ?>"
+		          </p>
+				</div>
+          	  </div>
+  	  <?php }else if(sizeof($xp->_playedxp) > 0){ 
+		  	  	if($xp->_playedxp[0]->_completed == "101")
+					$percent = 100;
+				else
+					$percent = $xp->_playedxp[0]->_completed;
+					
+				if($percent == 100){ ?>
+  	  	       		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - Completed"; ?>">
+		    				<i class="mdi-hardware-gamepad"></i>
+			          	</div>
+	          	<?php }else{ ?>
+	          		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	      			  	<div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+	          	<?php } ?>
+	  	            <div class="card-tier-details">
+	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
+			          <p>
+			          	"<?php echo $xp->_quote; ?>"
+			          </p>
+					</div>
+				</div>
+  	  <?php }else if(sizeof($xp->_watchedxp) > 0){ 
+  	  		$percent = 20;
+  	  		$length = "";
+    		foreach($xp->_watchedxp as $watched){
+    			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+    				$percent = 101;
+    				$length = $watched->_length;
+    			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+    				$percent = 100;
+    				$length = $watched->_length;
+    			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+    				$percent = 50;
+    				$length = $watched->_length;
+    			}else{
+    				$length = $watched->_length;
+    			}
+    		}
+    		
+    		if($percent == 101){
+    		?>
+	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
+	          			<i class="mdi-action-visibility"></i>
+	          	</div>
+  	            <div class="card-tier-details">
+  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
+		          <p>
+		          	"<?php echo $xp->_quote; ?>"
+		          </p>
+				</div>
+			   </div>
+  	  <?php }else{ ?>
+      		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+  			  	<div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+				  <div class="slice">
+				    <div class="bar minibar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+  	            <div class="card-tier-details">
+  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
+		          <p>
+		          	"<?php echo $xp->_quote; ?>"
+		          </p>
+				</div>
+   			</div>
+  	  <?php
+  	  		}
+  	  }
+}
 
 function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview){
 	$game = $xp->_game;?>
