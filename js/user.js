@@ -24,7 +24,6 @@ function AttachUserSettingEvents(){
     	e.stopPropagation();
     	UserSettingsValidation();	
     });
-    
 }
 
 function UserSettingsValidation(){
@@ -62,7 +61,14 @@ function VerifyUserData(username, email){
          				$("#userSettings").find(".validation").html(errors);
 						$("#userSettings").find(".validation").show();
          			}else{
-         				SaveUserSettings($("#userSettings").attr("data-id"), $("#settings_username").val(), $("#settings_password").val(), $("#settings_email").val(), $("#first_name").val(), $("#last_name").val(), $("#birthyear").val(), $("#defaultWatchedSource").val(), $("#steam_id").val(), $("#psn_id").val(), $("#xbox_id").val());
+         				var image = $("input[type=radio][name=avatargroup]:checked").attr("id");
+         				if(image == "gravatar")
+         					image = "Gravatar";
+     					else if(image == "uploaded")
+     						image = "Uploaded";
+ 						else if(image == "weburlradio")
+ 							image = $("#weburl").val();
+         				SaveUserSettings($("#userSettings").attr("data-id"), $("#settings_username").val(), $("#settings_password").val(), $("#settings_email").val(), $("#first_name").val(), $("#last_name").val(), $("#birth_year").val(), $("#defaultWatchedSource").val(), $("#steam_id").val(), $("#psn_id").val(), $("#xbox_id").val(), $("#title_id").val(), $("#personalweb_id").val(), $("#twitter_id").val(), image);
          			}
         },
         error: function(x, t, m) {
@@ -76,11 +82,11 @@ function VerifyUserData(username, email){
 	});
 }
 
-function SaveUserSettings(userid, username, password, email, first, last, birthyear, source, steam, psn, xbox){
+function SaveUserSettings(userid, username, password, email, first, last, birthyear, source, steam, psn, xbox, title, weburl, twitter, image){
 	$("#userSettings").find(".validation").show();
 	ShowLoader($("#userSettings").find(".validation"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
-         data: {action: "SaveUserSettings", userid: userid, username: username, email: email, password: password, first: first, last: last, birthyear: birthyear, source: source, steam: steam, psn: psn, xbox: xbox },
+         data: {action: "SaveUserSettings", userid: userid, username: username, email: email, password: password, first: first, last: last, birthyear: birthyear, source: source, steam: steam, psn: psn, xbox: xbox, title: title, weburl: weburl, twitter: twitter, image: image },
          type: 'post',
          success: function(output) {
          	$("#userSettings").find(".validation").hide();
@@ -108,6 +114,12 @@ function ShowUserPreviewCard(usercard, element){
 		if(element == undefined)
 			element = $("#discover");
 		ShowUserProfile($(this).attr("data-userid"));
+		$("#universalUserPreview").closeModal();
+	});
+	$(".user-preview-card-view-activity").on('click', function(e){
+		if(element == undefined)
+			element = $("#discover");
+		ShowUserActivity($(this).attr("data-userid"));
 		$("#universalUserPreview").closeModal();
 	});
 }

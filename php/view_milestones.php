@@ -74,7 +74,7 @@ function DisplayLargeMilestone($milestone){
 
 function DisplaySmallMilestone($milestone){ ?>
 <div class="badge-small" data-id="<?php echo $milestone->_id; ?>" >
-  <div class="c100 <?php if($milestone->_difficulty == 1){ echo "one"; }else if($milestone->_difficulty == 2){ echo "two"; }else if($milestone->_difficulty == 3){ echo "three"; }else if($milestone->_difficulty == 4){ echo "four"; }else if($milestone->_difficulty == 5){ echo "five"; }  ?> p<?php echo round(($milestone->_progress/$milestone->_threshold)*100); ?> small tooltipped" data-position="bottom" data-delay="30" data-tooltip="<?php echo $milestone->_description; ?>">
+  <div class="c100 <?php if($milestone->_difficulty == 1){ echo "one"; }else if($milestone->_difficulty == 2){ echo "two"; }else if($milestone->_difficulty == 3){ echo "three"; }else if($milestone->_difficulty == 4){ echo "four"; }else if($milestone->_difficulty == 5){ echo "five"; }  ?> p<?php echo round(($milestone->_progress/$milestone->_threshold)*100); ?> small" title="<?php echo $milestone->_description; ?>">
 	  <?php if($milestone->_difficulty == 1){ 
 	  		if($milestone->_progress == $milestone->_threshold){?>
 	  			<span style="background: -moz-linear-gradient(top, rgba(105,105,103,0.75) 0%, rgba(105,105,103,0.75) 100%, rgba(105,105,103,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(105,105,103,0.75)), color-stop(100%,rgba(105,105,103,0.75)), color-stop(101%,rgba(105,105,103,0.75))), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(105,105,103,0.75) 0%,rgba(105,105,103,0.75) 100%,rgba(105,105,103,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(105,105,103,0.75) 0%,rgba(105,105,103,0.75) 100%,rgba(105,105,103,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"><?php echo $milestone->_progress; ?>/<?php echo $milestone->_threshold; ?></span>
@@ -146,7 +146,7 @@ function DisplayGearMilestone($milestone){
 	}
 ?>
 <div class="badge-small" data-id="<?php echo $milestone->_id; ?>" data-progid="<?php echo $milestone->_progress->_id; ?>" data-objectid="<?php echo $milestone->_objectid; ?>" >
-  <div class="c100 <?php if($currentlevel == 1){ echo "one"; }else if($currentlevel == 2){ echo "two"; }else if($currentlevel == 3){ echo "three"; }else if($currentlevel == 4){ echo "four"; }else if($currentlevel == 5){ echo "five"; }  ?> p<?php echo $percent; ?> tooltipped" data-position="bottom" data-delay="30" data-tooltip="<?php echo $milestone->_description; ?>">
+  <div class="c100 <?php if($currentlevel == 1){ echo "one"; }else if($currentlevel == 2){ echo "two"; }else if($currentlevel == 3){ echo "three"; }else if($currentlevel == 4){ echo "four"; }else if($currentlevel == 5){ echo "five"; }  ?> p<?php echo $percent; ?>" title="<?php echo $milestone->_description; ?>">
   	  <span style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"><?php echo $progress; ?>/<?php echo $threshold; ?></span>
 	  <div class="slice">
 	    <div class="bar"></div>
@@ -198,7 +198,7 @@ function DisplayBattleProgress($user, $myprogress, $gameid){ ?>
 			</div>
 			<?php 
 				$games = AddSimilarGames($_SESSION['logged-in']->_id, $gameid); 
-				if(isset($games)){ ?>
+				if(isset($games) && sizeof($myprogress) > 0){ ?>
 					<div class="bp-similar col s12 m4">
 						<div class="bp-quick-header">New Quests Found</div>
 		
@@ -210,6 +210,20 @@ function DisplayBattleProgress($user, $myprogress, $gameid){ ?>
 									</div>
 								<?php
 								} ?>
+					</div>
+				<?php }else if(isset($games)){ ?>
+					<div class="bp-similar col s12">
+						<div class="bp-quick-header">New Quests Found</div>
+						<div class="row">
+							<?php foreach($games as $game){ ?>
+								<div class="col s12 m5 l3"> 
+									<div class="bp-related-quests-image z-depth-1" data-gbid="<?php echo $game->_gbid; ?>" style="width:90%;margin-left:2.5%;margin-right:2.5%;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;margin-bottom:5px">
+									<div class="bp-related-game-title"><?php echo $game->_title; ?></div>
+								</div>
+								</div>
+							<?php
+							} ?>
+						</div>
 					</div>
 				<?php } ?>
 			<div class="bp-equip col s12">

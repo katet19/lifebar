@@ -8,6 +8,63 @@ require_once "includes.php";
 //foreach($list as $old){
 	//UpdateUser($old,8146);
 //}
+
+//FixGameImageURLS();
+//FindMissingNames();
+function FindMissingNames(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Users` where `Username` like '%[CRITIC]%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$name = str_replace('[CRITIC]','',$row['Username']);
+			$name = preg_split('/(?=[A-Z])/', $name, -1, PREG_SPLIT_NO_EMPTY);
+			$first = $name[0];
+			$last = '';
+			if(sizeof($name) > 2){
+				$i = 1;
+				while($i < sizeof($name)){
+					$last = $last.$name[$i];
+					$i++;
+				}
+			}else{
+				$last = $name[1];
+			}
+			
+			//echo $first." ".$last."<BR>";
+			$mysqli->query("update `Users` set `First` = '".$first."', `Last` = '".$last."', `Birthdate` = '1983-01-01' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
+
+
+function FixGameImageURLS(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select `ImageLarge`, `ID`, `ImageSmall` from `Games` where `ImageLarge` like '%polygonalweave%' or `ImageSmall` like '%polygonalweave%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$small = $row['ImageSmall'];
+			$large = $row['ImageLarge'];
+			
+			$small = str_replace("polygonalweave.com","lifebar.io", $small);
+			$large = str_replace("polygonalweave.com","lifebar.io", $large);
+			echo $small." || ".$large."<BR>";
+			$mysqli->query("update `Games` set `ImageLarge` = '".$large."', `ImageSmall` = '".$small."' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
+
+function FixPlatformMilestones(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Milestones` where `Category` = 'Platform'")) {
+		while($row = mysqli_fetch_array($result)){
+			$validation = $row['Validation'];
+			
+			$newvalidation = str_replace("`PlatformIDs` like '%", "`PlatformIDs` like '%,", $validation);
+			$newvalidation = str_replace(",,", ",", $newvalidation);
+			$newvalidation = mysqli_real_escape_string($mysqli, $newvalidation);
+			$mysqli->query("update `Milestones` set `Validation` = '".$newvalidation."' where `ID` = '".$row['ID']."'");
+		}
+	}
+}
+
 function UpdateUser($old, $truth){
 	$mysqli = Connect();
 	$mysqli->query("update `Experiences` set `UserID` = '".$truth."' where `UserID` = '".$old."'");
@@ -103,6 +160,30 @@ function GetUnReviewedRSSFeeds(){
 	}
 	Close($mysqli, $result);
 	return $feeds;
+}
+
+function GetDBThreads(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("SHOW STATUS WHERE variable_name LIKE 'Threads_%'")) {
+		while($row = mysqli_fetch_array($result)){
+			$threads[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $threads;
+}
+
+function GetEmailList(){
+	$emails = "";
+	$mysqli = Connect();
+    $date = date('Y-m-d', strtotime("now -7 days") );
+	if ($result = $mysqli->query("select `Email` from `Users` where `Access` != 'Journalist' AND `Established` >= '".$date."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$emails[] = $row['Email'];
+		}
+	}
+	Close($mysqli, $result);
+	return $emails;
 }
 
 function GetUnReviewedRSSVideo(){
@@ -437,6 +518,25 @@ function SaveIGNImportForLater($id){
 	$mysqli = Connect();
 	$result = $mysqli->query("Update `ImportReview` set `Owner` = '-1' where `ID` = '".$id."'");
 	Close($mysqli, $result);
+}
+
+function CheckVersion($myver){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Version` ORDER BY `ID` DESC LIMIT 0,1");
+	while($row = mysqli_fetch_array($result)){
+		$version = $row["ID"];
+	}
+	if($version > $myver){
+		echo "UPDATE";
+	}else{
+		echo "CURRENT";
+	}
+}
+
+function ManualErrorMessage($msg){
+	$subject = "Manual Error";
+	$to = "lifebar.fjs78@zapiermail.com";
+	SendEmail($to, $subject, $msg);
 }
 
 ?>

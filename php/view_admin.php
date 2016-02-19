@@ -3,8 +3,18 @@ function DisplayAdmin($userid){
 	$admindata = GetExperienceData();
 	$gamedata = GetGamesData();
 	$userdata = GetUsersData(); ?>
-	<div class="col s12" style='margin-top:1.5em;'>
+	<div class="col s12">
 		<div class="row">
+  			<!-- 
+  			
+  			XP Management
+  			
+  			-->
+			<div class="col s12">
+				<div class="admin-category-header" style='margin-top:0px;'>
+					XP Management
+				</div>
+			</div>
 			<div class="col s12 m6 l4">
 	          <div class="card admin-card">
 	            <div class="card-content">
@@ -13,37 +23,6 @@ function DisplayAdmin($userid){
 	            <div class="card-action">
 	              <a href="#" class="admin-action admin-run-feed-collector">RUN FEED COLLECTOR</a>
 	              <a href="#" class="admin-action admin-manage-pending-reviews">Manage</a>
-	            </div>
-	          </div>
-  			</div>
-  			<div class="col s12 m6 l4">
-	          <div class="card admin-card">
-	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
-	            </div>
-	            <div class="card-action">
-	              <a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
-	            </div>
-	          </div>
-  			</div>
-			<div class="col s12 m6 l4">
-	          <div class="card admin-card">
-	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-assignment-ind" style='margin: 0 5px;'></i> Calculate User Weave</span>
-	            </div>
-	            <div class="card-action">
-	              <a href="#" class="admin-action admin-run-calc-user-weave">MANUAL RUN</a>
-	            </div>
-	          </div>
-  			</div>
-  			<div class="col s12 m6 l4">
-	          <div class="card admin-card">
-	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-social-pages" style='margin: 0 5px;'></i> Manage Milestones <div class="admin-counter"><?php echo GetMilestonesCount(); ?> milestones</div></span>
-	            </div>
-	            <div class="card-action">
-	              <a href="#" class="admin-action admin-badge-new">NEW</a>
-	              <a href="#" class="admin-action admin-badge-search">SEARCH/EDIT</a>
 	            </div>
 	          </div>
   			</div>
@@ -59,86 +38,156 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-  			<?php if($_SESSION['logged-in']->_id == 7 || $_SESSION['logged-in']->_id == 7828){
-  				$rewards = GetJoesRewards();?>
-	  			<div class="col s12 m6 l4">
-		          <div class="card admin-card">
-		            <div class="card-content">
-		              <span class="card-title"><i class="mdi-action-wallet-giftcard" style='margin: 0 5px;'></i> Joe's Rewards <div class="admin-counter"><?php echo $rewards[2]; ?>%</div></span>
-		            </div>
-		            <div class="card-action">
-						<div>Reward: <b><?php echo $rewards[1]; ?></b></div>
-		            </div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="cyan-text text-darken-2">
+		          	<div style='  font-size: 3em;'><?php echo number_format($admindata[0]); ?></div>
+		          	<div style='  font-weight: bold;'>Total XP</div>
 		          </div>
-	  			</div>
-  			<?php } ?>
+		        </div>
+			</div>
+  			<!-- 
+  			
+  			Game Management
+  			
+  			-->
+  			<div class="col s12">
+				<div class="admin-category-header">
+					Game Management
+				</div>
+			</div>
+  			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
+	            </div>
+	          </div>
+  			</div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="cyan-text text-darken-2">
+		          	<div style='  font-size: 3em;'><?php echo number_format($gamedata[0]); ?></div>
+		          	<div style='  font-weight: bold;'>Total Games</div>
+		          </div>
+		        </div>
+			</div>
+			
+  	  		<!-- 
+  			
+  			User Management
+  			
+  			-->
+  			<div class="col s12">
+				<div class="admin-category-header">
+					User Management
+				</div>
+			</div>
+			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-communication-email" style='margin: 0 5px;'></i> Export Email List</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-export-email">Get List</a>
+	            </div>
+	          </div>
+  			</div>
+  			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-action-assignment-ind" style='margin: 0 5px;'></i> Calculate User Weave</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-run-calc-user-weave">MANUAL RUN</a>
+	            </div>
+	          </div>
+  			</div>
+  			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="deep-purple-text text-darken-1">
+		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[0]); ?></div>
+		          	<div style='  font-weight: bold;'>Users</div>
+		          </div>
+		        </div>
+			</div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="deep-purple-text text-darken-1">
+		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[1]); ?></div>
+		          	<div style='  font-weight: bold;'>Critics</div>
+		          </div>
+		        </div>
+			</div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="deep-purple-text text-darken-1">
+		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[4]); ?></div>
+		          	<div style='  font-weight: bold;'>User XP (24 Hours)</div>
+		          </div>
+		        </div>
+			</div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="deep-purple-text text-darken-1">
+		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[3]); ?></div>
+		          	<div style='  font-weight: bold;'>User XP (7 Days)</div>
+		          </div>
+		        </div>
+			</div>
+			<div class="col s6 m3 l2">
+		        <div class="card-panel admin-card" style='height: 140px;'>
+		          <div class="deep-purple-text text-darken-1">
+		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[2]); ?></div>
+		          	<div style='  font-weight: bold;'>User XP (30 Days)</div>
+		          </div>
+		        </div>
+			</div>
+
+
+	  		<!-- 
+  			
+  			Database Management
+  			
+  			-->
+			<div class="col s12">
+				<div class="admin-category-header">
+					Database Management
+				</div>
+			</div>
+  			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-device-data-usage" style='margin: 0 5px;'></i> See Database Threads</span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-db-threads">See Live Threads</a>
+	            </div>
+	          </div>
+  			</div>
 		</div>
-		<?php DisplayAdminInfo($userid, $admindata, $gamedata, $userdata); ?>
 	</div>
 <?php
 }
 
-function DisplayAdminInfo($userid, $data, $gamedata, $userdata){
+function DisplayEmailExport(){
+	$emails = GetEmailList();
 	?>
-	<div class="row">
-		<div class="col s6 m3 l2">
-	        <div class="card-panel deep-purple darken-1">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($userdata[0]); ?></div>
-	          	<div style='  font-weight: bold;'>Users</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel deep-purple darken-1">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($userdata[2]); ?></div>
-	          	<div style='  font-weight: bold;'>User XP (30 Days)</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel deep-purple darken-1">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($userdata[3]); ?></div>
-	          	<div style='  font-weight: bold;'>User XP (7 Days)</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel deep-purple darken-1">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($userdata[4]); ?></div>
-	          	<div style='  font-weight: bold;'>User XP (24 Hours)</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel cyan darken-2">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($userdata[1]); ?></div>
-	          	<div style='  font-weight: bold;'>Critics</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel cyan darken-2">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($data[0]); ?></div>
-	          	<div style='  font-weight: bold;'>Total XP</div>
-	          </div>
-	        </div>
-		</div>
-		<div class="col s6 m3 l2">
-	        <div class="card-panel cyan darken-2">
-	          <div class="white-text">
-	          	<div style='  font-size: 3em;'><?php echo number_format($gamedata[0]); ?></div>
-	          	<div style='  font-weight: bold;'>Total Games</div>
-	          </div>
-	        </div>
-		</div>
+	<textarea>
+		<?php echo implode("\n",$emails); ?>
+	</textarea>
+	<?php
+}
+
+function DisplayDBThreads(){
+	$threads = GetDBThreads();
+	foreach($threads as $thread){ ?>
+	<div>
+		<div><b><?php echo $thread[0]; ?>:</b> <?php echo $thread[1]; ?></div>	
 	</div>
-	<?Php
+	<?php }
 }
 
 
@@ -170,7 +219,7 @@ function DisplayPendingReviews(){
 	  								<option value="NO" selected>Please select critic</option>
 								  <?php 
 								  foreach ($alljournalists as $journalist) { ?>
-								  	<option value="<?php echo $journalist->_id; ?>"><?php echo $journalist->_first." ".$journalist->_last; ?></option>
+								  	<option value="<?php echo $journalist->_id; ?>"><?php echo $journalist->_first." ".$journalist->_last; if($journalist->_security == "Authenticated"){ echo " (Authenticated)"; }  ?></option>
 								  <?php }?>
 								</select>
 			          		</div>
@@ -423,7 +472,7 @@ function DisplayNewMilestoneForm(){ ?>
 					        </div>
 					        <div class='col s10 m8' style="margin-top:2em;">
 					        	<b>Image:</b>
-					        	<input value='http://polygonalweave.com/Images/Badges/PASTENAMEHERE.jpg' type="text" name='badge_custom_image' id='badge_custom_image' />
+					        	<input value='http://lifebar.io/Images/Badges/PASTENAMEHERE.jpg' type="text" name='badge_custom_image' id='badge_custom_image' />
 					        </div>
 				          	<div class='col s2 m4'>
 				          		<div class='btn badge-file-upload' style='margin-top: 4em;'><i class="mdi-file-file-upload small"></i></div>	

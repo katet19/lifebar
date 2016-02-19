@@ -4,6 +4,7 @@ function InitializeNavigation(){
 	UserAccountNav();
 	AttachTabLoadingEvents();
 	CheckForNotifications();
+	CheckForUpdates();
 }
 
 function ManuallyNavigateToTab(tab){
@@ -33,15 +34,18 @@ function AttachTabLoadingEvents(){
 	  	ManuallyNavigateToTab("#notifications");
 	  });
 	  $(".userPTalk").on("click", function(){
-	  	window.open("http://talk.polygonalweave.com");
+	  	window.open("http://tidbits.io/");
 	  });
 	  $(".userPTalkHelp, .supportButton").on("click", function(){
-	  	GAEvent('Support', 'Bug Reporting');
-	  	window.open("https://gitreports.com/issue/Lifebario/support ");
+	  	var elem = $(".userContainer");
+	  	var name = elem.attr("data-username");
+	  	var email = elem.attr("data-email");
+	  	//$(".freshwidget-button").trigger("click");
+	  	ShowFreshDesk(name, email);
+	  	//window.open("https://gitreports.com/issue/Lifebario/support?name="+name+"&email=Please%20do%20not%20include%20email");
 	  });
   	  $(".supportForumButton").on("click", function(){
-  	  	GAEvent('Support', 'Forum');
-	  	window.open("https://github.com/Lifebar/support");
+	  	window.open("https://lifebar.freshdesk.com");
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){
@@ -50,6 +54,11 @@ function AttachTabLoadingEvents(){
   			ShowLanding();
 	  	}
 	  });
+}
+
+function ShowFreshDesk(name, email){
+	window.open("https://lifebar.freshdesk.com/widgets/feedback_widget/new?&widgetType=embedded&screenshot=no&helpdesk_ticket[requester]="+email+"&formTitle=Lifebar+Help+%26+Support&helpdesk_ticket[name]="+name);
+	//ShowPopUp("<iframe title='Feedback Form' class='freshwidget-embedded-form' id='freshwidget-embedded-form' src='https://lifebar.freshdesk.com/widgets/feedback_widget/new?&widgetType=embedded&screenshot=no' scrolling='no' height='500px' width='100%'' frameborder='0' ></iframe>");
 }
 
 /*
@@ -215,7 +224,30 @@ function CheckForNotifications(){
      		}else{
      			$(".userNotificiations").html("<i class='mdi-social-notifications-none'></i>");
      		}
-  			setTimeout(CheckForNotifications,60000);
+  			setTimeout(CheckForNotifications,300000);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            //ToastError("Server Timeout");
+	        } else {
+	            //ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function CheckForUpdates(){
+	var version = GLOBAL_VERSION;
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "CheckVersion", version: version },
+     type: 'post',
+     success: function(output) {
+     		if($.trim(output) == "UPDATE"){
+     			ToastUpdate();
+     		}else{
+  				setTimeout(CheckForUpdates,3660000);
+     		}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

@@ -44,8 +44,15 @@ function AttachXPEvents(){
 }
 
 function BuildSentenceOnLoad(){
-	$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-	$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+	ToggleQuarter($("#myxp-year").val());
+	var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+	if(quarter == "q0"){
+		$(".myxp-sentence-quarter").html("");
+		$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+	}else{
+		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+	}
 	
 	if($("#myxp-percent-completed").length > 0){
 		$(".myxp-sentence-intro").html("I played");
@@ -89,11 +96,22 @@ function BuildSentenceOnLoad(){
 function ListenAndBuildPlayedSentence(){
 	$('select').material_select();
 	$("#myxp-year").on('change', function() { 
-		$(".myxp-sentence-year").html(" of "+$(this).val());
+		ToggleQuarter($(this).val());
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0")
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+		else
+			$(".myxp-sentence-year").html(" of "+$(this).val());
 		ValidateXPEntry();
 	});
 	$("input[type=radio][name=dategroup]").change(function() {
-		$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));	
+		if($(this).attr("data-text") != ""){
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		}else{
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}
 		ValidateXPEntry();
 	});
 	$('.myxp-platforms').change(function() {
@@ -123,8 +141,14 @@ function ListenAndBuildPlayedSentence(){
 			$(".myxp-sentence-intro").html("I played");
 			$(".myxp-sentence-completion").html("through "+$(this).val()+"%");
 		}
-		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0"){
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}else{
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		}
 		ValidateXPEntry();
 	});
 	
@@ -143,18 +167,35 @@ function ListenAndBuildWatchedSentence(){
 	$('input[type=radio][name=viewingitemgroup]').change(function() {
 		$(".myxp-sentence-intro").html("I watched");
 		$(".myxp-sentence-exp").html($(this).attr("data-text"));
-		$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
-		$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0"){
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+			$(".myxp-sentence-quarter").html("");
+		}else{
+			$(".myxp-sentence-year").html(" of "+$(this).val());
+			$(".myxp-sentence-quarter").html("during "+$("input[type=radio][name=dategroup]:checked").attr("data-text"));
+		}
 		if($("#myxp-view-source").val() !== "")
 			$(".myxp-sentence-src").html("on "+$("#myxp-view-source").val());
 		ValidateXPEntry();
 	});
 	$("#myxp-year").on('change', function() { 
-		$(".myxp-sentence-year").html(" of "+$(this).val());
+		ToggleQuarter($(this).val());
+		var quarter = $("input[type=radio][name=dategroup]:checked").attr("id");
+		if(quarter == "q0")
+			$(".myxp-sentence-year").html(" in "+$(this).val());
+		else
+			$(".myxp-sentence-year").html(" of "+$(this).val());
 		ValidateXPEntry();
 	});
 	$("input[type=radio][name=dategroup]").change(function() {
-		$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		if($(this).attr("data-text") != ""){
+			$(".myxp-sentence-year").html(" of "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("during "+$(this).attr("data-text"));
+		}else{
+			$(".myxp-sentence-year").html(" in "+$("#myxp-year").val());
+			$(".myxp-sentence-quarter").html("");
+		}
 		ValidateXPEntry();
 	});
 	$("#myxp-form-url").on('keyup', function(){
@@ -171,6 +212,23 @@ function ListenAndBuildWatchedSentence(){
 	});
 }
 
+
+function ToggleQuarter(year){
+	var currentYear = (new Date).getFullYear();
+	if(year == currentYear -1){
+		$(".myxp-quarter").show(100);
+		$(".myxp-quarter").find(".myxp-form-box-header").html("Experienced Quarter <span style='margin-left:10px;font-weight:bold;font-size: 0.8em;'>optional</span>");
+		$(".myxp-sentence-quarter").html("");
+		$("#q0").prop("checked", true);
+	}else if(year != currentYear){
+		$(".myxp-quarter").hide(100);
+		$(".myxp-sentence-quarter").html("");
+		$("#q0").prop("checked", true);
+	}else{
+		$(".myxp-quarter").show(100);
+		$(".myxp-quarter").find(".myxp-form-box-header").html("Experienced Quarter");
+	}
+}
 
 function AddWatchedFabEvent(){
 	HideFab();
@@ -438,10 +496,11 @@ function SaveXPEntry(){
 		if((viewsrc == "YouTube" || viewsrc == "Twitch" || viewsrc == "UStream" || viewsrc == "Other") && $.trim($("#myxp-source-link").val()) != "")
 			viewsrc = $("#myxp-source-link").val();
 		var viewurl = $("#myxp-form-url").val();
+		var criticlink = $("#myxp-form-critic-link").val();
 		
 		if($("#myxp-quote").length > 0 && $(".myxp-platforms").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SavePlayedFull", gameid: gameid, quote: quote, tier: tier, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
+		         data: {action: "SavePlayedFull", gameid: gameid, quote: quote, tier: tier, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'New Played Full');
@@ -462,7 +521,7 @@ function SaveXPEntry(){
 			});
 		}else if($("#myxp-quote").length > 0 && $('input[type=radio][name=viewingitemgroup]').length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SaveWatchedFull", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter  },
+		         data: {action: "SaveWatchedFull", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'New Watched Full');
@@ -483,7 +542,7 @@ function SaveXPEntry(){
 			});
 		}else if($(".myxp-platforms").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SavePlayed", gameid: gameid, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream  },
+		         data: {action: "SavePlayed", gameid: gameid, platforms: platforms, completion: completion, year: year, quarter: quarter, single: single, multi: multi, alpha: alpha, beta: beta, early: early, demo: demo, dlc: dlc, stream: stream, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Add Played');
@@ -550,7 +609,7 @@ function SaveXPEntry(){
 			}
 		}else if($("#myxp-quote").length > 0){
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SaveTierQuote", gameid: gameid, quote: quote, tier: tier  },
+		         data: {action: "SaveTierQuote", gameid: gameid, quote: quote, tier: tier, criticlink: criticlink  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Update Tier-Quote');

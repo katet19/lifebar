@@ -56,20 +56,20 @@ function ShowAdminSecondaryContent(){
 function AttachAdminEvents(){
 	$(".admin-run-feed-collector, .admin-manage-pending-reviews").unbind();
 	$(".admin-run-feed-collector").on('click', function(){
-		ShowPopUp("<iframe src='http://polygonalweave.com/utilities/controller_rssFeeds.php' style='width:100%;min-height:600px;height:100%;'/>");	
+		ShowPopUp("<iframe src='http://lifebar.io/utilities/controller_rssFeeds.php' style='width:100%;min-height:600px;height:100%;'/>");	
 	});
 	$(".admin-run-game-updater").on('click', function(){
-		ShowPopUp("<iframe src='http://polygonalweave.com/utilities/controller_gameUpdater.php' style='width:100%;min-height:600px;height:100%;'/>");	
+		ShowPopUp("<iframe src='http://lifebar.io/utilities/controller_gameUpdater.php' style='width:100%;min-height:600px;height:100%;'/>");	
 	});
 	$(".admin-run-calc-user-weave").on('click', function(){
-		ShowPopUp("<iframe src='http://polygonalweave.com/utilities/controller_weave.php' style='width:100%;min-height:600px;height:100%;'/>");	
+		ShowPopUp("<iframe src='http://lifebar.io/utilities/controller_weave.php' style='width:100%;min-height:600px;height:100%;'/>");	
 	});
 	$(".admin-manage-pending-reviews").on('click', function(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayPendingReviews();
 	});
 	$(".admin-ign-scrape").on('click', function(){
-		ShowPopUp("<iframe src='http://material.polygonalweave.com/php/controller_reviewTranslator.php?run=Y' style='width:100%;min-height:600px;height:100%;'/>");	
+		ShowPopUp("<iframe src='http://lifebar.io/php/controller_reviewTranslator.php?run=Y' style='width:100%;min-height:600px;height:100%;'/>");	
 	});
 	$(".admin-ign-map").on('click', function(){
 		GLOBAL_HASH_REDIRECT = "NO";
@@ -87,7 +87,52 @@ function AttachAdminEvents(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayBadgeManagement();
 	});
-	
+	$(".admin-export-email").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayEmailExport();
+	});
+	$(".admin-db-threads").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayDBThreads();
+	});
+}
+
+function DisplayDBThreads(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayDBThreads" },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayEmailExport(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayEmailExport" },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function DisplayBadgeManagement(){
@@ -153,7 +198,7 @@ function AttachBadgeManagmentEvents(){
 		$(this).parent().remove();
 	});
 	$(".badge-file-upload").click(function(){
-		var html = "<div><span>Upload a custom badge image. Use the same name in the full http path in the previous form. </span><br><iframe src='http://polygonalweave.com/utilities/FileImageUploaderBadge.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>Upload a custom badge image. Use the same name in the full http path in the previous form. </span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderBadge.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
 	$("#badge_type").on('change', function() { 
@@ -163,8 +208,6 @@ function AttachBadgeManagmentEvents(){
 			$("#badge_games, #badge_games_search, #badge_game_list_container").hide();
 		}
 	});
-	
-	$('.tooltipped').tooltip({delay: 30});
 	
 	$("#badge_level").on('change', function() { 
 		$(".c100").removeClass("one");
@@ -219,7 +262,7 @@ function AttachBadgeManagmentEvents(){
 		var threshold = $("#badge_threshold").val();
 		var customimage = $("#badge_custom_image").val();
 		var badgeimage = "";
-		if(customimage != "http://polygonalweave.com/Images/Badges/PASTENAMEHERE.jpg" && customimage != ""){
+		if(customimage != "http://lifebar.io/Images/Badges/PASTENAMEHERE.jpg" && customimage != ""){
 			badgeimage = customimage;
 		}
 		var script = $("#badge_script").val();

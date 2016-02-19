@@ -67,7 +67,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m6 l4 no-right-padding">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info' title="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
 					<?php DisplayUserSkills($userid); ?>
 				</div>
 			</div>
@@ -87,7 +87,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
         		<div class="col s12 no-right-padding">
         			<div class="row">
         				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:260px;">
-        					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
+        					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info' title="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
         					<?php $total = DisplayKnowledgeHighlightsCritic($userid); ?>
         					<?php if($total > 6){ ?>
         						<div class="badge-card-container-view-more knowledge-view-more">View More</div>
@@ -102,7 +102,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l3">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:1073px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Checkpoints <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Checkpoints are your most recent experiences"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Checkpoints <span class='profile-card-info ' title="Checkpoints are your most recent experiences"><i class="mdi-action-info"></i></span></div>
 					<?php $latestxp = DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername); ?>
 				</div>
 			</div>
@@ -119,7 +119,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style='height: 508px;'>
-							<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
+							<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info ' title="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
 							<?php DisplayProfileDevelopersTopTen($user); ?>
 							<div class="badge-card-container-view-more developer-view-more">View More</div>
 						</div>
@@ -132,7 +132,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l12">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:360px;">
-					<div class="badge-card-container-header" style="height:initial;margin-bottom: 30px;width:100%">Experience Curve <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="The experience curve shows a lifetime of experiences based on the tier that has been given."><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;margin-bottom: 30px;width:100%">Experience Curve <span class='profile-card-info ' title="The experience curve shows a lifetime of experiences based on the tier that has been given."><i class="mdi-action-info"></i></span></div>
 					<?php DisplayProfileTierGraph($user); ?>
 				</div>
 			</div>
@@ -222,7 +222,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m6 l4 no-right-padding">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info ' title="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
 					<?php DisplayUserSkills($userid); ?>
 				</div>
 			</div>
@@ -243,7 +243,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l5 no-right-padding">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Knowledge <span class='profile-card-info ' title="Knowledge is based on experiences related to specific gaming franchsies"><i class="mdi-action-info"></i></span></div>
 					<?php DisplayKnowledgeHighlights($userid); ?>
 					<div class="badge-card-container-view-more knowledge-view-more">View More</div>
 				</div>
@@ -254,7 +254,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1 gear-container">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Gear <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Gear is based on your played experiences on specific platforms"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Gear <span class='profile-card-info ' title="Gear is based on your played experiences on specific platforms"><i class="mdi-action-info"></i></span></div>
 					<?php DisplayGear($userid); ?>
 					<div class="badge-card-container-view-more gear-view-more">View More</div>
 				</div>
@@ -268,7 +268,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 			</div>
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:735px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Checkpoints <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Checkpoints are your most recent experiences"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;">Checkpoints <span class='profile-card-info ' title="Checkpoints are your most recent experiences"><i class="mdi-action-info"></i></span></div>
 					<?php $latestxp = DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername); ?>
 				</div>
 			</div>
@@ -284,7 +284,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:508px;">
-							<div class="badge-card-container-header" style="height:initial;width:100%;">Upcoming Quests <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Upcoming Quests are games that have been bookmarked but haven't been released yet"><i class="mdi-action-info"></i></span></div>
+							<div class="badge-card-container-header" style="height:initial;width:100%;">Upcoming Quests <span class='profile-card-info ' title="Upcoming Quests are games that have been bookmarked but haven't been released yet"><i class="mdi-action-info"></i></span></div>
 							<?php DisplayUpcomingQuests($userid); ?>
 						</div>
 					</div>
@@ -295,7 +295,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l8">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:360px;">
-					<div class="badge-card-container-header" style="height:initial;margin-bottom: 30px;width:100%">Experience Curve <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="The experience curve shows a lifetime of experiences based on the tier that has been given."><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;margin-bottom: 30px;width:100%">Experience Curve <span class='profile-card-info ' title="The experience curve shows a lifetime of experiences based on the tier that has been given."><i class="mdi-action-info"></i></span></div>
 					<?php DisplayProfileTierGraph($user); ?>
 				</div>
 				<div class="profile-card badge-card-container col s12 z-depth-1">
@@ -308,7 +308,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<div class="col s12 m12 l4">
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style='height: 525px;'>
-					<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info tooltipped' data-position="bottom" data-delay="30" data-tooltip="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
+					<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Influencers <span class='profile-card-info ' title="Influencers are developers that you have given XP. The top ten are the developers with the most XP"><i class="mdi-action-info"></i></span></div>
 					<?php DisplayProfileDevelopersTopTen($user); ?>
 					<div class="badge-card-container-view-more developer-view-more">View More</div>
 				</div>
@@ -438,51 +438,75 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
         	<div class="lifebar-fill-min-circle" data-position="bottom" style='width: <?php if($lifebar[1] > 6){ echo $lifebar[1]; }else{ echo '6'; } ?>%;'></div>
         	<div class="lifebar-dmg-min" data-position="bottom"></div>
 	    	<div class='lifebar-1ups-min' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+	    		<?php if($user->_psn != "" || $user->_xbox != "" || $user->_steam != ""){ ?>
+			    	<div class='lifebar-usernames'>
+			    		 <?php if($user->_psn != ""){ ?>
+			    			<div class="lifebar-username-title-min" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> title="<?php echo $user->_psn; ?>" ><img src='http://lifebar.io/Images/Generic/playstation-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    		<?php if($user->_xbox != ""){ ?>
+			    			<div class="lifebar-username-title-min" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> title="<?php echo $user->_xbox; ?>"><img src='http://lifebar.io/Images/Generic/xbox-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    		<?php if($user->_steam != ""){ ?>
+			    			<div class="lifebar-username-title-min" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> title="<?php echo $user->_steam; ?>"><img src='http://lifebar.io/Images/Generic/steam-badge.png' class='lifebar-username-id-badge'></div>
+			    		<?php } ?>
+			    	</div>
+		    	<?php } ?>
     			<div class="lifebar-1up-count"><i class='mdi-action-accessibility'></i> x <?php if($user->_weave->_totalAgrees > 0){ echo $user->_weave->_totalAgrees; }else{ echo "0"; } ?></div>
 	    	</div>
-	    	<?php if($user->_psn != "" || $user->_xbox != "" || $user->_steam != ""){ ?>
-	    	<div class='lifebar-usernames'>
-	    		 <?php if($user->_psn != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_psn; ?>" ><img src='http://lifebar.io/Images/Generic/playstation-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    		<?php if($user->_xbox != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_xbox; ?>"><img src='http://lifebar.io/Images/Generic/xbox-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    		<?php if($user->_steam != ""){ ?>
-	    			<div class="lifebar-username-title-min tooltipped" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?> data-position="bottom" data-delay="30" data-tooltip="<?php echo $user->_steam; ?>"><img src='http://lifebar.io/Images/Generic/steam-badge.png' class='lifebar-username-id-badge'></div>
-	    		<?php } ?>
-	    	</div>
-	    	<?php } ?>
         </div>
         <div class="lifebar-username-min" style='top:35px;'>
         	<?php if($user->_security == "Journalist"){ ?>
-          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> <span><?php echo $user->_title; ?></span></span>
+          		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+          			<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?></span> 
+          			<?php if($user->_website != ''){ ?>
+          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+      				<?php }else{ ?>
+      					<span><?php echo $user->_title; ?></span>
+      				<?php } ?>
+          		</span>
+        	<?php }else if($user->_security == "Authenticated"){ ?>
+	          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
+	          		<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> 
+        			<?php if($user->_website != ''){ ?>
+          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+      				<?php }else{ ?>
+      					<span><?php echo $user->_title; ?></span>
+      				<?php } ?>
+	  				<span class='authenticated-mark-lifebar mdi-action-done ' title="Verified Account"></span>
+	          	</span>
         	<?php }else{ ?>
-        	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
+        		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span><?php if(($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)) || $_SESSION['logged-in']->_id == $user->_id){ echo $user->_first." ".$user->_last; } ?></span></span>
+        	<?php } ?>
+        	<?php if($user->_twitter != "" && !$light){ ?>
+        		<div style='margin-top: -5px;'>
+        			<a class="lifebar-twitter" href='https://twitter.com/<?php echo $user->_twitter; ?>' target="_blank">@<?php echo $user->_twitter; ?></a>
+        		</div>
         	<?php } ?>
         </div>
 		<div class='lifebar-image'>
 			<div class="lifebar-circle-fill"></div>
 			<!--<div class="lifebar-circle-container"></div>-->
-			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<?php if($user->_badge != ""){ ?><img class="srank-badge-lifebar" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+			</div>
 	    </div>
     	<div class="lifebar-dots-min" style='top: 10px;'>
     		<?php $bigdots = $lifebar[2];
     			  $littledots = $lifebar[3];
     			  $giantdots = $lifebar[4];
       			while($giantdots > 0){ $founddots = true; ?>
-    				<div class="lifebar-giantdot-min tooltipped" data-position="bottom" data-delay="30" data-tooltip="500 XP"></div>
+    				<div class="lifebar-giantdot-min" title="500 XP"></div>
 				<?php
 					$giantdots--;
     			}
     			while($bigdots > 0){ $founddots = true; ?>
-    				<div class="lifebar-bigdot-min tooltipped" data-position="bottom" data-delay="30" data-tooltip="100 XP"></div>
+    				<div class="lifebar-bigdot-min" title="100 XP"></div>
 				<?php
 					$bigdots--;
     			}
     			$firstlittle = true;
     			while($littledots > 0){ $founddots = true; ?>
-    				<div class="lifebar-littledot-min tooltipped" <?php if($firstlittle){ echo "style=''"; $firstlittle =false; } ?> data-position="bottom" data-delay="30" data-tooltip="25 XP"></div>
+    				<div class="lifebar-littledot-min" <?php if($firstlittle){ echo "style=''"; $firstlittle =false; } ?> title="25 XP"></div>
 				<?php
 					$littledots--;
     			}
@@ -498,18 +522,19 @@ function DisplaySlot1Game($xp){
 	if(isset($xp->_game)){ ?>
 		<div class="profile-highlighted-game waves-effect waves-block waves-light" data-gbid="<?php echo $highlightedgame->_gbid; ?>" style="background:transparent;"></div>	
 		<div class="profile-highlighted-game-quote">
-			<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-		      	<div class="profile-highlighted-game-tier">
-		      		<?php if($xp->_link != ''){ ?>
-		   				<i class="mdi-editor-format-quote"></i>
-		   			<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-		        			<i class="mdi-av-games"></i>
-		      		<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-		      			<i class="mdi-action-visibility"></i>
-		      		<?php } ?>
-		      	</div>
-	      	</div>
+	      		<?php if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
+						<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+					      	<div class="profile-highlighted-game-tier" title="Tier <?php echo $xp->_tier; ?> - Curated Review">
+			   					<i class="mdi-editor-format-quote"></i>
+			   				</div>
+		   				</div>
+		   			<?php }else{
+		   					DisplayProfileTierIcon($xp, true, true);
+	   					  } ?>
 			<?php echo $xp->_quote; ?>
+	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark-lifebar-slot1 mdi-action-done ' title="Verified Account"></div>
+	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
 			<?php echo $highlightedgame->_title; ?>
@@ -523,18 +548,19 @@ function DisplayEquippedGame($xp){
 	if(isset($xp->_game)){ ?>
 		<div class="profile-highlighted-game waves-effect waves-block waves-light" data-gbid="<?php echo $highlightedgame->_gbid; ?>" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 20%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 20%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 20%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>	
 		<div class="profile-highlighted-game-quote">
-			<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-		      	<div class="profile-highlighted-game-tier">
-		      		<?php if($xp->_link != ''){ ?>
-		   				<i class="mdi-editor-format-quote"></i>
-		   			<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-		        			<i class="mdi-av-games"></i>
-		      		<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-		      			<i class="mdi-action-visibility"></i>
-		      		<?php } ?>
-		      	</div>
-	      	</div>
+		      		<?php if($xp->_link != ''  && $xp->_authenticxp == "No"){ ?>
+  					<div class="profile-highlighted-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
+		      			<div class="profile-highlighted-game-tier" title="Tier <?php echo $xp->_tier; ?> - Curated Review">
+		   					<i class="mdi-editor-format-quote"></i>
+   				      	</div>
+	      			</div>
+		   			<?php }else{
+	   						DisplayProfileTierIcon($xp, false, true);
+      					  } ?>
 			<?php echo $xp->_quote; ?>
+	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done ' title="Verified Account"></div>
+	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
 			<?php echo $highlightedgame->_title; ?>
@@ -623,19 +649,19 @@ function DisplayPlayWatchBoth($user){
 			}
 		?>
 		<?php if($percplayed > 0){ ?>
-		<div class="userprofile-graph-played tooltipped" style="width:<?php echo $percplayed-0.333;?>%;display:inline-block;float:left;" data-position="bottom" data-delay="30" data-tooltip="<?php echo "Only played ".($played-$both)." games"; ?>">
+		<div class="userprofile-graph-played" style="width:<?php echo $percplayed-0.333;?>%;display:inline-block;float:left;" title="<?php echo "Only played ".($played-$both)." games"; ?>">
 			<div class="z-depth-1" style='background-color:#71277D;width:100%;display:block;height: 20px;border-radius: 7px 0 0 7px;margin-bottom: 7px;'></div>
 			<div class="profile-playwatch-label">Played <?php echo $percplayed; ?>%</div>
 		</div>
 		<?php } ?>
 		<?php if($percboth > 0){ ?>
-		<div class="userprofile-graph-both tooltipped" style="width:<?php echo $percboth-0.333; ?>%;display: inline-block;float: left;" data-position="bottom" data-delay="30" data-tooltip="<?php echo "Played and watched ".$both." games"; ?>">
+		<div class="userprofile-graph-both" style="width:<?php echo $percboth-0.333; ?>%;display: inline-block;float: left;" title="<?php echo "Played and watched ".$both." games"; ?>">
 			<div class="z-depth-1" style='background-color:#E0214E;width:100%;display:block;height: 20px;margin-bottom: 7px;'></div>
 			<div class="profile-playwatch-label">Both <?php echo $percboth; ?>%</div>
 		</div>
 		<?php } ?>
 		<?php if($percwatched > 0){ ?>
-		<div class="userprofile-graph-watched tooltipped" style="width:<?php echo $percwatched-0.333; ?>%;display: inline-block;float: left;" data-position="bottom" data-delay="30" data-tooltip="<?php echo "Only watched ".($watched-$both)." games"; ?>">
+		<div class="userprofile-graph-watched" style="width:<?php echo $percwatched-0.333; ?>%;display: inline-block;float: left;" title="<?php echo "Only watched ".($watched-$both)." games"; ?>">
 			<div class="z-depth-1" style='background-color:#1E8DBF;width:100%;display:block;height: 20px;border-radius: 0 7px 7px 0;margin-bottom: 7px;'></div>
 			<div class="profile-playwatch-label">Watched <?php echo $percwatched; ?>%</div>
 		</div>
@@ -707,8 +733,9 @@ function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
 	      		<?php if($critic){ ?>
 	      			<li><span class="GameHiddenActionLabel">Upload smaller image</span><a class="btn-floating light-green darken-3 user-add-small-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	        		<li><span class="GameHiddenActionLabel">Upload larger image</span><a class="btn-floating orange darken-3 user-add-large-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
-	        		<li><span class="GameHiddenActionLabel">Change users title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<?php } ?>
+        		<li><span class="GameHiddenActionLabel">Change users Title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment"></i></a></li>
+        		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<?php } ?>
 	    </ul>
@@ -770,7 +797,7 @@ function DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername){
 				else
 					$hiddenusername = $user->_username;	
 			
-			DisplayCheckpoint($exp->_game, $exp->_quote, $exp->_tier, $played, $watched, $exp->_link, $agrees, $userid, $hiddenusername, $exp->_id, $agreedcount, false, true);
+			DisplayCheckpoint($exp->_game, $exp, false, true, $exp->_authenticxp);
 		}
 	}
 	return $latestxp;
@@ -833,23 +860,24 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 				<?php echo $exp->_game->_title; ?>
 			</div>
 			<div class="profile-best-game-quote">
-				<div class="profile-best-game-tier-container tier<?php echo $exp->_tier; ?>BG z-depth-1">
-			      	<div class="profile-highlighted-game-tier" style='margin-left: 3px;'>
-			      		<?php if($exp->_link != ''){ ?>
-			   				<i class="mdi-editor-format-quote"></i>
-			   			<?php }else if(sizeof($exp->_playedxp) > 0){ ?>
-			        			<i class="mdi-av-games"></i>
-			      		<?php }else if(sizeof($exp->_watchedxp) > 0){ ?>
-			      			<i class="mdi-action-visibility"></i>
-			      		<?php } ?>
-			      	</div>
-		      	</div>
+	      		<?php if($exp->_link != ''  && $exp->_authenticxp == "No"){ ?>
+						<div class="profile-best-game-tier-container tier<?php echo $exp->_tier; ?>BG z-depth-1">
+					      	<div class="profile-highlighted-game-tier" title='Tier <?php echo $exp->_tier; ?> - Curated Review' style='margin-left: 3px;'>
+					   				<i class="mdi-editor-format-quote"></i>
+			   				</div>
+		   				</div>
+		   			<?php }else{
+		   					DisplayProfileTierIcon($exp, false, false);
+	   					  } ?>
 				<?php echo $exp->_quote; ?>
+		    	<?php if( $exp->_authenticxp == "Yes"){ ?> 
+		      		<div class='authenticated-mark-lifebar mdi-action-done ' title="Verified Account" style='font-size: 0.7em;'></div>
+		  		<?php } ?>
 			</div> 
 			<?php $first = false; 
 		}else{ ?>
 			<div class="profile-best-left-card-container">
-				<?php DisplayUserProfileGameCard($exp->_game, $exp->_quote, $exp->_tier, $played, $watched, $exp->_link, $agrees, $userid, $hiddenusername, $exp->_id, $agreedcount, true, false); ?>
+				<?php DisplayUserProfileGameCard($exp->_game, $exp, true, false); ?>
 			</div>
 			<?php
 		}
@@ -911,83 +939,35 @@ function DisplayMyLibraryChicklet($userid){
 	<div class="profile-card badge-card-container col s12 z-depth-1  waves-effect waves-block mylibrary" style="height:303px;background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">My Inventory</div>
 		<div class="mylibrary-total"><?php echo $total; ?></div>
-		<div class="mylibrary-label">games</div>
+		<div class="mylibrary-label"><?php if($total == 1){ echo "game"; }else{ echo "games"; } ?></div>
 	</div>
 <?php }
 
- function DisplayCheckpoint($game, $quote, $tier, $played, $watched, $link, $agrees, $userid, $hiddenusername, $expid, $agreedcount, $depth, $responsive){ ?>
+ function DisplayCheckpoint($game, $xp, $depth, $responsive, $authenticxp){ ?>
  	<div class="col s12 checkpoint-container waves-effect waves-block" data-gbid='<?php echo $game->_gbid; ?>'>
-      <div class="checkpoint-tier tier<?php echo $tier; ?>BG">
-      		<?php if($link != ''){ ?>
-      			<div class="checkpoint-icon-xp" style="margin-top:0"><i class="mdi-editor-format-quote"></i></div>
-			<?php }else if($watched && $played){ ?>
-				<div class="checkpoint-icon-xp" style="margin-top:0"><i class="mdi-content-create"></i></div>
-			<?php }else if($played){ ?> 
-				<div class="checkpoint-icon-xp" style="margin-top:0" ><i class="mdi-hardware-gamepad"></i></div>
-			<?php }else if($watched){ ?>
-				<div class="checkpoint-icon-xp" style="margin-top:0"><i class="mdi-action-visibility"></i></div>
-			<?php }?>
-		</div>
+   		<?php DisplayProfileCheckPointTierIcon($xp); ?>
 		<div class="checkpoint-name" >
 			<div><?php echo $game->_title; ?></div><div class="checkpoint-name-sub"><?php if($game->_year != 0){ echo $game->_year." - "; } ?><?php echo $game->_developer; ?></div>
 		</div>
 		<div class="checkpoint-quote">
-			<?php echo $quote; ?>
+			<?php echo $xp->_quote; ?>
+	    	<?php if( $authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done ' title="Verified Account"></div>
+	  		<?php } ?>
 		</div>
 	</div>
  <?php }
 
-function DisplayUserProfileGameCard($game, $quote, $tier, $played, $watched, $link, $agrees, $userid, $hiddenusername, $expid, $agreedcount, $depth, $responsive){ ?>
+function DisplayUserProfileGameCard($game, $xp, $depth, $responsive){ ?>
 	<div class="col s12 <?php if($responsive){ echo 'm6 l12'; } ?>" <?php if(!$responsive){ echo "style='float:initial'"; } ?> >
 	      <div class="card userprofile-discover-card" <?php if($depth =="" || $depth == false){ ?> style="box-shadow:initial;webkit-box-shadow:initial;"<?php } ?> data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 	        <div class="userprofile-game-card-image waves-effect waves-tier<?php echo $tier; ?> waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
-	        <div class="card-content tier<?php echo $tier; ?>BG">
-	          <?php if($played){ ?>
-	          <div class="card-tier-container tier<?php echo $tier; ?>BG">
-	          	<div class="card-tier">
-	          		<?php if($link != ''){ ?>
-       					<i class="mdi-editor-format-quote"></i>
-       				<?php }else{ ?>
-	          			<i class="mdi-hardware-gamepad"></i>
-	          		<?php } ?>
-	          	</div>
-  	            <div class="card-tier-details">
-  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-add-circle right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);'></i></span>
-		          <p>
-		          	"<?php echo $quote; ?>"
-		          </p>
-	        		<div class="critic-action-container col s12" style='  position: absolute; bottom: 10px; right: 10px;'>
-						<?php if($link != ""){ ?><a href='<?php echo $link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn" style='color:white !important;'>READ</div></a><?php } ?>
-						<?php if($_SESSION['logged-in']->_id != $userid){ ?>
-							<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $expid; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $game->_id; ?>" data-username="<?php echo $hiddenusername ?>" style='color:white !important;'><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-						<?php } ?>
-					</div>
-				</div>
-          	  </div>
-          	  <?php } ?>
-	          <?php if($watched){ ?>
-	          <div class="card-tier-container tier<?php echo $tier; ?>BG" <?php if($played && $watched){ echo "style='right:4em'"; } ?>>
-	          	<div class="card-tier">
-	          		<i class="mdi-action-visibility"></i>
-	          	</div>
-  	            <div class="card-tier-details">
-  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-add-circle right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);-ms-transform: rotate(-45deg);-o-transform: rotate(-45deg);'></i></span>
-		          <p>
-		          	"<?php echo $quote; ?>"
-		          </p>
-	        		<div class="critic-action-container col s12" style='  position: absolute; bottom: 10px; right: 10px;'>
-						<?php if($link != ""){ ?><a href='<?php echo $link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn" style='color:white !important;'>READ</div></a><?php } ?>
-						<?php if($_SESSION['logged-in']->_id != $userid){ ?>
-							<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $expid; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $game->_id; ?>" data-username="<?php echo $hiddenusername ?>" style='color:white !important;'><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-						<?php } ?>
-					</div>
-				</div>
-          	  </div>
-          	  <?php } ?>
+	        <div class="card-content tier<?php echo $xp->_tier; ?>BG">
+	          <?php DisplayGameCardTierIcon($xp); ?>
 	          <span class="card-title activator" style='color:white;'><div class="nav-game-title"><?php echo $game->_title; ?></div> <!--<i class="mdi-navigation-more-vert right" style='position: absolute;font-size: 1.5em;right: 0.25em;top: 15px;z-index:2; text-shadow: 1px 1px 5px black;color:white;'></i>--></span>
 	        </div>
-	        <div class="card-reveal tier<?php echo $tier; ?>BG" style="width:100%;color:white;">
+	        <div class="card-reveal tier<?php echo $xp->_tier; ?>BG" style="width:100%;color:white;">
 	        </div>
 	      </div>
       </div>
@@ -1030,12 +1010,12 @@ function DisplayUpcomingQuests($userid){
 		$release = new DateTime($game->_released);
 		$interval = $today->diff($release);
 		$diff = $interval->format("%r%a");
-		if($diff > 365){
+		if($interval->y > 0){
 			if($interval->y > 1)
 				$coming =  $interval->y." years";
 			else
 				$coming =  $interval->y." year"; 
-		}else if($diff > 31){
+		}else if($interval->m > 0){
 			if($interval->m > 1)
 				$coming = $interval->m." months";
 			else
@@ -1185,7 +1165,7 @@ function DisplayAbilities($userid){
 				<div class="ability-title">Spy</div>
 				<div class="ability-level">lvl <?php echo $abilities[0][0];?></div>
 				<div class="ability-sub-count"><?php if($abilities[0][2] > 0){ $count = $abilities[0][2]; }else{ $count = 0; } echo $count."/".$abilities[0][1]; ?></div>
-				<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people you are currently following">following</div>
+				<div class="ability-sub-title" title="The number of people you are currently following">following</div>
 				<div class="ability-progress-bar">
 					<div class="ability-level<?php echo $abilities[0][0]; ?>" style='width:<?php echo round(($abilities[0][2]/$abilities[0][1]) * 100); ?>%'></div>
 				</div>
@@ -1201,7 +1181,7 @@ function DisplayAbilities($userid){
 		<div class="ability-title">Spy</div>
 		<div class="ability-level">lvl <?php echo $abilities[0][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[0][2] > 0){ $count = $abilities[0][2]; }else{ $count = 0; } echo $count."/".$abilities[0][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people you are currently following">following</div>
+		<div class="ability-sub-title" title="The number of people you are currently following">following</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[0][0]; ?>" style='width:<?php echo round(($abilities[0][2]/$abilities[0][1]) * 100); ?>%'></div>
 		</div>
@@ -1210,7 +1190,7 @@ function DisplayAbilities($userid){
 		<div class="ability-title">Charisma </div>
 		<div class="ability-level">lvl <?php echo $abilities[2][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[2][2] > 0){ $count = $abilities[2][2]; }else{ $count = 0; } echo $count."/".$abilities[2][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of 1ups other people have given you">1ups</div>
+		<div class="ability-sub-title " title="The number of 1ups other people have given you">1ups</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[2][0]; ?>" style='width:<?php echo round(($abilities[2][2]/$abilities[2][1]) * 100); ?>%'></div>
 		</div>
@@ -1219,7 +1199,7 @@ function DisplayAbilities($userid){
 		<div class="ability-title">Leadership</div>
 		<div class="ability-level">lvl <?php echo $abilities[1][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[1][2] > 0){ $count = $abilities[1][2]; }else{ $count = 0; } echo $count."/".$abilities[1][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people who are following you">followers</div>
+		<div class="ability-sub-title " title="The number of people who are following you">followers</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[1][0]; ?>" style='width:<?php echo round(($abilities[1][2]/$abilities[1][1]) * 100); ?>%'></div>
 		</div>
@@ -1228,7 +1208,7 @@ function DisplayAbilities($userid){
 		<div class="ability-title">Tracking</div>
 		<div class="ability-level">lvl <?php echo $abilities[3][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[3][2] > 0){ $count = $abilities[3][2]; }else{ $count = 0; } echo $count."/".$abilities[3][1]; ?></div>
-		<div class="ability-sub-title  tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of games that you have bookmarked">bookmarks</div>
+		<div class="ability-sub-title  " title="The number of games that you have bookmarked">bookmarks</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[3][0]; ?>" style='width:<?php echo round(($abilities[3][2]/$abilities[3][1]) * 100); ?>%'></div>
 		</div>
@@ -1243,7 +1223,7 @@ function DisplayAbilitiesCritic($userid){
 		<div class="ability-title">Charisma </div>
 		<div class="ability-level">lvl <?php echo $abilities[2][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[2][2] > 0){ $count = $abilities[2][2]; }else{ $count = 0; } echo $count."/".$abilities[2][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of 1ups other people have given you">1ups</div>
+		<div class="ability-sub-title " title="The number of 1ups other people have given you">1ups</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[2][0]; ?>" style='width:<?php echo round(($abilities[2][2]/$abilities[2][1]) * 100); ?>%'></div>
 		</div>
@@ -1252,7 +1232,7 @@ function DisplayAbilitiesCritic($userid){
 		<div class="ability-title">Leadership</div>
 		<div class="ability-level">lvl <?php echo $abilities[1][0];?></div>
 		<div class="ability-sub-count"><?php if($abilities[1][2] > 0){ $count = $abilities[1][2]; }else{ $count = 0; } echo $count."/".$abilities[1][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people who are following you">followers</div>
+		<div class="ability-sub-title " title="The number of people who are following you">followers</div>
 		<div class="ability-progress-bar">
 			<div class="ability-level<?php echo $abilities[1][0]; ?>" style='width:<?php echo round(($abilities[1][2]/$abilities[1][1]) * 100); ?>%'></div>
 		</div>
@@ -1431,7 +1411,7 @@ function DisplaySpyAbility($userid, $abilities, $mutualconn, $conn){
 		<div class="ability-title">Spy</div>
 		<div class="ability-level">lvl <?php echo $abilities[0][0];?></div>
 		<div class="ability-sub-count"><?php echo $abilities[0][2]."/".$abilities[0][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people you are currently following">following</div>
+		<div class="ability-sub-title " title="The number of people you are currently following">following</div>
 		<div class="ability-progress-bar-dark">
 			<div class="ability-level<?php echo $abilities[0][0]; ?>" style='width:<?php echo round(($abilities[0][2]/$abilities[0][1]) * 100); ?>%'></div>
 		</div>
@@ -1443,7 +1423,7 @@ function DisplaySpyAbility($userid, $abilities, $mutualconn, $conn){
 			<?php 
 			foreach($spying as $spy){
 				?>
-				<div class="badge-card-ability-avatar tooltipped" data-id="<?php echo $spy->_id; ?>" data-position="bottom" data-delay="30" data-tooltip="<?php if($spy->_security == "Journalist"){ echo $spy->_first." ".$spy->_last; }else{ echo $spy->_username; } ?>" style="border-radius:50%;background:url(<?php echo $spy->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<div class="badge-card-ability-avatar " data-id="<?php echo $spy->_id; ?>" title="<?php if($spy->_security == "Journalist"){ echo $spy->_first." ".$spy->_last; }else{ echo $spy->_username; } ?>" style="border-radius:50%;background:url(<?php echo $spy->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 					<?php if($showpreview){ DisplayUserPreviewCard($spy, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
@@ -1468,7 +1448,7 @@ function DisplayLeadershipAbility($userid, $abilities, $mutualconn, $conn){
 		<div class="ability-title">Leadership</div>
 		<div class="ability-level">lvl <?php echo $abilities[1][0];?></div>
 		<div class="ability-sub-count"><?php echo $abilities[1][2]."/".$abilities[1][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of people who are following you">followers</div>
+		<div class="ability-sub-title" title="The number of people who are following you">followers</div>
 		<div class="ability-progress-bar-dark">
 			<div class="ability-level<?php echo $abilities[1][0]; ?>" style='width:<?php echo round(($abilities[1][2]/$abilities[1][1]) * 100); ?>%'></div>
 		</div>
@@ -1480,7 +1460,7 @@ function DisplayLeadershipAbility($userid, $abilities, $mutualconn, $conn){
 			<?php 
 			foreach($leader as $lead){
 				?>
-				<div class="badge-card-ability-avatar tooltipped" data-id="<?php echo $lead->_id; ?>" data-position="bottom" data-delay="30" data-tooltip="<?php if($lead->_security == "Journalist"){ echo $lead->_first." ".$lead->_last; }else{ echo $lead->_username; } ?>" style="border-radius:50%;background:url(<?php echo $lead->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<div class="badge-card-ability-avatar" data-id="<?php echo $lead->_id; ?>" title="<?php if($lead->_security == "Journalist"){ echo $lead->_first." ".$lead->_last; }else{ echo $lead->_username; } ?>" style="border-radius:50%;background:url(<?php echo $lead->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 					<?php if($showpreview){ DisplayUserPreviewCard($lead, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
@@ -1505,7 +1485,7 @@ function DisplayCharismaAbility($userid, $abilities, $mutualconn, $conn){
 		<div class="ability-title">Charisma </div>
 		<div class="ability-level">lvl <?php echo $abilities[2][0];?></div>
 		<div class="ability-sub-count"><?php echo $abilities[2][2]."/".$abilities[2][1]; ?></div>
-		<div class="ability-sub-title tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of 1ups other people have given you">1ups</div>
+		<div class="ability-sub-title" title="The number of 1ups other people have given you">1ups</div>
 		<div class="ability-progress-bar-dark">
 			<div class="ability-level<?php echo $abilities[2][0]; ?>" style='width:<?php echo round(($abilities[2][2]/$abilities[2][1]) * 100); ?>%'></div>
 		</div>
@@ -1551,7 +1531,7 @@ function DisplayTrackingAbility($userid, $abilities, $mutualconn, $conn){
 		<div class="ability-title">Tracking</div>
 		<div class="ability-level">lvl <?php echo $abilities[3][0];?></div>
 		<div class="ability-sub-count"><?php echo $abilities[3][2]."/".$abilities[3][1]; ?></div>
-		<div class="ability-sub-title  tooltipped" data-position="bottom" data-delay="30" data-tooltip="The number of games that you have bookmarked">bookmarks</div>
+		<div class="ability-sub-title" title="The number of games that you have bookmarked">bookmarks</div>
 		<div class="ability-progress-bar-dark">
 			<div class="ability-level<?php echo $abilities[3][0]; ?>" style='width:<?php echo round(($abilities[3][2]/$abilities[3][1]) * 100); ?>%'></div>
 		</div>
@@ -2088,7 +2068,7 @@ function DisplayMainMyLibrary($userid, $filter){
 	?>
 		<div class="col s12 mylibrary-container" style='position: relative;'> 
 		<?php
-			if($filter == "Alpha"){
+			if($filter == "Alpha" && sizeof($groupfeed) > 0){
 				$curr_char = strtoupper(substr($groupfeed[0][0][1],0,1));
 				if(!ctype_alpha($curr_char))
 					$curr_char = "#";
@@ -2217,5 +2197,205 @@ function DisplayMyLibrarySecondaryContent($userid){ ?>
 			</div>
 		</div>
 	</div>
-<?php 
+<?php
 }
+
+function DisplayProfileActivity($userid){
+	$user = GetUser($userid);
+	$name = "";
+	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
+	//DisplayBackButton($name."'s activity");
+	?>	
+	<div class='row' style='margin-top:20px'>
+		<div class="activity-top-level" data-id='<?php echo $user->_id; ?>' >
+			<?php 
+				DisplayMainActivity($userid, "My Activity");
+			?>
+		</div>
+		<?php
+			DisplayProfileActivitySecondaryContent($user, $name);
+		?>
+	</div>
+<?php	
+}
+
+function DisplayProfileActivityEndless($userid, $page, $date){
+	DisplayActivityEndless($userid, $page, $date, "My Activity");
+}
+
+function DisplayProfileActivitySecondaryContent($user, $name){ ?>
+	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
+		<div class="row activity-secondary-content">
+			<div class="col s12">
+				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Filter Activity Feed</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+			  	    <div id="activity-people-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All"><i class="mdi-social-people left"></i>People I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-only-users-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Users I Follow"><i class="mdi-social-people-outline left"></i>Only Users I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-all-users" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Users"><i class="mdi-social-public left"></i>All Users</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-only-critic-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Critics I Follow"><i class="mdi-action-subject left"></i>Only Personalities I Follow</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+					<div id="activity-all-critics" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Critics"><i class="mdi-social-location-city left"></i>All Personalities</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+			  	    <div id="activity-mine" class="activity-category-selector" style='font-size:1.25rem;' data-filter="My Activity"><i class="mdi-social-person left"></i> My Activity</div>
+				</div>
+			</div>
+			<div class="col s12">
+				<div class="activity-category-box">
+			  	    <div id="activity-someoneelse" class="activity-category-selector activity-category-selected" style='font-size:1.25rem;' data-id='<?php echo $user->_id; ?>' data-filter="<?php echo $name."'s"; ?> Activity"><i class="mdi-social-person left"></i><?php echo $name."'s"; ?>  Activity</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+}
+
+function DisplayProfileTierIcon($xp, $big, $slot){ 
+	if(sizeof($xp->_playedxp) > 0){
+		if($xp->_playedxp[0]->_completed == "101")
+			$percent = 100;
+		else
+			$percent = $xp->_playedxp[0]->_completed;
+			
+		if($percent == 100){ ?>
+			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - Completed"; ?>" <?php if(!$slot){ ?>style='margin-left: 3px;' <?php } ?>>
+			  		<i class="mdi-hardware-gamepad"></i>
+		  		</div>
+	  		</div>
+	  	<?php }else{ ?>
+			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> z-depth-1">
+			  <div class="c100 mini <?php if($big){ ?>biggerminiTierIcon<?php } ?> <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+				  <div class="slice">
+				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php
+	  	}
+	}else{
+  		$percent = 20;
+    	$length = "";
+		foreach($xp->_watchedxp as $watched){
+			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+				$percent = 101;
+				$length = $watched->_length;
+			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+				$percent = 100;
+				$length = $watched->_length;
+			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+				$percent = 50;
+				$length = $watched->_length;
+			}else{
+				$length = $watched->_length;
+			}
+		}
+		
+		if($percent == 101){ ?>
+  			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	      		<div class="profile-highlighted-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
+	      			<i class="mdi-action-visibility"></i>
+      			</div>
+  			</div>
+		<?php }else{ ?>
+			<div class="<?php if($slot){ ?>profile-highlighted-game-tier-container<?php }else{ ?> profile-best-game-tier-container<?php } ?> z-depth-1">
+			  <div class="c100 mini <?php if($big){ ?>biggerminiTierIcon<?php } ?> <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> <?php if($big){ ?>tierInProgessLarge<?php }else{ ?>tierInProgress<?php } ?>' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+				  <div class="slice">
+				    <div class="bar <?php if($big){ ?>bigbar<?php }else{ ?>minibar<?php } ?>"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php }
+	}
+}
+
+function DisplayProfileCheckPointTierIcon($xp){ 
+	if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>
+		<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG">
+			<div class="checkpoint-icon-xp" style="margin-top:0" title='Tier <?php echo $xp->_tier; ?> - Curated Review'><i class="mdi-editor-format-quote"></i></div>
+		</div>
+	<?php }else if(sizeof($xp->_playedxp) > 0){
+		if($xp->_playedxp[0]->_completed == "101")
+			$percent = 100;
+		else
+			$percent = $xp->_playedxp[0]->_completed;
+			
+		if($percent == 100){ ?>
+			<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	      		<div class="checkpoint-icon-xp" title='Tier <?php echo $xp->_tier; ?> - Completed'  style="margin-top:0">
+			  		<i class="mdi-hardware-gamepad"></i>
+		  		</div>
+	  		</div>
+	  	<?php }else{ ?>
+			<div class="checkpoint-tier z-depth-1">
+			  <div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;<?php if($big){ ?>font-size:60px;<?php } ?>'>
+			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+				  <div class="slice">
+				    <div class="bar minibar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php
+	  	}
+	}else{
+  		$percent = 20;
+    	$length = "";
+		foreach($xp->_watchedxp as $watched){
+			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+				$percent = 101;
+				$length = $watched->_length;
+			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+				$percent = 100;
+				$length = $watched->_length;
+			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+				$percent = 50;
+				$length = $watched->_length;
+			}else{
+				$length = $watched->_length;
+			}
+		}
+		
+		if($percent == 101){ ?>
+  			<div class="checkpoint-tier tier<?php echo $xp->_tier; ?>BG z-depth-1">
+	      		<div class="checkpoint-icon-xp" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>"  style="margin-top:0">
+	      			<i class="mdi-action-visibility"></i>
+      			</div>
+  			</div>
+		<?php }else{ ?>
+			<div class="checkpoint-tier z-depth-1">
+			  <div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;<?php if($big){ ?>font-size:60px;<?php } ?>'>
+			  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+				  <div class="slice">
+				    <div class="bar minibar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php }
+	}
+}
+?>

@@ -42,9 +42,9 @@ function FindGamesSmallImage(){
 }
 
 
-function GetGame($gameid){
+function GetGame($gameid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `ID` = ".$gameid)) {
 		while($row = mysqli_fetch_array($result)){
 			$game = new Game($row["ID"], 
@@ -72,15 +72,16 @@ function GetGame($gameid){
 				);
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 
 	return $game;
 }
 
 //DONT USE UNLESS YOU KNOW IT EXISTS, THERE IS A BETTER METHOD THAT ADDS
-function GetGameByGBID($gbid){
+function GetGameByGBID($gbid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
@@ -110,14 +111,15 @@ function GetGameByGBID($gbid){
 			}
 		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
 	
 	return $game;
 }
 
-function GetGameByGBIDFull($gbid){
+function GetGameByGBIDFull($gbid, $pconn = null){
 	$game = "";
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
@@ -146,12 +148,13 @@ function GetGameByGBIDFull($gbid){
 					);
 			}
 		}
-		
-		if($game == ""){
-			$game = RequestGameFromGiantBombByID($gbid);
-		}
 	}
-	Close($mysqli, $result);
+	if($pconn == null)
+		Close($mysqli, $result);
+	
+	if($game == ""){
+		$game = RequestGameFromGiantBombByID($gbid);
+	}
 
 	return $game;
 }
@@ -450,43 +453,39 @@ function GetDiscoverCategories(){
 
 function SearchForGameLocalFirst($search){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Games` where `Title` = '".$search."' LIMIT 0,1")) {
+	$games = array();
+	if ($result = $mysqli->query("select * from `Games` where `Title` like '%".$search."%' LIMIT 0,25")) {
 		while($row = mysqli_fetch_array($result)){
-			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
-			}
+			unset($game);
+			$game = new Game($row["ID"], 
+				$row["GBID"],
+				$row["Title"],
+				$row["Rated"],
+				$row["Released"],
+				$row["Genre"],
+				$row["Platforms"],
+				$row["Year"],
+				$row["ImageLarge"],
+				$row["ImageSmall"],
+				$row["Highlight"],
+				$row["Publisher"],
+				$row["Developer"],
+				$row["Alias"],
+				$row["Theme"],
+				$row["Franchise"],
+				$row["Similar"],
+				$row["Tier1"],
+				$row["Tier2"],
+				$row["Tier3"],
+				$row["Tier4"],
+				$row["Tier5"]
+				);
+				$games[] = $game;
 		}
 	}
 	
-	/*if($game == ""){
-		$GBgames = RequestGameFromGiantBomb($search);
-		$firsttry = false;
-		if(sizeof($GBgames) > 0){ $game = $GBgames[0]; }
-	}*/
 	Close($mysqli, $result);
-	return $game;
+	return $games;
 }
 
 function RecentlyReleasedCategory(){
@@ -612,7 +611,7 @@ function GetGameFeedByFilter($filter){
 	if ($result = $mysqli->query("select * from `Games` ".$filter)) {
 		while($row = mysqli_fetch_array($result)){
 			$feed = array();
-			$feed[] = GetExperienceForGame($row['ID']);
+			$feed[] = GetExperienceForGame($row['ID'], $mysqli);
 			if($row["Title"] != ""){
 				$game = new Game($row["ID"], 
 					$row["GBID"],
@@ -687,7 +686,7 @@ function GetGamesByFilter($filter){
 function InsertGame($gbid, $title, $rated, $released, $genre, $platforms, $year, $publisher, $developer, $alias, $theme, $franchise, $similar, $imagelarge, $imagesmall){
 	$mysqli = Connect();
 	$result = $mysqli->query("insert into `Games` (`GBID`,`Title`,`Rated`,`Released`,`Platforms`,`Year`,`Genre`,`Publisher`,`Developer`,`Alias`,`Theme`,`Franchise`,`Similar`,`ImageLarge`,`ImageSmall`) values ('$gbid','$title','$rated','$released','$platforms','$year','$genre','$publisher','$developer','$alias','$theme','$franchise','$similar','$imagelarge','$imagesmall')");
-	$game = GetGameByGBID($gbid);
+	$game = GetGameByGBID($gbid, $mysqli);
 	Close($mysqli, $result);
 	return $game;
 }
@@ -712,7 +711,7 @@ function FindGamesToBeUpdated(){
 	if ($result = $mysqli->query("select * from `Games` where `CrawlerUpdated` = 0 LIMIT 0,30")) {
 		while($row = mysqli_fetch_array($result)){
 			if($nothing){ echo "Starting ID: ".$row["ID"]."<BR>"; }
-			 UpdateGameFromGiantBombByID($row['GBID'], $row['Reviewed']);
+			 UpdateGameFromGiantBombByID($row['GBID'], $row['Reviewed'], $mysqli);
 			 $nothing = false;
 		}
 	}
@@ -793,8 +792,8 @@ function GetGameReleaseYears(){
 	return $years;
 }
 
-function GetGameMetaDataIDs($gbid){
-	$mysqli = Connect();
+function GetGameMetaDataIDs($gbid, $pconn = null){
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select `ConceptID` from `Game_Concepts` where `GBID` = '".$gbid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$concepts[] = $row['ConceptID'];
@@ -826,7 +825,8 @@ function GetGameMetaDataIDs($gbid){
 							$people, 
 							$platforms, 
 							$themes);
-	Close($mysqli, $result);
+	if($pconn == null)
+        Close($mysqli, $result);
 	return $metadata;
 }
 
@@ -863,14 +863,15 @@ function GetGenres(){
 	return $genre;
 }
 
-function GetGenreByID($id){
-	$mysqli = Connect();
+function GetGenreByID($id, $pconn = null){
+	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Link_Genre` where `GBID` = '".$id."'")) {
 		while($row = mysqli_fetch_array($result)){
 				$name = $row["Name"];
 		}
 	}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	return $name;
 }
 
@@ -912,8 +913,7 @@ function GetDevelopers(){
 
 function MarkGameReviewed($gameid, $year){
 	$mysqli = Connect();
-	//$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://polygonalweave.com/Images/".$year."/".$gameid.".jpg', `ImageSmall` = 'http://polygonalweave.com/Images/".$year."/".$gameid."s.jpg' where `ID` = '".$gameid."'");
-	$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://polygonalweave.com/Images/".$year."/".$gameid.".jpg' where `ID` = '".$gameid."'");
+	$result = $mysqli->query("update `Games` set `Reviewed` = 'Yes', `ImageLarge` = 'http://lifebar.io/Images/".$year."/".$gameid.".jpg' where `ID` = '".$gameid."'");
 	Close($mysqli, $result);
 }
 

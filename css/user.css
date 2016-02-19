@@ -67,6 +67,18 @@
 	font-weight: 200;
 }
 
+.settings-header{
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    font-size: 1.5em;
+    margin: 50px 0 45px 0.75rem;
+    color: rgba(0,0,0,0.4);
+    padding: 0 !important;
+}
+
+.avatar-item{
+	margin-bottom:1em;
+}
+
 .critic-name-container{
 	position:relative;
 	cursor: pointer;
@@ -322,8 +334,88 @@
 	font-weight:normal;
 }
 
+.srank-badge{
+    position: absolute !important;
+    height: 30px;
+    bottom: 10px !important;
+    top: inherit !important;
+    left: inherit !important;
+    width: 30px !important;
+    right: inherit !important;
+    margin-left: 60px;
+}
+
+.srank-badge-lifebar{
+    position: absolute !important;
+    height: 30px;
+    bottom: 0px !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: -10px !important;
+}
+
+.srank-badge-review{
+    position: absolute !important;
+    height: 20px;
+    bottom: 0px !important;
+    top: inherit !important;
+    left: 50px !important;
+    right: inherit !important;
+}
+
+.srank-badge-activity{
+    position: absolute !important;
+    height: 22px;
+    bottom: -2px !important;
+    top: inherit !important;
+    left: 75px !important;
+    right: inherit !important;
+}
+
+.authenticated-mark{
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 0.9em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+
+}
+
+.authenticated-mark-lifebar{
+	height: 20px;
+    width: 20px;
+    line-height: 18px;
+    font-size: 0.8em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.authenticated-mark-lifebar-slot1{
+    height: 33px;
+    width: 33px;
+    line-height: 33px;
+    font-size: 0.7em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+}
 
 @media only screen and (max-width : 600px) {
+	.srank-badge-activity{
+		left: 38px !important;
+	}
 	#userSettings{
 		margin:1em 0 5em;
 	}
@@ -369,5 +461,10 @@
 	}
 	.user-preview-card-xp{
 		  font-size: 18px;
+	}
+	.authenticated-mark-lifebar-slot1{
+	    height: 23px;
+	    width: 23px;
+	    line-height: 23px;
 	}
 }

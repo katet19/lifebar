@@ -50,6 +50,23 @@ function ShowTierQuote($exp, $gameid, $edit){
 				ShowDelete($exp->_id);
 	    	} ?>
 	</div>
+	<?php 
+	if($_SESSION['logged-in']->_security == "Authenticated" || $_SESSION['logged-in']->_security == "Journalist"){ ?>
+	<br>
+	<div class="myxp-edit-container z-depth-1">
+		<div class="row">
+			<div class="col s12 myxp-sentence" style="margin-left: 20px;">
+					Link to published review
+			</div>
+		</div>
+		<div class="row myxp-form-box">
+			<div class="input-field col s12 m12 l8">
+		        <input id="myxp-form-critic-link" type="text" <?php if($exp->_link != ""){ ?> value="<?php echo $exp->_link; ?>" <?php } ?> >
+	        	<label for="myxp-form-critic-link" <?php if($exp->_link != ""){ ?> class="active"<?php } ?>>Source your review</label>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
 	<?php
 	if($edit){
 		ShowMyXPFAB();
@@ -110,11 +127,14 @@ function ShowEditPlayed($exp){
 				$date = explode('-',$xp->_date);
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
-				$isaccurate = true;
-				$birthyear = substr($myuser->_birthdate,0,4); 
-				if(($year - $birthyear) <= 10 || $birthyear == 0){ $isaccurate = false; $birthyear = 1975; }  
+				
+				if($exp->_game->_year == 0){
+					$officialrelease = "";
+				}else{
+					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
+				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($isaccurate){ echo "~(".($year - $birthyear)."yrs old)"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $releaseyear){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
@@ -122,7 +142,7 @@ function ShowEditPlayed($exp){
 			</select>
 		 </div>
 	 </div>
-	 <div class="row myxp-form-box">
+	 <div class="row myxp-form-box myxp-quarter" >
 		 <div class="col s12 m12 l8" style="padding:0;">
 		 	<?php $month = date('n');
 	 			if($month > '0' && $month <= '3'){
@@ -133,9 +153,14 @@ function ShowEditPlayed($exp){
 					$quarter = "3";
 				}else if($month > '9' && $month <= '12'){
 					$quarter = "4";
+				}else if($month == 0){
+					$quarter = "0";
 				}
 		 	?>
 			  <label class="myxp-form-box-header">Experienced Quarter</label>
+			  <div class="myxp-form-select-item" style="display:none">
+		  	    <input name="dategroup" class="with-gap" type="radio" id="q0" <?php if($date[1] == 0){ echo "checked"; }else if($quarter == 0){ echo "checked"; } ?> data-text="" />
+		  	  </div >
 			  <div class="myxp-form-select-item">
 		  	    <input name="dategroup" class="with-gap" type="radio" id="q1" <?php if($date[1] == 1){ echo "checked"; }else if($quarter == 1){ echo "checked"; } ?> data-text="<b style='opacity:0.7;'>Q1</b> (Jan/Feb/Mar)" />
 			    <label for="q1"><b>Q1</b> (Jan/Feb/Mar)</label>
@@ -323,11 +348,14 @@ function ShowEditWatched($exp, $watchid){
 				$date = explode('-',$watchedxp->_date);
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
-				$isaccurate = true;
-				$birthyear = substr($myuser->_birthdate,0,4); 
-				if(($year - $birthyear) <= 10 || $birthyear == 0){ $isaccurate = false; $birthyear = 1975; }  
+				$releaseyear = $releaseyear - 5;
+				if($exp->_game->_year == 0){
+					$officialrelease = "";
+				}else{
+					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
+				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($isaccurate){ echo "~(".($year - $birthyear)."yrs old)"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $exp->_game->_year){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
@@ -335,7 +363,7 @@ function ShowEditWatched($exp, $watchid){
 			</select>
 		 </div>
 	 </div>
-	 <div class="row myxp-form-box">
+	 <div class="row myxp-form-box myxp-quarter">
 		 <div class="col s12 m12 l8" style="padding:0;">
 		 	<?php $month = date('n');
 	 			if($month > '0' && $month <= '3'){
@@ -346,9 +374,14 @@ function ShowEditWatched($exp, $watchid){
 					$quarter = "3";
 				}else if($month > '9' && $month <= '12'){
 					$quarter = "4";
+				}else if($month == 0){
+					$quarter = "0";
 				}
 		 	?>
 			  <label class="myxp-form-box-header">Experienced Quarter</label>
+  			  <div class="myxp-form-select-item" style="display:none">
+		  	    <input name="dategroup" class="with-gap" type="radio" id="q0" <?php if($date[1] == 0){ echo "checked"; }else if($quarter == 0){ echo "checked"; } ?> data-text="" />
+		  	  </div >
 			  <div class="myxp-form-select-item">
 		  	    <input name="dategroup" class="with-gap" type="radio" id="q1" <?php if($date[1] == 1){ echo "checked"; }else if($quarter == 1){ echo "checked"; } ?> data-text="<b style='opacity:0.7;'>Q1</b> (Jan/Feb/Mar)" />
 			    <label for="q1"><b>Q1</b> (Jan/Feb/Mar)</label>
@@ -380,7 +413,7 @@ function ShowEditWatched($exp, $watchid){
 				<option  value='Gamesradar' <?php if($watchedxp->_source == "Gamesradar"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Gamesradar' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Gamesradar</option>
 				<option  value='Gamespot' <?php if($watchedxp->_source == "Gamespot"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Gamespot' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Gamespot</option>
 				<option  value='Gametrailers' <?php if($watchedxp->_source == "Gametrailers"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Gametrailers' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Gametrailers</option>
-                <option  value='Giantbomb' <?php if($watchedxp->_source == "Giantbomb"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Giantbomb' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Giantbomb</option>
+                <option  value='Giant Bomb' <?php if($watchedxp->_source == "Giantbomb" || $watchedxp->_source == "Giant Bomb"){ echo " selected"; $found = true; }else if(($_SESSION['logged-in']->_defaultwatched == 'Giantbomb' || $_SESSION['logged-in']->_defaultwatched == "Giant Bomb") && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Giant Bomb</option>
 				<option  value='IGN' <?php if($watchedxp->_source == "IGN"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'IGN' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>IGN</option>
 				<option  value='Joystiq' <?php if($watchedxp->_source == "Joystiq"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Gamespot' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Joystiq</option>
 				<option  value='Other' <?php if($watchedxp->_source == "Other"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Other' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Other</option>
@@ -451,7 +484,7 @@ function ShowTierGraphSelection($exp){
 		$relativeT5 = 0;
 	?>
 	<div style="float: left; margin-left: 4rem; font-weight: 500;margin-bottom: 15px;">
-		<?php if($total == 0){ echo "Best"; } ?>
+		<?php echo "Best"; ?>
 	</div>
 	<div class="myxp-GraphBarContainer firsttier" data-total="<?php echo $total; ?>">
 		<div data-tier="1" data-count="<?php echo $t1; ?>" class="myxp-GraphLabel btn-flat waves-effect waves-light <?php if($exp->_tier == 1){ echo "myxp-selected-tier tier1BG"; }?>"><i class="mdi-content-add left" style='vertical-align: sub;font-size: 1em;'></i>Tier 1</div>
@@ -474,7 +507,7 @@ function ShowTierGraphSelection($exp){
 		<div class="myxp-GraphBar tier5BG" style="width:<?php echo $relativeT5; ?>%;"></div>
 	</div>
 	<div style="float: left; margin-left: 4rem; font-weight: 500;">
-		<?php if($total == 0){ echo "Worst"; } ?>
+		<?php echo "Worst"; ?>
 	</div>
 	<?php
 }

@@ -184,7 +184,7 @@ function DisplayReleaseNotification($details, $lastvisit){ ?>
 			<div class="notification-card notification-release">
 				<div class="row" style="margin: 10px 0 0;">
 					<div class="col s3 m2">
-						<div class="notification-card-icon-image" style="100%;background:url(<?php if($details->_icon == ""){ echo "http://polygonalweave.com/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						<div class="notification-card-icon-image" style="100%;background:url(<?php if($details->_icon == ""){ echo "http://lifebar.io/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 					</div>
 					<div class="col s9 m10">
 						<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -207,7 +207,7 @@ function DisplayGameNotification($details, $lastvisit){
 	<div class="notification-card notification-game">
 		<div class="row" style="margin: 10px 0 0;">
 			<div class="col s3 m2">
-				<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://polygonalweave.com/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://lifebar.io/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 			</div>
 			<div class="col s9 m10">
 				<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -289,7 +289,7 @@ function DisplayCriticNotification($details, $lastvisit){ ?>
 		<div class="notification-card notification-critic">
 			<div class="row" style="margin: 10px 0 0;">
 			<div class="col s3 m2">
-				<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://polygonalweave.com/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://lifebar.io/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 			</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -397,7 +397,7 @@ function DisplayAgreeNotification($details, $lastvisit){ ?>
 		<div class="notification-card notification-agree">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://polygonalweave.com/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+					<div class="notification-card-icon-image" style="width:100%;background:url(<?php if($details->_icon == ""){ echo "http://lifebar.io/Images/Generic/POLY08s.jpg"; }else{ echo $details->_icon; } ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>

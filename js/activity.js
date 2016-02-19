@@ -74,12 +74,13 @@ function AttachActivityEvents(){
 	 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
 	 })
 	 AttachAgreesFromActivity();
+	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
 	 	if(isScrolledIntoView($("#feed-endless-loader"))){
 	 		if($("#feed-endless-loader").html() == "")
       			EndlessLoader();
 	 	}
-     }); 
+     });
 }
 
 function AttachSecondaryEvents(){
@@ -98,7 +99,11 @@ function AttachSecondaryEvents(){
 		iconloc.addClass(icon);
 		iconloc.addClass("activity-header-icon-picker");
 		$(this).addClass("activity-category-selected");
-		RefreshActivity($(this).attr("data-filter"));
+		if($(this).attr("id") == "activity-someoneelse"){
+			ShowUserActivity($(this).attr("data-id"));
+		}else{
+			RefreshActivity($(this).attr("data-filter"));
+		}
 	});
 }
 

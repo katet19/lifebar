@@ -23,7 +23,11 @@ function Login($username, $password){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"],
+						$row["Website"],
+						$row["Badge"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
 				echo $row["SessionID"];
@@ -59,7 +63,11 @@ function FastLogin($id){
 						$row["SessionID"],
 						$row["Privacy"],
 						$row["RealNames"],
-						$row["Title"]);
+						$row["Title"],
+						$row["Image"],
+						$row["Website"],
+						$row["Badge"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
 		}
@@ -89,7 +97,11 @@ function LoginWithCookie($cookieID){
 					$row["SessionID"],
 					$row["Privacy"],
 					$row["RealNames"],
-					$row["Title"]);
+					$row["Title"],
+					$row["Image"],
+					$row["Website"],
+					$row["Badge"]);
+				$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
 			$_SESSION['logged-in'] = $myuser;
 		}
@@ -121,9 +133,9 @@ function SubmitPWReset($key, $pw){
 	Close($mysqli, $result);
 }
 function Logout(){
-	setcookie("RememberMe", "", time()-3600, '/');
-	if ( isset( $_COOKIE[session_name()] ) )
-		setcookie( session_name(), “”, time()-3600, “/” );
+	//setcookie("RememberMe", "", time()-3600, '/');
+	//if ( isset( $_COOKIE[session_name()] ) )
+	//	setcookie( session_name(), “”, time()-3600, “/” );
 	$_SESSION = array();
 	$_SESSION['logged-in'] = null;
 	session_destroy();
@@ -134,7 +146,7 @@ function GetOAuthConfig(){
 	$googlearray = array();
 	$keys = array();
 	
-	$config["base_url"] = "http://material.polygonalweave.com/php/library/Hybrid";
+	$config["base_url"] = "http://lifebar.io/php/library/Hybrid";
 	
 	//Google
 	unset($keys);

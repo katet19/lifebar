@@ -6,6 +6,8 @@ function RecentlyReleasedFromGB(){
 	$request = 'http://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&filter=original_release_date:'.date('Y-m-d', strtotime('-30 days')).'%2000:00:00|'.date('Y-m-d').'%2000:00:00&format=json&limit=30';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -19,54 +21,59 @@ function RecentlyReleasedFromGB(){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	foreach($decoded->results as $game){
-		//if($game->original_release_date != ""){
-			$release = explode(" ",$game->original_release_date);
-			$dates = explode("-",$game->original_release_date);
-	
-			$gameplatforms = "";
-			foreach($game->platforms as $platform){
-				$gameplatforms = $gameplatforms.$platform->name."\r\n";
-			}
-			
-			$gamerating = "";
-			if($game->original_game_rating != ""){
-				foreach($game->original_game_rating as $rating){
-					$rated = explode(" ", $rating->name);
-					if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
-							$gamerating = $rated[1];
-					}
+	if($decoded != null && sizeof($decoded->results > 0)){
+		foreach($decoded->results as $game){
+			//if($game->original_release_date != ""){
+				$release = explode(" ",$game->original_release_date);
+				$dates = explode("-",$game->original_release_date);
+		
+				$gameplatforms = "";
+				foreach($game->platforms as $platform){
+					$gameplatforms = $gameplatforms.$platform->name."\r\n";
 				}
-			}			
-			$localgame = GetGameByGBID($game->id);
-			$truegameid = "-1";
-			
-			if($localgame != ""){
-				$truegameid = $localgame->_id;
-			}
-			
-			$game = new Game($truegameid,
-				$game->id, 
-				$game->name,
-				$gamerating,
-				$release[0],
-				"",
-				$gameplatforms,
-				$dates[0],
-				$game->image->super_url,
-				$game->image->small_url,
-				"No",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"");
-			$gameresults[] = $game;
+				
+				$gamerating = "";
+				if($game->original_game_rating != ""){
+					foreach($game->original_game_rating as $rating){
+						$rated = explode(" ", $rating->name);
+						if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
+								$gamerating = $rated[1];
+						}
+					}
+				}			
+				$localgame = GetGameByGBID($game->id);
+				$truegameid = "-1";
+				
+				if($localgame != ""){
+					$truegameid = $localgame->_id;
+				}
+				
+				$game = new Game($truegameid,
+					$game->id, 
+					$game->name,
+					$gamerating,
+					$release[0],
+					"",
+					$gameplatforms,
+					$dates[0],
+					$game->image->super_url,
+					$game->image->small_url,
+					"No",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"");
+				$gameresults[] = $game;
+		}
+	}else{
+		ManualErrorMessage("RecentlyReleasedFromGB() failed to return data from GB");
 	}
 	
 	return $gameresults;
 }	
+
 
 function RequestGameFromGiantBomb($searchstring){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
@@ -82,6 +89,8 @@ function RequestGameFromGiantBomb($searchstring){
 	//echo $request;
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -95,146 +104,150 @@ function RequestGameFromGiantBomb($searchstring){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	foreach($decoded->results as $game){
-		if($game->original_release_date != ""){
-			$release = explode(" ",$game->original_release_date);
-			$dates = explode("-",$game->original_release_date);
-	
-			$gameplatforms = "";
-			if($game->platforms  != ""){
+	if($decoded != null && sizeof($decoded->results > 0)){
+		foreach($decoded->results as $game){
+			if($game->original_release_date != ""){
+				$release = explode(" ",$game->original_release_date);
+				$dates = explode("-",$game->original_release_date);
+		
+				$gameplatforms = "";
+				if($game->platforms  != ""){
+					foreach($game->platforms as $platform){
+						$gameplatforms = $gameplatforms.$platform->name."\r\n";
+					}
+				}
+				
+				$gamerating = "";
+				if($game->original_game_rating != ""){
+					foreach($game->original_game_rating as $rating){
+						$rated = explode(" ", $rating->name);
+						if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
+								$gamerating = $rated[1];
+						}
+					}
+				}			
+				$localgame = GetGameByGBID($game->id);
+				$truegameid = "-1";
+				
+				if($localgame != ""){
+					$truegameid = $localgame->_id;
+				}
+				
+				$game = new Game($truegameid,
+					$game->id, 
+					$game->name,
+					$gamerating,
+					$release[0],
+					"",
+					$gameplatforms,
+					$dates[0],
+					$game->image->super_url,
+					$game->image->small_url,
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"");
+				$gameresults[] = $game;
+			}else if($game->expected_release_day != "" && $game->expected_release_month != "" && $game->expected_release_year != ""){
+				$release = $game->expected_release_year."-".$game->expected_release_month."-".$game->expected_release_day;
+		
+				$gameplatforms = "";
 				foreach($game->platforms as $platform){
 					$gameplatforms = $gameplatforms.$platform->name."\r\n";
 				}
-			}
-			
-			$gamerating = "";
-			if($game->original_game_rating != ""){
-				foreach($game->original_game_rating as $rating){
-					$rated = explode(" ", $rating->name);
-					if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
-							$gamerating = $rated[1];
+				
+				$gamerating = "";
+				if($game->original_game_rating != ""){
+					foreach($game->original_game_rating as $rating){
+						$rated = explode(" ", $rating->name);
+						if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
+								$gamerating = $rated[1];
+						}
 					}
+				}			
+				$localgame = GetGameByGBID($game->id);
+				$truegameid = "-1";
+				
+				if($localgame != ""){
+					$truegameid = $localgame->_id;
 				}
-			}			
-			$localgame = GetGameByGBID($game->id);
-			$truegameid = "-1";
-			
-			if($localgame != ""){
-				$truegameid = $localgame->_id;
-			}
-			
-			$game = new Game($truegameid,
-				$game->id, 
-				$game->name,
-				$gamerating,
-				$release[0],
-				"",
-				$gameplatforms,
-				$dates[0],
-				$game->image->super_url,
-				$game->image->small_url,
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"");
-			$gameresults[] = $game;
-		}else if($game->expected_release_day != "" && $game->expected_release_month != "" && $game->expected_release_year != ""){
-			$release = $game->expected_release_year."-".$game->expected_release_month."-".$game->expected_release_day;
+				
+				$game = new Game($truegameid,
+					$game->id, 
+					$game->name,
+					$gamerating,
+					$release,
+					"",
+					$gameplatforms,
+					$game->expected_release_year,
+					$game->image->super_url,
+					$game->image->small_url,
+					"No",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"");
+				$gameresults[] = $game;
 	
-			$gameplatforms = "";
-			foreach($game->platforms as $platform){
-				$gameplatforms = $gameplatforms.$platform->name."\r\n";
-			}
-			
-			$gamerating = "";
-			if($game->original_game_rating != ""){
-				foreach($game->original_game_rating as $rating){
-					$rated = explode(" ", $rating->name);
-					if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
-							$gamerating = $rated[1];
+			}else{
+				if($game->expected_release_year <= "0000")
+					$game->expected_release_year = "2050";
+				if($game->expected_release_month <= "00")
+					$game->expected_release_month = "12";
+				if($game->expected_release_day <= "00")
+					$game->expected_release_day = "31";	
+				$release = $game->expected_release_year."-".$game->expected_release_month."-".$game->expected_release_day;
+		
+				$gameplatforms = "";
+				if($game->platforms != ""){
+					foreach($game->platforms as $platform){
+						$gameplatforms = $gameplatforms.$platform->name."\r\n";
 					}
 				}
-			}			
-			$localgame = GetGameByGBID($game->id);
-			$truegameid = "-1";
-			
-			if($localgame != ""){
-				$truegameid = $localgame->_id;
-			}
-			
-			$game = new Game($truegameid,
-				$game->id, 
-				$game->name,
-				$gamerating,
-				$release,
-				"",
-				$gameplatforms,
-				$game->expected_release_year,
-				$game->image->super_url,
-				$game->image->small_url,
-				"No",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"");
-			$gameresults[] = $game;
-
-		}else{
-			if($game->expected_release_year <= "0000")
-				$game->expected_release_year = "2050";
-			if($game->expected_release_month <= "00")
-				$game->expected_release_month = "12";
-			if($game->expected_release_day <= "00")
-				$game->expected_release_day = "31";	
-			$release = $game->expected_release_year."-".$game->expected_release_month."-".$game->expected_release_day;
-	
-			$gameplatforms = "";
-			if($game->platforms != ""){
-				foreach($game->platforms as $platform){
-					$gameplatforms = $gameplatforms.$platform->name."\r\n";
-				}
-			}
-			
-			$gamerating = "";
-			if($game->original_game_rating != ""){
-				foreach($game->original_game_rating as $rating){
-					$rated = explode(" ", $rating->name);
-					if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
-							$gamerating = $rated[1];
+				
+				$gamerating = "";
+				if($game->original_game_rating != ""){
+					foreach($game->original_game_rating as $rating){
+						$rated = explode(" ", $rating->name);
+						if($rated[1] == "E" || $rated[1] == "T" || $rated[1] == "M" || $rated[1] == "E10" || $rated[1] == "AO" || $rated[1] == "EC"){
+								$gamerating = $rated[1];
+						}
 					}
+				}			
+				$localgame = GetGameByGBID($game->id);
+				$truegameid = "-1";
+				
+				if($localgame != ""){
+					$truegameid = $localgame->_id;
 				}
-			}			
-			$localgame = GetGameByGBID($game->id);
-			$truegameid = "-1";
-			
-			if($localgame != ""){
-				$truegameid = $localgame->_id;
+				
+				$game = new Game($truegameid,
+					$game->id, 
+					$game->name,
+					$gamerating,
+					$release,
+					"",
+					$gameplatforms,
+					$game->expected_release_year,
+					$game->image->super_url,
+					$game->image->small_url,
+					"No",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"");
+				$gameresults[] = $game;
 			}
-			
-			$game = new Game($truegameid,
-				$game->id, 
-				$game->name,
-				$gamerating,
-				$release,
-				"",
-				$gameplatforms,
-				$game->expected_release_year,
-				$game->image->super_url,
-				$game->image->small_url,
-				"No",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"");
-			$gameresults[] = $game;
 		}
+	}else{
+		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."'");
 	}
 	
 	return $gameresults;
@@ -247,6 +260,8 @@ function RequestGiantBombImage($gameid){
 	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=image';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -281,6 +296,8 @@ function GetVideoDetailsGiantBomb($videoid){
 	$request = 'http://www.giantbomb.com/api/video/2300-'.$videoid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -301,6 +318,8 @@ function RequestUSReleaseFromGiantBombByID($gameid){
 	$request = 'http://www.giantbomb.com/api/releases/?api_key='.$gbapikey.'&format=json&filter=game:'.$gameid;
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -337,6 +356,8 @@ function RequestGameFromGiantBombByID($gameid){
 	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -501,12 +522,14 @@ function RequestGameFromGiantBombByID($gameid){
 }
 
 
-function UpdateGameFromGiantBombByID($gameid, $reviewed){
+function UpdateGameFromGiantBombByID($gameid, $reviewed, $pconn = null){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
 	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
@@ -596,7 +619,7 @@ function UpdateGameFromGiantBombByID($gameid, $reviewed){
 			$similar_games = $similar_games.$similar_game->id.",";
 		}
 	}
-	$mysqli = Connect();
+	$mysqli = Connect($pconn);
 	if($alreadyout){
 		UpdateGame($gameid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release, mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $game->expected_release_year,mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
 	}else{
@@ -609,7 +632,8 @@ function UpdateGameFromGiantBombByID($gameid, $reviewed){
 	//		InsertVideoForGame($gameid, 'GiantBomb', $viddetails->site_detail_url, $viddetails->name, $viddetails->id, 'GiantBomb', $viddetails->image->screen_url, 0, $viddetails->length_seconds);
 	//	}
 	//}
-	Close($mysqli, $result);
+    if($pconn == null)
+	   Close($mysqli, $result);
 	if($reviewed == "Sorta"){
 		AddSmallImage($gameid);
 		//AddImage($gameid);	
@@ -626,6 +650,8 @@ function FullUpdateViaGameID($gbid, $reviewed){
 	$request = 'http://www.giantbomb.com/api/game/3030-'.$gbid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);

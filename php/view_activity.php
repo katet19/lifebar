@@ -53,12 +53,34 @@ function DisplayMainActivity($userid, $filter){
 				$last_user = $feeditem[0]->_userid;
 			}
 		}else{
-			if(sizeof($group) > 0)
+			if(sizeof($group) > 0){
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
+					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
+						if($feeditem[5] == "BUCKETLIST"){
+							$groupfeed[] = $group;
+							unset($group);
+							//Do not add bookmark to feed
+						}else{
+							//Ignore the event before and only add the 2nd event
+							unset($group);
+							$group[] = $feeditem;
+							$last_type = $feeditem[5];
+							$last_user = $feeditem[0]->_userid;
+						}
+				}else{
+					$groupfeed[] = $group;
+					unset($group);
+					$group[] = $feeditem;
+					$last_type = $feeditem[5];
+					$last_user = $feeditem[0]->_userid;
+				}
+			}else{
 				$groupfeed[] = $group;
-			unset($group);
-			$group[] = $feeditem;
-			$last_type = $feeditem[5];
-			$last_user = $feeditem[0]->_userid;
+				unset($group);
+				$group[] = $feeditem;
+				$last_type = $feeditem[5];
+				$last_user = $feeditem[0]->_userid;
+			}
 		}
 	}
 	//The last group will get missed in the loop
@@ -106,8 +128,8 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 	else
 		$myfeed = GetMyFeed(0, $page, $filter);
 		
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$conn = GetConnectedToList($userid);
+	$mutualconn = GetMutalConnections($userid);
 	
 	$last_user = 0;
 	$last_type = "";
@@ -137,12 +159,34 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				$last_user = $feeditem[0]->_userid;
 			}
 		}else{
-			if(sizeof($group) > 0)
+			if(sizeof($group) > 0){
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
+					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
+						if($feeditem[5] == "BUCKETLIST"){
+							$groupfeed[] = $group;
+							unset($group);
+							//Do not add bookmark to feed
+						}else{
+							//Ignore the event before and only add the 2nd event
+							unset($group);
+							$group[] = $feeditem;
+							$last_type = $feeditem[5];
+							$last_user = $feeditem[0]->_userid;
+						}
+				}else{
+					$groupfeed[] = $group;
+					unset($group);
+					$group[] = $feeditem;
+					$last_type = $feeditem[5];
+					$last_user = $feeditem[0]->_userid;
+				}
+			}else{
 				$groupfeed[] = $group;
-			unset($group);
-			$group[] = $feeditem;
-			$last_type = $feeditem[5];
-			$last_user = $feeditem[0]->_userid;
+				unset($group);
+				$group[] = $feeditem;
+				$last_type = $feeditem[5];
+				$last_user = $feeditem[0]->_userid;
+			}
 		}
 	}
 	//The last group will get missed in the loop
@@ -175,19 +219,34 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 
 function FeedDateDivider($date){
 	$datetime = explode(" ", ConvertDateToActivityFormat($date));
-	?>
-	<div class="row feed-date-divider" data-date="<?php echo $date; ?>">
-		<div class="col s12">
-			<div class="feed-date-divider-month">
-				<?php echo $datetime[0]; ?>
-			</div>
-			<div class="feed-date-divider-bullet"></div>
-			<div class="feed-date-divider-day">
-				<?php echo $datetime[1]; ?>
+	$year = explode('-',$date);
+	$now = date('Y');
+	if($date != ''){
+		?>
+		<div class="row feed-date-divider" data-date="<?php echo $date; ?>">
+			<div class="col s12">
+				<?php 	if($year[0] != $now){ ?>
+					<div class="feed-date-divider-month">
+						<?php echo $datetime[0]; ?>
+					</div>
+					<div class="feed-date-divider-bullet"></div>
+					<div class="feed-date-divider-day">
+						<?php echo $datetime[1]; ?>
+						<span style='color:#D32F2F'>/</span>
+						<span style="font-weight:100;"><?php echo $year[0]; ?></span>
+					</div>
+				<?php }else{ ?>
+					<div class="feed-date-divider-month">
+						<?php echo $datetime[0]; ?>
+					</div>
+					<div class="feed-date-divider-bullet"></div>
+					<div class="feed-date-divider-day">
+						<?php echo $datetime[1]; ?>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
-	</div>
-	<?php
+	<?php }
 }
 
 function ConvertDateToActivityFormat($date){
@@ -211,14 +270,14 @@ function ConvertDateToActivityFormat($date){
 }
 
 function FeedXPItem($feed, $conn, $mutualconn){ 
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
@@ -243,12 +302,23 @@ function FeedXPItem($feed, $conn, $mutualconn){
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
-					<?php if(sizeof($feed) > 1){ ?>
-						 added <?php echo sizeof($feed); ?> new experiences
-					<?php }else if($user->_security == "Journalist"){ ?>
+					<?php if(sizeof($feed) > 1){ 
+                            if($user->_security == "Journalist" || ($user->_security == "Authenticated")){
+                                $allreviews = true;
+                                foreach($feed as $card){
+                                    if($card[3]->_link == ''){
+                                        $allreviews = false;
+                                    }
+                                }
+                                if($allreviews)
+                                    echo "reviewed ".sizeof($feed)." games";
+                                else
+                                    echo "added ".sizeof($feed)." new experiences";
+                            }else{?>
+						      added <?php echo sizeof($feed); ?> new experiences
+                         <?php } ?>
+					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
-					<?php }else if(sizeof($feed) > 1){ ?>
-						 added <?php echo sizeof($feed); ?> new experiences
 					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?>
 						reminisced about
 					<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
@@ -290,26 +360,27 @@ function FeedXPItem($feed, $conn, $mutualconn){
 }
 
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	?>
   <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
     <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     </div>
     <div class="feed-card-content">
-      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG">
-      	<?php if($user->_security == "Journalist"){ ?>
+  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
+      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
       		<i class="mdi-editor-format-quote"></i>
-      	<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-      		<i class="mdi-hardware-gamepad"></i>
-      	<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-      		<i class="mdi-action-visibility"></i>
-      	<?php } ?>
-  	  </div>
+	  </div>
+  	<?php }else{ 
+  			DisplayFeedTierIcon($xp, $event);
+   		} ?>
       <div class="feed-card-title grey-text text-darken-4">
       	<?php if($multiple){ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
+      	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+  		<?php } ?>
       </div>
       <div class="feed-action-container">
       		<?php if($xp->_link != ''){ ?>
@@ -342,17 +413,17 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 }
 
 function FeedConnectionItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
 	//quote will be following user id
 	$followinguser = GetUser($feed[0][0]->_quote);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; }
-	if($followinguser->_security == "Journalist"){ $followingusername = $followinguser->_first." ".$followinguser->_last; }else{ $followingusername = $followinguser->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; }
+	if($followinguser->_security == "Journalist" || $followinguser->_security == "Authenticated"){ $followingusername = $followinguser->_first." ".$followinguser->_last; }else{ $followingusername = $followinguser->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
@@ -399,14 +470,14 @@ function FeedConnectionCard($user, $event, $following){
 
 
 function FeedBookmarkItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
@@ -449,14 +520,14 @@ function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
 }
 
 function FeedTierChangedItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
@@ -496,7 +567,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 }
 
 function FeedTierChangedCard($game, $user, $event, $xp, $multiple){ 
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	$tierdata = explode(",",$event->_quote);
 	$before = $tierdata[0];
 	$after = $tierdata[1];
@@ -523,14 +594,14 @@ function FeedTierChangedCard($game, $user, $event, $xp, $multiple){
 }
 
 function FeedQuoteChangedItem($feed, $conn, $mutualconn){
-	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
-	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($feed[0][0]->_userid);
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
@@ -570,7 +641,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 }
 
 function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
-	if($user->_security == "Journalist"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	?>
   <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
     <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
@@ -581,6 +652,9 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
       	"<?php echo $event->_quote; ?>"
+    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+  		<?php } ?>
       </div>
     </div>
   </div>
@@ -694,6 +768,65 @@ function DisplayActivitySecondaryContent($userid){
 		</div>
 	</div>
 	<?php
+	}
+}
+
+function DisplayFeedTierIcon($xp, $event){ 
+	if(sizeof($xp->_playedxp) > 0){
+		if($xp->_playedxp[0]->_completed == "101")
+			$percent = 100;
+		else
+			$percent = $xp->_playedxp[0]->_completed;
+			
+		if($percent == 100){ ?>
+			<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG"  title="<?php echo "Tier ".$event->_tier." - Completed"; ?>">
+			  	<i class="mdi-hardware-gamepad"></i>
+			</div>
+	  	<?php }else{ ?>
+			<div class="feed-card-icon">
+			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+				  <div class="slice">
+				    <div class="bar minibar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php
+	  	}
+	}else{
+  		$percent = 20;
+    	$length = "";
+		foreach($xp->_watchedxp as $watched){
+			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+				$percent = 101;
+				$length = $watched->_length;
+			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+				$percent = 100;
+				$length = $watched->_length;
+			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+				$percent = 50;
+				$length = $watched->_length;
+			}else{
+				$length = $watched->_length;
+			}
+		}
+		
+		if($percent == 101){ ?>
+	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>">
+	      		<i class="mdi-action-visibility"></i>
+		  	</div>
+		<?php }else{ ?>
+			<div class="feed-card-icon">
+			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>" style='background-color:white;'>
+			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+				  <div class="slice">
+				    <div class="bar minibar"></div>
+				    <div class="fill"></div>
+				  </div>
+				</div>
+			</div>
+		<?php }
 	}
 }
 ?>

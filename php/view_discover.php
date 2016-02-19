@@ -103,9 +103,9 @@ function DisplayGameDiscoverGrid(){
     </div>
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory">
-      	<div class="discoverCategoryHeader" data-category="Experienced Users">
+      	<div class="discoverCategoryHeader" data-category="Active Users">
       		<i class="mdi-social-people categoryIcon" style="background-color: rgb(255, 0, 97);"></i>
-      		Experienced Users
+      		Active Users
       		<div class="ViewBtn"><a class="waves-effect waves-light btn" style="background-color: rgb(255, 0, 97);">View</a></div>
       	</div>
     	<?php $experiencedUsers = GetExperiencedUsersCategory();
@@ -155,7 +155,7 @@ function DisplayGameDiscoverGrid(){
     <div class="col discoverDivider"></div>
     <?php
     	$newusers = GetNewUsersCategory(6);
-	if(sizeof($newusers) > 2){ ?>
+	if(sizeof($newusers) > 5){ ?>
 	    <div class="col s12 discoverCategory">
 	      	<div class="discoverCategoryHeader" data-category="New Users">
 	      		<i class="mdi-social-people categoryIcon" style="background-color:#2E7D32;"></i>
@@ -234,7 +234,7 @@ function DisplayDiscoverCategory($category, $catid){
 			DisplayCategoryNewUsers();
 		else if($category == "Trending Games")
 			DisplayCategoryPopularGames();
-		else if($category == "Experienced Users")
+		else if($category == "Active Users")
 			DisplayCategoryExperienceUsers();
 		else if($category == "Best Experiences")
 			DisplayCategoryBestExperiences();
@@ -352,7 +352,7 @@ function DisplayDiscoverNavigation(){ ?>
 		<div class="row" style='margin:0;'>
 		    <div class="col s12" style="padding:0">
 		      <ul class="tabs">
-  		        <li class="tab col s6"><a href="#gameContainer" id='gameContainerTab' class="active"><img src="http://polygonalweave.com/Images/Generic/played.png" style='width: 1.75em;margin-top: 0.75em;'></a></li>
+  		        <li class="tab col s6"><a href="#gameContainer" id='gameContainerTab' class="active"><img src="http://lifebar.io/Images/Generic/played.png" style='width: 1.75em;margin-top: 0.75em;'></a></li>
 		        <li class="tab col s6"><a href="#peopleContainer" id='peopleContainerTab'><i class="mdi-social-people small"></i></a></li>
 		      </ul>
 			</div>

@@ -153,7 +153,7 @@ function AttachGameEvents(currentTab){
  	});
  	
  	$(".ptalk-link-games").on("click", function(){
- 		window.open("http://talk.polygonalweave.com/c/games");
+ 		window.open("http://tidbits.io/c/games");
  	});
  	
  	AttachFloatingIconEvent(iconOnHover);
@@ -277,7 +277,7 @@ function AttachFloatingIconButtonEvents(){
 		RequestUpdateFromGiantBomb($(this).attr("data-gameid"));	
 	});
 	$(".game-add-image-btn").on('click', function(){
-		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://polygonalweave.com/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
 	$(".fab-login").on('click', function(){
@@ -562,7 +562,7 @@ function BackOutOfGame(currentTab){
 	if(method != undefined)
 		method();
 	GLOBAL_HASH_REDIRECT = "NO";
-	location.hash = "";
+	//location.hash = "";
 }
 
 function HideGameContainer(){
@@ -635,12 +635,14 @@ function GameCardActions(element){
 	}else{
 		element.addClass("card-game-tier-container-active");
 		element.parent().parent().find(".card-game-tier").hide();
+		element.parent().parent().find(".c100").hide();
 		element.find(".card-tier-details").addClass("card-tier-details-active");
 		element.find(".mdi-content-clear").on("click", function(e){
 			e.stopPropagation();
 			$(this).parent().parent().parent().removeClass("card-game-tier-container-active");
 			$(this).parent().parent().removeClass("card-tier-details-active");
 			$(this).parent().parent().parent().parent().find(".card-game-tier").show();
+			$(this).parent().parent().parent().parent().find(".c100").show();
 		});
 	}
 }

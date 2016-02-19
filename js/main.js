@@ -7,9 +7,9 @@ $(function() {
 	$(window).resize(function() {
 		ResizeEvents();
 	});
-	$(window).bind('hashchange', function(){
-		ManageHashEvents();
-	});
+	//$(window).bind('hashchange', function(){
+	//	ManageHashEvents();
+	//});
 });
 
 
@@ -95,6 +95,11 @@ function ToastProgress(msg){
 
 function ToastError(msg){
 	toast(msg, 5000);
+}
+
+function ToastUpdate(){
+	var msg = "New updates available! <span onclick='location.reload(true);' style='cursor:pointer;color:#FF8E00;font-weight: bold;padding: 0 10px 0 20px;'>REFRESH</span>";
+	toast(msg, 3540000);
 }
 
 function ToastRight(msg){
@@ -294,6 +299,7 @@ function GAPage(title, page){
 }
 
 //Globals
+var GLOBAL_VERSION = 100000;
 var GLOBAL_TAB_REDIRECT = "";
 var GLOBAL_HASH_REDIRECT = "";
 var SIDE_CONTENT_EVENTS = new Array();

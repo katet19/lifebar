@@ -29,10 +29,10 @@ function SendForgotPasswordEmail($to){
 				$randomKey = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
 				$mysqli->query("UPDATE `Users` SET `Key` = '".$randomKey."' WHERE `Email` ='".$to."'");
 		}
-		$subject = "Polygonal Weave Account Reset";
-		$link = "http://material.polygonalweave.com?forgotkey=".$randomKey;
+		$subject = "Lifebar Account Reset";
+		$link = "http://lifebar.io?forgotkey=".$randomKey;
 		$message = $message."You have requested a password reset. If you didn't make this request you can ignore this email.<br><br>";
-		$message = $message."<a href='".$link."'>Click to reset your Polygonal Weave password</a><br><br>";
+		$message = $message."<a href='".$link."'>Click to reset your Lifebar password</a><br><br>";
 		SendEmail($to, $subject, $message);	
 	}
 	Close($mysqli, $result);

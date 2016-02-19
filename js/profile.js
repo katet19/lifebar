@@ -74,7 +74,6 @@ function AttachProfileEvents(userid){
 			$(this).parent().parent().parent().parent().find(".card-tier").show();
 		});
 	});
-	$('.tooltipped').tooltip({delay: 30});
 	$(".badge-view-more").on('click', function(){
 		DisplayUserBadges(userid);		
 	});
@@ -215,7 +214,6 @@ function DisplayLeadership(userid){
      type: 'post',
      success: function(output) {
  			$("#BattleProgess").html(output); 
-			$('.tooltipped').tooltip({delay: 30});
 			$(".badge-card-ability-avatar").on("click", function(){
 				ShowUserProfile($(this).attr("data-id"));
 				$("#lean-overlay").trigger("click");
@@ -261,7 +259,6 @@ function DisplaySpy(userid){
      type: 'post',
      success: function(output) {
  			$("#BattleProgess").html(output); 
-			$('.tooltipped').tooltip({delay: 30});
 			$(".badge-card-ability-avatar").on("click", function(){
 				ShowUserProfile($(this).attr("data-id"));
 				$("#lean-overlay").trigger("click");
@@ -665,11 +662,11 @@ function AttachFabHoverEvent(){
 
 function AttachFloatingIconWeaveButtonEvents(){
 	$(".user-add-small-image-btn").on('click', function(){
-		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://polygonalweave.com/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
 	$(".user-add-large-image-btn").on('click', function(){
-		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://polygonalweave.com/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
+		var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);
 	});
 	$(".user-run-weave-cal-btn").on('click', function(){
@@ -712,6 +709,10 @@ function AttachFloatingIconWeaveButtonEvents(){
 				});
 			});
 	});
+	$(".user-set-role").on("click", function(){
+		var userid = $(this).attr("data-userid");
+		DisplayRoleManagement(userid);
+	});
 	AttachFollowFABEvents();
 }
 
@@ -736,6 +737,48 @@ function AttachFollowFABEvents(){
 		$(this).find(".large").addClass("mdi-social-group");
 		AttachFabHoverEvent();
 		AttachFollowFABEvents();
+	});
+}
+
+function DisplayRoleManagement(userid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRoleManagement", userid: userid },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+ 		AttachRoleManagementEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachRoleManagementEvents(userid){
+	$(".save-role-change").on('click', function(){
+		var role = $("input[type=radio][name=rolegroup]:checked").attr("id");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "UpdateRoleManagement", userid: userid, role: role },
+	     type: 'post',
+	     success: function(output) {
+			Toast('Role has been updated');
+	  		$("#universalPopUp").closeModal();
+  			HideFocus();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
 	});
 }
 
@@ -941,4 +984,91 @@ function DisplayLifeTimeChart(){
       	
 		});
 	}
+}
+
+function ShowUserActivity(userid){
+  	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
+  	var windowWidth = $(window).width();
+    $("#activity").css({"display":"inline-block", "left": -windowWidth});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	if($(window).width() > 599){
+		$("#navigation-header").css({"display":"block"});
+		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	}
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowUserProfileActivity", userid: userid },
+     type: 'post',
+     success: function(output) {
+     			$("#activityInnerContainer").html(output);
+     			window.scrollTo(0, 0);
+      			Waves.displayEffect();
+				AttachShowUserActivityEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachShowUserActivityEvents(){
+		 $(".user-discover-card").on("click", function(e){
+		  	e.stopPropagation();
+		 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		 });
+	 	 $(".feed-avatar, .user-avatar").on("click", function(e){
+		  	e.stopPropagation();
+		 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+		 });
+		 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
+		 	e.stopPropagation(); 
+		 	ShowGame($(this).attr("data-gbid"), $("#activity"));
+		 })
+		 $(".feed-card-image").on("click", function(e){
+		 	e.stopPropagation(); 
+		 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
+		 })
+		 AttachAgreesFromActivity();
+		 AttachSecondaryEvents();
+		 $(window).unbind("scroll");
+		 $(window).scroll(function(){
+		 	if(isScrolledIntoView($("#feed-endless-loader"))){
+		 		if($("#feed-endless-loader").html() == "")
+	      			EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
+		 	}
+	     }); 
+}
+
+function EndlessUserAcitivtyLoader(userid){
+	ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
+	$("#feed-endless-loader").append("<br><br><br>");
+	var page = $("#feed-endless-loader").attr("data-page");
+	var date = $("#feed-endless-loader").attr("data-date");
+	var filter = $("#feed-endless-loader").attr("data-filter");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
+     type: 'post',
+     success: function(output) {
+		$("#feed-endless-loader").before(output);
+		$("#feed-endless-loader").html("");
+		$("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+		var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+		$("#feed-endless-loader").attr("data-date", lastdate);
+		AttachShowUserActivityEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }

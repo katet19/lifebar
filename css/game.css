@@ -349,6 +349,16 @@
 	
 }
 
+.game-tab-subheader-container{
+	padding: 2em 0 0;
+}
+
+.game-tab-subheader{
+    font-size: 2em;
+    font-weight: 500;
+    float: left;
+}
+
 
 @media only screen and (max-width : 992px) {
 	.GameHeaderContainer, .GameHeaderBackground{

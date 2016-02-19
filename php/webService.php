@@ -1,5 +1,4 @@
 <?php require_once 'includes.php';
-	
 	if(isset($_POST['action'])){
 		LoginServices();
 		SignupServices();
@@ -14,8 +13,6 @@
 		MilestoneServices();
 		GeneralServices();
 	}
-	
-	
 	function MilestoneServices(){
 		if($_POST['action'] == 'SaveBadge' ){
 			if(TestScript($_POST["validation"])){
@@ -53,8 +50,6 @@
 		}
 		
 	}
-	
-	
 	function WeaveServices(){
 		if($_POST['action'] == 'DisplayWeave' ){
 			DisplayWeave($_POST["userid"]);
@@ -110,9 +105,13 @@
 		if($_POST['action'] == 'DisplayDeveloperViewMore'){
 			DisplayDevelopervViewMore($_POST['userid']);
 		}
+		if($_POST['action'] == 'ShowUserProfileActivity'){
+			DisplayProfileActivity($_POST['userid']);
+		}
+		if($_POST['action'] == 'ShowUserProfileActivityEndless' ){
+			DisplayProfileActivityEndless($_POST['userid'], $_POST['page'], $_POST['date']);
+		}
 	}
-	
-
 	function AdminServices(){
 		if($_POST['action'] == 'DisplayAdmin' ){
 			DisplayAdmin($_SESSION['logged-in']->_id);
@@ -169,8 +168,24 @@
 		if($_POST['action'] == 'DisplayBadgeManagement'){
 			DisplayMilestoneManagement();
 		}
+		if($_POST['action'] == 'DisplayEmailExport'){
+			DisplayEmailExport();
+		}
+		if($_POST['action'] == 'DisplayDBThreads'){
+			DisplayDBThreads();
+		}
+		if($_POST['action'] == 'CheckVersion'){
+			CheckVersion($_POST['version']);
+		}
+		if($_POST['action'] == "DisplayRoleManagement"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				DisplayRoleManagement($_POST['userid']);
+		}
+		if($_POST['action'] == "UpdateRoleManagement"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				UpdateRoleManagement($_POST['userid'], $_POST['role']);
+		}
 	}
-	
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){
 			DisplayActivity($_SESSION['logged-in']->_id, $_POST['filter']);
@@ -182,7 +197,6 @@
 			DisplayActivityEndless($_SESSION['logged-in']->_id, $_POST['page'], $_POST['date'], $_POST['filter']);
 		}
 	}
-	
 	function NotificationServices(){
 		if($_POST['action'] == 'DisplayNotificationHome' ){
 			DisplayMyNotifications($_SESSION['logged-in']->_id);
@@ -194,7 +208,6 @@
 			CheckForAsyncNotifications();
 		}
 	}
-	
 	function XPServices(){
 		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['expid']) && $_SESSION['logged-in']->_id > 0){
 			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['expid']);
@@ -219,7 +232,7 @@
 		}
 		if($_POST['action'] =='SavePlayedFull' && $_SESSION['logged-in']->_id > 0){
 			SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year']);
+			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
 			echo "|**|";
@@ -227,7 +240,7 @@
 		}
 		if($_POST['action'] =='SaveWatchedFull' && $_SESSION['logged-in']->_id > 0){
 			SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year']);
+			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
 			echo "|**|";
@@ -255,7 +268,7 @@
 			DisplayMyXP($_POST['gameid']);
 		}
 		if($_POST['action'] =='SaveTierQuote' && $_SESSION['logged-in']->_id > 0){
-			UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier']);
+			UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink']);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
 			echo "|**|";
@@ -283,7 +296,6 @@
 			DisplayMyXP($_POST['gameid']);
 		}
 	}
-	
 	function GameServices(){
 		if($_POST['action'] == 'DisplayGame' && isset($_POST['gbid'])){
 			DisplayGame($_POST['gbid']);
@@ -307,7 +319,6 @@
 			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
 		}
 	}
-	
 	function UserServices(){
 		if($_POST['action'] == 'FollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){
 			AddConnection($_SESSION['logged-in']->_id, $_POST['followid']);
@@ -319,13 +330,12 @@
 			DisplayUserSettings();
 		}
 		if($_POST['action'] == 'SaveUserSettings'){
-			SaveAccountChanges($_POST['userid'], $_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear'], $_POST['source'], $_POST['steam'], $_POST['psn'], $_POST['xbox']);
+			SaveAccountChanges($_POST['userid'], $_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear'], $_POST['source'], $_POST['steam'], $_POST['psn'], $_POST['xbox'], $_POST['title'], $_POST['weburl'], $_POST['twitter'], $_POST['image']);
 		}
 		if($_POST['action'] == "SaveTitle"){
 			SaveUserTitle($_POST['userid'], $_POST['title']);
 		}
 	}
-	
 	function DiscoverServices(){
 		if($_POST['action'] == 'Search' && isset($_POST['search'])){
 			DisplaySearchResults($_POST['search']);
@@ -349,7 +359,6 @@
 			DisplayDiscoverCategory($_POST['category'], $_POST['catid']);
 		}
 	}
-	
 	function SignupServices(){
 		if($_POST['action'] == 'VerifyNewUser' && isset($_POST['username']) && isset($_POST['email'])){
 			VerifyUniqueUsername($_POST['username']);
@@ -359,7 +368,6 @@
 			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear']."-01-01","Public");
 		}
 	}
-
 	function LoginServices(){
 		if($_POST['action'] == 'Login' && isset($_POST['user']) && isset($_POST['pw']))
 			Login($_POST['user'], $_POST['pw']);	
@@ -377,7 +385,6 @@
 			ShowLanding();
 		}
 	}
-	
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){
 			if($_SESSION['logged-in']->_security == "Admin"){
@@ -385,5 +392,4 @@
 			}
 		}
 	}
-	
 ?>

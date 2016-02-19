@@ -27,21 +27,21 @@ function GetMyFeed($userid, $page, $filter){
 	if($userid > 0){
 		//$result = $mysqli->query("select eve.*, DATE(`Date`) as `ForDate` from `Events` eve where eve.`UserID` = '".$userid."' or eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by `ForDate` DESC limit ".$page.",45");
 		if($filter == "All"){
-			$mylist = GetConnectedToList($userid);
+			$mylist = GetConnectedToList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Users I Follow"){
-			$mylist = GetConnectedToUsersList($userid);
+			$mylist = GetConnectedToUsersList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Critics I Follow"){
-			$mylist = GetConnectedToCriticsList($userid);
+			$mylist = GetConnectedToCriticsList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
@@ -50,13 +50,13 @@ function GetMyFeed($userid, $page, $filter){
 		}else if($filter == "My Activity"){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Users"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Critics"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Popular XP"){
 			$result = $mysqli->query("select eve.* from `Events` eve, `Liked` lk where eve.`UserID` = lk.`UserQuoted` and eve.`GameID` = lk.`GameID` order by eve.`Date` DESC limit ".$page.",45");
 		}else{
-			$mylist = GetConnectedToList($userid);
+			$mylist = GetConnectedToList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
@@ -65,15 +65,15 @@ function GetMyFeed($userid, $page, $filter){
 		}
 	}else{
 		if($filter == "All"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Users"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "All Critics"){
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Popular XP"){
 			$result = $mysqli->query("select eve.* from `Events` eve, `Liked` lk where eve.`UserID` = lk.`UserQuoted` and eve.`GameID` = lk.`GameID` order by eve.`Date` DESC limit ".$page.",45");
 		}else{
-			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and usr.`Access` = 'Journalist' order by eve.`Date` DESC limit ".$page.",45");
+			$result = $mysqli->query("select eve.* from `Events` eve, `Users` usr where eve.`UserID` != '".$userid."' and eve.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated') order by eve.`Date` DESC limit ".$page.",45");
 		}
 	}	
 	
@@ -81,8 +81,8 @@ function GetMyFeed($userid, $page, $filter){
 		while($row = mysqli_fetch_array($result)){
 			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -102,8 +102,8 @@ function GetMyFeed($userid, $page, $filter){
 				$seen[] = $row["UserID"]."-".$row["GameID"];
 			}else if($row["Event"] == "BUCKETLIST"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -143,8 +143,8 @@ function GetMyFeed($userid, $page, $filter){
 				
 			}else if($row["Event"] == "TIERCHANGED"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -164,8 +164,8 @@ function GetMyFeed($userid, $page, $filter){
 			
 			}else if($row["Event"] == "QUOTECHANGED"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -184,7 +184,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeed[] = $myfeeditem;
 			}else if($row["Event"] == "GAMERELEASE"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
 				$exp = null;
 				$event = new Event($row["ID"],
 						$row["UserID"],
@@ -218,8 +218,8 @@ function GetMyEvents($userid){
 		while($row = mysqli_fetch_array($result)){
 			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -238,8 +238,8 @@ function GetMyEvents($userid){
 				$seen[] = $row["UserID"]."-".$row["GameID"];
 			}else if($row["Event"] == "BUCKETLIST"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -277,8 +277,8 @@ function GetMyEvents($userid){
 				
 			}else if($row["Event"] == "TIERCHANGED"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -297,8 +297,8 @@ function GetMyEvents($userid){
 			
 			}else if($row["Event"] == "QUOTECHANGED"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
-				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
+				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
 						$row["UserID"],
 						$exp->_first." ".$exp->_last,
@@ -316,7 +316,7 @@ function GetMyEvents($userid){
 				$myfeed[] = $myfeeditem;
 			}else if($row["Event"] == "GAMERELEASE"){
 				$myfeeditem = array();						
-				$game = GetGame($row["GameID"]);
+				$game = GetGame($row["GameID"], $mysqli);
 				$exp = null;
 				$event = new Event($row["ID"],
 						$row["UserID"],
@@ -361,8 +361,9 @@ function CalculateLifetimeGraph($userid){
 			
 		}
 	}
-	Close($mysqli, $result);
-	$user = GetUser($userid);
+
+	$user = GetUser($userid, $mysqli);
+    Close($mysqli, $result);
 	$birthyear = substr($user->_birthdate,0,4); 
 	$year = date("Y");  
 	$y = $birthyear;
@@ -423,14 +424,41 @@ function ConvertTimeStampToRelativeTime($timestamp){
 	$now = new DateTime("now");
 	$old = new DateTime($timestamp);
 	$interval = date_diff($now, $old);
-	if($interval->d > 0)
-		return $interval->d." days ago";
-	else if($interval->h > 0)
-		return $interval->h." hours ago";
-	else if($interval->i > 0)
-		return $interval->i." minutes ago";
-	else
-		return $interval->s." seconds ago";
+	if($interval->y > 0){
+		if($interval->y == 1)
+			return $interval->y." year ago";
+		else
+			return $interval->y." years ago";
+	}
+	else if($interval->m > 0){
+		if($interval->m == 1)
+			return $interval->m." month ago";
+		else
+			return $interval->m." months ago";
+	}
+	else if($interval->d > 0){
+		if($interval->d == 1)
+			return $interval->d." day ago";
+		else
+			return $interval->d." days ago";
+	}
+	else if($interval->h > 0){
+		if($interval->h == 1)
+			return $interval->h." hour ago";
+		else
+			return $interval->h." hours ago";
+	}
+	else if($interval->i > 0){
+		if($interval->h == 1)
+			return $interval->i." minute ago";
+		else
+			return $interval->i." minutes ago";
+	}else{
+		if($interval->s == 1)
+			return $interval->s." second ago";
+		else
+			return $interval->s." seconds ago";
+	}
 }
 
 function ConvertDateToLongRelationalEnglish($date){

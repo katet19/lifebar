@@ -30,16 +30,18 @@ function DisplayHeaderNavigation(){ ?>
 			</div>
 			<div class="col s4 m4 l4">
 				<?php if($_SESSION['logged-in'] != null){ ?>
-					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
+					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
 						<?php if($_SESSION['logged-in'] != null){ ?>
 							<div class="searchContainer">
 								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 							</div>
 						<?php }else{ ?>
 							<div class="searchContainerAnonymous">
 								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
 								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 							</div>
 						<?php } ?>
 						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
@@ -71,7 +73,7 @@ function DisplayHeaderNavigation(){ ?>
 function DisplaySideDrawer(){ ?>
   <ul id="slide-out" class="side-nav full">
 	<li class="side-nav-logo" style="display:none">
-		<div class="logoIcon"><img src="http://polygonalweave.com/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
+		<div class="logoIcon"><img src="http://lifebar.io/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
 		<div class="logoTitle">Save Game</div>
   	</li>
   	<li class="side-nav-logo">
@@ -126,7 +128,7 @@ function DisplayBattleProgressSheet(){ ?>
 function DisplayLifeBarLogo($showtag){ ?>
 	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
-			<img src='http://polygonalweave.com/Images/Generic/LifebarLogoTestTopDull.png' />
+			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
 			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
 		</div>
 	</div>
