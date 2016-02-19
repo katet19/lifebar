@@ -86,9 +86,19 @@ function ShowCritics($critics, $othercritics, $game, $myxp){
 			</div>
 			<?php
 			
-			if(sizeof($othercritics) > 0){
-				foreach($othercritics as $usr){
-						DisplayCriticQuoteCard($usr);
+			$count = 1;
+			$allothercritics = array();
+			foreach($othercritics as $critic){
+				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
+			}
+			
+			arsort($allothercritics);
+			$allothercritics = array_keys($allothercritics);
+			
+			if(sizeof($allothercritics) > 0){
+				while($count <= sizeof($allothercritics)){
+					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -104,9 +114,19 @@ function ShowCritics($critics, $othercritics, $game, $myxp){
 				<?php
 			}
 		}else{
-			if(sizeof($othercritics) > 0){
-				foreach($othercritics as $usr){
-						DisplayCriticQuoteCard($usr);
+			$count = 1;
+			$allothercritics = array();
+			foreach($othercritics as $critic){
+				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
+			}
+			
+			arsort($allothercritics);
+			$allothercritics = array_keys($allothercritics);
+			
+			if(sizeof($allothercritics) > 0){
+				while($count <= sizeof($allothercritics)){
+					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -160,10 +180,19 @@ function ShowUsers($users, $otherusers){
 				</div>
 			</div>
 			<?php
+			$count = 1;
+			$allotherusers = array();
+			foreach($otherusers as $user){
+				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
+			}
+			
+			arsort($allotherusers);
+			$allotherusers = array_keys($allotherusers);
 			
 			if(sizeof($otherusers) > 0){
-				foreach($otherusers as $usr){
-						DisplayUserQuoteCard($usr);
+				while($count <= sizeof($allotherusers)){
+					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
@@ -175,9 +204,19 @@ function ShowUsers($users, $otherusers){
 				<?php
 			}
 		}else{
+			$count = 1;
+			$allotherusers = array();
+			foreach($otherusers as $user){
+				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
+			}
+			
+			arsort($allotherusers);
+			$allotherusers = array_keys($allotherusers);
+			
 			if(sizeof($otherusers) > 0){
-				foreach($otherusers as $usr){
-						DisplayUserQuoteCard($usr);
+				while($count <= sizeof($allotherusers)){
+					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
+					$count++;
 				}
 			}else{
 				?>
