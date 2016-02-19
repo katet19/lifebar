@@ -212,9 +212,8 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 	</div>
 <?php
 }
-?>
 
-<?php function DummyGraphData1(){ ?>
+function DummyGraphData1(){ ?>
 	<div class="bp-progress-item">
 		<div class="bp-item-image z-depth-1" style="background:url(http://static.giantbomb.com/uploads/scale_medium/0/4/11870-capcom.jpg) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;"></div>
 		<div class="bp-progress-item-details">
@@ -230,9 +229,8 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 
 <?php	
 }
-?>
 
-<?php function DummyGraphData2(){ ?>
+function DummyGraphData2(){ ?>
 	<div class="bp-progress-item">
 		<div class="bp-item-image z-depth-1" style="background:url(http://static.giantbomb.com/uploads/scale_medium/1/13097/295179-marvelvscapcom1.jpg) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;"></div>
 		<div class="bp-progress-item-details">
@@ -248,9 +246,8 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 
 <?php	
 }
-?>
 
-<?php function DummyGraphData3(){ ?>
+function DummyGraphData3(){ ?>
 	<div class="bp-progress-item">
 		<div class="bp-item-image z-depth-1" style="background:url(http://static.giantbomb.com/uploads/scale_small/9/99864/2420176-psx_console_wcontroller.png) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;"></div>
 		<div class="bp-progress-item-details">
@@ -266,9 +263,8 @@ function DisplayLifeBarLogoLanding($showtag){ ?>
 
 <?php	
 }
-?>
 
-<?php function DummyActivityData(){ ?>
+function DummyActivityData(){ ?>
 <div class="feed-vert-line" style='z-index:-1;left:150px;'></div>
 <!-- First Row -->
 <div class="row" style="margin-bottom: 30px;">
