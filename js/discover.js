@@ -66,6 +66,8 @@ function Search(searchstring){
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
  			});
+ 			//Clear search input
+ 			$(".searchInput input").val('');
  			GAPage('Search', '/search');
      	},
         error: function(x, t, m) {
