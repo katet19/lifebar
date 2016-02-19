@@ -127,11 +127,14 @@ function ShowEditPlayed($exp){
 				$date = explode('-',$xp->_date);
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
-				$isaccurate = true;
-				$birthyear = substr($myuser->_birthdate,0,4); 
-				if(($year - $birthyear) <= 10 || $birthyear == 0){ $isaccurate = false; $birthyear = 1975; }  
+				
+				if($exp->_game->_year == 0){
+					$officialrelease = "";
+				}else{
+					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
+				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($isaccurate){ echo "~(".($year - $birthyear)."yrs old)"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $releaseyear){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
@@ -346,11 +349,13 @@ function ShowEditWatched($exp, $watchid){
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
 				$releaseyear = $releaseyear - 5;
-				$isaccurate = true;
-				$birthyear = substr($myuser->_birthdate,0,4); 
-				if(($year - $birthyear) <= 10 || $birthyear == 0){ $isaccurate = false; $birthyear = 1975; }  
+				if($exp->_game->_year == 0){
+					$officialrelease = "";
+				}else{
+					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
+				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($isaccurate){ echo "~(".($year - $birthyear)."yrs old)"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $exp->_game->_year){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
