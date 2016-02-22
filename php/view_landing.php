@@ -165,7 +165,7 @@
   <!--  ********** FOOTER ********** -->
 	<div id="landing-sign-up" class="section scrollspy">
     	<div class="row center">
-			<div class="col offset-m2 centered" style="width:60%">
+			<div class="col offset-m2 centered" style="width:70%">
 				<?php DisplayLandingSignup(); ?>
 			</div>
       	</div>
