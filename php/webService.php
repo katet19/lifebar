@@ -384,17 +384,8 @@
 		if($_POST['action'] == 'ShowLanding'){
 			ShowLanding();
 		}
-		if($_POST['action'] == 'LoginGoogle'){
-			GoogleLogin();
-		}
-		if($_POST['action'] == 'LoginTwitter'){
-			TwitterLogin();
-		}
-		if($_POST['action'] == 'LoginFacebook'){
-			FacebookLogin();
-		}
-		if($_POST['action'] == 'LoginSteam'){
-			SteamLogin();
+		if($_POST['action'] == 'ThirdPartyLogin' && $_POST['email'] != ''){
+			RegisterThirdPartyUser($_POST['username'], $_POST['email'], $_POST['first'], $_POST['last'], $_POST['image'], $_POST['thirdpartyID'], $_POST['whoAmI']);
 		}
 	}
 	function GeneralServices(){

@@ -1,21 +1,9 @@
 <?php require_once "includes.php";
 	
-	//Web Services
-	if($_GET['action'] == 'LoginGoogle'){
-		GoogleOAuth();
-		//$clientsecret = "ACY9DzEM-PBcAeEMOSseXGyX";
-		//$clientID = "1042911347563-rfqq1ej3uoobbimv57aingil32l5q4tb.apps.googleusercontent.com";
-		//$api = "AIzaSyCN-AViQetgURmPuCj89YsQEtTqezF43wo";
-	}
-	if($_GET['action'] == 'LoginTwitter'){
-		TwitterLogin();
-	}
-	if($_GET['action'] == 'LoginFacebook'){
-		FacebookLogin();
-	}
-	if($_GET['action'] == 'LoginSteam'){
-		SteamLogin();
-	}
+	//Google IDs
+	//$clientsecret = "ACY9DzEM-PBcAeEMOSseXGyX";
+	//$clientID = "1042911347563-rfqq1ej3uoobbimv57aingil32l5q4tb.apps.googleusercontent.com";
+	//$api = "AIzaSyCN-AViQetgURmPuCj89YsQEtTqezF43wo";
 	
 	function GoogleOAuth(){ ?>
 		<div id="googleProfile"></div>
@@ -32,8 +20,7 @@
 		    'clientid' : '1042911347563-rfqq1ej3uoobbimv57aingil32l5q4tb.apps.googleusercontent.com',
 		    'cookiepolicy' : 'single_host_origin',
 		    'callback' : 'googleLoginCallback',
-		    'approvalprompt':'force',
-		    'scope' : 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read'
+		    'scope' : 'profile https://www.googleapis.com/auth/plus.profile.emails.read'
 		  };
 		  gapi.auth.signIn(myParams);
 		}
@@ -48,30 +35,44 @@
 		        });
 		        request.execute(function (resp)
 		        {
-		            var email = '';
-		            if(resp['emails'])
-		            {
-		                for(i = 0; i < resp['emails'].length; i++)
-		                {
-		                    if(resp['emails'][i]['type'] == 'account')
-		                    {
-		                        email = resp['emails'][i]['value'];
-		                    }
-		                }
-		            }
-		 
-		            var str = "Name:" + resp['displayName'] + "<br>";
-		            str += "Image:" + resp['image']['url'] + "<br>";
-		            str += "<img src='" + resp['image']['url'] + "' /><br>";
-		 
-		            str += "URL:" + resp['url'] + "<br>";
-		            str += "Email:" + email + "<br>";
-		            document.getElementById("googleProfile").innerHTML = str;
+					var email = '';
+			        if(resp['emails'])
+			        {
+			            for(i = 0; i < resp['emails'].length; i++)
+			            {
+			                if(resp['emails'][i]['type'] == 'account')
+			                {
+			                    email = resp['emails'][i]['value'];
+			                }
+			            }
+			        }
+			 		var image = resp['image']['url'];
+			        var username = resp['displayName'].replace(" ", "_");
+			        var id_token = result['id_token'];
+		        
+		    		$.ajax({ url: '../php/webService.php',
+				     data: {action: "ThirdPartyLogin", email: email, image: image, username: username, whoAmI: 'Google', thirdpartyID: id_token  },
+				     type: 'post',
+				     success: function(output) {
+				     			GAEvent('Third Party Login', 'Google');
+		          				location.hash = "#activity";
+		 						location.reload();
+				      },
+					    error: function(x, t, m) {
+					        if(t==="timeout") {
+					            ToastError("Server Timeout");
+					        } else {
+					            ToastError(t);
+					        }
+						},
+						timeout:45000
+					});
 		        });
-		 
 		    }
 		 
 		}
+		
+		
 		function googleOnLoadCallback()
 		{
 		    gapi.client.setApiKey('AIzaSyCN-AViQetgURmPuCj89YsQEtTqezF43wo');

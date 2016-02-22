@@ -191,6 +191,9 @@
 
     <script src="http://lifebar.io/js/landing-main.js"></script>
     <script src="http://lifebar.io/js/landing-init.js"></script>
+    <?php
+    	GoogleOAuth();
+    ?>
 
 	
 	<script>

@@ -81,6 +81,40 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 	return $user;
 }
 
+function RegisterThirdPartyUser($username, $email, $first, $last, $image, $thirdpartyID, $whoAmI){
+	$mysqli = Connect();
+	$founduser = false;
+	echo "$username, $email, $first, $last, $image, $thirdpartyID, $whoAmI";
+	if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."' and `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$founduser = true;
+			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+		}
+	}
+	
+	if($founduser == false){
+		echo "2nd try";
+		if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."'")) {
+			while($row = mysqli_fetch_array($result)){
+				$founduser = true;
+				$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."' WHERE `Email` = '".$email."'");
+				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+			}
+		}
+	}
+	
+	if($founduser == false){
+		echo "new user";
+		$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."')");
+		$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+		AddIntroNotifications($user->_id, $mysqli);
+		CreateDefaultFollowingConnections($user->_id, $mysqli);
+		SignupEmail($email);
+	}
+	Close($mysqli, $result);
+	return $user;
+}
+
 function RegisterUserEarly($username, $password, $first, $last, $birthdate, $email){
 	$Salt = uniqid();
 	$Algo = '6';
