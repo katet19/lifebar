@@ -138,14 +138,15 @@ function AttachLoginEvents(){
 		} 
 		
 	});
+	$(".google-login, .twitter-login, .facebook-login, .steam-login").unbind();
 	$(".google-login").on("click", function(e){
 		googleLogin();
 	});
 	$(".twitter-login").on("click", function(e){
-		//window.location.href = "php/social_login.php?action=LoginTwitter";
+		window.location.href = "php/social_login.php?action=LoginTwitter";
 	});
 	$(".facebook-login").on("click", function(e){
-		//window.location.href = "php/social_login.php?action=LoginFacebook";
+		fb_login();
 	});
 	$(".steam-login").on("click", function(e){
 		//window.location.href = "php/social_login.php?action=LoginSteam";	

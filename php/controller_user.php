@@ -84,32 +84,39 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 function RegisterThirdPartyUser($username, $email, $first, $last, $image, $thirdpartyID, $whoAmI){
 	$mysqli = Connect();
 	$founduser = false;
+	
 	echo "$username, $email, $first, $last, $image, $thirdpartyID, $whoAmI";
-	if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."' and `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
+	//User already has signed before with this account
+	if ($result = $mysqli->query("select * from `Users` where `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$founduser = true;
 			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
 		}
 	}
-	
-	if($founduser == false){
-		echo "2nd try";
+	//User already has a valid account with the same email, update and login
+	if($founduser == false && $email != ''){
 		if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$founduser = true;
-				$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."' WHERE `Email` = '".$email."'");
+				if($row['Image'] == 'Gravatar' && $image != '')
+					$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."', `Image` = '".$image."' WHERE `Email` = '".$email."'");
+				else
+					$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."' WHERE `Email` = '".$email."'");
+					
 				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
 			}
 		}
 	}
-	
-	if($founduser == false){
-		echo "new user";
-		$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."')");
-		$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
-		AddIntroNotifications($user->_id, $mysqli);
-		CreateDefaultFollowingConnections($user->_id, $mysqli);
-		SignupEmail($email);
+	//New user, must have a username and third party ID. Does not require an email
+	if($founduser == false && $username != '' && $thirdpartyID != '' ){
+		$verified = VerifyUniqueUsername($username);
+		if(!$verified){
+			$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."')");
+			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+			AddIntroNotifications($user->_id, $mysqli);
+			CreateDefaultFollowingConnections($user->_id, $mysqli);
+			SignupEmail($email);
+		}
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -153,6 +160,7 @@ function VerifyUniqueUsername($username){
 		echo "Username is already used";	
 	}
 	Close($mysqli, $result);
+	return $founduser;
 }
 
 function VerifyUniqueEmail($email){

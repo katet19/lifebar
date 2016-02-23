@@ -29,7 +29,6 @@ require_once 'controller_weave.php';
 
 //Login
 require_once 'controller_login.php';
-require_once 'social_login.php';
 if(!isset($_SESSION["logged-in"]) && isset($_COOKIE["RememberMe"])){
 	LoginWithCookie($_COOKIE["RememberMe"]);
 }

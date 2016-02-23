@@ -54,6 +54,13 @@ function DisplayLogin(){
   	   			<i class="fa fa-steam"></i>
   	   		</div>
   	   	</div>
+   	   	<div class="row">
+  	   		<div class="col 12">
+  	   			<div class="social-validation">
+  	   				
+  	   			</div>
+  	   		</div>
+  	   	</div>
   	   </div>
   	</div>
   </div>
@@ -129,6 +136,13 @@ function DisplayLandingSignup(){
 	  	   		</div>
 		   		<div class="social-login-btn steam-login">
 	  	   			<i class="fa fa-steam"></i>
+	  	   		</div>
+	  	   	</div>
+	  	   	<div class="row">
+	  	   		<div class="col 12">
+	  	   			<div class="social-validation">
+	  	   				
+	  	   			</div>
 	  	   		</div>
 	  	   	</div>
   	   </div>
