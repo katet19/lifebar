@@ -60,9 +60,14 @@
 				     data: {action: "ThirdPartyLogin", email: email, image: image, username: username, whoAmI: 'Google', thirdpartyID: id_token  },
 				     type: 'post',
 				     success: function(output) {
+					     	if(output.indexOf("Error") >= 0){
+					     		$(".social-validation").html("ERROR: Unable to login with your Google account");
+					     	}else{
+				     			setCookie("RememberMe", $.trim(output), 14);
 				     			GAEvent('Third Party Login', 'Google');
 		          				location.hash = "#activity";
 		 						location.reload();
+					     	}
 				      },
 					    error: function(x, t, m) {
 					        if(t==="timeout") {
@@ -151,10 +156,43 @@
 			$access_token = $quickconnect->oauth("oauth/access_token", ["oauth_verifier" => $_GET['oauth_verifier']]);
 			$connection = new TwitterOAuth("LQud8mjA1xXQNPhyanWNbYRNl", "oo3gzYLplsIUFFHuxMLNB3nrROJGLioyDJq8y9Z0Ufyl6uCI94", $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			$user = $connection->get("account/verify_credentials");
-			require_once("controller_user.php");
-			$myuser = RegisterThirdPartyUser($user->screen_name, '',  '', '', $user->profile_image_url, $user->id, 'Twitter');
-			$url = "http://ken.lifebar.io";
-			header("Location: $url");
+			?>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+			<script type="text/javascript">
+				function setCookie(cname, cvalue, exdays) {
+				    var d = new Date();
+				    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+				    var expires = "expires="+d.toUTCString();
+				    document.cookie = cname + "=" + cvalue + "; " + expires;
+				}
+			
+				$( document ).ready(function() {
+					var user = '<?php echo $user->screen_name;?>';
+					var image = '<?php echo $user->profile_image_url;?>';
+					var id = '<?php echo $user->id;?>';
+					$.ajax({ url: '../php/webService.php',
+					     data: {action: "ThirdPartyLogin", email: '', image: image, username: user, whoAmI: 'Twitter', thirdpartyID: id  },
+					     type: 'post',
+					     success: function(output) {
+					     	if(output.indexOf("Error") >= 0){
+					     		$(".social-validation").html("ERROR: Unable to login with your Twitter account");
+					     	}else{
+				     			setCookie("RememberMe", $.trim(output), 14);
+		 						location.href = "http://ken.lifebar.io";
+					     	}
+					      },
+						    error: function(x, t, m) {
+						        if(t==="timeout") {
+						            ToastError("Server Timeout");
+						        } else {
+						            ToastError(t);
+						        }
+							},
+							timeout:45000
+						});
+				});
+			</script>
+			<?php
 		}
 	}
 	
@@ -195,10 +233,14 @@
 					     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 					     type: 'post',
 					     success: function(output) {
-					     			GAEvent('Third Party Login', 'Facebook');
-					     			//$(".social-validation").html(output);
-			          				location.hash = "#activity";
-			 						location.reload();
+					     	if(output.indexOf("Error") >= 0){
+					     		$(".social-validation").html("ERROR: Unable to login with your Facebook account");
+					     	}else{
+				     			setCookie("RememberMe", $.trim(output), 14);
+				     			GAEvent('Third Party Login', 'Facebook');
+		          				location.hash = "#activity";
+		 						location.reload();
+					     	}
 					      },
 						    error: function(x, t, m) {
 						        if(t==="timeout") {
@@ -224,10 +266,14 @@
 							     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 							     type: 'post',
 							     success: function(output) {
-							     			GAEvent('Third Party Login', 'Facebook');
-							     			//$(".social-validation").html(output);
-					          				location.hash = "#activity";
-					 						location.reload();
+							     	if(output.indexOf("Error") >= 0){
+							     		$(".social-validation").html("ERROR: Unable to login with your Facebook account");
+							     	}else{
+						     			setCookie("RememberMe", $.trim(output), 14);
+						     			GAEvent('Third Party Login', 'Facebook');
+				          				location.hash = "#activity";
+				 						location.reload();
+							     	}
 							      },
 								    error: function(x, t, m) {
 								        if(t==="timeout") {

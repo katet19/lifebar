@@ -148,9 +148,9 @@ function AttachLoginEvents(){
 	$(".facebook-login").on("click", function(e){
 		fb_login();
 	});
-	$(".steam-login").on("click", function(e){
+	/*$(".steam-login").on("click", function(e){
 		//window.location.href = "php/social_login.php?action=LoginSteam";	
-	});
+	});*/
 }
 
 function Login(user, pw){

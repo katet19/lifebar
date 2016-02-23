@@ -50,9 +50,9 @@ function DisplayLogin(){
    	   		<div class="social-login-btn facebook-login">
   	   			<i class="fa fa-facebook"></i>
   	   		</div>
-	   		<div class="social-login-btn steam-login">
+	   		<!--<div class="social-login-btn steam-login">
   	   			<i class="fa fa-steam"></i>
-  	   		</div>
+  	   		</div>-->
   	   	</div>
    	   	<div class="row">
   	   		<div class="col 12">
@@ -134,9 +134,9 @@ function DisplayLandingSignup(){
 	   	   		<div class="social-login-btn facebook-login">
 	  	   			<i class="fa fa-facebook"></i>
 	  	   		</div>
-		   		<div class="social-login-btn steam-login">
+		   		<!--<div class="social-login-btn steam-login">
 	  	   			<i class="fa fa-steam"></i>
-	  	   		</div>
+	  	   		</div>-->
 	  	   	</div>
 	  	   	<div class="row">
 	  	   		<div class="col 12">
