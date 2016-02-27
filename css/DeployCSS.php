@@ -6,8 +6,11 @@ function DeployCSS(){
 		$circle = file_get_contents("css/library/circle.css");
 		fwrite($deployed, $circle);
 		
-		$materialize = file_get_contents("css/library/materialize.css");
-		fwrite($deployed, $materialize);
+		$fontawesome = file_get_contents("css/library/font/font-awesome.min.css");
+		fwrite($deployed, $fontawesome);
+		
+		//$materialize = file_get_contents("library/materialize.css");
+		//fwrite($deployed, $materialize);
 		
 		$activity = file_get_contents("css/activity.css");
 		fwrite($deployed, $activity);
