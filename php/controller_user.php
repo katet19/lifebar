@@ -85,12 +85,11 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 	$mysqli = Connect();
 	$founduser = false;
 	
-	echo "$username, $email, $first, $last, $image, $thirdpartyID, $whoAmI";
 	//User already has signed before with this account
 	if ($result = $mysqli->query("select * from `Users` where `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$founduser = true;
-			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, false, $mysqli);
 		}
 	}
 	//User already has a valid account with the same email, update and login
@@ -98,28 +97,52 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 		if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$founduser = true;
-				if($row['Image'] == 'Gravatar' && $image != '')
-					$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."', `Image` = '".$image."' WHERE `Email` = '".$email."'");
-				else
-					$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."' WHERE `Email` = '".$email."'");
+				$mysqli->query("UPDATE `Users` SET `".$whoAmI."OAuthID` = '".$thirdpartyID."' WHERE `Email` = '".$email."'");
 					
-				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
+				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, false, $mysqli);
 			}
 		}
 	}
 	//New user, must have a username and third party ID. Does not require an email
-	if($founduser == false && $username != '' && $thirdpartyID != '' ){
-		$verified = VerifyUniqueUsername($username);
-		if(!$verified){
-			$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."')");
-			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, $mysqli);
-			AddIntroNotifications($user->_id, $mysqli);
-			CreateDefaultFollowingConnections($user->_id, $mysqli);
-			SignupEmail($email);
+	if($founduser == false && $thirdpartyID != '' ){
+		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
+		if($image == '')
+			$image = "Gravatar";
+		
+		if($whoAmI == "Twitter"){
+			$notunique = VerifyUniqueUsername($username);
+			if($notunique){
+				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','PENDING')");
+				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, true, $mysqli);
+			}else{
+				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','ACTIVE')");
+				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, false, $mysqli);
+			}
+		}else{
+			$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','PENDING')");
+			$user = ThirdPartyLogin($thirdpartyID, $whoAmI, true, $mysqli);
 		}
+		
+		AddIntroNotifications($user->_id, $mysqli);
+		CreateDefaultFollowingConnections($user->_id, $mysqli);
+		if($email != '')
+			SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
+}
+
+function FinishRegisterUser($userid, $email, $username){
+	$mysqli = Connect();
+	if($userid != '' && $username != ''){
+		if($email != '')
+			$mysqli->query("UPDATE `Users` SET `Email` = '".$email."', `Username` = '".$username."', `Key` = 'ACTIVE' WHERE `ID` = '".$userid."'");
+		else
+			$mysqli->query("UPDATE `Users` SET `Username` = '".$username."', `Key` = 'ACTIVE' WHERE `ID` = '".$userid."'");
+			
+		FastLogin($userid);
+	}
+	Close($mysqli, $result);
 }
 
 function RegisterUserEarly($username, $password, $first, $last, $birthdate, $email){
@@ -150,9 +173,11 @@ function RegisterUserEarly($username, $password, $first, $last, $birthdate, $ema
 function VerifyUniqueUsername($username){
 	$mysqli = Connect();
 	$founduser = false;
-	if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$founduser = true;
+	if($username != ''){
+		if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."' and `Key` = 'ACTIVE'")) {
+			while($row = mysqli_fetch_array($result)){
+				$founduser = true;
+			}
 		}
 	}
 	
@@ -166,7 +191,7 @@ function VerifyUniqueUsername($username){
 function VerifyUniqueEmail($email){
 	$mysqli = Connect();
 	$founduser = false;
-	if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."'")) {
+	if ($result = $mysqli->query("select * from `Users` where `Email` = '".$email."' and `Key` = 'ACTIVE'")) {
 		while($row = mysqli_fetch_array($result)){
 			$founduser = true;
 		}
@@ -174,7 +199,7 @@ function VerifyUniqueEmail($email){
 	
 	if($founduser){
 		echo "Email is already used";	
-	}
+	}	
 	Close($mysqli, $result);
 }
 

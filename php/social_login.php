@@ -60,14 +60,31 @@
 				     data: {action: "ThirdPartyLogin", email: email, image: image, username: username, whoAmI: 'Google', thirdpartyID: id_token  },
 				     type: 'post',
 				     success: function(output) {
-					     	if(output.indexOf("Error") >= 0){
-					     		$(".social-validation").html("ERROR: Unable to login with your Google account");
-					     	}else{
-				     			setCookie("RememberMe", $.trim(output), 14);
-				     			GAEvent('Third Party Login', 'Google');
-		          				location.hash = "#activity";
-		 						location.reload();
-					     	}
+				     			var finishuser = $.trim(output);
+				     			var userdata = finishuser.split("||");
+				     			var new_email = userdata[1];
+				     			var new_username = userdata[2];
+				     			var needUserName = userdata[3];
+				     			var email_class = '';
+				     			if(new_username == '' || needUserName == 'needusername'){
+			     					email_class = 'HideMe';
+				     				if(new_username != ''){
+				     					username_class = 'active';
+				     				}
+				     				$("#loginModal").html("<div class='row' style='margin-top:40px'><div class='col s12'><div class='input-field col s11'><i class='mdi-action-account-circle prefix "+username_class+"'></i><input id='final_username' type='text' value='"+new_username+"'><label for='final_username' class='"+username_class+"'>Username</label></div><div class='input-field col s11'><i class='mdi-communication-email prefix "+email_class+"'></i><input id='final_email' class='"+email_class+"' type='text' value='"+new_email+"'><label for='final_email' class='"+email_class+"'>Email</label></div><div class='col s11' style='text-align: center;margin-top:1em;'><div class='waves-effect btn-large' id='FinishRegistering'>Finish Registering</div><div class='validation-finalregister'></div></div></div></div>");
+				     				$('#loginModal').openModal();
+				     				$("#FinishRegistering").on("click", function(){
+				     					if($("#final_username").val() == ""){
+				     						$(".validation-finalregister").html("Please enter a usernameto finish registration");
+				     					}else{
+											VerifyGoogleUser(userdata[0]);
+								        }
+				     				});
+				     			}else{
+				     				GAEvent('Third Party Login', 'Google');
+		          					location.hash = "#activity";
+		 							location.reload();
+				     			}
 				      },
 					    error: function(x, t, m) {
 					        if(t==="timeout") {
@@ -98,6 +115,60 @@
 		       po.src = 'https://apis.google.com/js/client.js?onload=googleOnLoadCallback';
 		       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		     })();
+		     
+	 		function VerifyGoogleUser(session){
+				var errors = "";
+				var username = $("#final_username").val();
+				var email = $("#final_email").val();
+				console.log("Username:"+username);
+				$.ajax({ url: '../php/webService.php',
+			         data: {action: "VerifyNewUser", username: username, email: email },
+			         type: 'post',
+			         success: function(output) {
+			         			if(output.indexOf("Username is already used") >= 0){
+			         				errors = "Username is already used<br>";
+			         			}else if(output.indexOf("Email is already used") >= 0 && email != ''){
+			         				errors = errors + "Email is already used<br>";
+			         			}
+			         			console.log("Verify output:"+output);
+			         			if(errors !== ""){
+			         				$(".validation-finalregister").html(errors);
+			         			}else{
+	 		     					if($("#final_username").val() == ""){
+			     						$(".validation-finalregister").html("Please enter a username to finish registration");
+			     					}else{
+			     						$("#FinishRegistering").html("Saving & Logging you in...");
+			     						setCookie("RememberMe", session, 14);
+	 						    		$.ajax({ url: '../php/webService.php',
+										     data: {action: "FinishRegister", email: $("#final_email").val(), username: $("#final_username").val()  },
+										     type: 'post',
+										     success: function(output) {
+	     					     				GAEvent('Third Party Register', 'Google');
+					          					location.hash = "#activity";
+					 							location.reload();
+										     },
+											    error: function(x, t, m) {
+											        if(t==="timeout") {
+											            ToastError("Server Timeout");
+											        } else {
+											            ToastError(t);
+											        }
+												},
+												timeout:45000
+											});
+							        }
+			         			}
+			        },
+			        error: function(x, t, m) {
+				        if(t==="timeout") {
+				            ToastError("Server Timeout");
+				        } else {
+				            ToastError(t);
+				        }
+			    	},
+			    	timeout:45000
+				});
+			}
 		</script>
 	<?php }
 	
@@ -139,7 +210,7 @@
  		$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
  		$_SESSION['oauth_token'] = $request_token['oauth_token'];
 		$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-		$url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
+		$url = $connection->url('oauth/authenticate', array('oauth_token' => $request_token['oauth_token']));
 		header("Location: $url");
 	}
 	
@@ -157,7 +228,13 @@
 			$connection = new TwitterOAuth("LQud8mjA1xXQNPhyanWNbYRNl", "oo3gzYLplsIUFFHuxMLNB3nrROJGLioyDJq8y9Z0Ufyl6uCI94", $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			$user = $connection->get("account/verify_credentials");
 			?>
+			<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
+			<link href="../css/main.css" rel="stylesheet" type="text/css" />
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+			<script type="text/javascript" src="../js/library/materialize.js"></script>
+			
+			<div id="loginModal" class="modal" style="background-color:white;"></div>
+			
 			<script type="text/javascript">
 				function setCookie(cname, cvalue, exdays) {
 				    var d = new Date();
@@ -165,8 +242,8 @@
 				    var expires = "expires="+d.toUTCString();
 				    document.cookie = cname + "=" + cvalue + "; " + expires;
 				}
-			
-				$( document ).ready(function() {
+				
+				$(document).ready(function(){
 					var user = '<?php echo $user->screen_name;?>';
 					var image = '<?php echo $user->profile_image_url;?>';
 					var id = '<?php echo $user->id;?>';
@@ -174,12 +251,28 @@
 					     data: {action: "ThirdPartyLogin", email: '', image: image, username: user, whoAmI: 'Twitter', thirdpartyID: id  },
 					     type: 'post',
 					     success: function(output) {
-					     	if(output.indexOf("Error") >= 0){
-					     		$(".social-validation").html("ERROR: Unable to login with your Twitter account");
-					     	}else{
-				     			setCookie("RememberMe", $.trim(output), 14);
+ 							var finishuser = $.trim(output);
+			     			var userdata = finishuser.split("||");
+			     			var new_email = userdata[1];
+			     			var new_username = userdata[2];
+			     			var needUserName = userdata[3];
+			     			var email_class = '';
+					     	if(new_username == '' || needUserName == 'needusername'){
+		     					email_class = 'HideMe';
+			     				if(new_username != ''){
+			     					username_class = 'active';
+			     				}
+			     				$("#loginModal").html("<div class='row' style='margin-top:40px'><div class='col s12'><div class='input-field col s11'><i class='mdi-action-account-circle prefix "+username_class+"'></i><input id='final_username' type='text' value='"+new_username+"'><label for='final_username' class='"+username_class+"'>Username</label></div><div class='input-field col s11'><i class='mdi-communication-email prefix "+email_class+"'></i><input id='final_email' class='"+email_class+"' type='text' value='"+new_email+"'><label for='final_email' class='"+email_class+"'>Email</label></div><div class='col s11' style='text-align: center;margin-top:1em;'><div class='waves-effect btn-large' id='FinishRegistering'>Finish Registering</div><div class='validation-finalregister'></div></div></div></div>");
+			     				$('#loginModal').openModal();
+			     				$("#FinishRegistering").on("click", function(){
+									VerifyTwitterUser(userdata[0]);
+			     				});
+			     			}else{
+ 								var finishuser = $.trim(output);
+				     			var userdata = finishuser.split("||");
+				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 		 						location.href = "http://ken.lifebar.io";
-					     	}
+			     			}
 					      },
 						    error: function(x, t, m) {
 						        if(t==="timeout") {
@@ -191,6 +284,57 @@
 							timeout:45000
 						});
 				});
+				
+				function VerifyTwitterUser(session){
+					var errors = "";
+					var username = $("#final_username").val();
+					var email = $("#final_email").val();
+					$.ajax({ url: '../php/webService.php',
+				         data: {action: "VerifyNewUser", username: username, email: email },
+				         type: 'post',
+				         success: function(output) {
+				         			if(output.indexOf("Username is already used") >= 0){
+				         				errors = "Username is already used<br>";
+				         			}else if(output.indexOf("Email is already used") >= 0 && email != ''){
+				         				errors = errors + "Email is already used<br>";
+				         			}
+				         			if(errors !== ""){
+				         				$(".validation-finalregister").html(errors);
+				         			}else{
+				         				console.log($("#final_username").val()+","+email+","+session);
+		 		     					if($("#final_username").val() == ""){
+				     						$(".validation-finalregister").html("Please enter a username to finish registration");
+				     					}else{
+				     						setCookie("RememberMe", session, 14);
+				     						$("#FinishRegistering").html("Saving & Logging you in...");
+		 						    		$.ajax({ url: '../php/webService.php',
+											     data: {action: "FinishRegister", email: $("#final_email").val(), username: $("#final_username").val()  },
+											     type: 'post',
+											     success: function(output) {
+							 						location.href = "http://ken.lifebar.io";
+											     },
+												    error: function(x, t, m) {
+												        if(t==="timeout") {
+												            ToastError("Server Timeout");
+												        } else {
+												            ToastError(t);
+												        }
+													},
+													timeout:45000
+												});
+								        }
+				         			}
+				        },
+				        error: function(x, t, m) {
+					        if(t==="timeout") {
+					            ToastError("Server Timeout");
+					        } else {
+					            ToastError(t);
+					        }
+				    	},
+				    	timeout:45000
+					});
+				}
 			</script>
 			<?php
 		}
@@ -233,14 +377,10 @@
 					     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 					     type: 'post',
 					     success: function(output) {
-					     	if(output.indexOf("Error") >= 0){
-					     		$(".social-validation").html("ERROR: Unable to login with your Facebook account");
-					     	}else{
 				     			setCookie("RememberMe", $.trim(output), 14);
 				     			GAEvent('Third Party Login', 'Facebook');
 		          				location.hash = "#activity";
 		 						location.reload();
-					     	}
 					      },
 						    error: function(x, t, m) {
 						        if(t==="timeout") {
@@ -266,14 +406,27 @@
 							     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 							     type: 'post',
 							     success: function(output) {
-							     	if(output.indexOf("Error") >= 0){
-							     		$(".social-validation").html("ERROR: Unable to login with your Facebook account");
-							     	}else{
-						     			setCookie("RememberMe", $.trim(output), 14);
-						     			GAEvent('Third Party Login', 'Facebook');
-				          				location.hash = "#activity";
-				 						location.reload();
-							     	}
+										var finishuser = $.trim(output);
+						     			var userdata = finishuser.split("||");
+						     			var new_email = userdata[1];
+						     			var new_username = userdata[2];
+						     			var needUserName = userdata[3];
+						     			var email_class = '';
+						     			if(new_username == '' || needUserName == 'needusername'){
+					     					email_class = 'HideMe';
+						     				if(new_username != ''){
+						     					username_class = 'active';
+						     				}
+						     				$("#loginModal").html("<div class='row' style='margin-top:40px'><div class='col s12'><div class='input-field col s11'><i class='mdi-action-account-circle prefix "+username_class+"'></i><input id='final_username' type='text' value='"+new_username+"'><label for='final_username' class='"+username_class+"'>Username</label></div><div class='input-field col s11'><i class='mdi-communication-email prefix "+email_class+"'></i><input id='final_email' class='"+email_class+"' type='text' value='"+new_email+"'><label for='final_email' class='"+email_class+"'>Email</label></div><div class='col s11' style='text-align: center;margin-top:1em;'><div class='waves-effect btn-large' id='FinishRegistering'>Finish Registering</div><div class='validation-finalregister'></div></div></div></div>");
+						     				$('#loginModal').openModal();
+						     				$("#FinishRegistering").on("click", function(){
+												VerifyFacebookUser(userdata[0]);
+						     				});
+						     			}else{
+						     				GAEvent('Third Party Login', 'Facebook');
+				          					location.hash = "#activity";
+				 							location.reload();
+						     			}
 							      },
 								    error: function(x, t, m) {
 								        if(t==="timeout") {
@@ -302,6 +455,59 @@
 		    e.async = true;
 		    document.getElementById('fb-root').appendChild(e);
 		}());
+		
+		function VerifyFacebookUser(session){
+			var errors = "";
+			var username = $("#final_username").val();
+			var email = $("#final_email").val();
+			$.ajax({ url: '../php/webService.php',
+		         data: {action: "VerifyNewUser", username: username, email: email },
+		         type: 'post',
+		         success: function(output) {
+		         			if(output.indexOf("Username is already used") >= 0){
+		         				errors = "Username is already used<br>";
+		         			}else if(output.indexOf("Email is already used") >= 0 && email != ''){
+		         				errors = errors + "Email is already used<br>";
+		         			}
+		         			if(errors !== ""){
+		         				$(".validation-finalregister").html(errors);
+		         			}else{
+		         				console.log($("#final_username").val()+","+email+","+session);
+ 		     					if($("#final_username").val() == ""){
+		     						$(".validation-finalregister").html("Please enter a username to finish registration");
+		     					}else{
+		     						setCookie("RememberMe", session, 14);
+		     						$("#FinishRegistering").html("Saving & Logging you in...");
+ 						    		$.ajax({ url: '../php/webService.php',
+									     data: {action: "FinishRegister", email: $("#final_email").val(), username: $("#final_username").val()  },
+									     type: 'post',
+									     success: function(output) {
+     					     				GAEvent('Third Party Register', 'Facebook');
+				          					location.hash = "#activity";
+				 							location.reload();
+									     },
+										    error: function(x, t, m) {
+										        if(t==="timeout") {
+										            ToastError("Server Timeout");
+										        } else {
+										            ToastError(t);
+										        }
+											},
+											timeout:45000
+										});
+						        }
+		         			}
+		        },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+		}
 	</script>
 	<div id='fb-root'></div>
 	<?php }

@@ -40,7 +40,7 @@ function Login($username, $password){
 	Close($mysqli, $result);
 	return $myuser;
 }
-function ThirdPartyLogin($thirdpartyID, $whoAmI, $pconn = null){
+function ThirdPartyLogin($thirdpartyID, $whoAmI, $verified, $pconn = null){
 	$myuser = "";
 	$mysqli = Connect($pconn);
 		if ($result = $mysqli->query("select * from `Users` where `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
@@ -69,7 +69,14 @@ function ThirdPartyLogin($thirdpartyID, $whoAmI, $pconn = null){
 					$row["Badge"]);
 			$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
-			$_SESSION['logged-in'] = $myuser;
+			
+			if($verified == true){
+				$verified = "needusername";
+				$_SESSION['pending-user'] = $myuser;
+			}else{
+				$_SESSION['logged-in'] = $myuser;
+			}
+			echo $row["SessionID"]."||".$row['Email']."||".$row['Username']."||".$verified;
 		}
 	}
 	if($pconn == null)
