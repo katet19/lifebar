@@ -1,4 +1,5 @@
-<?php require 'includes.php'; ?>
+<?php 
+require 'includes.php'; ?>
 <!DOCTYPE HTML>
 <html>
 <title>Lifebar</title>
@@ -14,6 +15,7 @@
 <link href="../css/landing-style.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
+<link href="../css/font/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/navigation.css" rel="stylesheet" type="text/css" />
 <link href="../css/main.css" rel="stylesheet" type="text/css" />
 <link href="../css/activity.css" rel="stylesheet" type="text/css" />

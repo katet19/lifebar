@@ -27,10 +27,8 @@ require_once 'controller_database.php';
 require_once 'controller_gravatar.php';
 require_once 'controller_weave.php';
 
+//Login
 require_once 'controller_login.php';
-require_once 'library/Hybrid/Auth.php';
-require_once 'library/Hybrid/Endpoint.php';
-//GoogleLogin();
 if(!isset($_SESSION["logged-in"]) && isset($_COOKIE["RememberMe"])){
 	LoginWithCookie($_COOKIE["RememberMe"]);
 }
