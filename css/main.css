@@ -28,6 +28,10 @@ body{
 
 .HideForTabletAndMobile{ display: inline-block; }
 
+.HideMe{
+	display:none;
+}
+
 @media only screen and (max-width : 992px) {
 	.HideForDesktop{ display: inline-block; }
 	.HideForTabletAndMobile{ display: none; }

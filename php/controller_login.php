@@ -40,6 +40,49 @@ function Login($username, $password){
 	Close($mysqli, $result);
 	return $myuser;
 }
+function ThirdPartyLogin($thirdpartyID, $whoAmI, $verified, $pconn = null){
+	$myuser = "";
+	$mysqli = Connect($pconn);
+		if ($result = $mysqli->query("select * from `Users` where `".$whoAmI."OAuthID` = '".$thirdpartyID."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$user= new User($row["ID"], 
+					$row["First"],
+					$row["Last"],
+					$row["Username"],
+					$row["Email"],
+					$row["Birthdate"],
+					$row["Facebook"],
+					$row["Twitter"],
+					$row["SteamName"],
+					$row["Xbox"],
+					$row["PSN"],
+					$row["Google"],
+					$row["Access"],
+					$row["DefaultWatched"],
+					$row["WeaveView"],
+					$row["SessionID"],
+					$row["Privacy"],
+					$row["RealNames"],
+					$row["Title"],
+					$row["Image"],
+					$row["Website"],
+					$row["Badge"]);
+			$user->_weave = GetWeave($row["ID"], $mysqli);
+			$myuser = $user;
+			
+			if($verified == true){
+				$verified = "needusername";
+				$_SESSION['pending-user'] = $myuser;
+			}else{
+				$_SESSION['logged-in'] = $myuser;
+			}
+			echo $row["SessionID"]."||".$row['Email']."||".$row['Username']."||".$verified;
+		}
+	}
+	if($pconn == null)
+		Close($mysqli, $result);
+	return $myuser;
+}
 function FastLogin($id){
 	$myuser = "";
 	$mysqli = Connect();
@@ -139,40 +182,5 @@ function Logout(){
 	$_SESSION = array();
 	$_SESSION['logged-in'] = null;
 	session_destroy();
-}
-function GetOAuthConfig(){
-	$config = array();
-	$providers = array();
-	$googlearray = array();
-	$keys = array();
-	
-	$config["base_url"] = "http://lifebar.io/php/library/Hybrid";
-	
-	//Google
-	unset($keys);
-	$googlearray["enabled"] = true;
-	$keys["id"] = "520374804291-il70cd9di22ii68ira29f132n3075rup.apps.googleusercontent.com";
-	$keys["secret"] = "l_DKu31fiLPte7XUlF5tblJ4";
-	$googlearray["keys"] = $keys;
-	$providers["Google"] = $googlearray;
-	
-    $config["providers"]  = $providers;
-    
-    return $config;
-}
-function GoogleLogin(){
-	try{
-       $hybridauth = new Hybrid_Auth( GetOAuthConfig() );
- 
-       $google = $hybridauth->authenticate( "Google" );
- 
-       $user_profile = $google->getUserProfile();
- 
-       echo "Hi there! " . $user_profile->displayName;
- 
-   }
-   catch( Exception $e ){
-       echo "Ooophs, we got an error: " . $e->getMessage();
-   }
 }
 ?>

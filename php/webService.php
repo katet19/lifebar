@@ -384,6 +384,12 @@
 		if($_POST['action'] == 'ShowLanding'){
 			ShowLanding();
 		}
+		if($_POST['action'] == 'ThirdPartyLogin'){
+			RegisterThirdPartyUser($_POST['username'], $_POST['email'], $_POST['first'], $_POST['last'], $_POST['image'], $_POST['thirdpartyID'], $_POST['whoAmI']);
+		}
+		if($_POST['action'] == 'FinishRegister'){
+			FinishRegisterUser($_SESSION['pending-user']->_id, $_POST['email'], $_POST['username']);
+		}
 	}
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){
