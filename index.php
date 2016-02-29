@@ -83,6 +83,7 @@ require 'includes.php'; ?>
 		<div id="landingInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height:100%;"></div>
 	</div>
 </div>
+<div id='fb-root'></div>
 <?php LoadThirdPartyTools(); ?>
 <?php DisplaySideDrawer(); ?>
 <?php DisplayLogin(); ?>
