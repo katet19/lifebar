@@ -601,11 +601,12 @@ function ShowMyXP($exp){
     <div class="myxp-details-container z-depth-1" style="padding:0;">
 	    <?php 
 	    if(sizeof($exp->_playedxp) > 0){
-	    	$played = $exp->_playedxp[0];?>
+    		$played = $exp->_playedxp[0];
+	    	?>
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
-	    		<div class="col s2 m2"><i class='mdi-hardware-gamepad tierTextColor<?php echo $exp->_tier; ?>' style='font-size:2em;'></i></div>
+	    		<div class="col s2 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
 	    		<div class="col s10 m10 myxp-details-items">
-	    			<?php echo BuildPlayedSentence($played);	?><br><div class="myxp-edit-played btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
+	    			<?php BuildPlayedVisualSentence($played, $exp->_userid, $exp->_tier); ?><br><div class="myxp-edit-played btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
 	    		</div>
 	    	</div>
     	<?php
@@ -613,13 +614,170 @@ function ShowMyXP($exp){
 	    
 	    foreach($exp->_watchedxp as $watched){?>
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
-	    		<div class="col s2 m2"><i class='mdi-action-visibility tierTextColor<?php echo $exp->_tier; ?>' style='font-size:2em;'></i></div>
+	    		<div class="col s2 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
 	    		<div class="col s10 m10 myxp-details-items">
-	    			<?php echo BuildWatchedSentence($watched);	?><br><div class="myxp-edit-watched btn-flat waves-effect" data-id="<?php echo $watched->_id; ?>"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Edit</div>
+	    			<?php echo BuildWatchedVisualSentence($watched, $exp->_userid, $exp->_tier);	?><br><div class="myxp-edit-watched btn-flat waves-effect" data-id="<?php echo $watched->_id; ?>"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Edit</div>
 	    		</div>
 	    	</div>
     	<?php
 	    }
 	    ?>
     </div>
-<?php } ?>
+<?php }
+
+function BuildPlayedVisualSentence($exp, $userid, $tier){
+	$date = explode('-',$exp->_date);
+	if($exp->_completed > 0){
+		if($exp->_completed < 100){
+			$completedSentence = "Played through ".$exp->_completed."%";
+		}else if($exp->_completed == 100){
+			$completedSentence = "Finished";
+		}else if($exp->_completed == 101){
+			$exp->_completed = 100;
+			$completedSentence = "Played multiple playthroughs";
+		}
+	}
+	
+	if($exp->_date > 0){
+		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
+		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
+		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
+		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
+		else if($date[1] == 0){ $quarter = ""; }
+		if($quarter != "")
+			$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else
+			$sentence = $sentence." in ".$date[0];
+	}
+	if($exp->_platform != ""){
+		$myplatforms = str_replace("\n", " ", $exp->_platform);
+		$sentence = $sentence." on ". $myplatforms;
+	}
+	
+	
+	
+	?>
+	<div class="visual-sentence-perct">
+	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo $completedSentence; ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
+	  	  <span style='<?php if($exp->_completed != 100){ ?>background-color:transparent;<?php } ?>' class='visualsentence-tier-display <?php if($exp->_completed == 100){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-hardware-gamepad <?php if($exp->_completed != 100){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 100){ ?>style='color:white;<?php } ?>"></i></span>
+		  <div class="slice">
+		    <div class="bar minibar"></div>
+		    <div class="fill"></div>
+		  </div>
+		</div>
+		<div class="badge-small-name" style='width:auto;'>Completed</div>
+	</div>
+	<div class="visual-sentence-label">on</div>
+	<?php $platforms = explode(",",$exp->_platformids);
+		if(sizeof($platforms) == 1){ ?>
+	<div class="visual-sentence-perct">
+		<?php 
+			$milestone = GetPlatformMilestone($userid, $exp->_platformids);
+			DisplayPlatformMilestone($milestone);
+		?>
+	</div>
+	<?php }else{ ?>
+		<div class="visual-sentence-label" style='text-align:center; text-align: center;vertical-align: middle;font-weight: 500;padding:0px;'>
+			<?php echo sizeof($platforms); ?>
+			<div class="visual-sentence-sublabel">platforms</div>
+		</div>
+	<?php } ?>
+	<div class="visual-sentence-label">during</div>
+	<div class="visual-sentence-year"><?php echo $date[0]; ?></div>
+	
+	<?php
+}
+
+function DisplayPlatformMilestone($milestone){ 
+	//Calculate current level
+	if($milestone->_progress->_percentlevel4 == 100 && $milestone->_level5 > 0){
+		$progress = $milestone->_progress->_progresslevel5;
+		$currentlevel = 5;
+		$percent = $milestone->_progress->_percentlevel5;
+		$threshold = $milestone->_level5;
+	}else if($milestone->_progress->_percentlevel3 == 100  && $milestone->_level4 > 0){
+		$progress = $milestone->_progress->_progresslevel4;
+		$currentlevel = 4;
+		$percent = $milestone->_progress->_percentlevel4;
+		$threshold = $milestone->_level4;
+	}else if($milestone->_progress->_percentlevel2 == 100  && $milestone->_level3 > 0){
+		$progress = $milestone->_progress->_progresslevel3;
+		$currentlevel = 3;
+		$percent = $milestone->_progress->_percentlevel3;
+		$threshold = $milestone->_level3;
+	}else if($milestone->_progress->_percentlevel1 == 100  && $milestone->_level2 > 0){
+		$progress = $milestone->_progress->_progresslevel2;
+		$currentlevel = 2;
+		$percent = $milestone->_progress->_percentlevel2;
+		$threshold = $milestone->_level2;
+	}else{
+		$progress = $milestone->_progress->_progresslevel1;
+		$currentlevel = 1;
+		$percent = $milestone->_progress->_percentlevel1;
+		$threshold = $milestone->_level1;
+	}
+?>
+	<div style='text-align:center;display:block;'>
+	  <div class="c100 mini <?php if($currentlevel == 1){ echo "one"; }else if($currentlevel == 2){ echo "two"; }else if($currentlevel == 3){ echo "three"; }else if($currentlevel == 4){ echo "four"; }else if($currentlevel == 5){ echo "five"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo $progress; ?> / <?php  echo $threshold; ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
+	  	  <span style="width: 35px;height:35px;top: 3px;left: 3px;background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"><span style='opacity:0'><?php  $progress; ?>/<?php  $threshold; ?></span></span>
+		  <div class="slice">
+		    <div class="bar minibar"></div>
+		    <div class="fill"></div>
+		  </div>
+		</div>
+	</div>
+	<div class="badge-small-name" style='width:auto;'><?php echo $milestone->_name; ?></div>
+<?php
+}
+function BuildWatchedVisualSentence($exp, $userid, $tier){
+	if($exp->_length == "Watched a speed run" || $exp->_length == "Watched a complete single player playthrough" || $exp->_length == "Watched a complete playthrough"){
+		$exp->_completed = 101;
+	}else if($exp->_completed < 100 && ($exp->_length == "Watched multiple hours" || $exp->_length == "Watched gameplay" || $exp->_length == "Watched an hour or less")){
+		$exp->_completed = 100;
+	}else if($exp->_completed < 50 && ($exp->_length == "Watched promotional gameplay" || $exp->_length == "Watched a developer diary")){
+		$exp->_completed = 50;
+	}else{
+		$exp->_completed = 20;
+	}
+
+	if($exp->_source != ""){
+		$sentence = $sentence." on ".$exp->_source;
+	}
+	if($exp->_url != ""){
+		$link = $exp->_url;
+	}
+	
+	
+	$date = explode('-',$exp->_date);
+	
+	if($exp->_date > 0){
+		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
+		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
+		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
+		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
+		else if($date[1] == 0){ $quarter = ""; }
+		if($quarter != "")
+			$sentence = $sentence." during ".$quarter." of ".$date[0];
+		else
+			$sentence = $sentence." in ".$date[0];
+	}
+	
+	?>
+	<div class="visual-sentence-perct">
+	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo strtolower($exp->_length); ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
+	  	  <span style='<?php if($exp->_completed != 101){ ?>background-color:transparent;<?php } ?>left: 0px !important;' class='visualsentence-tier-display <?php if($exp->_completed == 101){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-action-visibility <?php if($exp->_completed != 101){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 101){ ?>style='color:white;<?php } ?>"></i></span>
+		  <div class="slice">
+		    <div class="bar minibar"></div>
+		    <div class="fill"></div>
+		  </div>
+		</div>
+		<div class="badge-small-name" style='width:auto;margin-left:0;'>Watched</div>
+	</div>
+	<div class="visual-sentence-label">on</div>
+	<div class="visual-sentence-label" style='font-weight:400;padding:0px;'><?php echo $exp->_source; if($link != ''){ echo "<a href='$link' style='margin-left:10px;' target='_blank'><i class='fa fa-film'></i></a>"; }?></div>
+	<div class="visual-sentence-label">during</div>
+	<div class="visual-sentence-year"><?php echo $date[0]; ?></div>
+	
+	<?php
+}
+

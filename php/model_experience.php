@@ -60,6 +60,7 @@ class SubExperience
 	public $_completed;
 	public $_mode;
 	public $_platform;
+	public $_platformids;
 	public $_alpha;
 	public $_dlc;
 	public $_beta;
@@ -71,7 +72,7 @@ class SubExperience
 	
 	
 	
-	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived, $authenticxp) {
+	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $platformids, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived, $authenticxp) {
 		$this->_id = $id;
 		$this->_expid = $expid;
 		$this->_userid= $userid;
@@ -88,6 +89,7 @@ class SubExperience
 		$this->_completed = $completed;
 		$this->_mode = $mode;
 		$this->_platform = $platform;
+		$this->_platformids = $platformids;
 		$this->_dlc = $dlc;
 		$this->_alpha = $alpha;
 		$this->_beta = $beta;
