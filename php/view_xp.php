@@ -629,12 +629,12 @@ function BuildPlayedVisualSentence($exp, $userid, $tier){
 	$date = explode('-',$exp->_date);
 	if($exp->_completed > 0){
 		if($exp->_completed < 100){
-			$completedSentence = "Played through ".$exp->_completed."%";
+			$completedSentence = $exp->_completed."% Completed";
 		}else if($exp->_completed == 100){
 			$completedSentence = "Finished";
 		}else if($exp->_completed == 101){
 			$exp->_completed = 100;
-			$completedSentence = "Played multiple playthroughs";
+			$completedSentence = "Multiple playthroughs";
 		}
 	}
 	
@@ -665,7 +665,7 @@ function BuildPlayedVisualSentence($exp, $userid, $tier){
 		    <div class="fill"></div>
 		  </div>
 		</div>
-		<div class="badge-small-name" style='width:auto;'>Completed</div>
+		<div class="badge-small-name" style='width:auto;'><? echo $completedSentence; ?></div>
 	</div>
 	<div class="visual-sentence-label">on</div>
 	<?php $platforms = explode(",",$exp->_platformids);
