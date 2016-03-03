@@ -1658,6 +1658,7 @@ function GetSubExperiences($userid, $gameid, $type, $pconn = null){
 				$row['Completed'], 
 				$row['Mode'], 
 				$row['Platform'],
+				$row['PlatformIDs'],
 				$row['DLC'],
 				$row['Alpha'],
 				$row['Beta'],

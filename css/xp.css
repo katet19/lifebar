@@ -439,6 +439,27 @@
 	top: -7px !important;
 }
 
+.visual-sentence-label{
+    display: inline-block;
+    font-size: 1.5em;
+    padding: 0 20px;
+}
+
+.visual-sentence-perct{
+	display:inline-block;
+    vertical-align: middle;
+}
+
+.visual-sentence-year{
+	display: inline-block;
+    font-size: 2em;
+    vertical-align: middle;
+    font-weight: 500;
+    margin-top: -5px;
+}
+.visual-sentence-sublabel{
+	font-size:0.5em;
+}
 @media only screen and (max-width : 600px) {
 	.myxp-GraphContainer{
 		width:100%;

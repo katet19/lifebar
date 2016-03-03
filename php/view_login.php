@@ -1,5 +1,8 @@
 <?php
 function DisplayLogin(){
+    	require_once("social_login.php");
+    	GoogleOAuth();
+    	FacebookOAuth();
 	?>
   <div id="loginModal" class="modal" style="background-color:white;">
     <div class="row" style="margin-top:40px">

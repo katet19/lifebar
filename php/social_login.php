@@ -509,5 +509,4 @@
 			});
 		}
 	</script>
-	<div id='fb-root'></div>
 	<?php }
