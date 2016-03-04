@@ -55,19 +55,35 @@ function Search(searchstring){
  			SideContentPush($("#sideContainer").html());
   			$(".user-discover-card").on("click", function(e){
  		   		e.stopPropagation();
+				CloseSearch();
+				//Clear search input
+	 			$(".searchInput input").val('');
+	 			$('html').unbind();
  				ShowUserPreviewCard($(this).find(".user-preview-card"));
  			});
   			Waves.displayEffect();
  			FilterResults();
- 			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
+ 			$(".game-discover-card .card-image").on("click", function(e){ 
+ 				e.stopPropagation(); 
+ 				CloseSearch();
+				//Clear search input
+	 			$(".searchInput input").val('');
+	 			$('html').unbind();
+ 				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+ 			});
  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
  			$(".SeeAllBtn").on('click',function(){
  				var context = $(this).attr("data-context");
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
  			});
- 			//Clear search input
- 			$(".searchInput input").val('');
+ 			
+ 			$('html').on('click', function(){
+				CloseSearch();
+				//Clear search input
+	 			$(".searchInput input").val('');
+	 			$('html').unbind();
+			});
  			GAPage('Search', '/search');
      	},
         error: function(x, t, m) {
@@ -205,9 +221,6 @@ function OpenSearch(){
 	});
 	$(".searchInput input").focus();
 	$(".loginContainer").hide();
-	$('html').on('click', function(){
-		CloseSearch();	
-	});
 }
 
 function CloseSearch(){
