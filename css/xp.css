@@ -482,7 +482,9 @@
 	.myxp-details-quote, .myxp-details-items{
 		font-size:1em;
 	}
-	
+	.myxp-details-items{
+		text-align:center;
+	}
 	.myxp-form-box{
 		margin-bottom:30px;
 	}
@@ -496,5 +498,12 @@
 		min-height: 85%;
 	    max-width: 100%;
 	    margin: 0;
+	}
+	.visual-sentence-label{
+	    font-size: 1.25em;
+	    padding: 0 5px;
+	}
+	.visual-sentence-game{
+    	max-width: 100px;
 	}
 }

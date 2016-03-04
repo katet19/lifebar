@@ -604,8 +604,8 @@ function ShowMyXP($exp){
     		$played = $exp->_playedxp[0];
 	    	?>
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
-	    		<div class="col s2 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
-	    		<div class="col s10 m10 myxp-details-items">
+	    		<div class="col s0 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
+	    		<div class="col s12 m10 myxp-details-items">
 	    			<?php BuildPlayedVisualSentence($played, $exp->_userid, $exp->_tier); ?><br><div class="myxp-edit-played btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
 	    		</div>
 	    	</div>
@@ -614,8 +614,8 @@ function ShowMyXP($exp){
 	    
 	    foreach($exp->_watchedxp as $watched){?>
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
-	    		<div class="col s2 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
-	    		<div class="col s10 m10 myxp-details-items">
+	    		<div class="col s0 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
+	    		<div class="col s12 m10 myxp-details-items">
 	    			<?php echo BuildWatchedVisualSentence($watched, $exp->_userid, $exp->_tier);	?><br><div class="myxp-edit-watched btn-flat waves-effect" data-id="<?php echo $watched->_id; ?>"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Edit</div>
 	    		</div>
 	    	</div>
@@ -726,7 +726,7 @@ function DisplayPlatformMilestone($milestone){
 		  </div>
 		</div>
 	</div>
-	<div class="badge-small-name" style='width:auto;'><?php echo $milestone->_name; ?></div>
+	<div class="badge-small-name visual-sentence-game" style='width:auto;'><?php echo $milestone->_name; ?></div>
 <?php
 }
 function BuildWatchedVisualSentence($exp, $userid, $tier){

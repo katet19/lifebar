@@ -12,24 +12,23 @@ function InitializeLogin(){
 function AttachSignUpEvents(){
 	$("#SignupSubmitBtn").on("click", function(e){
 		var errors = "";
-		if($("#signup_username").val() === "")
+		if($("#signupModal").find("#signup_username").val() === "")
 			errors = errors + "Username cannot be blank<br>";
-		if($("#signup_email").val() === "")
+		if($("#signupModal").find("#signup_email").val() === "")
 			errors = errors + "Email cannot be blank<br>";
-		if($("#signup_password").val() === "" || $("#signup_confirm_password").val() === "")
+		if($("#signupModal").find("#signup_password").val() === "")
 			errors = errors + "Password cannot be blank<br>";
-		if($("#signup_password").val() !== $("#signup_confirm_password").val())
-			errors = errors + "Passwords do not match<br>";
-		if($("#signup_username").val().indexOf(' ') >= 0)
+		//if($("#landing-sign-up").find("#signup_password").val() !== $("#landing-sign-up").find("#signup_confirm_password").val())
+		//	errors = errors + "Passwords do not match<br>";
+		if($("#signupModal").find("#signup_username").val().indexOf(' ') >= 0)
 			errors = errors + "Username can not have spaces<br>";
 			
 		if(errors === "")
-			VerifyNewUserData($("#signup_username").val(), $("#signup_email").val());	
+			VerifyNewUserData($("#signupModal").find("#signup_username").val(), $("#signupModal").find("#signup_email").val());	
 		else{
 			$("#signupModal").find(".validation").html(errors);
 			$("#signupModal").find(".validation").show();
 		}
-			
 	});
 }
 
@@ -70,7 +69,7 @@ function VerifyNewUserData(username, email){
          				$("#signupModal").find(".validation").html(errors);
 						$("#signupModal").find(".validation").show();
          			}else{
-         				Signup($("#signup_username").val(), $("#signup_password").val(), $("#signup_email").val(), $("#first_name").val(), $("#last_name").val(), $("#birthyear").val());
+         				Signup($("#signupModal").find("#signup_username").val(), $("#signupModal").find("#signup_password").val(), $("#signupModal").find("#signup_email").val(), '', '', $("#signupModal").find("#birthyear").val());
          			}
         },
         error: function(x, t, m) {
