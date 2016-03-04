@@ -81,6 +81,7 @@
 								        }
 				     				});
 				     			}else{
+				     				setCookie("RememberMe", userdata[0], 14);
 				     				GAEvent('Third Party Login', 'Google');
 		          					location.hash = "#activity";
 		 							location.reload();
@@ -377,7 +378,9 @@
 					     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 					     type: 'post',
 					     success: function(output) {
-				     			setCookie("RememberMe", $.trim(output), 14);
+ 								var finishuser = $.trim(output);
+				     			var userdata = finishuser.split("||");
+				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 				     			GAEvent('Third Party Login', 'Facebook');
 		          				location.hash = "#activity";
 		 						location.reload();
