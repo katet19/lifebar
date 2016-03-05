@@ -112,10 +112,10 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 		if($whoAmI == "Twitter"){
 			$notunique = VerifyUniqueUsername($username);
 			if($notunique){
-				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','PENDING')");
+				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`,`Twitter`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','PENDING','".$username."')");
 				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, true, $mysqli);
 			}else{
-				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','ACTIVE')");
+				$mysqli->query("INSERT INTO `Users` (`Username`,`Email`,`First`,`Last`,`Image`,`".$whoAmI."OAuthID`,`SessionID`,`Key`,`Twitter`) VALUES ('".$username."','".$email."','".$first."','".$last."','".$image."','".$thirdpartyID."','".$randomToken."','ACTIVE','".$username."')");
 				$user = ThirdPartyLogin($thirdpartyID, $whoAmI, false, $mysqli);
 			}
 		}else{

@@ -760,11 +760,11 @@ function DisplayActivitySecondaryContent($userid){
 					<div id="activity-all-users" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Users"><i class="mdi-social-public left"></i>All Users</div>
 				</div>
 			</div>
-			<div class="col s12">
+			<!--<div class="col s12">
 				<div class="activity-category-box">
 					<div id="activity-popular-xp" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Popular XP"><i class="mdi-action-thumb-up left"></i> Popular XP</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 	<?php

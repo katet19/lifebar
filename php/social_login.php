@@ -81,6 +81,7 @@
 								        }
 				     				});
 				     			}else{
+				     				setCookie("RememberMe", userdata[0], 14);
 				     				GAEvent('Third Party Login', 'Google');
 		          					location.hash = "#activity";
 		 							location.reload();
@@ -245,8 +246,9 @@
 				
 				$(document).ready(function(){
 					var user = '<?php echo $user->screen_name;?>';
-					var image = '<?php echo $user->profile_image_url;?>';
+					var image = '<?php echo str_replace("_normal","",$user->profile_image_url);?>';
 					var id = '<?php echo $user->id;?>';
+					
 					$.ajax({ url: '../php/webService.php',
 					     data: {action: "ThirdPartyLogin", email: '', image: image, username: user, whoAmI: 'Twitter', thirdpartyID: id  },
 					     type: 'post',
@@ -268,8 +270,7 @@
 									VerifyTwitterUser(userdata[0]);
 			     				});
 			     			}else{
- 								var finishuser = $.trim(output);
-				     			var userdata = finishuser.split("||");
+				     			console.log($.trim(userdata[0]));
 				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 		 						location.href = "http://lifebar.io";
 			     			}
@@ -377,7 +378,9 @@
 					     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 					     type: 'post',
 					     success: function(output) {
-				     			setCookie("RememberMe", $.trim(output), 14);
+ 								var finishuser = $.trim(output);
+				     			var userdata = finishuser.split("||");
+				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 				     			GAEvent('Third Party Login', 'Facebook');
 		          				location.hash = "#activity";
 		 						location.reload();
