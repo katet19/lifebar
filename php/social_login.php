@@ -246,8 +246,9 @@
 				
 				$(document).ready(function(){
 					var user = '<?php echo $user->screen_name;?>';
-					var image = '<?php echo $user->profile_image_url;?>';
+					var image = '<?php echo str_replace("_normal","",$user->profile_image_url);?>';
 					var id = '<?php echo $user->id;?>';
+					
 					$.ajax({ url: '../php/webService.php',
 					     data: {action: "ThirdPartyLogin", email: '', image: image, username: user, whoAmI: 'Twitter', thirdpartyID: id  },
 					     type: 'post',
@@ -269,8 +270,7 @@
 									VerifyTwitterUser(userdata[0]);
 			     				});
 			     			}else{
- 								var finishuser = $.trim(output);
-				     			var userdata = finishuser.split("||");
+				     			console.log($.trim(userdata[0]));
 				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 		 						location.href = "http://ryu.lifebar.io";
 			     			}
