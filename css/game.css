@@ -359,6 +359,59 @@
     float: left;
 }
 
+.game-community-box{
+	margin-bottom:50px;
+	display:inline-block;
+	width:100%;
+}
+
+.game-community-box-header{
+	font-size: 1.25em;
+    font-weight: 500;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    margin-bottom: 20px;
+    text-align: left;
+    color: rgba(0,0,0,0.6);
+}
+
+.game-community-bigbreak{
+	font-size:2em;
+	font-weight:400;
+	color:rgba(0,0,0,0.3);
+	text-align:center;
+    margin-top: 50px;
+}
+
+.game-community-verified{
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    font-size: 0.9em;
+    display: inline-block;
+    background-color: #7B1FA2;
+    color: white;
+    margin-left: 5px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.game-community-tier-position{
+    position: absolute;
+    right: 33.3%;
+    top: 17px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
 
 @media only screen and (max-width : 992px) {
 	.GameHeaderContainer, .GameHeaderBackground{

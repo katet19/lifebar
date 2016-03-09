@@ -84,6 +84,10 @@
 	cursor: pointer;
 }
 
+.critic-tier-container{
+	position:relative;
+}
+
 .critic-quote-container{
 	text-align: left;
 }
