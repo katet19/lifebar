@@ -398,10 +398,11 @@
 
 .game-community-tier-position{
     position: absolute;
-    right: 33.3%;
-    top: 17px;
+    left: 0;
+    margin-top: 10px;
     color: white;
     width: 40px;
+    display: inline-block;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
@@ -444,6 +445,10 @@
 	}
 	#game-critic-tab, #game-user-tab{
 		padding:0;
+	}
+	.game-community-tier-position{
+	    left: 1.5em;
+	    margin-top: 10px;
 	}
 }
 
@@ -498,6 +503,11 @@
 	}
 	.card-game-tier-container{
 		display:none;
+	}
+	.game-community-tier-position{
+	    left: inherit;
+	    top: -75px;
+	    right: 20px;
 	}
 }
 

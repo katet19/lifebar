@@ -41,7 +41,7 @@ function DisplayCriticQuoteCard($exp){
 		$hiddenusername = $user->_username;
 ?>
    <div class="col s12 critic-container">
-   		<div class="critic-name-container col s12 m12 l4" data-id="<?php echo $user->_id; ?>">
+   		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 	        <?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
@@ -52,10 +52,12 @@ function DisplayCriticQuoteCard($exp){
 	        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
 	        	<?php } ?>
 	        </div>
+		</div>
+        <div class="critic-quote-container col s12 m12 l9">
         	<?php if($user->_security == "Journalist"){ 
         			$percent = 100; ?>
 	          		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-	      			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+	      			  	<div class="c100 mini gray p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
 					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-editor-format-quote"></i></span>
 						  <div class="slice">
 						    <div class="bar minibar"></div>
@@ -123,8 +125,6 @@ function DisplayCriticQuoteCard($exp){
 		   			</div>
 	          	<?php } 
           	}?>
-		</div>
-        <div class="critic-quote-container col s12 m12 l8">
 			<div class="critic-quote">
 				<div class="critic-quote-icon"><i class="mdi-editor-format-quote"></i></div>
 				<span class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ echo "style='display:inline-block'"; } ?> ><?php if($agreedcount > 0){ echo $agreedcount;  } ?></span>
@@ -178,7 +178,7 @@ function DisplayUserQuoteCard($exp){
 		$hiddenusername = $user->_username;
 ?>
    <div class="col s12 user-container">
-   		<div class="critic-name-container col s12 m12 l4" data-id="<?php echo $user->_id; ?>">
+   		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
@@ -190,6 +190,8 @@ function DisplayUserQuoteCard($exp){
 	        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
 	        	<?php } ?>
 	        </div>
+		</div>
+        <div class="critic-quote-container col s12 m12 l9">
         	<?php if(sizeof($exp->_playedxp) > 0){ 
 		  	  	if($exp->_playedxp[0]->_completed == "101")
 					$percent = 100;
@@ -250,8 +252,6 @@ function DisplayUserQuoteCard($exp){
 		   			</div>
 	          	<?php } 
           	}?>
-		</div>
-        <div class="critic-quote-container col s12 m12 l8">
 			<div class="critic-quote">
 				<div class="critic-quote-icon"><i class="mdi-editor-format-quote"></i></div>
 				<span class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ echo "style='display:inline-block'"; } ?> ><?php if($agreedcount > 0){ echo $agreedcount;  } ?></span>

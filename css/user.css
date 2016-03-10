@@ -90,6 +90,7 @@
 
 .critic-quote-container{
 	text-align: left;
+	position:relative;
 }
 
 .critic-action-container{
@@ -114,6 +115,7 @@
 	font-size: 1.2em;
 	text-align: left;
 	width: 100%;
+	margin-left:65px;
 }
 
 .critic-quote-icon{
@@ -451,6 +453,14 @@
 	text-align:center;
 }
 
+@media only screen and (max-width : 992px) {
+	.critic-quote{
+		margin-left:70px;
+	}
+	.critic-quote-container{
+		margin-top:15px;
+	}
+}
 @media only screen and (max-width : 600px) {
 	.social-login-btn{
 		font-size: 20px;
@@ -515,5 +525,8 @@
 	    height: 23px;
 	    width: 23px;
 	    line-height: 23px;
+	}
+	.critic-quote{
+		margin-left:0px;
 	}
 }
