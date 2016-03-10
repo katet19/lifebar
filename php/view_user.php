@@ -57,7 +57,7 @@ function DisplayCriticQuoteCard($exp){
         	<?php if($user->_security == "Journalist"){ 
         			$percent = 100; ?>
 	          		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-	      			  	<div class="c100 mini gray p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+	      			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }else{ echo "gray"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
 					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-editor-format-quote"></i></span>
 						  <div class="slice">
 						    <div class="bar minibar"></div>
@@ -73,7 +73,7 @@ function DisplayCriticQuoteCard($exp){
 					
 				if($percent == 100){ ?>
   	  	       		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-			          	<div class="card-game-tier" style='margin-left:0px;' title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
 		    				<i class="mdi-hardware-gamepad"></i>
 			          	</div>
 		          	</div>
@@ -109,7 +109,7 @@ function DisplayCriticQuoteCard($exp){
 	    		if($percent == 101){
 	    		?>
 		          <div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-		          	<div class="card-game-tier" style='margin-left:0px;' title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
+		          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
 		          			<i class="mdi-action-visibility"></i>
 		          	</div>
 				   </div>
@@ -200,7 +200,7 @@ function DisplayUserQuoteCard($exp){
 					
 				if($percent == 100){ ?>
   	  	       		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-			          	<div class="card-game-tier" style='margin-left:0px;' title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
 		    				<i class="mdi-hardware-gamepad"></i>
 			          	</div>
 		          	</div>
@@ -236,7 +236,7 @@ function DisplayUserQuoteCard($exp){
 	    		if($percent == 101){
 	    		?>
 		          <div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
-		          	<div class="card-game-tier" style='margin-left:0px;' title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
+		          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
 		          			<i class="mdi-action-visibility"></i>
 		          	</div>
 				   </div>
