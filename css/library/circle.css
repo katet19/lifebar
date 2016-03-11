@@ -1075,6 +1075,19 @@
 .c100.orange.dark:hover > span {
   color: #e08833;
 }
+.c100.gray .bar,
+.c100.gray .fill {
+  border-color: #696967 !important;
+}
+.c100.one > span {
+  color: #FFF;
+}
+.c100.one:after {
+  background-color: #FFF;
+}
+.c100.one:hover > span {
+  color: #FFF;
+}
 .c100.one .bar,
 .c100.one .fill {
   border-color: #696967 !important;

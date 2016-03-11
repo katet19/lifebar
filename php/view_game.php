@@ -1,31 +1,23 @@
 <?php 
 function DisplayGame($gbid){
 	$game = GetGameByGBIDFull($gbid);
-	$critics = GetCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$othercritics = GetOutsideCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
-	ShowGameContent($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
+	ShowGameHeader($game, $myxp);
+	ShowGameContent($game, $myxp);
 }
 
 function DisplayGameViaID($gameid){
 	$game = GetGame($gameid);
-	$critics = GetCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$othercritics = GetOutsideCriticXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$myusers = GetMyUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
-	$otherusers = GetOutsideUsersXPForGame($game->_id, $_SESSION['logged-in']->_id);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
-	ShowGameContent($game, $critics, $othercritics, $myusers, $otherusers, $myxp);
+	ShowGameHeader($game, $myxp);
+	ShowGameContent($game, $myxp);
 }
 
-function ShowGameContent($game, $critics, $othercritics, $users, $otherusers, $myxp){ 
+function ShowGameContent($game, $myxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-critic-tab" class="col s12 game-tab"><?php ShowCritics($critics, $othercritics, $game, $myxp); ?></div>
-		<div id="game-user-tab" class="col s12 game-tab"><?php ShowUsers($users, $otherusers); ?></div>
+		<div id="game-community-tab" class="col s12 game-tab"><?php ShowCommunity($game, $_SESSION['logged-in']->_id, $myxp); ?></div>
+		<div id="game-analyze-tab" class="col s12 game-tab"></div>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab"><?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?></div>
 		<?php } ?>
@@ -33,215 +25,104 @@ function ShowGameContent($game, $critics, $othercritics, $users, $otherusers, $m
 	<?php DisplayGameInfo($game); ?>
 <?php }
 
-function ShowCritics($critics, $othercritics, $game, $myxp){
-	if($_SESSION['logged-in']->_id > 0){
-		$count = 1;
-		$allcritics = array();
-		foreach($critics as $critic){
-			$allcritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
-		}
-		
-		arsort($allcritics);
-		$allcritics = array_keys($allcritics);
+function ShowCommunity($game, $id, $myxp){
+	if($id != ""){
+		$verified = GetVerifiedXPForGame($game->_id, $id);
+		$curated = GetCuratedXPForGame($game->_id, $id);
+		$myusers = GetMyUsersXPForGame($game->_id, $id);
+	}
+	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
+	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
+	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
+	if($id != ""){
 		?>
-		<div class="row game-tab-subheader-container" >
-			<div class="col s12">
-				<div class="game-tab-subheader">Following</div>
+		<?php if(sizeof($verified) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><div class="game-community-verified mdi-action-done"></div> Verified</div>
+			<div class='row'>
+				<?php DisplayAllCommunityCards($verified, "Critic"); ?>
 			</div>
 		</div>
-		<?php
-		if(sizeof($allcritics) > 0){
-			while($count <= sizeof($allcritics)){
-				DisplayCriticQuoteCard($critics[$allcritics[$count-1]]);
-				$count++;
-			}
-		}else{
-			?>
-			<div class="row info-container" >
-				<div class="col s12">
-					<?php if($myxp->_bucketlist != "Yes" && sizeof($othercritics) == 0){ ?>
-						<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
-							<div class="info-label">Bookmark this game to keep track of your favorites</div>
-						<?php }else{ ?>
-							<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
-						<?php } ?>
-						<?php if($_SESSION['logged-in']->_id > 0){ ?>
-							<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-						<?php }else{ ?>
-							<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-						<?php } ?>
-					<?php }else{ ?>
-						<div class="info-label">None of the Critics you follow have XP for this game yet</div>
-					<?php } ?>
-				</div>
-			</div>
-			<?php
-		}
-		
-			?>
-			<div class="row game-tab-subheader-container" >
-				<div class="col s12">
-					<div class="game-tab-subheader" style='margin-top: <?php if(sizeof($allcritics) > 0){ echo "4em"; }else{ echo "0em"; } ?>'>Other Critics</div>
-				</div>
-			</div>
-			<?php
-			
-			$count = 1;
-			$allothercritics = array();
-			foreach($othercritics as $critic){
-				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
-			}
-			
-			arsort($allothercritics);
-			$allothercritics = array_keys($allothercritics);
-			
-			if(sizeof($allothercritics) > 0){
-				while($count <= sizeof($allothercritics)){
-					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
-					$count++;
-				}
-			}else{
-				?>
-				<div class="row info-container" >
-					<div class="col s12">
-						<?php if(sizeof($allcritics) > 0){ ?>
-							<div class="info-label">No one outside of the Critics you follow have XP for this game yet</div>
-						<?php }else{ ?>
-							<div class="info-label">Critics haven't published reviews for this game yet</div>
-						<?php } ?>
-					</div>
-				</div>
-				<?php
-			}
-		}else{
-			$count = 1;
-			$allothercritics = array();
-			foreach($othercritics as $critic){
-				$allothercritics[$critic->_id] = GetTotalAgreesForXP($critic->_id);
-			}
-			
-			arsort($allothercritics);
-			$allothercritics = array_keys($allothercritics);
-			
-			if(sizeof($allothercritics) > 0){
-				while($count <= sizeof($allothercritics)){
-					DisplayCriticQuoteCard($othercritics[$allothercritics[$count-1]]);
-					$count++;
-				}
-			}else{
-				?>
-				<div class="row info-container" >
-					<div class="col s12">
-						<div class="info-label">Critics haven't published reviews for this game yet</div>
-					</div>
-				</div>
-				<?php	
-			}
-		}
-		
-}
-
-function ShowUsers($users, $otherusers){
-	if($_SESSION['logged-in']->_id > 0){
-		$count = 1;
-		$allusers = array();
-		foreach($users as $user){
-			$allusers[$user->_id] = GetTotalAgreesForXP($user->_id);
-		}
-		
-		arsort($allusers);
-		$allusers = array_keys($allusers);
-		?>
-		<div class="row game-tab-subheader-container" >
-			<div class="col s12">
-				<div class="game-tab-subheader">Following</div>
-			</div>
+		<?php }
+		if(sizeof($myusers) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><i class="mdi-social-people" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Members</div></div>
+			<?php DisplayAllCommunityCards($myusers, "Users"); ?>
 		</div>
-		<?php
-		if(sizeof($allusers) > 0){
-			while($count <= sizeof($allusers)){
-				DisplayUserQuoteCard($users[$allusers[$count-1]]);
-				$count++;
-			}
-		}else{
-			?>
-			<div class="row info-container" >
-				<div class="col s12">
-					<div class="info-label">None of the users you follow have XP for this game yet</div>
-				</div>
+		<?php }
+		if(sizeof($curated) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><i class="mdi-file-folder-shared" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Curated</div></div>
+			<?php DisplayAllCommunityCards($curated, "Critic");	?>
+		</div>
+		<?php }else if(sizeof($othercurated) == 0 && sizeof($otherverified) == 0 && sizeof($verified) == 0){ ?>
+			<?php if($myxp->_bucketlist != "Yes"){ ?>
+				<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
+					<div class="info-label">Bookmark this game to keep track of your favorites</div>
+				<?php }else{ ?>
+					<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
+				<?php } ?>
+				<?php if($_SESSION['logged-in']->_id > 0){ ?>
+					<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
+				<?php }else{ ?>
+					<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
+				<?php } ?>
+			<?php } ?>
+		<?php }
+	}?>
+	<?php if(sizeof($otherverified) > 0 || sizeof($othercurated) > 0 || sizeof($otherusers) > 0){ ?>
+		<?php if($id != ""){ ?>
+			<div class='game-community-bigbreak'>
+				NOT FOLLOWING
 			</div>
-			<?php
-		}
-		
-			?>
-			<div class="row game-tab-subheader-container" >
-				<div class="col s12">
-					<div class="game-tab-subheader" style='margin-top: <?php if(sizeof($allusers) > 0){ echo "4em"; }else{ echo "0em"; } ?>'>Other Users</div>
-				</div>
-			</div>
-			<?php
-			$count = 1;
-			$allotherusers = array();
-			foreach($otherusers as $user){
-				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
-			}
-			
-			arsort($allotherusers);
-			$allotherusers = array_keys($allotherusers);
-			
-			if(sizeof($otherusers) > 0){
-				while($count <= sizeof($allotherusers)){
-					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
-					$count++;
-				}
-			}else{
-				?>
-				<div class="row info-container" >
-					<div class="col s12">
-						<div class="info-label">No one outside of the people you follow have XP for this game yet</div>
-					</div>
-				</div>
-				<?php
-			}
-		}else{
-			$count = 1;
-			$allotherusers = array();
-			foreach($otherusers as $user){
-				$allotherusers[$user->_id] = GetTotalAgreesForXP($user->_id);
-			}
-			
-			arsort($allotherusers);
-			$allotherusers = array_keys($allotherusers);
-			
-			if(sizeof($otherusers) > 0){
-				while($count <= sizeof($allotherusers)){
-					DisplayUserQuoteCard($otherusers[$allotherusers[$count-1]]);
-					$count++;
-				}
-			}else{
-				?>
-				<div class="row info-container" >
-					<div class="col s12">
-						<div class="info-label">No one has entered XP for this game yet</div>
-					</div>
-				</div>
-				<?php	
-			}
-		}
+		<?php } ?>
+		<?php if(sizeof($otherverified) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><div class="game-community-verified mdi-action-done"></div> Verified</div>
+			<?php DisplayAllCommunityCards($otherverified, "Critic");	?>
+		</div>
+			<?php }
+		if(sizeof($othercurated) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><i class="mdi-file-folder-shared" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Curated</div></div>
+			<?php DisplayAllCommunityCards($othercurated, "Critic");	?>
+		</div>
+		<?php }
+		if(sizeof($otherusers) > 0){ ?>
+		<div class='game-community-box'>
+			<div class='game-community-box-header'><i class="mdi-social-people" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Members</div></div>
+			<?php DisplayAllCommunityCards($otherusers, "Users"); ?>
+		</div>
+	<?php }
+	}
 }
 
-function ShowGameTabs($critics, $othercritics, $users, $otherusers, $myxp){
-	$totalusers = sizeof($users) + sizeof($otherusers);
-	$totalcritics = sizeof($critics) + sizeof($othercritics);
-	if(sizeof($otherusers) > 50)
-		$totalusers = $totalusers."+";
+function DisplayAllCommunityCards($users, $type){
+	$count = 1;
+	$sortarray = array();
+	foreach($users as $v){
+		$sortarray[$v->_id] = GetTotalAgreesForXP($v->_id);
+	}
+	arsort($sortarray);
+	$sortarray = array_keys($sortarray);
+	
+	while($count <= sizeof($sortarray)){
+		if($type == "Critic")
+			DisplayCriticQuoteCard($users[$sortarray[$count-1]]);
+		else
+			DisplayUserQuoteCard($users[$sortarray[$count-1]]);
+		$count++;
+	}
+}
+
+function ShowGameTabs($myxp){
 	?>
 	<div id="game-navigation-header">
 		<div class="row" style='margin:0;'>
 		    <div class="col s12 m8" style="padding:0;">
 		      <ul class="tabs gameNav" style="background-color:transparent">
-		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-critic-tab" class="active waves-effect waves-light">Critics <?php if($totalcritics > 0){ echo "<div class='HideForMobile'>(".$totalcritics.")</div>"; } ?></a></li>
-		        <li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($totalusers) > 0){ echo "<div class='HideForMobile'>(".$totalusers.")</div>"; } ?></a></li>
+		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-community-tab" class="active waves-effect waves-light">Community</a></li>
+		        <!--<li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($totalusers) > 0){ echo "<div class='HideForMobile'>(".$totalusers.")</div>"; } ?></a></li>-->
 		        <li class="tab col s3 userGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
 		      </ul>
 			</div>
@@ -250,7 +131,7 @@ function ShowGameTabs($critics, $othercritics, $users, $otherusers, $myxp){
 	<?php
 }
 
-function ShowGameHeader($game, $critics, $othercritics, $users, $otherusers, $myxp){
+function ShowGameHeader($game, $myxp){
 	?>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -261,7 +142,7 @@ function ShowGameHeader($game, $critics, $othercritics, $users, $otherusers, $my
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
-		<?php ShowGameTabs($critics, $othercritics, $users, $otherusers, $myxp); ?>
+		<?php ShowGameTabs($myxp); ?>
 		<div class="fixed-action-btn" id="game-fab">
 			<?php ShowMyGameFAB($game->_id); ?>
 		</div>
@@ -309,9 +190,6 @@ function DisplayGameInfo($game){	?>
 	<div class="HideForDesktop">
 		<?php DisplayGameInfoBackNav(); ?>
 	</div>
-	<!--<div class="row">
-		<div class="col s12 GameInfoHeader"><i class="mdi-action-info" style='font-size: 1.5em;vertical-align: sub;'></i> INFORMATION</div>
-	</div>-->
 	<div class="row" style='padding-top:3em;'>
 		<div class="col s12 GameInfoLabel">Released:</div>
 		<div class="col s12 GameInfoContent">
