@@ -306,6 +306,9 @@
 		if($_POST['action'] == 'DisplayMyXP' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			DisplayMyXP($_POST['gameid']);
 		}
+		if($_POST['action'] == 'DisplayMyAnalyze' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
+			DisplayAnalyzeTab($_SESSION['logged-in'], $_POST['gameid']);
+		}
 		if($_POST['action'] == 'AddBookmark' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"Yes");
 		}

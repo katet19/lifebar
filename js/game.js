@@ -133,7 +133,6 @@ function AttachGameEvents(currentTab){
   		var html = $('#infoModal').html();
   		ShowPopUp(html);
 	});
-	
 	AttachEditEvents();
  	$(".critic-name-container, .myxp-details-agree-listitem").on("click", function(e){
   		e.stopPropagation();
@@ -159,6 +158,7 @@ function AttachGameEvents(currentTab){
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();
+	DisplayExpSpectrum();
 }
 
 function AttachCriticBookmark(){
@@ -643,6 +643,32 @@ function GameCardActions(element){
 			$(this).parent().parent().removeClass("card-tier-details-active");
 			$(this).parent().parent().parent().parent().find(".card-game-tier").show();
 			$(this).parent().parent().parent().parent().find(".c100").show();
+		});
+	}
+}
+
+function DisplayExpSpectrum(){
+	if($(".GraphCriticUsers").length > 0){
+		$(".GraphCriticUsers").each(function(){
+			var experiencedUsersGraph = $(this).get(0).getContext("2d");
+			var data = {
+		    labels: ["", "", "", "", ""],
+		    datasets: [
+		        {
+		            label: "Lifetime XP",
+		            fillColor: "rgba(85, 85, 147, 0.41)",
+		            strokeColor: "rgba(85, 85, 147, 0.9)",
+		            pointColor: "rgba(85, 85, 147, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [$(this).attr("data-t5"), $(this).attr("data-t4"), $(this).attr("data-t3"), $(this).attr("data-t2"), $(this).attr("data-t1")]
+		        }
+		    ]
+		};
+		$(this).attr('width', $(this).parent().parent().parent().width()-40);
+        $(this).attr('height', 250);
+		var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : false, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", animation: true });
 		});
 	}
 }

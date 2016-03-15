@@ -1,0 +1,86 @@
+.analyze-card{
+	background-color: white;
+	width:100%;
+	position:relative;
+    padding: 1em 0.75rem 0em !important;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.analyze-card-header{
+    text-align: left;
+    padding: 5px 20px 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+}
+
+.analyze-card-title{
+	font-size:1.25em;
+	font-weight:500;
+	display:inline-block;
+}
+
+.analyze-card-sub-title{
+	color:rgba(0,0,0,0.8);
+	margin-left:15px;
+	display:inline-block;
+}
+
+.analyze-exp-spectrum-tier{
+    display: inline-block;
+    padding: 5px;
+    position: absolute;
+    bottom: 20px;
+    font-weight: 300;
+    left: 4.7%;
+    font-size: 1.25em;
+}
+
+.analyze-exp-spectrum-tier-sub{
+    bottom: 5px;
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+}
+
+.analyze-exp-spectrum-game-piece{
+    position: relative;
+    top: -33px;
+    font-size: 1.5em;
+    left: 5px;
+    height: 235px;
+    display: inline-block;
+}
+
+.analyze-exp-spectrum-game-line{
+    position: absolute;
+    top: 31px;
+    bottom: 0;
+    left: 13px;
+    color: transparent;
+    width: 2px;
+    background-color: black;
+    display: inline-block;
+}
+
+.analyze-card-list-item{
+	margin-top:15px;
+	cursor: pointer;
+}
+
+.analyze-game-list-details{
+	font-weight:300;
+}
+
+@media only screen and (max-width : 992px) {
+
+}
+
+@media only screen and (max-width : 600px) {
+
+}
+

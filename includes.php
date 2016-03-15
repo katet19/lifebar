@@ -50,6 +50,7 @@ set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING);
 //Views
 require_once 'php/view_admin.php';
 require_once 'php/view_activity.php';
+require_once 'php/view_analyze.php';
 require_once 'php/view_milestones.php';
 require_once 'php/view_discover.php';
 require_once 'php/view_game.php';
