@@ -70,17 +70,82 @@
 .analyze-card-list-item{
 	margin-top:15px;
 	cursor: pointer;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	min-height: 92px;
 }
 
 .analyze-game-list-details{
 	font-weight:300;
 }
 
+.analyze-game-my-tier{
+    display: inline-block;
+    position: relative;
+}
+
+.analyze-game-tier-position{
+    position: absolute;
+    left: 0;
+    top: -70px;
+    color: white;
+    width: 40px;
+    display: inline-block;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.analyze-view-more-hide{
+	display:none;
+}
+
+.analyze-view-more-show{
+	display:block;
+}
+
+.analyze-view-less-button, .analyze-view-more-button{
+	margin-top:30px;
+}
+
+.analyze-game-list-title{
+    position: relative;
+    font-size: 1.2em;
+    text-align: left;
+    font-weight: 500;
+    padding: 15px 10px 0px;
+    margin-left: 125px;
+    color: rgba(0,0,0,0.8);
+    width:40%;
+}
+
+.analyze-image-list{
+    height: 75px !important;
+    width: 100px !important;
+    float: left;
+    position: relative;
+}
 @media only screen and (max-width : 992px) {
 
 }
 
 @media only screen and (max-width : 600px) {
-
+	.analyze-game-list-title{
+		width:60%;
+		margin-left:0;
+	}
+	.analyze-image-list{
+		display:none;
+	}
+	.analyze-game-my-tier{
+	    left: 30px;
+	}
+	.analyze-card-list-item{
+		min-height:25px;
+	}
 }
 

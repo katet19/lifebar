@@ -159,12 +159,35 @@ function AttachGameEvents(currentTab){
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();
 	DisplayExpSpectrum();
+	AnalyzeViewMoreButtons();
+	$(".analyze-card-list-item").on('click', function(){ 
+		var game = $(this).attr("data-gbid");
+		ShowGame($(this).attr("data-gbid"), $("#discover"));
+	});
 }
 
 function AttachCriticBookmark(){
 	$(".no-critic-bookmark").on('click', function(e){
 		SubmitBookmark("AddBookmark", $(".game-add-bookmark-btn").attr("data-gameid"));	
 	});
+}
+
+function AnalyzeViewMoreButtons(){
+	if($(".analyze-view-more-hide").length > 0){
+		$(".analyze-view-more-button").css({"display":"inline-block"});
+		$(".analyze-view-more-button").on("click", function(){
+			$(".analyze-view-more-hide").addClass("analyze-view-more-show");
+			$(".analyze-view-more-hide").removeClass("analyze-view-more-hide");
+			$(".analyze-view-less-button").css({"display":"inline-block"});
+			$(".analyze-view-more-button").css({"display":"none"});
+		});
+		$(".analyze-view-less-button").on("click", function(){
+			$(".analyze-view-more-show").addClass("analyze-view-more-hide");
+			$(".analyze-view-more-show").removeClass("analyze-view-more-show");
+			$(".analyze-view-more-button").css({"display":"inline-block"});
+			$(".analyze-view-less-button").css({"display":"none"});
+		});
+	}
 }
 
 function SubmitBookmark(serviceValue, gameid){
