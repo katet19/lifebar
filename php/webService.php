@@ -145,7 +145,7 @@
 			CalculateMilestones($criticid, $game->_id, '', 'Played XP', true);
 		}
 		if($_POST['action'] == 'RequestUpdateFromGiantBomb' ){
-			UpdateGameFromGiantBombByID($_POST['gameid'], "Sorta");
+			FullUpdateViaGameID($_POST['gameid'], "Sorta");
 		}
 		if($_POST['action'] == 'DisplayUnmappedManager'){
 			DisplayManualMapping();
