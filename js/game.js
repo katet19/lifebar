@@ -173,21 +173,23 @@ function AttachCriticBookmark(){
 }
 
 function AnalyzeViewMoreButtons(){
-	if($(".analyze-view-more-hide").length > 0){
-		$(".analyze-view-more-button").css({"display":"inline-block"});
-		$(".analyze-view-more-button").on("click", function(){
-			$(".analyze-view-more-hide").addClass("analyze-view-more-show");
-			$(".analyze-view-more-hide").removeClass("analyze-view-more-hide");
-			$(".analyze-view-less-button").css({"display":"inline-block"});
-			$(".analyze-view-more-button").css({"display":"none"});
-		});
-		$(".analyze-view-less-button").on("click", function(){
-			$(".analyze-view-more-show").addClass("analyze-view-more-hide");
-			$(".analyze-view-more-show").removeClass("analyze-view-more-show");
-			$(".analyze-view-more-button").css({"display":"inline-block"});
-			$(".analyze-view-less-button").css({"display":"none"});
-		});
-	}
+	$(".analyze-card").each(function(){ 
+		if($(this).find(".analyze-view-more-hide").length > 0){
+			$(this).find(".analyze-view-more-button").css({"display":"inline-block"});
+		}
+	});
+	$(".analyze-view-more-button").on("click", function(){
+		$(this).parent().parent().find(".analyze-view-more-hide").addClass("analyze-view-more-show");
+		$(this).parent().parent().find(".analyze-view-more-hide").removeClass("analyze-view-more-hide");
+		$(this).parent().find(".analyze-view-less-button").css({"display":"inline-block"});
+		$(this).css({"display":"none"});
+	});
+	$(".analyze-view-less-button").on("click", function(){
+		$(this).parent().parent().find(".analyze-view-more-show").addClass("analyze-view-more-hide");
+		$(this).parent().parent().find(".analyze-view-more-show").removeClass("analyze-view-more-show");
+		$(this).parent().find(".analyze-view-more-button").css({"display":"inline-block"});
+		$(this).css({"display":"none"});
+	});
 }
 
 function SubmitBookmark(serviceValue, gameid){

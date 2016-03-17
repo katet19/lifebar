@@ -830,6 +830,35 @@ function GetGameMetaDataIDs($gbid, $pconn = null){
 	return $metadata;
 }
 
+function GetGamesFranchiseGames($gbid, $pconn = null){
+	$mysqli = Connect($pconn);
+	$franchiseInfo = array();
+	if ($result = $mysqli->query("select `FranchiseID` from `Game_Franchises` where `GBID` = '".$gbid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$franchiseID = $row["FranchiseID"];
+		}
+	}
+	
+	if ($result = $mysqli->query("select `GBID` from `Game_Franchises` where `FranchiseID` = '".$franchiseID."' and `GBID` != '".$gbid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$franchises[] = $row["GBID"];
+		}
+	}
+	
+	if ($result = $mysqli->query("select `Name` from `Link_Franchises` where `GBID` = '".$franchiseID."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$franchiseName = $row["Name"];
+		}
+	}
+	
+	
+	$franchiseInfo[] = $franchiseName;
+	$franchiseInfo[] = $franchises;
+	if($pconn == null)
+        Close($mysqli, $result);
+	return $franchiseInfo;
+}
+
 
 function GetPlatforms(){
 	$mysqli = Connect();

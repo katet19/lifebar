@@ -1,5 +1,6 @@
 <?php function DisplayAnalyzeTab($user, $myxp, $game){
 	BuildExperienceSpectrum($user, $myxp);
+	BuildFranchiseGames($game, $user->_id);
 	BuildSimilarGames($game, $user->_id);
 	BuildProfileProgress($game, $user->_id);
 } ?>
@@ -71,6 +72,107 @@
 	<?php
 } 
 
+function BuildFranchiseGames($game, $userid){
+	$franchiseInfo = GetGamesFranchiseGames($game->_gbid);
+	if(sizeof($franchiseInfo[1]) > 0){
+	?>
+	<div class="row">
+		<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
+		<div class='analyze-card-header'>
+			<div class='analyze-card-title'><?php echo $franchiseInfo[0]; ?> Franchise</div>
+		</div>
+		<?php 
+		$count = 1;
+		foreach($franchiseInfo[1] as $games){ 
+				unset($simgame);
+				unset($simxp);
+				$simgame = GetGameByGBID($games);
+				$simxp = GetExperienceForUserComplete($userid, $simgame->_id);
+				if($simgame != ''){ ?>
+				<div class="col s12 game-list-item" data-tier='<?php echo $simxp->_tier; ?>' data-year='<?php echo $simxp->_year; ?>' data-title="<?php echo $simxp->_title; ?>" >
+		     		<div class="analyze-card-list-item <?php if($count > 5){ ?>analyze-view-more-hide<?php } ?>" data-gameid="<?php echo $simxp->_gameid; ?>" data-gbid="<?php echo $games; ?>" style='background-color:white;'>
+				        <div class="analyze-image-list" style="width:100%;background:url(<?php echo $simgame->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				        <div class="analyze-game-list-title">
+				        	<?php echo $simgame->_title; ?> 
+				        	<div class="analyze-game-list-details"><?php if($simgame->_year > 0){ echo $simgame->_year; } ?></div>
+			        	</div>
+			      		<div class="analyze-game-my-tier">
+				  			<?php if(sizeof($simxp->_playedxp) > 0){ 
+						  	  	if($simxp->_playedxp[0]->_completed == "101")
+									$percent = 100;
+								else
+									$percent = $simxp->_playedxp[0]->_completed;
+									
+								if($percent == 100){ ?>
+				  	  	       		<div class="analyze-game-tier-position tier<?php echo $simxp->_tier; ?>BG z-depth-1">
+							          	<div class="card-game-tier" title="<?php echo "Tier ".$simxp->_tier." - Completed"; ?>">
+						    				<i class="mdi-hardware-gamepad"></i>
+							          	</div>
+						          	</div>
+					          	<?php }else{ ?>
+					          		<div class="analyze-game-tier-position tier<?php echo $simxp->_tier; ?>BG z-depth-1">
+					      			  	<div class="c100 mini <?php if($simxp->_tier == 1){ echo "tierone"; }else if($simxp->_tier == 2){ echo "tiertwo"; }else if($simxp->_tier == 3){ echo "tierthree"; }else if($simxp->_tier == 4){ echo "tierfour"; }else if($simxp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$simxp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+									  	  <span class='tierTextColor<?php echo $simxp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+										  <div class="slice">
+										    <div class="bar minibar"></div>
+										    <div class="fill"></div>
+										  </div>
+										</div>
+									</div>
+					          	<?php } ?>
+				          	<?php }else if(sizeof($simxp->_watchedxp) > 0){
+					  			$percent = 20;
+					  	  		$length = "";
+					    		foreach($simxp->_watchedxp as $watched){
+					    			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+					    				$percent = 101;
+					    				$length = $watched->_length;
+					    			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+					    				$percent = 100;
+					    				$length = $watched->_length;
+					    			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+					    				$percent = 50;
+					    				$length = $watched->_length;
+					    			}else{
+					    				$length = $watched->_length;
+					    			}
+					    		}
+					    		
+					    		if($percent == 101){
+					    		?>
+						          <div class="analyze-game-tier-position tier<?php echo $simxp->_tier; ?>BG z-depth-1">
+						          	<div class="card-game-tier" title="<?php echo "Tier ".$simxp->_tier." - ".$length; ?>">
+						          			<i class="mdi-action-visibility"></i>
+						          	</div>
+								   </div>
+				  	  			<?php }else{ ?>
+						      		<div class="analyze-game-tier-position tier<?php echo $simxp->_tier; ?>BG z-depth-1">
+						  			  	<div class="c100 mini <?php if($simxp->_tier == 1){ echo "tierone"; }else if($simxp->_tier == 2){ echo "tiertwo"; }else if($simxp->_tier == 3){ echo "tierthree"; }else if($simxp->_tier == 4){ echo "tierfour"; }else if($simxp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$simxp->_tier." - ".$length; ?>" style='background-color:white;'>
+									  	  <span class='tierTextColor<?php echo $simxp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+										  <div class="slice">
+										    <div class="bar minibar"></div>
+										    <div class="fill"></div>
+										  </div>
+										</div>
+						   			</div>
+					          	<?php } 
+				          	}?>
+			      		</div>
+		      		</div>
+		     	</div>
+			<?php $count++;
+			} 
+		}?>
+		<div class='analyze-card-header' style='border-bottom:none;margin-bottom:10px;margin-top:30px;padding:inherit;'>
+			<div class='analyze-view-more-button btn' style='display:none;'>View More</div>
+			<div class='analyze-view-less-button btn' style='display:none;'>Hide</div>
+		</div>
+		</div>
+	</div>
+	<?php
+	}
+}
+
 function BuildSimilarGames($game, $userid){
 	$similargames = explode(",",$game->_similar);
 	if(sizeof($similargames) > 0){
@@ -89,7 +191,7 @@ function BuildSimilarGames($game, $userid){
 				$simxp = GetExperienceForUserComplete($userid, $simgame->_id);
 				if($simgame != ''){ ?>
 				<div class="col s12 game-list-item" data-tier='<?php echo $simxp->_tier; ?>' data-year='<?php echo $simxp->_year; ?>' data-title="<?php echo $simxp->_title; ?>" >
-		     		<div class="analyze-card-list-item <?php if($count > 10){ ?>analyze-view-more-hide<?php } ?>" data-gameid="<?php echo $simxp->_gameid; ?>" data-gbid="<?php echo $similar; ?>" style='background-color:white;'>
+		     		<div class="analyze-card-list-item <?php if($count > 5){ ?>analyze-view-more-hide<?php } ?>" data-gameid="<?php echo $simxp->_gameid; ?>" data-gbid="<?php echo $similar; ?>" style='background-color:white;'>
 				        <div class="analyze-image-list" style="width:100%;background:url(<?php echo $simgame->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				        <div class="analyze-game-list-title">
 				        	<?php echo $simgame->_title; ?> 
