@@ -36,7 +36,8 @@
     position: absolute;
     bottom: 20px;
     font-weight: 300;
-    left: 4.7%;
+    left: 2.4%;
+    z-index: -1;
     font-size: 1.25em;
 }
 
@@ -49,10 +50,10 @@
 
 .analyze-exp-spectrum-game-piece{
     position: relative;
-    top: -33px;
+    top: -55px;
     font-size: 1.5em;
     left: 5px;
-    height: 235px;
+    height: 305px;
     display: inline-block;
 }
 
@@ -129,6 +130,57 @@
     float: left;
     position: relative;
 }
+
+.analyze-doughnut-header{
+    color:rgba(0,0,0,0.75);
+}
+
+.analyze-doughnut-item{
+}
+
+.analyze-doughnut-key{
+    display:inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+.analyze-doughnut-block{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    margin-left:5px;
+}
+.analyze-doughnut-desc{
+    display:inline-block;
+    font-weight:500;
+    padding: 0 5px;
+}
+
+.analyze-object-image-item{
+    width: 200px;
+    height: 150px;
+    display: inline-block;
+}
+
+.analyze-progress-item-details{
+    display: inline-block;
+    margin-left: 20px;
+    height: 75px;
+    vertical-align: initial;
+}
+
+.analyze-progress-item{
+    padding: 5px 10px 50px;
+}
+
+.analyze-doughnut-container{
+    
+}
+
+.analyze-doughnut-relational{
+    vertical-align: middle; 
+    margin: 0.5em 20px 1em; 
+}
+
 @media only screen and (max-width : 992px) {
 
 }
@@ -147,5 +199,25 @@
 	.analyze-card-list-item{
 		min-height:25px;
 	}
+	.analyze-object-image-item{
+	    height:75px;
+	    width:100px;
+        padding-top: 10px !important;
+	}
+	.analyze-progress-item-details{
+	    vertical-align: top;
+	}
+	.analyze-progress-item{
+        padding: 5px 10px 0px;
+    }
+    .analyze-doughnut-container{
+        text-align: left;
+        border-bottom: solid 1px rgba(0,0,0,0.3);
+        padding-bottom: 20px !important;
+        margin-bottom: 20px;
+    }
+    .analyze-doughnut-relational{
+        margin: 0.5em 5px 1em 0px;
+    }
 }
 

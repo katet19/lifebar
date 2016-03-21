@@ -830,35 +830,108 @@ function GetGameMetaDataIDs($gbid, $pconn = null){
 	return $metadata;
 }
 
-function GetGamesFranchiseGames($gbid, $pconn = null){
+function GetGamesFranchiseGames($gbid, $userid, $pconn = null){
 	$mysqli = Connect($pconn);
-	$franchiseInfo = array();
+	$franchises = array();
 	if ($result = $mysqli->query("select `FranchiseID` from `Game_Franchises` where `GBID` = '".$gbid."'")) {
 		while($row = mysqli_fetch_array($result)){
-			$franchiseID = $row["FranchiseID"];
+			$franchiseID[] = $row["FranchiseID"];
+		}
+	}
+	if(sizeof($franchiseID) > 0){
+		foreach($franchiseID as $franID){
+			$tierData = array(); 
+			$tierData[1]=0; 
+			$tierData[2]=0; 
+			$tierData[3]=0; 
+			$tierData[4]=0; 
+			$tierData[5]=0;
+			
+			unset($games);
+			unset($franchiseInfo);
+			$foundsomething = false;
+			if ($result = $mysqli->query("select e.`Tier` from `Game_Franchises` gf, `Games` g, `Experiences` e where gf.`FranchiseID` = '".$franID."' and gf.`GBID` = g.`GBID` and e.`GameID` = g.`ID` and e.`UserID` = '".$userid."'")) {
+				while($row = mysqli_fetch_array($result)){
+					if($row["Tier"] == 1)
+						$tierData[1] = $tierData[1] + 1;
+					else if($row["Tier"] == 2)
+						$tierData[2] = $tierData[2] + 1;
+					else if($row["Tier"] == 3)
+						$tierData[3] = $tierData[3] + 1;
+					else if($row["Tier"] == 4)
+						$tierData[4] = $tierData[4] + 1;
+					else if($row["Tier"] == 5)
+						$tierData[5] = $tierData[5] + 1;
+						
+					$foundsomething = true;
+				}
+			}
+			
+			$franchiseMilestone = GetSpecificMilestoneForUser($userid, $franID, 'Franchises');
+			
+			if($foundsomething && $franchiseMilestone->_name != ""){
+				$franchiseInfo[] = $tierData;
+				$franchiseInfo[] = $franchiseMilestone;
+				$franchises[] = $franchiseInfo;
+			}
 		}
 	}
 	
-	if ($result = $mysqli->query("select `GBID` from `Game_Franchises` where `FranchiseID` = '".$franchiseID."' and `GBID` != '".$gbid."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$franchises[] = $row["GBID"];
-		}
-	}
-	
-	if ($result = $mysqli->query("select `Name` from `Link_Franchises` where `GBID` = '".$franchiseID."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$franchiseName = $row["Name"];
-		}
-	}
-	
-	
-	$franchiseInfo[] = $franchiseName;
-	$franchiseInfo[] = $franchises;
 	if($pconn == null)
         Close($mysqli, $result);
-	return $franchiseInfo;
+	return $franchises;
 }
 
+function GetGamesDeveloperGames($gbid, $userid, $pconn = null){
+	$mysqli = Connect($pconn);
+	$developers = array();
+	if ($result = $mysqli->query("select `DeveloperID` from `Game_Developers` where `GBID` = '".$gbid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$developerID[] = $row["DeveloperID"];
+		}
+	}
+	if(sizeof($developerID) > 0){
+		foreach($developerID as $devID){
+			$tierData = array(); 
+			$tierData[1]=0; 
+			$tierData[2]=0; 
+			$tierData[3]=0; 
+			$tierData[4]=0; 
+			$tierData[5]=0;
+			
+			unset($games);
+			unset($developerInfo);
+			$foundsomething = false;
+			if ($result = $mysqli->query("select e.`Tier` from `Game_Developers` gf, `Games` g, `Experiences` e where gf.`DeveloperID` = '".$devID."' and gf.`GBID` = g.`GBID` and e.`GameID` = g.`ID` and e.`UserID` = '".$userid."'")) {
+				while($row = mysqli_fetch_array($result)){
+					if($row["Tier"] == 1)
+						$tierData[1] = $tierData[1] + 1;
+					else if($row["Tier"] == 2)
+						$tierData[2] = $tierData[2] + 1;
+					else if($row["Tier"] == 3)
+						$tierData[3] = $tierData[3] + 1;
+					else if($row["Tier"] == 4)
+						$tierData[4] = $tierData[4] + 1;
+					else if($row["Tier"] == 5)
+						$tierData[5] = $tierData[5] + 1;
+						
+					$foundsomething = true;
+				}
+			}
+			
+			$devMilestone = GetSpecificMilestoneForUser($userid, $devID, 'Developers');
+			if($foundsomething && $devMilestone->_name != ""){
+				$developerInfo[] = $tierData;
+				$developerInfo[] = $devMilestone;
+				$developers[] = $developerInfo;
+			}
+		}
+	}
+	
+	if($pconn == null)
+        Close($mysqli, $result);
+	return $developers;
+}
 
 function GetPlatforms(){
 	$mysqli = Connect();

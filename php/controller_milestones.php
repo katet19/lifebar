@@ -446,6 +446,36 @@ function GetDeveloperGames($devid, $userid){
 	return $myxp;
 }
 
+function GetSpecificMilestoneForUser($userid, $objectID, $type){
+	$mysqli = Connect();
+	$query = "select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and `Type` = 'XP' and b.`ObjectID` = '".$objectID."' and b.`ID` = p.`MilestoneID` and `Category` = '".$type."'";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$milestone = new Milestone($row[0],
+			$row['Name'],
+			$row['Description'],
+			$row['Type'],
+			$row['Image'],
+			$row['Difficulty'],
+			$row['Validation'],
+			$row[9],
+			$row[10],
+			$row[11],
+			$row[12],
+			$row[13],
+			$row['Enabled'],
+			$row['Parent'],
+			$row['Category'],
+			GetMilestoneProgression($row[0], $userid, $mysqli),
+			$row['ObjectID']
+			);
+			
+		}
+	}
+	Close($mysqli, $result);
+	return $milestone;
+}
+
 
 function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic){
 	$progress = array();
