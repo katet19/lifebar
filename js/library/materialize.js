@@ -1000,7 +1000,7 @@ else {
       // Update the variables with the new link and content
       $active = $(this);
       $content = $(this.hash);
-      if($(this).prop("hash") != "#profile" && $(this).prop("hash") != "#games" && $(this).prop("hash") != "#game-myxp-tab" && $(this).prop("hash") != "#game-user-tab" && $(this).prop("hash") != "#game-critic-tab")
+      if($(this).prop("hash") != "#profile" && $(this).prop("hash") != "#games" && $(this).prop("hash") != "#game-myxp-tab" && $(this).prop("hash") != "#game-community-tab" && $(this).prop("hash") != "#game-analyze-tab")
       	location.hash = $(this).prop("hash");
       $links = $this.find('li.tab a');
 

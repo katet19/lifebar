@@ -1147,6 +1147,136 @@ function GetMyUsersXPForGame($gameid, $userid){
 	return $exp;
 }
 
+function GetMyTiersByYear($userid, $year){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Experiences` e, `Games`g WHERE e.`GameID` = g.`ID` and e.`UserID` = '".$userid."' and g.`Year` = '".$year."'";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
+function GetMyTiersByGenre($userid, $genre){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Experiences` e, `Games`g WHERE e.`GameID` = g.`ID` and e.`UserID` = '".$userid."' and g.`Genre` = '".$genre."'";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
+function GetUserTiersForGame($gameid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` = u.`ID` and (u.`Access` = 'User' or u.`Access` = 'Admin')";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
+function GetCriticTiersForGame($gameid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` = u.`ID` and (u.`Access` = 'Journalist' or u.`Access` = 'Authenticated')";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
+function GetFollowingTiersForGame($gameid, $userid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and e.`UserID` = u.`ID`";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
 function GetOutsideUsersXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
@@ -1449,10 +1579,10 @@ function GetExperienceForGameByEvents($gameid, $userid){
 	return $exp;
 }
 
-function GetCriticXPForGame($gameid, $userid){
+function GetCuratedXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Journalist') order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
@@ -1482,10 +1612,76 @@ function GetCriticXPForGame($gameid, $userid){
 	return $exp;
 }
 
-function GetOutsideCriticXPForGame($gameid, $userid){
+function GetVerifiedXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and (usr.`Access` = 'Journalist' or usr.`Access` = 'Authenticated')) order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Authenticated') order by exp.`Tier` ASC")) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($row["UserID"], $mysqli);
+			$experience = new Experience($row["ID"],
+						$user->_first,
+						$user->_last,
+						$user,
+						$row["UserID"],
+						$row["GameID"],
+						GetGame($row["GameID"], $mysqli),
+						$row["Tier"],
+						$row["Quote"],
+						$row["ExperienceDate"],
+						$row["Link"],
+						$row["Owned"],
+						$row["BucketList"],
+						$row["AuthenticXP"]);
+						if($user->_security == "Authenticated"){
+							$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+							$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+						}
+				
+			$exp[$row["ID"]] = $experience;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $exp;
+}
+
+function GetOutsideCuratedXPForGame($gameid, $userid){
+	$exp = array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Journalist') order by exp.`Tier` ASC")) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($row["UserID"], $mysqli);
+			$experience = new Experience($row["ID"],
+						$user->_first,
+						$user->_last,
+						$user,
+						$row["UserID"],
+						$row["GameID"],
+						GetGame($row["GameID"], $mysqli),
+						$row["Tier"],
+						$row["Quote"],
+						$row["ExperienceDate"],
+						$row["Link"],
+						$row["Owned"],
+						$row["BucketList"],
+						$row["AuthenticXP"]);
+						if($user->_security == "Authenticated"){
+							$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+							$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+						}
+				
+			$exp[$row["ID"]] = $experience;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $exp;
+}
+
+function GetOutsideVerifiedXPForGame($gameid, $userid){
+	$exp = array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp, `Users` usr where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and (exp.`UserID` = usr.`ID` and usr.`Access` = 'Authenticated') order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["ID"],
@@ -1658,6 +1854,7 @@ function GetSubExperiences($userid, $gameid, $type, $pconn = null){
 				$row['Completed'], 
 				$row['Mode'], 
 				$row['Platform'],
+				$row['PlatformIDs'],
 				$row['DLC'],
 				$row['Alpha'],
 				$row['Beta'],

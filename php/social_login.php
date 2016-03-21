@@ -81,6 +81,7 @@
 								        }
 				     				});
 				     			}else{
+				     				setCookie("RememberMe", userdata[0], 14);
 				     				GAEvent('Third Party Login', 'Google');
 		          					location.hash = "#activity";
 		 							location.reload();
@@ -197,7 +198,7 @@
 	}
 	if($_GET['action'] == 'LoginTwitter2'){
 		if(isset($_GET['denied'])){
-			$url = "http://ken.lifebar.io";
+			$url = "http://ryu.lifebar.io";
 			header("Location: $url");
 		}else{
 			TwitterOAuthStep2();
@@ -245,8 +246,9 @@
 				
 				$(document).ready(function(){
 					var user = '<?php echo $user->screen_name;?>';
-					var image = '<?php echo $user->profile_image_url;?>';
+					var image = '<?php echo str_replace("_normal","",$user->profile_image_url);?>';
 					var id = '<?php echo $user->id;?>';
+					
 					$.ajax({ url: '../php/webService.php',
 					     data: {action: "ThirdPartyLogin", email: '', image: image, username: user, whoAmI: 'Twitter', thirdpartyID: id  },
 					     type: 'post',
@@ -268,10 +270,9 @@
 									VerifyTwitterUser(userdata[0]);
 			     				});
 			     			}else{
- 								var finishuser = $.trim(output);
-				     			var userdata = finishuser.split("||");
+				     			console.log($.trim(userdata[0]));
 				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
-		 						location.href = "http://ken.lifebar.io";
+		 						location.href = "http://ryu.lifebar.io";
 			     			}
 					      },
 						    error: function(x, t, m) {
@@ -311,7 +312,7 @@
 											     data: {action: "FinishRegister", email: $("#final_email").val(), username: $("#final_username").val()  },
 											     type: 'post',
 											     success: function(output) {
-							 						location.href = "http://ken.lifebar.io";
+							 						location.href = "http://ryu.lifebar.io";
 											     },
 												    error: function(x, t, m) {
 												        if(t==="timeout") {
@@ -377,7 +378,9 @@
 					     data: {action: "ThirdPartyLogin", email: user_email, image: user_image, username: user_name, whoAmI: 'Facebook', thirdpartyID: user_id  },
 					     type: 'post',
 					     success: function(output) {
-				     			setCookie("RememberMe", $.trim(output), 14);
+ 								var finishuser = $.trim(output);
+				     			var userdata = finishuser.split("||");
+				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 				     			GAEvent('Third Party Login', 'Facebook');
 		          				location.hash = "#activity";
 		 						location.reload();
@@ -509,5 +512,4 @@
 			});
 		}
 	</script>
-	<div id='fb-root'></div>
 	<?php }

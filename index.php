@@ -20,6 +20,7 @@ require 'includes.php'; ?>
 <link href="../css/main.css" rel="stylesheet" type="text/css" />
 <link href="../css/activity.css" rel="stylesheet" type="text/css" />
 <link href="../css/admin.css" rel="stylesheet" type="text/css" />
+<link href="../css/analyze.css" rel="stylesheet" type="text/css" />
 <link href="../css/discover.css" rel="stylesheet" type="text/css" />
 <link href="../css/user.css" rel="stylesheet" type="text/css" />
 <link href="../css/profile.css" rel="stylesheet" type="text/css" />
@@ -83,6 +84,7 @@ require 'includes.php'; ?>
 		<div id="landingInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height:100%;"></div>
 	</div>
 </div>
+<div id='fb-root'></div>
 <?php LoadThirdPartyTools(); ?>
 <?php DisplaySideDrawer(); ?>
 <?php DisplayLogin(); ?>
