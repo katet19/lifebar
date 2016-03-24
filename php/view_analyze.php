@@ -48,17 +48,19 @@
 							<?php if(sizeof($thisyear) > 4){ ?> data-yearTotal="<?php echo $thisYearTotal; ?>" data-year="<?php echo $game->_year; ?>" data-yt1="<?php echo $thisyear[1] ;?>" data-yt2="<?php echo $thisyear[2] ;?>" data-yt3="<?php echo $thisyear[3] ;?>" data-yt4="<?php echo $thisyear[4] ;?>" data-yt5="<?php echo $thisyear[5]; ?>" <?php } ?>
 							<?php if(sizeof($bygenre) > 4){ ?> data-genreTotal="<?php echo $byGenreTotal; ?>" data-genre="<?php echo $game->_genre; ?>" data-gt1="<?php echo $bygenre[1] ;?>" data-gt2="<?php echo $bygenre[2] ;?>" data-gt3="<?php echo $bygenre[3] ;?>" data-gt4="<?php echo $bygenre[4] ;?>" data-gt5="<?php echo $bygenre[5]; ?>" <?php } ?>
 						></canvas>
+						<div class="analyze-graph-helper" style='float:left;padding:0 18px;'>WORST</div>
+						<div class="analyze-graph-helper" style='float:right;padding:0 0;'>BEST</div>
 					</div>
 					<div class="col s12 m12 l2">
 						<div class="analyze-exp-key">
-							<div class="analyze-line-item" style='background-color:rgba(0, 150, 136, 0.9)'>
-								<div class="analyze-line-desc"><i class="mdi-editor-insert-invitation left" style='margin-bottom: 15px;'></i> <?php if($game->_year == 0){ ?>Your XP for unreleased games<?php }else{ ?>XP from games released in <?php echo $game->_year;  } ?></div>
-							</div>
 							<div class="analyze-line-item" style='background-color:rgba(85, 85, 147, 0.9);'>
-								<div class="analyze-line-desc"><i class="mdi-action-account-circle left" style='margin-bottom: 15px;'></i> Lifetime XP</div>
+								<div class="analyze-line-desc"><i class="mdi-action-account-circle left" style='margin-bottom: 15px;'></i> Lifetime</div>
+							</div>
+							<div class="analyze-line-item" style='background-color:rgba(0, 150, 136, 0.9)'>
+								<div class="analyze-line-desc"><i class="mdi-editor-insert-invitation left" style='margin-bottom: 15px;'></i> <?php if($game->_year == 0){ ?>Unreleased games<?php }else{ ?>Released in <?php echo $game->_year;  } ?></div>
 							</div>
 							<div class="analyze-line-item" style='background-color:rgba(233, 30, 99, 0.9);'>
-								<div class="analyze-line-desc"><i class="mdi-action-label left" style='margin-bottom: 15px;'></i>  XP from <?php echo $game->_genre; ?></div>
+								<div class="analyze-line-desc"><i class="mdi-action-label left" style='margin-bottom: 15px;'></i>  <?php echo $game->_genre; ?></div>
 							</div>
 						</div>
 					</div>
@@ -92,6 +94,8 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 							<?php if(sizeof($critics) > 1){ ?> data-criticTotal="<?php echo $criticTotal; ?>" data-yt1="<?php echo $critics[1] ;?>" data-yt2="<?php echo $critics[2] ;?>" data-yt3="<?php echo $critics[3] ;?>" data-yt4="<?php echo $critics[4] ;?>" data-yt5="<?php echo $critics[5]; ?>" <?php } ?>
 							<?php if(sizeof($users) > 1){ ?> data-usersTotal="<?php echo $usersTotal; ?>" data-gt1="<?php echo $users[1] ;?>" data-gt2="<?php echo $users[2] ;?>" data-gt3="<?php echo $users[3] ;?>" data-gt4="<?php echo $users[4] ;?>" data-gt5="<?php echo $users[5]; ?>" <?php } ?>
 						></canvas>
+						<div class="analyze-graph-helper" style='float:left;padding:0 18px;'>WORST</div>
+						<div class="analyze-graph-helper" style='float:right;padding:0 0;'>BEST</div>
 						<!--<div class="analyze-exp-spectrum-tier">
 							<?php if($myxp->_tier == 5){ ?>
 								<div class="analyze-exp-spectrum-game-piece">
