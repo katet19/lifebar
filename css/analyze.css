@@ -155,6 +155,19 @@
     padding: 0 5px;
 }
 
+.analyze-line-item{
+    text-align:left;
+    display:block;
+    margin-bottom:5px;
+    width:100%;
+}
+
+.analyze-line-desc{
+    padding:5px 10px;
+    color:white;
+    font-weight: 400;
+}
+
 .analyze-object-image-item{
     width: 200px;
     height: 150px;
@@ -181,8 +194,26 @@
     margin: 0.5em 20px 1em; 
 }
 
-@media only screen and (max-width : 992px) {
+.analyze-data-element{
+    font-size: 5em;
+    font-weight: 200;
+}
+.analyze-data-desc{
+    font-weight:400;
+}
+.analyze-left-card{
+    padding-left:0 !important;
+}
+.analyze-right-card{
+    padding-right:0 !important;
+}
 
+@media only screen and (max-width : 992px) {
+    .analyze-line-item{
+        display:inline-block;
+        max-width:30%;
+        text-align: center;
+    }
 }
 
 @media only screen and (max-width : 600px) {
@@ -218,6 +249,23 @@
     }
     .analyze-doughnut-relational{
         margin: 0.5em 5px 1em 0px;
+    }
+    .analyze-line-item{
+        display:block;
+        max-width:100%;
+        text-align: left;
+    }
+    .analyze-left-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    .analyze-right-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    .analyze-center-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
     }
 }
 

@@ -951,7 +951,7 @@ else {
 			ShowActivityHome();
 			$this.find(".indicator").css({"display":"block"});
 		}else if(data[0] == "#game" && data[1] > 0){
-			ShowGame(data[1], '', true);
+			ShowGame(data[1], '', true, false, data[3]);
 			$this.find(".indicator").css({"display":"none"});
 		}else if(data[0] == "#profile" && data[1] > 0){
 			ShowUserProfile(data[1], false);

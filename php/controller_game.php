@@ -933,6 +933,57 @@ function GetGamesDeveloperGames($gbid, $userid, $pconn = null){
 	return $developers;
 }
 
+function GetGamesPublisherGames($gbid, $userid, $pconn = null){
+	$mysqli = Connect($pconn);
+	$publishers = array();
+	if ($result = $mysqli->query("select `PublisherID` from `Game_Publishers` where `GBID` = '".$gbid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$publisherID[] = $row["PublisherID"];
+		}
+	}
+	if(sizeof($publisherID) > 0){
+		foreach($publisherID as $pubID){
+			$tierData = array(); 
+			$tierData[1]=0; 
+			$tierData[2]=0; 
+			$tierData[3]=0; 
+			$tierData[4]=0; 
+			$tierData[5]=0;
+			
+			unset($games);
+			unset($publisherInfo);
+			$foundsomething = false;
+			if ($result = $mysqli->query("select e.`Tier` from `Game_Publishers` gf, `Games` g, `Experiences` e where gf.`PublisherID` = '".$pubID."' and gf.`GBID` = g.`GBID` and e.`GameID` = g.`ID` and e.`UserID` = '".$userid."'")) {
+				while($row = mysqli_fetch_array($result)){
+					if($row["Tier"] == 1)
+						$tierData[1] = $tierData[1] + 1;
+					else if($row["Tier"] == 2)
+						$tierData[2] = $tierData[2] + 1;
+					else if($row["Tier"] == 3)
+						$tierData[3] = $tierData[3] + 1;
+					else if($row["Tier"] == 4)
+						$tierData[4] = $tierData[4] + 1;
+					else if($row["Tier"] == 5)
+						$tierData[5] = $tierData[5] + 1;
+						
+					$foundsomething = true;
+				}
+			}
+			
+			$pubMilestone = GetSpecificMilestoneForUser($userid, $pubID, 'Publishers');
+			if($foundsomething && $pubMilestone->_name != ""){
+				$publisherInfo[] = $tierData;
+				$publisherInfo[] = $pubMilestone;
+				$publishers[] = $publisherInfo;
+			}
+		}
+	}
+	
+	if($pconn == null)
+        Close($mysqli, $result);
+	return $publishers;
+}
+
 function GetPlatforms(){
 	$mysqli = Connect();
 	$platforms = array();
