@@ -1,8 +1,10 @@
-function ShowGame(id, currentTab, isID, browserNav){
-	LoadGame(id, currentTab, isID, browserNav);
+function ShowGame(id, currentTab, isID, browserNav, gameTab){
+	if(gameTab == "" || gameTab == undefined)
+		gameTab = "Community";
+	LoadGame(id, currentTab, isID, browserNav, gameTab);
 }
 
-function LoadGame(gbid, currentTab, isID, browserNav){
+function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	var windowWidth = $(window).width();
 	GLOBAL_TAB_REDIRECT = "Game";
 	ManuallyNavigateToTab("#games");
@@ -23,10 +25,17 @@ function LoadGame(gbid, currentTab, isID, browserNav){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#gameInnerContainer").html(output);
+	 		
+	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}
+	 		
 	 		var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		location.hash = "game/"+gameid+"/"+title;
+	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 	 		AttachGameEvents(currentTab);
 	 		AttachScrollEvents();
  	 		if(browserNav)
@@ -53,7 +62,14 @@ function LoadGame(gbid, currentTab, isID, browserNav){
  		 	var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		location.hash = "game/"+gameid+"/"+title;
+	 		
+ 	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}
+	 		
+	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
 		 	AttachScrollEvents();
   	 		if(browserNav)
@@ -74,7 +90,7 @@ function LoadGame(gbid, currentTab, isID, browserNav){
 	}
 }
 
-function LoadGameDirect(gbid, currentTab, type){
+function LoadGameDirect(gbid, currentTab, type, gameTab){
 	var windowWidth = $(window).width();
     $("#game").css({"display":"inline-block", "left": -windowWidth});
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").css({"display":"none"});
@@ -90,7 +106,14 @@ function LoadGameDirect(gbid, currentTab, type){
  		var gameid = $("#gameContentContainer").attr("data-id");
  		var title = $("#gameContentContainer").attr("data-title");
  		GLOBAL_HASH_REDIRECT = "NO";
- 		location.hash = "game/"+gameid+"/"+title;
+ 		
+   		if(gameTab == "Community"){
+ 		
+ 		}else if(gameTab == "Analyze"){
+ 			$("#analyze-tab-nav").click();
+ 		}
+ 		
+ 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
  		AttachGameEvents(currentTab);
  		AttachScrollEvents();
  		if(type == "played"){
@@ -133,7 +156,6 @@ function AttachGameEvents(currentTab){
   		var html = $('#infoModal').html();
   		ShowPopUp(html);
 	});
-	
 	AttachEditEvents();
  	$(".critic-name-container, .myxp-details-agree-listitem").on("click", function(e){
   		e.stopPropagation();
@@ -159,11 +181,49 @@ function AttachGameEvents(currentTab){
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();
+	AttachAnalyzeEvents();
+}
+
+function AttachAnalyzeEvents(){
+	DisplayExpSpectrum();
+	DisplayAgeGraph();
+	DisplayRelationalGraphs();
+	AnalyzeViewMoreButtons();
+	$(".analyze-card-list-item").on('click', function(){ 
+		var game = $(this).attr("data-gbid");
+		ShowGame($(this).attr("data-gbid"), $("#discover"));
+	});
+	$(".analyze-doughnut-view-games").on("click", function(){
+		if($(this).attr("data-type") == "Franchise")
+	 		DisplayKnowledgeDetails($(this).attr("data-userid"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
+ 		else if($(this).attr("data-type") == "Developer")
+	 		DisplayDeveloperDetails($(this).attr("data-userid"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
+	 });
 }
 
 function AttachCriticBookmark(){
 	$(".no-critic-bookmark").on('click', function(e){
 		SubmitBookmark("AddBookmark", $(".game-add-bookmark-btn").attr("data-gameid"));	
+	});
+}
+
+function AnalyzeViewMoreButtons(){
+	$(".analyze-card").each(function(){ 
+		if($(this).find(".analyze-view-more-hide").length > 0){
+			$(this).find(".analyze-view-more-button").css({"display":"inline-block"});
+		}
+	});
+	$(".analyze-view-more-button").on("click", function(){
+		$(this).parent().parent().parent().find(".analyze-view-more-hide").addClass("analyze-view-more-show");
+		$(this).parent().parent().parent().find(".analyze-view-more-hide").removeClass("analyze-view-more-hide");
+		$(this).parent().parent().find(".analyze-view-less-button").css({"display":"inline-block"});
+		$(this).css({"display":"none"});
+	});
+	$(".analyze-view-less-button").on("click", function(){
+		$(this).parent().parent().parent().find(".analyze-view-more-show").addClass("analyze-view-more-hide");
+		$(this).parent().parent().parent().find(".analyze-view-more-show").removeClass("analyze-view-more-show");
+		$(this).parent().parent().find(".analyze-view-more-button").css({"display":"inline-block"});
+		$(this).css({"display":"none"});
 	});
 }
 
@@ -643,6 +703,327 @@ function GameCardActions(element){
 			$(this).parent().parent().removeClass("card-tier-details-active");
 			$(this).parent().parent().parent().parent().find(".card-game-tier").show();
 			$(this).parent().parent().parent().parent().find(".c100").show();
+		});
+	}
+}
+
+function DisplayRelationalGraphs(){
+	if($(".GraphRelational").length > 0){
+		$(".GraphRelational").each(function(){
+			var experiencedUsersGraph = $(this).get(0).getContext("2d");
+			var data = {
+		    labels: ["", "", "", "", ""],
+		    datasets: [
+		        {
+		            label: "Lifetime XP",
+		            fillColor: "rgba(85, 85, 147, 0.41)",
+		            strokeColor: "rgba(85, 85, 147, 0.9)",
+		            pointColor: "rgba(85, 85, 147, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [$(this).attr("data-t5"), $(this).attr("data-t4"), $(this).attr("data-t3"), $(this).attr("data-t2"), $(this).attr("data-t1")]
+		        }
+		    ]
+		};
+		$(this).attr('width', $(this).parent().parent().parent().parent().width()-40);
+        $(this).attr('height', 250);
+		var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : false, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", animation: true });
+		});
+	}
+	
+	if($(".DougnutRelational").length > 0){
+		$(".DougnutRelational").each(function(){
+			var experiencedUsersGraph = $(this).get(0).getContext("2d");
+			var data = [
+					    {
+					        value: parseInt($(this).attr("data-t1")),
+					        color:"#0A67A3",
+					        highlight: "#1398f0",
+					        label: "Tier 1"
+					    },
+					     {
+					        value: parseInt($(this).attr("data-t2")),
+					        color:"#00B25C",
+					        highlight: "#00d771",
+					        label: "Tier 2"
+					    },
+					     {
+					        value: parseInt($(this).attr("data-t3")),
+					        color:"#FF8E00",
+					        highlight: "#ffac46",
+					        label: "Tier 3"
+					    },
+					     {
+					        value: parseInt($(this).attr("data-t4")),
+					        color:"#FF4100",
+					        highlight: "#ff632f",
+					        label: "Tier 4"
+					    },
+					     {
+					        value: parseInt($(this).attr("data-t5")),
+					        color:"#DB0058",
+					        highlight: "#ff247b",
+					        label: "Tier 5"
+					    }
+		    ];
+	    if($(window).width() >=600){
+	    	$(this).attr('height', 175);
+	    	$(this).attr('width', 175);
+	    }else{
+	    	$(this).attr('height', 125);
+	    	$(this).attr('width', 125);
+	    }
+      	var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: true });
+		});
+	}
+}
+
+function DisplayExpSpectrum(){
+	if($(".GraphExpSpectrum").length > 0){
+		$(".GraphExpSpectrum").each(function(){
+			var experiencedUsersGraph = $(this).get(0).getContext("2d");
+			var lifetimeTotal = $(this).attr("data-overalltotal");
+			var yearTotal = $(this).attr("data-yeartotal");
+			var genreTotal = $(this).attr("data-genretotal");
+			
+			//Your Lifetime XP
+			var ft5 = ($(this).attr("data-t5") > 0) ? Math.round(($(this).attr("data-t5") / lifetimeTotal) * 100) : 0;
+			var ft4 = ($(this).attr("data-t4") > 0) ? Math.round(($(this).attr("data-t4") / lifetimeTotal) * 100) : 0;
+			var ft3 = ($(this).attr("data-t3") > 0) ? Math.round(($(this).attr("data-t3") / lifetimeTotal) * 100) : 0;
+			var ft2 = ($(this).attr("data-t2") > 0) ? Math.round(($(this).attr("data-t2") / lifetimeTotal) * 100) : 0;
+			var ft1 = ($(this).attr("data-t1") > 0) ? Math.round(($(this).attr("data-t1") / lifetimeTotal) * 100) : 0;
+			
+			//Your XP from games released
+			var yt5 = ($(this).attr("data-yt5") > 0) ? Math.round(($(this).attr("data-yt5") / yearTotal) * 100) : 0;
+			var yt4 = ($(this).attr("data-yt4") > 0) ? Math.round(($(this).attr("data-yt4") / yearTotal) * 100) : 0;
+			var yt3 = ($(this).attr("data-yt3") > 0) ? Math.round(($(this).attr("data-yt3") / yearTotal) * 100) : 0;
+			var yt2 = ($(this).attr("data-yt2") > 0) ? Math.round(($(this).attr("data-yt2") / yearTotal) * 100) : 0;
+			var yt1 = ($(this).attr("data-yt1") > 0) ? Math.round(($(this).attr("data-yt1") / yearTotal) * 100) : 0;
+			
+			//Your XP from
+			var gt5 = ($(this).attr("data-gt5") > 0) ? Math.round(($(this).attr("data-gt5") / genreTotal) * 100) : 0;
+			var gt4 = ($(this).attr("data-gt4") > 0) ? Math.round(($(this).attr("data-gt4") / genreTotal) * 100) : 0;
+			var gt3 = ($(this).attr("data-gt3") > 0) ? Math.round(($(this).attr("data-gt3") / genreTotal) * 100) : 0;
+			var gt2 = ($(this).attr("data-gt2") > 0) ? Math.round(($(this).attr("data-gt2") / genreTotal) * 100) : 0;
+			var gt1 = ($(this).attr("data-gt1") > 0) ? Math.round(($(this).attr("data-gt1") / genreTotal) * 100) : 0;
+			
+			var data = {
+		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
+		    datasets: [
+		        {
+		            label: "Your Lifetime XP",
+		            fillColor: "rgba(85, 85, 147, 0.41)",
+		            strokeColor: "rgba(85, 85, 147, 0.9)",
+		            pointColor: "rgba(85, 85, 147, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [ft5, ft4, ft3, ft2, ft1]
+		        },
+		        {
+		            label: ($(this).attr("data-year") == 0) ? "Your XP for unreleased games" : "Your XP from games released in "+$(this).attr("data-year"),
+		            fillColor: "rgba(0, 150, 136, 0.41)",
+		            strokeColor: "rgba(0, 150, 136, 0.9)",
+		            pointColor: "rgba(0, 150, 136, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [yt5, yt4, yt3, yt2, yt1]
+		        },
+		        {
+		            label: "Your XP from "+$(this).attr("data-genre"),
+		            fillColor: "rgba(233, 30, 99, 0.41)",
+		            strokeColor: "rgba(233, 30, 99, 0.9)",
+		            pointColor: "rgba(233, 30, 99, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [gt5, gt4, gt3, gt2, gt1]
+		        }
+		    ]
+		};
+		if($("#game-community-tab").is(":visible"))
+			$(this).attr('width', $("#game-width-box").width() - 40);
+		else if($("#game-myxp-tab").is(":visible"))
+			$(this).attr('width', $("#myxp-game-width-box").width() - 40);
+		else
+			$(this).attr('width', $(this).parent().width() - 40);
+			
+		if($(window).width() > 599)
+        	$(this).attr('height', 300);
+    	else
+    		$(this).attr('height', 150);
+		var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });
+		});
+	}
+	if($(".GraphCommunityUsers").length > 0){
+		$(".GraphCommunityUsers").each(function(){
+			var communityGraph = $(this).get(0).getContext("2d");
+			var followingTotal = $(this).attr("data-followingTotal");
+			var criticTotal = $(this).attr("data-criticTotal");
+			var usersTotal = $(this).attr("data-usersTotal");
+			
+			//Xp from people you follow
+			var ft5 = ($(this).attr("data-ft5") > 0) ? Math.round(($(this).attr("data-ft5") / followingTotal) * 100) : 0;
+			var ft4 = ($(this).attr("data-ft4") > 0) ? Math.round(($(this).attr("data-ft4") / followingTotal) * 100) : 0;
+			var ft3 = ($(this).attr("data-ft3") > 0) ? Math.round(($(this).attr("data-ft3") / followingTotal) * 100) : 0;
+			var ft2 = ($(this).attr("data-ft2") > 0) ? Math.round(($(this).attr("data-ft2") / followingTotal) * 100) : 0;
+			var ft1 = ($(this).attr("data-ft1") > 0) ? Math.round(($(this).attr("data-ft1") / followingTotal) * 100) : 0;
+			
+			//Xp from Critics
+			var yt5 = ($(this).attr("data-yt5") > 0) ? Math.round(($(this).attr("data-yt5") / criticTotal) * 100) : 0;
+			var yt4 = ($(this).attr("data-yt4") > 0) ? Math.round(($(this).attr("data-yt4") / criticTotal) * 100) : 0;
+			var yt3 = ($(this).attr("data-yt3") > 0) ? Math.round(($(this).attr("data-yt3") / criticTotal) * 100) : 0;
+			var yt2 = ($(this).attr("data-yt2") > 0) ? Math.round(($(this).attr("data-yt2") / criticTotal) * 100) : 0;
+			var yt1 = ($(this).attr("data-yt1") > 0) ? Math.round(($(this).attr("data-yt1") / criticTotal) * 100) : 0;
+			
+			//Xp from Users
+			var gt5 = ($(this).attr("data-gt5") > 0) ? Math.round(($(this).attr("data-gt5") / usersTotal) * 100) : 0;
+			var gt4 = ($(this).attr("data-gt4") > 0) ? Math.round(($(this).attr("data-gt4") / usersTotal) * 100) : 0;
+			var gt3 = ($(this).attr("data-gt3") > 0) ? Math.round(($(this).attr("data-gt3") / usersTotal) * 100) : 0;
+			var gt2 = ($(this).attr("data-gt2") > 0) ? Math.round(($(this).attr("data-gt2") / usersTotal) * 100) : 0;
+			var gt1 = ($(this).attr("data-gt1") > 0) ? Math.round(($(this).attr("data-gt1") / usersTotal) * 100) : 0;
+			
+			var data = {
+		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
+		    datasets: [
+		        {
+		            label: "Following",
+		            fillColor: "rgba(76, 175, 80, 0.41)",
+		            strokeColor: "rgba(76, 175, 80, 0.9)",
+		            pointColor: "rgba(76, 175, 80, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [ft5, ft4, ft3, ft2, ft1]
+		        },
+		        {
+		            label: "Critics",
+		            fillColor: "rgba(255, 87, 34, 0.41)",
+		            strokeColor: "rgba(255, 87, 34, 0.9)",
+		            pointColor: "rgba(255, 87, 34, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [yt5, yt4, yt3, yt2, yt1]
+		        },
+		        {
+		            label: "Members",
+		            fillColor: "rgba(63, 81, 181, 0.41)",
+		            strokeColor: "rgba(63, 81, 181, 0.9)",
+		            pointColor: "rgba(63, 81, 181, 0.9)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(71,71,71,1)",
+		            data: [gt5, gt4, gt3, gt2, gt1]
+		        }
+		    ]
+		};
+		if($("#game-community-tab").is(":visible"))
+			$(this).attr('width', $("#game-width-box").width() - 40);
+		else if($("#game-myxp-tab").is(":visible"))
+			$(this).attr('width', $("#myxp-game-width-box").width() - 40);
+		else
+			$(this).attr('width', $(this).parent().width() - 40);
+		
+		if($(window).width() > 599)
+        	$(this).attr('height', 300);
+    	else
+    		$(this).attr('height', 150);
+		var temp = new Chart(communityGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });
+		});
+	}
+}
+
+function DisplayAgeGraph(){
+	if($(".GraphAgeUsers").length > 0){
+		$(".GraphAgeUsers").each(function(){
+			var ageGraph = $(this).get(0).getContext("2d");
+			var group1Total = $(this).attr("data-group1Total");
+			var group2Total = $(this).attr("data-group2Total");
+			var group3Total = $(this).attr("data-group3Total");
+			var group4Total = $(this).attr("data-group4Total");
+			var group5Total = $(this).attr("data-group5Total");
+			//Grpoup 1
+			var g1t5 = ($(this).attr("data-1t5") > 0) ? $(this).attr("data-1t5") : 0;
+			var g1t4 = ($(this).attr("data-1t4") > 0) ? $(this).attr("data-1t4") : 0;
+			var g1t3 = ($(this).attr("data-1t3") > 0) ? $(this).attr("data-1t3") : 0;
+			var g1t2 = ($(this).attr("data-1t2") > 0) ? $(this).attr("data-1t2") : 0;
+			var g1t1 = ($(this).attr("data-1t1") > 0) ? $(this).attr("data-1t1") : 0;
+			//Grpoup 2
+			var g2t5 = ($(this).attr("data-2t5") > 0) ? $(this).attr("data-2t5") : 0;
+			var g2t4 = ($(this).attr("data-2t4") > 0) ? $(this).attr("data-2t4") : 0;
+			var g2t3 = ($(this).attr("data-2t3") > 0) ? $(this).attr("data-2t3") : 0;
+			var g2t2 = ($(this).attr("data-2t2") > 0) ? $(this).attr("data-2t2") : 0;
+			var g2t1 = ($(this).attr("data-2t1") > 0) ? $(this).attr("data-2t1") : 0;
+			//Group 3
+			var g3t5 = ($(this).attr("data-3t5") > 0) ? $(this).attr("data-3t5") : 0;
+			var g3t4 = ($(this).attr("data-3t4") > 0) ? $(this).attr("data-3t4") : 0;
+			var g3t3 = ($(this).attr("data-3t3") > 0) ? $(this).attr("data-3t3") : 0;
+			var g3t2 = ($(this).attr("data-3t2") > 0) ? $(this).attr("data-3t2") : 0;
+			var g3t1 = ($(this).attr("data-3t1") > 0) ? $(this).attr("data-3t1") : 0;
+			//Group 4
+			var g4t5 = ($(this).attr("data-4t5") > 0) ? $(this).attr("data-4t5") : 0;
+			var g4t4 = ($(this).attr("data-4t4") > 0) ? $(this).attr("data-4t4") : 0;
+			var g4t3 = ($(this).attr("data-4t3") > 0) ? $(this).attr("data-4t3") : 0;
+			var g4t2 = ($(this).attr("data-4t2") > 0) ? $(this).attr("data-4t2") : 0;
+			var g4t1 = ($(this).attr("data-4t1") > 0) ? $(this).attr("data-4t1") : 0;
+			//Group 5
+			var g5t5 = ($(this).attr("data-5t5") > 0) ? $(this).attr("data-5t5") : 0;
+			var g5t4 = ($(this).attr("data-5t4") > 0) ? $(this).attr("data-5t4") : 0;
+			var g5t3 = ($(this).attr("data-5t3") > 0) ? $(this).attr("data-5t3") : 0;
+			var g5t2 = ($(this).attr("data-5t2") > 0) ? $(this).attr("data-5t2") : 0;
+			var g5t1 = ($(this).attr("data-5t1") > 0) ? $(this).attr("data-5t1") : 0;
+			
+			var data = {
+		    labels: ["Childhood", "Teens", "20's", "30's", "40+"],
+		    datasets: [
+		        {
+		            label: "Tier 5",
+		            fillColor: "rgba(219, 0, 88, 0.9)",
+		            strokeColor: "rgba(219, 0, 88, 0.9)",
+		            highlightFill: "rgba(219, 0, 88, 0.41)",
+		            highlightStroke: "rgba(219, 0, 88, 0.41)",
+		            data: [g1t5, g2t5, g3t5, g4t5, g5t5]
+		        }, 
+		        {
+		            label: "Tier 4",
+		            fillColor: "rgba(255, 65, 0, 0.9)",
+		            strokeColor: "rgba(255, 65, 0, 0.9)",
+		            highlightFill: "rgba(255, 65, 0, 0.41)",
+		            highlightStroke: "rgba(255, 65, 0, 0.41)",
+		            data: [g1t4, g2t4, g3t4, g4t4, g5t4]
+		        },
+		        {
+		            label: "Tier 3",
+		            fillColor: "rgba(255, 142, 0, 0.9)",
+		            strokeColor: "rgba(255, 142, 0, 0.9)",
+		            highlightFill: "rgba(255, 142, 0, 0.41)",
+		            highlightStroke: "rgba(255, 142, 0, 0.41)",
+		            data: [g1t3, g2t3, g3t3, g4t3, g4t5]
+		        },
+		        {
+		            label: "Tier 2",
+		            fillColor: "rgba(0, 178, 92, 0.9)",
+		            strokeColor: "rgba(0, 178, 92, 0.9)",
+		            highlightFill: "rgba(0, 178, 92, 0.41)",
+		            highlightStroke: "rgba(0, 178, 92, 0.41)",
+		            data: [g1t2, g2t2, g3t2, g4t2, g4t2]
+		        },
+		        {
+		            label: "Tier 1",
+		            fillColor: "rgba(10, 103, 163, 0.9)",
+		            strokeColor: "rgba(10, 103, 163, 0.9)",
+		            highlightFill: "rgba(10, 103, 163, 0.41)",
+		            highlightStroke: "rgba(10, 103, 163, 0.41)",
+		            data: [g1t1, g2t1, g3t1, g4t1, g4t1]
+		        }
+	        ]
+		};
+		$(this).attr('width', $(this).parent().parent().parent().width()-40);
+        $(this).attr('height', 300);
+		var temp = new Chart(ageGraph).Bar(data, { barStrokeWidth : 2, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>" });
 		});
 	}
 }

@@ -1,0 +1,276 @@
+.analyze-card{
+	background-color: white;
+	width:100%;
+	position:relative;
+    padding: 1em 0.75rem 0em !important;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.analyze-card-header{
+    text-align: left;
+    padding: 5px 20px 20px;
+    width: 100%;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+}
+
+.analyze-card-title{
+	font-size:1.25em;
+	font-weight:500;
+	display:inline-block;
+}
+
+.analyze-card-sub-title{
+	color:rgba(0,0,0,0.8);
+	margin-left:15px;
+	display:inline-block;
+}
+
+.analyze-exp-spectrum-tier{
+    display: inline-block;
+    padding: 5px;
+    position: absolute;
+    bottom: 20px;
+    font-weight: 300;
+    left: 2.4%;
+    z-index: -1;
+    font-size: 1.25em;
+}
+
+.analyze-exp-spectrum-tier-sub{
+    bottom: 5px;
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+}
+
+.analyze-exp-spectrum-game-piece{
+    position: relative;
+    top: -55px;
+    font-size: 1.5em;
+    left: 5px;
+    height: 305px;
+    display: inline-block;
+}
+
+.analyze-exp-spectrum-game-line{
+    position: absolute;
+    top: 31px;
+    bottom: 0;
+    left: 13px;
+    color: transparent;
+    width: 2px;
+    background-color: black;
+    display: inline-block;
+}
+
+.analyze-card-list-item{
+	margin-top:15px;
+	cursor: pointer;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+	min-height: 92px;
+}
+
+.analyze-game-list-details{
+	font-weight:300;
+}
+
+.analyze-game-my-tier{
+    display: inline-block;
+    position: relative;
+}
+
+.analyze-game-tier-position{
+    position: absolute;
+    left: 0;
+    top: -70px;
+    color: white;
+    width: 40px;
+    display: inline-block;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+.analyze-view-more-hide{
+	display:none;
+}
+
+.analyze-view-more-show{
+	display:block;
+}
+
+.analyze-view-less-button, .analyze-view-more-button{
+	margin-top:30px;
+}
+
+.analyze-game-list-title{
+    position: relative;
+    font-size: 1.2em;
+    text-align: left;
+    font-weight: 500;
+    padding: 15px 10px 0px;
+    margin-left: 125px;
+    color: rgba(0,0,0,0.8);
+    width:40%;
+}
+
+.analyze-image-list{
+    height: 75px !important;
+    width: 100px !important;
+    float: left;
+    position: relative;
+}
+
+.analyze-doughnut-header{
+    color:rgba(0,0,0,0.75);
+}
+
+.analyze-doughnut-item{
+}
+
+.analyze-doughnut-key{
+    display:inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+.analyze-doughnut-block{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    margin-left:5px;
+}
+.analyze-doughnut-desc{
+    display:inline-block;
+    font-weight:500;
+    padding: 0 5px;
+}
+
+.analyze-line-item{
+    text-align:left;
+    display:block;
+    margin-bottom:5px;
+    width:100%;
+}
+
+.analyze-line-desc{
+    padding:5px 10px;
+    color:white;
+    font-weight: 400;
+}
+
+.analyze-object-image-item{
+    width: 200px;
+    height: 150px;
+    display: inline-block;
+}
+
+.analyze-progress-item-details{
+    display: inline-block;
+    margin-left: 20px;
+    height: 75px;
+    vertical-align: initial;
+}
+
+.analyze-progress-item{
+    padding: 5px 10px 50px;
+}
+
+.analyze-doughnut-container{
+    
+}
+
+.analyze-doughnut-relational{
+    vertical-align: middle; 
+    margin: 0.5em 20px 1em; 
+}
+
+.analyze-data-element{
+    font-size: 5em;
+    font-weight: 200;
+}
+.analyze-data-desc{
+    font-weight:400;
+}
+.analyze-left-card{
+    padding-left:0 !important;
+}
+.analyze-right-card{
+    padding-right:0 !important;
+}
+
+.analyze-graph-helper{
+    font-weight:500;
+    margin-top:-10px;
+}
+
+@media only screen and (max-width : 992px) {
+    .analyze-line-item{
+        display:inline-block;
+        max-width:30%;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width : 600px) {
+	.analyze-game-list-title{
+		width:60%;
+		margin-left:0;
+	}
+	.analyze-image-list{
+		display:none;
+	}
+	.analyze-game-my-tier{
+	    left: 30px;
+	}
+	.analyze-card-list-item{
+		min-height:25px;
+	}
+	.analyze-object-image-item{
+	    height:75px;
+	    width:100px;
+        padding-top: 10px !important;
+	}
+	.analyze-progress-item-details{
+	    vertical-align: top;
+	}
+	.analyze-progress-item{
+        padding: 5px 10px 0px;
+    }
+    .analyze-doughnut-container{
+        text-align: left;
+        border-bottom: solid 1px rgba(0,0,0,0.3);
+        padding-bottom: 20px !important;
+        margin-bottom: 20px;
+    }
+    .analyze-doughnut-relational{
+        margin: 0.5em 5px 1em 0px;
+    }
+    .analyze-line-item{
+        display:block;
+        max-width:100%;
+        text-align: left;
+    }
+    .analyze-left-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    .analyze-right-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    .analyze-center-card{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+}
+

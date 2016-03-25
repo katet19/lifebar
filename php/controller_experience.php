@@ -1147,6 +1147,246 @@ function GetMyUsersXPForGame($gameid, $userid){
 	return $exp;
 }
 
+function GetMyTiersByYear($userid, $year){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Experiences` e, `Games`g WHERE e.`GameID` = g.`ID` and e.`UserID` = '".$userid."' and g.`Year` = '".$year."'";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	Close($mysqli, $result);
+	return $tierData;
+}
+
+function GetMyTiersByGenre($userid, $genre){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Experiences` e, `Games`g WHERE e.`GameID` = g.`ID` and e.`UserID` = '".$userid."' and g.`Genre` = '".$genre."'";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	Close($mysqli, $result);
+	return $tierData;
+}
+
+function GetUserTiersForGame($gameid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` = u.`ID` and (u.`Access` = 'User' or u.`Access` = 'Admin')";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	return $tierData;
+}
+
+function GetCriticTiersForGame($gameid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` = u.`ID` and (u.`Access` = 'Journalist' or u.`Access` = 'Authenticated')";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	Close($mysqli, $result);
+	return $tierData;
+}
+
+function GetFollowingTiersForGame($gameid, $userid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and e.`UserID` = u.`ID`";
+	$tierData = array(); 
+	$tierData[1]=0; 
+	$tierData[2]=0; 
+	$tierData[3]=0; 
+	$tierData[4]=0; 
+	$tierData[5]=0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Tier"] == 1)
+				$tierData[1] = $tierData[1] + 1;
+			else if($row["Tier"] == 2)
+				$tierData[2] = $tierData[2] + 1;
+			else if($row["Tier"] == 3)
+				$tierData[3] = $tierData[3] + 1;
+			else if($row["Tier"] == 4)
+				$tierData[4] = $tierData[4] + 1;
+			else if($row["Tier"] == 5)
+				$tierData[5] = $tierData[5] + 1;
+		}
+	}
+	Close($mysqli, $result);
+	return $tierData;
+}
+
+function GetTiersForGameWithDate($gameid){
+	$mysqli = Connect();
+	$query = "SELECT e.`Tier`, u.`Birthdate`, g.`Year` FROM `Games` g, `Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`ID` = e.`GameID` and e.`UserID` = u.`ID` and (u.`Access` = 'User' or u.`Access` = 'Admin' or u.`Access` = 'Authenticated')";
+	$tierData = array(); 
+	$i = 0;
+	while($i < 26){ $tierData[$i] = 0;  $i++; }
+	$gameyear = -1;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$i = -1;
+			if($gameyear == -1)
+				$gameyear = $row['Year'];
+			
+			$birthyear = explode("-",$row['Birthdate']);
+			$diff = $gameyear - $birthyear[0];
+			if($diff <= 10){
+				$i = 0;
+			}else if($diff <= 20){
+				$i = 5;
+			}else if($diff <= 30){
+				$i = 10;
+			}else if($diff <= 40){
+				$i = 15;
+			}else if($diff <= 50){
+				$i = 20;
+			}
+			
+			if($i != -1){
+				if($row["Tier"] == 1)
+					$tierData[$i + 1] = $tierData[$i + 1] + 1;
+				else if($row["Tier"] == 2)
+					$tierData[$i + 2] = $tierData[$i + 2] + 1;
+				else if($row["Tier"] == 3)
+					$tierData[$i + 3] = $tierData[$i + 3] + 1;
+				else if($row["Tier"] == 4)
+					$tierData[$i + 4] = $tierData[$i + 4] + 1;
+				else if($row["Tier"] == 5)
+					$tierData[$i + 5] = $tierData[$i + 5] + 1;
+			}
+		}
+	}
+	Close($mysqli, $result);
+	return $tierData;
+	
+}
+
+function GetAverageAgePlayed($gameid){
+	$mysqli = Connect();
+	$query = "SELECT u.`Birthdate`, g.`Year` FROM `Games` g, `Sub-Experiences` e, `Users` u where g.`ID` = '".$gameid."' and g.`Year` != 0 and g.`ID` = e.`GameID` and e.`Archived` = 'No' and e.`Type` = 'Played' and e.`UserID` = u.`ID` and (u.`Access` = 'User' or u.`Access` = 'Admin' or u.`Access` = 'Authenticated')";
+	$gameyear = -1;
+	$i = 0;
+	$avg = 0;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			if($gameyear == -1)
+				$gameyear = $row['Year'];
+			
+			if($gameyear != 0){
+				$birthyear = explode("-",$row['Birthdate']);
+				$diff = $gameyear - $birthyear[0];
+				$avg = $avg + $diff;
+				$i++;
+			}
+		}
+	}
+	if($i == 0)
+		$finalAvg = -1;
+	else
+		$finalAvg = round($avg / $i);
+	
+	Close($mysqli, $result);
+	return $finalAvg;
+}
+
+function GetGameCompletion($gameid){
+	$mysqli = Connect();
+	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Completed` >= 100 and `Archived` = 'No'";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$finished[] = $row['cnt'];
+		}
+	}
+	
+	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Archived` = 'No'";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$finished[] = $row['cnt'];
+		}
+	}
+	Close($mysqli, $result);
+	return $finished;
+}
+
+function GetGameBookmarked($gameid){
+	$mysqli = Connect();
+	$query = "select count(*) as cnt from `Experiences` where `GameID` = '".$gameid."' and `BucketList` = 'Yes'";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$bookmarked = $row['cnt'];
+		}
+	}
+	Close($mysqli, $result);
+	return $bookmarked;
+}
+
+
 function GetOutsideUsersXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();

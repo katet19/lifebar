@@ -15,7 +15,7 @@ function DeployCSS(){
 		$admin = file_get_contents("css/admin.css");
 		fwrite($deployed, $admin);
 		
-		$analytics = file_get_contents("css/analytics.css");
+		$analytics = file_get_contents("css/analyze.css");
 		fwrite($deployed, $analytics);
 		
 		$badge = file_get_contents("css/badge.css");

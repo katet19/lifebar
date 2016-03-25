@@ -145,7 +145,7 @@
 			CalculateMilestones($criticid, $game->_id, '', 'Played XP', true);
 		}
 		if($_POST['action'] == 'RequestUpdateFromGiantBomb' ){
-			UpdateGameFromGiantBombByID($_POST['gameid'], "Sorta");
+			FullUpdateViaGameID($_POST['gameid'], "Sorta");
 		}
 		if($_POST['action'] == 'DisplayUnmappedManager'){
 			DisplayManualMapping();
@@ -305,6 +305,11 @@
 		}
 		if($_POST['action'] == 'DisplayMyXP' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			DisplayMyXP($_POST['gameid']);
+		}
+		if($_POST['action'] == 'DisplayMyAnalyze' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
+			$myxp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $_POST['gameid']);
+			$game = GetGame($_POST['gameid']);
+			DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game);
 		}
 		if($_POST['action'] == 'AddBookmark' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"Yes");

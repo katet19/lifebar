@@ -88,7 +88,7 @@ function DisplayCriticQuoteCard($exp){
 						</div>
 					</div>
 	          	<?php } ?>
-          	<?php }else if(sizeof($exp->_watchedxp > 0)){
+          	<?php }else if(sizeof($exp->_watchedxp) > 0){
 	  			$percent = 20;
 	  	  		$length = "";
 	    		foreach($exp->_watchedxp as $watched){
@@ -215,7 +215,7 @@ function DisplayUserQuoteCard($exp){
 						</div>
 					</div>
 	          	<?php } ?>
-          	<?php }else if(sizeof($exp->_watchedxp > 0)){
+          	<?php }else if(sizeof($exp->_watchedxp) > 0){
 	  			$percent = 20;
 	  	  		$length = "";
 	    		foreach($exp->_watchedxp as $watched){

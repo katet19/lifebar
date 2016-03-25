@@ -16,10 +16,15 @@ function DisplayGameViaID($gameid){
 function ShowGameContent($game, $myxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-community-tab" class="col s12 game-tab"><?php ShowCommunity($game, $_SESSION['logged-in']->_id, $myxp); ?></div>
-		<div id="game-analyze-tab" class="col s12 game-tab"></div>
+		<div id="game-community-tab" class="col s12 game-tab">
+			<?php ShowCommunity($game, $_SESSION['logged-in']->_id, $myxp); ?>
+			<div class="col s12 m12 l10" id='game-width-box'></div>
+		</div>
+		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
-			<div id="game-myxp-tab" class="col s12 game-tab"><?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?></div>
+			<div id="game-myxp-tab" class="col s12 game-tab">
+				<?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?>
+			</div>
 		<?php } ?>
 	</div>
 	<?php DisplayGameInfo($game); ?>
@@ -122,7 +127,7 @@ function ShowGameTabs($myxp){
 		    <div class="col s12 m8" style="padding:0;">
 		      <ul class="tabs gameNav" style="background-color:transparent">
 		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-community-tab" class="active waves-effect waves-light">Community</a></li>
-		        <!--<li class="tab col s3" style='background-color:transparent'><a href="#game-user-tab" class="waves-effect waves-light">Users <?php if(sizeof($totalusers) > 0){ echo "<div class='HideForMobile'>(".$totalusers.")</div>"; } ?></a></li>-->
+		        <li class="tab col s3" style='background-color:transparent'><a href="#game-analyze-tab" id='analyze-tab-nav' class="waves-effect waves-light">Analyze</a></li>
 		        <li class="tab col s3 userGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
 		      </ul>
 			</div>
