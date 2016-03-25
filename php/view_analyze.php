@@ -5,7 +5,18 @@
 	BuildExperienceSpectrum($user, $myxp, $game);
 	BuildFranchiseGames($game, $user->_id, $myxp->_tier);
 	BuildDeveloperGames($game, $user->_id, $myxp->_tier);
+	BuildPublisherGames($game, $user->_id, $myxp->_tier);
+	?>
+	<div class="row">
+		<?php 	
+			BuildCompletedCard($game);
+		  	BuildBookmarkedCard($game); 
+			BuildAvgAgeCard($game); 
+		?>
+	</div>
+	<?php
 	BuildCommunitySpectrum($user, $myxp, $game);
+	BuildAgeGraph($user, $myxp, $game);
 	//BuildSimilarGames($game, $user->_id, $myxp);
 } ?>
 
@@ -18,81 +29,47 @@
 	$lifetime[] = $tierdata[3];
 	$lifetime[] = $tierdata[4];
 	$lifetimeTotal = $tierdata[0] + $tierdata[1] + $tierdata[2] + $tierdata[3] + $tierdata[4];
-	
 	$thisyear = GetMyTiersByYear($user->_id, $game->_year);
 	$thisYearTotal = $thisyear[1] + $thisyear[2] + $thisyear[3] + $thisyear[4] + $thisyear[5];
 	$bygenre = GetMyTiersByGenre($user->_id, $game->_genre);
 	$byGenreTotal = $bygenre[1] + $bygenre[2] + $bygenre[3] + $bygenre[4] + $bygenre[5];
-
+	if($lifetimeTotal > 0){
 	?>
-	<div class="row">
-		<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
-			<div class='analyze-card-header'>
-				<div class='analyze-card-title'>Personal Experience Spectrum</div>
-				<div class='analyze-card-sub-title'>compared to your other game experiences</div>
-			</div>
-			<canvas class="GraphCriticUsers" style='margin:0.5em 20px 1em'  
-				data-overallTotal="<?php echo $lifetimeTotal; ?>" data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"
-				<?php if(sizeof($thisyear) > 4){ ?> data-yearTotal="<?php echo $thisYearTotal; ?>" data-year="<?php echo $game->_year; ?>" data-yt1="<?php echo $thisyear[1] ;?>" data-yt2="<?php echo $thisyear[2] ;?>" data-yt3="<?php echo $thisyear[3] ;?>" data-yt4="<?php echo $thisyear[4] ;?>" data-yt5="<?php echo $thisyear[5]; ?>" <?php } ?>
-				<?php if(sizeof($bygenre) > 4){ ?> data-genreTotal="<?php echo $byGenreTotal; ?>" data-genre="<?php echo $game->_genre; ?>" data-gt1="<?php echo $bygenre[1] ;?>" data-gt2="<?php echo $bygenre[2] ;?>" data-gt3="<?php echo $bygenre[3] ;?>" data-gt4="<?php echo $bygenre[4] ;?>" data-gt5="<?php echo $bygenre[5]; ?>" <?php } ?>
-			></canvas>
-			<div class="analyze-exp-spectrum-tier">
-				<?php if($myxp->_tier == 5){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:25.7%;'>
-				<?php if($myxp->_tier == 4){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:49.3%;'>
-				<?php if($myxp->_tier == 3){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:72.7%;'>
-				<?php if($myxp->_tier == 2){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:96.3%;'>
-				<?php if($myxp->_tier == 1){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-key">
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(0, 150, 136, 0.9)'></div>
-					<div class="analyze-doughnut-desc">XP from games released in <?php echo $game->_year; ?></div>
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
+				<div class='analyze-card-header'>
+					<div class='analyze-card-title'>Personal Experience Spectrum</div>
+					<div class='analyze-card-sub-title'>compared to your other game experiences</div>
 				</div>
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(85, 85, 147, 0.9);'></div>
-					<div class="analyze-doughnut-desc">Lifetime XP</div>
+				<div class="row">
+					<div class="col s12 m12 l10">
+						<canvas class="GraphExpSpectrum" style='margin:0.5em 20px 1em'  
+							data-overallTotal="<?php echo $lifetimeTotal; ?>" data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"
+							<?php if(sizeof($thisyear) > 4){ ?> data-yearTotal="<?php echo $thisYearTotal; ?>" data-year="<?php echo $game->_year; ?>" data-yt1="<?php echo $thisyear[1] ;?>" data-yt2="<?php echo $thisyear[2] ;?>" data-yt3="<?php echo $thisyear[3] ;?>" data-yt4="<?php echo $thisyear[4] ;?>" data-yt5="<?php echo $thisyear[5]; ?>" <?php } ?>
+							<?php if(sizeof($bygenre) > 4){ ?> data-genreTotal="<?php echo $byGenreTotal; ?>" data-genre="<?php echo $game->_genre; ?>" data-gt1="<?php echo $bygenre[1] ;?>" data-gt2="<?php echo $bygenre[2] ;?>" data-gt3="<?php echo $bygenre[3] ;?>" data-gt4="<?php echo $bygenre[4] ;?>" data-gt5="<?php echo $bygenre[5]; ?>" <?php } ?>
+						></canvas>
+						<div class="analyze-graph-helper" style='float:left;padding:0 18px;'>WORST</div>
+						<div class="analyze-graph-helper" style='float:right;padding:0 0;'>BEST</div>
+					</div>
+					<div class="col s12 m12 l2">
+						<div class="analyze-exp-key">
+							<div class="analyze-line-item" style='background-color:rgba(85, 85, 147, 0.9);'>
+								<div class="analyze-line-desc"><i class="mdi-action-account-circle left" style='margin-bottom: 15px;'></i> Lifetime</div>
+							</div>
+							<div class="analyze-line-item" style='background-color:rgba(0, 150, 136, 0.9)'>
+								<div class="analyze-line-desc"><i class="mdi-editor-insert-invitation left" style='margin-bottom: 15px;'></i> <?php if($game->_year == 0){ ?>Unreleased games<?php }else{ ?>Released in <?php echo $game->_year;  } ?></div>
+							</div>
+							<div class="analyze-line-item" style='background-color:rgba(233, 30, 99, 0.9);'>
+								<div class="analyze-line-desc"><i class="mdi-action-label left" style='margin-bottom: 15px;'></i>  <?php echo $game->_genre; ?></div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(233, 30, 99, 0.9);'></div>
-					<div class="analyze-doughnut-desc">XP from <?php echo $game->_genre; ?></div>
-				</div>
+
 			</div>
 		</div>
-	</div>
 	<?php
+	}
 } 
 
 function BuildCommunitySpectrum($user, $myxp, $game){
@@ -102,76 +79,112 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 	$criticTotal = $critics[1] + $critics[2] + $critics[3] + $critics[4] + $critics[5];
 	$users = GetUserTiersForGame($game->_id);
 	$usersTotal = $users[1] + $users[2] + $users[3] + $users[4] + $users[5];
+	if($followingTotal + $crticTotal + $usersTotal > 3){
 	?>
-	<div class="row">
-		<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
-			<div class='analyze-card-header'>
-				<div class='analyze-card-title'>Community Spectrum</div>
-				<div class='analyze-card-sub-title'>compared to other users & critics</div>
-			</div>
-			<canvas class="GraphCommunityUsers" style='margin:0.5em 20px 1em'  
-				<?php if(sizeof($following) > 1){ ?> data-followingTotal="<?php echo $followingTotal; ?>" data-ft1="<?php echo $following[1] ;?>" data-ft2="<?php echo $following[2] ;?>" data-ft3="<?php echo $following[3] ;?>" data-ft4="<?php echo $following[4] ;?>" data-ft5="<?php echo $following[5]; ?>" <?php } ?>
-				<?php if(sizeof($critics) > 1){ ?> data-criticTotal="<?php echo $criticTotal; ?>" data-yt1="<?php echo $critics[1] ;?>" data-yt2="<?php echo $critics[2] ;?>" data-yt3="<?php echo $critics[3] ;?>" data-yt4="<?php echo $critics[4] ;?>" data-yt5="<?php echo $critics[5]; ?>" <?php } ?>
-				<?php if(sizeof($users) > 1){ ?> data-usersTotal="<?php echo $usersTotal; ?>" data-gt1="<?php echo $users[1] ;?>" data-gt2="<?php echo $users[2] ;?>" data-gt3="<?php echo $users[3] ;?>" data-gt4="<?php echo $users[4] ;?>" data-gt5="<?php echo $users[5]; ?>" <?php } ?>
-			></canvas>
-			<div class="analyze-exp-spectrum-tier">
-				<?php if($myxp->_tier == 5){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:25.7%;'>
-				<?php if($myxp->_tier == 4){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:49.3%;'>
-				<?php if($myxp->_tier == 3){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:72.7%;'>
-				<?php if($myxp->_tier == 2){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-spectrum-tier" style='left:96.3%;'>
-				<?php if($myxp->_tier == 1){ ?>
-					<div class="analyze-exp-spectrum-game-piece">
-						<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
-						<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="analyze-exp-key">
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(255, 87, 34, 0.9)'></div>
-					<div class="analyze-doughnut-desc">XP from Critics</div>
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
+				<div class='analyze-card-header'>
+					<div class='analyze-card-title'>Community Spectrum</div>
+					<div class='analyze-card-sub-title'>compared to other users & critics</div>
 				</div>
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(76, 175, 80, 0.9);'></div>
-					<div class="analyze-doughnut-desc">XP from people you follow</div>
-				</div>
-				<div class="analyze-doughnut-item" style='display:inline-block;min-width:20%;'>
-					<div class="analyze-doughnut-block" style='background-color:rgba(63, 81, 181, 0.9);'></div>
-					<div class="analyze-doughnut-desc">XP from Users</div>
+				<div class="row">
+					<div class="col s12 m12 l10">
+						<canvas class="GraphCommunityUsers" style='margin:0.5em 20px 1em'  
+							<?php if(sizeof($following) > 1){ ?> data-followingTotal="<?php echo $followingTotal; ?>" data-ft1="<?php echo $following[1] ;?>" data-ft2="<?php echo $following[2] ;?>" data-ft3="<?php echo $following[3] ;?>" data-ft4="<?php echo $following[4] ;?>" data-ft5="<?php echo $following[5]; ?>" <?php } ?>
+							<?php if(sizeof($critics) > 1){ ?> data-criticTotal="<?php echo $criticTotal; ?>" data-yt1="<?php echo $critics[1] ;?>" data-yt2="<?php echo $critics[2] ;?>" data-yt3="<?php echo $critics[3] ;?>" data-yt4="<?php echo $critics[4] ;?>" data-yt5="<?php echo $critics[5]; ?>" <?php } ?>
+							<?php if(sizeof($users) > 1){ ?> data-usersTotal="<?php echo $usersTotal; ?>" data-gt1="<?php echo $users[1] ;?>" data-gt2="<?php echo $users[2] ;?>" data-gt3="<?php echo $users[3] ;?>" data-gt4="<?php echo $users[4] ;?>" data-gt5="<?php echo $users[5]; ?>" <?php } ?>
+						></canvas>
+						<div class="analyze-graph-helper" style='float:left;padding:0 18px;'>WORST</div>
+						<div class="analyze-graph-helper" style='float:right;padding:0 0;'>BEST</div>
+						<!--<div class="analyze-exp-spectrum-tier">
+							<?php if($myxp->_tier == 5){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:25.7%;'>
+							<?php if($myxp->_tier == 4){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:49.3%;'>
+							<?php if($myxp->_tier == 3){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:72.7%;'>
+							<?php if($myxp->_tier == 2){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:96.3%;'>
+							<?php if($myxp->_tier == 1){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="mdi-communication-location-on tierTextColor<?php echo $myxp->_tier; ?>"></i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>-->
+					</div>
+					<div class="col s12 m12 l2">
+						<div class="analyze-exp-key">
+							<div class="analyze-line-item" style='background-color:rgba(63, 81, 181, 0.9);'>
+								<div class="analyze-line-desc"><i class='mdi-social-public left' style='margin-bottom: 15px;'></i> Members</div>
+							</div>
+							<div class="analyze-line-item" style='background-color:rgba(76, 175, 80, 0.9);'>
+								<div class="analyze-line-desc"><i class='mdi-social-people left' style='margin-bottom: 15px;'></i> Following</div>
+							</div>
+							<div class="analyze-line-item"  style='background-color:rgba(255, 87, 34, 0.9)';>
+								<div class="analyze-line-desc"><i class='mdi-social-location-city left' style='margin-bottom: 15px;'></i> Critics</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	<?php
+	}
 } 
+
+function BuildAgeGraph($user, $myxp, $game){
+	$tierData = GetTiersForGameWithDate($game->_id);
+	$group1Total = $tierData[1] + $tierData[2] + $tierData[3] + $tierData[4] + $tierData[5];
+	$group2Total = $tierData[6] + $tierData[7] + $tierData[8] + $tierData[9] + $tierData[10];
+	$group3Total = $tierData[11] + $tierData[12] + $tierData[13] + $tierData[14] + $tierData[15];
+	$group4Total = $tierData[16] + $tierData[17] + $tierData[18] + $tierData[19] + $tierData[20];
+	$group5Total = $tierData[21] + $tierData[22] + $tierData[23] + $tierData[24] + $tierData[25];
+	$overallTotal = $group1Total + $group2Total + $group3Total + $group4Total + $group5Total;
+	if($overallTotal > 20){
+	?>
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
+				<div class='analyze-card-header'>
+					<div class='analyze-card-title'>Experience Breakdown by Age</div>
+					<div class='analyze-card-sub-title'>compare different age groups from verified critics and users</div>
+				</div>
+				<canvas class="GraphAgeUsers" style='margin:0.5em 20px 1em'  
+					<?php if(sizeof($group1Total) > 0){ ?> data-group1Total="<?php echo $group1Total; ?>" data-1t1="<?php echo $tierData[1] ;?>" data-1t2="<?php echo $tierData[2] ;?>" data-1t3="<?php echo $tierData[3] ;?>" data-1t4="<?php echo $tierData[4] ;?>" data-1t5="<?php echo $tierData[5]; ?>" <?php } ?>
+					<?php if(sizeof($group2Total) > 0){ ?> data-group2Total="<?php echo $group2Total; ?>" data-2t1="<?php echo $tierData[6] ;?>" data-2t2="<?php echo $tierData[7] ;?>" data-2t3="<?php echo $tierData[8] ;?>" data-2t4="<?php echo $tierData[9] ;?>" data-2t5="<?php echo $tierData[10]; ?>" <?php } ?>
+					<?php if(sizeof($group3Total) > 0){ ?> data-group3Total="<?php echo $group3Total; ?>" data-3t1="<?php echo $tierData[11] ;?>" data-3t2="<?php echo $tierData[12] ;?>" data-3t3="<?php echo $tierData[13] ;?>" data-3t4="<?php echo $tierData[14] ;?>" data-3t5="<?php echo $tierData[15]; ?>" <?php } ?>
+					<?php if(sizeof($group4Total) > 0){ ?> data-group4Total="<?php echo $group4Total; ?>" data-4t1="<?php echo $tierData[16] ;?>" data-4t2="<?php echo $tierData[17] ;?>" data-4t3="<?php echo $tierData[18] ;?>" data-4t4="<?php echo $tierData[19] ;?>" data-4t5="<?php echo $tierData[20]; ?>" <?php } ?>
+					<?php if(sizeof($group5Total) > 0){ ?> data-group5Total="<?php echo $group5Total; ?>" data-5t1="<?php echo $tierData[21] ;?>" data-5t2="<?php echo $tierData[22] ;?>" data-5t3="<?php echo $tierData[23] ;?>" data-5t4="<?php echo $tierData[24] ;?>" data-5t5="<?php echo $tierData[25]; ?>" <?php } ?>
+				></canvas>
+			</div>
+		</div>
+	<?php
+	}
+}
 
 function BuildFranchiseGames($game, $userid, $myxptier){
 	$franchises = GetGamesFranchiseGames($game->_gbid, $userid);
@@ -216,6 +229,32 @@ function BuildDeveloperGames($game, $userid, $myxptier){
 					</div>
 					<div class="col s12 m6 analyze-doughnut-container">
 						<?php BuildRelationalDoughnut($developer[0], $myxptier, "Your XP with this developer"); ?>
+					</div>
+				</div>
+		<?php
+		} ?>
+			</div>
+		</div>
+	<?php }
+}
+
+function BuildPublisherGames($game, $userid, $myxptier){
+	$publishers = GetGamesPublisherGames($game->_gbid, $userid);
+	if(sizeof($publishers) > 0){?>
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
+				<div class='analyze-card-header'>
+					<div class='analyze-card-title'>Publishers</div>
+				</div>
+		<?php
+		foreach($publishers as $publisher){ 
+		?>
+				<div class="col s12" style='padding:0;margin-bottom:15px;'>
+					<div class="col s12 m6" style='padding:0;'>
+						<?php DisplayAnalyzeObjectHeader($publisher[1], $userid, "Publisher")?>
+					</div>
+					<div class="col s12 m6 analyze-doughnut-container">
+						<?php BuildRelationalDoughnut($publisher[0], $myxptier, "Your XP with this publisher"); ?>
 					</div>
 				</div>
 		<?php
@@ -406,6 +445,53 @@ function BuildWarningMsg(){ ?>
 		</div>
 	</div>
 <?php
+}
+
+function BuildCompletedCard($game){
+	$finishedData = GetGameCompletion($game->_id);
+	?>
+	<div class="col s12 m4 analyze-left-card">
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
+				<div class="analyze-data-element"><?php if($finishedData[1] > 0){echo round(($finishedData[0] / $finishedData[1]) * 100); }else{ echo "0"; } ?>%</div>
+				<div class="analyze-data-desc">of the community finished</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function BuildAvgAgeCard($game){
+	$avg = GetAverageAgePlayed($game->_id);
+	?>
+		<div class="col s12 m4 analyze-right-card">
+			<div class="row">
+				<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
+					<?php 	if($avg != -1){ ?>
+						<div class="analyze-data-element"><?php echo $avg;  ?></div>
+						<div class="analyze-data-desc">average age when played</div>
+					<?php }else{ ?>
+						<div class="analyze-data-element">0</div>
+						<div class="analyze-data-desc">people have played</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	<?php
+}
+
+function BuildBookmarkedCard($game){
+	$bookmarked = GetGameBookmarked($game->_id);
+	?>
+	<div class="col s12 m4 analyze-center-card">
+		<div class="row">
+			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
+				<div class="analyze-data-element"><?php echo $bookmarked; ?></div>
+				<div class="analyze-data-desc">user<?php if($bookmarked != 1){ ?>s<?php } ?> bookmarked</div>
+			</div>
+		</div>
+	</div>
+	<?php
 }
 
 function BuildRelationalDoughnut($tiers, $myxp, $msg){

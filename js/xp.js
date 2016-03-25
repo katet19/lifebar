@@ -637,6 +637,28 @@ function DisplayBattleProgress(content){
 	var contentsplit = $.trim(content).split("|**|");
 	ShowBattleProgress(contentsplit[0]);
 	$("#game-myxp-tab").html(contentsplit[1]);
+	RefreshAnalytics();
+}
+
+function RefreshAnalytics(){
+	ShowLoader($("#game-analyze-tab"), 'big', "<br><br><br>");
+	var gameid = $("#gameContentContainer").attr("data-id");
+	$.ajax({ url: '../php/webService.php',
+         data: {action: "DisplayMyAnalyze", gameid: gameid  },
+         type: 'post',
+         success: function(output) {
+     		$("#game-analyze-tab").html(output);
+     		AttachAnalyzeEvents();
+         },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function AttachBPEvents(){

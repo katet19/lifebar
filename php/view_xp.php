@@ -623,6 +623,7 @@ function ShowMyXP($exp){
 	    }
 	    ?>
     </div>
+    <div class="col s12 m12 l10" id='myxp-game-width-box'></div>
 <?php }
 
 function BuildPlayedVisualSentence($exp, $userid, $tier){
