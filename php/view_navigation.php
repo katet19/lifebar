@@ -31,19 +31,11 @@ function DisplayHeaderNavigation(){ ?>
 			<div class="col s4 m4 l4">
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
-						<?php if($_SESSION['logged-in'] != null){ ?>
-							<div class="searchContainer">
-								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
-								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
-							</div>
-						<?php }else{ ?>
-							<div class="searchContainerAnonymous">
-								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
-								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
-							</div>
-						<?php } ?>
+						<div class="searchContainer">
+							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+						</div>
 						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
 						<div class="userNotificiations"><i class="mdi-social-notifications-none"></i></div>
 						<div class="userAvatar" style="background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -60,10 +52,18 @@ function DisplayHeaderNavigation(){ ?>
 						  </ul>
 					</div>
 				<?php }else{ ?>
-					<div class="loginContainer">
-					  <a id="loginButton" class="waves-effect waves-light btn-flat modal-trigger" href="#loginModal" style='color: white;margin-top: 4px;margin-bottom: 5px;'>Login</a>
-					  <a id="signupButton" class="waves-effect waves-light btn-flat modal-trigger" href="#signupModal" style='margin-right: 5px;color: white;margin-bottom: 5px;margin-top:4px;'>Signup</a>
+				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
+						<div class="searchContainerAnonymous" style='margin-top: 0.5em;'>
+							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+						</div>
+						<div class="loginContainer" style='display:inline-block;margin-top: 0.5em;vertical-align: top;'>
+						  <a id="loginButton" class="waves-effect waves-light btn-flat modal-trigger" href="#loginModal" style='color: white;margin-top: 0px;margin-bottom: 0px;vertical-align: sub;'>Login</a>
+						  <a id="signupButton" class="waves-effect waves-light btn-flat modal-trigger" href="#signupModal" style='margin-right: 5px;color: white;margin-top: 0px;margin-bottom: 0px;vertical-align: sub;margin-top: 5px;'>Signup</a>
+						</div>
 					</div>
+
 				<?php } ?>
 			</div>
 		</div>

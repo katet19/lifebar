@@ -263,13 +263,13 @@ function SubmitOwned(serviceValue, gameid){
      type: 'post',
      success: function(output) {
      	if(serviceValue == "AddOwned"){
-			Toast("Added to your owned library");
+			Toast("Saved game for later");
 			$(".game-remove-owned-btn").show();
 			$(".game-add-owned-btn").hide();
 			$(".GameMyStatusIcons .myowned").show();
 			GAEvent('Game', 'Add to Owned');
 		}else{
-			Toast("Removed from your owned library");
+			Toast("Removed game");
 			$(".game-remove-owned-btn").hide();
 			$(".game-add-owned-btn").show();
 			$(".GameMyStatusIcons .myowned").hide();

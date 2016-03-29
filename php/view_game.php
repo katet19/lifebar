@@ -35,6 +35,8 @@ function ShowCommunity($game, $id, $myxp){
 		$verified = GetVerifiedXPForGame($game->_id, $id);
 		$curated = GetCuratedXPForGame($game->_id, $id);
 		$myusers = GetMyUsersXPForGame($game->_id, $id);
+	}else{
+		$id = -1;
 	}
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
