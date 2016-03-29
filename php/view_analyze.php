@@ -1,6 +1,6 @@
 <?php function DisplayAnalyzeTab($user, $myxp, $game){
 	if($myxp->_tier <= 0){
-		BuildWarningMsg();
+		BuildWarningMsg($user);
 	}
 	BuildExperienceSpectrum($user, $myxp, $game);
 	BuildFranchiseGames($game, $user->_id, $myxp->_tier);
@@ -73,8 +73,10 @@
 } 
 
 function BuildCommunitySpectrum($user, $myxp, $game){
-	$following = GetFollowingTiersForGame($game->_id, $user->_id);
-	$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
+	if($user->_id > 0){
+		$following = GetFollowingTiersForGame($game->_id, $user->_id);
+		$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
+	}
 	$critics = GetCriticTiersForGame($game->_id);
 	$criticTotal = $critics[1] + $critics[2] + $critics[3] + $critics[4] + $critics[5];
 	$users = GetUserTiersForGame($game->_id);
@@ -142,9 +144,11 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 							<div class="analyze-line-item" style='background-color:rgba(63, 81, 181, 0.9);'>
 								<div class="analyze-line-desc"><i class='mdi-social-public left' style='margin-bottom: 15px;'></i> Members</div>
 							</div>
-							<div class="analyze-line-item" style='background-color:rgba(76, 175, 80, 0.9);'>
-								<div class="analyze-line-desc"><i class='mdi-social-people left' style='margin-bottom: 15px;'></i> Following</div>
-							</div>
+							<?php if($user->_id > 0){ ?>
+								<div class="analyze-line-item" style='background-color:rgba(76, 175, 80, 0.9);'>
+									<div class="analyze-line-desc"><i class='mdi-social-people left' style='margin-bottom: 15px;'></i> Following</div>
+								</div>
+							<?php } ?>
 							<div class="analyze-line-item"  style='background-color:rgba(255, 87, 34, 0.9)';>
 								<div class="analyze-line-desc"><i class='mdi-social-location-city left' style='margin-bottom: 15px;'></i> Critics</div>
 							</div>
@@ -437,11 +441,15 @@ function BuildSimilarGames($game, $userid, $myxp){
 	}
 }
 
-function BuildWarningMsg(){ ?>
+function BuildWarningMsg($user){ ?>
 	<div class="row">
 		<div class="col s12" style='font-size: 1.25em;font-weight:500;'>
 			<i class="mdi-alert-warning" style='color:orangered;font-size: 1.5em;vertical-align: sub;'></i> 
-			<span>Analysis of this game is limited without any XP</span>
+			<?php if($user->_id > 0){ ?>
+				<span>Analysis of this game is limited without any XP</span>
+			<?php }else{ ?>
+				<span>Analysis of this game is limited without logging in</span>
+			<?php } ?>
 		</div>
 	</div>
 <?php
