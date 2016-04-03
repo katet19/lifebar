@@ -1052,7 +1052,7 @@ function DisplayEquipXP($gameid, $showtitle){
 	$newgame = GetGame($gameid);
 	?>
 	<div class="equip-xp-container" data-newgame="<?php echo $gameid; ?>" data-newgame-image="<?php echo $newgame->_imagesmall; ?>">
-		<div class="equip-xp-header">Equip <?php if($showtitle){ echo $newgame->_title; }else{ echo "your XP"; } ?></div>
+		<div class="equip-xp-header">Pin <?php if($showtitle){ echo $newgame->_title; }else{ echo "your XP"; } ?></div>
 		<div class="equip-xp-subheader">Show off the games you are currently playing or want to highlight when people visit your Profile.</div>
 		<div class="equip-xp-games">
 			<div class="equip-xp-game" data-slot="1" data-previous="<?php if($gameid != $equip1){ echo $game1->_id; } ?>">
@@ -1069,9 +1069,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip1){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 			<div class="equip-xp-game" data-slot="2" data-previous="<?php if($gameid != $equip2){ echo $game2->_id; } ?>">
@@ -1088,9 +1088,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip2){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 			<div class="equip-xp-game" data-slot="3" data-previous="<?php if($gameid != $equip3){ echo $game3->_id; } ?>">
@@ -1108,9 +1108,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip3){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 		</div>

@@ -340,6 +340,10 @@ function AttachFloatingIconButtonEvents(){
 		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
+	$(".game-share-btn").on("click", function(){
+		var gameid = $("#gameContentContainer").attr("data-id");
+		ShowShareModal("game", gameid);
+	});
 	$(".fab-login").on('click', function(){
 		 $('#signupModal').openModal();
 		 GAEvent('Game', 'Login');
@@ -374,8 +378,8 @@ function DisplayEquipXP(){
 function AttachEquipXPEvents(gameid){
 	$(".equip-xp-game-btn").on('click', function(){
 		$(this).parent().find(".equip-xp-game-image").css({"opacity":"0"});
-		if($(this).text() == "Equip"){
-			$(this).text("Unequip");
+		if($(this).text() == "Pin"){
+			$(this).text("Un-pin");
 			var image = $(".equip-xp-container").attr("data-newgame-image");
 			$(this).parent().find(".equip-xp-game-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
 			$(this).parent().find(".equip-xp-game-empty-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
@@ -384,7 +388,7 @@ function AttachEquipXPEvents(gameid){
 			var slot = $(this).parent().attr("data-slot");
 			UpdatePreferredXP(gameid, slot);
 		}else{
-			$(this).text("Equip");
+			$(this).text("Pin");
 			var oldgameid = $(this).parent().attr("data-previous");
 			var image = $(this).parent().find(".equip-xp-game-image").attr("data-previous");
 			$(this).parent().find(".equip-xp-game-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
