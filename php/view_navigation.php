@@ -142,3 +142,50 @@ function DisplayLifeBarLogo($showtag){ ?>
 		</div>
 	</div>*/
 }
+
+function DisplayShareContent($userid, $type, $otherid){
+	if($type == "game"){
+		$url = "http://lifebar.io/1/u.php?i=g".$otherid;
+		$game = GetGame($otherid);
+		//$header = "Share ".$game->_title." with others";
+		$header = "Select how you would like to share this game";
+		$share = htmlspecialchars("Check out ".$game->_title." at Lifebar.io!");
+		$shareEmail = htmlspecialchars("Check out ".$game->_title." at Lifebar.io!<br><br><a href='".$url."'>");
+	}
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="share-header">
+				<div class="share-header-title">
+					<?php echo $header; ?>
+				</div>
+			</div>
+		</div>
+	    <div class="col s12">
+	    	<div class="row">
+	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $share; ?>+<?php echo $url; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
+	 				<i class="fa fa-twitter-square"></i>
+	  	   		</a>
+	  	   		<a href="https://plus.google.com/share?url=<?php echo $url; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
+	  	   			<i class="fa fa-google-plus-square"></i>
+	  	   		</a>
+	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
+	  	   			<i class="fa fa-facebook-square"></i>
+	  	   		</a>
+ 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $url; ?>&t=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
+	  	   			<i class="fa fa-tumblr-square"></i>
+	  	   		</a>
+	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareEmail; ?>" class="social-share-custom-btn">
+	  	   			<i class="fa fa-envelope-o"></i>
+	  	   		</a>
+	    	</div>
+	    </div>
+	    <div class="row">
+		    <div class="col s12 m6 l4" style='float: inherit;text-align: center; margin: auto;'>
+		        <input id="share-link" type="text" value='<?php echo $url; ?>'>
+		        <div class="share-sub-link">COPY LINK</div>
+		    </div>
+	    </div>
+	</div>
+	<?php
+}

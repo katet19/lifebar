@@ -402,5 +402,13 @@
 				TestScript($_POST["script"]);
 			}
 		}
+		if($_POST['action'] == 'DisplayShareModal'){
+			if(isset($_POST['userid']))
+				$id = $_POST['userid'];
+			else
+				$id = $_SESSION['logged-in']->_id;
+				
+			DisplayShareContent($id, $_POST['type'], $_POST['otherid']);
+		}
 	}
 ?>

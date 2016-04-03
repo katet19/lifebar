@@ -174,14 +174,15 @@ function ShowMyGameFAB($gameid){
 	      	<li><span class="GameHiddenActionLabel">Request update from GB</span><a class="btn-floating  red accent-4 game-update-info-btn" data-gameid='<?php echo $myxp->_game->_gbid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Upload hi-res jpg</span><a class="btn-floating light-green darken-3 game-add-image-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-gameyear='<?php echo $myxp->_game->_year; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	      	<?php } ?>
+	      	<li><span class="GameHiddenActionLabel">Don't save for later</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Save for later</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
 	    	<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){ ?>
-	    	<li><span class="GameHiddenActionLabel">Equip XP to Profile</span><a class="btn-floating indigo darken-3 game-set-fav-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-extension"></i></a></li>
+	    	<li><span class="GameHiddenActionLabel">Pin XP to Profile</span><a class="btn-floating blue-grey darken-3 game-set-fav-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="fa fa-thumb-tack"></i></a></li>
 	    	<?php } ?>
     	  	<li><span class="GameHiddenActionLabel">Remove bookmark</span><a class="btn-floating grey darken-1 game-remove-bookmark-btn" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Bookmark this game</span><a class="btn-floating red darken-4 game-add-bookmark-btn" <?php if($myxp->_bucketlist == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	
-	      	<li><span class="GameHiddenActionLabel">Don't save for later</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
-	      	<li><span class="GameHiddenActionLabel">Save for later</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Share game page</span><a class="btn-floating indigo darken-2 game-share-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-game-name='<?php echo $myxp->_game->_title; ?>'><i class="mdi-social-share"></i></a></li>
 	      	<?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
 	      	<li><span class="GameHiddenActionLabelBigFab">Add a watched XP</span><a class="btn-floating game-add-watched-btn" style='width: 55.5px; height: 55.5px;'><i class="mdi-action-visibility" style='line-height: 55.5px;font-size: 1.6rem;'></i></a></li>
 	      	<?php } ?>

@@ -1,3 +1,4 @@
+
 function InitializeNavigation(){
 	$('.mainNav').tabs();
 	$("#slide-out li").on('click', function(e){ SideNavigation($(this)); });
@@ -175,6 +176,38 @@ function ShowProfileDetails(content){
   		HideFocus();
   	});
 }
+
+
+/*
+*
+* Social Sharing Modal
+*
+*/
+function ShowShareModal(type, otherid){
+	var loading = "<div id='share-container'></div>";
+	ShowPopUp(loading);
+	ShowLoader($("#share-container"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: 'DisplayShareModal', type: type, otherid: otherid },
+     type: 'post',
+     success: function(output) {
+		$("#share-container").html(output);
+		$(".share-sub-link").on("click", function(){
+			$("#share-link").select();
+    		document.execCommand("copy");	
+		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
 
 /*
 *
