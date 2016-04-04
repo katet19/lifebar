@@ -626,6 +626,16 @@ function GetExperiencedUsersCategory(){
 			$users[] = GetUser($row["UserID"], $mysqli);
 		}
 	}
+	if(sizeof($users) < 5){
+		//Expand the search
+		unset($users);
+		$thisquarter = date('Y-m-d', strtotime("now -15 days") );
+		if ($result = $mysqli->query("select * from `Sub-Experiences` exp, `Users` usr where usr.`ID` = exp.`UserID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' and exp.`DateEntered` >= '".$thisquarter."' GROUP BY  `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6")) {
+			while($row = mysqli_fetch_array($result)){
+				$users[] = GetUser($row["UserID"], $mysqli);
+			}
+		}
+	}
 	Close($mysqli, $result);
 	
 	return $users;
