@@ -149,8 +149,24 @@ function DisplayShareContent($userid, $type, $otherid){
 		$game = GetGame($otherid);
 		//$header = "Share ".$game->_title." with others";
 		$header = "Select how you would like to share this game";
-		$share = htmlspecialchars("Check out ".$game->_title." at Lifebar.io!");
-		$shareEmail = htmlspecialchars("Check out ".$game->_title." at Lifebar.io!<br><br><a href='".$url."'>");
+		$share = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." at Lifebar.io!");
+		$shareEmail = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." at Lifebar.io! ".$url);
+	}else if($type == "user"){
+		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
+		$user = GetUser($otherid);
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+		$header = "Select how you would like to share this user profile";
+		if($user->_security == "Journalist"){
+			$share = htmlspecialchars("Check out ".$username."s curated gaming profile at Lifebar.io!");
+			$shareEmail = htmlspecialchars("Check out ".$username."s curated gaming profile at Lifebar.io! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out ".$username."s gaming profile at Lifebar.io!");
+			$shareEmail = htmlspecialchars("Check out ".$username."s gaming profile at Lifebar.io! ".$url);
+		}
 	}
 	?>
 	<div class="row">

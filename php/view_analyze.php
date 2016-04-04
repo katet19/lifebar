@@ -462,7 +462,7 @@ function BuildCompletedCard($game){
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
 				<div class="analyze-data-element"><?php if($finishedData[1] > 0){echo round(($finishedData[0] / $finishedData[1]) * 100); }else{ echo "0"; } ?>%</div>
-				<div class="analyze-data-desc">of the community finished</div>
+				<div class="analyze-data-desc">of those who played finished</div>
 			</div>
 		</div>
 	</div>

@@ -687,6 +687,9 @@ function AttachFloatingIconWeaveButtonEvents(){
 	    	timeout:45000
 		});
 	});
+	$(".user-share-btn").on("click", function(){
+		ShowShareModal("user", $(this).attr("data-userid"));
+	});
 	$(".user-set-title").on("click", function(){
 		var userid = $(this).attr("data-userid");
 		var html = "<div class='row'><div class='col s12 input-field'><input type=text name='updatetitle' id='updatetitle' /><label for='updatetitle'>Title/Publication</label></div><div class='btn wave-effect update-title-btn'>Update Title<div></div>";
