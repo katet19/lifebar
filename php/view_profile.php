@@ -738,6 +738,7 @@ function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
         		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<?php } ?>
+  		      	<li><span class="GameHiddenActionLabel">Share profile page</span><a class="btn-floating indigo darken-2 user-share-btn" data-userid='<?php echo $userid; ?>' data-user-name='<?php echo $username; ?>'><i class="mdi-social-share"></i></a></li>
 	    </ul>
 	<?php }
 }
