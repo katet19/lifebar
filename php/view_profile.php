@@ -719,7 +719,8 @@ function DisplayTimeline($user){
 }
 
 function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
-	if($_SESSION['logged-in']->_id > 0 && ($userid != $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id == 7)){ ?>
+	if($_SESSION['logged-in']->_id > 0){ ?>
+		<?php if($userid != $_SESSION['logged-in']->_id){ ?>
 	    <a class="btn-floating btn-large <?php if(in_array($userid, $conn)){ echo "user-unfollow-btn blue darken-2"; }else{ echo "user-follow-btn blue darken-2"; } ?> "  data-userid='<?php echo $userid; ?>' data-username='<?php echo $username; ?>'>
 	      <?php if(in_array($userid, $conn)){ ?>
 	      	<span class="GameHiddenActionLabelBigFab">Unfollow</span>
@@ -739,6 +740,22 @@ function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
 	        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<?php } ?>
   		      	<li><span class="GameHiddenActionLabel">Share profile page</span><a class="btn-floating indigo darken-2 user-share-btn" data-userid='<?php echo $userid; ?>' data-user-name='<?php echo $username; ?>'><i class="mdi-social-share"></i></a></li>
+	    <?php }else if($userid == $_SESSION['logged-in']->_id){ ?>
+			    <a class="btn-floating btn-large indigo darken-2 user-share-btn"  data-userid='<?php echo $userid; ?>' data-username='<?php echo $username; ?>'>
+					<span class="GameHiddenActionLabelBigFab">Share profile page</span>
+			      	<i class="large mdi-social-share"></i>
+			    </a>
+			    <ul>
+			      	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+			      		<?php if($critic){ ?>
+			      			<li><span class="GameHiddenActionLabel">Upload smaller image</span><a class="btn-floating light-green darken-3 user-add-small-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
+			        		<li><span class="GameHiddenActionLabel">Upload larger image</span><a class="btn-floating orange darken-3 user-add-large-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
+			        	<?php } ?>
+		        		<li><span class="GameHiddenActionLabel">Change users Title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment"></i></a></li>
+		        		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
+			        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
+	      	<?php } ?>
+	    <?php } ?>
 	    </ul>
 	<?php }
 }

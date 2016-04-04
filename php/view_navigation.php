@@ -160,12 +160,15 @@ function DisplayShareContent($userid, $type, $otherid){
 			$username = $user->_username;
 		}
 		$header = "Select how you would like to share this user profile";
-		if($user->_security == "Journalist"){
-			$share = htmlspecialchars("Check out ".$username."s curated gaming profile at Lifebar.io!");
-			$shareEmail = htmlspecialchars("Check out ".$username."s curated gaming profile at Lifebar.io! ".$url);
+		if($otherid == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my profile at Lifebar.io!");
+			$shareEmail = htmlspecialchars("Check out my profile at Lifebar.io! ".$url);
+		}else if($user->_security == "Journalist"){
+			$share = htmlspecialchars("Check out ".$username."%27s curated gaming profile at Lifebar.io!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated gaming profile at Lifebar.io! ".$url);
 		}else{
-			$share = htmlspecialchars("Check out ".$username."s gaming profile at Lifebar.io!");
-			$shareEmail = htmlspecialchars("Check out ".$username."s gaming profile at Lifebar.io! ".$url);
+			$share = htmlspecialchars("Check out ".$username."%27s gaming profile at Lifebar.io!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s gaming profile at Lifebar.io! ".$url);
 		}
 	}
 	?>
