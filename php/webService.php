@@ -185,6 +185,26 @@
 			if($_SESSION['logged-in']->_security == 'Admin')
 				UpdateRoleManagement($_POST['userid'], $_POST['role']);
 		}
+		if($_POST['action'] == "DisplayAdminControlsForUser"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				DisplayAdminControlsForUser($_POST['userid']);
+		}
+		if($_POST['action'] == "AdminGiveBadge"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				GiveBadgeAccess($_POST['userid'], $_POST['badgeid']);
+		}
+		if($_POST['action'] == "AdminRemoveBadge"){
+			if($_SESSION['logged-in']->_security == 'Admin')
+				RemoveBadgeAccess($_POST['userid'], $_POST['badgeid']);
+		}
+		if($_POST['action'] == "UnequipBadge"){
+			if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
+				UnequipBadge($_POST['userid'], $_POST['badgeid']);
+		}
+		if($_POST['action'] == "EquipBadge"){
+			if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
+				EquipBadge($_POST['userid'], $_POST['badgeid']);
+		}
 	}
 	function ActivityServices(){
 		if($_POST['action'] == 'DisplayActivity' ){

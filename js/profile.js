@@ -716,6 +716,10 @@ function AttachFloatingIconWeaveButtonEvents(){
 		var userid = $(this).attr("data-userid");
 		DisplayRoleManagement(userid);
 	});
+	$(".user-manage-badge").on("click", function(){
+		var userid = $(this).attr("data-userid");
+		DisplayManageBadge(userid);
+	});
 	AttachFollowFABEvents();
 }
 
@@ -772,6 +776,140 @@ function AttachRoleManagementEvents(userid){
 			Toast('Role has been updated');
 	  		$("#universalPopUp").closeModal();
   			HideFocus();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function DisplayManageBadge(userid){
+	ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+	ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayAdminControlsForUser", userid: userid },
+     type: 'post',
+     success: function(output) {
+ 		$("#BattleProgess").html(output);
+ 		AttachManageBadgeEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachManageBadgeEvents(userid){
+	AttachGiveBadge(userid);
+	AttachRemoveBadge(userid);
+	EquipBadge(userid);
+	UnequipBadge(userid);
+}
+
+function AttachGiveBadge(userid){
+	$(".badge-give").unbind();
+	$(".badge-give").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "AdminGiveBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+	     	btn.parent().parent().find(".badge-image-container").addClass("badge-active");
+	     	btn.addClass("badge-remove");
+	     	btn.removeClass("badge-give");
+	     	btn.html("Remove");
+			Toast("Badge Given");
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function AttachRemoveBadge(userid){
+	$(".badge-remove").unbind();
+	$(".badge-remove").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "AdminRemoveBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+	     	btn.parent().parent().find(".badge-image-container").removeClass("badge-active");
+ 	     	btn.addClass("badge-give");
+	     	btn.removeClass("badge-remove");
+	     	btn.html("Give");
+			Toast("Badge Removed");
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function UnequipBadge(userid){
+	$(".badge-unequip").unbind();
+	$(".badge-unequip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+ 	     	btn.addClass("badge-equip");
+	     	btn.removeClass("badge-unequip");
+	     	btn.html("Equip");
+			Toast("Badge Unequipped");
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function EquipBadge(userid){
+	$(".badge-equip").unbind();
+	$(".badge-equip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+ 	     	btn.addClass("badge-unequip");
+	     	btn.removeClass("badge-equip");
+	     	btn.html("Unequip");
+			Toast("Badge Equipped");
+			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
