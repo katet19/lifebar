@@ -128,6 +128,58 @@
 	font-weight:bold;
 }
 
+.badge-card{
+    display: inline-block;
+    margin-right: 1.25em;
+    margin-bottom: 20px;
+    width: 350px;
+    vertical-align: top;
+    height: 150px;
+}
+
+.badge-preview{
+    height: 50px;
+    width: 50px;
+    margin-top: 45px;
+}
+
+.badge-image-container{
+    width: 100px;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+    float: left;
+    background-color: #ededed;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.badge-details-container{
+    display: inline-block;
+    height: 100%;
+    width:250px;
+    float:left;
+    padding: 10px;
+    position:relative;
+}
+
+.badge-btn{
+    position:absolute;
+    bottom:-5px;
+    right:10px;
+}
+
+.badge-name{
+    font-size: 1.2em;
+    font-weight:500;
+}
+
+.badge-active{
+    background-color: #99DA9C;
+}
 
 @media only screen and (max-width : 600px) {
 	.badge-small{
