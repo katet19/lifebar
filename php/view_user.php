@@ -133,26 +133,7 @@ function DisplayCriticQuoteCard($exp){
 		</div>
 		<div class="critic-action-container col s12">
 			<?php if($user->_security == 'Authenticated'){ ?>
-				<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $exp->_game->_id."-".$user->_id; ?>">
-					<?php $watched = false; $played = false; unset($details);
-						foreach($exp->_playedxp as $playedxp){
-							$played = true;
-							$details[] = "<i class='mdi-hardware-gamepad left tierTextColor".$exp->_tier."'></i> ".BuildPlayedSentence($playedxp);
-						}
-						foreach($exp->_watchedxp as $watchedxp){
-							$watched = true;
-							$details[] = "<i class='mdi-action-visibility left tierTextColor".$exp->_tier."'></i> ".BuildWatchedSentence($watchedxp);
-						}
-					?>
-					<?php BuildDetailsPopUp($exp, $details, $conn); ?>
-					<?php if($watched){?>
-						<i class="mdi-action-visibility left tierTextColor<?php echo $exp->_tier; ?>"></i>
-					<?php } ?>
-					<?php if($played){?>
-						<i class="mdi-hardware-gamepad left tierTextColor<?php echo $exp->_tier; ?>"></i>
-					<?php } ?>
-					DETAILS
-				</div>
+				<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $user->_id; ?>" data-uname="<?php echo $hiddenusername; ?>">DETAILS</div>
 			<?php } ?>
 			<?php if($exp->_link != ''){ ?>
 				<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
@@ -259,26 +240,7 @@ function DisplayUserQuoteCard($exp){
 			</div>
 		</div>
 		<div class="critic-action-container col s12">
-			<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $exp->_game->_id."-".$user->_id; ?>">
-				<?php $watched = false; $played = false; unset($details);
-					foreach($exp->_playedxp as $playedxp){
-						$played = true;
-						$details[] = "<i class='mdi-hardware-gamepad left tierTextColor".$exp->_tier."'></i> ".BuildPlayedSentence($playedxp);
-					}
-					foreach($exp->_watchedxp as $watchedxp){
-						$watched = true;
-						$details[] = "<i class='mdi-action-visibility left tierTextColor".$exp->_tier."'></i> ".BuildWatchedSentence($watchedxp);
-					}
-				?>
-				<?php BuildDetailsPopUp($exp, $details, $conn); ?>
-				<?php if($watched){?>
-					<i class="mdi-action-visibility left tierTextColor<?php echo $exp->_tier; ?>"></i>
-				<?php } ?>
-				<?php if($played){?>
-					<i class="mdi-hardware-gamepad left tierTextColor<?php echo $exp->_tier; ?>"></i>
-				<?php } ?>
-				DETAILS
-			</div>
+			<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $user->_id; ?>" data-uname="<?php echo $hiddenusername; ?>">DETAILS</div>
 			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } ?>

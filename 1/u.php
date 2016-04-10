@@ -14,6 +14,15 @@ function makeOpenGraph($type, $id) {
 		$og = ConvertGametoOG(GetGame($id));
 	}else if($type == 'u'){
 		$og = ConvertUsertoOG(GetUser($id));
+	}else if($type == 'x'){
+		$ids = explode("-", $id);
+		if(sizeof($ids) > 1){
+			$game = GetGame($ids[0]);
+			$user = GetUser($ids[1]);
+			$og = ConvertGamePlusUsertoOG($user, $game);
+		}else{
+			$og['LINK'] = "http://lifebar.io";
+		}
 	}
     ?>
     <!DOCTYPE html>
@@ -57,6 +66,25 @@ function ConvertGametoOG($game){
 	$og["DESC"] = "Check out analytics and what others are saying about ".$game->_title;
 	$og["IMAGE"] = $game->_imagesmall; 
 	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/";
+	
+	return $og;
+}
+
+function ConvertGamePlusUsertoOG($user, $game){
+	$og["ID"] = $user->_id;
+	
+	if($user->_security == "Journalist" || $user->_security == "Authenticated")
+		$og["TITLE"] = $user->_first." ".$user->_last;
+	else
+		$og["TITLE"] = $user->_username;
+	
+	if($user->_security == "Journalist")
+		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s curated experience with ".$game->_title);
+	else
+		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s experience with ".$game->_title);
+		
+	$og["IMAGE"] = $game->_imagesmall; 
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/";
 	
 	return $og;
 }

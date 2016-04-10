@@ -567,6 +567,7 @@ function ShowMyXP($exp){
 	    </div>
 	    <div class="row" style='margin: 0;'>
 	    	<div class="myxp-edit-tier-quote btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
+	    	<div class="myxp-share-tier-quote btn-flat waves-effect" data-userid='<?php echo  $exp->_userid; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i> Share</div>
 	    </div>
     </div>
     <br>

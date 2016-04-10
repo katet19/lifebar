@@ -175,7 +175,7 @@
 	background-color:#D32F2F;
 }
 
-.myxp-edit-tier-quote{
+.myxp-edit-tier-quote, .myxp-share-tier-quote{
 	padding: 0 2em;
 	margin: 0 1em;
 	font-weight: bold;
@@ -183,7 +183,7 @@
 	float: right;
 }
 
-.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover{
+.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover, .myxp-share-tier-quote:hover{
 	opacity:1;
 }
 
@@ -460,6 +460,11 @@
 .visual-sentence-sublabel{
 	font-size:0.5em;
 }
+.userxp-details-lifebar{
+	margin-bottom: 150px;
+	padding-top: 20px !important;
+	position: relative;
+}
 @media only screen and (max-width : 600px) {
 	.myxp-GraphContainer{
 		width:100%;
@@ -505,5 +510,15 @@
 	}
 	.visual-sentence-game{
     	max-width: 100px;
+	}
+	.gameNav{
+		font-size:0.8em;
+	}
+	.myxp-details-container .row .s0{
+		display:none;
+	}
+	.userxp-details-lifebar{
+		width:90% !important;
+		margin-left:3% !important;
 	}
 }

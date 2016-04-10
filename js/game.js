@@ -25,13 +25,6 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#gameInnerContainer").html(output);
-	 		
-	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
-	 		
 	 		var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
@@ -42,6 +35,12 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
  	 			GLOBAL_HASH_REDIRECT = "";
 	 		GLOBAL_TAB_REDIRECT = "";
 	 		GAPage('Game', '/game/'+title);
+	 		
+ 	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -54,20 +53,24 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 		});
 	}else{
 		ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
+		var otherid = -1;
+		if(gameTab.indexOf("User") >= 0){
+			actionTaken = "DisplayGameViaIDWithUser";
+			var gameData = gameTab.split('/');
+			if(gameData[1].length > 0)
+				otherid = gameData[1];
+		}else{
+			actionTaken = "DisplayGameViaID";
+		}
+		
 		$.ajax({ url: '../php/webService.php',
-		 data: {action: "DisplayGameViaID", gameid: gbid },
+		 data: {action: actionTaken, gameid: gbid, otherid: otherid },
 		 type: 'post',
 		 success: function(output) {
 		 	$("#gameInnerContainer").html(output);
  		 	var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		
- 	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
 	 		
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
@@ -76,6 +79,15 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
  	 			GLOBAL_HASH_REDIRECT = "";
 		 	GLOBAL_TAB_REDIRECT = "";
 		 	GAPage('Game', '/game/'+title);
+		 	
+  	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}else if (gameTab.indexOf("User") >= 0){
+	 			$("#userxp-tab-nav").click();
+	 			DisplayExpSpectrum($("#game-userxp-tab"));
+	 		}
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -165,9 +177,9 @@ function AttachGameEvents(currentTab){
   	Waves.displayEffect();
   	
   	$(".detailsBtn").on('click', function(e){ 
-  		var uniqueid = $(this).attr("data-uid"); 
-  		var html = $('#'+uniqueid).html();
-  		ShowPopUp(html);
+  		var userid = $(this).attr("data-uid");
+  		var username = $(this).attr("data-uname");
+  		DisplayUserDetails(userid, username);
   	});
 	
  	$(".backButton").on('click', function(){
@@ -178,14 +190,50 @@ function AttachGameEvents(currentTab){
  		window.open("http://tidbits.io/c/games");
  	});
  	
+ 	$(".myxp-share-tier-quote").unbind();
+ 	$(".myxp-share-tier-quote").on('click', function(){
+		var gameid = $("#gameContentContainer").attr("data-id");
+		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
+	});
+ 	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 }
 
+function DisplayUserDetails(userid, username){
+	$("#userxp-tab-nav").html(username);
+ 	$("#userxp-tab-nav").parent().show(250);
+ 	$("#game-userxp-tab").css({"display":"block"});
+	$("#userxp-tab-nav").click();
+	ShowLoader($("#game-userxp-tab"), 'big', "<br><br><br>");
+	var gameid = $("#gameContentContainer").attr("data-id");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayUserDetails", gameid: gameid, userid: userid },
+     type: 'post',
+     success: function(output) {
+		$("#game-userxp-tab").html(output);
+		DisplayExpSpectrum($("#game-userxp-tab"));
+	 	$(".myxp-share-tier-quote").unbind();
+	 	$(".myxp-share-tier-quote").on('click', function(){
+			var gameid = $("#gameContentContainer").attr("data-id");
+			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
+		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
 function AttachAnalyzeEvents(){
-	DisplayExpSpectrum();
+	DisplayExpSpectrum($("#game-analyze-tab"));
 	DisplayAgeGraph();
 	DisplayRelationalGraphs();
 	AnalyzeViewMoreButtons();
@@ -783,9 +831,9 @@ function DisplayRelationalGraphs(){
 	}
 }
 
-function DisplayExpSpectrum(){
-	if($(".GraphExpSpectrum").length > 0){
-		$(".GraphExpSpectrum").each(function(){
+function DisplayExpSpectrum(elem){
+	if(elem.find(".GraphExpSpectrum").length > 0){
+		elem.find(".GraphExpSpectrum").each(function(){
 			var experiencedUsersGraph = $(this).get(0).getContext("2d");
 			var lifetimeTotal = $(this).attr("data-overalltotal");
 			var yearTotal = $(this).attr("data-yeartotal");
@@ -816,7 +864,7 @@ function DisplayExpSpectrum(){
 		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
 		    datasets: [
 		        {
-		            label: "Your Lifetime XP",
+		            label: "Lifetime XP",
 		            fillColor: "rgba(85, 85, 147, 0.41)",
 		            strokeColor: "rgba(85, 85, 147, 0.9)",
 		            pointColor: "rgba(85, 85, 147, 0.9)",
@@ -826,7 +874,7 @@ function DisplayExpSpectrum(){
 		            data: [ft5, ft4, ft3, ft2, ft1]
 		        },
 		        {
-		            label: ($(this).attr("data-year") == 0) ? "Your XP for unreleased games" : "Your XP from games released in "+$(this).attr("data-year"),
+		            label: ($(this).attr("data-year") == 0) ? "XP for unreleased games" : "XP from games released in "+$(this).attr("data-year"),
 		            fillColor: "rgba(0, 150, 136, 0.41)",
 		            strokeColor: "rgba(0, 150, 136, 0.9)",
 		            pointColor: "rgba(0, 150, 136, 0.9)",
@@ -836,7 +884,7 @@ function DisplayExpSpectrum(){
 		            data: [yt5, yt4, yt3, yt2, yt1]
 		        },
 		        {
-		            label: "Your XP from "+$(this).attr("data-genre"),
+		            label: "XP from "+$(this).attr("data-genre"),
 		            fillColor: "rgba(233, 30, 99, 0.41)",
 		            strokeColor: "rgba(233, 30, 99, 0.9)",
 		            pointColor: "rgba(233, 30, 99, 0.9)",
@@ -861,8 +909,8 @@ function DisplayExpSpectrum(){
 		var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });
 		});
 	}
-	if($(".GraphCommunityUsers").length > 0){
-		$(".GraphCommunityUsers").each(function(){
+	if(elem.find(".GraphCommunityUsers").length > 0){
+		elem.find(".GraphCommunityUsers").each(function(){
 			var communityGraph = $(this).get(0).getContext("2d");
 			var followingTotal = $(this).attr("data-followingTotal");
 			var criticTotal = $(this).attr("data-criticTotal");
