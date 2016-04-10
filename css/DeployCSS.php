@@ -59,6 +59,12 @@ function DeployCSS(){
 		
 		$xp = file_get_contents("css/xp.css");
 		fwrite($deployed, $xp);
+        
+        $collection = file_get_contents("css/collection.css");
+		fwrite($deployed, $collection);
+        
+        $import = file_get_contents("css/import.css");
+		fwrite($deployed, $import);
 		
 		echo "Finished deploying CSS";
 		fclose($deployed);

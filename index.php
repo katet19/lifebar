@@ -28,6 +28,8 @@ require 'includes.php'; ?>
 <link href="../css/notification.css" rel="stylesheet" type="text/css" />
 <link href="../css/weave.css" rel="stylesheet" type="text/css" />
 <link href="../css/badge.css" rel="stylesheet" type="text/css" />
+<link href="../css/collection.css" rel="stylesheet" type="text/css" />
+<link href="../css/import.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../js/library/chart.js"></script>
 <script type="text/javascript" src="../js/library/materialize.js"></script>
@@ -48,6 +50,8 @@ require 'includes.php'; ?>
 <script type="text/javascript" src="../js/notification.js"></script>
 <script type="text/javascript" src="../js/landing.js"></script>
 <script type="text/javascript" src="../js/profile.js"></script>
+<script type="text/javascript" src="../js/collection.js"></script>
+<script type="text/javascript" src="../js/import.js"></script>
 </head>
 <body id="applicationContainer">
 	<div id="navigationContainer">
