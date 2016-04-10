@@ -321,7 +321,14 @@
 			DisplayGame($_POST['gbid']);
 		}
 		if($_POST['action'] == 'DisplayGameViaID' && isset($_POST['gameid'])){
-			DisplayGameViaID($_POST['gameid']);
+			DisplayGameViaID($_POST['gameid'], -1);
+		}
+		if($_POST['action'] == 'DisplayGameViaIDWithUser' && isset($_POST['gameid'])){
+			DisplayGameViaID($_POST['gameid'], $_POST['otherid']);
+		}
+		if($_POST['action'] == 'DisplayUserDetails' && isset($_POST['gameid']) && isset($_POST['userid'])){
+			$xp = GetExperienceForUserByGame($_POST['userid'], $_POST['gameid']);
+			ShowUserXP($xp);
 		}
 		if($_POST['action'] == 'DisplayMyXP' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			DisplayMyXP($_POST['gameid']);

@@ -234,7 +234,11 @@ function AddWatchedFabEvent(){
 	HideFab();
 	var gameid = $("#gameContentContainer").attr("data-id");
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
-	$(".userGameTab").show();
+	if($(".userGameTab").length == 0){
+		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
+	}else
+		$(".userGameTab").show(250);
+		
 	$(".userGameTab a").trigger('click');
 	$.ajax({ url: '../php/webService.php',
          data: {action: "DisplayAddWatched", gameid: gameid },
@@ -258,7 +262,11 @@ function AddWatchedFabEvent(){
 
 function AddPlayedFabEvent(){
 	HideFab();
-	$(".userGameTab").show();
+	if($(".userGameTab").length == 0){
+		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
+	}else
+		$(".userGameTab").show(250);
+		
 	$(".userGameTab a").trigger('click');
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
 	var gameid = $("#gameContentContainer").attr("data-id");
@@ -365,7 +373,11 @@ function CancelXPEntry(){
          		$("#game-myxp-tab").html(output);
          		ShowFab();
          	}else{
-         		$(".userGameTab").hide();
+         		if($(".preExistingGameTab").length > 0)
+         			$(".userGameTab").hide(250);
+     			else
+     				$(".userGameTab").hide(250, function(){ $(".userGameTab").remove();  });
+     				
          		$(".criticGameTab a").trigger('click');
          		ShowFab();
          	}

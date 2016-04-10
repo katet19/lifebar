@@ -33,17 +33,27 @@
 	$thisYearTotal = $thisyear[1] + $thisyear[2] + $thisyear[3] + $thisyear[4] + $thisyear[5];
 	$bygenre = GetMyTiersByGenre($user->_id, $game->_genre);
 	$byGenreTotal = $bygenre[1] + $bygenre[2] + $bygenre[3] + $bygenre[4] + $bygenre[5];
+	if($user->_id != $_SESSION['logged-in']->_id){
+		$mine = false;
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+	}else
+		$mine = true;
+	
 	if($lifetimeTotal > 0){
 	?>
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
 				<div class='analyze-card-header'>
-					<div class='analyze-card-title'>Personal Experience Spectrum</div>
-					<div class='analyze-card-sub-title'>compared to your other game experiences</div>
+					<div class='analyze-card-title'><?php if(!$mine){ echo $username."'s"; }else{ echo "Personal"; }?> Experience Spectrum</div>
+					<div class='analyze-card-sub-title'>compared to other game experiences</div>
 				</div>
 				<div class="row">
 					<div class="col s12 m12 l10">
-						<canvas class="GraphExpSpectrum" style='margin:0.5em 20px 1em'  
+						<canvas class="GraphExpSpectrum" style='margin:0.5em 20px 1em' data-personal='<?php if($mine){ echo "Y"; }else{ echo "N"; } ?>'
 							data-overallTotal="<?php echo $lifetimeTotal; ?>" data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"
 							<?php if(sizeof($thisyear) > 4){ ?> data-yearTotal="<?php echo $thisYearTotal; ?>" data-year="<?php echo $game->_year; ?>" data-yt1="<?php echo $thisyear[1] ;?>" data-yt2="<?php echo $thisyear[2] ;?>" data-yt3="<?php echo $thisyear[3] ;?>" data-yt4="<?php echo $thisyear[4] ;?>" data-yt5="<?php echo $thisyear[5]; ?>" <?php } ?>
 							<?php if(sizeof($bygenre) > 4){ ?> data-genreTotal="<?php echo $byGenreTotal; ?>" data-genre="<?php echo $game->_genre; ?>" data-gt1="<?php echo $bygenre[1] ;?>" data-gt2="<?php echo $bygenre[2] ;?>" data-gt3="<?php echo $bygenre[3] ;?>" data-gt4="<?php echo $bygenre[4] ;?>" data-gt5="<?php echo $bygenre[5]; ?>" <?php } ?>
