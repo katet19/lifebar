@@ -714,6 +714,7 @@ function AttachBPEvents(){
 			$(".bp-header").addClass("bp-header-min");
 			$(".bp-container").addClass("bp-container-min");
 			$(".bp-top-row").addClass("bp-top-row-min");
+			$(".bp-share-container").addClass("bp-share-container-min");
 			$(".lifebar-avatar-min").addClass("lifebar-avatar-min-min");
 			$(".lifebar-dots-min").addClass("lifebar-dots-min-min");
 			$(".lifebar-bar-container-min").addClass("lifebar-bar-container-min-min");
@@ -729,6 +730,7 @@ function AttachBPEvents(){
 			$(".bp-header").removeClass("bp-header-min");
 			$(".bp-container").removeClass("bp-container-min");
 			$(".bp-top-row").removeClass("bp-top-row-min");
+			$(".bp-share-container").removeClass("bp-share-container-min");
 			//$(".lifebar-dots-min").show(200);
 			//$(".lifebar-bar-container-min").show(200);
 			$(".lifebar-avatar-min").removeClass("lifebar-avatar-min-min");

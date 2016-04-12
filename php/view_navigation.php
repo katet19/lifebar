@@ -144,86 +144,38 @@ function DisplayLifeBarLogo($showtag){ ?>
 }
 
 function DisplayShareContent($userid, $type, $otherid){
-	if($type == "game"){
-		$url = "http://lifebar.io/1/u.php?i=g".$otherid;
-		$game = GetGame($otherid);
-		//$header = "Share ".$game->_title." with others";
-		$header = "Select how you would like to share this game";
-		$share = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." @Lifebario!");
-		$shareEmail = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." @Lifebario! ".$url);
-	}else if($type == "user"){
-		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
-		$user = GetUser($otherid);
-		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
-			$username = $user->_first." ".$user->_last;
-		}else{
-			$username = $user->_username;
-		}
-		$header = "Select how you would like to share this user profile";
-		if($otherid == $_SESSION['logged-in']->_id){
-			$share = htmlspecialchars("Check out my profile @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out my profile @Lifebario! ".$url);
-		}else if($user->_security == "Journalist"){
-			$share = htmlspecialchars("Check out ".$username."%27s curated gaming profile at @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated gaming profile at @Lifebario! ".$url);
-		}else{
-			$share = htmlspecialchars("Check out ".$username."%27s gaming profile at @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s gaming profile at @Lifebario! ".$url);
-		}
-	}else if($type == "userxp"){
-		$ids = explode("-", $otherid);
-		$game = GetGame($ids[0]);
-		$user = GetUser($ids[1]);
-		
-		$url = "http://lifebar.io/1/u.php?i=x".$otherid;
-		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
-			$username = $user->_first." ".$user->_last;
-		}else{
-			$username = $user->_username;
-		}
-		$header = "Select how you would like to share this experience";
-		if($user->_id == $_SESSION['logged-in']->_id){
-			$share = htmlspecialchars("Check out my experience with ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out my experience with ".$game->_title." @Lifebario! ".$url);
-		}else if($user->_security == "Journalist"){
-			$share = htmlspecialchars("Check out ".$username."%27s curated experience playing ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated experience playing ".$game->_title." @Lifebario! ".$url);
-		}else{
-			$share = htmlspecialchars("Check out ".$username."%27s experience with ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".$game->_title." @Lifebario! ".$url);
-		}
-	}
+	$shareData = GetShareLink($userid, $type, $otherid);
 	?>
 	<div class="row">
 		<div class="col s12">
 			<div class="share-header">
 				<div class="share-header-title">
-					<?php echo $header; ?>
+					<?php echo $shareData[1]; ?>
 				</div>
 			</div>
 		</div>
 	    <div class="col s12">
 	    	<div class="row">
-	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $share; ?>+<?php echo $url; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
+	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
 	 				<i class="fa fa-twitter-square"></i>
 	  	   		</a>
-	  	   		<a href="https://plus.google.com/share?url=<?php echo $url; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
+	  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
 	  	   			<i class="fa fa-google-plus-square"></i>
 	  	   		</a>
-	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
+	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
 	  	   			<i class="fa fa-facebook-square"></i>
 	  	   		</a>
- 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $url; ?>&t=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
+ 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
 	  	   			<i class="fa fa-tumblr-square"></i>
 	  	   		</a>
-	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareEmail; ?>" class="social-share-custom-btn">
+	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" class="social-share-custom-btn">
 	  	   			<i class="fa fa-envelope-o"></i>
 	  	   		</a>
 	    	</div>
 	    </div>
 	    <div class="row">
 		    <div class="col s12 m6 l4" style='float: inherit;text-align: center; margin: auto;'>
-		        <input id="share-link" type="text" value='<?php echo $url; ?>'>
+		        <input id="share-link" type="text" value='<?php echo $shareData[4]; ?>'>
 		        <div class="share-sub-link">COPY LINK</div>
 		    </div>
 	    </div>

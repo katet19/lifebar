@@ -323,6 +323,33 @@
     transition: all 1s ease-out;
 }
 
+.bp-share-container{
+    margin-bottom: 0;
+    font-size: 0.5em;
+    float: right;
+    margin-right: 50px;
+    margin-top: 25px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+.bp-share-container-min{
+	margin-top:0 !important;
+}
+
+.bp-share-label{
+	display: inline-block;
+    color: white;
+    position: relative;
+    font-size: 2.2em;
+    top: -5px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
 .bp-progress-item-levelup{
     font-weight: 500;
     float: right;
@@ -520,5 +547,12 @@
 	.userxp-details-lifebar{
 		width:90% !important;
 		margin-left:3% !important;
+	}
+	.bp-share-container{
+	    margin-right: 0px;
+    	margin-top: 90px;
+	}
+	.bp-share-container-min{
+		display:none;
 	}
 }
