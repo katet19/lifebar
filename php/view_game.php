@@ -598,6 +598,7 @@ function ShowUserXP($userxp){
 				      </div>
 				    </div>
 		    	    <div class="row" style='margin: 0;'>
+		    	    	<div class="myxp-profile-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-person left" style="vertical-align: sub;"></i> View Profile</div>
 				    	<div class="myxp-share-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i> Share</div>
 				    </div>
 				</div>
