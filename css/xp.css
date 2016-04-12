@@ -175,7 +175,7 @@
 	background-color:#D32F2F;
 }
 
-.myxp-edit-tier-quote, .myxp-share-tier-quote{
+.myxp-edit-tier-quote, .myxp-share-tier-quote, .myxp-profile-tier-quote{
 	padding: 0 2em;
 	margin: 0 1em;
 	font-weight: bold;
@@ -183,7 +183,7 @@
 	float: right;
 }
 
-.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover, .myxp-share-tier-quote:hover{
+.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover, .myxp-share-tier-quote:hover, .myxp-profile-tier-quote:hover{
 	opacity:1;
 }
 
