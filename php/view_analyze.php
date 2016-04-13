@@ -490,7 +490,7 @@ function BuildAvgAgeCard($game){
 						<div class="analyze-data-desc">average age when played</div>
 					<?php }else{ ?>
 						<div class="analyze-data-element">0</div>
-						<div class="analyze-data-desc">people have played</div>
+						<div class="analyze-data-desc">members have played</div>
 					<?php } ?>
 				</div>
 			</div>
