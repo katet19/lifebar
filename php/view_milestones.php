@@ -167,16 +167,16 @@ function DisplayBattleProgress($user, $myprogress, $gameid){
 			    <div class="col s12" >
 			    	<div class="row bp-share-container">
 			    		<div class='bp-share-label'>Share XP:</div>
-			  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
+			  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');GAEvent('BPShare', 'Twitter');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
 			 				<i class="fa fa-twitter-square"></i>
 			  	   		</a>
-			  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="social-share-btn" target="_blank" style='color:#fff;' alt="Share on Google+">
+			  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');GAEvent('BPShare', 'Google');return false;" class="social-share-btn" target="_blank" style='color:#fff;' alt="Share on Google+">
 			  	   			<i class="fa fa-google-plus-square"></i>
 			  	   		</a>
-			   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
+			   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');GAEvent('BPShare', 'Facebook');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
 			  	   			<i class="fa fa-facebook-square"></i>
 			  	   		</a>
-		 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
+		 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');GAEvent('BPShare', 'Tumblr');return false;" class="social-share-btn" target="_blank" style='color:#fff;'>
 			  	   			<i class="fa fa-tumblr-square"></i>
 			  	   		</a>
 			    	</div>

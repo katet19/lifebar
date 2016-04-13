@@ -1367,14 +1367,14 @@ function GetAverageAgePlayed($gameid){
 
 function GetGameCompletion($gameid){
 	$mysqli = Connect();
-	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Completed` >= 100 and `Archived` = 'No'";
+	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Completed` >= 100 and `Archived` = 'No' and `Type` = 'Played'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$finished[] = $row['cnt'];
 		}
 	}
 	
-	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Archived` = 'No'";
+	$query = "select count(*) as cnt from `Sub-Experiences` where `GameID` = '".$gameid."' and `Archived` = 'No' and `Type` = 'Played'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$finished[] = $row['cnt'];

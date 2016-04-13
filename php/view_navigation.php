@@ -156,19 +156,19 @@ function DisplayShareContent($userid, $type, $otherid){
 		</div>
 	    <div class="col s12">
 	    	<div class="row">
-	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
+	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');GAEvent('UserShare', 'Twitter');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
 	 				<i class="fa fa-twitter-square"></i>
 	  	   		</a>
-	  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
+	  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');GAEvent('UserShare', 'Google');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
 	  	   			<i class="fa fa-google-plus-square"></i>
 	  	   		</a>
-	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
+	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');GAEvent('UserShare', 'Facebook');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
 	  	   			<i class="fa fa-facebook-square"></i>
 	  	   		</a>
- 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
+ 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');GAEvent('UserShare', 'Tumblr');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
 	  	   			<i class="fa fa-tumblr-square"></i>
 	  	   		</a>
-	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" class="social-share-custom-btn">
+	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" onclick="javascript:GAEvent('UserShare', 'Email');" class="social-share-custom-btn">
 	  	   			<i class="fa fa-envelope-o"></i>
 	  	   		</a>
 	    	</div>

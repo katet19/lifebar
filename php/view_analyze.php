@@ -490,7 +490,7 @@ function BuildAvgAgeCard($game){
 						<div class="analyze-data-desc">average age when played</div>
 					<?php }else{ ?>
 						<div class="analyze-data-element">0</div>
-						<div class="analyze-data-desc">people have played</div>
+						<div class="analyze-data-desc">members have played</div>
 					<?php } ?>
 				</div>
 			</div>
@@ -505,7 +505,7 @@ function BuildBookmarkedCard($game){
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
 				<div class="analyze-data-element"><?php echo $bookmarked; ?></div>
-				<div class="analyze-data-desc">user<?php if($bookmarked != 1){ ?>s<?php } ?> bookmarked</div>
+				<div class="analyze-data-desc">member<?php if($bookmarked != 1){ ?>s<?php } ?> bookmarked</div>
 			</div>
 		</div>
 	</div>

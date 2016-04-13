@@ -89,7 +89,7 @@ function ShowCommunity($game, $id, $myxp){
 		<?php }
 	}?>
 	<?php if(sizeof($otherverified) > 0 || sizeof($othercurated) > 0 || sizeof($otherusers) > 0){ ?>
-		<?php if($id != ""){ ?>
+		<?php if($_SESSION['logged-in']->_id > 0){ ?>
 			<div class='game-community-bigbreak'>
 				NOT FOLLOWING
 			</div>
