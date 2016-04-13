@@ -792,8 +792,8 @@ function GetShareLink($userid, $type, $otherid){
 		$game = GetGame($otherid);
 		//$header = "Share ".$game->_title." with others";
 		$header = "Select how you would like to share this game";
-		$share = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." @Lifebario!");
-		$shareEmail = htmlspecialchars("Check out analytics and what others are saying about ".$game->_title." @Lifebario! ".$url);
+		$share = htmlspecialchars("Check out analytics and what others are saying about ".str_replace("&","%26",$game->_title)." @Lifebario!");
+		$shareEmail = htmlspecialchars("Check out analytics and what others are saying about ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 	}else if($type == "user"){
 		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
 		$user = GetUser($otherid);
@@ -826,14 +826,14 @@ function GetShareLink($userid, $type, $otherid){
 		}
 		$header = "Select how you would like to share this experience";
 		if($user->_id == $_SESSION['logged-in']->_id){
-			$share = htmlspecialchars("Check out my experience with ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out my experience with ".$game->_title." @Lifebario! ".$url);
+			$share = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 		}else if($user->_security == "Journalist"){
-			$share = htmlspecialchars("Check out ".$username."%27s curated experience playing ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated experience playing ".$game->_title." @Lifebario! ".$url);
+			$share = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 		}else{
-			$share = htmlspecialchars("Check out ".$username."%27s experience with ".$game->_title." @Lifebario!");
-			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".$game->_title." @Lifebario! ".$url);
+			$share = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 		}
 	}
 	
