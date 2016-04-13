@@ -838,7 +838,7 @@ function GetShareLink($userid, $type, $otherid){
 	}
 	
 	$shareData[0] = $username;
-	$shareDatap[1]= $header;
+	$shareData[1]= $header;
 	$shareData[2] = $share;
 	$shareData[3] = $shareEmail;
 	$shareData[4] = $url;
