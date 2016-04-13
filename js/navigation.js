@@ -195,6 +195,7 @@ function ShowShareModal(type, otherid){
 		$(".share-sub-link").on("click", function(){
 			$("#share-link").select();
     		document.execCommand("copy");	
+    		GAEvent('UserShare', 'CopyLink');
 		});
      },
         error: function(x, t, m) {
