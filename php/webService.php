@@ -12,6 +12,35 @@
 		WeaveServices();
 		MilestoneServices();
 		GeneralServices();
+		ImportServices();
+	}
+	function ImportServices(){
+		if($_POST['action'] == 'DisplayStartSteamImport' ){
+			DisplayStartSteamImport($_POST['userid']);
+		}
+		if($_POST['action'] == "ImportSteamGames"){
+			DisplaySteamGameImport($_POST['steamname'], $_POST['forceImport']);
+		}
+		if($_POST['action'] == "NextPageImport"){
+			if($_POST['type'] == 'unmapped')
+				DisplayUnMappedGames($_POST['offset']);
+			else if($_POST['type'] == 'mapped')
+				DisplayMappedGames($_POST['offset']);
+		}
+		if($_POST['action'] == "MapGame"){
+			MapGameToLifebar($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
+		if($_POST['action'] == "TrashGame"){
+			if($_SESSION['logged-in']->_security == "Admin"){
+				TrashGameToLifebar($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+			}
+		}
+		if($_POST['action'] == "IgnoreGame"){
+			IgnoreGameFromMyImport($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
+		if($_POST['action'] == "ReportGame"){
+			ReportGameFromMyImport($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
 	}
 	function MilestoneServices(){
 		if($_POST['action'] == 'SaveBadge' ){
@@ -110,6 +139,9 @@
 		}
 		if($_POST['action'] == 'ShowUserProfileActivityEndless' ){
 			DisplayProfileActivityEndless($_POST['userid'], $_POST['page'], $_POST['date']);
+		}
+		if($_POST['action'] == 'DisplayUserCollection' ){
+			DisplayUserCollection($_POST['userid']);
 		}
 	}
 	function AdminServices(){

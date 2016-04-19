@@ -286,7 +286,7 @@ function DisplayAdminGameSearchResults($search){
 	$games = SearchForGame($search); 
 	foreach($games as $game){
 		?>
-		<li data-gbid='<?php echo $game->_gbid; ?>'><?php echo $game->_title." (".$game->_year.")"; ?></li>
+		<li data-gbid='<?php echo $game->_gbid; ?>' data-image='<?php echo $game->_imagesmall; ?>'><img src='<?php echo $game->_imagesmall; ?>' style='height:50px;width:50px;margin-right: 10px;vertical-align: middle;float:left;'> <span class='actual-title'><?php echo $game->_title." (".$game->_year.")"; ?></span><span style='display:block;font-weight:300;height:20px;overflow:hidden;'><?php echo $game->_platforms; ?></span></li>
 		<?php
 	}
 	

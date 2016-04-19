@@ -1,0 +1,354 @@
+function StartSteamImport(userid, forceImport){
+	ShowPopUp("");
+	ShowLoader($("#universalPopUp"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayStartSteamImport", userid: userid },
+     type: 'post',
+     success: function(output) {
+ 		$("#universalPopUp").html(output); 
+		$('.start-steam-import').on("click", function(){
+			if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
+				$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
+			}else{
+				ImportSteamGames(userid, forceImport);
+			}
+		});
+		$("#steamname").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
+					$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
+				}else{
+					ImportSteamGames(userid, forceImport);
+				}
+			} 
+			
+		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function ImportSteamGames(userid, forceImport){
+	var steamID = $("#steamname").val();
+	if(steamID.length > 0){
+		$("#universalPopUp").closeModal();
+		var windowWidth = $(window).width();
+		$(".indicator").css({"display":"none"});
+		$(".active").removeClass("active");
+	    $("#profile").css({"display":"inline-block", "left": -windowWidth});
+	    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
+	    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+		$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+		if($(window).width() > 599){
+			$("#navigation-header").css({"display":"block"});
+			$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+		}
+		
+		
+		window.scrollTo(0, 0);
+  		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Importing your game Library from Steam</div><div style='font-size:1em'>'This can take awhile, possibly a few minutes, depending on the size of your game library.</div><br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "ImportSteamGames", steamname: steamID, forceImport: forceImport },
+		     type: 'post',
+		     success: function(output) {
+		 		$("#profileInnerContainer").html(output);
+		 		AttachImportSearchEvents(userid);
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:1145000
+			});
+	}
+}
+
+function AttachImportSearchEvents(userid){
+	$(".import-game-search-btn,.import-game-search, html, .import-map-game, .import-steam-reimport, .import-ignore-game, .import-map-to-skip-game, .import-report-game, .import-report-game, .unmapped-next, .mapped-prev, .unmapped-prev, .mapped-next, .backButton").unbind();
+	$('.import-game-search-btn').on('click', function(e){ 
+		e.stopPropagation(); 
+		SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent());
+	});
+	$(".import-game-search").on('keypress keyup', function (e) {
+		if (e.keyCode === 13) { 
+			SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent());
+		}
+	});
+	$('html').click(function(){
+		if($(".import-game-search-results").is(":visible"))
+			$(".import-game-search-results").hide(250);
+	});
+	$(".import-map-game").on("click", function(){
+		MapGame($(this));
+	});
+	
+	$(".import-steam-reimport").on('click', function(){
+		StartSteamImport($(this).attr("data-id"), true);
+	});
+	
+	$(".import-ignore-game").on("click", function(){
+		var importID = $(this).parent().attr("data-importid");	
+		$(this).parent().parent().css({"background-color": "#C62828"});
+		$(this).parent().parent().find(".col").css({"opacity":"0"});
+		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game Ignored</div>");
+		var row = $(this).parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = $(this).attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "IgnoreGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+				UpdateUITotals();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+	});
+	
+	$(".import-map-to-skip-game").on("click", function(){
+		var importID = $(this).parent().attr("data-importid");	
+		$(this).parent().parent().css({"background-color": "#673AB7"});
+		$(this).parent().parent().find(".col").css({"opacity":"0"});
+		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game will always be hidden</div>");
+		var row = $(this).parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = $(this).attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "TrashGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+				UpdateUITotals();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+		
+	});
+	
+	$(".import-report-game").on("click", function(){
+		var importID = $(this).parent().attr("data-importid");	
+		$(this).parent().parent().css({"background-color": "#EF6C00"});
+		$(this).parent().parent().find(".col").css({"opacity":"0"});
+		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game Reported to Admin's</div>");
+		var row = $(this).parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = $(this).attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "ReportGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+				UpdateUITotals();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+	});
+	$(".backButton").on("click", function(){
+		DisplayUserCollection(userid);	
+	});
+	$(".unmapped-next").on("click", function(){
+		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
+		var offsetInfo = $(".import-unmapped-offset").html().split(" - ");
+		var offsetTotal = parseInt(offsetInfo[1]);
+		var offset = parseInt(curroffset) + offsetTotal;
+		var total = parseInt($(this).parent().parent().find(".import-results-total").html());
+		var max = offset + 25;
+		if(max > total)
+			max = total;
+		$(".import-results-offset").html(offset+" - "+max);
+		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
+		GetNextPageImport(offset, "unmapped", userid);
+	});
+	$(".mapped-next").on("click", function(){
+		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
+		var offset = parseInt(curroffset) + 25;
+		var total = parseInt($(this).parent().parent().find(".import-results-total").html());
+		var max = offset + 25;
+		if(max > total)
+			max = total;
+		$(".import-results-offset").html(offset+" - "+max);
+		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
+		GetNextPageImport(offset, "mapped", userid);
+	});
+	$(".unmapped-prev").on("click", function(){
+		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
+		var offset = parseInt(curroffset) - 25;
+		var min = offset - 25;
+		if(min < 0)
+			offset = 0;
+		$(".import-results-offset").html(offset+" - 25");
+		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
+		GetNextPageImport(offset, "unmapped", userid);
+	});
+	$(".mapped-prev").on("click", function(){
+		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
+		var offset = parseInt(curroffset) - 25;
+		var min = offset - 25;
+		if(min < 0)
+			offset = 0;
+		$(".import-results-offset").html(offset+" - 25");
+		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
+		GetNextPageImport(offset, "mapped", userid);
+	});
+	
+}
+
+function GetNextPageImport(offset, type, userid){
+ 	if(type == 'unmapped'){
+ 		ShowLoader($(".import-unmapped-games-container"), 'big', "<br><br><br>");
+ 		window.scrollTo(0, 1700);
+ 	}else if(type == 'mapped'){
+ 		ShowLoader($(".import-mapped-games-container"), 'big', "<br><br><br>");
+ 		window.scrollTo(0, 0);
+ 	}
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "NextPageImport", offset: offset, type: type },
+     type: 'post',
+     success: function(output) {
+     	if(type == 'unmapped'){
+     		$(".import-unmapped-games-container").html(output);
+     		window.scrollTo(0, 2000);
+     	}else if(type == 'mapped'){
+     		$(".import-mapped-games-container").html(output);
+     	}
+     	AttachImportSearchEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function MapGame(element){
+		var importID = element.parent().attr("data-importid");	
+		element.parent().parent().css({"background-color": "#2E7D32"});
+		element.parent().parent().find(".col").css({"opacity":"0"});
+		element.parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game Mapped</div>");
+		var row = element.parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = element.attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "MapGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+		     	UpdateUITotals();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+}
+
+function UpdateUITotals(){
+	var total = parseInt($(".import-unmapped-total").html()) - 1;
+	$(".import-unmapped-total").html(total);
+	var offsetInfo = $(".import-unmapped-offset").html().split(" - ");
+	var offsetTotal = parseInt(offsetInfo[1]) - 1;
+	$(".import-unmapped-offset").html(offsetInfo[0]+" - "+offsetTotal);
+}
+
+function SearchForGameImport(search, element){
+	var searchResults = element.parent().find(".import-game-search-results");
+	searchResults.parent().css({"z-index":"1"});
+	searchResults.show(250);
+	var test = element.parent().find(".import-game-search-results");
+	ShowLoader(element.parent().find(".import-game-search-results"), 'small', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "AdminGameSearch", search: search },
+     type: 'post',
+     success: function(output) {
+		element.parent().find(".import-game-search-results").html(output);
+ 		$(".import-game-search-results li").on('click', function(){
+ 			var gbid = $(this).attr("data-gbid");
+ 			var image = $(this).attr("data-image");
+ 			if($(this).parent().parent().next().find(".import-warning-msg").length  > 0){
+ 				$(this).parent().parent().next().find(".import-warning-msg").remove();
+ 				$(this).parent().parent().next().find(".import-warning-msg-txt").remove();
+ 			}else{
+ 				$(this).parent().parent().next().find(".import-map-suggest-image").remove();
+ 			}
+ 			$(this).parent().parent().next().append("<div class='import-map-suggest-image' style='height:69px;width:200px;background:url("+image+") 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div>");
+ 			$(this).addClass("import-game-search-selected");
+ 			element.find(".import-game-search").val($(this).find(".actual-title").text());
+ 			var disabled = element.parent().parent().parent().find(".import-disabled-game");
+ 			if(disabled.length > 0){
+ 				disabled.css({"opacity":"1"});
+ 				disabled.removeClass("import-disabled-game");
+ 				disabled.addClass("import-map-game");
+ 				$(".import-map-game").unbind();
+ 				$(".import-map-game").on("click", function(){
+					MapGame($(this));
+				});
+ 			}
+ 			searchResults.parent().css({"z-index":"0"});
+ 		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
