@@ -575,7 +575,7 @@ function SearchForGame(search, element){
  		$(".admin-review-search-results li").on('click', function(){
  			var gbid = $(this).attr("data-gbid");	
  			$(this).addClass("admin-review-search-selected");
- 			element.find(".admin-review-search").val($(this).html());
+ 			element.find(".admin-review-search").val($(this).find(".actual-title").text());
  		});
      },
         error: function(x, t, m) {

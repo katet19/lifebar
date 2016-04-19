@@ -68,11 +68,12 @@
 }
 
 .admin-review-search-results li{
-  display: block;
-  padding: 1rem 1rem;
-  text-align: center;
-  color: #474747;
-  cursor:pointer;
+    display: block;
+    padding: 1rem 1rem;
+    text-align: left;
+    color: #474747;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .admin-category-header{
