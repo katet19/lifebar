@@ -1,9 +1,30 @@
+.collection-box-container{
+    height: 300px;
+    display: inline-block;
+    position: relative;
+    top: 20px;
+    width: 300px;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.collection-box-container:hover .collection-box{
+    opacity:0.9;
+    background-color: #2196F3;
+}
+
 .collection-box{
     width: 200px;
     height: 200px;
+    position: relative;
     margin: 10px 20px 10px 0px;
     display: inline-block;
     vertical-align: top;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .collection-add{
@@ -29,4 +50,25 @@
     color: white;
     padding: 23px 10px;
     text-align: center;
+}
+
+.collection-name{
+    position: absolute;
+    left: 0;
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 20px 13px;
+    font-weight: 500;
+    font-size: 1.25em;
+}
+
+.collection-desc{
+    font-size:0.8em;
+    font-weight:300;
+}
+
+.collection-total{
+    font-weight: 500;
+    font-size: 2.5em;
 }

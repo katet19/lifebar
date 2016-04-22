@@ -10,7 +10,10 @@ function StartSteamImport(userid, forceImport){
 			if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
 				$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
 			}else{
-				ImportSteamGames(userid, forceImport);
+					if($('#importFullReset:checked').length > 0)
+						ImportSteamGames(userid, forceImport, "true");
+					else
+						ImportSteamGames(userid, forceImport, "false");
 			}
 		});
 		$("#steamname").on('keypress keyup', function (e) {
@@ -19,7 +22,10 @@ function StartSteamImport(userid, forceImport){
 				if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
 					$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
 				}else{
-					ImportSteamGames(userid, forceImport);
+					if($('#importFullReset:checked').length > 0)
+						ImportSteamGames(userid, forceImport, "true");
+					else
+						ImportSteamGames(userid, forceImport, "false");
 				}
 			} 
 			
@@ -36,53 +42,54 @@ function StartSteamImport(userid, forceImport){
 	});
 }
 
-function ImportSteamGames(userid, forceImport){
+function ImportSteamGames(userid, forceImport, fullreset){
 	var steamID = $("#steamname").val();
-	if(steamID.length > 0){
-		$("#universalPopUp").closeModal();
-		var windowWidth = $(window).width();
-		$(".indicator").css({"display":"none"});
-		$(".active").removeClass("active");
-	    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-	    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-	    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-		$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-		if($(window).width() > 599){
-			$("#navigation-header").css({"display":"block"});
-			$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
-		}
-		
-		
-		window.scrollTo(0, 0);
-  		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Importing your game Library from Steam</div><div style='font-size:1em'>'This can take awhile, possibly a few minutes, depending on the size of your game library.</div><br><br><br>");
-		$.ajax({ url: '../php/webService.php',
-		     data: {action: "ImportSteamGames", steamname: steamID, forceImport: forceImport },
-		     type: 'post',
-		     success: function(output) {
-		 		$("#profileInnerContainer").html(output);
-		 		AttachImportSearchEvents(userid);
-		     },
-		        error: function(x, t, m) {
-			        if(t==="timeout") {
-			            ToastError("Server Timeout");
-			        } else {
-			            ToastError(t);
-			        }
-		    	},
-		    	timeout:1145000
-			});
+	$("#universalPopUp").closeModal();
+	var windowWidth = $(window).width();
+	$(".indicator").css({"display":"none"});
+	$(".active").removeClass("active");
+    $("#profile").css({"display":"inline-block", "left": -windowWidth});
+    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
+    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	if($(window).width() > 599){
+		$("#navigation-header").css({"display":"block"});
+		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
+	
+	
+	window.scrollTo(0, 0);
+	if(forceImport)
+  		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Importing your game Library from Steam</div><div style='font-size:1em'>This can take awhile, possibly a few minutes, depending on the size of your game library.</div><br><br><br>");
+  	else
+  		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Loading your Steam Library Import</div><div style='font-size:1em'></div><br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+	     data: {action: "ImportSteamGames", steamname: steamID, forceImport: forceImport, fullreset: fullreset },
+	     type: 'post',
+	     success: function(output) {
+	 		$("#profileInnerContainer").html(output);
+	 		AttachImportSearchEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:1145000
+		});
 }
 
 function AttachImportSearchEvents(userid){
-	$(".import-game-search-btn,.import-game-search, html, .import-map-game, .import-steam-reimport, .import-ignore-game, .import-map-to-skip-game, .import-report-game, .import-report-game, .unmapped-next, .mapped-prev, .unmapped-prev, .mapped-next, .backButton").unbind();
+	$(".import-game-search-btn,.import-game-search, html, .import-map-game, .import-steam-reimport, .import-ignore-game, .import-map-to-skip-game, .import-report-game, .import-report-game, .unmapped-next, .mapped-prev, .unmapped-prev, .mapped-next, .backButton, .import-map-suggest-image").unbind();
 	$('.import-game-search-btn').on('click', function(e){ 
 		e.stopPropagation(); 
-		SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent());
+		SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent(), userid);
 	});
 	$(".import-game-search").on('keypress keyup', function (e) {
 		if (e.keyCode === 13) { 
-			SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent());
+			SearchForGameImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent(), userid);
 		}
 	});
 	$('html').click(function(){
@@ -90,7 +97,7 @@ function AttachImportSearchEvents(userid){
 			$(".import-game-search-results").hide(250);
 	});
 	$(".import-map-game").on("click", function(){
-		MapGame($(this));
+		MapGame($(this), userid);
 	});
 	
 	$(".import-steam-reimport").on('click', function(){
@@ -110,11 +117,12 @@ function AttachImportSearchEvents(userid){
 		
 		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
 		var auditid = $(this).attr("data-id");
+		UpdateUITotals();
 		$.ajax({ url: '../php/webService.php',
 		     data: {action: "IgnoreGame", importID: importID, gbid: gbid, auditid:auditid },
 		     type: 'post',
 		     success: function(output) {
-				UpdateUITotals();
+				GetNextUnmappedRow(userid);
 		     },
 		        error: function(x, t, m) {
 			        if(t==="timeout") {
@@ -140,11 +148,12 @@ function AttachImportSearchEvents(userid){
 		
 		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
 		var auditid = $(this).attr("data-id");
+		UpdateUITotals();
 		$.ajax({ url: '../php/webService.php',
 		     data: {action: "TrashGame", importID: importID, gbid: gbid, auditid:auditid },
 		     type: 'post',
 		     success: function(output) {
-				UpdateUITotals();
+				GetNextUnmappedRow(userid);
 		     },
 		        error: function(x, t, m) {
 			        if(t==="timeout") {
@@ -171,11 +180,12 @@ function AttachImportSearchEvents(userid){
 		
 		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
 		var auditid = $(this).attr("data-id");
+		UpdateUITotals("reported");
 		$.ajax({ url: '../php/webService.php',
 		     data: {action: "ReportGame", importID: importID, gbid: gbid, auditid:auditid },
 		     type: 'post',
 		     success: function(output) {
-				UpdateUITotals();
+				GetNextUnmappedRow(userid);
 		     },
 		        error: function(x, t, m) {
 			        if(t==="timeout") {
@@ -186,6 +196,9 @@ function AttachImportSearchEvents(userid){
 		    	},
 		    	timeout:45000
 			});
+	});
+	$(".import-map-suggest-image").on("click", function(){
+		ShowPopUp("<img style='height:100%;width:100%;' src='"+$(this).attr("data-image")+"'>");		
 	});
 	$(".backButton").on("click", function(){
 		DisplayUserCollection(userid);	
@@ -268,7 +281,7 @@ function GetNextPageImport(offset, type, userid){
 	});
 }
 
-function MapGame(element){
+function MapGame(element, userid){
 		var importID = element.parent().attr("data-importid");	
 		element.parent().parent().css({"background-color": "#2E7D32"});
 		element.parent().parent().find(".col").css({"opacity":"0"});
@@ -281,11 +294,12 @@ function MapGame(element){
 		
 		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
 		var auditid = element.attr("data-id");
+		UpdateUITotals("mapped");
 		$.ajax({ url: '../php/webService.php',
 		     data: {action: "MapGame", importID: importID, gbid: gbid, auditid:auditid },
 		     type: 'post',
 		     success: function(output) {
-		     	UpdateUITotals();
+		     	GetNextUnmappedRow(userid);
 		     },
 		        error: function(x, t, m) {
 			        if(t==="timeout") {
@@ -298,15 +312,47 @@ function MapGame(element){
 			});
 }
 
-function UpdateUITotals(){
-	var total = parseInt($(".import-unmapped-total").html()) - 1;
+function UpdateUITotals(type){
+	var total = parseInt($(".import-unmapped-total").html().replace(",","")) - 1;
 	$(".import-unmapped-total").html(total);
-	var offsetInfo = $(".import-unmapped-offset").html().split(" - ");
-	var offsetTotal = parseInt(offsetInfo[1]) - 1;
-	$(".import-unmapped-offset").html(offsetInfo[0]+" - "+offsetTotal);
+	
+	if(type == "reported"){
+		if($(".import-report-total").length > 0){
+			var rpttotal = parseInt($(".import-report-total").html().replace(",","")) + 1;
+			$(".import-report-total").html(rpttotal);
+		}
+	}
+	
+	if(type == "mapped"){
+		if($(".import-mapped-total").length > 0){
+			var rpttotal = parseInt($(".import-mapped-total").html().replace(",","")) + 1;
+			$(".import-mapped-total").html(rpttotal);	
+		}
+	}
 }
 
-function SearchForGameImport(search, element){
+function GetNextUnmappedRow(userid){
+	//var curroffset = $(".import-results-offset").attr("data-offset");
+	var offset = 25;
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "NextUnmappedRow", offset: offset },
+     type: 'post',
+     success: function(output) {
+		$(".import-unmapped-games-container").append(output);
+		AttachImportSearchEvents(userid);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function SearchForGameImport(search, element, userid){
 	var searchResults = element.parent().find(".import-game-search-results");
 	searchResults.parent().css({"z-index":"1"});
 	searchResults.show(250);
@@ -326,7 +372,7 @@ function SearchForGameImport(search, element){
  			}else{
  				$(this).parent().parent().next().find(".import-map-suggest-image").remove();
  			}
- 			$(this).parent().parent().next().append("<div class='import-map-suggest-image' style='height:69px;width:200px;background:url("+image+") 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div>");
+ 			$(this).parent().parent().next().append("<div class='import-map-suggest-image' data-image='"+image+"' style='height:69px;width:200px;background:url("+image+") 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div>");
  			$(this).addClass("import-game-search-selected");
  			element.find(".import-game-search").val($(this).find(".actual-title").text());
  			var disabled = element.parent().parent().parent().find(".import-disabled-game");
@@ -336,9 +382,13 @@ function SearchForGameImport(search, element){
  				disabled.addClass("import-map-game");
  				$(".import-map-game").unbind();
  				$(".import-map-game").on("click", function(){
-					MapGame($(this));
+					MapGame($(this), userid);
 				});
  			}
+ 			$(".import-map-suggest-image").unbind();
+ 			$(".import-map-suggest-image").on("click", function(){
+				ShowPopUp("<img style='height:100%;width:100%;' src='"+$(this).attr("data-image")+"'>");		
+			});
  			searchResults.parent().css({"z-index":"0"});
  		});
      },

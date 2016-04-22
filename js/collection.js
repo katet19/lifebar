@@ -12,6 +12,9 @@ function DisplayUserCollection(userid){
 		$(".import-steam").on("click", function(){
 			StartSteamImport(userid, false);	
 		});
+		$(".load-steam-import").on("click", function(){
+			ImportSteamGames(userid, false);	
+		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

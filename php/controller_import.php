@@ -44,7 +44,13 @@ function TrashGameToLifebar($importID, $gbid, $auditID){
 	else
 		$result = $mysqli->query("insert into `GamesMapper` (`GameID`,`GBID`,`Steam`,`MapStrength`,`Visible`) values ('".$game->_id."','".$gbid."','".$importID."','".$strength."','No')");
 		
-	$mysqli->query("update `ImportAudit` set `Ignore` = 'Yes' where `ID` = '".$auditID."'")	;
+	
+	
+	if($strength >= 2){
+		$mysqli->query("update `ImportAudit` set `Ignore` = 'Yes' where `ImportID` = '".$importID."' and `Type` = 'Steam'");
+	}else{
+		$mysqli->query("update `ImportAudit` set `Ignore` = 'Yes' where `ID` = '".$auditID."'");
+	}
 	
 	Close($mysqli, $result);
 }
@@ -73,7 +79,11 @@ function ReportGameFromMyImport($importID, $gbid, $auditID){
 	else
 		$result = $mysqli->query("insert into `GamesMapper` (`GameID`,`GBID`,`Steam`,`MapStrength`,`Visible`) values ('".$game->_id."','".$gbid."','".$importID."','".$strength."','No')");
 		
-	$mysqli->query("update `ImportAudit` set `Ignore` = 'Rprt' where `ID` = '".$auditID."'");
+	if($strength >= 2){
+		$mysqli->query("update `ImportAudit` set `Ignore` = 'Rprt' where `ImportID` = '".$importID."' and `Type` = 'Steam'");
+	}else{
+		$mysqli->query("update `ImportAudit` set `Ignore` = 'Rprt' where `ID` = '".$auditID."'");
+	}
 	
 	Close($mysqli, $result);
 }
@@ -97,6 +107,60 @@ function GetSteamMapped($userid, $offSet){
 	}
 	Close($mysqli, $result);
 	return $mapped;
+}
+
+function GetSteamMappedBacklog($userid){
+	$mysqli = Connect();
+	$backlog = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` > 0 and `Ignore` = 'No' and `TimePlayed` = 0 group by `MappedID` order by `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			$game = GetGameByGBIDFull($row['MappedID']);
+			$import = null;
+			$import['GameID'] = $game->_id;
+			$import['GBID'] = $game->_gbid;
+			
+			if($import != null)
+				$backlog[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $backlog;
+}
+
+function GetSteamMappedPlayed($userid){
+	$mysqli = Connect();
+	$played = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` > 0 and `Ignore` = 'No' and `TimePlayed` > 0 group by `MappedID` order by `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			$game = GetGameByGBIDFull($row['MappedID']);
+			$import = null;
+			$import['GameID'] = $game->_id;
+			$import['GBID'] = $game->_gbid;
+			
+			if($import != null)
+				$played[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $played;
+}
+
+function GetSteamReported($userid, $offSet){
+	$mysqli = Connect();
+	$reported = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` i, `GamesMapperReport` r where i.`UserID` = '".$userid."' and i.`Type` = 'Steam' and i.`Ignore` = 'Rprt' and i.`ImportID` = r.`ImportID` group by `Title` order by `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			$import = null;
+			$import['SteamTitle'] = $row['Title'];
+			$import['ImportImage'] = $row['Image'];
+			$import['ReportedOn'] = $row['Reported'];
+			
+			if($import != null)
+				$reported[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $reported;
 }
 
 function GetSteamUnMapped($userid, $offSet){
@@ -133,10 +197,45 @@ function GetSteamUnMapped($userid, $offSet){
 	return $unmapped;
 }
 
+function GetSteamUnMappedRow($userid, $offSet){
+	$mysqli = Connect();
+	$unmapped = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` = 0  and `Ignore` = 'No' order by `Title` LIMIT ".$offSet.",1")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row['PossibleMap'] > 0){
+				$game = GetGameByGBIDFull($row['PossibleMap'], $mysqli);
+				$import = null;
+				$import['Title'] = $game->_title;
+				$import['SteamTitle'] = $row['Title'];
+				$import['ImportImage'] = $row['Image'];
+				$import['LifebarImage'] = $game->_imagesmall;
+				$import['GameID'] = $game->_id;
+				$import['GBID'] = $game->_gbid;
+				$import['ImportID'] = $row['ImportID'];
+				$import['TimePlayed'] = $row['TimePlayed'];
+				$import['Year'] = $game->_year;
+				$import['AuditID'] = $row['ID'];
+			}else{
+				$import = null;
+				$import['SteamTitle'] = $row['Title'];
+				$import['ImportImage'] = $row['Image'];
+				$import['TimePlayed'] = $row['TimePlayed'];
+				$import['ImportID'] = $row['ImportID'];
+				$import['AuditID'] = $row['ID'];
+			}
+			if($import != null)
+				$unmapped[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $unmapped;
+}
+
 function GetSteamTotals($userid){
 	$mysqli = Connect();
 	$unmapped = 0;
 	$mapped = 0;
+	$reported = 0;
 	if ($result = $mysqli->query("select count(*) as cnt from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` = 0 and `Ignore` = 'No'")) {
 		while($row = mysqli_fetch_array($result)){
 			$unmapped = $row['cnt'];
@@ -149,11 +248,32 @@ function GetSteamTotals($userid){
 		}
 	}
 	
+	if ($result = $mysqli->query("select count(*) as cnt from `ImportAudit` i, `GamesMapperReport` r where i.`UserID` = '".$userid."' and i.`Type` = 'Steam' and i.`Ignore` = 'Rprt' and i.`ImportID` = r.`ImportID`")) {
+		while($row = mysqli_fetch_array($result)){
+			$reported = $row['cnt'];
+		}
+	}
+	
 	$totals[0] = number_format($unmapped);
 	$totals[1] = number_format($mapped);
+	$totals[2] = number_format($reported);
 	
 	Close($mysqli, $result);
 	return $totals;	
+}
+
+function AlreadyImportedSteam($userid){
+	$mysqli = Connect();
+	$imported = false;
+	if ($result = $mysqli->query("select count(*) as cnt from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam'")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row['cnt'] > 0)
+			$imported = true;
+		}
+	}
+	
+	Close($mysqli, $result);
+	return $imported;	
 }
 
 function GetGameMapping($id, $name, $pconn = null){
@@ -162,9 +282,21 @@ function GetGameMapping($id, $name, $pconn = null){
 	if ($result = $mysqli->query("select * from `GamesMapper` where `Steam` = '".$id."'")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row['Visible'] == 'No'){
-				$gameid = -1;
-				$gbid = -1;
-				$mapStrength = "medium";
+				$reported = false;
+				if ($result = $mysqli->query("select * from `GamesMapperReport` where `ImportID` = '".$id."'")) {
+					while($row = mysqli_fetch_array($result)){
+						$reported = true;
+					}
+				}
+				if(!$reported){
+					$gameid = -1;
+					$gbid = -1;
+					$mapStrength = "high";
+				}else{
+					$gameid = -1;
+					$gbid = -1;
+					$mapStrength = "medium";
+				}
 			}else if($row['GBID'] > 0){
 				$gameid = $row['GameID'];
 				$gbid = $row['GBID'];
@@ -198,56 +330,98 @@ function GetGameMapping($id, $name, $pconn = null){
 	return $mapping;
 }
 
-function ImportLibraryForSteamUser($steamvanity){
+function ImportLibraryForSteamUser($steamvanity, $fullreset){
 	if(strlen($steamvanity) > 15 && ctype_digit($steamvanity))
 		$userid = $steamvanity;
 	else
 		$userid = GetSteamID($steamvanity);
+		
 	$steamapikey = 'F380E48672B5996985B5EB0A9DACD9DB';
-	$request = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$steamapikey.'&steamid='.$userid.'&format=json&include_appinfo=1';
-	$request = str_replace(" ", "%20", $request);
-	$curl = curl_init($request);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$curl_response = curl_exec($curl);
-	if ($curl_response === false) {
-    		$info = curl_getinfo($curl);
-    		curl_close($curl);
-   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
-	}
-	curl_close($curl);
-	$decoded = json_decode($curl_response);
-	if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
-    		die('error occured: ' . $decoded->response->errormessage);
-	}
-	
-	SyncUserToSteam($_SESSION['logged-in']->_id, $userid, $steamvanity);
-	$allgames = $decoded->response->games;
-	if($allgames != ''){
-		AuditOfImport($allgames, $_SESSION['logged-in']->_id);
+	if(strlen($userid) > 15 && ctype_digit($userid)){
+		$request = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$steamapikey.'&steamid='.$userid.'&format=json&include_appinfo=1';
+		$request = str_replace(" ", "%20", $request);
+		$curl = curl_init($request);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl_response = curl_exec($curl);
+		if ($curl_response === false) {
+	    		$info = curl_getinfo($curl);
+	    		curl_close($curl);
+	   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
+		}
+		curl_close($curl);
+		$decoded = json_decode($curl_response);
+		if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+	    		die('error occured: ' . $decoded->response->errormessage);
+		}
+		
+		$allgames = $decoded->response->games;
+		if($allgames != ''){
+			SyncUserToSteam($_SESSION['logged-in']->_id, $userid, $steamvanity);
+			AuditOfImport($allgames, $_SESSION['logged-in']->_id, $fullreset);
+			$steambacklog = DoesCollectionExist('Steam Backlog',$_SESSION['logged-in']->_id);
+			if($steambacklog != null){
+				RemoveCollection($steambacklog);
+			}
+			$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
+			CreateCollection('Steam Backlog',"Steam games I yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
+			
+			$steamplayed = DoesCollectionExist('Steam Played',$_SESSION['logged-in']->_id);
+			if($steamplayed != null){
+				RemoveCollection($steamplayed);
+			}
+			$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
+			CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);
+			
+			return "SUCCESS";
+		}else{
+			return "FAILED";
+		}
+		
+	}else{
+		return "FAILED";
 	}
 }
 
-function AuditOfImport($games, $userid){
+function AuditOfImport($games, $userid, $fullreset){
 	$mysqli = Connect();
-	$mysqli->query("delete from `ImportAudit` where `UserID` = '$userid'");
+	
+	if($fullreset)
+		$mysqli->query("delete from `ImportAudit` where `UserID` = '$userid'");
+		
 	foreach($games as $game){
 		$mapping = null;
 		$skip = false;
-		$mapping = GetGameMapping($game->appid, $game->name, $mysqli);
-		if($mapping[0] == -1 && $mapping[1] == -1){
-			$skip = true;
-		}else if($mapping[2] == "high"){
-			$mappedID = $mapping[1];
-			$possibleMap = '';
-		}else if($mapping[2] == "medium" || $mapping[2] == "low"){
-			$mappedID = '';
-			$possibleMap = $mapping[1];
-		}else{
-			$mappedID = '';
-			$possibleMap = '';
+		$alreadyExists = false;
+		if($fullreset == false){
+			if ($result = $mysqli->query("select * from `ImportAudit` where `ImportID` = '".$game->appid."' and `UserID` = '".$userid."'")) {
+				while($row = mysqli_fetch_array($result)){
+					$alreadyExists = true;		
+				}
+			}	
 		}
-		if($skip == false)
-			$result = $mysqli->query("insert into `ImportAudit` (`UserID`,`Title`,`Image`,`ImportID`,`TimePlayed`,`MappedID`,`PossibleMap`) values ('".$userid."','".$game->name."','http://media.steampowered.com/steamcommunity/public/images/apps/".$game->appid."/".$game->img_logo_url.".jpg','".$game->appid."','".$game->playtime_forever."','".$mappedID."','".$possibleMap."')");
+		if($alreadyExists == false){
+			$mapping = GetGameMapping($game->appid, $game->name, $mysqli);
+			if($mapping[0] == -1 && $mapping[1] == -1){
+				if($mapping[2] == "high")
+					$skip = true;
+				else
+					$skip = 'trueWithReport';
+			}else if($mapping[2] == "high"){
+				$mappedID = $mapping[1];
+				$possibleMap = '';
+			}else if($mapping[2] == "medium" || $mapping[2] == "low"){
+				$mappedID = '';
+				$possibleMap = $mapping[1];
+			}else{
+				$mappedID = '';
+				$possibleMap = '';
+			}
+			
+			if($skip == 'trueWithReport')
+				$mysqli->query("insert into `ImportAudit` (`UserID`,`Title`,`Image`,`ImportID`,`TimePlayed`,`MappedID`,`PossibleMap`,`Ignore`) values ('".$userid."','".$game->name."','http://media.steampowered.com/steamcommunity/public/images/apps/".$game->appid."/".$game->img_logo_url.".jpg','".$game->appid."','".$game->playtime_forever."','".$mappedID."','".$possibleMap."', 'Rprt')");
+			else if($skip == false)
+				$mysqli->query("insert into `ImportAudit` (`UserID`,`Title`,`Image`,`ImportID`,`TimePlayed`,`MappedID`,`PossibleMap`) values ('".$userid."','".$game->name."','http://media.steampowered.com/steamcommunity/public/images/apps/".$game->appid."/".$game->img_logo_url.".jpg','".$game->appid."','".$game->playtime_forever."','".$mappedID."','".$possibleMap."')");
+		}
 	}
 	Close($mysqli, $result);
 }

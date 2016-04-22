@@ -284,9 +284,15 @@ function DisplayPendingReviews(){
 
 function DisplayAdminGameSearchResults($search){
 	$games = SearchForGame($search); 
-	foreach($games as $game){
+	if(sizeof($games) > 0){
+		foreach($games as $game){
+			?>
+			<li data-gbid='<?php echo $game->_gbid; ?>' data-image='<?php echo $game->_imagesmall; ?>'><img src='<?php echo $game->_imagesmall; ?>' style='height:50px;width:50px;margin-right: 10px;vertical-align: middle;float:left;'> <span class='actual-title'><?php echo $game->_title." (".$game->_year.")"; ?></span><span style='display:block;font-weight:300;height:20px;overflow:hidden;'><?php echo $game->_platforms; ?></span></li>
+			<?php
+		}
+	}else{
 		?>
-		<li data-gbid='<?php echo $game->_gbid; ?>' data-image='<?php echo $game->_imagesmall; ?>'><img src='<?php echo $game->_imagesmall; ?>' style='height:50px;width:50px;margin-right: 10px;vertical-align: middle;float:left;'> <span class='actual-title'><?php echo $game->_title." (".$game->_year.")"; ?></span><span style='display:block;font-weight:300;height:20px;overflow:hidden;'><?php echo $game->_platforms; ?></span></li>
+		<div style='font-size:1.25em;margin-top:25px;font-weight:400;'>0 games were found.</div>
 		<?php
 	}
 	

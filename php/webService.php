@@ -19,13 +19,16 @@
 			DisplayStartSteamImport($_POST['userid']);
 		}
 		if($_POST['action'] == "ImportSteamGames"){
-			DisplaySteamGameImport($_POST['steamname'], $_POST['forceImport']);
+			DisplaySteamGameImport($_POST['steamname'], $_POST['forceImport'], $_POST['fullreset']);
 		}
 		if($_POST['action'] == "NextPageImport"){
 			if($_POST['type'] == 'unmapped')
 				DisplayUnMappedGames($_POST['offset']);
 			else if($_POST['type'] == 'mapped')
 				DisplayMappedGames($_POST['offset']);
+		}
+		if($_POST['action'] == "NextUnmappedRow"){
+			GetNextUnmappedGameRow($_POST['offset']);
 		}
 		if($_POST['action'] == "MapGame"){
 			MapGameToLifebar($_POST['importID'], $_POST['gbid'], $_POST['auditid']);

@@ -1,4 +1,4 @@
-.import-steam{
+.import-steam, .load-steam-import{
     position:absolute;
     position:absolute;
     right:25px;
@@ -53,12 +53,20 @@
     font-weight: 500;
 }
 
+.import-map-suggest-image{
+    cursor: pointer;
+}
+
+.import-map-suggest-image:hover{
+    opacity:0.9;
+}
+
 .import-game-search{
     margin-top: 10px !important;
 }
 
 .import-results-header{
-background-color: rgb(215, 214, 214);
+    background-color: rgb(215, 214, 214);
     color: rgba(0,0,0,0.7);
     text-align: left;
     position: fixed;
