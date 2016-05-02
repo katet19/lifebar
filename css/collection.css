@@ -33,12 +33,22 @@
     font-size: 8.5em;
     font-weight: bold;
     text-align: center;
+    margin-top: 80px;
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     -o-transition: all 0.5s ease-out;
     -ms-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
     cursor: pointer;
+}
+
+.collection-added-from-search{
+    float: right;
+    position: absolute;
+    top: 20px;
+    display: inline-block;
+    font-size: 1em;
+    right: 30px;
 }
 
 .collection-add:hover{
@@ -61,14 +71,332 @@
     padding: 20px 13px;
     font-weight: 500;
     font-size: 1.25em;
+    line-height: 20px;
 }
 
 .collection-desc{
-    font-size:0.8em;
-    font-weight:300;
+    font-size: 0.7em;
+    font-weight: 300;
+    margin-top: 5px;
+    line-height: 16px;
 }
 
 .collection-total{
     font-weight: 500;
     font-size: 2.5em;
+    line-height: 60px;
+}
+
+.collection-paging{
+    padding-top: 25px;
+    display: inline-block;
+    margin: 0 2.5%;
+    width: 95%;
+}
+
+.collection-pagination{
+    display:inline-block;
+}
+
+.collection-prev, .collection-next{
+    display:inline-block;
+}
+
+.collection-pagination-desc{
+    font-size: 1.5em;
+    display: inline-block;
+    float:left;
+}
+
+.collection-pagination-total{
+    font-weight:500;
+}
+
+
+.collection-search-icon{
+    color: white;
+    display: inline-block;
+    font-size: 1.5rem !important;
+    position: absolute;
+    z-index: 1;
+    right: 320px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.collection-search-box{
+    width: 350px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 10px 0 35px;
+    background-color: rgb(63, 128, 202);
+}
+
+.collection-details-name{
+    font-size: 2.5em;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.collection-details-desc{
+    text-align: left;
+    padding-left: 20px;
+    margin-top: -10px;
+}
+
+.collection-details-total{
+    float: right;
+    margin-right: 30px;
+    margin-top: -6px;
+    margin-left: 15px;
+}
+
+.collection-details-total-num{
+    font-size: 3em;
+    font-weight: 400;
+}
+
+.collection-details-total-string{
+    font-size: 1.5em;
+    height: 67px;
+    font-weight: 500;
+    padding-top: 17px;
+}
+
+.collection-details-total-lbl{
+    margin-top: -15px;
+}
+
+.collection-game-xp-progress-bar{
+    height: 25px;
+    border: 1px solid rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+    top: 22px;
+    left: 30px;
+    right: 200px;
+    z-index: 1;
+}
+
+.collection-game-xp-progress-filled{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    height: 25px;
+    z-index: 2;
+}
+
+.collection-game-tier{
+    width: 35px;
+    font-size: 1.25em;
+    display: inline-block;
+    height: 35px;
+    margin-top: 6px;
+    text-align: center;
+}
+
+.collection-game-tier-container{
+    position: relative;
+    right: inherit;
+    top: 13px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+    background-color:gray;
+}
+
+.collection-mgmt-header{
+    font-size: 1.25em;
+    font-weight: 500;
+    display: inline-block;
+    text-align: left;
+    padding: 5px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.frm-collection-validation{
+    color:red;
+    font-size:1.2em;
+    text-align: center;
+    margin-top:15px;
+    display:none;
+}
+
+.edit-mode-btn{
+    position: absolute;
+    top: 25px;
+    z-index: 7;
+    right: 25px;
+}
+
+.collection-edit-mode{
+    display:none;
+}
+
+.collection-game-search-results{
+    background-color: white;
+    overflow: auto;
+    width: 100%;
+    height: 500px;
+    margin-top: -20px;
+    margin-left: -10px;
+    border: 1px solid #bbb;
+}
+
+.collection-game-search-results li{
+    display: block;
+    padding: 5px 10px 20px;
+    text-align: left;
+    color: #474747;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-weight: 500;
+    position: relative;
+}
+
+.collection-game-search-results li span{
+    padding-right:100px;
+}
+
+.add-to-collection-from-search{
+    position: absolute;
+    top: 10px;
+    display: inline-block;
+    font-size: 0.8em;
+    right: 10px;
+}
+
+.collection-remove-game{
+    margin-top: 20px;
+    background-color:#F44336 !important;
+    display:none;
+    float: right;
+    padding: 0 1rem;
+    font-size: 0.8em;
+}
+
+.collection-cover-game{
+    margin-top: 20px;
+    margin-right:20px;
+    background-color:#00838F !important;
+    display:none;
+    float: right;
+    font-size: 0.8em;
+    padding: 0 1rem;
+}
+
+.collection-edit-save-refresh{
+    background-color: #43A047 !important;
+    z-index: 7;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    margin-left: 10px;
+    float: left;
+    height: 25px;
+    margin-bottom: 0;
+    display:none;
+}
+
+.collection-edit-delete{
+    background-color: #F44336 !important;
+    z-index: 7;
+    margin-right: 10px;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    height: 25px;
+    float:right;
+    margin-bottom: 0;
+    display:none;
+}
+
+.collection-edit-random-cover{
+    background-color: #00838F !important;
+    position: absolute;
+    top: 70px;
+    z-index: 7;
+    right: 25px;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    width:225px;
+    height: 25px;
+    display:none;
+}
+
+.collection-edit-exit{
+    position: absolute;
+    top: 20px;
+    z-index: 7;
+    right: 25px;
+    display:none;
+}
+
+.collection-confirm-delete{
+    background-color:#F44336 !important;
+}
+
+.import-list-header-add-collection{
+    display:none;
+}
+
+.collection-add-game-from-popup{
+    text-align: left;
+    width: 100%;
+    height: 45px;
+}
+
+.collection-add-game-from-popup-name{
+    font-weight: 400;
+    margin-bottom: 5px;
+    float: left;
+    font-size: 1.1em;
+    line-height: 36px;
+    z-index:1;
+}
+
+.collection-add-game-from-popup-remove{
+    float:right;
+    margin-bottom:0;
+    z-index:2;
+    color: rgba(0,0,0,0.54);
+    font-weight: bold;
+    cursor:default;
+}
+
+.collection-add-game-from-popup-add{
+    float:right;
+    margin-bottom:0;
+    z-index:2;
+    color: rgba(0,0,0,0.54);
+    font-weight: bold;
+}
+
+.collection-add-game-from-popup-add:hover{
+    color: rgba(0,0,0,0.9);
+}
+
+.collection-game-add-to-collection{
+    position: absolute;
+    right: 10px;
+    padding: 0 1rem;
+    top: 15px;
+}
+
+.collection-add-to-existing-collection-container{
+    overflow: auto;
+    height: 500px;
 }

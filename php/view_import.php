@@ -39,48 +39,58 @@ function DisplaySteamGameImport($steamID, $forceImport, $fullreset){
 		$importSuccess = ImportLibraryForSteamUser($steamID, $fullreset);
 	$totals = GetSteamTotals($_SESSION['logged-in']->_id);
 	DisplayBackButton("Import Steam Library");
+	$last = GetLastImportForUser($_SESSION['logged-in']->_id);
 	
 	if($importSuccess != "FAILED"){
 		?>
-		<div class="row">
-			<div class="col s12 import-results-subheader" style='margin-top: 75px;'>
-				Total Games Imported <span class='import-mapped-total' style='font-weight:bold;'><?php echo $totals[1]; ?></span>
-				<div class="btn import-steam-reimport" style='float:right;font-size: 0.6em;' data-id='<?php echo $_SESSION['logged-in']->_id; ?>'>Sync your Steam Library</div>
-			</div>
-			<?php 
-			$played = GetCollectionByName('Steam Played',$_SESSION['logged-in']->_id); 
-		  	$backlog = GetCollectionByName('Steam Backlog',$_SESSION['logged-in']->_id);
-		  	if($played != ''){
-				DisplayCollection($played);
-			 } ?>
-			
-			<?php if($backlog != ''){ 
-				DisplayCollection($backlog);
-			 } ?>
-			
-			<!-- OLD WAY
-			<div class="steam-collections-container">
-				
-			</div>
-			<div class="import-mapped-games-container">
-				<?php /*DisplayMappedGames(0);*/ ?>
-			</div>
-			<div class="import-results-paging">
-				<div class="import-results-pagination">
-					<div class='btn mapped-prev'><i class="fa fa-chevron-left"></i></div>
+		<div class="row" style='margin:75px 0.75rem;'>
+			<div class="profile-card col s12 m6 l4 z-depth-1">
+				<div class="import-modal-header">
+					<i class="fa fa-steam-square"></i> Steam Import Results
 				</div>
-				<div class="import-results-desc">
-					<span class="import-results-offset" data-offset="0">0 - 25</span> of <span class='import-results-total'><?php echo $totals[1]; ?></span>
+				<div class="col s12 import-results-subheader" style='margin-top: 50px;'>
+					Games Imported <span class='import-mapped-total' style='font-weight:bold;float:right;margin-right: 5px;'><?php echo $totals[1]; ?></span>
+					<hr>
+					<span class='import-results-desc'>Games that matched our database and were directly added to either your Played or your Backlog Collections.</span>
 				</div>
-				<div class="import-results-pagination">
-					<div class='btn mapped-next'><i class="fa fa-chevron-right"></i></div>
+				<div class="col s12 import-results-subheader">
+					Unmapped Games <span class='import-unmapped-total' style='font-weight:bold;float:right;margin-right: 5px;'><?php echo $totals[0]; ?></span>
+					<hr>
+					<span class='import-results-desc'>Games that don't have a direct match yet in our database yet, but might exist.</span>
 				</div>
-			</div> -->
+				<div class="col s12 import-results-subheader">
+					Reported Games <span class='import-report-total' style='font-weight:bold;float:right;margin-right: 5px;'><?php echo $totals[2]; ?></span>
+					<hr>
+					<span class='import-results-desc'>Games are reported when we have confirmed they don't exist in our database yet or aren't a game!</span>
+				</div>
+				<div class="col s12 import-results-subheader">
+					Last Sync'd <span style='font-weight:bold;float:right;margin-right: 5px;'><?php echo ConvertTimeStampToRelativeTime($last); ?></span>
+				</div>
+			</div>
+			<div class="col s12 m6 l8">
+				<div class="row">
+					<div class="profile-card col s12 z-depth-1" style='padding:3em 0px 2em 0px !important;position:relative;'>
+						<div class="import-modal-header">
+							 Auto-Collections Created/Updated
+						</div>
+						<?php 
+						$played = GetCollectionByName('Steam Played', $_SESSION['logged-in']->_id);
+					  	$backlog = GetCollectionByName('Steam Backlog', $_SESSION['logged-in']->_id);
+					  	 if($played != ''){
+					  		DisplayCollection($played);
+						 }
+						 if($backlog != ''){ 
+							DisplayCollection($backlog);
+						 } ?>
+					 </div>
+				 </div>
+	 		</div>
+	 		<div class="btn import-steam-reimport" style='position: fixed;top: 68px;right: 10px;z-index: 10;' data-id='<?php echo $_SESSION['logged-in']->_id; ?>'>Sync your Steam Library</div>
 		</div>
 		<?php if($totals[0] > 0 ){ ?>
 		<div class="row" style='margin-top: 100px;'>
 			<div class="col s12 import-results-subheader">
-				Unmapped Games <span class='import-unmapped-total' style='font-weight:bold;'><?php echo $totals[0]; ?></span>
+				Unmapped Games <span class='import-unmapped-total' style='background-color: #D32F2F;font-weight: bold;color: white;padding: 0 5px;font-size: 0.9em;margin-left: 15px;border-radius: 5px;'><?php echo $totals[0]; ?></span>
 			</div>
 			<div class="col s12 import-results-subheader-desc">
 				We were unable to locate an exact match for the following games in our database. Please help us build our mapping catalog by manually selecting the correct match or by reporting that there is not a match in our database.
@@ -93,7 +103,7 @@ function DisplaySteamGameImport($steamID, $forceImport, $fullreset){
 		<?php if($totals[2] > 0 ){ ?>
 			<div class="row" style='margin-top: 100px;'>
 				<div class="col s12 import-results-subheader">
-					Reported Games <span class='import-report-total' style='font-weight:bold;'><?php echo $totals[2]; ?></span>
+					Reported Games <span class='import-report-total' style='background-color: #D32F2F;font-weight: bold;color: white;padding: 0 5px;font-size: 0.9em;margin-left: 15px;border-radius: 5px;'><?php echo $totals[2]; ?></span>
 				</div>
 				<div class="col s12 import-results-subheader-desc">
 					We are unable to map these games from your Library because they don't exist in our database yet! We are working hard to get these games added as soon as we can.
@@ -113,110 +123,6 @@ function DisplaySteamGameImport($steamID, $forceImport, $fullreset){
 			</div>
 		</div>
 		<?php
-	}
-}
-
-function DisplayMappedGames($offSet){
-	$mappedGames = GetSteamMapped($_SESSION['logged-in']->_id, $offSet);
-	if(sizeof($mappedGames) > 0){?>
-		<div class="col s12">
-			<div class="row" style='margin:10px 0;'>
-				<div class="col s12 import-list-header">Game</div>
-			</div>
-		</div>
-		<?php $i = 0;
-		foreach($mappedGames as $game){
-			$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game['GameID']);
-			?>
-			<div class="col s12" style='height:70px;'>
-				<div class="row" style='margin:0;position:relative;border-bottom: 1px solid rgba(0,0,0,0.3);<?php if($i % 2 == 0){?>background-color:#ddd;<?php } ?>'>
-					<div class="col s3" style='padding:0;position: relative;'>
-						<img class="import-game-image z-depth-1" src="<?php echo $game['ImportImage']; ?>" >
-						<div class="import-game-name">
-							<?php echo $game['Title']; ?>
-						</div>
-					</div>
-					<div class="col s2">
-						<div class='import-time-played'><?php echo $game['TimePlayed']; ?> minutes</div>
-					</div>
-					<div class="col s1" style='position:relative;min-width:100px;'>
-						<?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ 
-							if(sizeof($xp->_playedxp) > 0){
-  						  	  	if($xp->_playedxp[0]->_completed == "101")
-									$percent = 100;
-								else
-									$percent = $xp->_playedxp[0]->_completed;
-									
-								if($percent == 100){ ?>
-				  	  	       		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1" style='position: relative;top: 13px;right: inherit;'>
-							          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - Completed"; ?>">
-						    				<i class="mdi-hardware-gamepad"></i>
-							          	</div>
-					          	<?php }else{ ?>
-					          		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1" style='position: relative;top: 13px;right: inherit;'>
-					      			  	<div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
-									  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
-										  <div class="slice">
-										    <div class="bar minibar"></div>
-										    <div class="fill"></div>
-										  </div>
-										</div>
-					          	<?php } ?>
-								</div>
-							<?php }else if(sizeof($xp->_watchedxp) > 0){ 
-							  	  		$percent = 20;
-							  	  		$length = "";
-							    		foreach($xp->_watchedxp as $watched){
-							    			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
-							    				$percent = 101;
-							    				$length = $watched->_length;
-							    			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
-							    				$percent = 100;
-							    				$length = $watched->_length;
-							    			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
-							    				$percent = 50;
-							    				$length = $watched->_length;
-							    			}else{
-							    				$length = $watched->_length;
-							    			}
-							    		}
-							    		
-							    		if($percent == 101){
-							    		?>
-								          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1" style='position: relative;top: 13px;right: inherit;'>
-								          	<div class="card-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
-								          			<i class="mdi-action-visibility"></i>
-								          	</div>
-										   </div>
-								     	  <?php }else{ ?>
-								      		<div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1" style='position: relative;top: 13px;right: inherit;'>
-								  			  	<div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;'>
-											  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
-												  <div class="slice">
-												    <div class="bar minibar"></div>
-												    <div class="fill"></div>
-												  </div>
-												</div>
-								   			</div>
-									  	  <?php
-									  	  		}
-								}
-						 }else{ ?>
-						 &nbsp;
-						 <?php } ?>
-					</div>
-					<div class="col s2">
-						<?php if($game['TimePlayed'] > 0){ ?>
-							<div class='import-collection-mapped-msg'>Added to '<b>Steam Played</b>' Collection</div>
-						<?php }else{ ?>
-							<div class='import-collection-mapped-msg'>Added to '<b>Steam Backlog</b>' Collection</div>
-						<?php } ?>
-					</div>
-				</div>
-			</div>
-			<?php
-			$i++;
-		} 
 	}
 }
 
@@ -298,30 +204,40 @@ function DisplayUnmappedGameRow($game, $i){ ?>
 }
 
 function DisplayReportedGames($offSet){
-	$unmappedGames = GetSteamReported($_SESSION['logged-in']->_id, $offSet);
-	if(sizeof($unmappedGames) > 0){?>
+	$reportedGames = GetSteamReported($_SESSION['logged-in']->_id, $offSet);
+	if(sizeof($reportedGames) > 0){
+		$newCol = false;
+		$totalReported = sizeof($reportedGames);
+		$cutOff = round($totalReported  / 2);
+	?>
 		<div class="col s12">
 			<div class="row" style='margin:10px 0;'>
-				<div class="col s12 import-list-header">Steam</div>
+				<?php if($totalReported > 25){ ?>
+					<div class="col s4 import-list-header">Games</div>
+					<div class="col s2 import-list-header" style='text-align:right;padding-right:5%;'># of Reports</div>
+					<div class="col s4 import-list-header">Games</div>
+					<div class="col s2 import-list-header" style='text-align:right;padding-right:5%;'># of Reports</div>
+				<?php }else{ ?>
+					<div class="col s4 import-list-header">Games</div>
+					<div class="col s2 import-list-header" style='text-align:right;padding-right:5%;'># of Reports</div>
+					<div class="col s6 import-list-header">&nbsp;</div>
+				<?php } ?>
 			</div>
 		</div>
-		<?php $i = 0;
-		foreach($unmappedGames as $game){ ?>
-			<div class="col s12" style='height:70px;'>
-				<div class="row" style='margin:0;position:relative;border-bottom: 1px solid rgba(0,0,0,0.3);<?php if($i % 2 == 0){?>background-color:#ddd;<?php } ?>'>
-					<div class="col s4" style='padding:0;overflow: hidden;height: 70px;position: relative;z-index: 0;'>
-						<img class="import-game-image z-depth-1" src="<?php echo $game['ImportImage']; ?>" >
-						<div class="import-game-name">
-							<?php echo $game['SteamTitle']; ?>
-						</div>
+		<div class="col s6" style='text-align:left;'>
+		<?php $i = 0; 
+		foreach($reportedGames as $game){ 
+				if($totalReported > 25 && $cutOff < $i && $newCol == false){
+					?>
 					</div>
-					<div class="col s3">
-						<div class="import-game-name">
-							Reported <?php echo ConvertTimeStampToRelativeTime($game['ReportedOn']); ?>
-						</div>
-					</div>
+					<div class="col s6" style='text-align:left;'>
+					<?php
+					$newCol = true;
+				} ?>
+				<div style='width:100%;text-align: left;padding-left: 20px;line-height: 40px;font-size: 1em;border-bottom: 1px solid rgba(0,0,0,0.3);<?php if($i % 2 == 0){?>background-color:#ddd;<?php } ?>'>
+					<?php echo $game['SteamTitle']; ?>
+					<div style='float:right;margin-right:5%;display:inline-block;'><?php echo $game['Priority']; ?></div>
 				</div>
-			</div>
 		<?php
 			$i++;
 		} 

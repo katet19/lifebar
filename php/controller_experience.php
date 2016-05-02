@@ -1090,6 +1090,55 @@ function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
 	return $experience;
 }
 
+function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null){
+	$mysqli = Connect($pconn);
+	$missing = true;
+	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$experience = new Experience($row["ID"],
+						$user->_first,
+						$user->_last,
+						$user->_username,
+						$row["UserID"],
+						$row["GameID"],
+						GetGame($row["GameID"], $mysqli),
+						$row["Tier"],
+						$row["Quote"],
+						$row["ExperienceDate"],
+						$row["Link"],
+						$row["Owned"],
+						$row["BucketList"],
+						$row["AuthenticXP"]);
+			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
+			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
+			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$missing = false;
+		}
+	}
+	
+	if($missing){
+		$experience = new Experience($row["ID"],
+						'',
+						'',
+						'',
+						'',
+						$gameid,
+						GetGame($gameid, $mysqli),
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'');
+	}
+	
+    if($pconn == null)
+	   Close($mysqli, $result);
+	
+	return $experience;
+}
+
 function GetExperienceForFeed($gameid, $filter, $pconn = null){
 	$exp = array();
 	$mysqli = Connect($pconn);
@@ -2074,23 +2123,21 @@ function UpdateXP($user,$gameid,$quote,$tier,$link){
 
 function SubmitBookmark($user,$gameid,$bucketlist){
 	$mysqli = Connect();
-	$datarow = HasUserExperienced($user, $gameid, $mysqli);
-	if ($datarow != false){
-		$result = $mysqli->query("update `Experiences` set `BucketList`='$bucketlist' where `UserID` = '$user' and `GameID` = '$gameid'");
-		if($bucketlist != "No" && $datarow["BucketList"] != "Yes"){
-			$mysqli->query("Delete from `Events` where `UserID` = '$user' and `GameID` = '$gameid' and `Event` = 'BUCKETLIST'");
-			$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`) values ('$user','$gameid','BUCKETLIST')");
+	$game = GetGame($gameid);
+	$collectionid = DoesCollectionExist('Bookmarked',$user);
+	if($collectionid > 0){
+		if($bucketlist == "Yes"){
+			$added = AddToCollection($collectionid, $game->_gbid, $user);
+			if($added > 0){
+				$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`) values ('$user','$gameid','BUCKETLIST')");
+				CheckForNotifications("Bucket",$user,$gameid);
+			}
+		}else{
+			RemoveFromCollection($collectionid, $gameid, $user);
 		}
-	}else{
-		$result = $mysqli->query("insert into `Experiences` (`UserID`,`GameID`,`BucketList`) values ('$user','$gameid', '$bucketlist')");
-		if($bucketlist != "No")
-			$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`) values ('$user','$gameid','BUCKETLIST')");
 	}
 	
 	Close($mysqli, $result);
-	
-	if($bucketlist == "Yes")
-		CheckForNotifications("Bucket",$user,$gameid);
 }
 
 function SubmitOwned($user,$gameid,$owned){

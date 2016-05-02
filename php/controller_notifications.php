@@ -451,49 +451,54 @@ function AddCriticCardsToBookmarkedUsers($gameid){
 function AddSimilarGames($userid, $gameid){
 	$mysqli = Connect();
 	$gameinfo = GetGame($gameid, $mysqli);
-	$mysqli->query("Delete from `Quests` where `Category` = 'Games' && `CoreID` = '".$gameid."' && `UserID` = '".$userid."' ");	
-	$addcards =  array();
-	$simgames = explode(",", $gameinfo->_similar);
-	$max = rand(2,5);
-	$totalsim = 0;
-	foreach($simgames as $gameid){
-		$found = false;
-		if($gameid != "" && $totalsim <= $max){
-			if ($result = $mysqli->query("select g.`ID` as `GameID` from `Experiences` exp, `Games` g where exp.`GameID` = g.`ID` and  g.`GBID` = '".$gameid."' and exp.`UserID` = '".$userid."'")){
-				while($row = mysqli_fetch_array($result)){
-					$found = true;
-				}
-			}
-			
-			if(!$found){
-				if ($result2 = $mysqli->query("select g.`ID` as `GameID` from `Quests` q, `Games` g where q.`Category` = 'Games' and q.`CoreID` = g.`ID` and g.`GBID` = '".$gameid."' and q.`UserID` = '".$userid."'")){ 
-					while($row2 = mysqli_fetch_array($result2)){
+	$collectionid = DoesCollectionExist('Upcoming Quests',$userid);
+	if($collectionid != null){
+		RemoveFromCollection($collectionid, $gameinfo->_id, $userid);
+		$addcards =  array();
+		$simgames = explode(",", $gameinfo->_similar);
+		$max = rand(2,5);
+		$totalsim = 0;
+		foreach($simgames as $gameid){
+			$found = false;
+			if($gameid != "" && $totalsim <= $max){
+				if ($result = $mysqli->query("select g.`ID` as `GameID` from `Experiences` exp, `Games` g where exp.`GameID` = g.`ID` and  g.`GBID` = '".$gameid."' and exp.`UserID` = '".$userid."'")){
+					while($row = mysqli_fetch_array($result)){
 						$found = true;
 					}
 				}
-			}
-			if(!$found && $totalsim <= $max){
-				$game = GetGameByGBID($gameid, $mysqli);
-				$gameyear = explode("-",$game->_released);
-				if($game->_title != "" && $gameyear[0] > "0000"){
-					$questgames[] = $game;
-					$totalsim++;
-					$type = "gamewithbg";
-					$category = "Games";
-					$coreid = $game->_id;
-					$title = "Have you experienced ".$game->_title."?";
-					$caption = $game->_title." is similar to another game you have experienced, ".$gameinfo->_title.", and you have not entered any experiences for it yet.";
-					$valueone="Add your experience";
-					$actionone="Method,ShowGame(".$game->_gbid.")";
-					$valuetwo="Release";
-					$actiontwo=$game->_released;
-					$color = "#000";
-					$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`,`Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','".$game->_imagesmall."')") or die;
+				
+				if(!$found){
+					if ($result2 = $mysqli->query("select g.`ID` as `GameID` from `Quests` q, `Games` g where q.`Category` = 'Games' and q.`CoreID` = g.`ID` and g.`GBID` = '".$gameid."' and q.`UserID` = '".$userid."'")){ 
+						while($row2 = mysqli_fetch_array($result2)){
+							$found = true;
+						}
+					}
 				}
+				if(!$found && $totalsim <= $max){
+					$game = GetGameByGBID($gameid, $mysqli);
+					$gameyear = explode("-",$game->_released);
+					if($game->_title != "" && $gameyear[0] > "0000"){
+						$questgames[] = $game;
+						$totalsim++;
+						/*$type = "gamewithbg";
+						$category = "Games";
+						$coreid = $game->_id;
+						$title = "Have you experienced ".$game->_title."?";
+						$caption = $game->_title." is similar to another game you have experienced, ".$gameinfo->_title.", and you have not entered any experiences for it yet.";
+						$valueone="Add your experience";
+						$actionone="Method,ShowGame(".$game->_gbid.")";
+						$valuetwo="Release";
+						$actiontwo=$game->_released;
+						$color = "#000";
+						$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`,`Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','".$game->_imagesmall."')") or die;
+						*/
+						AddToCollection($collectionid, $game->_gbid, $userid);
+					}
+				} 
 			}
 		}
+	    UpdateTotalNew($userid, $totalsim, $mysqli);
 	}
-    UpdateTotalNew($userid, $totalsim, $mysqli);
 	Close($mysqli, $result);
 	
 	return $questgames;

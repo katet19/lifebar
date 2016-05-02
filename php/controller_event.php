@@ -200,6 +200,28 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeeditem[] = 3;
 				$myfeeditem[] = "GAMERELEASE";
 				$myfeed[] = $myfeeditem;
+			}else if($row["Event"] == "COLLECTIONCREATION"){
+				$myfeeditem = array();						
+				$collection = GetCollectionByID($row["GameID"], $mysqli);
+				if($collection != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $collection;
+					$myfeeditem[] = $row["GameID"];
+					$myfeeditem[] = $exp;
+					$myfeeditem[] = 3;
+					$myfeeditem[] = "COLLECTIONCREATION";
+					$myfeed[] = $myfeeditem;
+				}
 			}
 		}
 	}
@@ -331,6 +353,26 @@ function GetMyEvents($userid){
 				$myfeeditem[] = $exp;
 				$myfeeditem[] = 3;
 				$myfeed[] = $myfeeditem;
+			}else if($row["Event"] == "COLLECTIONCREATION"){
+				$myfeeditem = array();						
+				$collection = GetCollectionByID($row["GameID"], $mysqli);
+				$exp = null;
+				$event = new Event($row["ID"],
+						$row["UserID"],
+						$exp->_first." ".$exp->_last,
+						$row["Event"],
+						$row["GameID"],
+						$row["Date"],
+						$row["Quote"],
+						$row["Tier"]);
+						
+				$myfeeditem[] = $event;
+				$myfeeditem[] = $collection;
+				$myfeeditem[] = $row["GameID"];
+				$myfeeditem[] = $exp;
+				$myfeeditem[] = 3;
+				$myfeeditem[] = "COLLECTIONCREATION";
+				$myfeed[] = $myfeeditem;
 			}
 		}
 		
@@ -447,7 +489,7 @@ function ConvertTimeStampToRelativeTime($timestamp){
 			return $interval->h." hours ago";
 	}
 	else if($interval->i > 0){
-		if($interval->h == 1)
+		if($interval->i == 1)
 			return $interval->i." minute ago";
 		else
 			return $interval->i." minutes ago";

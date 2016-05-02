@@ -13,19 +13,59 @@
 		MilestoneServices();
 		GeneralServices();
 		ImportServices();
+		CollectionServices();
+	}
+	
+	function CollectionServices(){
+		if($_POST['action'] == 'DisplayCollectionDetails'){
+			DisplayCollectionDetails($_POST['collectionid']);
+		}
+		if($_POST['action'] == "NextPageCollection"){
+			DisplayCollectionDetailGamesPagination($_POST['collectionid'], $_POST['userid'], $_POST['offset'], $_POST['editMode']);
+		}
+		if($_POST['action'] == "DisplaySearchCollection"){
+			DisplaySearchCollection($_POST['collectionid'], $_POST['searchstring'], $_POST['offset'], $_POST['userid'], $_POST['editMode']);
+		}
+		if($_POST['action'] == "DisplayCollectionManagement"){
+			DisplayCollectionManagement($_POST['gameid'],$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "ValidateCollectionName"){
+			ValidateCollectionName($_POST['collectionName'],$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "CreateCollection"){
+			CreatePersonalCollection($_POST['collectionName'],$_POST['collectionDesc'],$_SESSION['logged-in']->_id, $_POST['gameid']);
+		}
+		if($_POST['action'] == "AddGameToCollection"){
+			$gameid = AddToCollection($_POST['collectionID'],$_POST['gbid'],$_SESSION['logged-in']->_id);
+			if($gameid > 0)
+				DisplayAddedGameToCollection($gameid);
+		}
+		if($_POST['action'] == "AddGameToCollectionFromCollectionManger"){
+			$game = GetGame($_POST['gameid']);
+			AddToCollection($_POST['collectionID'],$game->_gbid,$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "RemoveGameFromCollection"){
+			RemoveFromCollection($_POST['collectionID'],$_POST['gameid'],$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "UpdateCollection"){
+			UpdateCollection($_POST['collectionid'],$_POST['collectionName'],$_POST['collectionDesc']);
+		}
+		if($_POST['action'] == "SetCollectionCover"){
+			SetCollectionCover($_POST['collectionid'],$_POST['gameid']);
+		}
+		if($_POST['action'] == "DeleteCollection"){
+			RemoveCollection($_POST['collectionid']);
+		}
 	}
 	function ImportServices(){
 		if($_POST['action'] == 'DisplayStartSteamImport' ){
 			DisplayStartSteamImport($_POST['userid']);
 		}
+		if($_POST['action'] == "GetEstimatedTimeToImport"){
+			GetEstimatedTimeToImport($_POST['steamname']);
+		}
 		if($_POST['action'] == "ImportSteamGames"){
 			DisplaySteamGameImport($_POST['steamname'], $_POST['forceImport'], $_POST['fullreset']);
-		}
-		if($_POST['action'] == "NextPageImport"){
-			if($_POST['type'] == 'unmapped')
-				DisplayUnMappedGames($_POST['offset']);
-			else if($_POST['type'] == 'mapped')
-				DisplayMappedGames($_POST['offset']);
 		}
 		if($_POST['action'] == "NextUnmappedRow"){
 			GetNextUnmappedGameRow($_POST['offset']);

@@ -2,6 +2,7 @@
 function DisplayGame($gbid){
 	$game = GetGameByGBIDFull($gbid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
+	$myxp->_bucketlist = IsGameBookmarkedFromCollection($game->_id);
 	ShowGameHeader($game, $myxp, -1);
 	ShowGameContent($game, $myxp, -1);
 }
@@ -9,6 +10,7 @@ function DisplayGame($gbid){
 function DisplayGameViaID($gameid, $userid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
+	$myxp->_bucketlist = IsGameBookmarkedFromCollection($gameid);
 	if($userid > 0){
 		$otherxp = GetExperienceForUserByGame($userid, $game->_id);
 		ShowGameHeader($game, $myxp, $otherxp);
@@ -167,21 +169,19 @@ function ShowGameHeader($game, $myxp, $otherxp){
 		<?php DisplayGameBackNav(); ?>
 		<div class="GameMyStatusIcons">
 			<i class="mdi-action-bookmark mybookmark" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?>></i>
-			<i class="mdi-av-my-library-books myowned" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?>></i>
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
 		<?php ShowGameTabs($myxp, $otherxp); ?>
 		<div class="fixed-action-btn" id="game-fab">
-			<?php ShowMyGameFAB($game->_id); ?>
+			<?php ShowMyGameFAB($game->_id, $myxp); ?>
 		</div>
 
 	</div>
 	<?php
 }
 
-function ShowMyGameFAB($gameid){
-	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
+function ShowMyGameFAB($gameid, $myxp){
 	if($_SESSION['logged-in']->_id > 0){ ?>
 	    <a class="btn-floating btn-large <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ echo "game-add-played-btn red darken-2"; }else{ echo "game-add-watched-btn red darken-2"; } ?> "  data-gameid='<?php echo $myxp->_game->_id; ?>'>
 	      <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
@@ -196,8 +196,7 @@ function ShowMyGameFAB($gameid){
 	      	<li><span class="GameHiddenActionLabel">Request update from GB</span><a class="btn-floating  red accent-4 game-update-info-btn" data-gameid='<?php echo $myxp->_game->_gbid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Upload hi-res jpg</span><a class="btn-floating light-green darken-3 game-add-image-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-gameyear='<?php echo $myxp->_game->_year; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	      	<?php } ?>
-	      	<li><span class="GameHiddenActionLabel">Don't save for later</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
-	      	<li><span class="GameHiddenActionLabel">Save for later</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Add to Collection</span><a class="btn-floating orange darken-2 game-collection-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
 	    	<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){ ?>
 	    	<li><span class="GameHiddenActionLabel">Pin XP to Profile</span><a class="btn-floating blue-grey darken-3 game-set-fav-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="fa fa-thumb-tack"></i></a></li>
 	    	<?php } ?>

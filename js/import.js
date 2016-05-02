@@ -59,16 +59,47 @@ function ImportSteamGames(userid, forceImport, fullreset){
 	
 	
 	window.scrollTo(0, 0);
-	if(forceImport)
-  		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Importing your game Library from Steam</div><div style='font-size:1em'>This can take awhile, possibly a few minutes, depending on the size of your game library.</div><br><br><br>");
-  	else
+	if(forceImport){
+		$("#profileInnerContainer").html("<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Importing your game Library from Steam</div><div style='font-size:1em'>This can take awhile, possibly a few minutes, depending on the size of your game library.</div><br><div class='progress' style='width:80%;margin:0 10%;background-color:rgba(0,0,0,0.1);'><div class='determinate import-load-prog' style='width: 0%;background-color:rgba(0,0,0,0.8);'></div></div>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "GetEstimatedTimeToImport", steamname: steamID},
+	     type: 'post',
+	     success: function(output) {
+			var totalGames = parseInt($.trim(output));
+			var percent = 0;
+			var totalTime = totalGames * 22.5;
+			var interval = Math.floor(totalTime / 100);
+			var progress = setInterval(function(){ 
+				$(".import-load-prog").css({"width":percent+"%"}); 
+				percent++; 
+				if(percent > 100){
+					clearInterval(progress);
+				}
+			}, interval);
+
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+  	}else
   		ShowLoader($("#profileInnerContainer"), 'big', "<div style='width:100%;margin-top:100px;text-align:center;font-size:2em;'><i class='fa fa-steam'></i> Loading your Steam Library Import</div><div style='font-size:1em'></div><br><br><br>");
+	
 	$.ajax({ url: '../php/webService.php',
 	     data: {action: "ImportSteamGames", steamname: steamID, forceImport: forceImport, fullreset: fullreset },
 	     type: 'post',
 	     success: function(output) {
 	 		$("#profileInnerContainer").html(output);
 	 		AttachImportSearchEvents(userid);
+	 		$(".collection-box-container").on("click", function(){
+	 			var collectionid = $(this).attr("data-id");	
+	 			DisplayCollectionDetails(collectionid, "SteamImport", userid);
+	 		});
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -202,82 +233,6 @@ function AttachImportSearchEvents(userid){
 	});
 	$(".backButton").on("click", function(){
 		DisplayUserCollection(userid);	
-	});
-	$(".unmapped-next").on("click", function(){
-		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
-		var offsetInfo = $(".import-unmapped-offset").html().split(" - ");
-		var offsetTotal = parseInt(offsetInfo[1]);
-		var offset = parseInt(curroffset) + offsetTotal;
-		var total = parseInt($(this).parent().parent().find(".import-results-total").html());
-		var max = offset + 25;
-		if(max > total)
-			max = total;
-		$(".import-results-offset").html(offset+" - "+max);
-		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
-		GetNextPageImport(offset, "unmapped", userid);
-	});
-	$(".mapped-next").on("click", function(){
-		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
-		var offset = parseInt(curroffset) + 25;
-		var total = parseInt($(this).parent().parent().find(".import-results-total").html());
-		var max = offset + 25;
-		if(max > total)
-			max = total;
-		$(".import-results-offset").html(offset+" - "+max);
-		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
-		GetNextPageImport(offset, "mapped", userid);
-	});
-	$(".unmapped-prev").on("click", function(){
-		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
-		var offset = parseInt(curroffset) - 25;
-		var min = offset - 25;
-		if(min < 0)
-			offset = 0;
-		$(".import-results-offset").html(offset+" - 25");
-		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
-		GetNextPageImport(offset, "unmapped", userid);
-	});
-	$(".mapped-prev").on("click", function(){
-		var curroffset = $(this).parent().parent().find(".import-results-offset").attr("data-offset");
-		var offset = parseInt(curroffset) - 25;
-		var min = offset - 25;
-		if(min < 0)
-			offset = 0;
-		$(".import-results-offset").html(offset+" - 25");
-		$(this).parent().parent().find(".import-results-offset").attr("data-offset", offset);
-		GetNextPageImport(offset, "mapped", userid);
-	});
-	
-}
-
-function GetNextPageImport(offset, type, userid){
- 	if(type == 'unmapped'){
- 		ShowLoader($(".import-unmapped-games-container"), 'big', "<br><br><br>");
- 		window.scrollTo(0, 1700);
- 	}else if(type == 'mapped'){
- 		ShowLoader($(".import-mapped-games-container"), 'big', "<br><br><br>");
- 		window.scrollTo(0, 0);
- 	}
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "NextPageImport", offset: offset, type: type },
-     type: 'post',
-     success: function(output) {
-     	if(type == 'unmapped'){
-     		$(".import-unmapped-games-container").html(output);
-     		window.scrollTo(0, 2000);
-     	}else if(type == 'mapped'){
-     		$(".import-mapped-games-container").html(output);
-     	}
-     	AttachImportSearchEvents(userid);
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
 	});
 }
 

@@ -1,6 +1,52 @@
 <?php
 require_once "includes.php";
 
+function GetPlayedImport($userid){
+	$mysqli = Connect();
+	$mapped = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` > 0 and `Ignore` = 'No' and `TimePlayed` > 0 group by `MappedID` order by `Title` LIMIT 0,40")) {
+		while($row = mysqli_fetch_array($result)){
+			$game = GetGameByGBIDFull($row['MappedID']);
+			$import = null;
+			$import['Title'] = $game->_title;
+			$import['ImportImage'] = $row['Image'];
+			$import['GameID'] = $game->_id;
+			$import['GBID'] = $game->_gbid;
+			$import['TimePlayed'] = $row['TimePlayed'];
+			
+			if($import != null){
+				$mapped[] = $import;
+			}
+		}
+	}
+	Close($mysqli, $result);
+	$mapped['Collection'] = GetCollectionByNameForUser('Steam Played',$userid,$userid);
+	return $mapped;
+}
+
+function GetBacklogImport($userid){
+	$mysqli = Connect();
+	$mapped = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` where `UserID` = '".$userid."' and `Type` = 'Steam' and `MappedID` > 0 and `Ignore` = 'No' and `TimePlayed` = 0 group by `MappedID` order by `Title` LIMIT 0,40")) {
+		while($row = mysqli_fetch_array($result)){
+			$game = GetGameByGBIDFull($row['MappedID']);
+			$import = null;
+			$import['Title'] = $game->_title;
+			$import['ImportImage'] = $row['Image'];
+			$import['GameID'] = $game->_id;
+			$import['GBID'] = $game->_gbid;
+			$import['TimePlayed'] = $row['TimePlayed'];
+			
+			if($import != null){
+				$mapped[] = $import;
+			}
+		}
+	}
+	Close($mysqli, $result);
+	$mapped['Collection'] = GetCollectionByNameForUser('Steam Backlog',$userid,$userid);
+	return $mapped;
+}
+
 function MapGameToLifebar($importID, $gbid, $auditID){
 	$mysqli = Connect();
 	if($_SESSION['logged-in']->_security == "Admin")
@@ -154,6 +200,7 @@ function GetSteamReported($userid, $offSet){
 			$import['SteamTitle'] = $row['Title'];
 			$import['ImportImage'] = $row['Image'];
 			$import['ReportedOn'] = $row['Reported'];
+			$import['Priority'] = $row['Priority'];
 			
 			if($import != null)
 				$reported[] = $import;
@@ -338,32 +385,38 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 		
 	$steamapikey = 'F380E48672B5996985B5EB0A9DACD9DB';
 	if(strlen($userid) > 15 && ctype_digit($userid)){
-		$request = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$steamapikey.'&steamid='.$userid.'&format=json&include_appinfo=1';
-		$request = str_replace(" ", "%20", $request);
-		$curl = curl_init($request);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		$curl_response = curl_exec($curl);
-		if ($curl_response === false) {
-	    		$info = curl_getinfo($curl);
-	    		curl_close($curl);
-	   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
-		}
-		curl_close($curl);
-		$decoded = json_decode($curl_response);
-		if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
-	    		die('error occured: ' . $decoded->response->errormessage);
+		if($_SESSION['STEAMGAMES'] == ''){
+			$request = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$steamapikey.'&steamid='.$userid.'&format=json&include_appinfo=1';
+			$request = str_replace(" ", "%20", $request);
+			$curl = curl_init($request);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			$curl_response = curl_exec($curl);
+			if ($curl_response === false) {
+		    		$info = curl_getinfo($curl);
+		    		curl_close($curl);
+		   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
+			}
+			curl_close($curl);
+			$decoded = json_decode($curl_response);
+			if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+		    		die('error occured: ' . $decoded->response->errormessage);
+			}
+			
+			$allgames = $decoded->response->games;
+		}else{
+			$allgames = $_SESSION['STEAMGAMES'];
+			$_SESSION['STEAMGAMES'] = null;
 		}
 		
-		$allgames = $decoded->response->games;
 		if($allgames != ''){
-			SyncUserToSteam($_SESSION['logged-in']->_id, $userid, $steamvanity);
-			AuditOfImport($allgames, $_SESSION['logged-in']->_id, $fullreset);
+			$newuser = SyncUserToSteam($_SESSION['logged-in']->_id, $userid, $steamvanity);
+			AuditOfImport($allgames, $_SESSION['logged-in']->_id, $fullreset, $newuser);
 			$steambacklog = DoesCollectionExist('Steam Backlog',$_SESSION['logged-in']->_id);
 			if($steambacklog != null){
 				RemoveCollection($steambacklog);
 			}
 			$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
-			CreateCollection('Steam Backlog',"Steam games I yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
+			CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
 			
 			$steamplayed = DoesCollectionExist('Steam Played',$_SESSION['logged-in']->_id);
 			if($steamplayed != null){
@@ -382,7 +435,7 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 	}
 }
 
-function AuditOfImport($games, $userid, $fullreset){
+function AuditOfImport($games, $userid, $fullreset, $newuser){
 	$mysqli = Connect();
 	
 	if($fullreset)
@@ -417,9 +470,11 @@ function AuditOfImport($games, $userid, $fullreset){
 				$possibleMap = '';
 			}
 			
-			if($skip == 'trueWithReport')
+			if($skip == 'trueWithReport'){
 				$mysqli->query("insert into `ImportAudit` (`UserID`,`Title`,`Image`,`ImportID`,`TimePlayed`,`MappedID`,`PossibleMap`,`Ignore`) values ('".$userid."','".$game->name."','http://media.steampowered.com/steamcommunity/public/images/apps/".$game->appid."/".$game->img_logo_url.".jpg','".$game->appid."','".$game->playtime_forever."','".$mappedID."','".$possibleMap."', 'Rprt')");
-			else if($skip == false)
+				if($newuser)
+					IncreaseReportPriority($game->appid, $mysqli);
+			}else if($skip == false)
 				$mysqli->query("insert into `ImportAudit` (`UserID`,`Title`,`Image`,`ImportID`,`TimePlayed`,`MappedID`,`PossibleMap`) values ('".$userid."','".$game->name."','http://media.steampowered.com/steamcommunity/public/images/apps/".$game->appid."/".$game->img_logo_url.".jpg','".$game->appid."','".$game->playtime_forever."','".$mappedID."','".$possibleMap."')");
 		}
 	}
@@ -459,12 +514,48 @@ function GetSteamID($steamvanity){
 function SyncUserToSteam($userid, $steamid, $steamvanity){
 	$mysqli = Connect();
 	$oldsteamid = GetSteamIDForUser($userid);
+	$newuser = false;
 	if($oldsteamid[0] == -1){
 		$result = $mysqli->query("insert into `UsersSync` (`UserID`,`Type`,`SyncID`,`SyncVanity`) values ('$userid','Steam','$steamid','$steamvanity')");
+		$newuser = true;
 	}else{
-		$result = $mysqli->query("update `UsersSync` set `SyncID` = '$steamid', `SyncVanity`= '$steamvanity' where `UserID` = '$userid' and `Type` = 'Steam'");
+		$timestamp = date('Y-m-d H:i:s', strtotime("now"));
+		$result = $mysqli->query("update `UsersSync` set `SyncID` = '$steamid', `SyncVanity`= '$steamvanity', `LastSync` = '$timestamp' where `UserID` = '$userid' and `Type` = 'Steam'");
 	}
 	Close($mysqli, $result);
+	return $newuser;
+}
+
+function GetEstimatedTimeToImport($steamvanity){
+	if(strlen($steamvanity) > 15 && ctype_digit($steamvanity))
+		$userid = $steamvanity;
+	else
+		$userid = GetSteamID($steamvanity);
+		
+	$steamapikey = 'F380E48672B5996985B5EB0A9DACD9DB';
+	if(strlen($userid) > 15 && ctype_digit($userid)){
+		$request = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='.$steamapikey.'&steamid='.$userid.'&format=json&include_appinfo=1';
+		$request = str_replace(" ", "%20", $request);
+		$curl = curl_init($request);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl_response = curl_exec($curl);
+		if ($curl_response === false) {
+	    		$info = curl_getinfo($curl);
+	    		curl_close($curl);
+	   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
+		}
+		curl_close($curl);
+		$decoded = json_decode($curl_response);
+		if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+	    		die('error occured: ' . $decoded->response->errormessage);
+		}
+		
+		$allgames = $decoded->response->games;
+		$_SESSION['STEAMGAMES'] = $allgames;
+		echo sizeof($allgames);
+	}else{
+		echo "FAILED";
+	}
 }
 
 function GetSteamIDForUser($userid){
@@ -478,6 +569,40 @@ function GetSteamIDForUser($userid){
 	}
 	Close($mysqli, $result);
 	return $steamid;
+}
+
+function GetLastImportForUser($userid){
+	$mysqli = Connect();
+	$last = -1;
+	if ($result = $mysqli->query("select * from `UsersSync` where `UserID` = '".$userid."' and `Type` = 'Steam'")) {
+		while($row = mysqli_fetch_array($result)){
+			$last = $row['LastSync'];
+		}
+	}
+	Close($mysqli, $result);
+	return $last;
+}
+
+function UpdateSyncDate($userid){
+	$mysqli = Connect();
+	$timestamp = date('Y-m-d H:i:s', strtotime("now"));
+	$result = $mysqli->query("update `UsersSync` set `LastSync` = '$timestamp' where `UserID` = '$userid' and `Type` = 'Steam'");
+	Close($mysqli, $result);
+}
+
+function IncreaseReportPriority($importID, $pconn = null){
+	$mysqli = Connect($pconn);
+	$total = -1;
+		if ($result = $mysqli->query("select `Priority` from `GamesMapperReport` where `ImportID` = '".$importID."' LIMIT 0,1")) {
+		while($row = mysqli_fetch_array($result)){
+			$total = $row['Priority'] + 1;
+		}
+	}
+	if($total > 0)
+		$result = $mysqli->query("update `GamesMapperReport` set `Priority` = '$total' where `ImportID` = '$importID'");
+	
+	if($pconn == null)
+		Close($mysqli, $result);
 }
 
 ?>
