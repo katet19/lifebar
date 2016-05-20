@@ -73,6 +73,9 @@ function AttachActivityEvents(){
 	 	e.stopPropagation(); 
 	 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
 	 })
+	 $(".feed-activity-collection-link").on("click", function(){
+		DisplayCollectionDetails($(this).attr("data-cid"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
+	 });
  	 $(".collection-box-container").on("click", function(){
 		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
 	 });

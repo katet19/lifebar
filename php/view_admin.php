@@ -66,6 +66,18 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
+			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	            	<?php $reportedTotals = GetImportReported(); ?>
+	              <span class="card-title"><i class="fa fa-steam" style='margin: 0 5px;'></i> Reported from Import <div class="admin-counter"><?php echo number_format($reportedTotals[1]); ?></div></span>
+	            </div>
+	            <div class="card-action">
+            	  <div class="admin-counter" style='float:left;color:rgba(0,0,0,0.5);'><?php echo number_format($reportedTotals[0]); ?> Total</div>
+	              <a href="#" class="admin-action admin-manage-reported-games">MANAGE GAMES</a>
+	            </div>
+	          </div>
+  			</div>
 			<div class="col s6 m3 l2">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="cyan-text text-darken-2">
@@ -406,6 +418,94 @@ function DisplayManualMappingInReview(){
 <?php
 }
 
+function DisplayAdminManageReportedGames(){ ?>
+	<div class="row">
+		<div class="col s12 import-results-subheader">
+			Reported Games
+		</div>
+		<div class="col s12 import-results-subheader-desc">
+			Games that users reported while mapping their import. 
+		</div>
+		<div class="import-unmapped-games-container">
+			<?php DisplayReportedGamesMapping(0);?>
+		</div>
+	</div>
+<?php
+}
+
+
+function DisplayReportedGamesMapping($offSet){
+	$reportedGames = GetImportReportedPriority($offSet);
+	if(sizeof(reportedGames) > 0){?>
+		<div class="col s12">
+			<div class="row" style='margin:10px 0;'>
+				<div class="col s4 import-list-header">Steam</div>
+				<div class="col s8 import-list-header">Lifebar</div>
+			</div>
+		</div>
+		<?php $i = 0;
+		foreach($reportedGames as $game){
+			DisplayReportedGameRow($game, $i);
+			$i++;
+		} 
+	}
+}
+
+function GetNextReportedGameRow($offSet){
+	$unmappedGame = GetReportedRow($offSet);
+	if(isset($unmappedGame[0])){
+		DisplayReportedGameRow($unmappedGame[0], $offset);
+	}
+}
+
+function DisplayReportedGameRow($game, $i){ ?>
+	<div class="col s12" style='height:70px;'>
+			<div class="row" style='margin:0;position:relative;border-bottom: 1px solid rgba(0,0,0,0.3);<?php if($i % 2 == 0){?>background-color:#ddd;<?php } ?>'>
+				<div class="col s4" style='padding:0;overflow: hidden;height: 70px;position: relative;z-index: 0;'>
+					<img class="import-game-image z-depth-1" src="<?php echo $game['ImportImage']; ?>" >
+					<div class="import-game-name">
+						<?php echo $game['SteamTitle']; ?>
+					</div>
+				</div>
+				<div class="col s2" style='position:relative;height: 70px;z-index:0;'>
+			        <ul class='import-game-search-results'>
+			        	<?php if($game['GBID'] > 0){ ?>
+			        		<li class='import-game-search-selected' data-gbid='<?php echo $game['GBID']; ?>'><?php echo $game['Title']." (".$game['Year'].")"; ?></li>
+			        	<?php } ?>
+			        </ul>
+		          	<div class="row">
+			          	<div class='col s12 m9 l10'>
+					        <input class="import-game-search" type="text" value="<?php if($game['GBID'] > 0){ echo $game['Title']." (".$game['Year'].")"; }else{ echo $game['SteamTitle']; } ?>">
+				        </div>
+				        <div class="col s12 m3 l2" style='padding:0;'>
+				        	<div class='btn-flat import-game-search-btn' style='margin-top: 15px;padding-left: 0px;color: rgba(0,0,0,0.6);'><i class="mdi-action-search"></i></div>
+				        </div>
+		        	</div>
+				</div>
+				<div class="col s2" style='overflow: hidden;height: 70px;'>
+					<?php if($game['GBID'] > 0){ ?>
+						<div class='import-map-suggest-image' data-image="<?php echo $game['LifebarImage']; ?>" style='height:69px;width:200px;background:url(<?php echo $game['LifebarImage']; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div>
+					<?php }else{ ?>
+						<div class="import-warning-msg">
+							<i class='mdi-content-report'></i>
+						</div>
+						<div class="import-warning-msg-txt">
+							Search for a match
+						</div>
+					<?php } ?>
+				</div>
+				<div class="col s4" style='padding-top: 15px;overflow: hidden;height: 70px;text-align:right' data-importid='<?php echo $game['ImportID']; ?>'>
+					<?php if($game['GBID'] > 0){ ?>
+						<div class='btn import-map-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#2E7D32;color:white;padding: 0 1rem;' title='Map'><i class="fa fa-check-circle btn-import-action-icon"></i> <span class='btn-import-action-text'>Map</span></div>
+					<?php }else{ ?>
+						<div class='btn import-disabled-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#2E7D32;color:white;padding: 0 1rem;opacity:0.3;' title='Map'><i class="fa fa-check-circle btn-import-action-icon"></i> <span class='btn-import-action-text'>Map</span></div>
+					<?php } ?>
+					<div class='btn import-map-to-skip-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#673AB7;color:white;padding: 0 1rem;' title='Trash'><i class="fa fa-trash-o btn-import-action-icon"></i></div>
+				</div>
+			</div>
+		</div>
+	<?php
+}
 
 function DisplayNewMilestoneForm(){ ?>
 	<div class="col s12 admin-review-container">

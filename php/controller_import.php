@@ -67,6 +67,8 @@ function MapGameToLifebar($importID, $gbid, $auditID){
 	else
 		$result = $mysqli->query("insert into `GamesMapper` (`GameID`,`GBID`,`Steam`,`MapStrength`) values ('".$game->_id."','".$gbid."','".$importID."','".$strength."')");
 		
+	$mysqli->query("delete from `GamesMapperReport` where `ImportID` = '".$importID."'");
+		
 	if($strength >= 2){
 		$mysqli->query("update `ImportAudit` set `MappedID` = '".$gbid."' where `ImportID` = '".$importID."' and `Type` = 'Steam'");
 	}else{
@@ -91,6 +93,7 @@ function TrashGameToLifebar($importID, $gbid, $auditID){
 		$result = $mysqli->query("insert into `GamesMapper` (`GameID`,`GBID`,`Steam`,`MapStrength`,`Visible`) values ('".$game->_id."','".$gbid."','".$importID."','".$strength."','No')");
 		
 	
+	$mysqli->query("delete from `GamesMapperReport` where `ImportID` = '".$importID."'");
 	
 	if($strength >= 2){
 		$mysqli->query("update `ImportAudit` set `Ignore` = 'Yes' where `ImportID` = '".$importID."' and `Type` = 'Steam'");
@@ -210,6 +213,26 @@ function GetSteamReported($userid, $offSet){
 	return $reported;
 }
 
+function GetImportReportedPriority($offSet){
+	$mysqli = Connect();
+	$reported = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` i, `GamesMapperReport` r where i.`Type` = 'Steam' and i.`ImportID` = r.`ImportID` group by r.`ImportID` order by r.`Priority` DESC LIMIT 0,25")) {
+		while($row = mysqli_fetch_array($result)){
+			$import = null;
+			$import['SteamTitle'] = $row['Title'];
+			$import['ImportImage'] = $row['Image'];
+			$import['ReportedOn'] = $row['Reported'];
+			$import['Priority'] = $row['Priority'];
+			$import['ImportID'] = $row['ImportID'];
+			
+			if($import != null)
+				$reported[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $reported;
+}
+
 function GetSteamUnMapped($userid, $offSet){
 	$mysqli = Connect();
 	$unmapped = null;
@@ -276,6 +299,26 @@ function GetSteamUnMappedRow($userid, $offSet){
 	}
 	Close($mysqli, $result);
 	return $unmapped;
+}
+
+function GetReportedRow($offSet){
+	$mysqli = Connect();
+	$reported = null;
+	if ($result = $mysqli->query("select * from `ImportAudit` i, `GamesMapperReport` r where i.`Type` = 'Steam' and i.`ImportID` = r.`ImportID` group by r.`ImportID` order by r.`Priority` DESC LIMIT ".$offSet.",1")) {
+		while($row = mysqli_fetch_array($result)){
+			$import = null;
+			$import['SteamTitle'] = $row['Title'];
+			$import['ImportImage'] = $row['Image'];
+			$import['ReportedOn'] = $row['Reported'];
+			$import['Priority'] = $row['Priority'];
+			$import['ImportID'] = $row['ImportID'];
+			
+			if($import != null)
+				$reported[] = $import;
+		}
+	}
+	Close($mysqli, $result);
+	return $reported;
 }
 
 function GetSteamTotals($userid){
@@ -413,17 +456,31 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 			AuditOfImport($allgames, $_SESSION['logged-in']->_id, $fullreset, $newuser);
 			$steambacklog = DoesCollectionExist('Steam Backlog',$_SESSION['logged-in']->_id);
 			if($steambacklog != null){
-				RemoveCollection($steambacklog);
+				ClearCollection($steambacklog);
+				$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
+				BulkAddToCollection($steambacklog, $backlog);
+				UpdateTimeStampCollection($steambacklog);
+			}else{
+				$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
+				CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
 			}
-			$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
-			CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
 			
 			$steamplayed = DoesCollectionExist('Steam Played',$_SESSION['logged-in']->_id);
 			if($steamplayed != null){
-				RemoveCollection($steamplayed);
+				ClearCollection($steamplayed);
+				$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
+				BulkAddToCollection($steamplayed, $played);
+				UpdateTimeStampCollection($steamplayed);
+			}else{
+				$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
+				CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);
 			}
-			$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
-			CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);
+			
+			if($fullreset){
+				$mysqli = Connect();
+				$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('".$_SESSION['logged-in']->_id."','".sizeof($allgames)."','STEAMIMPORT','".$steamplayed."||".$steambacklog."')");
+				Close($mysqli, $result);
+			}
 			
 			return "SUCCESS";
 		}else{

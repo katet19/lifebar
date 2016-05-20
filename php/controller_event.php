@@ -222,6 +222,54 @@ function GetMyFeed($userid, $page, $filter){
 					$myfeeditem[] = "COLLECTIONCREATION";
 					$myfeed[] = $myfeeditem;
 				}
+			}else if($row["Event"] == "STEAMIMPORT"){
+				$myfeeditem = array();			
+				$collections = explode("||", $row["Quote"]);
+				$backlog = GetCollectionByID($collections[1], $mysqli);
+				$played = GetCollectionByID($collections[0], $mysqli);
+				$total = $row["GameID"];
+				if($collections != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $backlog;
+					$myfeeditem[] = $played;
+					$myfeeditem[] = $total;
+					$myfeeditem[] = 3;
+					$myfeeditem[] = "STEAMIMPORT";
+					$myfeed[] = $myfeeditem;
+				}
+			}else if($row["Event"] == "COLLECTIONUPDATE"){
+				$myfeeditem = array();			
+				$game = GetGame($row["Quote"]);
+				$collection = GetCollectionByID($row["GameID"], $mysqli);
+				if($collection != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $game;
+					$myfeeditem[] = $collection;
+					$myfeeditem[] = $exp;
+					$myfeeditem[] = 1;
+					$myfeeditem[] = "COLLECTIONUPDATE";
+					$myfeed[] = $myfeeditem;
+				}
 			}
 		}
 	}
@@ -373,6 +421,54 @@ function GetMyEvents($userid){
 				$myfeeditem[] = 3;
 				$myfeeditem[] = "COLLECTIONCREATION";
 				$myfeed[] = $myfeeditem;
+			}else if($row["Event"] == "STEAMIMPORT"){
+				$myfeeditem = array();			
+				$collections = explode("||", $row["Quote"]);
+				$backlog = GetCollectionByID($collections[1], $mysqli);
+				$played = GetCollectionByID($collections[0], $mysqli);
+				$total = $row["GameID"];
+				if($collections != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $backlog;
+					$myfeeditem[] = $played;
+					$myfeeditem[] = $total;
+					$myfeeditem[] = 3;
+					$myfeeditem[] = "STEAMIMPORT";
+					$myfeed[] = $myfeeditem;
+				}
+			}else if($row["Event"] == "COLLECTIONUPDATE"){
+				$myfeeditem = array();			
+				$game = GetGame($row["Quote"]);
+				$collection = GetCollectionByID($row["GameID"], $mysqli);
+				if($collection != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $game;
+					$myfeeditem[] = $collection;
+					$myfeeditem[] = $exp;
+					$myfeeditem[] = 1;
+					$myfeeditem[] = "COLLECTIONUPDATE";
+					$myfeed[] = $myfeeditem;
+				}
 			}
 		}
 		

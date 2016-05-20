@@ -121,6 +121,7 @@ function HideFocus(){
 *
 */
 function ShowPopUp(content){
+	$("#universalPopUp").css({"max-width":"55%"});
 	$("#universalPopUp").html(content);
 	$("#universalPopUp").openModal();
   	$(".closeDetailsModal").unbind();

@@ -1,6 +1,7 @@
 <?php require_once 'controller_database.php';
 require_once 'controller_game.php';
 require_once 'controller_user.php';
+require_once 'controller_collection.php';
 
 
 if(isset($_GET['i'])){
@@ -14,6 +15,8 @@ function makeOpenGraph($type, $id) {
 		$og = ConvertGametoOG(GetGame($id));
 	}else if($type == 'u'){
 		$og = ConvertUsertoOG(GetUser($id));
+	}else if($type == 'c'){
+		$og = ConvertCollectiontoOG(GetCollectionByID($id));
 	}else if($type == 'x'){
 		$ids = explode("-", $id);
 		if(sizeof($ids) > 1){
@@ -106,5 +109,20 @@ function ConvertUsertoOG($user){
 	$og["LINK"] = "http://lifebar.io/#profile/".$user->_id."/".htmlspecialchars($user->_username)."/";
 	
 	return $og;
+}
+
+function ConvertCollectiontoOG($collection){
+	$og["ID"] = $collection->_id;
+	
+	$og["TITLE"] = $collection->_name;
+	
+	$og["DESC"] = htmlspecialchars($collection->_desc);
+	
+	if($collection->_cover != '')
+		$og["IMAGE"] = $collection->_cover;
+	else
+		$og["IMAGE"] = $collection->_games[0]->_image;
+		
+	$og["LINK"] = "http://lifebar.io/#collection/".$collection->_id."/".$collection->_owner."/".htmlspecialchars($collection->_name)."/";
 }
 ?>

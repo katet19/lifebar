@@ -2059,7 +2059,7 @@ function SubmitCriticExperience($user,$gameid,$quote,$tier,$links){
 		$mysqli->query("insert into `Sub-Experiences` (`UserID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`) values ('$user','$gameid','$quote','$tier','Played','100','$dates')");
 	}
 	AddCriticCardsToBookmarkedUsers($gameid);
-	CalculateGameTierData($gameid);
+	//CalculateGameTierData($gameid);
 	//CalculateWeave($user);
 	Close($mysqli, $result);
 }
@@ -2090,7 +2090,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 		$result = $mysqli->query("insert into `Experiences` (`UserID`,`GameID`,`Quote`,`Tier`,`ExperienceDate`,`Link`,`AuthenticXP`) values ('$user','$gameid','$quote','$tier','$dates','$link','$authentic')");
 	
 	Close($mysqli, $result);
-	CalculateGameTierData($gameid);
+	//CalculateGameTierData($gameid);
 }
 
 function UpdateXP($user,$gameid,$quote,$tier,$link){
@@ -2117,7 +2117,7 @@ function UpdateXP($user,$gameid,$quote,$tier,$link){
 	$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
 	
 	Close($mysqli, $result);
-	CalculateGameTierData($gameid);
+	//CalculateGameTierData($gameid);
 }
 
 
@@ -2153,12 +2153,29 @@ function SubmitOwned($user,$gameid,$owned){
 function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year, $single, $multi, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);
+	$newXP = "true";
 	
+	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
 	if($tier <= 0 || $quote == ""){
-		$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
 		$tier = $quickxp->_tier;
 		$quote = $quickxp->_quote;
+	}else if(sizeof($quickxp->_playedxp) > 0){
+		if($single == '' && $multi == '')
+			$modesplayed = $quickxp->_playedxp[0]->_mode;
+		if($dlc == '')
+			$dlc = $quickxp->_dlc;
+		if($alpha == '')
+			$alpha = $quickxp->_alpha;
+		if($beta == '')
+			$beta = $quickxp->_beta;
+		if($earlyaccess == '')
+			$earlyaccess = $quickxp->_earlyaccess;
+		if($demo == '')
+			$demo = $quickxp->_demo;
+		if($streamed == '')
+			$streamed = $quickxp->_streamed;
 	}
+	
 	
 	$quote = mysqli_real_escape_string($mysqli, $quote);
 	
@@ -2174,7 +2191,8 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$modesplayed = "Multiplayer";
 		
 	$platformids = GetPlatformIDs($platform);
-	$platform = implode("\n", $platform);
+	if(sizeof($platform) > 0)
+		$platform = implode("\n", $platform);
 	
 	if($quarter == 'q1')
 		$date = $year."-01-01";
@@ -2187,8 +2205,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 	else if($quarter == "q0")
 		$date = $year."-00-00";
 		
-	$data = HasUserPlayedXP($user, $gameid, $completed);
-	if ($data == -1){
+	if (sizeof($quickxp->_playedxp) == 0){
 		CreateEventForPlayedXP(false, null, $completed, $user, $gameid, $tier, $quote);
 		$result = $mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
 	}else{
@@ -2197,6 +2214,11 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
 	}
 	Close($mysqli, $result);
+	
+	if($quickxp->_tier > 0)
+		$newXP = "false";
+	
+	return $newXP;
 }
 
 function GetPlatformIDs($platforms){

@@ -457,6 +457,20 @@ function GetIGNUnmapped(){
 	return $reviews;
 }
 
+function GetImportReported(){
+	$mysqli = Connect();
+	$result = $mysqli->query("select count(*) from `GamesMapperReport`");
+	while($row = mysqli_fetch_array($result)){
+		$total[] = $row["count(*)"];
+	}
+	$result = $mysqli->query("select count(*) from `ImportAudit` i, `GamesMapperReport` r where i.`Type` = 'Steam' and i.`ImportID` = r.`ImportID`");
+	while($row = mysqli_fetch_array($result)){
+		$total[] = $row["count(*)"];
+	}
+	Close($mysqli, $result);
+	return $total;
+}
+
 function GetIGNUnmappedAndNeedsReview(){
 	$mysqli = Connect();
 	$myuser = $_SESSION['logged-in'];

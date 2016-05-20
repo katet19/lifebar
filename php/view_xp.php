@@ -451,7 +451,7 @@ function ShowEditWatched($exp, $watchid){
 
 }
 
-function ShowTierGraphSelection($exp){
+function ShowTierGraphSelection($exp, $size){
 	$tiertally = GetTierBreakdownLight($_SESSION['logged-in']->_id, $exp->_game->_year);
 	$total = $tiertally[0];
 	if($total == "")
@@ -463,23 +463,23 @@ function ShowTierGraphSelection($exp){
 	$t5 = $tiertally[5];
 	
 	if($t1 != 0)
-		$relativeT1 = ceil($t1 / $total * 70);
+		$relativeT1 = ceil($t1 / $total * $size);
 	else
 		$relativeT1 = 0;
 	if($t2 != 0)
-		$relativeT2 = ceil($t2 / $total * 70);
+		$relativeT2 = ceil($t2 / $total * $size);
 	else
 		$relativeT2 = 0;
 	if($t3 != 0)
-		$relativeT3 = ceil($t3 / $total * 70);
+		$relativeT3 = ceil($t3 / $total * $size);
 	else
 		$relativeT3 = 0;
 	if($t4 != 0)
-		$relativeT4 = ceil($t4 / $total * 70);
+		$relativeT4 = ceil($t4 / $total * $size);
 	else
 		$relativeT4 = 0;
 	if($t5 != 0)
-		$relativeT5 = ceil($t5 / $total * 70);
+		$relativeT5 = ceil($t5 / $total * $size);
 	else
 		$relativeT5 = 0;
 	?>

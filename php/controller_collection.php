@@ -3,19 +3,22 @@ require_once "includes.php";
 
 function GetPersonalCollections($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `CreatedBy` = '".$userid."' order by `ID` DESC")) {
+	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `Visibility` = 'Yes' and `CreatedBy` = '".$userid."' order by `ID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = new Collection($row['ID'], 
 						$row['OwnerID'], 
 						$row['Name'], 
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 			$collections[] = $collection;
 		}
 	}
@@ -25,19 +28,22 @@ function GetPersonalCollections($userid){
 
 function GetPersonalAutoCollections($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `CreatedBy` = '-1' order by `ID` DESC")) {
+	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `Visibility` = 'Yes' and `CreatedBy` < '0' order by `ID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = new Collection($row['ID'], 
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 			$collections[] = $collection;
 		}
 	}
@@ -47,19 +53,22 @@ function GetPersonalAutoCollections($userid){
 
 function GetLatestCollectionForUser($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' order by `LastUpdated` DESC LIMIT 0,5")) {
+	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `Visibility` = 'Yes' order by `LastUpdated` DESC LIMIT 0,5")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = new Collection($row['ID'], 
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 			$collections[] = $collection;
 		}
 	}
@@ -69,7 +78,7 @@ function GetLatestCollectionForUser($userid){
 
 function GetCollectionListForUser($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' order by `Name`")) {
+	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `Visibility` = 'Yes' order by `Name`")) {
 		while($row = mysqli_fetch_array($result)){
 			unset($collection);
 			$collection['ID'] = $row['ID'];
@@ -83,7 +92,7 @@ function GetCollectionListForUser($userid){
 
 function GetCollectionListForUserAndGame($userid, $gameid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' order by `Name`")) {
+	if ($result = $mysqli->query("select * from `Collections` where `OwnerID` = '".$userid."' and `Visibility` = 'Yes' order by `LastUpdated` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			unset($collection);
 			$collection['ID'] = $row['ID'];
@@ -103,24 +112,74 @@ function GetCollectionListForUserAndGame($userid, $gameid){
 
 function GetSubscribedCollections($userid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select c.*, s.`SubSince` from `Collections` c, `CollectionSubs` s where s.`CollectionID` = c.`ID` and  s.`UserID` = '".$userid."' order by `ID` DESC")) {
+	if ($result = $mysqli->query("select c.*, s.`SubSince` from `Collections` c, `CollectionSubs` s where s.`CollectionID` = c.`ID` and c.`Visibility` = 'Yes' and  s.`UserID` = '".$userid."' order by `ID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = new Collection($row['ID'], 
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 			$collections[] = $collection;
 		}
 	}
 	Close($mysqli, $result);
 	return $collections;
+}
+
+function IsUserSubscribed($userid, $collectionID){
+	$mysqli = Connect();
+	$following = false;
+	if ($result = $mysqli->query("select `SubSince` from `CollectionSubs` where `CollectionID` = '".$collectionID."' and  `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$following = true;
+		}
+	}
+	Close($mysqli, $result);
+	return $following;
+}
+
+function GetTotalSubs($collectionID, $pconn = null){
+	$mysqli = Connect($pconn);
+	$following = 0;
+	if ($result = $mysqli->query("select count(*) as cnt from `CollectionSubs` where `CollectionID` = '".$collectionID."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$following = $row['cnt'];
+		}
+	}
+	
+	if($pconn == null)
+		Close($mysqli, $result);
+		
+	return $following;
+}
+
+function FollowCollection($userid, $collectionID){
+	$mysqli = Connect();
+	$following = false;
+	if ($result = $mysqli->query("select `SubSince` from `CollectionSubs` where `CollectionID` = '".$collectionID."' and  `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$following = true;
+		}
+	}
+	if($following == false){
+		$mysqli->query("insert into `CollectionSubs` (`CollectionID`,`UserID`) VALUES ('".$collectionID."','".$userid."')");
+	}
+	Close($mysqli, $result);
+}
+
+function UnfollowCollection($userid, $collectionID){
+	$mysqli = Connect();
+	$mysqli->query("delete from `CollectionSubs` where `CollectionID` = '".$collectionID."' and  `UserID` = '".$userid."'");
+	Close($mysqli, $result);
 }
 
 function CreatePersonalCollection($name, $desc, $userid, $gameid){
@@ -142,6 +201,10 @@ function CreatePersonalCollection($name, $desc, $userid, $gameid){
 }
 
 function CreateCollection($name,$desc,$ownerid,$createdBy,$visibility,$games){
+	/*
+		-1 = User can hide games & delete
+		-2 = User can hide & not delete
+	*/
 	$mysqli = Connect();
 	$exists = DoesCollectionExist($name,$ownerid);
 	$collectionID = -1;
@@ -163,10 +226,29 @@ function CreateCollection($name,$desc,$ownerid,$createdBy,$visibility,$games){
 	return $collectionID;
 }
 
+function BulkAddToCollection($collectionID, $games){
+	$mysqli = Connect();
+	if(sizeof($games) > 0 && $collectionID > 0){
+		foreach($games as $game){
+			if($game['GameID'] > 0 && $game['GBID'] > 0)
+				$result = $mysqli->query("insert into `CollectionGames` (`CollectionID`,`GameID`,`GBID`) values ('".$collectionID."','".$game['GameID']."','".$game['GBID']."')");
+		}
+	}
+	Close($mysqli, $result);
+	return $collectionID;
+}
+
 function UpdateCollection($collectionid, $name, $desc){
 	$mysqli = Connect();
 	$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
 	$result = $mysqli->query("update `Collections` set `Name` = '".mysqli_real_escape_string($mysqli,$name)."', `Description` = '".mysqli_real_escape_string($mysqli,$desc)."', `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+	Close($mysqli, $result);
+}
+
+function UpdateTimeStampCollection($collectionid){
+	$mysqli = Connect();
+	$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
+	$result = $mysqli->query("update `Collections` set `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
 	Close($mysqli, $result);
 }
 
@@ -181,7 +263,19 @@ function SetCollectionCover($collectionid, $gameid){
 
 function RemoveCollection($collectionid){
 	$mysqli = Connect();
-	$mysqli->query("delete from `Collections` where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+	$collection = GetCollectionByID($collectionid, $mysqli);
+	if($collection->_createdby > 0){
+		$mysqli->query("delete from `Collections` where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+		$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionid."'");
+	}else{
+		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
+		$mysqli->query("update `Collections` set `Visibility` = 'Archived', `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+	}
+	Close($mysqli, $result);
+}
+
+function ClearCollection($collectionid){
+	$mysqli = Connect();
 	$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionid."'");
 	Close($mysqli, $result);
 }
@@ -195,13 +289,16 @@ function GetCollectionByName($name,$ownerid){
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 		}
 	}
 	Close($mysqli, $result);
@@ -218,13 +315,16 @@ function GetCollectionByNameForUser($name,$ownerid,$userid){
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGamesWithXP($row['ID'], $userid, 0, 25, $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 		}
 	}
 	Close($mysqli, $result);
@@ -241,13 +341,16 @@ function GetCollectionByID($collectionID, $pconn = null){
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGames($row['ID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 		}
 	}
 	
@@ -266,13 +369,16 @@ function GetCollectionByIDForUser($collectionID, $userid){
 						$row['OwnerID'], 
 						$row['Name'],
 						$row['Description'],
-						0, 
+						GetTotalSubs($row['ID'], $mysqli), 
 						$row['Created'], 
+						$row['CreatedBy'], 
 						$row['LastUpdated'], 
 						GetCollectionGamesWithXP($row['ID'], $userid, 0, 25, $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
-						$row['CoverSmall']);
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
 		}
 	}
 	Close($mysqli, $result);
@@ -304,7 +410,7 @@ function DoesCollectionExist($name,$ownerid){
 function GetCollectionGames($collectionID, $pconn = null){
 	$mysqli = Connect($pconn);
 	$games = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$collectionID."' order by `GBID` DESC")) {
+	if ($result = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No' order by `GBID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$game = GetGame($row['GameID']);
 			$games[] = $game;
@@ -333,7 +439,7 @@ function IsGameBookmarkedFromCollection($gameid, $pconn = null){
 function GetCollectionGamesWithXP($collectionID, $userid, $offSet, $limit, $pconn = null){
 	$mysqli = Connect($pconn);
 	$gameXP = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`GameID` = g.`ID` order by g.`Title` LIMIT ".$offSet.",".$limit)) {
+	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` order by g.`Title` LIMIT ".$offSet.",".$limit)) {
 		while($row = mysqli_fetch_array($result)){
 			$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
 			$gameXP[] = $xp;
@@ -348,7 +454,7 @@ function GetCollectionGamesWithXP($collectionID, $userid, $offSet, $limit, $pcon
 function GetCollectionGamesBySearch($collectionID, $search, $offSet, $limit, $userid, $pconn = null){
 	$mysqli = Connect($pconn);
 	$gameXP = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`GameID` = g.`ID` and g.`Title` like '%".$search."%' order by g.`Title` LIMIT ".$offSet.",".$limit)) {
+	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` and g.`Title` like '%".$search."%' order by g.`Title` LIMIT ".$offSet.",".$limit)) {
 		while($row = mysqli_fetch_array($result)){
 			$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
 			$gameXP[] = $xp;
@@ -363,7 +469,7 @@ function GetCollectionGamesBySearch($collectionID, $search, $offSet, $limit, $us
 function GetCollectionSize($collectionID){
 	$mysqli = Connect();
 	$size = 0;
-	if ($result = $mysqli->query("select count(*) as cnt from `CollectionGames` where `CollectionID` = '".$collectionID."'")) {
+	if ($result = $mysqli->query("select count(*) as cnt from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No'")) {
 		while($row = mysqli_fetch_array($result)){
 			$size = $row['cnt'];
 		}
@@ -391,7 +497,7 @@ function AddToCollection($collectionID, $gbid, $userid){
 		$mysqli->query("insert into `CollectionGames` (`CollectionID`,`GameID`, `GBID`) values ('".$collectionID."', '".$game->_id."', '".$gbid."')");
 		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
 		$result = $mysqli->query("update `Collections` set  `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionID."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
-
+		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('$userid','$collectionID','COLLECTIONUPDATE','".$gameid."')");
 	}
 	
 	Close($mysqli, $result);
@@ -400,8 +506,21 @@ function AddToCollection($collectionID, $gbid, $userid){
 }
 
 function RemoveFromCollection($collectionID, $gameID, $userid){
+	$collection = GetCollectionByID($collectionID);
+	if($collection->_createdby > 0){
+		$mysqli = Connect();
+		$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionID."' and `GameID` = '".$gameID."'");
+		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
+		$mysqli->query("update `Collections` set  `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionID."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+		Close($mysqli, $result);
+	}else{
+		HideInCollection($collectionID, $gameID, $userid);
+	}
+}
+
+function HideInCollection($collectionID, $gameID, $userid){
 	$mysqli = Connect();
-	$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionID."' and `GameID` = '".$gameID."'");
+	$mysqli->query("update `CollectionGames` set `Hidden` = 'Yes' where `CollectionID` = '".$collectionID."' and `GameID` = '".$gameID."'");
 	$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
 	$mysqli->query("update `Collections` set  `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionID."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
 	Close($mysqli, $result);
@@ -423,7 +542,7 @@ function CreateDefaultUserCollections($userid){
 				$games[] = $game;
 			}
 		}
-		CreateCollection('Upcoming Quests','Games that are similar to other games I have experienced',$userid,-1,'Yes',$games);
+		CreateCollection('Lifebar Backlog','Games that are similar to other games I have experienced',$userid,-2,'Yes',$games);
 	}
 	if(DoesCollectionExist('Bookmarked',$userid) == null){
 		unset($games);
@@ -436,7 +555,7 @@ function CreateDefaultUserCollections($userid){
 				$games[] = $game;
 			}
 		}
-		CreateCollection('Bookmarked','Games I have bookmarked',$userid,-1,'Yes',$games);
+		CreateCollection('Bookmarked','Games I have bookmarked',$userid,-2,'Yes',$games);
 	}
 	Close($mysqli, $result);
 	
