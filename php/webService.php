@@ -69,7 +69,7 @@
 			DisplayCollectionWatchedEdit($_POST['gameid'], $_SESSION['logged-in']->_id);
 		}
 		if($_POST['action'] =='SavePlayedCollection' && $_SESSION['logged-in']->_id > 0){
-			if($_POST['gameid'] > 0){
+			if($_POST['gameid'] > 0 && $_POST['tier'] > 0){
 				$new = SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],'','',$_POST['platform'],'','','','','','');
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
 				CalculateWeave($_SESSION['logged-in']->_id);
@@ -78,7 +78,7 @@
 			}
 		}
 		if($_POST['action'] == 'PostUpdateFromCollection'){
-			if($_POST['gameid'] > 0){
+			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
 				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],'');
 				echo "|**|false";
 			}
@@ -405,7 +405,7 @@
 			}
 		}
 		if($_POST['action'] =='SaveTierQuote' && $_SESSION['logged-in']->_id > 0){
-			if($_POST['gameid'] > 0){
+			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
 				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink']);
 				CalculateWeave($_SESSION['logged-in']->_id);
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
@@ -463,12 +463,6 @@
 		}
 		if($_POST['action'] == 'RemoveBookmark' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
-		}
-		if($_POST['action'] == 'AddOwned' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
-			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"Yes");
-		}
-		if($_POST['action'] == 'RemoveOwned' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
-			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
 		}
 	}
 	function UserServices(){

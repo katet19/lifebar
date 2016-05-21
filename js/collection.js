@@ -307,7 +307,7 @@ function AttachPlayedCollectionEditEvents(){
 		SaveCollectionXPEntry(maincontainer, xpcontainer, 'played');	
 	});
 	$(".myxp-post").on("click", function(){
-		var maincontainer = $(this).parent().parent().parent().parent().parent();
+		var maincontainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent();
 		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
 		SaveCollectionXPEntry(maincontainer, xpcontainer, 'post');	
 	});
@@ -491,7 +491,7 @@ function SaveCollectionXPEntry(maincontainer, xpcontainer, type){
 		    	timeout:45000
 			});
 		}else if(type == 'post'){
-			$(".myxp-post").html("<div class='preloader-wrapper small active' style='vertical-align:text-top;margin-right:1em; width:15px; height:15px;'><div class='spinner-layer spinner-blue-only'><div class='circle-clipper left'><div class='circle' style='border-width:2px;'></div></div><div class='gap-patch'><div class='circle' style='border-width:2px;'></div></div><div class='circle-clipper right'><div class='circle' style='border-width:2px;'></div></div></div></div>");
+			$(".myxp-post").html("<div class='preloader-wrapper small active' style='vertical-align:text-top;margin-right:1em; width:15px; height:15px;'><div class='spinner-layer spinner-white-only'><div class='circle-clipper left'><div class='circle' style='border-width:2px;'></div></div><div class='gap-patch'><div class='circle' style='border-width:2px;'></div></div><div class='circle-clipper right'><div class='circle' style='border-width:2px;'></div></div></div></div> <span class='myxp-saving-label'>Posting Update</span>");
 			$.ajax({ url: '../php/webService.php',
 		         data: {action: "PostUpdateFromCollection", gameid: gameid, quote: quote, tier: tier  },
 		         type: 'post',
@@ -560,6 +560,7 @@ function EnableEditMode(from, fromid, transition){
 	$(".edit-mode-btn, .collection-search-icon, .collection-search-box, .collection-tier-container-placeholder").hide(transition);
 	$(".collection-game-xp-progress-bar, .backContainer, .collection-game-add-to-collection").hide(transition);
 	$(".collection-game-tier-container").css({"float":"left","left":"0","margin-left":"0"});
+	$(".collection-game-tier-container-watched").css({"left":"56px","right":"inherit"})
 	$(".collection-edit-mode, .collection-edit-save-refresh, .collection-edit-delete, .collection-edit-exit").show(transition);	
 	$(".collection-xp-details-container").css({"padding-right":"10px"});
 	$(".import-list-header-search").hide();

@@ -640,29 +640,29 @@ function DisplayCollectionPlayedEdit($gameid, $userid){
 		      <div class="input-field col s12" style='text-align:left;position:relative;top:15px;'>
 		  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
 				<div class="collection-game-myxp-header">Summary</div>
-				<div class="collection-game-myxp-container" style='top: 75px;<?php if($exp->_tier > 0){ ?>right: 125px;<?php } ?>'>
+				<div class="collection-game-myxp-container" style='top: 75px;'>
 			  	    <script>
 				      function countChar(val) {
 				        var len = val.value.length;
 				        if (len > 140) {
 				          val.value = val.value.substring(0, 140);
 				        } else {
-				          $('#charNum').html(len);
+				          $('#charNumCollection').html(len);
 				        }
 				        ValidateXPEntry();
 				      };
 				    </script>
-			        <textarea id="myxp-quote" class="myxp-quote materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php /*echo $exp->_quote;*/ ?></textarea>
-			        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> ><?php if($exp->_tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
-			        <div class="myxp-quote-counter"><span id='charNum'>0<?php /*echo strlen($exp->_quote);*/ ?></span>/140</div>
+			        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php /*echo $exp->_quote;*/ ?></textarea>
+			        <label for="myxp-collection-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> ><?php if($exp->_tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
+			        <?php if($exp->_tier > 0){ ?>
+			        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>Post</a>
+			        <?php } ?>
+			        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection'>0<?php /*echo strlen($exp->_quote);*/ ?></span>/140</div>
 			        <?php if($exp->_quote != ''){ ?>
 				        <div class="collection-myxp-last-quote">
 				        	<div style='font-weight:500;'>Last time:</div>
 				        	<i><?php echo $exp->_quote; ?></i>
 				        </div>
-			        <?php } ?>
-			        <?php if($exp->_tier > 0){ ?>
-			        	<a class="waves-effect waves-light btn-flat disabled myxp-post" style='position: absolute;right: -125px;padding: 0 1em;top: 40px;'><i class="mdi-editor-mode-edit left"></i>Post</a>
 			        <?php } ?>
 		        </div>
 		      </div>
@@ -710,29 +710,29 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 					<div class="collection-game-myxp-gutter"><i class="mdi-action-visibility left"></i></div>
 					<div class="collection-game-myxp-header">Viewing Experience</div>
 					<div class="collection-game-myxp-container" style='right:50px;top: 35px;'>
-			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched an hour or less' || $watchedxp->_length == 'Watched multiple hours' || $watchedxp->_length == 'Watched gameplay'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched gameplay">
+			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched an hour or less' || $watchedxp->_length == 'Watched multiple hours' || $watchedxp->_length == 'Watched gameplay'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched gameplay">
 			  			    <div class="watched-type-box-header"><i class="fa fa-gamepad"></i> Gameplay</div>
 						    <div class="watched-type-box-desc">Gameplay from a third party, like a Let's Play or Quick Look</div>
 					  	  </div >
-			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched a speed run'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a speed run">
+			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched a speed run'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a speed run">
 			  			    <div class="watched-type-box-header"><i class="mdi-maps-directions-walk"></i> Speedrun</div>
 						    <div class="watched-type-box-desc">A playthrough with the intent of finishing as fast as possible</div>
 					  	  </div >
-			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched competitive play'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched competitive play">
+			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched competitive play'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched competitive play">
 			  			    <div class="watched-type-box-header"><i class="mdi-hardware-headset-mic"></i> Competitive</div>
 						    <div class="watched-type-box-desc">Professional level play at tournaments or league play</div>
 					  	  </div >
-			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched a complete single player playthrough' || $watchedxp->_length == 'Watched a complete playthrough'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a complete playthrough">
+			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched a complete single player playthrough' || $watchedxp->_length == 'Watched a complete playthrough'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a complete playthrough">
 			  			    <div class="watched-type-box-header"><i class="mdi-maps-beenhere"></i> Playthrough</div>
 						    <div class="watched-type-box-desc">A complete playthrough of a game's core content</div>
 					  	  </div >
-  			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched trailer(s)'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched trailer(s)">
+  			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched trailer(s)'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched trailer(s)">
 			  			    <div class="watched-type-box-header"><i class="mdi-action-theaters"></i> Trailer</div>
 					  	  </div>
-  			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched a developer diary'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a developer diary">
+  			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched a developer diary'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched a developer diary">
 			  			    <div class="watched-type-box-header"><i class="mdi-action-class"></i> Dev Diary</div>
 					  	  </div>
-  			  			  <div class="col s6 m4 watched-type-box <?php if($watchedxp->_length == 'Watched promotional gameplay'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched promotional gameplay">
+  			  			  <div class="col s6 m6 l4 watched-type-box <?php if($watchedxp->_length == 'Watched promotional gameplay'){ echo 'watched-type-box-selected'; } ?>"  data-text="Watched promotional gameplay">
 			  			    <div class="watched-type-box-header"><i class="mdi-image-movie-creation"></i> Promotional</div>
 					  	  </div>
 					</div>
@@ -740,8 +740,8 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 				<div class="col s12 m12 l10" style='text-align:left;position:relative;top:330px'>
 					<div class="collection-game-myxp-gutter"><i class="mdi-av-videocam left"></i></div>
 					<div class="collection-game-myxp-header">Source</div>
-					<div class="collection-game-myxp-container" style='right:50px;top: 35px;'>
-						<select id="myxp-view-source">
+					<div class="collection-game-myxp-container" style='right:50px;'>
+						<select class="myxp-view-source">
 							<option  value=''>Please select</option>
 							<option  value='Destructoid' <?php if($watchedxp->_source == "Destructoid"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Destructoid' && $watchedxp->_source == ""){ echo " selected"; $found = true; } ?>>Destructoid</option>
 							<option  value='Edge' <?php if($watchedxp->_source == "Edge"){ echo " selected"; $found = true; }else if($_SESSION['logged-in']->_defaultwatched == 'Edge' && $watchedxp->_source == ""){ echo "selected"; $found = true; } ?>>Edge</option>
@@ -820,29 +820,29 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 		      <div class="input-field col s12" style='text-align:left;position:relative;top:15px;'>
 		  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
 				<div class="collection-game-myxp-header">Summary</div>
-				<div class="collection-game-myxp-container" style='top: 75px;<?php if($exp->_tier > 0){ ?>right: 125px;<?php } ?>'>
+				<div class="collection-game-myxp-container" style='top: 75px;'>
 			  	    <script>
 				      function countChar(val) {
 				        var len = val.value.length;
 				        if (len > 140) {
 				          val.value = val.value.substring(0, 140);
 				        } else {
-				          $('#charNum').html(len);
+				          $('#charNumCollection').html(len);
 				        }
 				        ValidateXPEntry();
 				      };
 				    </script>
-			        <textarea id="myxp-quote" class="myxp-quote materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php /*echo $exp->_quote;*/ ?></textarea>
-			        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> ><?php if($exp->_tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
-			        <div class="myxp-quote-counter"><span id='charNum'>0<?php /*echo strlen($exp->_quote);*/ ?></span>/140</div>
+			        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php /*echo $exp->_quote;*/ ?></textarea>
+			        <label for="myxp-collection-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> ><?php if($exp->_tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
+			        <?php if($exp->_tier > 0){ ?>
+			        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>Post</a>
+			        <?php } ?>
+			        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection'>0<?php /*echo strlen($exp->_quote);*/ ?></span>/140</div>
 			        <?php if($exp->_quote != ''){ ?>
 				        <div class="collection-myxp-last-quote">
 				        	<div style='font-weight:500;'>Last time:</div>
 				        	<i><?php echo $exp->_quote; ?></i>
 				        </div>
-			        <?php } ?>
-			        <?php if($exp->_tier > 0){ ?>
-			        	<a class="waves-effect waves-light btn-flat disabled myxp-save" style='position: absolute;right: -125px;padding: 0 1em;top: 40px;'><i class="mdi-editor-mode-edit left"></i>Post</a>
 			        <?php } ?>
 		        </div>
 		      </div>

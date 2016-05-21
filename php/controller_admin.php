@@ -182,6 +182,7 @@ function GetEmailList(){
 			$emails[] = $row['Email'];
 		}
 	}
+	
 	Close($mysqli, $result);
 	return $emails;
 }

@@ -245,7 +245,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1 gear-container">
 					<div class="badge-card-container-header" style="height:initial;width:100%;">Gear <span class='profile-card-info ' title="Gear is based on your played experiences on specific platforms"><i class="mdi-action-info"></i></span></div>
-					<?php /*DisplayGear($userid);*/ ?>
+					<?php DisplayGear($userid); ?>
 					<div class="badge-card-container-view-more gear-view-more">View More</div>
 				</div>
 			</div>
@@ -284,7 +284,7 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 					<div class="row">
 						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
 							<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info ' title="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
-							<?php /*DisplayUserSkills($userid);*/ ?>
+							<?php DisplayUserSkills($userid); ?>
 						</div>
 					</div>
 				</div>

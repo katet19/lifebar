@@ -2115,7 +2115,9 @@ function UpdateXP($user,$gameid,$quote,$tier,$link){
 		$authentic = "No";
 	
 	$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
-	
+	if($result == '' || $result == false){
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP');
+	}
 	Close($mysqli, $result);
 	//CalculateGameTierData($gameid);
 }
@@ -2156,10 +2158,17 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 	$newXP = "true";
 	
 	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
-	if($tier <= 0 || $quote == ""){
-		$tier = $quickxp->_tier;
-		$quote = $quickxp->_quote;
-	}else if(sizeof($quickxp->_playedxp) > 0){
+	if(sizeof($quickxp->_playedxp) > 0){
+		if($quote == '')
+			$quote = $quickxp->_quote;
+		if($tier <= 0)
+			$tier = $quickxp->_tier;
+		if($completed == '')
+			$completed = $quickxp->_playedxp[0]->_completed;
+		if($quarter == '')
+			$quarter = $quickxp->_playedxp[0]->_quarter;
+		if($year == '')
+			$year = $quickxp->_playedxp[0]->_year;
 		if($single == '' && $multi == '')
 			$modesplayed = $quickxp->_playedxp[0]->_mode;
 		if($dlc == '')
@@ -2174,6 +2183,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 			$demo = $quickxp->_demo;
 		if($streamed == '')
 			$streamed = $quickxp->_streamed;
+		$newXP = "false";
 	}
 	
 	
@@ -2206,17 +2216,26 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$date = $year."-00-00";
 		
 	if (sizeof($quickxp->_playedxp) == 0){
-		CreateEventForPlayedXP(false, null, $completed, $user, $gameid, $tier, $quote);
 		$result = $mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
+		if($result == '' || $result == false){
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+		}else{
+			CreateEventForPlayedXP(false, null, $completed, $user, $gameid, $tier, $quote);
+		}
 	}else{
-		CreateEventForPlayedXP(true, $data, $completed, $user, $gameid, $tier, $quote);
 		$mysqli->query("update `Sub-Experiences` set `Archived`='Yes' where `GameID` = '$gameid' && `UserID` = '$user' && `Type` = 'Played'");
-		$mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
+		if($result == '' || $result == false){
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+		}else{
+			$mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
+			if($result == '' || $result == false){
+				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+			}else{
+				CreateEventForPlayedXP(true, $data, $completed, $user, $gameid, $tier, $quote);
+			}
+		}
 	}
 	Close($mysqli, $result);
-	
-	if($quickxp->_tier > 0)
-		$newXP = "false";
 	
 	return $newXP;
 }
