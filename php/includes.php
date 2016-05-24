@@ -8,6 +8,8 @@ require_once 'model_event.php';
 require_once 'model_category.php';
 require_once 'model_notifications.php';
 require_once 'model_weave.php';
+require_once 'model_badge.php';
+require_once 'model_collection.php';
 
 $GLOBALS["AllowNewUsers"] = false; 
 $GLOBALS["DownForMaintenance"] = false; 
@@ -36,11 +38,14 @@ if(!isset($_SESSION["logged-in"]) && isset($_COOKIE["RememberMe"])){
 //Controllers
 require_once 'controller_admin.php';
 require_once 'controller_agree.php';
+require_once 'controller_badge.php';
+require_once 'controller_collection.php';
 require_once 'controller_email.php';
 require_once 'controller_event.php';
 require_once 'controller_feedbackLoop.php';
 require_once 'controller_experience.php';
 require_once 'controller_game.php';
+require_once 'controller_import.php';
 require_once 'controller_milestones.php';
 require_once 'controller_giantbomb.php';
 require_once 'controller_notifications.php';
@@ -53,10 +58,13 @@ set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING);
 require_once 'view_admin.php';
 require_once 'view_activity.php';
 require_once 'view_analyze.php';
+require_once 'view_badge.php';
+require_once 'view_collection.php';
 require_once 'view_milestones.php';
 require_once 'view_discover.php';
 require_once 'view_game.php';
 require_once 'view_graphs.php';
+require_once 'view_import.php';
 require_once 'view_landing.php';
 require_once 'view_login.php';
 require_once 'view_navigation.php';

@@ -2,18 +2,26 @@
 function DisplayGame($gbid){
 	$game = GetGameByGBIDFull($gbid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $myxp);
-	ShowGameContent($game, $myxp);
+	$myxp->_bucketlist = IsGameBookmarkedFromCollection($game->_id);
+	ShowGameHeader($game, $myxp, -1);
+	ShowGameContent($game, $myxp, -1);
 }
 
-function DisplayGameViaID($gameid){
+function DisplayGameViaID($gameid, $userid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	ShowGameHeader($game, $myxp);
-	ShowGameContent($game, $myxp);
+	$myxp->_bucketlist = IsGameBookmarkedFromCollection($gameid);
+	if($userid > 0){
+		$otherxp = GetExperienceForUserByGame($userid, $game->_id);
+		ShowGameHeader($game, $myxp, $otherxp);
+		ShowGameContent($game, $myxp, $otherxp);
+	}else{
+		ShowGameHeader($game, $myxp, -1);
+		ShowGameContent($game, $myxp, -1);
+	}
 }
 
-function ShowGameContent($game, $myxp){ 
+function ShowGameContent($game, $myxp, $otherxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-community-tab" class="col s12 game-tab">
@@ -26,6 +34,11 @@ function ShowGameContent($game, $myxp){
 				<?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?>
 			</div>
 		<?php } ?>
+		<div id="game-userxp-tab" class="col s12 game-tab" <?php if($otherxp == -1){ ?> style='display:none;' <?php } ?> >
+			<?php if($otherxp != -1){
+					ShowUserXP($otherxp);
+					}?>
+		</div>
 	</div>
 	<?php DisplayGameInfo($game); ?>
 <?php }
@@ -35,6 +48,8 @@ function ShowCommunity($game, $id, $myxp){
 		$verified = GetVerifiedXPForGame($game->_id, $id);
 		$curated = GetCuratedXPForGame($game->_id, $id);
 		$myusers = GetMyUsersXPForGame($game->_id, $id);
+	}else{
+		$id = -1;
 	}
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
@@ -76,7 +91,7 @@ function ShowCommunity($game, $id, $myxp){
 		<?php }
 	}?>
 	<?php if(sizeof($otherverified) > 0 || sizeof($othercurated) > 0 || sizeof($otherusers) > 0){ ?>
-		<?php if($id != ""){ ?>
+		<?php if($_SESSION['logged-in']->_id > 0){ ?>
 			<div class='game-community-bigbreak'>
 				NOT FOLLOWING
 			</div>
@@ -120,15 +135,26 @@ function DisplayAllCommunityCards($users, $type){
 	}
 }
 
-function ShowGameTabs($myxp){
+function ShowGameTabs($myxp, $otherxp){
 	?>
 	<div id="game-navigation-header">
 		<div class="row" style='margin:0;'>
 		    <div class="col s12 m8" style="padding:0;">
 		      <ul class="tabs gameNav" style="background-color:transparent">
 		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-community-tab" class="active waves-effect waves-light">Community</a></li>
-		        <li class="tab col s3" style='background-color:transparent'><a href="#game-analyze-tab" id='analyze-tab-nav' class="waves-effect waves-light">Analyze</a></li>
-		        <li class="tab col s3 userGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
+		        <li class="tab col s3 userAnalyzeTab" style='background-color:transparent'><a href="#game-analyze-tab" id='analyze-tab-nav' class="waves-effect waves-light">Analyze</a></li>
+		        <?php if(isset($_SESSION['logged-in']->_id) && $myxp->_tier != 0){ ?> 
+		        	<li class="tab col s3 userGameTab preExistingGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
+		        <?php } ?>
+		        <li class="tab col s3" style='background-color:transparent;<?php if($otherxp == -1){ echo "display:none;"; } ?>'>
+		        	<a href="#game-userxp-tab" id='userxp-tab-nav' class="waves-effect waves-light">
+		        		<?php if($otherxp->_username->_security == "Journalist" || $otherxp->_username->_security == "Authenticated"){
+		        			echo $otherxp->_username->_first." ".$otherxp->_username->_last; 
+		        		}else{
+		        			echo $otherxp->_username->_username; 
+		        		}?>
+		        	</a>
+	        	</li>
 		      </ul>
 			</div>
 		</div>
@@ -136,28 +162,26 @@ function ShowGameTabs($myxp){
 	<?php
 }
 
-function ShowGameHeader($game, $myxp){
+function ShowGameHeader($game, $myxp, $otherxp){
 	?>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		<?php DisplayGameBackNav(); ?>
 		<div class="GameMyStatusIcons">
 			<i class="mdi-action-bookmark mybookmark" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?>></i>
-			<i class="mdi-av-my-library-books myowned" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?>></i>
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
-		<?php ShowGameTabs($myxp); ?>
+		<?php ShowGameTabs($myxp, $otherxp); ?>
 		<div class="fixed-action-btn" id="game-fab">
-			<?php ShowMyGameFAB($game->_id); ?>
+			<?php ShowMyGameFAB($game->_id, $myxp); ?>
 		</div>
 
 	</div>
 	<?php
 }
 
-function ShowMyGameFAB($gameid){
-	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
+function ShowMyGameFAB($gameid, $myxp){
 	if($_SESSION['logged-in']->_id > 0){ ?>
 	    <a class="btn-floating btn-large <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ echo "game-add-played-btn red darken-2"; }else{ echo "game-add-watched-btn red darken-2"; } ?> "  data-gameid='<?php echo $myxp->_game->_id; ?>'>
 	      <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
@@ -172,14 +196,14 @@ function ShowMyGameFAB($gameid){
 	      	<li><span class="GameHiddenActionLabel">Request update from GB</span><a class="btn-floating  red accent-4 game-update-info-btn" data-gameid='<?php echo $myxp->_game->_gbid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Upload hi-res jpg</span><a class="btn-floating light-green darken-3 game-add-image-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-gameyear='<?php echo $myxp->_game->_year; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	      	<?php } ?>
+	      	<li><span class="GameHiddenActionLabel">Add to Collection</span><a class="btn-floating orange darken-2 game-collection-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
 	    	<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){ ?>
-	    	<li><span class="GameHiddenActionLabel">Equip XP to Profile</span><a class="btn-floating indigo darken-3 game-set-fav-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-extension"></i></a></li>
+	    	<li><span class="GameHiddenActionLabel">Pin XP to Profile</span><a class="btn-floating blue-grey darken-3 game-set-fav-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="fa fa-thumb-tack"></i></a></li>
 	    	<?php } ?>
     	  	<li><span class="GameHiddenActionLabel">Remove bookmark</span><a class="btn-floating grey darken-1 game-remove-bookmark-btn" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Bookmark this game</span><a class="btn-floating red darken-4 game-add-bookmark-btn" <?php if($myxp->_bucketlist == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	
-	      	<li><span class="GameHiddenActionLabel">Don't save for later</span><a class="btn-floating grey darken-1 game-remove-owned-btn" <?php if($myxp->_owned != "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
-	      	<li><span class="GameHiddenActionLabel">Save for later</span><a class="btn-floating orange darken-2 game-add-owned-btn" <?php if($myxp->_owned == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Share game page</span><a class="btn-floating indigo darken-2 game-share-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-game-name='<?php echo $myxp->_game->_title; ?>'><i class="mdi-social-share"></i></a></li>
 	      	<?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
 	      	<li><span class="GameHiddenActionLabelBigFab">Add a watched XP</span><a class="btn-floating game-add-watched-btn" style='width: 55.5px; height: 55.5px;'><i class="mdi-action-visibility" style='line-height: 55.5px;font-size: 1.6rem;'></i></a></li>
 	      	<?php } ?>
@@ -548,4 +572,92 @@ function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview
 	        </div>
 	      </div>
       </div>
-<?php } ?>
+<?php }
+
+function ShowUserXP($userxp){ 
+	$user = $userxp->_username;
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$agrees = GetAgreesForXP($userxp->_id);
+	$agreedcount = array_shift($agrees);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="myxp-details-container z-depth-1">
+				<div class="row" style='margin: 0;'>
+					<div class="col s12 userxp-details-lifebar">
+						<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
+					</div>
+				    <div class="row" style='margin: 0;'>
+					  <div class="col s3 m2">
+					  	<div class="myxp-details-tier tierTextColor<?php echo $userxp->_tier; ?>">TIER<div class="myxp-details-tier-number"><?php echo $userxp->_tier; ?></div></div>
+					  </div>
+			  	      <div class="col s9 m10">
+				        <div class="myxp-details-quote-container"><i class="mdi-editor-format-quote prefix quoteflip" style='font-size:2em;'></i><span class="myxp-details-quote"><?php echo $userxp->_quote; ?></span></div>
+				      </div>
+				    </div>
+		    	    <div class="row" style='margin: 0;'>
+		    	    	<div class="myxp-profile-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-person left" style="vertical-align: sub;"></i> View Profile</div>
+				    	<div class="myxp-share-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i> Share</div>
+				    </div>
+				</div>
+			</div>
+			<br>
+			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
+			<br>
+		    <div class="myxp-details-container z-depth-1" style="padding:0;">
+			    <?php 
+			    if(sizeof($userxp->_playedxp) > 0){
+		    		$played = $userxp->_playedxp[0];
+			    	?>
+			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
+			    		<div class="col s0 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
+			    		<div class="col s12 m10 myxp-details-items">
+			    			<?php BuildPlayedVisualSentence($played, $userxp->_userid, $userxp->_tier, '', ''); ?>
+			    		</div>
+			    	</div>
+		    	<?php
+			    }
+			    
+			    foreach($userxp->_watchedxp as $watched){ ?>
+			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
+			    		<div class="col s0 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
+			    		<div class="col s12 m10 myxp-details-items">
+			    			<?php echo BuildWatchedVisualSentence($watched, $userxp->_userid, $userxp->_tier, '' ,'');	?>
+			    		</div>
+			    	</div>
+		    	<?php
+			    }
+			    ?>
+		    </div>
+			<br>
+		    <?php if($agreedcount > 0){ ?>
+			    <div class="myxp-details-container z-depth-1">
+			    	<div class="row" style='margin: 0;'>
+					  <div class="col s3 m2">
+					  	<div class="myxp-details-agree-count"><?php echo $agreedcount; ?>up</div>
+					  </div>
+				    	<div class="col s9 m10">
+					    	<div class="myxp-details-agree-list">
+					    		<?php
+					    			$i = 0;
+					    			while($i < sizeof($agrees) && $i < 25){ ?>
+					    			<div class="myxp-details-agree-listitem">
+					    				<?php $userAgree = GetUser($agrees[$i]); ?>
+					    				<div class="user-avatar" style="margin-top:0;width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:45px;background:url(<?php echo $userAgree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+					    				<?php DisplayUserPreviewCard($userAgree, $conn, $mutualconn); ?>
+					    			</div>
+					    		<?php	
+					    		$i++;
+					    		} ?>
+					    	</div>
+				    	</div>
+				    </div>
+			    </div>
+			    <br>
+    		<?php } ?>
+		</div>
+	</div>
+<?php
+}
+?>

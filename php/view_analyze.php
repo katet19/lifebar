@@ -1,6 +1,6 @@
 <?php function DisplayAnalyzeTab($user, $myxp, $game){
 	if($myxp->_tier <= 0){
-		BuildWarningMsg();
+		BuildWarningMsg($user);
 	}
 	BuildExperienceSpectrum($user, $myxp, $game);
 	BuildFranchiseGames($game, $user->_id, $myxp->_tier);
@@ -33,17 +33,27 @@
 	$thisYearTotal = $thisyear[1] + $thisyear[2] + $thisyear[3] + $thisyear[4] + $thisyear[5];
 	$bygenre = GetMyTiersByGenre($user->_id, $game->_genre);
 	$byGenreTotal = $bygenre[1] + $bygenre[2] + $bygenre[3] + $bygenre[4] + $bygenre[5];
+	if($user->_id != $_SESSION['logged-in']->_id){
+		$mine = false;
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+	}else
+		$mine = true;
+	
 	if($lifetimeTotal > 0){
 	?>
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
 				<div class='analyze-card-header'>
-					<div class='analyze-card-title'>Personal Experience Spectrum</div>
-					<div class='analyze-card-sub-title'>compared to your other game experiences</div>
+					<div class='analyze-card-title'><?php if(!$mine){ echo $username."'s"; }else{ echo "Personal"; }?> Experience Spectrum</div>
+					<div class='analyze-card-sub-title'>compared to other game experiences</div>
 				</div>
 				<div class="row">
 					<div class="col s12 m12 l10">
-						<canvas class="GraphExpSpectrum" style='margin:0.5em 20px 1em'  
+						<canvas class="GraphExpSpectrum" style='margin:0.5em 20px 1em' data-personal='<?php if($mine){ echo "Y"; }else{ echo "N"; } ?>'
 							data-overallTotal="<?php echo $lifetimeTotal; ?>" data-t1="<?php echo $lifetime[0] ;?>" data-t2="<?php echo $lifetime[1] ;?>" data-t3="<?php echo $lifetime[2] ;?>" data-t4="<?php echo $lifetime[3] ;?>" data-t5="<?php echo $lifetime[4]; ?>"
 							<?php if(sizeof($thisyear) > 4){ ?> data-yearTotal="<?php echo $thisYearTotal; ?>" data-year="<?php echo $game->_year; ?>" data-yt1="<?php echo $thisyear[1] ;?>" data-yt2="<?php echo $thisyear[2] ;?>" data-yt3="<?php echo $thisyear[3] ;?>" data-yt4="<?php echo $thisyear[4] ;?>" data-yt5="<?php echo $thisyear[5]; ?>" <?php } ?>
 							<?php if(sizeof($bygenre) > 4){ ?> data-genreTotal="<?php echo $byGenreTotal; ?>" data-genre="<?php echo $game->_genre; ?>" data-gt1="<?php echo $bygenre[1] ;?>" data-gt2="<?php echo $bygenre[2] ;?>" data-gt3="<?php echo $bygenre[3] ;?>" data-gt4="<?php echo $bygenre[4] ;?>" data-gt5="<?php echo $bygenre[5]; ?>" <?php } ?>
@@ -73,8 +83,10 @@
 } 
 
 function BuildCommunitySpectrum($user, $myxp, $game){
-	$following = GetFollowingTiersForGame($game->_id, $user->_id);
-	$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
+	if($user->_id > 0){
+		$following = GetFollowingTiersForGame($game->_id, $user->_id);
+		$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
+	}
 	$critics = GetCriticTiersForGame($game->_id);
 	$criticTotal = $critics[1] + $critics[2] + $critics[3] + $critics[4] + $critics[5];
 	$users = GetUserTiersForGame($game->_id);
@@ -142,9 +154,11 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 							<div class="analyze-line-item" style='background-color:rgba(63, 81, 181, 0.9);'>
 								<div class="analyze-line-desc"><i class='mdi-social-public left' style='margin-bottom: 15px;'></i> Members</div>
 							</div>
-							<div class="analyze-line-item" style='background-color:rgba(76, 175, 80, 0.9);'>
-								<div class="analyze-line-desc"><i class='mdi-social-people left' style='margin-bottom: 15px;'></i> Following</div>
-							</div>
+							<?php if($user->_id > 0){ ?>
+								<div class="analyze-line-item" style='background-color:rgba(76, 175, 80, 0.9);'>
+									<div class="analyze-line-desc"><i class='mdi-social-people left' style='margin-bottom: 15px;'></i> Following</div>
+								</div>
+							<?php } ?>
 							<div class="analyze-line-item"  style='background-color:rgba(255, 87, 34, 0.9)';>
 								<div class="analyze-line-desc"><i class='mdi-social-location-city left' style='margin-bottom: 15px;'></i> Critics</div>
 							</div>
@@ -437,11 +451,15 @@ function BuildSimilarGames($game, $userid, $myxp){
 	}
 }
 
-function BuildWarningMsg(){ ?>
+function BuildWarningMsg($user){ ?>
 	<div class="row">
 		<div class="col s12" style='font-size: 1.25em;font-weight:500;'>
 			<i class="mdi-alert-warning" style='color:orangered;font-size: 1.5em;vertical-align: sub;'></i> 
-			<span>Analysis of this game is limited without any XP</span>
+			<?php if($user->_id > 0){ ?>
+				<span>Analysis of this game is limited without any XP</span>
+			<?php }else{ ?>
+				<span>Analysis of this game is limited without logging in</span>
+			<?php } ?>
 		</div>
 	</div>
 <?php
@@ -454,7 +472,7 @@ function BuildCompletedCard($game){
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
 				<div class="analyze-data-element"><?php if($finishedData[1] > 0){echo round(($finishedData[0] / $finishedData[1]) * 100); }else{ echo "0"; } ?>%</div>
-				<div class="analyze-data-desc">of the community finished</div>
+				<div class="analyze-data-desc">of those who played finished</div>
 			</div>
 		</div>
 	</div>
@@ -472,7 +490,7 @@ function BuildAvgAgeCard($game){
 						<div class="analyze-data-desc">average age when played</div>
 					<?php }else{ ?>
 						<div class="analyze-data-element">0</div>
-						<div class="analyze-data-desc">people have played</div>
+						<div class="analyze-data-desc">members have played</div>
 					<?php } ?>
 				</div>
 			</div>
@@ -487,7 +505,7 @@ function BuildBookmarkedCard($game){
 		<div class="row">
 			<div class="col s12 analyze-card z-depth-1" style='padding: 0 0 2em !important;' >
 				<div class="analyze-data-element"><?php echo $bookmarked; ?></div>
-				<div class="analyze-data-desc">user<?php if($bookmarked != 1){ ?>s<?php } ?> bookmarked</div>
+				<div class="analyze-data-desc">member<?php if($bookmarked != 1){ ?>s<?php } ?> bookmarked</div>
 			</div>
 		</div>
 	</div>

@@ -12,6 +12,114 @@
 		WeaveServices();
 		MilestoneServices();
 		GeneralServices();
+		ImportServices();
+		CollectionServices();
+	}
+	
+	function CollectionServices(){
+		if($_POST['action'] == 'DisplayCollectionDetails'){
+			DisplayCollectionDetails($_POST['collectionid']);
+		}
+		if($_POST['action'] == "NextPageCollection"){
+			DisplayCollectionDetailGamesPagination($_POST['collectionid'], $_POST['userid'], $_POST['offset'], $_POST['editMode']);
+		}
+		if($_POST['action'] == "DisplaySearchCollection"){
+			DisplaySearchCollection($_POST['collectionid'], $_POST['searchstring'], $_POST['offset'], $_POST['userid'], $_POST['editMode']);
+		}
+		if($_POST['action'] == "DisplayCollectionManagement"){
+			DisplayCollectionManagement($_POST['gameid'],$_SESSION['logged-in']->_id,$_POST['quickAdd']);
+		}
+		if($_POST['action'] == "ValidateCollectionName"){
+			ValidateCollectionName($_POST['collectionName'],$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "CreateCollection"){
+			CreatePersonalCollection($_POST['collectionName'],$_POST['collectionDesc'],$_SESSION['logged-in']->_id, $_POST['gameid']);
+		}
+		if($_POST['action'] == "AddGameToCollection"){
+			$gameid = AddToCollection($_POST['collectionID'],$_POST['gbid'],$_SESSION['logged-in']->_id);
+			if($gameid > 0)
+				DisplayAddedGameToCollection($gameid);
+		}
+		if($_POST['action'] == "AddGameToCollectionFromCollectionManger"){
+			$game = GetGame($_POST['gameid']);
+			AddToCollection($_POST['collectionID'],$game->_gbid,$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "RemoveGameFromCollection"){
+			RemoveFromCollection($_POST['collectionID'],$_POST['gameid'],$_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "UpdateCollection"){
+			UpdateCollection($_POST['collectionid'],$_POST['collectionName'],$_POST['collectionDesc']);
+		}
+		if($_POST['action'] == "SetCollectionCover"){
+			SetCollectionCover($_POST['collectionid'],$_POST['gameid']);
+		}
+		if($_POST['action'] == "DeleteCollection"){
+			RemoveCollection($_POST['collectionid']);
+		}
+		if($_POST['action'] == "FollowCollection"){
+			FollowCollection($_SESSION['logged-in']->_id, $_POST['collectionid']);
+		}
+		if($_POST['action'] == "UnfollowCollection"){
+			UnfollowCollection($_SESSION['logged-in']->_id, $_POST['collectionid']);
+		}
+		if($_POST['action'] == "DisplayCollectionPlayedEdit"){
+			DisplayCollectionPlayedEdit($_POST['gameid'], $_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "DisplayCollectionWatchedEdit"){
+			DisplayCollectionWatchedEdit($_POST['gameid'], $_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] =='SavePlayedCollection' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0 && $_POST['tier'] > 0){
+				$new = SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],'','',$_POST['platform'],'','','','','','');
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|".$new;
+			}
+		}
+		if($_POST['action'] =='SaveWatchedCollection' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], '', $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|".$new;
+			}
+		}
+		if($_POST['action'] == 'PostUpdateFromCollection'){
+			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
+				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],'',$_POST['completion']);
+				echo "|**|false";
+			}
+		}
+	}
+	function ImportServices(){
+		if($_POST['action'] == 'DisplayStartSteamImport' ){
+			DisplayStartSteamImport($_POST['userid']);
+		}
+		if($_POST['action'] == "GetEstimatedTimeToImport"){
+			GetEstimatedTimeToImport($_POST['steamname']);
+		}
+		if($_POST['action'] == "ImportSteamGames"){
+			DisplaySteamGameImport($_POST['steamname'], $_POST['forceImport'], $_POST['fullreset']);
+		}
+		if($_POST['action'] == "NextUnmappedRow"){
+			GetNextUnmappedGameRow($_POST['offset']);
+		}
+		if($_POST['action'] == "MapGame"){
+			MapGameToLifebar($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
+		if($_POST['action'] == "TrashGame"){
+			if($_SESSION['logged-in']->_security == "Admin"){
+				TrashGameToLifebar($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+			}
+		}
+		if($_POST['action'] == "IgnoreGame"){
+			IgnoreGameFromMyImport($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
+		if($_POST['action'] == "ReportGame"){
+			ReportGameFromMyImport($_POST['importID'], $_POST['gbid'], $_POST['auditid']);
+		}
 	}
 	function MilestoneServices(){
 		if($_POST['action'] == 'SaveBadge' ){
@@ -111,79 +219,107 @@
 		if($_POST['action'] == 'ShowUserProfileActivityEndless' ){
 			DisplayProfileActivityEndless($_POST['userid'], $_POST['page'], $_POST['date']);
 		}
+		if($_POST['action'] == 'DisplayUserCollection' ){
+			DisplayUserCollection($_POST['userid']);
+		}
 	}
 	function AdminServices(){
-		if($_POST['action'] == 'DisplayAdmin' ){
-			DisplayAdmin($_SESSION['logged-in']->_id);
-		}
-		if($_POST['action'] == 'DisplayAdminSecondaryContent'){
-			DisplayAdminSecondaryContent($_SESSION['logged-in']->_id);
-		}
-		if($_POST['action'] == 'DisplayPendingReviews' ){
-			DisplayPendingReviews();
-		}
-		if($_POST['action'] == 'DismissPendingReview'){
-			SaveRSSFeedAsReviewed($_POST['id']);
-		}
 		if($_POST['action'] == 'AdminGameSearch' && isset($_POST['search'])){
 			DisplayAdminGameSearchResults($_POST['search']);
 		}
 		if($_POST['action'] == 'AdminBadgeGameSearch' && isset($_POST['search'])){
 			DisplayAdminBadgeGameSearchResults($_POST['search']);
 		}
-		if($_POST['action'] == 'SavePendingReview'){
-			if($_POST['first'] != "" && $_POST['last'] != ""){
-				$criticid = RegisterJournalist($_POST['first'], $_POST['last']);
-			}else{
-				$criticid = $_POST['journalist'];
+		if($_SESSION['logged-in']->_security == 'Admin'){
+			if($_POST['action'] == 'DisplayAdmin' ){
+				DisplayAdmin($_SESSION['logged-in']->_id);
 			}
-			$game = GetGameByGBIDFull($_POST['gameid']);
-			
-			SubmitCriticExperience($criticid,$game->_id,$_POST['quote'],$_POST['tier'],$_POST['link']);
-			SaveRSSFeedAsReviewed($_POST['id']);
-			CalculateWeave($criticid);
-			CalculateMilestones($criticid, $game->_id, '', 'Played XP', true);
-		}
-		if($_POST['action'] == 'RequestUpdateFromGiantBomb' ){
-			FullUpdateViaGameID($_POST['gameid'], "Sorta");
-		}
-		if($_POST['action'] == 'DisplayUnmappedManager'){
-			DisplayManualMapping();
-		}
-		if($_POST['action'] == 'DisplayManualMappingInReview'){
-			DisplayManualMappingInReview();
-		}
-		if($_POST['action'] == 'SaveMappingForLater'){
-			SaveIGNImportForLater($_POST['id']);
-		}
-		if($_POST['action'] == 'DismissMapping'){
-			DismissMappingReview($_POST['id']);
-		}
-		if($_POST['action'] == 'MapReviewToGame'){
-			MapReviewToGame($_POST['id'], $_POST['quote'], $_POST['tier'], $_POST['link'], $_POST['gameid'], $_POST['criticid']);
-		}
-		if($_POST['action'] == 'DisplayNewBadgeForm'){
-			DisplayNewMilestoneForm();
-		}
-		if($_POST['action'] == 'DisplayBadgeManagement'){
-			DisplayMilestoneManagement();
-		}
-		if($_POST['action'] == 'DisplayEmailExport'){
-			DisplayEmailExport();
-		}
-		if($_POST['action'] == 'DisplayDBThreads'){
-			DisplayDBThreads();
-		}
-		if($_POST['action'] == 'CheckVersion'){
-			CheckVersion($_POST['version']);
-		}
-		if($_POST['action'] == "DisplayRoleManagement"){
-			if($_SESSION['logged-in']->_security == 'Admin')
-				DisplayRoleManagement($_POST['userid']);
-		}
-		if($_POST['action'] == "UpdateRoleManagement"){
-			if($_SESSION['logged-in']->_security == 'Admin')
-				UpdateRoleManagement($_POST['userid'], $_POST['role']);
+			if($_POST['action'] == 'DisplayAdminSecondaryContent'){
+				DisplayAdminSecondaryContent($_SESSION['logged-in']->_id);
+			}
+			if($_POST['action'] == 'DisplayPendingReviews' ){
+				DisplayPendingReviews();
+			}
+			if($_POST['action'] == 'DismissPendingReview'){
+				SaveRSSFeedAsReviewed($_POST['id']);
+			}
+			if($_POST['action'] == 'SavePendingReview'){
+				if($_POST['first'] != "" && $_POST['last'] != ""){
+					$criticid = RegisterJournalist($_POST['first'], $_POST['last']);
+				}else{
+					$criticid = $_POST['journalist'];
+				}
+				$game = GetGameByGBIDFull($_POST['gameid']);
+				
+				SubmitCriticExperience($criticid,$game->_id,$_POST['quote'],$_POST['tier'],$_POST['link']);
+				SaveRSSFeedAsReviewed($_POST['id']);
+				CalculateWeave($criticid);
+				CalculateMilestones($criticid, $game->_id, '', 'Played XP', true);
+			}
+			if($_POST['action'] == 'RequestUpdateFromGiantBomb' ){
+				FullUpdateViaGameID($_POST['gameid'], "Sorta");
+			}
+			if($_POST['action'] == 'DisplayUnmappedManager'){
+				DisplayManualMapping();
+			}
+			if($_POST['action'] == 'DisplayManualMappingInReview'){
+				DisplayManualMappingInReview();
+			}
+			if($_POST['action'] == 'SaveMappingForLater'){
+				SaveIGNImportForLater($_POST['id']);
+			}
+			if($_POST['action'] == 'DismissMapping'){
+				DismissMappingReview($_POST['id']);
+			}
+			if($_POST['action'] == 'MapReviewToGame'){
+				MapReviewToGame($_POST['id'], $_POST['quote'], $_POST['tier'], $_POST['link'], $_POST['gameid'], $_POST['criticid']);
+			}
+			if($_POST['action'] == 'DisplayNewBadgeForm'){
+				DisplayNewMilestoneForm();
+			}
+			if($_POST['action'] == 'DisplayBadgeManagement'){
+				DisplayMilestoneManagement();
+			}
+			if($_POST['action'] == 'DisplayEmailExport'){
+				DisplayEmailExport();
+			}
+			if($_POST['action'] == 'DisplayDBThreads'){
+				DisplayDBThreads();
+			}
+			if($_POST['action'] == 'CheckVersion'){
+				CheckVersion($_POST['version']);
+			}
+			if($_POST['action'] == "DisplayRoleManagement"){
+				if($_SESSION['logged-in']->_security == 'Admin')
+					DisplayRoleManagement($_POST['userid']);
+			}
+			if($_POST['action'] == "UpdateRoleManagement"){
+				if($_SESSION['logged-in']->_security == 'Admin')
+					UpdateRoleManagement($_POST['userid'], $_POST['role']);
+			}
+			if($_POST['action'] == "DisplayAdminControlsForUser"){
+				if($_SESSION['logged-in']->_security == 'Admin')
+					DisplayAdminControlsForUser($_POST['userid']);
+			}
+			if($_POST['action'] == "AdminGiveBadge"){
+				if($_SESSION['logged-in']->_security == 'Admin')
+					GiveBadgeAccess($_POST['userid'], $_POST['badgeid']);
+			}
+			if($_POST['action'] == "AdminRemoveBadge"){
+				if($_SESSION['logged-in']->_security == 'Admin')
+					RemoveBadgeAccess($_POST['userid'], $_POST['badgeid']);
+			}
+			if($_POST['action'] == "UnequipBadge"){
+				if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
+					UnequipBadge($_POST['userid'], $_POST['badgeid']);
+			}
+			if($_POST['action'] == "EquipBadge"){
+				if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
+					EquipBadge($_POST['userid'], $_POST['badgeid']);
+			}
+			if($_POST['action'] == "DisplayAdminManageReportedGames"){
+				DisplayAdminManageReportedGames();
+			}
 		}
 	}
 	function ActivityServices(){
@@ -231,51 +367,64 @@
 			ShowTierQuote(null, $_POST['gameid'], true);
 		}
 		if($_POST['action'] =='SavePlayedFull' && $_SESSION['logged-in']->_id > 0){
-			SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0){
+				SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] =='SaveWatchedFull' && $_SESSION['logged-in']->_id > 0){
-			SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
-			SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0){
+				SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],$_POST['criticlink']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] =='SavePlayed' && $_SESSION['logged-in']->_id > 0){
-			SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0){
+				SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] =='SaveWatched' && $_SESSION['logged-in']->_id > 0){
-			SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0){
+				SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] =='UpdateWatched' && $_SESSION['logged-in']->_id > 0){
-			UpdateWatchedXP($_POST['subxpid'],$_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0){
+				UpdateWatchedXP($_POST['subxpid'],$_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['viewurl'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] =='SaveTierQuote' && $_SESSION['logged-in']->_id > 0){
-			UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink']);
-			CalculateWeave($_SESSION['logged-in']->_id);
-			CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
-			echo "|**|";
-			DisplayMyXP($_POST['gameid']);
+			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
+				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink'],'');
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+			}
 		}
 		if($_POST['action'] == 'GetGameFAB' ){
-			ShowMyGameFAB($_POST['gameid']);
+			$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $_POST['gameid']);
+			ShowMyGameFAB($_POST['gameid'], $myxp);
 		}
 		if($_POST['action'] == 'GetFeedbackLoop' ){
 			CalculateFeedbackForSave($_POST['gameid'], $_POST['type']);
@@ -301,7 +450,14 @@
 			DisplayGame($_POST['gbid']);
 		}
 		if($_POST['action'] == 'DisplayGameViaID' && isset($_POST['gameid'])){
-			DisplayGameViaID($_POST['gameid']);
+			DisplayGameViaID($_POST['gameid'], -1);
+		}
+		if($_POST['action'] == 'DisplayGameViaIDWithUser' && isset($_POST['gameid'])){
+			DisplayGameViaID($_POST['gameid'], $_POST['otherid']);
+		}
+		if($_POST['action'] == 'DisplayUserDetails' && isset($_POST['gameid']) && isset($_POST['userid'])){
+			$xp = GetExperienceForUserByGame($_POST['userid'], $_POST['gameid']);
+			ShowUserXP($xp);
 		}
 		if($_POST['action'] == 'DisplayMyXP' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			DisplayMyXP($_POST['gameid']);
@@ -316,12 +472,6 @@
 		}
 		if($_POST['action'] == 'RemoveBookmark' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
-		}
-		if($_POST['action'] == 'AddOwned' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
-			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"Yes");
-		}
-		if($_POST['action'] == 'RemoveOwned' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
-			SubmitOwned($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
 		}
 	}
 	function UserServices(){
@@ -401,6 +551,14 @@
 			if($_SESSION['logged-in']->_security == "Admin"){
 				TestScript($_POST["script"]);
 			}
+		}
+		if($_POST['action'] == 'DisplayShareModal'){
+			if(isset($_POST['userid']))
+				$id = $_POST['userid'];
+			else
+				$id = $_SESSION['logged-in']->_id;
+				
+			DisplayShareContent($id, $_POST['type'], $_POST['otherid']);
 		}
 	}
 ?>

@@ -218,23 +218,13 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 			</div>
 		</div>
 		
-		<!-- Skills -->
-		<div class="col s12 m6 l4 no-right-padding">
-			<div class="row">
-				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info ' title="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
-					<?php DisplayUserSkills($userid); ?>
-				</div>
-			</div>
-		</div>
 		
-		<!-- Abilities -->
-		<div class="col s12 m6 l3 no-right-padding">
+		<!-- Collections -->
+		<div class="col s12 m12 l7">
 			<div class="row">
-				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
-					<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
-					<?php DisplayAbilities($userid); ?>
-					<!--<div class="badge-card-container-view-more abilities-view-more">View Details</div>-->
+				<div class="profile-card badge-card-container col s12 z-depth-1" style='height: 445px;'>
+					<div class="badge-card-container-header" style="height:initial;width:100%;margin-bottom:5px;">Collections <span class='profile-card-info ' title="Collections are groups of games defined by users"><i class="mdi-action-info"></i></span></div>
+					<?php DisplayUserCollections($user); ?>
 				</div>
 			</div>
 		</div>
@@ -267,19 +257,36 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 				<?php DisplayMyLibraryChicklet($userid);  ?>
 			</div>
 			<div class="row">
-				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:735px;">
+				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:1215px;">
 					<div class="badge-card-container-header" style="height:initial;width:100%;">Checkpoints <span class='profile-card-info ' title="Checkpoints are your most recent experiences"><i class="mdi-action-info"></i></span></div>
 					<?php $latestxp = DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername); ?>
 				</div>
 			</div>
 		</div>
-		<!-- Best, Upcoming -->
+		<!-- Best, Upcoming, Abilities, Skills -->
 		<div class="col s12 m12 l9">
 			<div class="row" style='margin-bottom: 0;'>
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:550px;">
 					<div class="badge-card-container-header profile-best-title z-depth-1" style="height:initial;">Favorites</div>
 					<?php DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $latestxp); ?>
 					<div class="profile-best-view-more">VIEW MORE</div>
+				</div>
+				<div class="col s12 m6" style="padding-left: 0 !important;">
+					<div class="row">
+						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
+							<div class="badge-card-container-header" style="height:initial;width:100%;">Abilities</div>
+							<?php DisplayAbilities($userid); ?>
+							<!--<div class="badge-card-container-view-more abilities-view-more">View Details</div>-->
+						</div>
+					</div>
+				</div>
+				<div class="col s12 m6" style="padding-right:0 !important;">
+					<div class="row">
+						<div class="profile-card badge-card-container col s12 z-depth-1" style="height:445px;">
+							<div class="badge-card-container-header" style="height:initial;width:100%;">Skills <span class='profile-card-info ' title="Skills is based on the genre(s) of the games experienced"><i class="mdi-action-info"></i></span></div>
+							<?php DisplayUserSkills($userid); ?>
+						</div>
+					</div>
 				</div>
 				<div class="col s12 m12 l12" style="padding-left:0 !important;padding-right: 0 !important;">
 					<div class="row">
@@ -719,7 +726,8 @@ function DisplayTimeline($user){
 }
 
 function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
-	if($_SESSION['logged-in']->_id > 0 && ($userid != $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id == 7)){ ?>
+	if($_SESSION['logged-in']->_id > 0){ ?>
+		<?php if($userid != $_SESSION['logged-in']->_id){ ?>
 	    <a class="btn-floating btn-large <?php if(in_array($userid, $conn)){ echo "user-unfollow-btn blue darken-2"; }else{ echo "user-follow-btn blue darken-2"; } ?> "  data-userid='<?php echo $userid; ?>' data-username='<?php echo $username; ?>'>
 	      <?php if(in_array($userid, $conn)){ ?>
 	      	<span class="GameHiddenActionLabelBigFab">Unfollow</span>
@@ -734,10 +742,28 @@ function ShowWeaveFAB($userid, $conn, $mutualconn, $critic, $username){
 	      			<li><span class="GameHiddenActionLabel">Upload smaller image</span><a class="btn-floating light-green darken-3 user-add-small-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	        		<li><span class="GameHiddenActionLabel">Upload larger image</span><a class="btn-floating orange darken-3 user-add-large-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
 	        	<?php } ?>
+	        	<li><span class="GameHiddenActionLabel">Manage User Badge Access</span><a class="btn-floating blue user-manage-badge" data-userid='<?php echo $userid; ?>'><i class="fa fa-certificate"></i></a></li>
         		<li><span class="GameHiddenActionLabel">Change users Title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment"></i></a></li>
         		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
 	        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<?php } ?>
+  		      	<li><span class="GameHiddenActionLabel">Share profile page</span><a class="btn-floating indigo darken-2 user-share-btn" data-userid='<?php echo $userid; ?>' data-user-name='<?php echo $username; ?>'><i class="mdi-social-share"></i></a></li>
+	    <?php }else if($userid == $_SESSION['logged-in']->_id){ ?>
+			    <a class="btn-floating btn-large indigo darken-2 user-share-btn"  data-userid='<?php echo $userid; ?>' data-username='<?php echo $username; ?>'>
+					<span class="GameHiddenActionLabelBigFab">Share profile page</span>
+			      	<i class="large mdi-social-share"></i>
+			    </a>
+			    <ul>
+			      	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+			      		<?php if($critic){ ?>
+			      			<li><span class="GameHiddenActionLabel">Upload smaller image</span><a class="btn-floating light-green darken-3 user-add-small-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
+			        		<li><span class="GameHiddenActionLabel">Upload larger image</span><a class="btn-floating orange darken-3 user-add-large-image-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
+			        	<?php } ?>
+		        		<li><span class="GameHiddenActionLabel">Change users Title</span><a class="btn-floating purple darken-4 user-set-title" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment"></i></a></li>
+		        		<li><span class="GameHiddenActionLabel">Change users Role</span><a class="btn-floating teal user-set-role" data-userid='<?php echo $userid; ?>'><i class="mdi-action-assignment-ind"></i></a></li>
+			        	<li><span class="GameHiddenActionLabel">Run Weave Calculator</span><a class="btn-floating red darken-3 user-run-weave-cal-btn" data-userid='<?php echo $userid; ?>'><i class="mdi-action-cached"></i></a></li>
+	      	<?php } ?>
+	    <?php } ?>
 	    </ul>
 	<?php }
 }
@@ -790,7 +816,7 @@ function DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername){
 				$agreedcount = array_shift($agrees);
 				
 				$hiddenusername = '';
-				if($user->_security == "Journalist")
+				if($user->_security == "Journalist"  || $user->_security == "Authenticated")
 					 $hiddenusername = $user->_first." ".$user->_last;
 				else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
 					$hiddenusername = $user->_first." ".$user->_last; 
@@ -849,7 +875,7 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 			$agreedcount = array_shift($agrees);
 			
 			$hiddenusername = '';
-			if($user->_security == "Journalist")
+			if($user->_security == "Journalist"  || $user->_security == "Authenticated")
 				 $hiddenusername = $user->_first." ".$user->_last;
 			else
 				$hiddenusername = $user->_username;	
@@ -902,7 +928,7 @@ function DisplayWorstXPForUser($userid, $conn, $mutualconn, $hiddenusername, $la
 				$agreedcount = array_shift($agrees);
 				
 				$hiddenusername = '';
-				if($user->_security == "Journalist")
+				if($user->_security == "Journalist"  || $user->_security == "Authenticated")
 					 $hiddenusername = $user->_first." ".$user->_last;
 				else if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $conn))
 					$hiddenusername = $user->_first." ".$user->_last; 
@@ -937,7 +963,7 @@ function DisplayMyLibraryChicklet($userid){
 		$total = GetMyLibraryCount($userid);
 		?>
 	<div class="profile-card badge-card-container col s12 z-depth-1  waves-effect waves-block mylibrary" style="height:303px;background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">My Inventory</div>
+		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">Inventory</div>
 		<div class="mylibrary-total"><?php echo $total; ?></div>
 		<div class="mylibrary-label"><?php if($total == 1){ echo "game"; }else{ echo "games"; } ?></div>
 	</div>
@@ -1052,7 +1078,7 @@ function DisplayEquipXP($gameid, $showtitle){
 	$newgame = GetGame($gameid);
 	?>
 	<div class="equip-xp-container" data-newgame="<?php echo $gameid; ?>" data-newgame-image="<?php echo $newgame->_imagesmall; ?>">
-		<div class="equip-xp-header">Equip <?php if($showtitle){ echo $newgame->_title; }else{ echo "your XP"; } ?></div>
+		<div class="equip-xp-header">Pin <?php if($showtitle){ echo $newgame->_title; }else{ echo "your XP"; } ?></div>
 		<div class="equip-xp-subheader">Show off the games you are currently playing or want to highlight when people visit your Profile.</div>
 		<div class="equip-xp-games">
 			<div class="equip-xp-game" data-slot="1" data-previous="<?php if($gameid != $equip1){ echo $game1->_id; } ?>">
@@ -1069,9 +1095,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip1){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 			<div class="equip-xp-game" data-slot="2" data-previous="<?php if($gameid != $equip2){ echo $game2->_id; } ?>">
@@ -1088,9 +1114,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip2){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 			<div class="equip-xp-game" data-slot="3" data-previous="<?php if($gameid != $equip3){ echo $game3->_id; } ?>">
@@ -1108,9 +1134,9 @@ function DisplayEquipXP($gameid, $showtitle){
 				<?php }?>
 				
 				<?php if($gameid == $equip3){ ?>
-					<div class="equip-xp-game-btn btn">Unequip</div>
+					<div class="equip-xp-game-btn btn">Un-pin</div>
 				<?php }else{ ?>
-					<div class="equip-xp-game-btn btn">Equip</div>
+					<div class="equip-xp-game-btn btn">Pin</div>
 				<?php } ?>
 			</div>
 		</div>
@@ -1572,7 +1598,7 @@ function DisplayAbilitiesViewMore($userid){
 	$abilities = GetAbilities($userid);
 	
 	$name = "";
-	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
 	DisplayBackButton($name."'s abilities");
 	?>
 	<div class="row" style='margin-top:4em;text-align:left;'>
@@ -1616,7 +1642,7 @@ function DisplayKnowledgeViewMore($userid){
 	$knowledgethisyear = GetKnowledgeThisYear($userid);
 	$knowledgeyearspast = GetKnowledgeYearsPast($userid);
 	$name = "";
-	if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
 	DisplayBackButton($name."'s knowledge");
 	?>
 	<div class="row" style='margin-top:4em;text-align:left;'>
@@ -2396,6 +2422,59 @@ function DisplayProfileCheckPointTierIcon($xp){
 				</div>
 			</div>
 		<?php }
+	}
+}
+
+function DisplayUserCollections($user){
+	$collections = GetLatestCollectionForUser($user->_id);
+	$newuser = false;
+	if(sizeof($collections) <= 2){
+		if(sizeof($collections[0]->_games) == 0 && sizeof($collections[1]->_games) == 0){
+			$newuser = true;
+		}	
+	} 
+	if($newuser){
+		$collections = GetLatestCollectionForUser(7);
+		?>
+		<div style='margin-left:25px'>
+			<?php
+			if(sizeof($collections) > 0){
+				foreach($collections as $collection){
+					DisplayCollection($collection);
+				}
+			}
+			?>
+		</div>
+		<?php
+	?>
+	<div class="newprofile-overlay-container">
+		<div class="newprofile-header">Collections</div>
+		<div class="newprofile-skills" style='font-size:1.2em;'>
+			Collections help you group games in meaningful ways. Whether it's a bucket list, games you are looking forward to or a top ten from your childhood, you can build & share it!
+		</div>
+		<div class="newprofile-skills" style='font-size:1.2em;'>
+			Lifebar also auto creates collections for you! Bookmarking a game will automatically add to your Bookmark collection and if you try Steam import we create a collection from your Steam Library to help you build your Lifebar quickly. 
+			<?php if($user->_id == $_SESSION['logged-in']->_id){ ?>
+				<br>Give importing a try! 
+				<span class="view-collections btn" style='margin-left: 20px;font-size: 0.8em;padding: 0 1rem;background-color: #E91E63;'><i class='fa fa-steam' style='font-size: 1em;margin-right: 10px;'></i> Import Steam Library</span> 
+			<?php } ?>
+		</div>
+		<div class="badge-card-container-view-more view-collections" style='left: 0;text-align: right;z-index: 10;bottom: 0;height: 50px;color:white;'>View & Create Collections</div>
+	</div>
+	<?php
+	}else{
+	?>
+		<div style='margin-left:25px'>
+			<?php
+			if(sizeof($collections) > 0){
+				foreach($collections as $collection){
+					DisplayCollection($collection);
+				}
+			}
+			?>
+		</div>
+		<div class="badge-card-container-view-more view-collections" style='left: 0;text-align: right;background-color: white;z-index: 10;bottom: 0;height: 50px;'>View Collections</div>
+	<?php
 	}
 }
 ?>

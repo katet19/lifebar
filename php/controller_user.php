@@ -75,6 +75,7 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultFollowingConnections($user->_id, $mysqli);
+		CreateDefaultUserCollections($user->_id);
 		SignupEmail($email);
 	}
 	Close($mysqli, $result);
@@ -785,5 +786,77 @@ function SaveUserTitle($userid, $title){
 	$mysqli->query("UPDATE `Users` SET `Title` = '".$title."' WHERE `ID` ='".$userid."'");
 	Close($mysqli, $result);
 }
+
+function GetShareLink($userid, $type, $otherid){
+	if($type == "game"){
+		$url = "http://lifebar.io/1/u.php?i=g".$otherid;
+		$game = GetGame($otherid);
+		//$header = "Share ".$game->_title." with others";
+		$header = "Select how you would like to share this game";
+		$share = htmlspecialchars("Check out analytics and what others are saying about ".str_replace("&","%26",$game->_title)." @Lifebario!");
+		$shareEmail = htmlspecialchars("Check out analytics and what others are saying about ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+	}else if($type == "user"){
+		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
+		$user = GetUser($otherid);
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+		$header = "Select how you would like to share this user profile";
+		if($otherid == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my profile @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my profile @Lifebario! ".$url);
+		}else if($user->_security == "Journalist"){
+			$share = htmlspecialchars("Check out ".$username."%27s curated gaming profile at @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated gaming profile at @Lifebario! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out ".$username."%27s gaming profile at @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s gaming profile at @Lifebario! ".$url);
+		}
+	}else if($type == "userxp"){
+		$ids = explode("-", $otherid);
+		$game = GetGame($ids[0]);
+		$user = GetUser($ids[1]);
+		
+		$url = "http://lifebar.io/1/u.php?i=x".$otherid;
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+		$header = "Select how you would like to share this experience";
+		if($user->_id == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}else if($user->_security == "Journalist"){
+			$share = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}
+	}else if($type == "collection"){
+		$url = "http://lifebar.io/1/u.php?i=c".$otherid;
+		$collection = GetCollectionByID($otherid);
+		$header = "Select how you would like to share this collection";
+		if($user->_id == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
+		}
+	}
+	
+	$shareData[0] = $username;
+	$shareData[1] = $header;
+	$shareData[2] = $share;
+	$shareData[3] = $shareEmail;
+	$shareData[4] = $url;
+	
+	return $shareData;
+}
+
 
 ?>

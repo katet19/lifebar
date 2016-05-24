@@ -31,19 +31,11 @@ function DisplayHeaderNavigation(){ ?>
 			<div class="col s4 m4 l4">
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
-						<?php if($_SESSION['logged-in'] != null){ ?>
-							<div class="searchContainer">
-								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
-								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
-							</div>
-						<?php }else{ ?>
-							<div class="searchContainerAnonymous">
-								<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
-								<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-								<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
-							</div>
-						<?php } ?>
+						<div class="searchContainer">
+							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+						</div>
 						<div class='userBug supportButton'><i class="mdi-action-bug-report"></i></div>
 						<div class="userNotificiations"><i class="mdi-social-notifications-none"></i></div>
 						<div class="userAvatar" style="background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -60,10 +52,18 @@ function DisplayHeaderNavigation(){ ?>
 						  </ul>
 					</div>
 				<?php }else{ ?>
-					<div class="loginContainer">
-					  <a id="loginButton" class="waves-effect waves-light btn-flat modal-trigger" href="#loginModal" style='color: white;margin-top: 4px;margin-bottom: 5px;'>Login</a>
-					  <a id="signupButton" class="waves-effect waves-light btn-flat modal-trigger" href="#signupModal" style='margin-right: 5px;color: white;margin-bottom: 5px;margin-top:4px;'>Signup</a>
+				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
+						<div class="searchContainerAnonymous" style='margin-top: 0.5em;'>
+							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
+							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+						</div>
+						<div class="loginContainer" style='display:inline-block;margin-top: 0.5em;vertical-align: top;'>
+						  <a id="loginButton" class="waves-effect waves-light btn-flat modal-trigger" href="#loginModal" style='color: white;margin-top: 0px;margin-bottom: 0px;vertical-align: sub;'>Login</a>
+						  <a id="signupButton" class="waves-effect waves-light btn-flat modal-trigger" href="#signupModal" style='margin-right: 5px;color: white;margin-top: 0px;margin-bottom: 0px;vertical-align: sub;margin-top: 5px;'>Signup</a>
+						</div>
 					</div>
+
 				<?php } ?>
 			</div>
 		</div>
@@ -141,4 +141,44 @@ function DisplayLifeBarLogo($showtag){ ?>
 			<div class="logoLifebarDamage"></div>
 		</div>
 	</div>*/
+}
+
+function DisplayShareContent($userid, $type, $otherid){
+	$shareData = GetShareLink($userid, $type, $otherid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="share-header">
+				<div class="share-header-title">
+					<?php echo $shareData[1]; ?>
+				</div>
+			</div>
+		</div>
+	    <div class="col s12">
+	    	<div class="row">
+	  	   		<a href='http://twitter.com/intent/tweet?status=<?php echo $shareData[2]; ?>+<?php echo $shareData[4]; ?>' onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');GAEvent('UserShare', 'Twitter');return false;" class="social-share-btn" target="_blank" style='color:#55acee;'>
+	 				<i class="fa fa-twitter-square"></i>
+	  	   		</a>
+	  	   		<a href="https://plus.google.com/share?url=<?php echo $shareData[4]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');GAEvent('UserShare', 'Google');return false;" class="social-share-btn" target="_blank" style='color:#dc4e41;' alt="Share on Google+">
+	  	   			<i class="fa fa-google-plus-square"></i>
+	  	   		</a>
+	   	   		<a href="http://www.facebook.com/sharer/sharer.php?u=<?php echo $shareData[4]; ?>&title=<?php echo $share; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');GAEvent('UserShare', 'Facebook');return false;" class="social-share-btn" target="_blank" style='color:#3b5998;'>
+	  	   			<i class="fa fa-facebook-square"></i>
+	  	   		</a>
+ 	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');GAEvent('UserShare', 'Tumblr');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
+	  	   			<i class="fa fa-tumblr-square"></i>
+	  	   		</a>
+	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" onclick="javascript:GAEvent('UserShare', 'Email');" class="social-share-custom-btn">
+	  	   			<i class="fa fa-envelope-o"></i>
+	  	   		</a>
+	    	</div>
+	    </div>
+	    <div class="row">
+		    <div class="col s12 m6 l4" style='float: inherit;text-align: center; margin: auto;'>
+		        <input id="share-link" type="text" value='<?php echo $shareData[4]; ?>'>
+		        <div class="share-sub-link">COPY LINK</div>
+		    </div>
+	    </div>
+	</div>
+	<?php
 }

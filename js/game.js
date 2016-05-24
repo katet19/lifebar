@@ -25,13 +25,6 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#gameInnerContainer").html(output);
-	 		
-	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
-	 		
 	 		var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
@@ -42,6 +35,12 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
  	 			GLOBAL_HASH_REDIRECT = "";
 	 		GLOBAL_TAB_REDIRECT = "";
 	 		GAPage('Game', '/game/'+title);
+	 		
+ 	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -54,20 +53,24 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 		});
 	}else{
 		ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
+		var otherid = -1;
+		if(gameTab.indexOf("User") >= 0){
+			actionTaken = "DisplayGameViaIDWithUser";
+			var gameData = gameTab.split('/');
+			if(gameData[1].length > 0)
+				otherid = gameData[1];
+		}else{
+			actionTaken = "DisplayGameViaID";
+		}
+		
 		$.ajax({ url: '../php/webService.php',
-		 data: {action: "DisplayGameViaID", gameid: gbid },
+		 data: {action: actionTaken, gameid: gbid, otherid: otherid },
 		 type: 'post',
 		 success: function(output) {
 		 	$("#gameInnerContainer").html(output);
  		 	var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
 	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		
- 	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
 	 		
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
@@ -76,6 +79,15 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
  	 			GLOBAL_HASH_REDIRECT = "";
 		 	GLOBAL_TAB_REDIRECT = "";
 		 	GAPage('Game', '/game/'+title);
+		 	
+  	 		if(gameTab == "Community"){
+	 		
+	 		}else if(gameTab == "Analyze"){
+	 			$("#analyze-tab-nav").click();
+	 		}else if (gameTab.indexOf("User") >= 0){
+	 			$("#userxp-tab-nav").click();
+	 			DisplayExpSpectrum($("#game-userxp-tab"));
+	 		}
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -165,9 +177,9 @@ function AttachGameEvents(currentTab){
   	Waves.displayEffect();
   	
   	$(".detailsBtn").on('click', function(e){ 
-  		var uniqueid = $(this).attr("data-uid"); 
-  		var html = $('#'+uniqueid).html();
-  		ShowPopUp(html);
+  		var userid = $(this).attr("data-uid");
+  		var username = $(this).attr("data-uname");
+  		DisplayUserDetails(userid, username);
   	});
 	
  	$(".backButton").on('click', function(){
@@ -178,14 +190,56 @@ function AttachGameEvents(currentTab){
  		window.open("http://tidbits.io/c/games");
  	});
  	
+ 	$(".myxp-share-tier-quote").unbind();
+ 	$(".myxp-share-tier-quote").on('click', function(){
+		var gameid = $("#gameContentContainer").attr("data-id");
+		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
+	});
+ 	$(".myxp-profile-tier-quote").on('click', function(){
+		ShowUserProfile($(this).attr("data-userid"));
+	});
+ 	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 }
 
+function DisplayUserDetails(userid, username){
+	$("#userxp-tab-nav").html(username);
+ 	$("#userxp-tab-nav").parent().show(250);
+ 	$("#game-userxp-tab").css({"display":"block"});
+	$("#userxp-tab-nav").click();
+	ShowLoader($("#game-userxp-tab"), 'big', "<br><br><br>");
+	var gameid = $("#gameContentContainer").attr("data-id");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayUserDetails", gameid: gameid, userid: userid },
+     type: 'post',
+     success: function(output) {
+		$("#game-userxp-tab").html(output);
+		DisplayExpSpectrum($("#game-userxp-tab"));
+	 	$(".myxp-share-tier-quote").unbind();
+	 	$(".myxp-share-tier-quote").on('click', function(){
+			var gameid = $("#gameContentContainer").attr("data-id");
+			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
+		});
+	 	$(".myxp-profile-tier-quote").on('click', function(){
+			ShowUserProfile($(this).attr("data-userid"));
+		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
 function AttachAnalyzeEvents(){
-	DisplayExpSpectrum();
+	DisplayExpSpectrum($("#game-analyze-tab"));
 	DisplayAgeGraph();
 	DisplayRelationalGraphs();
 	AnalyzeViewMoreButtons();
@@ -257,35 +311,6 @@ function SubmitBookmark(serviceValue, gameid){
 	});
 }
 
-function SubmitOwned(serviceValue, gameid){
-	$.ajax({ url: '../php/webService.php',
-     data: {action: serviceValue, gameid: gameid },
-     type: 'post',
-     success: function(output) {
-     	if(serviceValue == "AddOwned"){
-			Toast("Added to your owned library");
-			$(".game-remove-owned-btn").show();
-			$(".game-add-owned-btn").hide();
-			$(".GameMyStatusIcons .myowned").show();
-			GAEvent('Game', 'Add to Owned');
-		}else{
-			Toast("Removed from your owned library");
-			$(".game-remove-owned-btn").hide();
-			$(".game-add-owned-btn").show();
-			$(".GameMyStatusIcons .myowned").hide();
-			GAEvent('Game', 'Remove from Owned');
-		}
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
-}
 
 function RequestUpdateFromGiantBomb(gameid){
 	Toast("Updating Game...");
@@ -308,28 +333,25 @@ function RequestUpdateFromGiantBomb(gameid){
 
 function AttachFloatingIconButtonEvents(){
 	$(".game-remove-bookmark-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			SubmitBookmark("RemoveBookmark", $(this).attr("data-gameid"));
 		}
 	});
 	$(".game-add-bookmark-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			SubmitBookmark("AddBookmark", $(this).attr("data-gameid"));
 		}
 	});
-	$(".game-remove-owned-btn").on('click', function(){
-		SubmitOwned("RemoveOwned", $(this).attr("data-gameid"));
-	});
-	$(".game-add-owned-btn").on('click', function(){
-		SubmitOwned("AddOwned", $(this).attr("data-gameid")); 
+	$(".game-collection-btn").on('click', function(){
+		DisplayCollectionPopUp($(this).attr("data-gameid"));	
 	});
 	$(".game-add-watched-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			AddWatchedFabEvent();
 		}
 	});
 	$(".game-add-played-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			AddPlayedFabEvent();		
 		}
 	});
@@ -339,6 +361,10 @@ function AttachFloatingIconButtonEvents(){
 	$(".game-add-image-btn").on('click', function(){
 		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
+	});
+	$(".game-share-btn").on("click", function(){
+		var gameid = $("#gameContentContainer").attr("data-id");
+		ShowShareModal("game", gameid);
 	});
 	$(".fab-login").on('click', function(){
 		 $('#signupModal').openModal();
@@ -374,8 +400,8 @@ function DisplayEquipXP(){
 function AttachEquipXPEvents(gameid){
 	$(".equip-xp-game-btn").on('click', function(){
 		$(this).parent().find(".equip-xp-game-image").css({"opacity":"0"});
-		if($(this).text() == "Equip"){
-			$(this).text("Unequip");
+		if($(this).text() == "Pin"){
+			$(this).text("Un-pin");
 			var image = $(".equip-xp-container").attr("data-newgame-image");
 			$(this).parent().find(".equip-xp-game-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
 			$(this).parent().find(".equip-xp-game-empty-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
@@ -384,7 +410,7 @@ function AttachEquipXPEvents(gameid){
 			var slot = $(this).parent().attr("data-slot");
 			UpdatePreferredXP(gameid, slot);
 		}else{
-			$(this).text("Equip");
+			$(this).text("Pin");
 			var oldgameid = $(this).parent().attr("data-previous");
 			var image = $(this).parent().find(".equip-xp-game-image").attr("data-previous");
 			$(this).parent().find(".equip-xp-game-image").css({"background":"url("+image+") 50% 50%", "background-size":"cover", "opacity":"1"});
@@ -779,9 +805,9 @@ function DisplayRelationalGraphs(){
 	}
 }
 
-function DisplayExpSpectrum(){
-	if($(".GraphExpSpectrum").length > 0){
-		$(".GraphExpSpectrum").each(function(){
+function DisplayExpSpectrum(elem){
+	if(elem.find(".GraphExpSpectrum").length > 0){
+		elem.find(".GraphExpSpectrum").each(function(){
 			var experiencedUsersGraph = $(this).get(0).getContext("2d");
 			var lifetimeTotal = $(this).attr("data-overalltotal");
 			var yearTotal = $(this).attr("data-yeartotal");
@@ -812,7 +838,7 @@ function DisplayExpSpectrum(){
 		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
 		    datasets: [
 		        {
-		            label: "Your Lifetime XP",
+		            label: "Lifetime XP",
 		            fillColor: "rgba(85, 85, 147, 0.41)",
 		            strokeColor: "rgba(85, 85, 147, 0.9)",
 		            pointColor: "rgba(85, 85, 147, 0.9)",
@@ -822,7 +848,7 @@ function DisplayExpSpectrum(){
 		            data: [ft5, ft4, ft3, ft2, ft1]
 		        },
 		        {
-		            label: ($(this).attr("data-year") == 0) ? "Your XP for unreleased games" : "Your XP from games released in "+$(this).attr("data-year"),
+		            label: ($(this).attr("data-year") == 0) ? "XP for unreleased games" : "XP from games released in "+$(this).attr("data-year"),
 		            fillColor: "rgba(0, 150, 136, 0.41)",
 		            strokeColor: "rgba(0, 150, 136, 0.9)",
 		            pointColor: "rgba(0, 150, 136, 0.9)",
@@ -832,7 +858,7 @@ function DisplayExpSpectrum(){
 		            data: [yt5, yt4, yt3, yt2, yt1]
 		        },
 		        {
-		            label: "Your XP from "+$(this).attr("data-genre"),
+		            label: "XP from "+$(this).attr("data-genre"),
 		            fillColor: "rgba(233, 30, 99, 0.41)",
 		            strokeColor: "rgba(233, 30, 99, 0.9)",
 		            pointColor: "rgba(233, 30, 99, 0.9)",
@@ -857,8 +883,8 @@ function DisplayExpSpectrum(){
 		var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });
 		});
 	}
-	if($(".GraphCommunityUsers").length > 0){
-		$(".GraphCommunityUsers").each(function(){
+	if(elem.find(".GraphCommunityUsers").length > 0){
+		elem.find(".GraphCommunityUsers").each(function(){
 			var communityGraph = $(this).get(0).getContext("2d");
 			var followingTotal = $(this).attr("data-followingTotal");
 			var criticTotal = $(this).attr("data-criticTotal");

@@ -42,7 +42,7 @@ function GetLifeBarSize($user){
 function GetUserSkills($userid){
 	$mysqli = Connect();
 	$myskills = array();
-	if ($result = $mysqli->query("select count( * ) AS cnt, `GenreID` from `Sub-Experiences` e, `Games` g, `Game_Genre` gg where e.`UserID` = '".$userid."' and e.`Archived` = 'No' and e.`Type` = 'Played' and  e.`GameID` = g.`ID` and g.`GBID` = gg.`GBID` group by `GenreID` order by `cnt` DESC LIMIT 0, 5")){
+	if ($result = $mysqli->query("SELECT COUNT( * ) AS cnt,  `GenreID` FROM  `Game_Genre` gg WHERE gg.`GBID` IN ( SELECT  `GBID` FROM  `Sub-Experiences` e,  `Games` g WHERE e.`UserID` =  '".$userid."' AND e.`Archived` =  'No' AND e.`Type` =  'Played' AND e.`GameID` = g.`ID`) GROUP BY  `GenreID` ORDER BY  `cnt` DESC LIMIT 0 , 5")){
 		while($row = mysqli_fetch_array($result)){
 			unset($skill);
 			$skill[] = GetGenreByID($row['GenreID'], $mysqli);

@@ -1,0 +1,892 @@
+.collection-box-container{
+    height: 300px;
+    display: inline-block;
+    position: relative;
+    top: 20px;
+    width: 300px;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.collection-box-container:hover .collection-box{
+    opacity:0.9;
+    background-color: #2196F3;
+}
+
+.collection-box{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: 10px 20px 10px 0px;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.collection-add{
+	background-color: #ccc;
+    color: white;
+    font-size: 8.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 80px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+}
+
+.collection-added-from-search{
+    float: right;
+    position: absolute;
+    top: 20px;
+    display: inline-block;
+    font-size: 1em;
+    right: 30px;
+}
+
+.collection-add:hover{
+	background-color: #2196F3;
+}
+
+.collection-empty{
+    background-color: #2196F3;
+    color: white;
+    padding: 23px 10px;
+    text-align: center;
+}
+
+.collection-name{
+    position: absolute;
+    left: 0;
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 20px 13px;
+    font-weight: 500;
+    font-size: 1.25em;
+    line-height: 20px;
+}
+
+.collection-desc{
+    font-size: 0.7em;
+    font-weight: 300;
+    margin-top: 5px;
+    line-height: 16px;
+}
+
+.collection-total{
+    font-weight: 500;
+    font-size: 2.5em;
+    line-height: 60px;
+}
+
+.collection-paging{
+    padding-top: 25px;
+    display: inline-block;
+    margin: 0 2.5%;
+    width: 95%;
+}
+
+.collection-pagination{
+    display:inline-block;
+}
+
+.collection-prev, .collection-next{
+    display:inline-block;
+}
+
+.collection-pagination-desc{
+    font-size: 1.5em;
+    display: inline-block;
+    float:left;
+}
+
+.collection-pagination-total{
+    font-weight:500;
+}
+
+
+.collection-search-icon{
+    color: white;
+    display: inline-block;
+    font-size: 1.5rem !important;
+    position: absolute;
+    z-index: 1;
+    right: 320px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.collection-search-box{
+    width: 350px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 10px 0 35px;
+    background-color: rgb(63, 128, 202);
+}
+
+.collection-details-name{
+    font-size: 2.5em;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.collection-details-desc{
+    text-align: left;
+    padding-left: 20px;
+    margin-top: -10px;
+}
+
+.collection-details-total{
+    float: right;
+    margin-right: 30px;
+    margin-top: -6px;
+    margin-left: 15px;
+}
+
+.collection-details-total-num{
+    font-size: 3em;
+    font-weight: 400;
+}
+
+.collection-details-total-string{
+    font-size: 1.5em;
+    height: 67px;
+    font-weight: 500;
+    padding-top: 17px;
+}
+
+.collection-details-total-lbl{
+    margin-top: -15px;
+}
+
+.collection-game-xp-progress-bar{
+    height: 25px;
+    border: 1px solid rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+    top: 22px;
+    left: 80px;
+    right: 125px;
+    z-index: 1;
+}
+
+.collection-game-xp-progress-filled{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    height: 25px;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.3);
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out; 
+}
+
+.collection-game-tier{
+    width: 35px;
+    font-size: 1.25em;
+    display: inline-block;
+    height: 35px;
+    margin-top: 6px;
+    text-align: center;
+}
+
+.collection-game-tier-container{
+    position: relative;
+    right: inherit;
+    top: 13px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out; 
+    background-color:gray;
+}
+
+.collection-game-tier-container-watched{
+    top: 13px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out; 
+    background-color:gray;
+    position: absolute;
+    left: 0px;
+}
+
+.collection-mgmt-header{
+    font-size: 1.25em;
+    font-weight: 500;
+    display: inline-block;
+    text-align: left;
+    padding: 5px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.frm-collection-validation{
+    color:red;
+    font-size:1.2em;
+    text-align: center;
+    margin-top:15px;
+    display:none;
+}
+
+.edit-mode-btn{
+    position: absolute;
+    top: 25px;
+    z-index: 7;
+    right: 25px;
+}
+
+.collection-follow-btn{
+    position: absolute;
+    top: 25px;
+    z-index: 7;
+    right: 25px;
+}
+
+.collection-edit-mode{
+    display:none;
+}
+
+.collection-game-search-results{
+    background-color: white;
+    overflow: auto;
+    width: 100%;
+    height: 500px;
+    margin-top: -20px;
+    margin-left: -10px;
+    border: 1px solid #bbb;
+}
+
+.collection-game-search-results li{
+    display: block;
+    padding: 5px 10px 20px;
+    text-align: left;
+    color: #474747;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-weight: 500;
+    position: relative;
+}
+
+.collection-game-search-results li span{
+    padding-right:100px;
+}
+
+.add-to-collection-from-search{
+    position: absolute;
+    top: 10px;
+    display: inline-block;
+    font-size: 0.8em;
+    right: 10px;
+}
+
+.collection-remove-game{
+    margin-top: 20px;
+    background-color:#F44336 !important;
+    display:none;
+    float: right;
+    padding: 0 1rem;
+    font-size: 0.8em;
+}
+
+.collection-cover-game{
+    margin-top: 20px;
+    margin-right:20px;
+    background-color:#00838F !important;
+    display:none;
+    float: right;
+    font-size: 0.8em;
+    padding: 0 1rem;
+}
+
+.collection-edit-save-refresh{
+    background-color: #43A047 !important;
+    z-index: 7;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    margin-left: 10px;
+    float: left;
+    height: 25px;
+    margin-bottom: 0;
+    display:none;
+}
+
+.collection-edit-delete{
+    background-color: #F44336 !important;
+    z-index: 7;
+    margin-right: 10px;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    height: 25px;
+    float:right;
+    margin-bottom: 0;
+    display:none;
+}
+
+.collection-edit-random-cover{
+    background-color: #00838F !important;
+    position: absolute;
+    top: 70px;
+    z-index: 7;
+    right: 25px;
+    font-size: 0.7em;
+    font-weight: 400;
+    line-height: 25px;
+    width:225px;
+    height: 25px;
+    display:none;
+}
+
+.collection-edit-exit{
+    position: absolute;
+    top: 20px;
+    z-index: 7;
+    right: 25px;
+    display:none;
+}
+
+.collection-confirm-delete{
+    background-color:#F44336 !important;
+}
+
+.import-list-header-add-collection{
+    display:none;
+}
+
+.collection-add-game-from-popup{
+    text-align: left;
+    width: 100%;
+    height: 45px;
+}
+
+.collection-add-game-from-popup-name{
+    margin-bottom: 5px;
+    float: left;
+    font-size: 1em;
+    line-height: 36px;
+    overflow:hidden;
+    z-index:1;
+    color: rgba(0,0,0,0.8);
+}
+
+.collection-add-game-from-popup-remove{
+    float:right;
+    margin-bottom:0;
+    z-index:2;
+    padding: 0 1rem;
+    color: rgba(0,0,0,0.54);
+    font-weight: bold;
+    cursor:default;
+}
+
+.collection-add-game-from-popup-add{
+    float:right;
+    margin-bottom:0;
+    z-index:2;
+    padding: 0 1rem;
+    color: rgba(0,0,0,0.54);
+    font-weight: bold;
+}
+
+.collection-add-game-from-popup-add:hover{
+    color: rgba(0,0,0,0.9);
+}
+
+.collection-game-add-to-collection{
+    position: absolute;
+    right: 10px;
+    padding: 0 1rem;
+    top: 15px;
+}
+
+.collection-add-to-existing-collection-container{
+    overflow: auto;
+    height: 225px;
+    padding: 10px 0px 10px 10px;
+    margin-bottom:0px;
+}
+
+.collection-quick-add-container{
+    background-color: white;
+    position: absolute;
+    right: 10px;
+    top: 45px;
+    z-index: 1000;
+    border-top: 8px solid #f57c00;
+    width: 400px;
+    height: 300px;
+    display:none;
+}
+
+.collection-xp-details-container{
+    position:relative;
+    padding-right: 125px !important;
+    padding-left: 70px !important;
+}
+
+.collection-xp-details-container-edit{
+    position:relative;
+    padding-right: 10px !important;
+}
+
+.collection-quick-add-btn{
+    margin-bottom: 0 !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    font-size: 0.8em !important;
+    margin-top: 10px !important;
+    padding: 0 1rem !important;
+}
+
+.collection-validation-quick{
+    color: red;
+    font-size: 0.8em;
+    text-align: center;
+    margin-top: -15px;
+    display:none;
+}
+
+.collection-game-name{
+    position: absolute;
+    display: inline-block;
+    margin-top: 15px;
+    height: 69px;
+    left: 0;
+    text-align: left;
+    overflow: hidden;
+    word-wrap: normal;
+}
+
+.collection-image-gradient{
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%, rgba(0,0,0,0.9) 101%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.9)), color-stop(101%,rgba(0,0,0,0.9)));
+}
+
+.collection-games-container-row{
+    height:70px;
+    padding:0 !important;
+}
+
+.collection-edit-properties-container{
+    margin-top: -154px;
+    margin-bottom: 0px; 
+    padding-top: 30px; 
+    margin-left: 50px; 
+    background-color: rgba(0,0,0,0.8);
+    border-radius: 10px 10px 0 0;
+}
+
+.collection-share{
+    display: inline-block;
+    font-size: 0.7em;
+    left: 10px;
+    border-radius: 50%;
+    height: 40px;
+    text-align: center;
+    width: 40px;
+    position: relative;
+    cursor: pointer;
+    top: -2px;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+}
+
+.collection-share:hover{
+    background-color:#303f9f !important;
+}
+
+.collection-xp-entry-container{
+    display:none;
+    border-top: 1px solid #ccc;
+    padding-top: 20px !important;
+}
+
+.collectionEditGameMode{
+    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    height:auto;
+}
+.collectionEditGameMode .collection-games-container-sub-row{
+    padding-bottom: 25px;
+}
+.collection-game-xp-progress-tick{
+    display: inline-block;
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0.3;
+    height: 100%;
+    width: 25px;
+    margin-left: -30px;
+}
+.collection-game-xp-progress-tick:hover{
+    opacity:1;
+    font-weight:400;
+}
+.collection-game-xp-progress-tick-selected{
+    opacity:1;
+    font-weight:bold;
+}
+.collection-tick{
+    height: 7px;
+    width: 7px;
+    background-color: #888;
+    color: #888;
+    border-radius: 50%;
+    margin-left: 12px;
+    margin-top: 7px;
+    font-size: 0.8em;
+    overflow: hidden;
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    -o-transition: all 0.15s ease-out;
+    -ms-transition: all 0.15s ease-out;
+    transition: all 0.15s ease-out;
+}
+
+.collection-game-xp-progress-tick:hover .collection-tick{
+    color: white;
+    height: 40px;
+    margin-top: -8px;
+    width: 40px;
+    background-color: #444;
+    padding-top: 10px;
+}
+
+.collection-game-myxp-header{
+    margin: 0 1em 0 0em;
+    font-weight: 500;
+    font-size: 1.25em;
+    position:absolute;
+    text-align:left;
+    left:40px;
+    right:0;
+    display: inline-block;
+    vertical-align: top;
+    color:rgba(0,0,0,0.6);
+    border-bottom: 1px solid rgba(0,0,0,0.6);
+}
+
+.collection-game-myxp-container{
+    position: absolute;
+    left: 40px;
+    top: 25px;
+    right:0px;
+}
+
+.collection-game-myxp-gutter{
+    position:absolute;
+    left:0;
+    width:40px;
+    margin: 0 1em 0 0em;
+    height: 100%;
+    font-weight: 500;
+    font-size: 1.25em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.collection-myxp-quarter{
+    display:inline-block;
+    font-size: 1.16em;
+    border-radius: 50%;
+    padding: 10px 13px;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+}
+
+.collection-myxp-quarter:hover{
+    background-color:#2196F3;
+    color:white;
+}
+
+.collection-myxp-quarter-selected{
+    background-color:#2196F3;
+    color:white;
+}
+
+.collection-myxp-quarter-container{
+    position:absolute;
+    right:-250px;
+    width:250px;
+    top:15px;
+    text-align: right;
+}
+
+.collection-myxp-tier{
+    display: inline-block;
+    font-size: 1.25em;
+    padding: 10px 22px;
+    position:relative;
+    font-weight: 400;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+    border: 2px solid;
+}
+
+.collection-myxp-label{
+    position: absolute;
+    font-size: 0.6em;
+    font-weight: 500;
+    text-transform: uppercase;
+    top: 50px;
+    left: 7px;
+}
+
+.collection-myxp-last-quote{
+    margin-top: 35px;
+    font-size: 1.2em;
+    text-align:left;
+}
+
+.collection-myxp-tier-container{
+    margin-top:10px;
+}
+
+.collection-myxp-tier:hover{
+
+}
+
+.collection-myxp-tier-selected{
+    color:white;
+}
+
+.collection-myxp-played-container{
+    height:400px;
+}
+
+.collection-myxp-watched-container{
+    height:600px;
+}
+
+.watched-type-box{
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 10px !important;
+    color: rgba(0,0,0,0.7);
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+}
+
+.watched-type-box-small{
+    width: 32%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    text-align:center;
+    margin-top:10px;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out; 
+}
+
+.watched-type-box:hover, .watched-type-box-small:hover{
+    background-color: #2196F3;
+    color: white;
+}
+
+.watched-type-box i{
+    left: -5px;
+    position: absolute;
+}
+
+.watched-type-box-header{
+    font-weight: 500;
+    position: relative;
+    padding-left: 20px;
+}
+.watched-type-box-desc{
+    font-size:0.8em;
+    padding-left: 35px;
+    display:none;
+}
+.watched-type-box-selected{
+    background-color: #2196F3;
+    color: white;
+}
+
+.collection-quote-container{
+    text-align:left;
+    position:relative;
+    top:15px;
+}
+
+@media only screen and (max-width : 599px) {
+    .edit-mode-btn{
+        padding: 0 10px;
+    }
+    .collection-details-total{
+        float: inherit;
+        margin-right: 5px;
+        margin-top: 25px;
+        margin-left: 10px;
+    }
+    .collection-details-total-string{
+        font-size: 1.25em;
+        height: 55px;
+        padding-top: 10px;
+    }
+    .collection-details-total-num{
+        font-size:2.7em;
+    }
+    .collection-image-gradient{
+        background: -moz-linear-gradient(top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%, rgba(0,0,0,0.9) 101%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0.9)), color-stop(101%,rgba(0,0,0,0.9)));
+    }
+    .collection-details-name, .collection-details-desc{
+        padding-left:0;
+    }
+    .import-game-image{
+        display:none !important;
+    }
+    .collection-game-name{
+        position:initial;
+        height:initial;
+        display: inline-block;
+        margin-top: 15px;
+        margin-left: 10px;
+        float: left;
+        overflow: hidden;
+        word-wrap: normal;
+    }
+    .collection-games-container-row, .collection-games-container-sub-row{
+        height:110px !important;
+    }
+    .import-list-header-search{
+        width:100% !important;
+    }
+    .collection-search-icon{
+        left: 10px !important;
+        right: inherit;
+    }
+    .collection-search-box{
+        width:100%;
+        padding: 0 10px 0 45px;
+    }
+    .collection-game-add-to-collection{
+        top:-25px;
+        padding: 0 0.5rem !important;
+        height: 30px;
+        line-height: 30px;
+    }
+    .collection-quick-add-container{
+        width:95%;
+        top:40px;
+    }
+    .collection-xp-details-container{
+        z-index: 1 !important;
+        padding-right: 25px !important;
+        padding-left: 75px !important;
+    }
+    .collection-game-tier-container-watched{
+        left:10px;
+    }
+    .collection-game-tier-container{
+        margin-left:-20px;
+    }
+    .collection-game-xp-progress-bar{
+        left: 75px;
+        right: 20px;
+    }
+    .collection-edit-properties-container{
+        margin-top: -100px;
+        margin-bottom: 0px;
+        padding-top: 30px;
+        margin-left: -10px;
+        margin-right: -10px;
+        border-radius:inherit;
+    }
+    .collection-edit-random-cover{
+        display:none;
+    }
+    .collection-edit-exit{
+        width: 100%;
+        right: 0;
+        top: 15px;
+    }
+    .collection-games-container{
+        width: 100% !important;
+    }
+    .collection-game-search-container{
+        position:absolute !important;
+    }
+    .collection-game-search-results{
+        width: auto;
+        display:none;
+    }
+    .collection-box-container, .collection-list-container{
+        text-align: center;
+    }
+    .collectionEditGameMode{
+        height:auto !important;
+    }
+    .collection-xp-entry-container{
+       margin-top: 33px !important;
+    }
+    .collection-game-xp-progress-tick{
+        opacity:0.5;
+    }
+    .collection-myxp-played-container{
+        height:700px;
+    }
+    .collection-myxp-watched-container{
+        height:840px;
+    }
+    .collection-quote-played-container{
+        top:410px;
+    }
+    .collection-quote-watched-container{
+        top:575px;
+    }
+    .collection-myxp-last-quote{
+        display:none;
+    }
+}

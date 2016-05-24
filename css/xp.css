@@ -175,7 +175,7 @@
 	background-color:#D32F2F;
 }
 
-.myxp-edit-tier-quote{
+.myxp-edit-tier-quote, .myxp-share-tier-quote, .myxp-profile-tier-quote{
 	padding: 0 2em;
 	margin: 0 1em;
 	font-weight: bold;
@@ -183,7 +183,7 @@
 	float: right;
 }
 
-.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover{
+.myxp-edit-tier-quote:hover, .myxp-edit-played:hover, .myxp-edit-watched:hover, .myxp-share-tier-quote:hover, .myxp-profile-tier-quote:hover{
 	opacity:1;
 }
 
@@ -323,6 +323,33 @@
     transition: all 1s ease-out;
 }
 
+.bp-share-container{
+    margin-bottom: 0;
+    font-size: 0.5em;
+    float: right;
+    margin-right: 50px;
+    margin-top: 50px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+.bp-share-container-min{
+	margin-top:0 !important;
+}
+
+.bp-share-label{
+	display: inline-block;
+    color: white;
+    position: relative;
+    font-size: 2.2em;
+    top: -5px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
 .bp-progress-item-levelup{
     font-weight: 500;
     float: right;
@@ -460,6 +487,11 @@
 .visual-sentence-sublabel{
 	font-size:0.5em;
 }
+.userxp-details-lifebar{
+	margin-bottom: 150px;
+	padding-top: 20px !important;
+	position: relative;
+}
 @media only screen and (max-width : 600px) {
 	.myxp-GraphContainer{
 		width:100%;
@@ -505,5 +537,22 @@
 	}
 	.visual-sentence-game{
     	max-width: 100px;
+	}
+	.gameNav{
+		font-size:0.8em;
+	}
+	.myxp-details-container .row .s0{
+		display:none;
+	}
+	.userxp-details-lifebar{
+		width:90% !important;
+		margin-left:3% !important;
+	}
+	.bp-share-container{
+	    margin-right: 0px;
+    	margin-top: 90px;
+	}
+	.bp-share-container-min{
+		display:none;
 	}
 }

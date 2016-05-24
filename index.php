@@ -5,8 +5,6 @@ require 'includes.php'; ?>
 <title>Lifebar</title>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
@@ -30,6 +28,8 @@ require 'includes.php'; ?>
 <link href="../css/notification.css" rel="stylesheet" type="text/css" />
 <link href="../css/weave.css" rel="stylesheet" type="text/css" />
 <link href="../css/badge.css" rel="stylesheet" type="text/css" />
+<link href="../css/collection.css" rel="stylesheet" type="text/css" />
+<link href="../css/import.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../js/library/chart.js"></script>
 <script type="text/javascript" src="../js/library/materialize.js"></script>
@@ -50,6 +50,8 @@ require 'includes.php'; ?>
 <script type="text/javascript" src="../js/notification.js"></script>
 <script type="text/javascript" src="../js/landing.js"></script>
 <script type="text/javascript" src="../js/profile.js"></script>
+<script type="text/javascript" src="../js/collection.js"></script>
+<script type="text/javascript" src="../js/import.js"></script>
 </head>
 <body id="applicationContainer">
 	<div id="navigationContainer">

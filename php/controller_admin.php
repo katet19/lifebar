@@ -1,7 +1,7 @@
 <?php
 require_once "includes.php";
 
-//RemoveUser(7887);
+//RemoveUser(10034);
 //ClearEmptyUsers();
 
 //$list = array(8263,8898,8897,8894,8893,9031,9032,9128,9129,9205,9206,9247);
@@ -182,6 +182,7 @@ function GetEmailList(){
 			$emails[] = $row['Email'];
 		}
 	}
+	
 	Close($mysqli, $result);
 	return $emails;
 }
@@ -455,6 +456,20 @@ function GetIGNUnmapped(){
 	}
 	Close($mysqli, $result);
 	return $reviews;
+}
+
+function GetImportReported(){
+	$mysqli = Connect();
+	$result = $mysqli->query("select count(*) from `GamesMapperReport`");
+	while($row = mysqli_fetch_array($result)){
+		$total[] = $row["count(*)"];
+	}
+	$result = $mysqli->query("select count(*) from `ImportAudit` i, `GamesMapperReport` r where i.`Type` = 'Steam' and i.`ImportID` = r.`ImportID`");
+	while($row = mysqli_fetch_array($result)){
+		$total[] = $row["count(*)"];
+	}
+	Close($mysqli, $result);
+	return $total;
 }
 
 function GetIGNUnmappedAndNeedsReview(){

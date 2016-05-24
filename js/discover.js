@@ -227,14 +227,14 @@ function CloseSearch(){
 	if($(window).width() >= 993){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"150px", "background-color" : ""});
 		setTimeout(function(){
-			$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar").show(100);
+			$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
 		$(".SearchBtn").css({"float":"inherit"});
 	}else if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"100px", "background-color" : ""});
 		setTimeout(function(){
-			$(".userAccountNavButton, .userBug, .userAvatar").show(100);
+			$(".userAccountNavButton, .userBug, .userAvatar, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
 		$(".SearchBtn").css({"float":"inherit"});
@@ -246,8 +246,6 @@ function CloseSearch(){
 	}
 	$(".closeMobileSearch").hide();
 	$(".searchInput").css({"display":""});
-	$(".loginContainer").show();
-	$(".logoContainer").parent().show();
 	$(".mainNav").parent().show();
 	$(".userContainer").parent().show();
 }

@@ -234,7 +234,11 @@ function AddWatchedFabEvent(){
 	HideFab();
 	var gameid = $("#gameContentContainer").attr("data-id");
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
-	$(".userGameTab").show();
+	if($(".userGameTab").length == 0){
+		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
+	}else
+		$(".userGameTab").show(250);
+		
 	$(".userGameTab a").trigger('click');
 	$.ajax({ url: '../php/webService.php',
          data: {action: "DisplayAddWatched", gameid: gameid },
@@ -258,7 +262,11 @@ function AddWatchedFabEvent(){
 
 function AddPlayedFabEvent(){
 	HideFab();
-	$(".userGameTab").show();
+	if($(".userGameTab").length == 0){
+		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
+	}else
+		$(".userGameTab").show(250);
+		
 	$(".userGameTab a").trigger('click');
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
 	var gameid = $("#gameContentContainer").attr("data-id");
@@ -365,7 +373,11 @@ function CancelXPEntry(){
          		$("#game-myxp-tab").html(output);
          		ShowFab();
          	}else{
-         		$(".userGameTab").hide();
+         		if($(".preExistingGameTab").length > 0)
+         			$(".userGameTab").hide(250);
+     			else
+     				$(".userGameTab").hide(250, function(){ $(".userGameTab").remove();  });
+     				
          		$(".criticGameTab a").trigger('click');
          		ShowFab();
          	}
@@ -418,10 +430,6 @@ function DisplayTierDetails(tier, year){
 
 function ValidateXPEntry(){
 	var validation = "";
-	if($("#myxp-quote").length > 0){
-		if($.trim($("#myxp-quote").val()) == "")
-			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Summary of your experience required</li>";
-	}
 	if($(".myxp-tiercontainer").length > 0){
 		if($(".myxp-selected-tier").length == 0)
 			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a tier 1 - 5 is requried</li>";
@@ -702,6 +710,7 @@ function AttachBPEvents(){
 			$(".bp-header").addClass("bp-header-min");
 			$(".bp-container").addClass("bp-container-min");
 			$(".bp-top-row").addClass("bp-top-row-min");
+			$(".bp-share-container").addClass("bp-share-container-min");
 			$(".lifebar-avatar-min").addClass("lifebar-avatar-min-min");
 			$(".lifebar-dots-min").addClass("lifebar-dots-min-min");
 			$(".lifebar-bar-container-min").addClass("lifebar-bar-container-min-min");
@@ -717,6 +726,7 @@ function AttachBPEvents(){
 			$(".bp-header").removeClass("bp-header-min");
 			$(".bp-container").removeClass("bp-container-min");
 			$(".bp-top-row").removeClass("bp-top-row-min");
+			$(".bp-share-container").removeClass("bp-share-container-min");
 			//$(".lifebar-dots-min").show(200);
 			//$(".lifebar-bar-container-min").show(200);
 			$(".lifebar-avatar-min").removeClass("lifebar-avatar-min-min");

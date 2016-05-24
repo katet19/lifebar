@@ -57,6 +57,12 @@ function DeployJS($version){
 		
 		$xp = file_get_contents("js/xp.js");
 		fwrite($deployed, $xp);
+        
+        $collection = file_get_contents("js/collection.js");
+		fwrite($deployed, $collection);
+        
+        $import = file_get_contents("js/import.js");
+		fwrite($deployed, $import);
 		
 		echo "Finished deploying JS";
 		fclose($deployed);
