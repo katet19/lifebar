@@ -128,6 +128,12 @@ function AttachProfileEvents(userid){
 	 $(".mylibrary").on("click", function(){
 	 	DisplayMyLibrary(userid);
 	 });
+ 	 $(".view-collections").on("click", function(){
+ 		DisplayUserCollection(userid);
+	 });
+ 	 $(".collection-box-container").on("click", function(){
+		 DisplayCollectionDetails($(this).attr("data-id"), 'Profile', userid);	
+	 });
 	 /*
 	 * New Profile
 	 */

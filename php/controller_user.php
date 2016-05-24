@@ -75,6 +75,7 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultFollowingConnections($user->_id, $mysqli);
+		CreateDefaultUserCollections($user->_id);
 		SignupEmail($email);
 	}
 	Close($mysqli, $result);
@@ -835,10 +836,21 @@ function GetShareLink($userid, $type, $otherid){
 			$share = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
 			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 		}
+	}else if($type == "collection"){
+		$url = "http://lifebar.io/1/u.php?i=c".$otherid;
+		$collection = GetCollectionByID($otherid);
+		$header = "Select how you would like to share this collection";
+		if($user->_id == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
+		}
 	}
 	
 	$shareData[0] = $username;
-	$shareData[1]= $header;
+	$shareData[1] = $header;
 	$shareData[2] = $share;
 	$shareData[3] = $shareEmail;
 	$shareData[4] = $url;

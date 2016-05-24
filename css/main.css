@@ -66,6 +66,8 @@ body{
 	}
 }
 
+.tier00BG{ background-color: gray !important; }
+
 .tier0BG{ background-color:rgba(0,0,0,0.7) !important;   }
 
 .tier1BG{ background-color:#0A67A3 !important;   }
@@ -89,6 +91,38 @@ body{
 .tierTextColor4{ color:#FF4100 !important;  }
 
 .tierTextColor5{ color:#DB0058 !important;  }
+
+.tierBorderColor0{ border-color:rgba(0,0,0,0.7) !important; color:rgba(0,0,0,0.7) !important;    }
+
+.tierBorderColor1{ border-color:#0A67A3 !important; color:#0A67A3;  }
+
+.tierBorderColor2{ border-color:#00B25C !important; color:#00B25C;  }
+
+.tierBorderColor3{ border-color:#FF8E00 !important; color:#FF8E00; }
+
+.tierBorderColor4{ border-color:#FF4100 !important; color:#FF4100;  }
+
+.tierBorderColor5{ border-color:#DB0058 !important; color:#DB0058; }
+
+.tierBorderColor1:hover{ border-color:#0A67A3 !important; background-color:#0A67A3 !important; color:white !important;  }
+
+.tierBorderColor2:hover{ border-color:#00B25C !important; background-color:#00B25C !important; color:white !important; }
+
+.tierBorderColor3:hover{ border-color:#FF8E00 !important; background-color:#FF8E00 !important; color:white !important; }
+
+.tierBorderColor4:hover{ border-color:#FF4100 !important; background-color:#FF4100 !important; color:white !important; }
+
+.tierBorderColor5:hover{ border-color:#DB0058 !important; background-color:#DB0058 !important; color:white !important; }
+
+.tierBorderColor1selected{ border-color:#0A67A3 !important; background-color:#0A67A3 !important; color:white !important;  }
+
+.tierBorderColor2selected{ border-color:#00B25C !important; background-color:#00B25C !important; color:white !important; }
+
+.tierBorderColor3selected{ border-color:#FF8E00 !important; background-color:#FF8E00 !important; color:white !important; }
+
+.tierBorderColor4selected{ border-color:#FF4100 !important; background-color:#FF4100 !important; color:white !important; }
+
+.tierBorderColor5selected{ border-color:#DB0058 !important; background-color:#DB0058 !important; color:white !important; }
 
 #toast-container > div{
 	text-align: center !important;

@@ -451,7 +451,7 @@ function ShowEditWatched($exp, $watchid){
 
 }
 
-function ShowTierGraphSelection($exp){
+function ShowTierGraphSelection($exp, $size){
 	$tiertally = GetTierBreakdownLight($_SESSION['logged-in']->_id, $exp->_game->_year);
 	$total = $tiertally[0];
 	if($total == "")
@@ -463,23 +463,23 @@ function ShowTierGraphSelection($exp){
 	$t5 = $tiertally[5];
 	
 	if($t1 != 0)
-		$relativeT1 = ceil($t1 / $total * 70);
+		$relativeT1 = ceil($t1 / $total * $size);
 	else
 		$relativeT1 = 0;
 	if($t2 != 0)
-		$relativeT2 = ceil($t2 / $total * 70);
+		$relativeT2 = ceil($t2 / $total * $size);
 	else
 		$relativeT2 = 0;
 	if($t3 != 0)
-		$relativeT3 = ceil($t3 / $total * 70);
+		$relativeT3 = ceil($t3 / $total * $size);
 	else
 		$relativeT3 = 0;
 	if($t4 != 0)
-		$relativeT4 = ceil($t4 / $total * 70);
+		$relativeT4 = ceil($t4 / $total * $size);
 	else
 		$relativeT4 = 0;
 	if($t5 != 0)
-		$relativeT5 = ceil($t5 / $total * 70);
+		$relativeT5 = ceil($t5 / $total * $size);
 	else
 		$relativeT5 = 0;
 	?>
@@ -607,7 +607,7 @@ function ShowMyXP($exp){
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
 	    		<div class="col s0 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
 	    		<div class="col s12 m10 myxp-details-items">
-	    			<?php BuildPlayedVisualSentence($played, $exp->_userid, $exp->_tier); ?><br><div class="myxp-edit-played btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
+	    			<?php BuildPlayedVisualSentence($played, $exp->_userid, $exp->_tier,'',''); ?><br><div class="myxp-edit-played btn-flat waves-effect"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Update</div>
 	    		</div>
 	    	</div>
     	<?php
@@ -617,7 +617,7 @@ function ShowMyXP($exp){
 	    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0 0;'>
 	    		<div class="col s0 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
 	    		<div class="col s12 m10 myxp-details-items">
-	    			<?php echo BuildWatchedVisualSentence($watched, $exp->_userid, $exp->_tier);	?><br><div class="myxp-edit-watched btn-flat waves-effect" data-id="<?php echo $watched->_id; ?>"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Edit</div>
+	    			<?php echo BuildWatchedVisualSentence($watched, $exp->_userid, $exp->_tier,'','');	?><br><div class="myxp-edit-watched btn-flat waves-effect" data-id="<?php echo $watched->_id; ?>"><i class="mdi-content-create left" style="vertical-align: sub;"></i> Edit</div>
 	    		</div>
 	    	</div>
     	<?php
@@ -627,7 +627,7 @@ function ShowMyXP($exp){
     <div class="col s12 m12 l10" id='myxp-game-width-box'></div>
 <?php }
 
-function BuildPlayedVisualSentence($exp, $userid, $tier){
+function BuildPlayedVisualSentence($exp, $userid, $tier, $gamename, $gbid){
 	$date = explode('-',$exp->_date);
 	if($exp->_completed > 0){
 		if($exp->_completed < 100){
@@ -669,6 +669,11 @@ function BuildPlayedVisualSentence($exp, $userid, $tier){
 		</div>
 		<div class="badge-small-name" style='width:auto;'><? echo $completedSentence; ?></div>
 	</div>
+	<? if($gamename != '' && $gbid != ''){ ?>
+		<div class="visual-sentence-label" style='padding: 0 0px 0 20px;'>
+			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
+		</div>
+	<?php } ?>
 	<div class="visual-sentence-label">on</div>
 	<?php $platforms = explode(",",$exp->_platformids);
 		if(sizeof($platforms) == 1){ ?>
@@ -731,7 +736,7 @@ function DisplayPlatformMilestone($milestone){
 	<div class="badge-small-name visual-sentence-game" style='width:auto;'><?php echo $milestone->_name; ?></div>
 <?php
 }
-function BuildWatchedVisualSentence($exp, $userid, $tier){
+function BuildWatchedVisualSentence($exp, $userid, $tier, $gamename, $gbid){
 	if($exp->_length == "Watched a speed run" || $exp->_length == "Watched a complete single player playthrough" || $exp->_length == "Watched a complete playthrough"){
 		$exp->_completed = 101;
 	}else if($exp->_completed < 100 && ($exp->_length == "Watched multiple hours" || $exp->_length == "Watched gameplay" || $exp->_length == "Watched an hour or less")){
@@ -775,6 +780,11 @@ function BuildWatchedVisualSentence($exp, $userid, $tier){
 		</div>
 		<div class="badge-small-name" style='width:auto;margin-left:0;'>Watched</div>
 	</div>
+	<? if($gamename != '' && $gbid != ''){ ?>
+		<div class="visual-sentence-label" style='padding: 0 0px 0 20px;'>
+			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
+		</div>
+	<?php } ?>
 	<div class="visual-sentence-label">on</div>
 	<div class="visual-sentence-label" style='font-weight:400;padding:0px;'><?php echo $exp->_source; if($link != ''){ echo "<a href='$link' style='margin-left:10px;' target='_blank'><i class='fa fa-film'></i></a>"; }?></div>
 	<div class="visual-sentence-label">during</div>

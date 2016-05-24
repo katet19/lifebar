@@ -95,6 +95,10 @@ function AttachAdminEvents(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayDBThreads();
 	});
+	$(".admin-manage-reported-games").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayReportedGames();
+	});
 }
 
 function DisplayDBThreads(){
@@ -406,6 +410,181 @@ function DisplayUnmappedManagerReviewed(){
 	});
 }
 
+function DisplayReportedGames(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayAdminManageReportedGames" },
+     type: 'post',
+     success: function(output) {
+ 		$("#adminInnerContainer").html(output);
+		AttachReportedGamesEvents();
+  		Waves.displayEffect();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachReportedGamesEvents(){
+	$(".import-game-search-btn,.import-game-search, html, .import-map-game, .import-steam-reimport, .import-ignore-game, .import-map-to-skip-game, .import-report-game, .import-report-game, .unmapped-next, .mapped-prev, .unmapped-prev, .mapped-next, .backButton, .import-map-suggest-image").unbind();
+	$('.import-game-search-btn').on('click', function(e){ 
+		e.stopPropagation(); 
+		SearchForGameReportedImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent(), '-1');
+	});
+	$(".import-game-search").on('keypress keyup', function (e) {
+		if (e.keyCode === 13) { 
+			SearchForGameReportedImport($(this).parent().parent().find(".import-game-search").val(), $(this).parent().parent(), '-1');
+		}
+	});
+	$('html').click(function(){
+		if($(".import-game-search-results").is(":visible"))
+			$(".import-game-search-results").hide(250);
+	});
+	$(".import-map-game").on("click", function(){
+		MapReportedGame($(this));
+	});
+	$(".import-map-to-skip-game").on("click", function(){
+		var importID = $(this).parent().attr("data-importid");	
+		$(this).parent().parent().css({"background-color": "#673AB7"});
+		$(this).parent().parent().find(".col").css({"opacity":"0"});
+		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game will always be hidden</div>");
+		var row = $(this).parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = $(this).attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "TrashGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+				GetNextReportedRow();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+	});
+	$(".import-map-suggest-image").on("click", function(){
+		ShowPopUp("<img style='height:100%;width:100%;' src='"+$(this).attr("data-image")+"'>");		
+	});
+}
+
+function SearchForGameReportedImport(search, element, userid){
+	var searchResults = element.parent().find(".import-game-search-results");
+	searchResults.parent().css({"z-index":"1"});
+	searchResults.show(250);
+	var test = element.parent().find(".import-game-search-results");
+	ShowLoader(element.parent().find(".import-game-search-results"), 'small', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "AdminGameSearch", search: search },
+     type: 'post',
+     success: function(output) {
+		element.parent().find(".import-game-search-results").html(output);
+ 		$(".import-game-search-results li").on('click', function(){
+ 			var gbid = $(this).attr("data-gbid");
+ 			var image = $(this).attr("data-image");
+ 			if($(this).parent().parent().next().find(".import-warning-msg").length  > 0){
+ 				$(this).parent().parent().next().find(".import-warning-msg").remove();
+ 				$(this).parent().parent().next().find(".import-warning-msg-txt").remove();
+ 			}else{
+ 				$(this).parent().parent().next().find(".import-map-suggest-image").remove();
+ 			}
+ 			$(this).parent().parent().next().append("<div class='import-map-suggest-image' data-image='"+image+"' style='height:69px;width:200px;background:url("+image+") 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div>");
+ 			$(this).addClass("import-game-search-selected");
+ 			element.find(".import-game-search").val($(this).find(".actual-title").text());
+ 			var disabled = element.parent().parent().parent().find(".import-disabled-game");
+ 			if(disabled.length > 0){
+ 				disabled.css({"opacity":"1"});
+ 				disabled.removeClass("import-disabled-game");
+ 				disabled.addClass("import-map-game");
+ 				$(".import-map-game").unbind();
+ 				$(".import-map-game").on("click", function(){
+					MapReportedGame($(this));
+				});
+ 			}
+ 			$(".import-map-suggest-image").unbind();
+ 			$(".import-map-suggest-image").on("click", function(){
+				ShowPopUp("<img style='height:100%;width:100%;' src='"+$(this).attr("data-image")+"'>");		
+			});
+ 			searchResults.parent().css({"z-index":"0"});
+ 		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function GetNextReportedRow(){
+	//var curroffset = $(".import-results-offset").attr("data-offset");
+	var offset = 25;
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "NextReportedRow", offset: offset },
+     type: 'post',
+     success: function(output) {
+		$(".import-unmapped-games-container").append(output);
+		AttachReportedGamesEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function MapReportedGame(element){
+		var importID = element.parent().attr("data-importid");	
+		element.parent().parent().css({"background-color": "#2E7D32"});
+		element.parent().parent().find(".col").css({"opacity":"0"});
+		element.parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game Mapped</div>");
+		var row = element.parent().parent().parent();
+		setTimeout(function(){
+			row.hide(250);
+		}
+		,500);
+		
+		var gbid = row.find(".import-game-search-selected").attr("data-gbid");
+		var auditid = element.attr("data-id");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: "MapGame", importID: importID, gbid: gbid, auditid:auditid },
+		     type: 'post',
+		     success: function(output) {
+		     	GetNextReportedRow();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+}
+
 function DisplayPendingReviews(){
 	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
@@ -575,7 +754,7 @@ function SearchForGame(search, element){
  		$(".admin-review-search-results li").on('click', function(){
  			var gbid = $(this).attr("data-gbid");	
  			$(this).addClass("admin-review-search-selected");
- 			element.find(".admin-review-search").val($(this).html());
+ 			element.find(".admin-review-search").val($(this).find(".actual-title").text());
  		});
      },
         error: function(x, t, m) {

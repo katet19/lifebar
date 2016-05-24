@@ -311,35 +311,6 @@ function SubmitBookmark(serviceValue, gameid){
 	});
 }
 
-function SubmitOwned(serviceValue, gameid){
-	$.ajax({ url: '../php/webService.php',
-     data: {action: serviceValue, gameid: gameid },
-     type: 'post',
-     success: function(output) {
-     	if(serviceValue == "AddOwned"){
-			Toast("Saved game for later");
-			$(".game-remove-owned-btn").show();
-			$(".game-add-owned-btn").hide();
-			$(".GameMyStatusIcons .myowned").show();
-			GAEvent('Game', 'Add to Owned');
-		}else{
-			Toast("Removed game");
-			$(".game-remove-owned-btn").hide();
-			$(".game-add-owned-btn").show();
-			$(".GameMyStatusIcons .myowned").hide();
-			GAEvent('Game', 'Remove from Owned');
-		}
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
-}
 
 function RequestUpdateFromGiantBomb(gameid){
 	Toast("Updating Game...");
@@ -362,28 +333,25 @@ function RequestUpdateFromGiantBomb(gameid){
 
 function AttachFloatingIconButtonEvents(){
 	$(".game-remove-bookmark-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			SubmitBookmark("RemoveBookmark", $(this).attr("data-gameid"));
 		}
 	});
 	$(".game-add-bookmark-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			SubmitBookmark("AddBookmark", $(this).attr("data-gameid"));
 		}
 	});
-	$(".game-remove-owned-btn").on('click', function(){
-		SubmitOwned("RemoveOwned", $(this).attr("data-gameid"));
-	});
-	$(".game-add-owned-btn").on('click', function(){
-		SubmitOwned("AddOwned", $(this).attr("data-gameid")); 
+	$(".game-collection-btn").on('click', function(){
+		DisplayCollectionPopUp($(this).attr("data-gameid"));	
 	});
 	$(".game-add-watched-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			AddWatchedFabEvent();
 		}
 	});
 	$(".game-add-played-btn").on('click touchend', function(){
-		if($(".game-remove-owned-btn").css("opacity") == 1){
+		if($(".game-collection-btn").css("opacity") == 1){
 			AddPlayedFabEvent();		
 		}
 	});

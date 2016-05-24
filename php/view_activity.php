@@ -54,7 +54,7 @@ function DisplayMainActivity($userid, $filter){
 			}
 		}else{
 			if(sizeof($group) > 0){
-				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED" || $feeditem[5] == "COLLECTIONUPDATE") 
 					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
 						if($feeditem[5] == "BUCKETLIST"){
 							$groupfeed[] = $group;
@@ -113,6 +113,12 @@ function DisplayMainActivity($userid, $filter){
 					FeedQuoteChangedItem($feeditem, $conn, $mutualconn);
 				}else if($feeditem[0][5] == "GAMERELEASE"){
 					FeedGameReleasesItem($feeditem);
+				}else if($feeditem[0][5] == "COLLECTIONCREATION"){
+					FeedCollectionCreationItem($feeditem, $conn, $mutualconn);
+				}else if($feeditem[0][5] == "STEAMIMPORT"){
+					FeedSteamImport($feeditem, $conn, $mutualconn);
+				}else if($feeditem[0][5] == "COLLECTIONUPDATE"){
+					FeedCollectionUpdate($feeditem, $conn, $mutualconn);
 				}
 			}
 		?>
@@ -213,6 +219,10 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				FeedQuoteChangedItem($feeditem, $conn, $mutualconn);
 			}else if($feeditem[0][5] == "GAMERELEASE"){
 				FeedGameReleasesItem($feeditem);
+			}else if($feeditem[0][5] == "COLLECTIONCREATION"){
+				FeedCollectionCreationItem($feeditem,$conn, $mutualconn);
+			}else if($feeditem[0][5] == "STEAMIMPORT"){
+				FeedSteamImport($feeditem, $conn, $mutualconn);
 			}
 		}
 }
@@ -370,23 +380,34 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
       <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
       		<i class="mdi-editor-format-quote"></i>
 	  </div>
-  	<?php }else{ 
+  	<?php }else if($event->_quote != ''){ 
   			DisplayFeedTierIcon($xp, $event);
    		} ?>
       <div class="feed-card-title grey-text text-darken-4">
-      	<?php if($multiple){ ?>
+      	<?php if($multiple && $event->_quote != ''){ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
-      	"<?php echo $event->_quote; ?>"
-      	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+      	<?php if($event->_quote != ''){ ?>
+      		"<?php echo $event->_quote; ?>"
+	        	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+	      		<?php } ?>
+      	<?php }else{ ?>
+      		<div style='margin-top:15px;'>
+      			<?php if(sizeof($xp->_playedxp) > 0){ 
+      				BuildPlayedVisualSentence($xp->_playedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      			}else if(sizeof($xp->_watchedxp) > 0){
+      				BuildWatchedVisualSentence($xp->_watchedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      			} ?>
+      		</div>
+
   		<?php } ?>
       </div>
       <div class="feed-action-container">
       		<?php if($xp->_link != ''){ ?>
 			<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 			<?php } ?>
-			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
+			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $xp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } ?>
       </div>
@@ -468,6 +489,54 @@ function FeedConnectionCard($user, $event, $following){
 <?php
 }
 
+function FeedCollectionUpdate($feed, $conn, $mutualconn){
+	$user = GetUser($feed[0][0]->_userid);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+?>
+	<div class="row" style='margin-bottom: 30px;'>
+		<div class="feed-avatar-col">
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
+			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+		</div>
+		<div class="feed-activity-icon-col">
+			<div class="feed-activity-icon-xp" style='background-color:#2196F3;'><i class="mdi-image-collections"></i></div>
+		</div>
+		<div class="feed-content-col">
+			<div class="feed-activity-title">
+				<?php if(sizeof($feed) > 1){ ?>
+					<span class='feed-activity-user-link' data-id='<?php echo $user->_id; ?>'><?php echo $username; ?></span> 
+					added <?php echo sizeof($feed); ?> games to <span class="feed-activity-collection-link" data-cid="<?php echo $feed[0][2]->_id; ?>"><?php echo $feed[0][2]->_name; ?></span>
+					<span class='feed-activity-when-info'><i class='mdi-action-schedule'></i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
+				<?php }else{ ?>
+					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
+					added
+					<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
+					to <span class="feed-activity-collection-link" data-cid="<?php echo $feed[0][2]->_id; ?>"><?php echo $feed[0][2]->_name; ?></span>
+					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+				<?php } ?>
+			</div>
+			<div class="feed-activity-game-container">
+				<?php foreach($feed as $card){ 
+					$event = $card[0];
+					$game = $card[1];
+					FeedGameCollectionCard($game, $user, $event); 
+				}?>
+			</div>
+		</div>
+	</div>
+<?php
+}
+
+function FeedGameCollectionCard($game, $user, $event){ ?>
+  <div class="feed-bookmark-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+    </div>
+  </div>
+<?php
+}
 
 function FeedBookmarkItem($feed, $conn, $mutualconn){
 	$user = GetUser($feed[0][0]->_userid);
@@ -611,9 +680,9 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 				<div class="feed-activity-title">
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					<?php if(sizeof($feed) > 1){ ?>
-						updated their thoughts for <?php echo sizeof($feed); ?> games
+						posted <?php echo sizeof($feed); ?> times
 					<?php }else{ ?>
-						updated their thoughts for 
+						posted about  
 					<?php } ?>
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
@@ -695,6 +764,85 @@ function FeedGameReleaseDetailsCard($game){ ?>
     	<div class="feed-card-level-game_title feed-activity-game-link feed-release-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
     </div>
   </div>
+<?php
+}
+
+function FeedCollectionCreationItem($feed, $conn, $mutualconn){
+	$user = GetUser($feed[0][0]->_userid);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+?>
+	<div class="row" style='margin-bottom: 30px;'>
+		<div class="feed-avatar-col">
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
+			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+		</div>
+		<div class="feed-activity-icon-col">
+			<div class="feed-activity-icon-xp" style='background-color:#2196F3;'><i class="mdi-image-collections"></i></div>
+		</div>
+		<div class="feed-content-col">
+				<div class="feed-activity-title">
+					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
+					<?php if(sizeof($feed) > 1){ ?>
+						created <?php echo sizeof($feed); ?> Collections
+					<?php }else{ ?>
+						created a new Collection 
+					<?php } ?>
+					<?php if(sizeof($feed) == 1){ ?>
+						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
+					<?php } ?>
+					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+				</div>
+			<div class="feed-activity-game-container">
+				<?php
+					if(sizeof($feed) > 1)
+						$multiple = true;
+					else
+						$multiple = false;
+						
+					foreach($feed as $card){
+						$event = $card[0];
+						$collection = $card[1];
+						DisplayCollection($collection);
+					} 
+				?>
+			</div>
+		</div>
+	</div>
+<?php
+}
+
+function FeedSteamImport($feed, $conn, $mutualconn){
+	$user = GetUser($feed[0][0]->_userid);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+?>
+	<div class="row" style='margin-bottom: 30px;'>
+		<div class="feed-avatar-col">
+    		<div class="feed-avatar" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
+			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+		</div>
+		<div class="feed-activity-icon-col">
+			<div class="feed-activity-icon-xp" style='background-color:#2196F3;'><i class="fa fa-steam"></i></div>
+		</div>
+		<div class="feed-content-col">
+				<div class="feed-activity-title">
+					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
+						imported <?php echo number_format($feed[0][3]); ?> games from their Steam Library
+					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+				</div>
+			<div class="feed-activity-game-container">
+				<?php
+					$played = $feed[0][2];
+					DisplayCollection($played);
+					$backlog = $feed[0][1];
+					DisplayCollection($backlog);
+				?>
+			</div>
+		</div>
+	</div>
 <?php
 }
 

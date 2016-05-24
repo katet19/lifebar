@@ -430,10 +430,6 @@ function DisplayTierDetails(tier, year){
 
 function ValidateXPEntry(){
 	var validation = "";
-	if($("#myxp-quote").length > 0){
-		if($.trim($("#myxp-quote").val()) == "")
-			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Summary of your experience required</li>";
-	}
 	if($(".myxp-tiercontainer").length > 0){
 		if($(".myxp-selected-tier").length == 0)
 			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a tier 1 - 5 is requried</li>";

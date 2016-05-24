@@ -191,6 +191,12 @@
 	color:black;
 }
 
+.feed-activity-collection-link{
+  color:black;
+  font-style:italic;
+  cursor: pointer;
+}
+
 .feed-activity-user-link{
 	
 }
@@ -326,6 +332,10 @@
 
 .feed-card-title{
 	font-size:1.1em;
+}
+
+.feed-card-metadata{
+  font-size:0.9em;
 }
 
 .tierInProgress{
