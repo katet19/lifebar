@@ -9,7 +9,6 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	</head>
 	<body style='background-color:#D32F2F;color:white;text-align:center;padding:50px 25px'>
 		<div><?php DisplayLifeBarLogo(false); ?></div>
-		<div style='font-size: 3em;font-weight: 100;padding-top: 35px;'>Lifebar is temporarily down for maintenance</div>
 	</body>
 	</html>
 <?php }else{ ?>
