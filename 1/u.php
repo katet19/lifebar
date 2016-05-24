@@ -124,5 +124,7 @@ function ConvertCollectiontoOG($collection){
 		$og["IMAGE"] = $collection->_games[0]->_image;
 		
 	$og["LINK"] = "http://lifebar.io/#collection/".$collection->_id."/".$collection->_owner."/".htmlspecialchars($collection->_name)."/";
+	
+	return $og;
 }
 ?>
