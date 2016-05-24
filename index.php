@@ -1,6 +1,6 @@
 <?php require 'includes.php'; 
 
-if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security != 'Admin'){?>-->
+if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admin'){ ?>
 	<html>
 	<title>Lifebar - Down for Maintenance</title>
 	<head>
