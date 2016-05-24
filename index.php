@@ -1,8 +1,21 @@
 <?php 
-require 'includes.php'; ?>
+require 'includes.php'; 
+
+if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security != 'Admin'){?>-->
+	<html>
+	<title>Lifebar - Down for Maintenance</title>
+	<head>
+		<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
+		<link href="../css/main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body style='background-color:#D32F2F;color:white;text-align:center;padding:50px 25px'>
+		<div><?php DisplayLifeBarLogo(false); ?></div>
+	</body>
+	</html>
+<?php }else{ ?>
 <!DOCTYPE HTML>
 <html>
-<title>Lifebar</title>
+<title>Lifebar | Celebrate your life with games</title>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-Frame-Options" content="deny">
@@ -107,3 +120,4 @@ require 'includes.php'; ?>
 </script>
 </body>
 </html>
+<?php } ?>
