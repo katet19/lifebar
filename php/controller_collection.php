@@ -539,7 +539,7 @@ function HideInCollection($collectionID, $gameID, $userid){
 function CreateDefaultUserCollections($userid){
 	$mysqli = Connect();
 	
-	if(DoesCollectionExist('Upcomming Quests',$userid) == null){
+	if(DoesCollectionExist('Lifebar Backlog',$userid) == null){
 		unset($games);
 		$query = "select g.`ID`, g.`GBID` from `Quests` q, `Games` g where q.`Category` = 'Games' and q.`CoreID` = g.`ID` and q.`UserID` = '".$userid."'";
 		if ($result = $mysqli->query($query)) {
