@@ -536,6 +536,17 @@ function HideInCollection($collectionID, $gameID, $userid){
 
 //CreateDefaultUserCollections(9702);
 
+function AddDefaultUserCollections(){
+	$mysqli = Connect();
+	$query = "select `ID` from `Users` where `ID` not in ('7','7588','9702')";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			CreateDefaultUserCollections($row['ID']);
+		}
+	}
+	Close($mysqli, $result);
+}
+
 function CreateDefaultUserCollections($userid){
 	$mysqli = Connect();
 	
