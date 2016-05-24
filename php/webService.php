@@ -1,5 +1,5 @@
 <?php require_once 'includes.php';
-	if(isset($_POST['action']) && !$GLOBALS["DownForMaintenance"]){
+	if(isset($_POST['action']) && (!$GLOBALS["DownForMaintenance"] || $_SESSION['logged-in']->_security == 'Admin')){
 		LoginServices();
 		SignupServices();
 		DiscoverServices();
@@ -14,7 +14,7 @@
 		GeneralServices();
 		ImportServices();
 		CollectionServices();
-	}else if($GLOBALS["DownForMaintenance"]){
+	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
 		<?php
