@@ -961,6 +961,9 @@ else {
 		}else if(data[0] == "#landing"){
 			ShowLanding();
 			$this.find(".indicator").css({"display":"none"});
+		}else if(data[0] == "#collection" && data[1] > 0){
+			DisplayCollectionDetails(data[1], "UserCollection", data[2]);
+			$this.find(".indicator").css({"display":"none"});
 		}else{
 			if($("#loginButton").length > 0){
 				ShowLanding();
