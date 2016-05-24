@@ -11,7 +11,7 @@ function DisplayUserCollection($userid){
 		<div class="col s12" style='border-bottom:1px solid rgba(0,0,0,0.4);'>
 			<div class="row" style='margin-top:2em;'>
 				<div class="col s12 ability-tracking-header">Auto Collections</div>
-				<div class="col s12">Automated Collections made by Lifebar. <?php if($userid == $_SESSION['logged-in']->_id){ ?> Auto Collections are created as you add experiences and can be removed at anytime. <?php } ?></div>
+				<div class="col s12">Automated Collections made by Lifebar. <?php if($userid == $_SESSION['logged-in']->_id){ ?> Some are pre-built like Bookmarked & Lifebar Backlog and others are created as you add experiences <?php } ?></div>
 				<div class="col s12 collection-list-container">
 					<?php if(sizeof($autocollections) > 0){
 						foreach($autocollections as $collection){
@@ -394,14 +394,14 @@ function DisplayCollectionDetailGames($collectiongames, $edit){
 				    		
 				    		if($percent == 101){
 				    		?>
-					          	<div class="collection-game-tier-container-watched tier<?php echo $xp->_tier; ?>BG z-depth-1">
+					          	<div class="collection-game-tier-container-watched tier<?php echo $xp->_tier; ?>BG z-depth-1" data-gameid='<?php echo $xp->_game->_id; ?>'>
 					          		<div class="collection-game-tier" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>">
 			          					<i class="mdi-action-visibility"></i>
 						          	</div>
 					          	</div>
 
 					     	  <?php }else{ ?>
-					      		<div class="collection-game-tier-container-watched tier<?php echo $xp->_tier; ?>BG z-depth-1">
+					      		<div class="collection-game-tier-container-watched tier<?php echo $xp->_tier; ?>BG z-depth-1" data-gameid='<?php echo $xp->_game->_id; ?>'>
 					  			  	<div class="c100 mini <?php if($xp->_tier == 1){ echo "tierone"; }else if($xp->_tier == 2){ echo "tiertwo"; }else if($xp->_tier == 3){ echo "tierthree"; }else if($xp->_tier == 4){ echo "tierfour"; }else if($xp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$xp->_tier." - ".$length; ?>" style='background-color:white;'>
 								  	  <span class='tierTextColor<?php echo $xp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
 									  <div class="slice">
@@ -414,7 +414,7 @@ function DisplayCollectionDetailGames($collectiongames, $edit){
 						  	  		}
 								}else{
 									?>
-			 		  	  	       	<div class="collection-game-tier-container-watched collection-tier-container-placeholder z-depth-1">
+			 		  	  	       	<div class="collection-game-tier-container-watched collection-tier-container-placeholder z-depth-1" data-gameid='<?php echo $xp->_game->_id; ?>'>
 							          	<div class="collection-game-tier" title="Not Watched">
 						    				<i class="mdi-action-visibility"></i>
 							          	</div>
@@ -548,7 +548,7 @@ function DisplayCollectionPlayedEdit($gameid, $userid){
 	$platforms = explode("\n", $exp->_game->_platforms);
 	if(sizeof($platforms) > 0){
 	?>
-	<div class="row collection-myxp-container">
+	<div class="row collection-myxp-played-container">
 		<div class="col s12 m6">
 			<div class="row">
 				<div class="col s12 m12 l10" style='text-align:left;position:relative;top:15px;'>
@@ -637,7 +637,7 @@ function DisplayCollectionPlayedEdit($gameid, $userid){
 		</div>
 		<div class="col s12 m6">
 		    <div class="row">
-		      <div class="input-field col s12" style='text-align:left;position:relative;top:15px;'>
+		      <div class="input-field col s12 collection-quote-played-container">
 		  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
 				<div class="collection-game-myxp-header">Summary</div>
 				<div class="collection-game-myxp-container" style='top: 75px;'>
@@ -687,10 +687,8 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 	$exp = GetExperienceForUserByGame($userid, $gameid);
 	$year = date("Y");  
 	$releaseyear = $exp->_game->_year;
-	$platforms = explode("\n", $exp->_game->_platforms);
-	if(sizeof($platforms) > 0){
 	?>
-	<div class="row collection-myxp-container" style='height:600px;'>
+	<div class="row collection-myxp-watched-container">
 		<div class="col s12 m6">
 			<div class="row">
 				<div class="col s12 m12 l10" style='text-align:left;position:relative;top:15px;'>
@@ -817,7 +815,7 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 		</div>
 		<div class="col s12 m6">
 		    <div class="row">
-		      <div class="input-field col s12" style='text-align:left;position:relative;top:15px;'>
+		      <div class="input-field col s12 collection-quote-watched-container">
 		  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
 				<div class="collection-game-myxp-header">Summary</div>
 				<div class="collection-game-myxp-container" style='top: 75px;'>
@@ -855,10 +853,5 @@ function DisplayCollectionWatchedEdit($gameid, $userid){
 			<a class="waves-effect waves-light btn myxp-cancel" style='margin-left:2em;'><i class="mdi-navigation-close left"></i>Cancel</a>
     	</div>
     </div>
-	<?php }else{
-		?>
-		<div style='font-weight:500;'>This game doesn't have any record of what platforms you might have played it on.</div> 
-		<div>It might be because the developer hasn't announced the platforms yet or it could simply be missing from our database. <br><br>Please contact support@lifebar.io and let us know if you think it's incorrect!</div>
-		<?php
-	}
+	<?php 
 }

@@ -613,7 +613,7 @@ function ShowUserXP($userxp){
 			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
 			    		<div class="col s0 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
 			    		<div class="col s12 m10 myxp-details-items">
-			    			<?php BuildPlayedVisualSentence($played, $userxp->_userid, $userxp->_tier); ?>
+			    			<?php BuildPlayedVisualSentence($played, $userxp->_userid, $userxp->_tier, '', ''); ?>
 			    		</div>
 			    	</div>
 		    	<?php
@@ -623,7 +623,7 @@ function ShowUserXP($userxp){
 			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
 			    		<div class="col s0 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
 			    		<div class="col s12 m10 myxp-details-items">
-			    			<?php echo BuildWatchedVisualSentence($watched, $userxp->_userid, $userxp->_tier);	?>
+			    			<?php echo BuildWatchedVisualSentence($watched, $userxp->_userid, $userxp->_tier, '' ,'');	?>
 			    		</div>
 			    	</div>
 		    	<?php

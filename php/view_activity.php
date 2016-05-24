@@ -380,23 +380,34 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
       <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
       		<i class="mdi-editor-format-quote"></i>
 	  </div>
-  	<?php }else{ 
+  	<?php }else if($event->_quote != ''){ 
   			DisplayFeedTierIcon($xp, $event);
    		} ?>
       <div class="feed-card-title grey-text text-darken-4">
-      	<?php if($multiple){ ?>
+      	<?php if($multiple && $event->_quote != ''){ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
-      	"<?php echo $event->_quote; ?>"
-      	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+      	<?php if($event->_quote != ''){ ?>
+      		"<?php echo $event->_quote; ?>"
+	        	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+	      		<?php } ?>
+      	<?php }else{ ?>
+      		<div style='margin-top:15px;'>
+      			<?php if(sizeof($xp->_playedxp) > 0){ 
+      				BuildPlayedVisualSentence($xp->_playedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      			}else if(sizeof($xp->_watchedxp) > 0){
+      				BuildWatchedVisualSentence($xp->_watchedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      			} ?>
+      		</div>
+
   		<?php } ?>
       </div>
       <div class="feed-action-container">
       		<?php if($xp->_link != ''){ ?>
 			<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 			<?php } ?>
-			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
+			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $xp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } ?>
       </div>
@@ -669,9 +680,9 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 				<div class="feed-activity-title">
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					<?php if(sizeof($feed) > 1){ ?>
-						updated their thoughts for <?php echo sizeof($feed); ?> games
+						posted <?php echo sizeof($feed); ?> times
 					<?php }else{ ?>
-						updated their thoughts for 
+						posted about  
 					<?php } ?>
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>

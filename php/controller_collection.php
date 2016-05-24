@@ -252,6 +252,13 @@ function UpdateTimeStampCollection($collectionid){
 	Close($mysqli, $result);
 }
 
+function UpdateVisibilityOfCollection($collectionid, $visibility){
+	$mysqli = Connect();
+	$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
+	$result = $mysqli->query("update `Collections` set `LastUpdated` = '".$updatedDate."', `Visibility` = '".$visibility."' where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+	Close($mysqli, $result);
+}
+
 function SetCollectionCover($collectionid, $gameid){
 	$mysqli = Connect();
 	$game = GetGame($gameid, $mysqli);
@@ -481,7 +488,7 @@ function GetCollectionSize($collectionID){
 }
 
 
-function AddToCollection($collectionID, $gbid, $userid){
+function AddToCollection($collectionID, $gbid, $userid, $skipEvent = false){
 	$mysqli = Connect();
 	$alreadyExists = false;
 	$gameid = -1;
@@ -497,7 +504,8 @@ function AddToCollection($collectionID, $gbid, $userid){
 		$mysqli->query("insert into `CollectionGames` (`CollectionID`,`GameID`, `GBID`) values ('".$collectionID."', '".$game->_id."', '".$gbid."')");
 		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
 		$result = $mysqli->query("update `Collections` set  `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionID."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('$userid','$collectionID','COLLECTIONUPDATE','".$gameid."')");
+		if(!$skipEvent)
+			$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('$userid','$collectionID','COLLECTIONUPDATE','".$gameid."')");
 	}
 	
 	Close($mysqli, $result);
@@ -526,7 +534,7 @@ function HideInCollection($collectionID, $gameID, $userid){
 	Close($mysqli, $result);
 }
 
-//CreateDefaultUserCollections(7588);
+//CreateDefaultUserCollections(9702);
 
 function CreateDefaultUserCollections($userid){
 	$mysqli = Connect();

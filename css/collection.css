@@ -175,8 +175,8 @@
     background-color: rgba(0,0,0,0.1);
     position: absolute;
     top: 22px;
-    left: 30px;
-    right: 200px;
+    left: 80px;
+    right: 125px;
     z-index: 1;
 }
 
@@ -236,7 +236,7 @@
     transition: all 0.5s ease-out; 
     background-color:gray;
     position: absolute;
-    right: 90px;
+    left: 0px;
 }
 
 .collection-mgmt-header{
@@ -451,7 +451,8 @@
 
 .collection-xp-details-container{
     position:relative;
-    padding-right: 200px !important;
+    padding-right: 125px !important;
+    padding-left: 70px !important;
 }
 
 .collection-xp-details-container-edit{
@@ -590,6 +591,7 @@
     font-weight: 500;
     font-size: 1.25em;
     position:absolute;
+    text-align:left;
     left:40px;
     right:0;
     display: inline-block;
@@ -675,6 +677,7 @@
 .collection-myxp-last-quote{
     margin-top: 35px;
     font-size: 1.2em;
+    text-align:left;
 }
 
 .collection-myxp-tier-container{
@@ -689,8 +692,12 @@
     color:white;
 }
 
-.collection-myxp-container{
+.collection-myxp-played-container{
     height:400px;
+}
+
+.collection-myxp-watched-container{
+    height:600px;
 }
 
 .watched-type-box{
@@ -744,6 +751,12 @@
 .watched-type-box-selected{
     background-color: #2196F3;
     color: white;
+}
+
+.collection-quote-container{
+    text-align:left;
+    position:relative;
+    top:15px;
 }
 
 @media only screen and (max-width : 599px) {
@@ -809,13 +822,19 @@
         top:40px;
     }
     .collection-xp-details-container{
-        z-index:1 !important;
-        padding-right: 90px !important;
-        padding-left: 0px !important;
+        z-index: 1 !important;
+        padding-right: 25px !important;
+        padding-left: 75px !important;
+    }
+    .collection-game-tier-container-watched{
+        left:10px;
+    }
+    .collection-game-tier-container{
+        margin-left:-20px;
     }
     .collection-game-xp-progress-bar{
-        left: 10px;
-        right: 85px;
+        left: 75px;
+        right: 20px;
     }
     .collection-edit-properties-container{
         margin-top: -100px;
@@ -854,5 +873,20 @@
     }
     .collection-game-xp-progress-tick{
         opacity:0.5;
+    }
+    .collection-myxp-played-container{
+        height:700px;
+    }
+    .collection-myxp-watched-container{
+        height:840px;
+    }
+    .collection-quote-played-container{
+        top:410px;
+    }
+    .collection-quote-watched-container{
+        top:575px;
+    }
+    .collection-myxp-last-quote{
+        display:none;
     }
 }

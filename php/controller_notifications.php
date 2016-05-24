@@ -210,7 +210,7 @@ function CheckForNotifications($type,$user,$gameid){
 	Close($mysqli, $result);
 }
 
-//AddIntroNotifications(7);
+//AddIntroNotifications(9702);
 //AddIntroQuests(7588);
 
 //AddAllBookmarked(7);
@@ -223,7 +223,7 @@ function AddIntroNotifications($userid, $pconn = null){
 	$type = "info";
 	$category = "General";
 	$title = "Welcome to Lifebar!";
-	$caption = "A place where you can document all of your gaming experiences whether you watched someone play a game, played it yourself or did both. Fill out your history of playing gaming and track your present experiences.";
+	$caption = "A place where you can document all of your gaming experiences whether you watched someone play a game, played it yourself or did both. Fill out your history of playing gaming and track of your present experiences.";
 	$color = "#66BB6A";
 	$icon = "mdi-action-thumb-up";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
@@ -275,7 +275,7 @@ function AddIntroNotifications($userid, $pconn = null){
 	$type = "info";
 	$category = "General";
 	$title = "An archive of historical reviews";
-	$caption = "While new reviews are always being added, there is also a growing backlog of critic reviews. There are thousands of reviews going back to the 90s already archived with additional ones being added each day. You can find them by going to a game and viewing the Critics tab or finding the critic who originally reviewed it and browsing their profile.";
+	$caption = "While new reviews are always being added, there is also a growing backlog of critic reviews. There are thousands of reviews going back to the 90s already archived with additional ones being added each day. You can find them by going to a game and viewing the Community tab and looking for Curated users or finding the critic who originally reviewed it and browsing their profile.";
 	$color = "#66BB6A";
 	$icon = "mdi-action-description";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
@@ -291,7 +291,7 @@ function AddIntroNotifications($userid, $pconn = null){
 	$type = "info";
 	$category = "General";
 	$title = "Follow your friends!";
-	$caption = "Find your friends and follow them. By following someone, their most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Users tab. We have taken the liberty to have you follow the top 10 current personalities, which you will see below. Feel free to un-follow them if you like, but who knows, you may find someone with tastes similar to yours.";
+	$caption = "Find your friends and follow them. By following someone, their most recent activity is added to your feed and you can see their experiences when viewing specific games by going to the Community tab. We have taken the liberty of auto-following the top 10 current personalities, you can see who was added below. Feel free to un-follow them if you like, but who knows, you may find someone with tastes similar to yours.";
 	$valueone="Find Users";
 	$actionone="Trigger,#NavConnections";
 	$color = "#66BB6A";
@@ -304,6 +304,14 @@ function AddIntroNotifications($userid, $pconn = null){
 	$caption = "Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. If you find any bugs or have feedback please click on the bug at the top right and please let us know!";
 	$color = "#66BB6A";
 	$icon = "mdi-action-bug-report";
+	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
+	//Steam
+	$type = "info";
+	$category = "General";
+	$title = "Steam Import";
+	$caption = "Importing your Steam Library will really help you build up your Lifebar quickly. Go to your Profile and view your Collections to start importing your Steam Library!";
+	$color = "#212121";
+	$icon = "fa fa-steam";
 	$mysqli->query("insert into `Quests` (`UserID`,`Category`,`Type`,`Title`,`Caption`,`Color`,`Icon`) values ('$userid','$category','$type','$title','$caption','$color','$icon')");
     UpdateTotalNew($userid, 10, $mysqli);
     if($pconn == null)
@@ -451,7 +459,7 @@ function AddCriticCardsToBookmarkedUsers($gameid){
 function AddSimilarGames($userid, $gameid){
 	$mysqli = Connect();
 	$gameinfo = GetGame($gameid, $mysqli);
-	$collectionid = DoesCollectionExist('Upcoming Quests',$userid);
+	$collectionid = DoesCollectionExist('Lifebar Backlog',$userid);
 	if($collectionid != null){
 		RemoveFromCollection($collectionid, $gameinfo->_id, $userid);
 		$addcards =  array();
@@ -492,7 +500,7 @@ function AddSimilarGames($userid, $gameid){
 						$color = "#000";
 						$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ActionOne`,`ValueTwo`,`ActionTwo`,`Color`,`Icon`) values ('$userid','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$actionone','$valuetwo','$actiontwo','$color','".$game->_imagesmall."')") or die;
 						*/
-						AddToCollection($collectionid, $game->_gbid, $userid);
+						AddToCollection($collectionid, $game->_gbid, $userid, true);
 					}
 				} 
 			}

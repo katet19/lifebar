@@ -334,6 +334,10 @@
 	font-size:1.1em;
 }
 
+.feed-card-metadata{
+  font-size:0.9em;
+}
+
 .tierInProgress{
     background-color: transparent !important;
     width: 25px !important;

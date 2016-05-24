@@ -166,9 +166,6 @@ function AttachCollectionDetailsEvents(fromid, from){
 		var maincontainer = $(this).parent().parent().parent();
 		if(!xpcontainer.is(":visible"))
 			DisplayCollectionPlayedEdit($(this).attr("data-gameid"), xpcontainer, maincontainer);
-			//HideCollectionPlayedEdit(xpcontainer, maincontainer);
-		//else
-				
 	});
 	$(".collection-game-tier-container-watched").on("click", function(){
 		var xpcontainer = $(this).parent().parent().find(".collection-xp-entry-container");
@@ -186,13 +183,16 @@ function AttachCollectionDetailsEvents(fromid, from){
 		var progContainer = $(this).parent().parent().parent().find(".collection-game-xp-progress-filled");
 		tierContainer.css({"left":progress+"%", "margin-left":"-20px"});
 		progContainer.css({"width":progress+"%"});
+		ValidateCollectionXPEntry('played');
 	});
 }
 
 function HideCollectionPlayedEdit(xpcontainer, maincontainer){
 	maincontainer.removeClass("collectionEditGameMode");
 	xpcontainer.hide();
+	xpcontainer.html("");
 	var tierContainer = maincontainer.find(".collection-game-tier-container");
+	var tierWatchedContainer = maincontainer.find(".collection-game-tier-container-watched");
 	var progContainer = maincontainer.find(".collection-game-xp-progress-filled");
 	if(progContainer.attr("data-default") == "0")
 		tierContainer.css({"left":progContainer.attr("data-default")+"%", "margin-left":"0px"});
@@ -200,7 +200,9 @@ function HideCollectionPlayedEdit(xpcontainer, maincontainer){
 		tierContainer.css({"left":progContainer.attr("data-default")+"%", "margin-left":"-20px"});
 	
 	tierContainer.removeClass("tier1BG tier2BG tier3BG tier4BG tier5BG");
+	tierWatchedContainer.removeClass("tier1BG tier2BG tier3BG tier4BG tier5BG");
 	tierContainer.addClass("tier"+tierContainer.attr("data-default")+"BG");
+	tierWatchedContainer.addClass("tier"+tierContainer.attr("data-default")+"BG");
 	progContainer.removeClass("tier1BG tier2BG tier3BG tier4BG tier5BG");
 	progContainer.addClass("tier"+tierContainer.attr("data-default")+"BG");
 		
@@ -212,8 +214,9 @@ function HideCollectionPlayedEdit(xpcontainer, maincontainer){
 }
 
 function CloseCollectionPlayedEdit(maincontainer, xpcontainer){
-	maincontainer.removeClass("collectionEditGameMode");
+	$(".collectionEditGameMode").removeClass("collectionEditGameMode");
 	xpcontainer.hide();
+	xpcontainer.html("");
 	var tierContainer = maincontainer.find(".collection-game-tier-container");
 	var progContainer = maincontainer.find(".collection-game-xp-progress-filled");
 	var progress = $(".collection-game-xp-progress-tick-selected").attr("data-prog");
@@ -296,20 +299,25 @@ function DisplayCollectionWatchedEdit(gameid, xpcontainer, maincontainer){
 
 function AttachPlayedCollectionEditEvents(){
 	ToggleCollectionQuarter($(".myxp-year").val());
+	ValidateCollectionXPEntry('played');
 	$(".myxp-cancel").on('click', function(){
-		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
 		var maincontainer = $(this).parent().parent().parent().parent().parent();
+		var xpcontainer = maincontainer.find(".collection-xp-entry-container");
 		HideCollectionPlayedEdit(xpcontainer, maincontainer);
 	});
 	$(".myxp-save").on("click", function(){
-		var maincontainer = $(this).parent().parent().parent().parent().parent();
-		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
-		SaveCollectionXPEntry(maincontainer, xpcontainer, 'played');	
+		if(!$(this).hasClass("disabled")){
+			var maincontainer = $(this).parent().parent().parent().parent().parent();
+			var xpcontainer = maincontainer.find(".collection-xp-entry-container");
+			SaveCollectionXPEntry(maincontainer, xpcontainer, 'played');	
+		}
 	});
 	$(".myxp-post").on("click", function(){
-		var maincontainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent();
-		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
-		SaveCollectionXPEntry(maincontainer, xpcontainer, 'post');	
+		if(!$(this).hasClass("disabled")){
+			var maincontainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent();
+			var xpcontainer = maincontainer.find(".collection-xp-entry-container");
+			SaveCollectionXPEntry(maincontainer, xpcontainer, 'post');	
+		}
 	});
 	$(".collection-myxp-tier").on('click', function(){
 		if(!$(this).hasClass("myxp-selected-tier")){
@@ -324,39 +332,49 @@ function AttachPlayedCollectionEditEvents(){
 			xpTierContainer.addClass("tier"+tier+"BG");
 			xpProgBar.addClass("tier"+tier+"BG");
 			
-			ValidateCollectionXPEntry();
+			ValidateCollectionXPEntry('played');
 		}
 	});
 	$(".myxp-year").on('change', function() { 
 		ToggleCollectionQuarter($(this).val());
-		ValidateCollectionXPEntry();
+		ValidateCollectionXPEntry('played');
 	});
 	$(".collection-myxp-quarter").on('click',function() {
 		$(".collection-myxp-quarter-selected").removeClass("collection-myxp-quarter-selected");
 		$(this).addClass("collection-myxp-quarter-selected");
-		ValidateCollectionXPEntry();
+		ValidateCollectionXPEntry('played');
 	});
 	$('.myxp-platforms').change(function() {
-		ValidateCollectionXPEntry();
+		ValidateCollectionXPEntry('played');
 	});
 	$(".myxp-quote").on('keypress keyup', function (e) {
 		e.stopPropagation(); 
 		if($(this).val() !== "")
-			ValidateCollectionXPEntry();
+			ValidateCollectionXPEntry('played');
 	});
 }
 
 function AttachWatchedCollectionEditEvents(){
 	ToggleCollectionQuarter($(".myxp-year").val());
+	ValidateCollectionXPEntry('watched');
 	$(".myxp-cancel").on('click', function(){
 		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
 		var maincontainer = $(this).parent().parent().parent().parent().parent();
 		HideCollectionPlayedEdit(xpcontainer, maincontainer);
 	});
+	$(".myxp-post").on("click", function(){
+		if(!$(this).hasClass("disabled")){
+			var maincontainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent();
+			var xpcontainer = maincontainer.find(".collection-xp-entry-container");
+			SaveCollectionXPEntry(maincontainer, xpcontainer, 'post');	
+		}
+	});
 	$(".myxp-save").on("click", function(){
-		var maincontainer = $(this).parent().parent().parent().parent().parent();
-		var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
-		//SaveCollectionXPEntry(maincontainer, xpcontainer, 'played');	
+		if(!$(this).hasClass("disabled")){
+			var maincontainer = $(this).parent().parent().parent().parent().parent();
+			var xpcontainer = $(this).parent().parent().parent().parent().find(".collection-xp-entry-container");
+			SaveCollectionXPEntry(maincontainer, xpcontainer, 'watched');
+		}
 	});
 	$(".collection-myxp-tier").on('click', function(){
 		if(!$(this).hasClass("myxp-selected-tier")){
@@ -364,29 +382,31 @@ function AttachWatchedCollectionEditEvents(){
 			oldselection.removeClass("myxp-selected-tier tierBorderColor1selected tierBorderColor2selected tierBorderColor3selected tierBorderColor4selected tierBorderColor5selected");
 			$(this).addClass("myxp-selected-tier tierBorderColor"+ $(this).attr("data-tier") +"selected");
 			var tier = $(this).attr("data-tier");
-			var xpTierContainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent().find(".collection-game-tier-container");
-			var xpProgBar = $(this).parent().parent().parent().parent().parent().parent().parent().parent().find(".collection-game-xp-progress-filled");
+			var xpTierContainer = $(this).parent().parent().parent().parent().parent().parent().parent().parent().find(".collection-game-tier-container-watched");
 			xpTierContainer.removeClass("tier1BG tier2BG tier3BG tier4BG tier5BG");
-			xpProgBar.removeClass("tier1BG tier2BG tier3BG tier4BG tier5BG");
 			xpTierContainer.addClass("tier"+tier+"BG");
-			xpProgBar.addClass("tier"+tier+"BG");
 			
-			ValidateCollectionXPEntry();
+			ValidateCollectionXPEntry('watched');
 		}
 	});
 	$(".myxp-year").on('change', function() { 
 		ToggleCollectionQuarter($(this).val());
-		ValidateCollectionXPEntry();
+		ValidateCollectionXPEntry('watched');
 	});
 	$(".collection-myxp-quarter").on('click',function() {
 		$(".collection-myxp-quarter-selected").removeClass("collection-myxp-quarter-selected");
 		$(this).addClass("collection-myxp-quarter-selected");
-		ValidateCollectionXPEntry();
+		ValidateCollectionXPEntry('watched');
 	});
 	$(".myxp-quote").on('keypress keyup', function (e) {
 		e.stopPropagation(); 
 		if($(this).val() !== "")
-			ValidateCollectionXPEntry();
+			ValidateCollectionXPEntry('watched');
+	});
+	$(".watched-type-box").on('click', function(){
+		$(".watched-type-box-selected").removeClass("watched-type-box-selected");
+		$(this).addClass("watched-type-box-selected");
+		ValidateCollectionXPEntry('watched');
 	});
 }
 
@@ -405,37 +425,31 @@ function ToggleCollectionQuarter(year){
 	}
 }
 
-function ValidateCollectionXPEntry(){
+function ValidateCollectionXPEntry(type){
 	var validation = "";
 	var container = $(".collectionEditGameMode");
-	if($(".collectionEditGameMode").find(".myxp-tiercontainer").length > 0){
-		if($(".collectionEditGameMode").find(".myxp-selected-tier").length == 0)
-			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a tier 1 - 5 is requried</li>";
-	}
-	if($("#myxp-percent-completed").length > 0){
-		if($("#myxp-percent-completed").val() == "0")
-			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a percentage completed is required</li>";
-	}
-	if($(".collectionEditGameMode").find(".myxp-platforms").length > 0){
-		var found = 0;
-		$(".myxp-platforms").each(function(){
-			if(this.checked)
-				found++;
-		});
-		if(found == 0)
+	if(container.find(".myxp-selected-tier").length == 0)
+		validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a tier 1 - 5 is requried</li>";
+			
+	if(container.find(".collection-game-xp-progress-tick-selected").length == 0 && type == 'played')
+		validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a percentage completed is required</li>";
+			
+	if(container.find(".myxp-platforms").length > 0 && type == 'played'){
+		if(container.find(".myxp-platform").val() == '')
 			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a platform played is required</li>";
 	}
-	if($('input[type=radio][name=viewingitemgroup]').length > 0){
-		if($('input[type=radio][name=viewingitemgroup]:checked').length == 0)
+	if(container.find(".watched-type-box-selected").length == 0 && type == 'watched'){
 			validation = validation + "<li style='text-align:left;'><i class='mdi-alert-warning'></i> Selecting a viewing experience is required</li>";
 	}
 
 	if(validation == ""){
-		$(".collectionEditGameMode").find(".myxp-save").removeClass("disabled");
-		$(".collectionEditGameMode").find(".myxp-post").removeClass("disabled");
-	}else if(!$(".collectionEditGameMode").find(".myxp-save").hasClass("disabled")){
-		$(".collectionEditGameMode").find(".myxp-save").addClass("disabled");
-		$(".collectionEditGameMode").find(".myxp-post").addClass("disabled");
+		container.find(".myxp-save").removeClass("disabled");
+		
+		if(container.find(".myxp-quote").val() != '')
+			container.find(".myxp-post").removeClass("disabled");
+	}else if(!container.find(".myxp-save").hasClass("disabled")){
+		container.find(".myxp-save").addClass("disabled");
+		container.find(".myxp-post").addClass("disabled");
 	}
 		
 	return validation;
@@ -459,7 +473,7 @@ function SaveCollectionXPEntry(maincontainer, xpcontainer, type){
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Collection Played');
-	         		DisplayBattleProgressFromCollection(output, maincontainer, xpcontainer);
+	         		DisplayBattleProgressFromCollection(output, maincontainer, xpcontainer, type);
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -472,13 +486,16 @@ function SaveCollectionXPEntry(maincontainer, xpcontainer, type){
 		    	timeout:45000
 			});
 		}else if(type == 'watched'){
+			var viewing = maincontainer.find(".watched-type-box-selected").attr("data-text");
+			var viewsrc = maincontainer.find(".myxp-view-source").val();
+			
 			$(".myxp-save").html("<div class='preloader-wrapper small active' style='vertical-align:text-top;margin-right:1em; width:15px; height:15px;'><div class='spinner-layer spinner-white-only'><div class='circle-clipper left'><div class='circle' style='border-width:2px;'></div></div><div class='gap-patch'><div class='circle' style='border-width:2px;'></div></div><div class='circle-clipper right'><div class='circle' style='border-width:2px;'></div></div></div></div> <span class='myxp-saving-label'>Saving XP</span>");
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "SaveWatchedCollection", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, viewurl: viewurl, year: year, quarter: quarter, criticlink: criticlink  },
+		         data: {action: "SaveWatchedCollection", gameid: gameid, quote: quote, tier: tier, viewing: viewing, viewsrc: viewsrc, year: year, quarter: quarter  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Collection Watched');
-	         		DisplayBattleProgress(output);
+	         		DisplayBattleProgressFromCollection(output, maincontainer, xpcontainer, type);
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -491,13 +508,14 @@ function SaveCollectionXPEntry(maincontainer, xpcontainer, type){
 		    	timeout:45000
 			});
 		}else if(type == 'post'){
+			var completion = maincontainer.find(".collection-game-xp-progress-tick-selected").attr("data-prog");
 			$(".myxp-post").html("<div class='preloader-wrapper small active' style='vertical-align:text-top;margin-right:1em; width:15px; height:15px;'><div class='spinner-layer spinner-white-only'><div class='circle-clipper left'><div class='circle' style='border-width:2px;'></div></div><div class='gap-patch'><div class='circle' style='border-width:2px;'></div></div><div class='circle-clipper right'><div class='circle' style='border-width:2px;'></div></div></div></div> <span class='myxp-saving-label'>Posting Update</span>");
 			$.ajax({ url: '../php/webService.php',
-		         data: {action: "PostUpdateFromCollection", gameid: gameid, quote: quote, tier: tier  },
+		         data: {action: "PostUpdateFromCollection", gameid: gameid, quote: quote, tier: tier, completion: completion  },
 		         type: 'post',
 		         success: function(output) {
 		         	GAEvent('XP', 'Collection Updated Post');
-	         		DisplayBattleProgressFromCollection(output, maincontainer, xpcontainer);
+	         		DisplayBattleProgressFromCollection(output, maincontainer, xpcontainer, type);
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -515,11 +533,19 @@ function SaveCollectionXPEntry(maincontainer, xpcontainer, type){
 	}
 }
 
-function DisplayBattleProgressFromCollection(content, maincontainer, xpcontainer){
+function DisplayBattleProgressFromCollection(content, maincontainer, xpcontainer, type){
 	var contentsplit = $.trim(content).split("|**|");
 	if(contentsplit[1] == "true"){
 		ShowBattleProgress(contentsplit[0]);
+	}else{
+		if(type == "post")
+			Toast("Posted an update to your thoughts on '"+maincontainer.find(".collection-game-name").text()+"'");
+		else if(type == 'watched')
+			Toast("Saved your watched XP for '"+maincontainer.find(".collection-game-name").text()+"'");
+		else if(type == 'played')
+			Toast("Updated your played XP for '"+maincontainer.find(".collection-game-name").text()+"'");
 	}
+	
 	CloseCollectionPlayedEdit(maincontainer, xpcontainer);
 }
 
@@ -559,8 +585,8 @@ function EnableEditMode(from, fromid, transition){
 	}
 	$(".edit-mode-btn, .collection-search-icon, .collection-search-box, .collection-tier-container-placeholder").hide(transition);
 	$(".collection-game-xp-progress-bar, .backContainer, .collection-game-add-to-collection").hide(transition);
-	$(".collection-game-tier-container").css({"float":"left","left":"0","margin-left":"0"});
-	$(".collection-game-tier-container-watched").css({"left":"56px","right":"inherit"})
+	$(".collection-game-tier-container").css({"float":"left","left":"45px","margin-left":"0"});
+	$(".collection-game-tier-container-watched").css({"left":"0px","right":"inherit"})
 	$(".collection-edit-mode, .collection-edit-save-refresh, .collection-edit-delete, .collection-edit-exit").show(transition);	
 	$(".collection-xp-details-container").css({"padding-right":"10px"});
 	$(".import-list-header-search").hide();

@@ -77,9 +77,18 @@
 				echo "|**|".$new;
 			}
 		}
+		if($_POST['action'] =='SaveWatchedCollection' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], '', $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|".$new;
+			}
+		}
 		if($_POST['action'] == 'PostUpdateFromCollection'){
 			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
-				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],'');
+				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],'',$_POST['completion']);
 				echo "|**|false";
 			}
 		}
@@ -406,7 +415,7 @@
 		}
 		if($_POST['action'] =='SaveTierQuote' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0 && $_POST['quote'] != '' && $_POST['tier'] > 0){
-				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink']);
+				UpdateXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['criticlink'],'');
 				CalculateWeave($_SESSION['logged-in']->_id);
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
 				echo "|**|";

@@ -67,7 +67,7 @@ function ImportSteamGames(userid, forceImport, fullreset){
 	     success: function(output) {
 			var totalGames = parseInt($.trim(output));
 			var percent = 0;
-			var totalTime = totalGames * 22.5;
+			var totalTime = totalGames * 2.85;//22.5;
 			var interval = Math.floor(totalTime / 100);
 			var progress = setInterval(function(){ 
 				$(".import-load-prog").css({"width":percent+"%"}); 

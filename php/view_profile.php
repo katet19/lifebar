@@ -2427,17 +2427,54 @@ function DisplayProfileCheckPointTierIcon($xp){
 
 function DisplayUserCollections($user){
 	$collections = GetLatestCollectionForUser($user->_id);
-	?>
-	<div style='margin-left:25px'>
-		<?php
-		if(sizeof($collections) > 0){
-			foreach($collections as $collection){
-				DisplayCollection($collection);
-			}
-		}
+	$newuser = false;
+	if(sizeof($collections) <= 2){
+		if(sizeof($collections[0]->_games) == 0 && sizeof($collections[1]->_games) == 0){
+			$newuser = true;
+		}	
+	} 
+	if($newuser){
+		$collections = GetLatestCollectionForUser(7);
 		?>
+		<div style='margin-left:25px'>
+			<?php
+			if(sizeof($collections) > 0){
+				foreach($collections as $collection){
+					DisplayCollection($collection);
+				}
+			}
+			?>
+		</div>
+		<?php
+	?>
+	<div class="newprofile-overlay-container">
+		<div class="newprofile-header">Collections</div>
+		<div class="newprofile-skills" style='font-size:1.2em;'>
+			Collections help you group games in meaningful ways. Whether it's a bucket list, games you are looking forward to or a top ten from your childhood, you can build & share it!
+		</div>
+		<div class="newprofile-skills" style='font-size:1.2em;'>
+			Lifebar also auto creates collections for you! Bookmarking a game will automatically add to your Bookmark collection and if you try Steam import we create a collection from your Steam Library to help you build your Lifebar quickly. 
+			<?php if($user->_id == $_SESSION['logged-in']->_id){ ?>
+				<br>Give importing a try! 
+				<span class="view-collections btn" style='margin-left: 20px;font-size: 0.8em;padding: 0 1rem;background-color: #E91E63;'><i class='fa fa-steam' style='font-size: 1em;margin-right: 10px;'></i> Import Steam Library</span> 
+			<?php } ?>
+		</div>
+		<div class="badge-card-container-view-more view-collections" style='left: 0;text-align: right;z-index: 10;bottom: 0;height: 50px;color:white;'>View & Create Collections</div>
 	</div>
-	<div class="badge-card-container-view-more view-collections" style='left: 0;text-align: right;background-color: white;z-index: 10;bottom: 0;height: 50px;'>View Collections</div>
 	<?php
+	}else{
+	?>
+		<div style='margin-left:25px'>
+			<?php
+			if(sizeof($collections) > 0){
+				foreach($collections as $collection){
+					DisplayCollection($collection);
+				}
+			}
+			?>
+		</div>
+		<div class="badge-card-container-view-more view-collections" style='left: 0;text-align: right;background-color: white;z-index: 10;bottom: 0;height: 50px;'>View Collections</div>
+	<?php
+	}
 }
 ?>

@@ -459,7 +459,10 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 				ClearCollection($steambacklog);
 				$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
 				BulkAddToCollection($steambacklog, $backlog);
-				UpdateTimeStampCollection($steambacklog);
+				if($fullreset == false)
+					UpdateTimeStampCollection($steambacklog);
+				else
+					UpdateVisibilityOfCollection($steambacklog, 'Yes');
 			}else{
 				$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
 				CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
@@ -470,7 +473,10 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 				ClearCollection($steamplayed);
 				$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
 				BulkAddToCollection($steamplayed, $played);
-				UpdateTimeStampCollection($steamplayed);
+				if($fullreset == false)
+					UpdateTimeStampCollection($steamplayed);
+				else
+					UpdateVisibilityOfCollection($steamplayed, 'Yes');
 			}else{
 				$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
 				CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);

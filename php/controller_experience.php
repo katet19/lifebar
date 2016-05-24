@@ -2066,7 +2066,19 @@ function SubmitCriticExperience($user,$gameid,$quote,$tier,$links){
 
 function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	$mysqli = Connect();
-	$quote = mysqli_real_escape_string($mysqli, $quote);
+	if($quote != '')
+		$quote = mysqli_real_escape_string($mysqli, $quote);
+	$newXP = "true";
+	
+	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
+	if($quickxp != ''){
+		if($quote == '')
+			$quote = mysqli_real_escape_string($mysqli, $quickxp->_quote);
+		if($tier <= 0)
+			$tier = $quickxp->_tier;
+		$newXP = "false";
+	}
+	
 	
 	if($quarter == 'q1')
 		$dates = $year."-01-01";
@@ -2084,16 +2096,23 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	else
 		$authentic = "No";
 		
-	if(HasUserExperienced($user, $gameid, $mysqli))
-		$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
-	else
-		$result = $mysqli->query("insert into `Experiences` (`UserID`,`GameID`,`Quote`,`Tier`,`ExperienceDate`,`Link`,`AuthenticXP`) values ('$user','$gameid','$quote','$tier','$dates','$link','$authentic')");
+	if($newXP == "false"){
+		$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
+		$result = $mysqli->query($update);
+		if($result == '' || $result == false)
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SaveXP - ('.$update.')');
+	}else{
+		$insert = "insert into `Experiences` (`UserID`,`GameID`,`Quote`,`Tier`,`ExperienceDate`,`Link`,`AuthenticXP`) values ('$user','$gameid','$quote','$tier','$dates','$link','$authentic')";
+		$result = $mysqli->query($insert);
+		if($result == '' || $result == false)
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SaveXP - ('.$insert.')');
+	}
 	
 	Close($mysqli, $result);
 	//CalculateGameTierData($gameid);
 }
 
-function UpdateXP($user,$gameid,$quote,$tier,$link){
+function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
 	$mysqli = Connect();
 	$data = HasUserGivenXP($user, $gameid);
 	$quote = mysqli_real_escape_string($mysqli, $quote);
@@ -2113,10 +2132,19 @@ function UpdateXP($user,$gameid,$quote,$tier,$link){
 		$authentic = "Yes";
 	else
 		$authentic = "No";
-	
-	$result = $mysqli->query("update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'");
+
+	$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
+	$result = $mysqli->query($update);
 	if($result == '' || $result == false){
-		customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP');
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$update.')');
+	}else{
+		if($completed > 0 && $completed != ''){
+			$subupdate = "update `Sub-Experiences` set `Completed` = '".$completed."' where `UserID` = '".$user."' and `GameID` = '".$gameid."' and `Type` = 'Played' and `Archived` = 'No'";
+			$result = $mysqli->query($subupdate);
+			if($result == '' || $result == false){
+				customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
+			}
+		}
 	}
 	Close($mysqli, $result);
 	//CalculateGameTierData($gameid);
@@ -2216,20 +2244,23 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		$date = $year."-00-00";
 		
 	if (sizeof($quickxp->_playedxp) == 0){
-		$result = $mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
+		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+		$result = $mysqli->query($insert);
 		if($result == '' || $result == false){
-			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
 		}else{
 			CreateEventForPlayedXP(false, null, $completed, $user, $gameid, $tier, $quote);
 		}
 	}else{
-		$mysqli->query("update `Sub-Experiences` set `Archived`='Yes' where `GameID` = '$gameid' && `UserID` = '$user' && `Type` = 'Played'");
+		$update = "update `Sub-Experiences` set `Archived`='Yes' where `GameID` = '".$gameid."' and `UserID` = '".$user."' and `Type` = 'Played'";
+		$result = $mysqli->query($update);
 		if($result == '' || $result == false){
-			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$update.')');
 		}else{
-			$mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')");
+			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+			$result = $mysqli->query($insert);
 			if($result == '' || $result == false){
-				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP');
+				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
 			}else{
 				CreateEventForPlayedXP(true, $data, $completed, $user, $gameid, $tier, $quote);
 			}
@@ -2272,11 +2303,15 @@ function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid,
 
 function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $quarter, $year){
 	$mysqli = Connect();
+	$newXP = "true";
 	
-	if($tier <= 0 || $quote == ""){
-		$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
-		$tier = $quickxp->_tier;
-		$quote = $quickxp->_quote;
+	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
+	if($quickxp != ''){
+		if($quote == '')
+			$quote = mysqli_real_escape_string($mysqli, $quickxp->_quote);
+		if($tier <= 0)
+			$tier = $quickxp->_tier;
+		$newXP = "false";
 	}
 	
 	$quote = mysqli_real_escape_string($mysqli, $quote);
@@ -2309,9 +2344,17 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	else if($quarter == "q0")
 		$date = $year."-00-00";
 	
-	CreateEventForWatchedXP($user, $gameid, $tier, $quote);
-	$result = $mysqli->query("insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`URL`,`Date`,`Length`,`Source`) values ('$user','$expid','$gameid','$quote','$tier','Watched','$url','$date', '$length', '$source')");
+	
+	$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`URL`,`Date`,`Length`,`Source`) values ('$user','$expid','$gameid','$quote','$tier','Watched','$url','$date', '$length', '$source')";
+	$result = $mysqli->query($insert);
+	if($result == '' || $result == false){
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','SaveWatchedXP - ('.$insert.')');
+	}else{
+		CreateEventForWatchedXP($user, $gameid, $tier, $quote);
+	}
 	Close($mysqli, $result);
+	
+	return $newXP;
 }
 
 function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, $year){
