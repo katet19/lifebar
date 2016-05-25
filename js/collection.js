@@ -15,7 +15,8 @@ function DisplayUserCollection(userid){
 		$(".load-steam-import").on("click", function(){
 			ImportSteamGames(userid, false);	
 		});
-		$(".collection-box-container").on("click", function(){
+		$(".collection-box-container").on("click", function(e){
+			e.stopPropagation();
 			DisplayCollectionDetails($(this).attr("data-id"), 'UserCollection', userid, false);	
 		});
 		$(".collection-add").on("click", function(){
@@ -34,46 +35,48 @@ function DisplayUserCollection(userid){
 }
 
 function DisplayCollectionDetails(collectionid, from, fromid, isNew){
-	window.scrollTo(0, 0);
-	var windowWidth = $(window).width();
-    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #game, #profiledetails, #settings, #admin, #notifications, #user, #landing").css({"display":"none"});
-	$("#activity, #discover, #game, #profiledetails, #settings, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	if($(window).width() > 599){
-		$("#navigation-header").css({"display":"block"});
-		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	if(fromid != undefined){
+		window.scrollTo(0, 0);
+		var windowWidth = $(window).width();
+	    $("#profile").css({"display":"inline-block", "left": -windowWidth});
+	    $("#activity, #discover, #game, #profiledetails, #settings, #admin, #notifications, #user, #landing").css({"display":"none"});
+		$("#activity, #discover, #game, #profiledetails, #settings, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+		if($(window).width() > 599){
+			$("#navigation-header").css({"display":"block"});
+			$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+		}
+		$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	  	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayCollectionDetails", collectionid: collectionid },
+	     type: 'post',
+	     success: function(output) {
+	 		$("#profileInnerContainer").html(output);
+	 		if(isNew)
+	 			EnableEditMode(from, fromid, 0);
+	 		
+	 		var collectionName = $.trim($(".collection-details-name").text().replace(" ","_"));
+	 		location.hash = "collection/"+collectionid+"/"+fromid+"/"+collectionName;
+	 		AttachCollectionDetailsEvents(fromid, from);
+	 		
+	 		//Handle mobile
+	 		if($(window).width() <= 600){
+	 			$(".edit-mode-btn").text("EDIT");
+	 			$(".collection-details-container").parent().css({"top":"150px"});
+	 			$(".backContainer").css({"top":"15px"});
+	 		}
+	 		
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
 	}
-	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-  	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "DisplayCollectionDetails", collectionid: collectionid },
-     type: 'post',
-     success: function(output) {
- 		$("#profileInnerContainer").html(output);
- 		if(isNew)
- 			EnableEditMode(from, fromid, 0);
- 		
- 		var collectionName = $.trim($(".collection-details-name").text().replace(" ","_"));
- 		location.hash = "collection/"+collectionid+"/"+fromid+"/"+collectionName;
- 		AttachCollectionDetailsEvents(fromid, from);
- 		
- 		//Handle mobile
- 		if($(window).width() <= 600){
- 			$(".edit-mode-btn").text("EDIT");
- 			$(".collection-details-container").parent().css({"top":"150px"});
- 			$(".backContainer").css({"top":"15px"});
- 		}
- 		
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
 }
 
 
