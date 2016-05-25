@@ -465,7 +465,7 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 					UpdateVisibilityOfCollection($steambacklog, 'Yes');
 			}else{
 				$backlog = GetSteamMappedBacklog($_SESSION['logged-in']->_id);
-				CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
+				$backlogID = CreateCollection('Steam Backlog',"Steam games I have yet to start",$_SESSION['logged-in']->_id,'-1','Yes',$backlog);
 			}
 			
 			$steamplayed = DoesCollectionExist('Steam Played',$_SESSION['logged-in']->_id);
@@ -479,10 +479,14 @@ function ImportLibraryForSteamUser($steamvanity, $fullreset){
 					UpdateVisibilityOfCollection($steamplayed, 'Yes');
 			}else{
 				$played = GetSteamMappedPlayed($_SESSION['logged-in']->_id);
-				CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);
+				$playedID = CreateCollection('Steam Played',"Games I have played from my Steam Library",$_SESSION['logged-in']->_id,'-1','Yes',$played);
 			}
 			
-			if($fullreset){
+			if($fullreset || $steambacklog == null || $steamplayed == null){
+				if($steambacklog == null)
+					$steambacklog = $backlogID;
+				if($steamplayed == null)
+					$steamplayed = $playedID;
 				$mysqli = Connect();
 				$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('".$_SESSION['logged-in']->_id."','".sizeof($allgames)."','STEAMIMPORT','".$steamplayed."||".$steambacklog."')");
 				Close($mysqli, $result);
