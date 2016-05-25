@@ -274,9 +274,11 @@ function RemoveCollection($collectionid){
 	if($collection->_createdby > 0){
 		$mysqli->query("delete from `Collections` where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
 		$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionid."'");
+		$mysqli->query("delete from `Events` where `GameID` = '".$collectionid."' and `Event` = 'COLLECTIONUPDATE' and `UserID` = '".$_SESSION['logged-in']->_id."'");
 	}else{
 		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));
 		$mysqli->query("update `Collections` set `Visibility` = 'Archived', `LastUpdated` = '".$updatedDate."' where `ID` = '".$collectionid."' and `OwnerID` = '".$_SESSION['logged-in']->_id."'");
+		$mysqli->query("delete from `Events` where `GameID` = '".$collectionid."' and `Event` = 'COLLECTIONUPDATE' and `UserID` = '".$_SESSION['logged-in']->_id."'");
 	}
 	Close($mysqli, $result);
 }
