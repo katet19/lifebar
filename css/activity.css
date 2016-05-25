@@ -362,6 +362,28 @@
 	font-size:60px !important;
 }
 
+.feed-visual-sentence-label{
+    display: inline-block;
+    font-size: 1em;
+    padding: 0 2px;
+}
+
+.feed-visual-sentence-perct{
+	display:inline-block;
+  vertical-align: middle;
+}
+
+.feed-visual-sentence-year{
+  display: inline-block;
+  font-size: 1.1em;
+  vertical-align: middle;
+  font-weight: 500;
+  padding: 0 2px;
+}
+.feed-visual-sentence-sublabel{
+	font-size:0.5em;
+}
+
 @media only screen and (max-width : 599px) {
 	.feed-activity-game-container{
 	  margin-top: 15px;

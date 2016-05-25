@@ -393,11 +393,11 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
 	      		<?php } ?>
       	<?php }else{ ?>
-      		<div style='margin-top:15px;'>
+      		<div style='margin-top:15px;margin-left:-15px;'>
       			<?php if(sizeof($xp->_playedxp) > 0){ 
-      				BuildPlayedVisualSentence($xp->_playedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      				BuildPlayedVisualActivitySentence($xp->_playedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
       			}else if(sizeof($xp->_watchedxp) > 0){
-      				BuildWatchedVisualSentence($xp->_watchedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
+      				BuildWatchedVisualActivitySentence($xp->_watchedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
       			} ?>
       		</div>
 
