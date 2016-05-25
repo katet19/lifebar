@@ -10,7 +10,7 @@ function DisplayUserCollection(userid){
  			ShowUserProfile(userid);
  		});
 		$(".import-steam").on("click", function(){
-			StartSteamImport(userid, false);	
+			StartSteamImport(userid, true);	
 		});
 		$(".load-steam-import").on("click", function(){
 			ImportSteamGames(userid, false);	
