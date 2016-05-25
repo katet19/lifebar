@@ -1176,7 +1176,7 @@ function GetExperienceForFeed($gameid, $filter, $pconn = null){
 function GetMyUsersXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.*, exp.ID as 'THEEXPID', gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' order by exp.`Tier` ASC")) {
+	if ($result = $mysqli->query("select exp.*, exp.ID as 'THEEXPID', gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`Quote` != '' and  exp.`UserID` in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' order by exp.`Tier` ASC")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["THEEXPID"],
@@ -1449,7 +1449,7 @@ function GetGameBookmarked($gameid){
 function GetOutsideUsersXPForGame($gameid, $userid){
 	$exp = array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select exp.*, exp.ID as 'THEEXPID', gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and usr.`ID` != '".$userid."' and exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' and usr.`Flagged` = 'No' order by exp.`ID` DESC LIMIT 0,30")) {
+	if ($result = $mysqli->query("select exp.*, exp.ID as 'THEEXPID', gms.*, usr.`First`, usr.`Last` from `Experiences` exp, `Games` gms, `Users` usr where exp.`Quote` != '' and exp.`UserID` not in (select `Celebrity` from `Connections` where `Fan` = '".$userid."') and usr.`ID` != '".$userid."' and exp.`GameID` = '".$gameid."' and gms.`ID` = '".$gameid."' and exp.`UserID` = usr.`ID` and usr.`Access` != 'Journalist' and usr.`Access` != 'Authenticated' and usr.`Flagged` = 'No' order by exp.`ID` DESC LIMIT 0,30")) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($row["UserID"], $mysqli);
 			$experience = new Experience($row["THEEXPID"],
