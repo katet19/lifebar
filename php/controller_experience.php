@@ -2286,7 +2286,10 @@ function GetPlatformIDs($platforms){
 	}
 	Close($mysqli, $platformresult);
 	
-	return implode(",",$platformID);
+	if(sizeof($platformID) > 0)
+		return implode(",",$platformID);
+	else	
+		return ''; 
 }
 
 function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid, $tier, $quote){
