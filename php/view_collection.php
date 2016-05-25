@@ -120,18 +120,22 @@ function DisplayCollectionDetails($collectionID){
 		if(sizeof($collection->_games) >= 1 && $collection->_cover == ''){
 			$key = array_rand($collection->_games, 1);
 			$one = $collection->_games[$key];
-			$size = getimagesize($one->_game->_image);
-			if($size[0] < 900){
-				$key = array_rand($collection->_games, 1);
-				$one = $collection->_games[$key];
+			if(@getimagesize($one->_game->_image)){
 				$size = getimagesize($one->_game->_image);
 				if($size[0] < 900){
 					$key = array_rand($collection->_games, 1);
 					$one = $collection->_games[$key];
+					if(@getimagesize($one->_game->_image)){
+						$size = getimagesize($one->_game->_image);
+						if($size[0] < 900){
+							$key = array_rand($collection->_games, 1);
+							$one = $collection->_games[$key];
+						}
+					}
 				}
+				
+				$coverimage = $one->_game->_image;
 			}
-			
-			$coverimage = $one->_game->_image;
 		}else if($collection->_cover != ''){
 			$coverimage = $collection->_cover;	
 		}

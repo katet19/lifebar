@@ -126,6 +126,7 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 		
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultFollowingConnections($user->_id, $mysqli);
+		CreateDefaultUserCollections($user->_id);
 		if($email != '')
 			SignupEmail($email);
 	}
