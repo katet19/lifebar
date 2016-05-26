@@ -36,8 +36,9 @@
 }
 
 #SaveUserSettingsSubmitBtn{
-	float: right;
-	margin-right: 40px;	
+    float: right;
+    margin-right: 0px;
+    margin-top: 5px;
 }
 
 .user-settings-box{
