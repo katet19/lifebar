@@ -6,6 +6,7 @@ function ShowUserSettings(){
          success: function(output) {
 			$("#BattleProgess").html(output); 
             AttachUserSettingEvents();
+            $("#user-settings-account").show();
             GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
@@ -24,6 +25,14 @@ function AttachUserSettingEvents(){
     	e.stopPropagation();
     	UserSettingsValidation();	
     });
+    $(".tab a").on("click", function(){
+    	$(".settings-active").removeClass("settings-active");
+    	$(this).addClass("settings-active");
+    	var container = $(this).attr("data-id");
+    	$(".user-settings-box").hide();
+    	$("#"+container).show();
+    });
+    AttachManageBadgeEvents($("#userSettings").attr("data-id"));
 }
 
 function UserSettingsValidation(){
