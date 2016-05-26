@@ -2157,7 +2157,7 @@ function SubmitBookmark($user,$gameid,$bucketlist){
 	$collectionid = DoesCollectionExist('Bookmarked',$user);
 	if($collectionid > 0){
 		if($bucketlist == "Yes"){
-			$added = AddToCollection($collectionid, $game->_gbid, $user);
+			$added = AddToCollection($collectionid, $game->_gbid, $user, true);
 			if($added > 0){
 				$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`) values ('$user','$gameid','BUCKETLIST')");
 				CheckForNotifications("Bucket",$user,$gameid);
