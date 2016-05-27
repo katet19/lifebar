@@ -135,6 +135,19 @@ function GetSubscribedCollections($userid){
 	return $collections;
 }
 
+function GetSubscribedCollectionList($userid, $pconn = null){
+	$mysqli = Connect($pconn);
+	if ($result = $mysqli->query("select `CollectionID` from `Collections` c, `CollectionSubs` s where s.`CollectionID` = c.`ID` and c.`Visibility` = 'Yes' and  s.`UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$collections[] = $row['CollectionID'];
+		}
+	}
+	
+	if($pconn == null)
+		Close($mysqli, $result);
+	return $collections;
+}
+
 function IsUserSubscribed($userid, $collectionID){
 	$mysqli = Connect();
 	$following = false;
