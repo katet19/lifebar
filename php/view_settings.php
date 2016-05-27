@@ -6,8 +6,8 @@ function DisplayUserSettings(){
 	    <div class="col s12">
 	      <ul class="tabs user-settings-tabs">
 	        <li class="tab col s3"><a class="settings-active" data-id="user-settings-account">Account</a></li>
-	        <li class="tab col s3"><a data-id="user-settings-avatar">Avatar & Badges</a></li>
-	        <li class="tab col s3"><a data-id="user-settings-config">Configuration</a></li>
+	        <li class="tab col s3"><a data-id="user-settings-avatar"><span class='HideForTabletAndMobile'>Avatar & Badges</span><span class='HideForDesktop'>Avtr/Bdgs</span></a></li>
+	        <li class="tab col s3"><a data-id="user-settings-config"><span class='HideForTabletAndMobile'>Configuration</span><span class='HideForDesktop'>Config</span></a></li>
 	        <div class="col s3">
 	        	<a href="#" class="waves-effect btn" id="SaveUserSettingsSubmitBtn">Save</a>
         		<div class="col s12 validation" style='text-align: center;color:red;display:none;'></div>
@@ -90,7 +90,7 @@ function DisplayUserSettings(){
 		    <div class="row">
 		      <div class="col s12 m4" style='text-align: center;'>
 		  		  <div class="avatar-item">
-			  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
+			  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" data-image="<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
 				    <label for="gravatar">Use your Profile image from <a href="http://gravatar.com" target="_blank">Gravatar</a></label>
 			  	  </div >
 	    		  <div class="user-avatar" style="width:60px;margin-right: auto;margin-left:50px;margin-top: 0px;float:left;height:60px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -117,7 +117,7 @@ function DisplayUserSettings(){
 			        <label for="weburl"  <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "class='active'"; } ?>>Web URL</label>
 	  			</div>
 		      </div>
-		      <div class="row">
+		      <div class="row avatar-badge-mgmt">
 		      	<?php DisplayBadgeManagementForUser($_SESSION['logged-in']->_id); ?>
 		      </div>
 	    </div>
@@ -194,8 +194,24 @@ function DisplayUserSettings(){
 					</div>
 				</div>
 			</div>
-      	</div>
-	    	
+			<div class="row">
+				<div class="col s12 settings-header" style='display:block;'>Promo Code</div>
+		    		<div class="row" style=' margin-top: 1em;margin-right:1em;'>
+				      <div class="input-field col s8 m4">
+				        <i class="mdi-action-loyalty prefix"></i>
+				        <input id="settings_promo" type="text" value="">
+				        <label for="settings_promo" >Enter your promo code</label>
+				      </div>
+				      <div class="col s4 m2">
+				      	<div class="btn apply-promo-code">Submit Code</div>
+				      </div>
+			      	</div>
+			      	<div class="settings-promo-msg">
+			      		
+			      	</div>
+		      	</div>
+			</div>
+      		</div>
 	    </div>
 	  </div>
   </div>

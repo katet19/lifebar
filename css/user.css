@@ -508,6 +508,13 @@
     text-transform: uppercase;
 }
 
+.settings-promo-msg{
+    margin-top: -20px;
+    margin-left: 50px;
+    color: #2196F3;
+    font-weight: 500;
+}
+
 @media only screen and (max-width : 992px) {
 	.critic-quote{
 		padding-left:70px;
@@ -529,9 +536,6 @@
 	}
 	.srank-badge-activity{
 		left: 38px !important;
-	}
-	#userSettings{
-		margin:35px 0 5em;
 	}
 	.dynamic-card-content{
 		height: 120px;
@@ -593,7 +597,7 @@
 		font-size:1em !important;
 	}
 	#SaveUserSettingsSubmitBtn{
-		margin-right: 0px;	
+		margin-right: -25px;	
 		margin-top:3px;
 	}
 }

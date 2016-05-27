@@ -13,6 +13,25 @@ function SetTitles(){
 	}
 }
 
+function ApplyPromoCode($userid, $promo){
+	$mysqli = Connect();
+	$nothingFound = true;
+	if ($result = $mysqli->query("select * from `Promos` where `Code` = '".strtoupper($promo)."'")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row['RewardType'] == 'BADGE'){
+				GiveBadgeAccess($userid, $row['Reward']);
+				echo "<div style='font-size:1.2em;font-weight:500;'>Unlocked <i>".$row['Name']."</i> Badge!</div> <div style='color:rgba(0,0,0,0.6);'>Go to Settings > Avatars & Badges to select your knew badge.</div>";
+				$nothingFound = false;
+			}
+		}
+	}
+	
+	if($nothingFound){
+		echo "'".$promo."' is not a valid promo code. Please try again";
+	}
+	Close($mysqli, $result);
+}
+
 function UpdateRoleManagement($userid, $role){
 	$mysqli = Connect();
 	
