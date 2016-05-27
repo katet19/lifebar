@@ -28,11 +28,18 @@ function GetMyFeed($userid, $page, $filter){
 		//$result = $mysqli->query("select eve.*, DATE(`Date`) as `ForDate` from `Events` eve where eve.`UserID` = '".$userid."' or eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by `ForDate` DESC limit ".$page.",45");
 		if($filter == "All"){
 			$mylist = GetConnectedToList($userid, $mysqli);
+			$collectionList = GetSubscribedCollectionList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
-			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
+			$collectionQuery = array();
+			if(sizeof($collectionList) > 0){
+				foreach($collectionList as $collection){
+					$collectionQuery[] = "'".$collection."'";
+				}
+			}
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (eve.`UserID` in (".implode(",", $addedquery).") and eve.`Event` != 'COLLECTIONUPDATE') or (eve.`Event` = 'COLLECTIONUPDATE' and eve.`GameID` in (".implode(",",$collectionQuery).")) order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "Only Users I Follow"){
 			$mylist = GetConnectedToUsersList($userid, $mysqli);
 			$addedquery = array();
