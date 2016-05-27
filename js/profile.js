@@ -889,6 +889,10 @@ function UnequipBadge(userid){
 	     	btn.removeClass("badge-unequip");
 	     	btn.html("Equip");
 			Toast("Badge Unequipped");
+			if($(".avatar-preview").length > 0){
+				UpdateAvatarBadge("REMOVE");
+			}
+			
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
@@ -915,6 +919,9 @@ function EquipBadge(userid){
 	     	btn.removeClass("badge-equip");
 	     	btn.html("Unequip");
 			Toast("Badge Equipped");
+			if($(".avatar-preview").length > 0){
+				UpdateAvatarBadge(output);
+			}
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {

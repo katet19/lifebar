@@ -494,6 +494,12 @@
 		if($_POST['action'] == "SaveTitle"){
 			SaveUserTitle($_POST['userid'], $_POST['title']);
 		}
+		if($_POST['action'] == "PromoCode"){
+			ApplyPromoCode($_SESSION['logged-in']->_id, $_POST['promo']);
+		}
+		if($_POST['action'] == "AsyncMyBadges"){
+			DisplayBadgeManagementForUser($_SESSION['logged-in']->_id);
+		}
 	}
 	function DiscoverServices(){
 		if($_POST['action'] == 'Search' && isset($_POST['search'])){
