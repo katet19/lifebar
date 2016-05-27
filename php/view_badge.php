@@ -47,4 +47,36 @@ function DisplayAdminControlsForUser($userid){
 	</div>
 	<?php
 }
+
+function DisplayBadgeManagementForUser($userid){
+	$userbadges = GetAllBadgesForUser($userid);
+	$user = GetUser($userid);
+	?>
+	<div class="col s12 settings-header" style='display:block;margin-top:0'>Your Badges</div>
+	<div class="col s12">
+		<?php 
+		if(sizeof($userbadges) > 0){
+			foreach($userbadges as $badge){
+			?>
+				<div class="badge-card z-depth-1">
+					<div class="badge-image-container">
+						<img class="badge-preview" src='http://lifebar.io/Images/Badges/<?php echo $badge->_file; ?>'></img>
+					</div>
+					<div class="badge-details-container">
+						<div class="badge-name"><?php echo $badge->_title; ?></div>
+						<div class="badge-desc"><?php echo $badge->_description; ?></div>
+						<?php if($badge->_file == $user->_badge){ ?>
+							<div class="btn badge-btn badge-unequip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Unequip</div>
+						<?php }else{ ?>
+							<div class="btn badge-btn badge-equip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Equip</div>
+						<?php } ?>
+					</div>
+				</div>
+			<?php
+			}
+		}
+		?>
+	</div>
+	<?php
+}
 ?>

@@ -6,6 +6,7 @@ function ShowUserSettings(){
          success: function(output) {
 			$("#BattleProgess").html(output); 
             AttachUserSettingEvents();
+            $("#user-settings-account").show();
             GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
@@ -24,6 +25,77 @@ function AttachUserSettingEvents(){
     	e.stopPropagation();
     	UserSettingsValidation();	
     });
+    $(".tab a").on("click", function(){
+    	$(".settings-active").removeClass("settings-active");
+    	$(this).addClass("settings-active");
+    	var container = $(this).attr("data-id");
+    	$(".user-settings-box").hide();
+    	$("#"+container).show();
+    });
+    $('input[type=radio][name=avatargroup]').change(function() {
+    	UpdateAvatarPreview();
+    });
+    $(".apply-promo-code").on("click",function(){
+    	var code = $("#settings_promo").val();
+		$.ajax({ url: '../php/webService.php',
+	         data: {action: "PromoCode", promo: code },
+	         type: 'post',
+	         success: function(output) {
+				$(".settings-promo-msg").html(output);
+				RefreshBadgeMgmt();
+	         },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+    });
+    AttachManageBadgeEvents($("#userSettings").attr("data-id"));
+}
+
+function UpdateAvatarPreview(){
+	var image = $(".avatar-preview").find(".lifebar-avatar-min");
+	var imagepicked = $("input[type=radio][name=avatargroup]:checked").attr("id");
+	if(imagepicked == "gravatar"){
+		var newimage = $("input[type=radio][name=avatargroup]:checked").attr("data-image");
+		image.css({"background":"url("+newimage+") 25% 50%","background-size":"cover"});
+	}else if(imagepicked == "weburlradio"){
+		var newimage = $("#weburl").val();
+		image.css({"background":"url("+newimage+") 25% 50%","background-size":"cover"});
+	}else if(imagepicked == "uploaded"){
+		var newimage = "http://lifebar.io/Images/Avatars/"+$("#userSettings").attr("data-id")+".jpg";
+		image.css({"background":"url("+newimage+") 25% 50%","background-size":"cover"});
+	}
+}
+
+function UpdateAvatarBadge(badge){
+	var image = $(".avatar-preview").find(".lifebar-avatar-min");
+	image.find("img").remove();
+	if(badge != "" && badge != "REMOVE")
+		image.append("<img class='srank-badge-lifebar' src='"+badge+"'></img>");
+}
+
+function RefreshBadgeMgmt(){
+	$.ajax({ url: '../php/webService.php',
+         data: {action: "AsyncMyBadges" },
+         type: 'post',
+         success: function(output) {
+			$(".avatar-badge-mgmt").html(output);
+			AttachManageBadgeEvents($("#userSettings").attr("data-id"));
+         },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function UserSettingsValidation(){

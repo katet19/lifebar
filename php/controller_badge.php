@@ -57,7 +57,14 @@ function GetAllBadgeForUserList($userid){
 
 function GiveBadgeAccess($userid, $badgeid){
 	$mysqli = Connect();
-	$mysqli->query("insert into `Badges_Users` (`UserID`,`BadgeID`) VALUES ('".$userid."','".$badgeid."')");
+	$alreadyHas = false;
+	if ($result = $mysqli->query("select * from `Badges_Users` where `BadgeID` = '".$badgeid."' and `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$alreadyHas = true;
+		}
+	}
+	if(!$alreadyHas)
+		$mysqli->query("insert into `Badges_Users` (`UserID`,`BadgeID`) VALUES ('".$userid."','".$badgeid."')");
 	Close($mysqli, $result);
 }
 
@@ -76,8 +83,8 @@ function UnequipBadge($userid, $badgeid){
 function EquipBadge($userid, $badgeid){
 	$mysqli = Connect();
 	$badge = GetBadge($badgeid);
-	echo "update `Users` set `Badge` = '".$badge->_file."' where `UserID` = '".$userid."'";
 	$mysqli->query("update `Users` set `Badge` = '".$badge->_file."' where `ID` = '".$userid."'");
 	Close($mysqli, $result);
+	echo "http://lifebar.io/Images/Badges/".$badge->_file;
 }
 ?>
