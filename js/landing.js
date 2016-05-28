@@ -1,31 +1,3 @@
-    //set animation timing
-	var animationDelay = 1750, //2500,
-		//loading bar effect
-		barAnimationDelay = 3800, //3800,
-		barWaiting = barAnimationDelay - 3000, //3000 is the duration of the transition on the loading bar - set in the scss/css file
-		//letters effect
-		lettersDelay = 50,
-		//type effect
-		typeLettersDelay = 150,
-		selectionDuration = 500,
-		typeAnimationDelay = selectionDuration + 800,
-		//clip effect 
-		revealDuration = 600,
-		revealAnimationDelay = 1500,
-		cardanimated = false;
-		
-		
-		
-	var options = [
-    // {selector: '#landing_profile', offset: 0, callback: '$().slideUp("#landing_profile")' },
-    {selector: '#landing_xp', offset: 200, callback: '$().slideLeft("#landing_xp")' },
-    {selector: '#landing_discover', offset: 250, callback: '$().slideRight("#landing_discover")' },
-    {selector: '#landing_activity', offset: 300, callback: '$().slideLeft("#landing_activity")' },
-    {selector: '#landing_notifications', offset: 350, callback: '$().slideRight("#landing_notifications")' }
-    ];
-   
-    $().scrollFire(options);
-
 function ShowLanding(){
 	var windowWidth = $(window).width();
     $("#landing").css({"display":"inline-block", "left": -windowWidth});
@@ -44,33 +16,8 @@ function ShowLanding(){
 			$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
 			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
-			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
-			$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), ''); });
-  			$(".critic-name-container").on("click", function(e){
- 				ShowUserWeave($(this).attr("data-id"));
- 			});
-			$(".landing-show-discover").on("click", function(e){
-				ManuallyNavigateToTab("#discover");
-			});
-			$(".landing-show-activity").on("click", function(e){
-				ManuallyNavigateToTab("#activity");
-			});
 			AttachSignUpEvents();
-			window.scrollTo(0, 0);
-			var graphRunYet = false;
-			var scrolled = false;
-			$(window).scroll(function(){
-			 	if(isLandingScrolledIntoView(".landingGraphs") && graphRunYet == false){
-			 		runGraphEvent();
-			 		graphRunYet = true;
-			 	}
-			 	if(scrolled == false){
-			 		$(".landing-monitor").css({"opacity":"1"});
-			 		scrolled = true;
-			 	}
-			 });
 			AttachSignUpLandingEvents();
-			AnimateLanding();
 			$('select').material_select();
 			GAPage('Landing', '/landing');
             var formStarted = false;

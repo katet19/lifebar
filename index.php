@@ -15,17 +15,16 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <?php }else{ ?>
 <!DOCTYPE HTML>
 <html>
-<title>Lifebar | Celebrate your life with games</title>
+<title>Lifebar | Your gaming life</title>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
 <link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
-<link href="../css/landing.css" rel="stylesheet" type="text/css" />
-<link href="../css/landing-style.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
+<link href="../css/library/webflow.css" rel="stylesheet" type="text/css" />
 <link href="../css/font/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/navigation.css" rel="stylesheet" type="text/css" />
 <link href="../css/main.css" rel="stylesheet" type="text/css" />
@@ -43,6 +42,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/badge.css" rel="stylesheet" type="text/css" />
 <link href="../css/collection.css" rel="stylesheet" type="text/css" />
 <link href="../css/import.css" rel="stylesheet" type="text/css" />
+<link href="../css/lifebar.webflow.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../js/library/chart.js"></script>
 <script type="text/javascript" src="../js/library/materialize.js"></script>
