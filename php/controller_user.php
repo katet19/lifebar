@@ -27,7 +27,7 @@ function ApplyPromoCode($userid, $promo){
 	}
 	
 	if($nothingFound){
-		echo "'".$promo."' is not a valid promo code. Please try again";
+		echo "'".$promo."' is not a valid cheat code. Please try again";
 	}
 	Close($mysqli, $result);
 }
