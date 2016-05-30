@@ -63,6 +63,9 @@ function DeployCSS(){
         $import = file_get_contents("css/import.css");
 		fwrite($deployed, $import);
 		
+        $landingwebflow = file_get_contents("css/lifebar.webflow.css");
+		fwrite($deployed, $landingwebflow);
+		
 		echo "Finished deploying CSS";
 		fclose($deployed);
 	}else{
