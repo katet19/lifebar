@@ -660,6 +660,10 @@ html.w-mod-js *[data-ix="move-down-tagline"] {
   .landing-tagline {
     padding-bottom: 60px;
   }
+  .landing-collection-wrapper{
+    float: inherit;
+    padding: 40px 0;
+  }
 }
 
 @media (max-width: 479px) {

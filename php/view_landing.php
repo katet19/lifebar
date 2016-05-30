@@ -37,14 +37,14 @@
           <div class="landing-specs-wrapper">
             <div class="landing-spec-icon"><img width="100%" height="100%" src="http://lifebar.io/Images/LandingBeta/ic_remove_red_eye_white_24px.svg">
             </div>
-            <div class="spec-description">Follow activity of friends, press and your favorite personalities&nbsp;</div>
+            <div class="spec-description">Follow activity of friends and your favorite personalities&nbsp;</div>
           </div>
         </div>
         <div class="_w-col _w-col-3">
           <div class="landing-specs-wrapper">
             <div class="landing-spec-icon"><img width="100%" height="100%" src="http://lifebar.io/Images/LandingBeta/ic_insert_chart_white_24px.svg">
             </div>
-            <div class="spec-description">Discover and visualize your future with digital games</div>
+            <div class="spec-description">Visualize and analyze your gaming experiences</div>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
   <div id="example-2" class="w-section landing-section landing-red _w-section">
     <div class="landing-body layered-perspective">
       <div data-ix="section-header" class="w-preserve-3d landing-section-header _w-container">
-        <div class="w-h1">Personalized Stats</div>
+        <div class="w-h1">Personalized Profile</div>
       </div>
       <div data-ix="30-transform" class="landing-layered-container _w-container"><img src="http://lifebar.io/Images/LandingBeta/3d_layer 1.svg" class="layer-1"><img src="http://lifebar.io/Images/LandingBeta/3d_layer2.svg" class="layer-2"><img src="http://lifebar.io/Images/LandingBeta/3d_layer3.svg" class="layer-3"><img src="http://lifebar.io/Images/LandingBeta/3d_layer4.png" class="layer-4">
       </div>
@@ -125,14 +125,14 @@
           <div class="landing-specs-wrapper">
             <div class="landing-spec-icon"><img width="100%" height="100%" src="http://lifebar.io/Images/LandingBeta/ic_people_white_24px.svg">
             </div>
-            <div class="spec-description">Find journalists and personalities with fresh perspectives</div>
+            <div class="spec-description">Find users and personalities with fresh perspectives</div>
           </div>
         </div>
         <div class="_w-col _w-col-3">
           <div class="landing-specs-wrapper">
             <div class="landing-spec-icon"><img width="100%" height="100%" src="http://lifebar.io/Images/LandingBeta/ic_compare_white_24px.svg">
             </div>
-            <div class="spec-description">Compare the similarities of popular themes and genres</div>
+            <div class="spec-description">Compare what your friends think to critics and the rest of the community</div>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@
   <div id="section-4" class="w-section landing-section landing-green _w-section">
     <div class="landing-body landing-min-height _w-perspective">
       <div data-ix="section-header" class="w-preserve-3d landing-section-header _w-container">
-        <div class="w-h1">Game Profile</div>
+        <div class="w-h1">Game Portfolios</div>
       </div>
       <div data-ix="tilt-block" class="landing-tilt-container _w-container">
         <div class="landing-tilt-desktop"></div>
