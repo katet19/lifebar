@@ -24,6 +24,7 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 	<link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
 	<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 	<link href="../css/font/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="../css/library/webflow.css" rel="stylesheet" type="text/css" />
 	<link href="../css/deployed.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body id="applicationContainer">

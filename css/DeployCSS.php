@@ -63,12 +63,6 @@ function DeployCSS(){
         $import = file_get_contents("css/import.css");
 		fwrite($deployed, $import);
 		
-        $landingwebflow = file_get_contents("css/import.css");
-		fwrite($deployed, $landingwebflow);
-		
-		$webflow = file_get_contents("css/library/webflow.css");
-		fwrite($deployed, $webflow);
-		
 		echo "Finished deploying CSS";
 		fclose($deployed);
 	}else{
