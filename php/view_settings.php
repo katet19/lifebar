@@ -195,12 +195,12 @@ function DisplayUserSettings(){
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 settings-header" style='display:block;'>Promo Code</div>
+				<div class="col s12 settings-header" style='display:block;'>Cheat Code</div>
 		    		<div class="row" style=' margin-top: 1em;margin-right:1em;'>
 				      <div class="input-field col s8 m4">
 				        <i class="mdi-action-loyalty prefix"></i>
 				        <input id="settings_promo" type="text" value="">
-				        <label for="settings_promo" >Enter your promo code</label>
+				        <label for="settings_promo" >Enter your cheat code</label>
 				      </div>
 				      <div class="col s4 m2">
 				      	<div class="btn apply-promo-code">Submit Code</div>

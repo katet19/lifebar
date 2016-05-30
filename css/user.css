@@ -413,10 +413,10 @@
 
 .srank-badge-activity{
     position: absolute !important;
-    height: 22px;
-    bottom: -2px !important;
     top: inherit !important;
-    left: 75px !important;
+    height: 32px;
+    bottom: -8px !important;
+    left: 70px !important;
     right: inherit !important;
 }
 
