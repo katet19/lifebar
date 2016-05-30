@@ -1,0 +1,715 @@
+.landing-sign-up-mobile{
+  position:fixed;
+  top:10px;
+  right:150px;
+}
+
+.landing-login-mobile{
+  position:fixed;
+  top:10px;
+  right:20px;
+}
+
+
+._w-section.landing-example.landing-purple {
+  background-color: #7b1fa2;
+  background-image: -webkit-linear-gradient(270deg, #7b1fa2 50%, rgba(0, 0, 0, .09));
+  background-image: linear-gradient(180deg, #7b1fa2 50%, rgba(0, 0, 0, .09));
+  color: #fff;
+}
+
+.w-h1{
+    font-size: 38px;
+    line-height: 44px;
+    margin-top: 20px;
+}
+
+.landing-body {
+  position: relative;
+  overflow: hidden;
+  padding-right: 30px;
+  padding-left: 30px;
+  -webkit-perspective-origin: 20% 50%;
+  perspective-origin: 20% 50%;
+}
+
+.landing-body.landing-min-height {
+  min-height: 640px;
+}
+
+.landing-body.landing-min-height.landing-perspective-bottom {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+  -webkit-perspective-origin: 50% 100%;
+  perspective-origin: 50% 100%;
+}
+
+.landing-body.landing-min-height._w-perspective {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+  -webkit-perspective-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+}
+
+.landing-body.layered-perspective {
+  -webkit-perspective: 1600px;
+  perspective: 1600px;
+}
+
+.landing-showcase-container {
+  position: relative;
+  min-height: 460px;
+  -webkit-perspective-origin: 50% 100%;
+  perspective-origin: 50% 100%;
+}
+
+.landing-showcase-desktop-wrapper {
+  position: absolute;
+  right: 0%;
+  bottom: 0px;
+  width: 680px;
+  height: 480px;
+}
+
+.landing-showcase-desktop {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url('http://lifebar.io/Images/LandingBeta/Profile.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 7px 7px 18px 0 rgba(40, 42, 95, .2);
+}
+
+.landing-showcase-tablet-wrapper {
+  position: absolute;
+  left: 5%;
+  bottom: 0px;
+  width: 360px;
+  height: 380px;
+}
+
+.landing-showcase-tablet {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url('http://lifebar.io/Images/LandingBeta/Screen Shot 2016-05-27 at 8.31.16 AM.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 7px 7px 18px 0 rgba(40, 42, 95, .4);
+}
+
+.landing-showcase-mobile-wrapper {
+  position: absolute;
+  left: -5%;
+  bottom: 0px;
+  width: 200px;
+  height: 280px;
+}
+
+.landing-showcase-mobile {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url('http://lifebar.io/Images/LandingBeta/ActivityMockup.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 7px 7px 18px 0 rgba(40, 42, 95, .7);
+}
+
+.landing-showcase-wrapper {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: -5px;
+  -webkit-perspective-origin: 50% 100%;
+  perspective-origin: 50% 100%;
+}
+
+.landing-tagline {
+  margin-top: 60px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.landing-tagline._w-container {
+  width: 680px;
+  margin-right: 5%;
+  margin-left: auto;
+  float: none;
+}
+
+.landing-section.landing-red {
+  background-color: #d32f2f;
+}
+
+.landing-section.landing-red._w-section {
+  background-image: -webkit-linear-gradient(270deg, #d32f2f 51%, rgba(0, 0, 0, .09));
+  background-image: linear-gradient(180deg, #d32f2f 51%, rgba(0, 0, 0, .09));
+  color: #fff;
+}
+
+.landing-section.landing-blue {
+  background-color: #0098ff;
+}
+
+.landing-section.landing-blue._w-section {
+  background-image: -webkit-linear-gradient(270deg, #0098ff 55%, rgba(0, 0, 0, .09));
+  background-image: linear-gradient(180deg, #0098ff 55%, rgba(0, 0, 0, .09));
+  color: #fff;
+}
+
+.landing-section.landing-green {
+  background-color: #00b25c;
+}
+
+.landing-section.landing-green._w-section {
+  background-image: -webkit-linear-gradient(270deg, #00b25c 45%, rgba(0, 0, 0, .09));
+  background-image: linear-gradient(180deg, #00b25c 45%, rgba(0, 0, 0, .09));
+  color: #fff;
+}
+
+.landing-section.landing-dark-blue {
+  background-color: #0a67a3;
+  background-image: -webkit-linear-gradient(270deg, #0a67a3 51%, rgba(0, 0, 0, .09));
+  background-image: linear-gradient(180deg, #0a67a3 51%, rgba(0, 0, 0, .09));
+  color: #fff;
+}
+
+.landing-layered-container {
+  position: relative;
+  overflow: visible;
+  width: 621px;
+  height: 374px;
+  margin: 95px auto 60px;
+  -webkit-perspective-origin: 20% 50%;
+  perspective-origin: 20% 50%;
+}
+
+.layer-1 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.layer-2 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.layer-3 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.layer-4 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.landing-discover-container {
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  width: 1050px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.landing-discover-container._w-container {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+
+.landing-isometric-col-2 {
+  float: left;
+}
+
+.landing-isometric-item {
+  width: 240px;
+  height: 320px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  background-image: url('http://lifebar.io/Images/LandingBeta/HyperLightDrifterBoxArt.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 1px 1px 3px 0 #000;
+}
+
+.landing-isometric-item.landing-item-1 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/ChrisCarterCard.png');
+}
+
+.landing-isometric-item.landing-item-2 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/HyperLightDrifterBoxArt.png');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-3 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/doom-boxart.jpg');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-4 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/AndrewReinerCard.png');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-5 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/JustinMcElroyCard.png');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-6 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/OverwatchCard.png');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-7 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Stardew_valley_boxart.png');
+  background-size: cover;
+}
+
+.landing-isometric-item.landing-item-8 {
+  background-image: url('http://lifebar.io/Images/LandingBeta/AustinWalkerCard.png');
+  background-size: cover;
+}
+
+.landing-isometric-col-1 {
+  float: left;
+}
+
+.landing-isometric-col-3 {
+  float: left;
+}
+
+.landing-isometric-col-4 {
+  float: left;
+}
+
+.landing-tilt-container {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  min-height: 420px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+
+.landing-tilt-container._w-container {
+  max-width: 940px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.landing-tilt-desktop {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: -5px;
+  width: 900px;
+  height: 620px;
+  margin-right: auto;
+  margin-left: auto;
+  background-image: url('http://lifebar.io/Images/LandingBeta/Screen Shot 2016-05-27 at 11.26.44 AM.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 13px 13px 28px 0 #0a8837;
+}
+
+.landing-tilt-tablet {
+  position: absolute;
+  right: 10%;
+  bottom: 20%;
+  width: 400px;
+  height: 420px;
+  margin-right: auto;
+  margin-left: auto;
+  background-image: url('http://lifebar.io/Images/LandingBeta/Screen Shot 2016-05-27 at 11.34.02 AM.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 13px 13px 18px 0 rgba(10, 136, 55, .3);
+}
+
+.landing-tilt-mobile {
+  position: absolute;
+  left: 10%;
+  bottom: 5%;
+  width: 200px;
+  height: 280px;
+  background-image: url('http://lifebar.io/Images/LandingBeta/lifeistrangemobile.png');
+  background-position: 0px 0px;
+  background-size: cover;
+  box-shadow: 11px 11px 19px 0 rgba(10, 136, 55, .3);
+}
+
+.landing-collection-wrapper {
+  position: relative;
+  margin: 120px auto 160px;
+  padding: 40px;
+  float: left;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+
+.landing-collection {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-right: 60px;
+  margin-left: 60px;
+  float: none;
+  -webkit-transform: rotateX(3deg) rotateY(0deg) rotateZ(0deg);
+  transform: rotateX(3deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.landing-collection-back {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: 1px solid #000;
+  background-color: #fff;
+  box-shadow: 7px 7px 29px 0 rgba(0, 0, 0, .4);
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+
+.landing-collection-back.landing-collection-1back {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection1Back.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-back.landing-collection-2back {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection2Back.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-back.landing-collection-3back {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection3Back.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-middle {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: 1px solid #000;
+  background-color: #fff;
+  box-shadow: 8px 8px 17px 0 rgba(0, 0, 0, .4);
+  -webkit-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+}
+
+.landing-collection-middle.landing-collection-1middle {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection1Middle.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-middle.landing-collection-2middle {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection2Middle.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-middle.landing-collection-3middle {
+  background-image: url('http://lifebar.io/Images/LandingBeta/Collection3Middle.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-front {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: 1px solid #000;
+  background-color: #fff;
+  box-shadow: 10px 10px 14px 0 rgba(0, 0, 0, .4);
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+
+.landing-collection-front.landing-collection-1front {
+  background-image: url('http://lifebar.io/Images/LandingBeta/SteamBacklog.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-front.landing-collection-2front {
+  background-image: url('http://lifebar.io/Images/LandingBeta/CurrentyPlayingCard.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-collection-front.landing-collection-3front {
+  background-image: url('http://lifebar.io/Images/LandingBeta/GBQuickLookCard.png');
+  background-position: 0px 0px;
+  background-size: cover;
+}
+
+.landing-footer {
+  padding: 40px 30px 60px;
+}
+
+.landing-footer.landing-blue {
+  background-color: #0098ff;
+}
+
+.landing-footer.landing-red {
+  background-color: #d32f2f;
+}
+
+.landing-footer.landing-green {
+  background-color: #00b25c;
+}
+
+.landing-footer.landing-dark-blue {
+  background-color: #0a67a3;
+}
+
+.landing-footer.landing-purple {
+  background-color: #7b1fa2;
+}
+
+._w-row.landing-1200px-row {
+  max-width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+._w-col {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+  float: left;
+}
+
+._w-col._w-col-3 {
+  width: 33%;
+}
+
+.landing-specs-wrapper {
+  margin-bottom: 40px;
+}
+
+.landing-spec-icon {
+  width: 80px;
+  height: 80px;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-left: auto;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.spec-description {
+  font-family: Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.landing-logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  float: left;
+  -webkit-transform: translate(45%, 80%);
+  -ms-transform: translate(45%, 80%);
+  transform: translate(45%, 80%);
+}
+
+.landing-tagline {
+  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: Roboto, sans-serif;
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 300;
+}
+
+.landing-section-header {
+  text-align: center;
+}
+
+.landing-section-header._w-container {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  opacity: 0;
+  -webkit-transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg) translate(-50px, 100px);
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(0deg) translate(-50px, 100px);
+  font-family: Roboto, sans-serif;
+}
+
+html.w-mod-js *[data-ix="move-down"] {
+  -webkit-transform: translate(0px, 100%);
+  -ms-transform: translate(0px, 100%);
+  transform: translate(0px, 100%);
+}
+
+html.w-mod-js *[data-ix="tiled"] {
+  opacity: 0;
+  -webkit-transform: rotate(-35deg) translate(0px, 50%);
+  -ms-transform: rotate(-35deg) translate(0px, 50%);
+  transform: rotate(-35deg) translate(0px, 50%);
+}
+
+html.w-mod-js *[data-ix="tilt-block"] {
+  -webkit-transform: translate(0px, 100%);
+  -ms-transform: translate(0px, 100%);
+  transform: translate(0px, 100%);
+}
+
+html.w-mod-js *[data-ix="move-down-tagline"] {
+  -webkit-transform: translate(0px, 500%);
+  -ms-transform: translate(0px, 500%);
+  transform: translate(0px, 500%);
+}
+
+@media (max-width: 991px) {
+  .landing-body.landing-min-height {
+    min-height: 490px;
+  }
+  .landing-showcase-container {
+    min-height: 380px;
+  }
+  .landing-showcase-tablet-wrapper {
+    left: auto;
+    right: 2%;
+  }
+  .landing-showcase-mobile-wrapper {
+    left: 0%;
+  }
+  .landing-tagline._w-container {
+    position: static;
+    margin-right: auto;
+  }
+  .landing-layered-container {
+    height: 306px;
+  }
+  .landing-layered-container._w-container {
+    width: auto;
+  }
+  .landing-discover-container {
+    left: 28%;
+    top: 22%;
+  }
+  .landing-isometric-item {
+    width: 180px;
+    height: 240px;
+  }
+  .landing-tilt-container._w-container {
+    max-width: 728px;
+  }
+  .landing-tilt-desktop {
+    width: 680px;
+    height: 480px;
+  }
+  .landing-tilt-tablet {
+    width: 320px;
+    height: 320px;
+  }
+  .landing-tilt-mobile {
+    width: 160px;
+    height: 220px;
+  }
+  .landing-collection-wrapper {
+    margin-top: 100px;
+    margin-bottom: 140px;
+  }
+  .landing-logo {
+    -webkit-transform: translate(0%, 0%);
+    -ms-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+  }
+  .landing-tagline {
+    padding-bottom: 60px;
+  }
+  .landing-collection-wrapper{
+    float: inherit;
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .landing-showcase-tablet-wrapper {
+    right: -40%;
+  }
+  .landing-showcase-mobile-wrapper {
+    left: -10%;
+  }
+  .landing-tagline._w-container {
+    margin-bottom: 10px;
+  }
+  .landing-layered-container._w-container {
+    height: 188px;
+  }
+  .landing-discover-container {
+    top: 18%;
+  }
+  .landing-isometric-item {
+    width: 160px;
+    height: 210px;
+  }
+  .landing-tilt-desktop {
+    width: 540px;
+    height: 380px;
+  }
+  .landing-tilt-tablet {
+    right: 22%;
+    bottom: 15%;
+  }
+  .landing-tilt-mobile {
+    left: 17%;
+    bottom: 15%;
+  }
+  .landing-collection-wrapper {
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+  ._w-col._w-col-3 {
+    width: 100%;
+  }
+  .landing-tagline {
+    width: 300px;
+    margin-right: 0px;
+    margin-left: 0px;
+    font-size: 18px;
+  }
+}
+
