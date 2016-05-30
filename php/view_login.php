@@ -72,9 +72,9 @@ function DisplayLogin(){
 
 function DisplayLandingSignup(){
 	?>
-    <div class="row" style="margin-top:40px">
+    <div class="row" style="margin-top:60px;margin-bottom:60px;">
     	<div class="col s12">
-    		<div style='font-size: 2em;margin-bottom: 40px;font-weight: 400;'>Sign up for the public alpha to start building your lifebar today!</div>
+    		<div style='font-size: 2em;margin-bottom: 100px;font-weight: 400;'>Sign up for the beta to start building your lifebar today!</div>
     	</div>
 		  <div class="col s12 m6 login-modal-divider">
 		    <div class="row">
@@ -156,7 +156,7 @@ function DisplayLandingSignup(){
 function DisplaySignup(){
 	?>
   <div id="signupModal" class="modal" style="background-color:white;">
-	    <div class="row" style="margin-top:40px">
+	    <div class="row" style="margin-top:40px;">
 			  <div class="col s12 m6 login-modal-divider">
 			    <div class="row">
 			      <div class="input-field col s11">
@@ -238,7 +238,7 @@ function DisplaySignup(){
 function DisplayPasswordReset(){
 	?>
   <div id="passwordResetModal" class="modal" style="background-color:white;">
-    <div class="row" style="margin-top:40px">
+    <div class="row" style="margin-top:40px;">
 	  <div class="col s12" >
       	<div class="row">
   	      <div class="input-field col s12">
