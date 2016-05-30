@@ -16,6 +16,9 @@ function DeployJS($version){
 		$vel = file_get_contents("js/library/velocity.min.js");
 		fwrite($deployed, $vel);
 		
+		$webflow = file_get_contents("js/library/webflow.js");
+		fwrite($deployed, $webflow);
+		
 		$activity = file_get_contents("js/activity.js");
 		fwrite($deployed, $activity);
 		

@@ -30,11 +30,11 @@ function DeployCSS(){
 		$graph = file_get_contents("css/graph.css");
 		fwrite($deployed, $graph);
 		
-		$landing = file_get_contents("css/landing.css");
+		/*$landing = file_get_contents("css/landing.css");
 		fwrite($deployed, $landing);
 		
 		$landingstyle = file_get_contents("css/landing-style.css");
-		fwrite($deployed, $landingstyle);
+		fwrite($deployed, $landingstyle);*/
 		
 		$main = file_get_contents("css/main.css");
 		fwrite($deployed, $main);
@@ -62,6 +62,12 @@ function DeployCSS(){
         
         $import = file_get_contents("css/import.css");
 		fwrite($deployed, $import);
+		
+        $landingwebflow = file_get_contents("css/import.css");
+		fwrite($deployed, $landingwebflow);
+		
+		$webflow = file_get_contents("css/library/webflow.css");
+		fwrite($deployed, $webflow);
 		
 		echo "Finished deploying CSS";
 		fclose($deployed);
