@@ -111,12 +111,17 @@ function DisplayCollectionDetails($collectionID){
 			$edit = true;
 		else
 			$edit = false;
+			
+		if($collection->_createdby == -3)
+			$disableRemove = true;
+		else
+			$disableRemove = false;
 		?>
 		<div class="backContainer" style='background:transparent;text-shadow: 1px 1px 5px rgba(0,0,0,0.3);position:absolute;top:0;'>
 			<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0;" >Back</a></div>
 		</div>
 		<?php
-		$totalsize = GetCollectionSize($collectionID);
+		$totalsize = GetCollectionSize($collectionID, $collection->_owner, $collection->_rule);
 		if(sizeof($collection->_games) >= 1 && $collection->_cover == ''){
 			$key = array_rand($collection->_games, 1);
 			$one = $collection->_games[$key];
@@ -233,9 +238,9 @@ function DisplayCollectionDetails($collectionID){
 				</div>
 			</div>
 			<div class="col s12 collection-games-container">
-			<?php DisplayCollectionDetailGames($collection->_games, $edit); ?>
+			<?php DisplayCollectionDetailGames($collection->_games, $edit, $disableRemove); ?>
 			</div>
-			<?php if($edit){ ?>
+			<?php if($edit && $collection->_createdby != -3){ ?>
 				<div class="col s12 m4 collection-edit-mode collection-game-search-container" style='position:relative;height: 70px;z-index:5;margin-top: 15px;'>
 		          	<div class="row">
 			          	<div class='input-field' style='display: inline-block;width: calc(100% - 40px);'>
@@ -251,6 +256,20 @@ function DisplayCollectionDetails($collectionID){
 		        		</div>
 		        	</div>
 				</div>
+			<?php }else if($collection->_createdby == -3){ ?>
+					<div class="col s12 m4 collection-edit-mode collection-game-search-container" style='position:relative;height: 70px;z-index:5;margin-top: 15px;'>
+			          	<div class="row">
+	          				<div class="col s12 import-results-subheader" style='font-size:1em;display:block;'>
+								<i class="fa fa-exclamation-triangle" style='color:#FF9800;margin-right:5px'></i>This is a rule based Auto-Collection, so you cannot manually modify.
+							</div>
+		          		</div>
+		          		<div class="row">
+  							<div class="col s12 import-results-subheader" style='font-size:1.1em;display:block;'>
+								<div style='font-weight:400'>Rule for this collection:</div>
+								<div style='font-weight:300;font-style:italic'><?php echo $collection->_ruledesc; ?></div>
+							</div>
+		          		</div>
+	          		</div>
 			<?php } ?>
 			<div class="collection-paging">
 				<div class="collection-pagination">
@@ -275,26 +294,38 @@ function DisplayCollectionDetails($collectionID){
 }
 
 function DisplayCollectionDetailGamesPagination($collectionid, $userid, $offset, $editMode){
-	$collectiongames = GetCollectionGamesWithXP($collectionid, $userid, $offset, 25);
+	$quickcollection = GetCollectionByID($collectionid);
+	$collectiongames = GetCollectionGamesWithXP($collectionid, $userid, $quickcollection->_rule, $offset, 25);
 	if(($editMode == "true" || $editMode == true) && $userid == $_SESSION['logged-in']->_id)
 		$editMode = true;
 	else
 		$editMode = false;
 		
-	DisplayCollectionDetailGames($collectiongames, $editMode);
+	if($quickcollection->_createdby == -3)
+		$disableRemove = true;
+	else
+		$disableRemove = false;
+		
+	DisplayCollectionDetailGames($collectiongames, $editMode, $disableRemove);
 }
 
 function DisplaySearchCollection($collectionid, $search, $offset, $userid, $editMode){
-	$collectiongames = GetCollectionGamesBySearch($collectionid, $search, $offset, 25, $userid);
+	$quickcollection = GetCollectionByID($collectionid);
+	$collectiongames = GetCollectionGamesBySearch($collectionid, $search, $offset, 25, $_SESSION['logged-in']->_id, $quickcollection->_owner, $quickcollection->_rule);
 	if(($editMode == "true" || $editMode == true) && $userid == $_SESSION['logged-in']->_id)
 		$editMode = true;
 	else
 		$editMode = false;
 		
-	DisplayCollectionDetailGames($collectiongames, $editMode);
+	if($quickcollection->_createdby == -3)
+		$disableRemove = true;
+	else
+		$disableRemove = false;
+		
+	DisplayCollectionDetailGames($collectiongames, $editMode, $disableRemove);
 }
 
-function DisplayCollectionDetailGames($collectiongames, $edit){
+function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 	$i = 0;
 	if($collectiongames !=null && sizeof($collectiongames) > 0){
 		foreach($collectiongames as $xp){
@@ -312,7 +343,8 @@ function DisplayCollectionDetailGames($collectiongames, $edit){
 					</div>
 					<div class="col s12 m8 collection-xp-details-container" style='z-index:0;'>
 						<?php if($edit){ 
-								DisplayRemoveOption($xp->_game->_id); 
+								if(!$disableRemove)
+									DisplayRemoveOption($xp->_game->_id); 
 								DisplayPinOption($xp->_game->_id);
 							  } 
 						?>

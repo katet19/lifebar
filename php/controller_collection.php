@@ -13,7 +13,7 @@ function GetPersonalCollections($userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli), 
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -38,7 +38,7 @@ function GetPersonalAutoCollections($userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli), 
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -63,7 +63,7 @@ function GetLatestCollectionForUser($userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli), 
+						GetCollectionGames($row['ID'],  $row['Rule'], $row['OwnerID'], $mysqli), 
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -122,7 +122,7 @@ function GetSubscribedCollections($userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli),
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -222,7 +222,7 @@ function CreateCollection($name,$desc,$ownerid,$createdBy,$visibility,$games){
 	$exists = DoesCollectionExist($name,$ownerid);
 	$collectionID = -1;
 	if($exists == null){
-		$result = $mysqli->query("insert into `Collections` (`Name`,`Description`,`OwnerID`,`CreatedBy`,`Visibility`) values ('".mysqli_real_escape_string($mysqli,$name)."','".mysqli_real_escape_string($mysqli,$desc)."','".$ownerid."','".$createdBy."','".$visibility."')");
+		$result = $mysqli->query("insert into `Collections` (`Name`,`Description`,`OwnerID`,`CreatedBy`,`Visibility`,`Rule`) values ('".mysqli_real_escape_string($mysqli,$name)."','".mysqli_real_escape_string($mysqli,$desc)."','".$ownerid."','".$createdBy."','".$visibility."','-1')");
 		if ($result = $mysqli->query("select * from `Collections` where `Name` = '".$name."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
 			while($row = mysqli_fetch_array($result)){
 				$collectionID = $row['ID'];
@@ -232,6 +232,25 @@ function CreateCollection($name,$desc,$ownerid,$createdBy,$visibility,$games){
 			foreach($games as $game){
 				if($game['GameID'] > 0 && $game['GBID'] > 0)
 					$result = $mysqli->query("insert into `CollectionGames` (`CollectionID`,`GameID`,`GBID`) values ('".$collectionID."','".$game['GameID']."','".$game['GBID']."')");
+			}
+		}
+	}
+	Close($mysqli, $result);
+	return $collectionID;
+}
+
+function CreateAutoCollection($name,$desc,$ownerid,$createdBy,$visibility,$rule,$ruledesc){
+	/*
+		-3 = User can not hide & can not delete
+	*/
+	$mysqli = Connect();
+	$exists = DoesCollectionExist($name,$ownerid);
+	$collectionID = -1;
+	if($exists == null){
+		$result = $mysqli->query("insert into `Collections` (`Name`,`Description`,`OwnerID`,`CreatedBy`,`Visibility`,`Rule`,`RuleDesc`) values ('".mysqli_real_escape_string($mysqli,$name)."','".mysqli_real_escape_string($mysqli,$desc)."','".$ownerid."','".$createdBy."','".$visibility."','".mysqli_real_escape_string($mysqli,$rule)."','".$ruledesc."')");
+		if ($result = $mysqli->query("select * from `Collections` where `Name` = '".$name."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
+			while($row = mysqli_fetch_array($result)){
+				$collectionID = $row['ID'];
 			}
 		}
 	}
@@ -315,7 +334,7 @@ function GetCollectionByName($name,$ownerid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli),
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -341,7 +360,7 @@ function GetCollectionByNameForUser($name,$ownerid,$userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGamesWithXP($row['ID'], $userid, 0, 25, $mysqli),
+						GetCollectionGamesWithXP($row['ID'], $userid, $row['OwnerID'], $row['Rule'], 0, 25, $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -367,7 +386,7 @@ function GetCollectionByID($collectionID, $pconn = null){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGames($row['ID'], $mysqli),
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -395,7 +414,7 @@ function GetCollectionByIDForUser($collectionID, $userid){
 						$row['Created'], 
 						$row['CreatedBy'], 
 						$row['LastUpdated'], 
-						GetCollectionGamesWithXP($row['ID'], $userid, 0, 25, $mysqli),
+						GetCollectionGamesWithXP($row['ID'], $userid, $row['OwnerID'], $row['Rule'], 0, 25, $mysqli),
 						$row['Visibility'],
 						$row['Cover'],
 						$row['CoverSmall'],
@@ -429,13 +448,30 @@ function DoesCollectionExist($name,$ownerid){
 	return $collection;
 }
 
-function GetCollectionGames($collectionID, $pconn = null){
+function GetCollectionGames($collectionID, $rulestring, $userid, $pconn = null){
 	$mysqli = Connect($pconn);
 	$games = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No' order by `GBID` DESC")) {
-		while($row = mysqli_fetch_array($result)){
-			$game = GetGame($row['GameID']);
-			$games[] = $game;
+	if($rulestring != -1 && $rulestring != ''){
+		$rules = explode("||", $rulestring);
+		$rule = $rules[0];
+		$quarter = date('Y-m-d', strtotime("now - 120 days"));
+		$lastweeks = date('Y-m-d', strtotime("now - 14 days"));
+		$rule = str_replace("<USERID>", "'".$userid."'", $rule);
+		$rule = str_replace("<THISQUARTER>", "'".$quarter."'", $rule);
+		$rule = str_replace("<LAST2WEEKS>", "'".$lastweeks."'", $rule);
+		$rule = str_replace("<OFFSET>", "0", $rule);
+		if ($result = $mysqli->query($rule)) {
+			while($row = mysqli_fetch_array($result)){
+				$game = GetGame($row['GameID']);
+				$games[] = $game;
+			}
+		}
+	}else{
+		if ($result = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No' order by `GBID` DESC")) {
+			while($row = mysqli_fetch_array($result)){
+				$game = GetGame($row['GameID']);
+				$games[] = $game;
+			}
 		}
 	}
 	
@@ -458,13 +494,30 @@ function IsGameBookmarkedFromCollection($gameid, $pconn = null){
 	return $bookmarked;
 }
 
-function GetCollectionGamesWithXP($collectionID, $userid, $offSet, $limit, $pconn = null){
+function GetCollectionGamesWithXP($collectionID, $userid, $ownerid, $rulestring, $offSet, $limit, $pconn = null){
 	$mysqli = Connect($pconn);
 	$gameXP = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` order by g.`Title` LIMIT ".$offSet.",".$limit)) {
-		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
-			$gameXP[] = $xp;
+	if($rulestring != -1  && $rulestring != ''){
+		$rules = explode("||", $rulestring);
+		$rule = $rules[0];
+		$quarter = date('Y-m-d', strtotime("now - 120 days"));
+		$lastweeks = date('Y-m-d', strtotime("now - 14 days"));
+		$rule = str_replace("<USERID>", "'".$ownerid."'", $rule);
+		$rule = str_replace("<THISQUARTER>", "'".$quarter."'", $rule);
+		$rule = str_replace("<LAST2WEEKS>", "'".$lastweeks."'", $rule);
+		$rule = str_replace("<OFFSET>", $offSet, $rule);
+		if ($result = $mysqli->query($rule)) {
+			while($row = mysqli_fetch_array($result)){
+				$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
+				$gameXP[] = $xp;
+			}
+		}
+	}else{
+		if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` order by g.`Title` LIMIT ".$offSet.",".$limit)) {
+			while($row = mysqli_fetch_array($result)){
+				$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
+				$gameXP[] = $xp;
+			}
 		}
 	}
 	
@@ -473,13 +526,31 @@ function GetCollectionGamesWithXP($collectionID, $userid, $offSet, $limit, $pcon
 	return $gameXP;
 }
 
-function GetCollectionGamesBySearch($collectionID, $search, $offSet, $limit, $userid, $pconn = null){
+function GetCollectionGamesBySearch($collectionID, $search, $offSet, $limit, $userid, $ownerid, $rulestring, $pconn = null){
 	$mysqli = Connect($pconn);
 	$gameXP = null;
-	if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` and g.`Title` like '%".$search."%' order by g.`Title` LIMIT ".$offSet.",".$limit)) {
-		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
-			$gameXP[] = $xp;
+	if($rulestring != -1  && $rulestring != ''){
+		$rules = explode("||", $rulestring);
+		$rule = $rules[1];
+		$quarter = date('Y-m-d', strtotime("now - 120 days"));
+		$lastweeks = date('Y-m-d', strtotime("now - 14 days"));
+		$rule = str_replace("<USERID>", "'".$ownerid."'", $rule);
+		$rule = str_replace("<THISQUARTER>", "'".$quarter."'", $rule);
+		$rule = str_replace("<LAST2WEEKS>", "'".$lastweeks."'", $rule);
+		$rule = str_replace("<SEARCH>", $search, $rule);
+		$rule = str_replace("<OFFSET>", $offSet, $rule);
+		if ($result = $mysqli->query($rule)) {
+			while($row = mysqli_fetch_array($result)){
+				$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
+				$gameXP[] = $xp;
+			}
+		}
+	}else{
+		if ($result = $mysqli->query("select * from `CollectionGames` c, `Games` g where c.`CollectionID` = '".$collectionID."' and c.`Hidden` = 'No' and c.`GameID` = g.`ID` and g.`Title` like '%".$search."%' order by g.`Title` LIMIT ".$offSet.",".$limit)) {
+			while($row = mysqli_fetch_array($result)){
+				$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $row['GameID']);
+				$gameXP[] = $xp;
+			}
 		}
 	}
 	
@@ -488,12 +559,28 @@ function GetCollectionGamesBySearch($collectionID, $search, $offSet, $limit, $us
 	return $gameXP;
 }
 
-function GetCollectionSize($collectionID){
+function GetCollectionSize($collectionID, $userid, $rulestring){
 	$mysqli = Connect();
 	$size = 0;
-	if ($result = $mysqli->query("select count(*) as cnt from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No'")) {
-		while($row = mysqli_fetch_array($result)){
-			$size = $row['cnt'];
+	if($rulestring != -1 && $rulestring != ''){
+		$rules = explode("||", $rulestring);
+		$rule = $rules[0];
+		$quarter = date('Y-m-d', strtotime("now - 120 days"));
+		$lastweeks = date('Y-m-d', strtotime("now - 14 days"));
+		$rule = str_replace("<USERID>", "'".$userid."'", $rule);
+		$rule = str_replace("<THISQUARTER>", "'".$quarter."'", $rule);
+		$rule = str_replace("<LAST2WEEKS>", "'".$lastweeks."'", $rule);
+		$rule = str_replace("LIMIT <OFFSET>, 25", "", $rule);
+		if ($result = $mysqli->query($rule)) {
+			while($row = mysqli_fetch_array($result)){
+				$size++;
+			}
+		}
+	}else{
+		if ($result = $mysqli->query("select count(*) as cnt from `CollectionGames` where `CollectionID` = '".$collectionID."' and `Hidden` = 'No'")) {
+			while($row = mysqli_fetch_array($result)){
+				$size = $row['cnt'];
+			}
 		}
 	}
 
@@ -590,6 +677,11 @@ function CreateDefaultUserCollections($userid){
 			}
 		}
 		CreateCollection('Bookmarked','Games I have bookmarked',$userid,-2,'Yes',$games);
+	}
+	if(DoesCollectionExist('Recently Played',$userid) == null){
+		$rule = "SELECT * FROM `Sub-Experiences` WHERE `UserID` = <USERID> and `Type` = 'Played' and `Date` >= <THISQUARTER> and `DateEntered` >= <LAST2WEEKS> and `Archived` = 'No' LIMIT <OFFSET>, 25||SELECT s.* FROM `Sub-Experiences`s, `Games` g WHERE s.`UserID` = <USERID> and s.`Type` = 'Played' and s.`Date` >= <THISQUARTER> and s.`DateEntered` >= <LAST2WEEKS> and s.`Archived` = 'No' and s.`GameID` = g.`ID` and g.`Title` like '%<SEARCH>%' LIMIT <OFFSET>, 25";
+		$ruledesc = "Games you have entered a played XP for in the last 2 weeks";
+		CreateAutoCollection('Recently Played','Games I have played in the last two weeks',$userid,-3,'Yes',$rule,$ruledesc);
 	}
 	Close($mysqli, $result);
 	
