@@ -463,23 +463,23 @@ function ShowTierGraphSelection($exp, $size){
 	$t5 = $tiertally[5];
 	
 	if($t1 != 0)
-		$relativeT1 = ceil($t1 / $total * $size);
+		$relativeT1 = ceil($t1 / $total * 70);
 	else
 		$relativeT1 = 0;
 	if($t2 != 0)
-		$relativeT2 = ceil($t2 / $total * $size);
+		$relativeT2 = ceil($t2 / $total * 70);
 	else
 		$relativeT2 = 0;
 	if($t3 != 0)
-		$relativeT3 = ceil($t3 / $total * $size);
+		$relativeT3 = ceil($t3 / $total * 70);
 	else
 		$relativeT3 = 0;
 	if($t4 != 0)
-		$relativeT4 = ceil($t4 / $total * $size);
+		$relativeT4 = ceil($t4 / $total * 70);
 	else
 		$relativeT4 = 0;
 	if($t5 != 0)
-		$relativeT5 = ceil($t5 / $total * $size);
+		$relativeT5 = ceil($t5 / $total * 70);
 	else
 		$relativeT5 = 0;
 	?>
