@@ -111,6 +111,13 @@
 	vertical-align: top;
 }
 
+.critic-disclaimer{
+    font-size: 1.1em;
+    padding: 5px 0 25px !important;
+    text-align: center;
+    font-weight: 500;
+}
+
 /*
 * Lifebar
 */

@@ -62,7 +62,10 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 					-->
 			</div>
 		</div>
-		
+		<!-- Disclaimer -->
+		<div class="col s12 critic-disclaimer">
+			<i class="fa fa-exclamation-triangle" style='color:#FF9800'></i> <?php echo $hiddenusername; ?>'s Profile is curated by Lifebar and is strictly based off their published reviews 
+		</div>
 		<!-- Skills -->
 		<div class="col s12 m6 l4 no-right-padding">
 			<div class="row">
