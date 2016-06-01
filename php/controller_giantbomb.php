@@ -155,8 +155,10 @@ function RequestGameFromGiantBomb($searchstring){
 				$release = $game->expected_release_year."-".$game->expected_release_month."-".$game->expected_release_day;
 		
 				$gameplatforms = "";
-				foreach($game->platforms as $platform){
-					$gameplatforms = $gameplatforms.$platform->name."\r\n";
+				if($game->platforms != ""){
+					foreach($game->platforms as $platform){
+						$gameplatforms = $gameplatforms.$platform->name."\r\n";
+					}	
 				}
 				
 				$gamerating = "";
