@@ -563,6 +563,14 @@ function CheckForExistingImport($userid){
 
 function GetSteamID($steamvanity){
 	$steamapikey = 'F380E48672B5996985B5EB0A9DACD9DB';
+	$steamvanity = str_replace("http://steamcommunity.com/id/", "", $steamvanity);
+	$steamvanity = str_replace("https://steamcommunity.com/id/", "", $steamvanity);
+	$steamvanity = str_replace("http://steamcommunity.com/profiles/", "", $steamvanity);
+	$steamvanity = str_replace("https://steamcommunity.com/profiles/", "", $steamvanity);
+	if(strlen($steamvanity) > 15 && ctype_digit($steamvanity)){
+		return $steamvanity;
+	}
+
 	$request = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key='.$steamapikey.'&vanityurl='.$steamvanity;
 	$request = str_replace(" ", "%20", $request);
 	$curl = curl_init($request);
