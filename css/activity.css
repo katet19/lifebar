@@ -187,8 +187,18 @@
   border-radius: 50%;
 }
 
-.feed-activity-game-link{
-	color:black;
+.feed-activity-game-link, .feed-activity-user-link-action{
+	cursor: pointer;
+	font-weight:400;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.feed-activity-game-link:hover, .feed-activity-user-link-action:hover{
+  color:black; 
 }
 
 .feed-activity-collection-link{
@@ -220,10 +230,6 @@
 
 .feed-card-level-game_title{
 	font-weight:500;
-}
-
-.feed-activity-game-link{
-	cursor: pointer;
 }
 
 .feed-activity-when-info{
