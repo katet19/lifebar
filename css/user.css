@@ -186,6 +186,23 @@
 	padding: 0 0.75rem;
 }
 
+.readBtnProfile{
+	color: white;
+    font-weight: 500;
+    padding: 0 0.75rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.readBtnCheckpoint{
+	color: rgba(0,0,0,0.54);
+    font-weight: bold;
+    padding: 0;
+    line-height: 16px;
+    height: 16px;
+    margin-bottom: 4px;
+}
+
 .agreeBtn, .disableAgreeBtn, .disagreeBtn{
 	text-transform: none;
 }

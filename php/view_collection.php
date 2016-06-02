@@ -295,7 +295,7 @@ function DisplayCollectionDetails($collectionID){
 
 function DisplayCollectionDetailGamesPagination($collectionid, $userid, $offset, $editMode){
 	$quickcollection = GetCollectionByID($collectionid);
-	$collectiongames = GetCollectionGamesWithXP($collectionid, $userid, $quickcollection->_owner, $quickcollection->_rule, $offset, 25);
+	$collectiongames = GetCollectionGamesWithXP($collectionid, $_SESSION['logged-in']->_id, $quickcollection->_owner, $quickcollection->_rule, $offset, 25);
 	if(($editMode == "true" || $editMode == true) && $userid == $_SESSION['logged-in']->_id)
 		$editMode = true;
 	else
