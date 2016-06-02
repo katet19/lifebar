@@ -48,6 +48,9 @@ function AttachTabLoadingEvents(){
   	  $(".supportForumButton").on("click", function(){
 	  	window.open("https://lifebar.freshdesk.com");
 	  });
+	  $(".supportBlogButton").on("click", function(){
+	  	window.open("https://medium.com/lifebar-io");
+	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){
 			ManuallyNavigateToTab("#profile");
