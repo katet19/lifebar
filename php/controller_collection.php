@@ -185,6 +185,7 @@ function FollowCollection($userid, $collectionID){
 	}
 	if($following == false){
 		$mysqli->query("insert into `CollectionSubs` (`CollectionID`,`UserID`) VALUES ('".$collectionID."','".$userid."')");
+		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`) values ('$userid','$collectionID','COLLECTIONFOLLOW','".$name."||".$desc."')");
 	}
 	Close($mysqli, $result);
 }
