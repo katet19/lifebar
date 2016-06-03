@@ -131,7 +131,7 @@ function DisplayLifeBarLogo($showtag){ ?>
 	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
 			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
-			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
+			<?php if($showtag){ ?> <div class="logoAlpha">beta</div><?php } ?>
 		</div>
 	</div>
 	<?php /*
