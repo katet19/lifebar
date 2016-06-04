@@ -95,7 +95,7 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
-		SignupEmail($email);
+		//SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;

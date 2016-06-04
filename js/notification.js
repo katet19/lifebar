@@ -15,6 +15,7 @@ function ShowNotificationMainContent(){
      data: {action: "DisplayNotificationHome" },
      type: 'post',
      success: function(output) {
+     	window.scrollTo(0, 0);
      	if($(".notifications-new-badge").length > 0)
      		GAPage('Notifications', '/notifications/new');
      	else
