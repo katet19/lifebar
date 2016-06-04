@@ -234,6 +234,12 @@
 		if($_POST['action'] == 'AdminBadgeGameSearch' && isset($_POST['search'])){
 			DisplayAdminBadgeGameSearchResults($_POST['search']);
 		}
+		if($_POST['action'] == "UnequipBadge"){
+			UnequipBadge($_POST['userid'], $_POST['badgeid']);
+		}
+		if($_POST['action'] == "EquipBadge"){
+			EquipBadge($_POST['userid'], $_POST['badgeid']);
+		}
 		if($_SESSION['logged-in']->_security == 'Admin'){
 			if($_POST['action'] == 'DisplayAdmin' ){
 				DisplayAdmin($_SESSION['logged-in']->_id);
@@ -312,14 +318,6 @@
 			if($_POST['action'] == "AdminRemoveBadge"){
 				if($_SESSION['logged-in']->_security == 'Admin')
 					RemoveBadgeAccess($_POST['userid'], $_POST['badgeid']);
-			}
-			if($_POST['action'] == "UnequipBadge"){
-				if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
-					UnequipBadge($_POST['userid'], $_POST['badgeid']);
-			}
-			if($_POST['action'] == "EquipBadge"){
-				if($_SESSION['logged-in']->_security == 'Admin' || $_SESSION['logged-in'] == $_POST['userid'])
-					EquipBadge($_POST['userid'], $_POST['badgeid']);
 			}
 			if($_POST['action'] == "DisplayAdminManageReportedGames"){
 				DisplayAdminManageReportedGames();

@@ -76,6 +76,8 @@ function AttachSignUpLandingEvents(){
 }
 
 function SignupFromLanding(username, password, email, first, last, birthyear){
+	$("#SignupSubmitBtnLanding").hide();
+	$("#landing-sign-up").find(".validation").show();
 	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
          data: {action: "Signup", username: username, password: password, email: email, first: first, last: last, birthyear: birthyear },
@@ -83,6 +85,7 @@ function SignupFromLanding(username, password, email, first, last, birthyear){
          success: function(output) {
          			window.location.hash = "#notifications";
          			setCookie("RememberMe", $.trim(output), 14);
+					window.scrollTo(0,0);
 					window.location.reload(true);
   		},
         error: function(x, t, m) {
