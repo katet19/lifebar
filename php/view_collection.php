@@ -394,6 +394,7 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 					          	</div>
 				          	</div>
 						 <?php }else{ ?>
+						 	<a class="signUpFromCollection btn-flat" style='margin-top: 15px;' href='#signupModal'>SIGN UP TO ENTER YOUR XP</a>
 						 <?php }
 						 
 						 if(sizeof($xp->_watchedxp) > 0){ 
