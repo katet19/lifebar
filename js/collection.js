@@ -107,6 +107,7 @@ function AttachCollectionDetailsEvents(fromid, from){
 			UpdateCollectionSub("yes");
 		}
 	});
+	$(".signUpFromCollection").on('click', function(e){ $('#signupModal').openModal(); });
   	$(".backButton").on("click", function(){
   		if(from == "UserCollection")
  			DisplayUserCollection(fromid);
