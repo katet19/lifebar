@@ -219,18 +219,24 @@ function DisplayGameInfo($game){	?>
 	<div class="HideForDesktop">
 		<?php DisplayGameInfoBackNav(); ?>
 	</div>
-	<div class="row" style='padding-top:3em;'>
-		<div class="col s12 GameInfoLabel">Released:</div>
-		<div class="col s12 GameInfoContent">
-			<?php 
-			if($game->_year == 0){
-				echo "Release date not announced";
-			}else{
-				echo ConvertDateToLongRelationalEnglish($game->_released); ?> <?php echo $game->_year; ?>
-			<?php } ?>
+	<?php if($game->_id != '33548' && $game->_id != '33541' && $game->_id != '33542' && $game->_id != '33547' && $game->_id != '33543'
+	&& $game->_id != '33546' && $game->_id != '33540' && $game->_id != '33549' && $game->_id != '33544' && $game->_id != '33545') { ?>
+		<div class="row" style='padding-top:3em;'>
+			<div class="col s12 GameInfoLabel">Released:</div>
+			<div class="col s12 GameInfoContent">
+				<?php 
+				if($game->_year == 0){
+					echo "Release date not announced";
+				}else{
+					echo ConvertDateToLongRelationalEnglish($game->_released); ?> <?php echo $game->_year; ?>
+				<?php } ?>
+			</div>
 		</div>
-	</div>
-	<div class="row">
+		<div class="row">
+	<?php }else{ ?>
+		<div class="row" style='padding-top:3em;'>
+	<?php } ?>
+
 		<div class="col s12 GameInfoLabel">Platforms:</div>
 		<div class="col s12 GameInfoContent">
 			<?php $platforms = explode("\n", $game->_platforms);

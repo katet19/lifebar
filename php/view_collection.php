@@ -173,7 +173,7 @@ function DisplayCollectionDetails($collectionID){
 	        	<?php if($collection->_createdby == -1){ ?>
 	        		<div class="btn collection-edit-delete" style='position: absolute;top: 110px;right: 14px;width: 225px;'>Delete Collection</div>
 	        	<?php } ?>
-			<?php }else{ 
+			<?php }else if($_SESSION['logged-in']->_id > 0){ 
 					$following = IsUserSubscribed($_SESSION['logged-in']->_id, $collection->_id);
 					if($following){	?>
 						<div class="btn collection-follow-btn" data-following="yes">Un-follow</div>
@@ -374,7 +374,7 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 						          	</div>
 
 							<?php 
-						 }else{ ?>
+						 }else if($_SESSION['logged-in']->_id > 0){ ?>
 						 	<div class="collection-game-xp-progress-bar" data-gameid='<?php echo $xp->_game->_id; ?>'>
   						 		<div class="collection-game-xp-progress-tick" data-prog="10" style='left:10%;'><div class="collection-tick">10%</div></div>
   						 		<div class="collection-game-xp-progress-tick" data-prog="20" style='left:20%;'><div class="collection-tick">20%</div></div>
@@ -393,6 +393,8 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 				    				<i class="mdi-hardware-gamepad"></i>
 					          	</div>
 				          	</div>
+						 <?php }else{ ?>
+						 	<a class="signUpFromCollection btn-flat" style='margin-top: 15px;' href='#signupModal'>SIGN UP TO ENTER YOUR XP</a>
 						 <?php }
 						 
 						 if(sizeof($xp->_watchedxp) > 0){ 
@@ -433,7 +435,7 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 					   			</div>
 						  	  <?php
 						  	  		}
-								}else{
+								}else if($_SESSION['logged-in']->_id > 0){
 									?>
 			 		  	  	       	<div class="collection-game-tier-container-watched collection-tier-container-placeholder z-depth-1" data-gameid='<?php echo $xp->_game->_id; ?>'>
 							          	<div class="collection-game-tier" title="Not Watched">
