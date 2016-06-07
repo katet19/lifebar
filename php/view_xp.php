@@ -130,11 +130,12 @@ function ShowEditPlayed($exp){
 				
 				if($exp->_game->_year == 0){
 					$officialrelease = "";
+					$releaseyear = $year - 5;
 				}else{
 					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
 				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $releaseyear){ echo " - US Release (".$officialrelease.")"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $releaseyear && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
@@ -351,11 +352,12 @@ function ShowEditWatched($exp, $watchid){
 				$releaseyear = $releaseyear - 5;
 				if($exp->_game->_year == 0){
 					$officialrelease = "";
+					$releaseyear = $year - 5;
 				}else{
 					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
 				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $exp->_game->_year){ echo " - US Release (".$officialrelease.")"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $exp->_game->_year  && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}
