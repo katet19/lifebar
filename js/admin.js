@@ -99,6 +99,29 @@ function AttachAdminEvents(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayReportedGames();
 	});
+	$(".clear-search-cache-btn").on("click", function(){
+		ClearSearchCache();	
+	});
+}
+
+
+function ClearSearchCache(){
+	var searchstring = $("#search-cache-input").val();
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ClearSearchCache", searchstring: searchstring },
+     type: 'post',
+     success: function(output) {
+		Toast("Search cache was cleared for all searchs that contained '"+searchstring+"'");
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function DisplayDBThreads(){
