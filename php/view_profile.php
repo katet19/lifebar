@@ -200,24 +200,26 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 							</div>
 						</div>
 					</div>
-					<div class="col s12 m12 l4">
-						<div class="row">
-							<div class="profile-card profile-highlighted-game-container-small col s12 z-depth-1" <?php if($xp->_id <= 0){ echo "style='opacity:0.4;'"; } ?>>
-								<?php
-									if($user->_weave->_subpreferredXP1 > 0)
-										$xpsub1 = GetExperienceForUserComplete($user->_id, $user->_weave->_subpreferredXP1);
-									DisplayEquippedGame($xpsub1); 
-								?>
-							</div>
-							<div class="profile-card profile-highlighted-game-container-small col s12 z-depth-1" <?php if($xp->_id <= 0){ echo "style='opacity:0.4;'"; } ?>>
-								<?php
-									if($user->_weave->_subpreferredXP2 > 0)
-										$xpsub2 = GetExperienceForUserComplete($user->_id, $user->_weave->_subpreferredXP2);
-									DisplayEquippedGame($xpsub2); 
-								?>
+					<?php if($user->_weave->_totalXP > 0){ ?>
+						<div class="col s12 m12 l4">
+							<div class="row">
+								<div class="profile-card profile-highlighted-game-container-small col s12 z-depth-1" <?php if($xp->_id <= 0){ echo "style='opacity:0.4;'"; } ?>>
+									<?php
+										if($user->_weave->_subpreferredXP1 > 0)
+											$xpsub1 = GetExperienceForUserComplete($user->_id, $user->_weave->_subpreferredXP1);
+										DisplayEquippedGame($xpsub1); 
+									?>
+								</div>
+								<div class="profile-card profile-highlighted-game-container-small col s12 z-depth-1" <?php if($xp->_id <= 0){ echo "style='opacity:0.4;'"; } ?>>
+									<?php
+										if($user->_weave->_subpreferredXP2 > 0)
+											$xpsub2 = GetExperienceForUserComplete($user->_id, $user->_weave->_subpreferredXP2);
+										DisplayEquippedGame($xpsub2); 
+									?>
+								</div>
 							</div>
 						</div>
-					</div>
+					<?php } ?>
 			</div>
 		</div>
 		
