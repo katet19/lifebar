@@ -183,8 +183,8 @@ function ShowGameHeader($game, $myxp, $otherxp){
 
 function ShowMyGameFAB($gameid, $myxp){
 	if($_SESSION['logged-in']->_id > 0){ ?>
-	    <a class="btn-floating btn-large <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ echo "game-add-played-btn red darken-2"; }else{ echo "game-add-watched-btn red darken-2"; } ?> "  data-gameid='<?php echo $myxp->_game->_id; ?>'>
-	      <?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
+	    <a class="btn-floating btn-large <?php if(sizeof($myxp->_playedxp) == 0){ echo "game-add-played-btn red darken-2"; }else{ echo "game-add-watched-btn red darken-2"; } ?> "  data-gameid='<?php echo $myxp->_game->_id; ?>'>
+	      <?php if(sizeof($myxp->_playedxp) == 0){ ?>
 	      	<span class="GameHiddenActionLabelBigFab">Add a played XP</span>
     	  <?php }else{ ?>
     	  	<span class="GameHiddenActionLabelBigFab">Add a watched XP</span>
@@ -204,7 +204,7 @@ function ShowMyGameFAB($gameid, $myxp){
 	      	<li><span class="GameHiddenActionLabel">Bookmark this game</span><a class="btn-floating red darken-4 game-add-bookmark-btn" <?php if($myxp->_bucketlist == "Yes"){ echo "style='display:none;'"; } ?> data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-bookmark"></i></a></li>
 	      	
 	      	<li><span class="GameHiddenActionLabel">Share game page</span><a class="btn-floating indigo darken-2 game-share-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-game-name='<?php echo $myxp->_game->_title; ?>'><i class="mdi-social-share"></i></a></li>
-	      	<?php if(sizeof($myxp->_playedxp) == 0 && $myxp->_game->_year > 0){ ?>
+	      	<?php if(sizeof($myxp->_playedxp) == 0){ ?>
 	      	<li><span class="GameHiddenActionLabelBigFab">Add a watched XP</span><a class="btn-floating game-add-watched-btn" style='width: 55.5px; height: 55.5px;'><i class="mdi-action-visibility" style='line-height: 55.5px;font-size: 1.6rem;'></i></a></li>
 	      	<?php } ?>
 	      	
