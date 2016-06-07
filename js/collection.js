@@ -94,7 +94,7 @@ function AttachCollectionDetailsEvents(fromid, from){
 	else
 		$(".collection-next").show();
 		
-	$(".backButton, .collection-next, .collection-prev, #collection-search, .collection-game-xp-progress-bar, .edit-mode-btn, .import-game-image, .collection-search-icon, .collection-game-add-to-collection, .collection-follow-btn").unbind();
+	$(".backButton, .collection-next, .collection-prev, #collection-search, .collection-game-xp-progress-bar, .edit-mode-btn, .import-game-image, .collection-game-name, .collection-search-icon, .collection-game-add-to-collection, .collection-follow-btn").unbind();
 	$(".collection-follow-btn").on("click", function(){
 		var following = $(this).attr("data-following");
 		if(following == "yes"){
@@ -107,6 +107,7 @@ function AttachCollectionDetailsEvents(fromid, from){
 			UpdateCollectionSub("yes");
 		}
 	});
+	$(".signUpFromCollection").on('click', function(e){ $('#signupModal').openModal(); });
   	$(".backButton").on("click", function(){
   		if(from == "UserCollection")
  			DisplayUserCollection(fromid);
@@ -155,7 +156,7 @@ function AttachCollectionDetailsEvents(fromid, from){
 	$(".edit-mode-btn").on("click", function(){
 		EnableEditMode(from, fromid, 250);
 	});
-	$(".import-game-image").on("click", function(){
+	$(".import-game-image, .collection-game-name").on("click", function(){
 		ShowGame($(this).attr("data-id"), $("#profile"));	
 	});
 	$(".collection-game-add-to-collection").on("click", function(){

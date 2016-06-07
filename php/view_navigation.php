@@ -48,6 +48,7 @@ function DisplayHeaderNavigation(){ ?>
 							<li><a href="#!" class="adminButton">Admin</a></li>
 							<?php } ?>
 							<li><a href="#!" class="supportForumButton">Support</a></li>
+							<li><a href="#!" class="supportBlogButton">Blog</a></li>
 							<li><a href="#!" class="signOutButton">Sign out</a></li>
 						  </ul>
 					</div>
@@ -99,6 +100,7 @@ function DisplaySideDrawer(){ ?>
 			<li><a href="#!" class="adminButton">Admin</a></li>
 		<?php } ?>
 		<li><a href="#!" class="supportForumButton">Support</a></li>
+		<li><a href="#!" class="supportBlogButton">Blog</a></li>
 		<li><a href="#!" class="supportButton">Report Bug</a></li>
 		<li><a href="#!" class="signOutButton">Sign out</a></li>
 	<?php } ?>
@@ -129,7 +131,7 @@ function DisplayLifeBarLogo($showtag){ ?>
 	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
 		<div class="logoImage">
 			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
-			<?php if($showtag){ ?> <div class="logoAlpha">alpha</div><?php } ?>
+			<?php if($showtag){ ?> <div class="logoAlpha">beta</div><?php } ?>
 		</div>
 	</div>
 	<?php /*

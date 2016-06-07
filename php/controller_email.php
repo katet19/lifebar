@@ -4,7 +4,7 @@ require_once "includes.php";
 function SignupEmail($to){
 	$subject = "Welcome to Lifebar!";
 	$link = "http://lifebar.io";
-	$message = $message."<h1 style='color:#0a67a3;'>Welcome to the Lifebar alpha!</h1>";
+	$message = $message."<h1 style='color:#0a67a3;'>Welcome to the Lifebar beta!</h1>";
 	$message = $message."<p style='font-size:16px;'>Lifebar represents your life playing and watching video games. With Lifebar you will be able to <b>discover</b> new games, <b>share</b> your experiences and <b>visualize</b> a lifetime of gaming.</p>";
 	$message = $message."<p style='color:#e01b84;font-size:20px;'>Play Games. Watch Games. <b>Earn XP!</b></p>";
 	$message = $message."Whether you played a game or watched others play it, your time spent informs your thoughts on that game. At Lifebar we acknowledge they are different types of experiences, but want to recognize the way we experience games is changing rapidly and capturing that variety is important.<br><br>";

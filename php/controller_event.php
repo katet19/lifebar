@@ -267,6 +267,28 @@ function GetMyFeed($userid, $page, $filter){
 					$myfeeditem[] = "COLLECTIONCREATION";
 					$myfeed[] = $myfeeditem;
 				}
+			}else if($row["Event"] == "COLLECTIONFOLLOW"){
+				$myfeeditem = array();						
+				$collection = GetCollectionByID($row["GameID"], $mysqli);
+				if($collection != null){
+					$exp = null;
+					$event = new Event($row["ID"],
+							$row["UserID"],
+							$exp->_first." ".$exp->_last,
+							$row["Event"],
+							$row["GameID"],
+							$row["Date"],
+							$row["Quote"],
+							$row["Tier"]);
+							
+					$myfeeditem[] = $event;
+					$myfeeditem[] = $collection;
+					$myfeeditem[] = $row["GameID"];
+					$myfeeditem[] = $exp;
+					$myfeeditem[] = 3;
+					$myfeeditem[] = "COLLECTIONFOLLOW";
+					$myfeed[] = $myfeeditem;
+				}
 			}else if($row["Event"] == "STEAMIMPORT"){
 				$myfeeditem = array();			
 				$collections = explode("||", $row["Quote"]);

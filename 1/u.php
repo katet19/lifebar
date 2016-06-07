@@ -116,7 +116,10 @@ function ConvertCollectiontoOG($collection){
 	
 	$og["TITLE"] = $collection->_name;
 	
-	$og["DESC"] = htmlspecialchars($collection->_desc);
+	if($collection->_desc != '')
+		$og["DESC"] = htmlspecialchars($collection->_desc);
+	else
+		$og["DESC"] = "A Lifebar collection by ".htmlspecialchars($collection->_name);
 	
 	if($collection->_cover != '')
 		$og["IMAGE"] = $collection->_cover;

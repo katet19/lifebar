@@ -7,7 +7,7 @@ function StartSteamImport(userid, forceImport){
      success: function(output) {
  		$("#universalPopUp").html(output); 
 		$('.start-steam-import').on("click", function(){
-			if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
+			if($("#steamname").val() == ''){
 				$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
 			}else{
 					if($('#importFullReset:checked').length > 0)
@@ -19,7 +19,7 @@ function StartSteamImport(userid, forceImport){
 		$("#steamname").on('keypress keyup', function (e) {
 			if (e.keyCode === 13) { 
 				e.stopPropagation(); 	
-				if($("#steamname").val() == '' || $("#steamname").val().indexOf("http") > -1){
+				if($("#steamname").val() == ''){
 					$(".import-validation").html("Please enter a valid Vanity ID or Profile ID");
 				}else{
 					if($('#importFullReset:checked').length > 0)

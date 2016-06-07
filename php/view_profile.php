@@ -62,7 +62,10 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 					-->
 			</div>
 		</div>
-		
+		<!-- Disclaimer -->
+		<div class="col s12 critic-disclaimer">
+			<i class="fa fa-exclamation-triangle" style='color:#FF9800'></i> <?php echo $hiddenusername; ?>'s Profile is curated by Lifebar and is strictly based off their published reviews 
+		</div>
 		<!-- Skills -->
 		<div class="col s12 m6 l4 no-right-padding">
 			<div class="row">
@@ -542,6 +545,9 @@ function DisplaySlot1Game($xp){
 	    	<?php if( $xp->_authenticxp == "Yes"){ ?> 
 	      		<div class='authenticated-mark-lifebar-slot1 mdi-action-done ' title="Verified Account"></div>
 	  		<?php } ?>
+	  		<?php if( $xp->_link != ""){ ?> 
+	      		<a href='<?php echo $xp->_link; ?>' target='_blank' onclick="var event = arguments[0] || window.event; event.stopPropagation();" ><div class="btn-flat waves-effect readBtnProfile">READ</div></a>
+	  		<?php } ?>
 		</div>
 		<div class="profile-highlighted-game-name">
 			<?php echo $highlightedgame->_title; ?>
@@ -900,6 +906,9 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 		    	<?php if( $exp->_authenticxp == "Yes"){ ?> 
 		      		<div class='authenticated-mark-lifebar mdi-action-done ' title="Verified Account" style='font-size: 0.7em;'></div>
 		  		<?php } ?>
+  		  		<?php if( $exp->_link != ""){ ?> 
+	      			<a href='<?php echo $exp->_link; ?>' target='_blank' onclick="var event = arguments[0] || window.event; event.stopPropagation();" ><div class="btn-flat waves-effect readBtnProfile" style='margin-bottom: -2px;'>READ</div></a>
+	  			<?php } ?>
 			</div> 
 			<?php $first = false; 
 		}else{ ?>
@@ -981,6 +990,9 @@ function DisplayMyLibraryChicklet($userid){
 	    	<?php if( $authenticxp == "Yes"){ ?> 
 	      		<div class='authenticated-mark mdi-action-done ' title="Verified Account"></div>
 	  		<?php } ?>
+	  		<?php if( $xp->_link != ""){ ?> 
+  				<a href='<?php echo $xp->_link; ?>' target='_blank' onclick="var event = arguments[0] || window.event; event.stopPropagation();" ><div class="btn-flat waves-effect readBtnCheckpoint">READ</div></a>
+  			<?php } ?>
 		</div>
 	</div>
  <?php }
