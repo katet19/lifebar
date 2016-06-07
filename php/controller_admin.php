@@ -35,6 +35,12 @@ function FindMissingNames(){
 	}
 }
 
+function ClearSearchCache($searchstring){
+	$mysqli = Connect();
+	$mysqli->query("delete from `Search_Cache` where `Search` like '%".$searchstring."%'");
+	Close($mysqli, $result);
+}
+
 
 function FixGameImageURLS(){
 	$mysqli = Connect();
