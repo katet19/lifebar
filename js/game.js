@@ -718,6 +718,8 @@ function GameCardActions(element){
 		element.find(".signup-option").on('click', function(){
 			$('#signupModal').openModal();	
 		});
+	}else if(element.hasClass("card-game-collection-add")){
+		DisplayCollectionQuickForm(element.parent(), element.parent().parent().attr("data-gameid"), element.parent().parent().attr("data-gbid"), true);
 	}else{
 		element.addClass("card-game-tier-container-active");
 		element.parent().parent().find(".card-game-tier").hide();

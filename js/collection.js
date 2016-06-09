@@ -160,7 +160,7 @@ function AttachCollectionDetailsEvents(fromid, from){
 		ShowGame($(this).attr("data-id"), $("#profile"));	
 	});
 	$(".collection-game-add-to-collection").on("click", function(){
-		DisplayCollectionQuickForm($(this), $(this).attr("data-id"));
+		DisplayCollectionQuickForm($(this), $(this).attr("data-id"), '', false);
 	});
 	$(".collection-share").on("click", function(){
 		ShowShareModal("collection", $(this).attr("data-id"));
@@ -749,12 +749,21 @@ function SearchCollection(searchstring, offset, userid, from){
 	});
 }
 
-function DisplayCollectionQuickForm(element, gameid){
+function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 	var container = element.parent().parent().find(".collection-quick-add-container");
+	if(fromGameCard){
+		$(".active-collection-game-icon").addClass("z-depth-1");
+		$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
+		container.parent().css({"z-index":"10"});
+		container.css({"top":"210px"});
+		var fabIcon = element.find(".card-game-tier-container");
+		fabIcon.removeClass("z-depth-1");
+		fabIcon.addClass("orange darken-2 active-collection-game-icon");
+	}
 	ShowLoader(container, 'small', "<br><br><br>");
 	container.show(250);
 	$.ajax({ url: '../php/webService.php',
-     data: {action: "DisplayCollectionManagement", gameid: gameid, quickAdd: "true" },
+     data: {action: "DisplayCollectionManagement", gameid: gameid, gbid: gbid, quickAdd: "true" },
      type: 'post',
      success: function(output) {
  		container.html(output); 
@@ -764,7 +773,10 @@ function DisplayCollectionQuickForm(element, gameid){
  		$('html').click(function(){
 			if(container.is(":visible")){
 				container.hide(250);
+				container.parent().css({"z-index":"1"});
 				$('html').unbind();
+				$(".active-collection-game-icon").addClass("z-depth-1");
+				$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
 			}
 		});
  		AttachCollectionManagementEvents(gameid, "true");

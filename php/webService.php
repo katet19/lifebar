@@ -31,7 +31,7 @@
 			DisplaySearchCollection($_POST['collectionid'], $_POST['searchstring'], $_POST['offset'], $_POST['userid'], $_POST['editMode']);
 		}
 		if($_POST['action'] == "DisplayCollectionManagement"){
-			DisplayCollectionManagement($_POST['gameid'],$_SESSION['logged-in']->_id,$_POST['quickAdd']);
+			DisplayCollectionManagement($_POST['gameid'],$_SESSION['logged-in']->_id,$_POST['quickAdd'],$_POST['gbid']);
 		}
 		if($_POST['action'] == "ValidateCollectionName"){
 			ValidateCollectionName($_POST['collectionName'],$_SESSION['logged-in']->_id);
