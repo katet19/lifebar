@@ -322,6 +322,9 @@
 			if($_POST['action'] == "DisplayAdminManageReportedGames"){
 				DisplayAdminManageReportedGames();
 			}
+			if($_POST['action'] == "ClearSearchCache"){
+				ClearSearchCache($_POST['searchstring']);
+			}
 		}
 	}
 	function ActivityServices(){

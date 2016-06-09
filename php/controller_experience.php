@@ -645,7 +645,7 @@ function GetAnticipatedGames($userid, $limit){
 	$users = array();
 	$mysqli = Connect();
 	$now = date('Y-m-d');
-	if ($result = $mysqli->query("select * from `Experiences` exp, `Games` g where `UserID` = '".$userid."' and exp.`GameID` = g.`ID` and g.`Released` > '".$now."' and exp.`BucketList` = 'Yes' ORDER BY g.`Released` ASC LIMIT 0,".$limit)) {
+	if ($result = $mysqli->query("select * from `Collections` c, `CollectionGames` cg,  `Games` g where c.`Name` = 'Bookmarked' and c.`ID` = cg.`CollectionID` and c.`OwnerID` = '".$userid."' and cg.`GameID` = g.`ID` and g.`Released` > '".$now."'  ORDER BY g.`Released` ASC LIMIT 0,".$limit)) {
 		while($row = mysqli_fetch_array($result)){
 			$game = GetGame($row["GameID"], $mysqli);
 			
@@ -1435,7 +1435,7 @@ function GetGameCompletion($gameid){
 
 function GetGameBookmarked($gameid){
 	$mysqli = Connect();
-	$query = "select count(*) as cnt from `Experiences` where `GameID` = '".$gameid."' and `BucketList` = 'Yes'";
+	$query = "SELECT COUNT( * ) AS cnt FROM  `Collections` c,  `CollectionGames` g WHERE g.`GameID` =  '".$gameid."' AND c.`Name` = 'Bookmarked' AND c.`ID` = g.`CollectionID`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$bookmarked = $row['cnt'];

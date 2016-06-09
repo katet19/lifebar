@@ -69,6 +69,16 @@ function DisplayAdmin($userid){
 			<div class="col s12 m6 l4">
 	          <div class="card admin-card">
 	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
+	            </div>
+	            <div class="card-action">
+	              <input id='search-cache-input' style='margin-right:10px;'> <a href="#" class="admin-action clear-search-cache-btn">CLEAR SEARCH</a>
+	            </div>
+	          </div>
+  			</div>
+			<div class="col s12 m6 l4">
+	          <div class="card admin-card">
+	            <div class="card-content">
 	            	<?php $reportedTotals = GetImportReported(); ?>
 	              <span class="card-title"><i class="fa fa-steam" style='margin: 0 5px;'></i> Reported from Import <div class="admin-counter"><?php echo number_format($reportedTotals[1]); ?></div></span>
 	            </div>
