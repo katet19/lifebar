@@ -224,7 +224,7 @@ function CreateCollection($name,$desc,$ownerid,$createdBy,$visibility,$games){
 	$collectionID = -1;
 	if($exists == null){
 		$result = $mysqli->query("insert into `Collections` (`Name`,`Description`,`OwnerID`,`CreatedBy`,`Visibility`,`Rule`) values ('".mysqli_real_escape_string($mysqli,$name)."','".mysqli_real_escape_string($mysqli,$desc)."','".$ownerid."','".$createdBy."','".$visibility."','-1')");
-		if ($result = $mysqli->query("select * from `Collections` where `Name` = '".$name."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
+		if ($result = $mysqli->query("select * from `Collections` where `Name` = '".mysqli_real_escape_string($mysqli,$name)."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
 			while($row = mysqli_fetch_array($result)){
 				$collectionID = $row['ID'];
 			}
@@ -439,7 +439,7 @@ function ValidateCollectionName($collectionName, $userid){
 function DoesCollectionExist($name,$ownerid){
 	$mysqli = Connect();
 	$collection = null;
-	if ($result = $mysqli->query("select * from `Collections` where `Name` = '".$name."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
+	if ($result = $mysqli->query("select * from `Collections` where `Name` = '".mysqli_real_escape_string($mysqli,$name)."' and `OwnerID` = '".$ownerid."' order by `ID` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = $row['ID'];
 		}
