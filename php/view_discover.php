@@ -7,9 +7,10 @@
 
 function DisplayGameDiscoverGrid(){ 
 	$cat = GetDiscoverCategories();
+	$zdepth = 20;
 ?>
  <div class="row discover-row">
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader discoverCategoryHeaderFirst" data-category="Recent Releases">
       		<i class="mdi-notification-event-note categoryIcon" style="background-color: #009688;"></i>
       		Recent Releases
@@ -23,7 +24,7 @@ function DisplayGameDiscoverGrid(){
 		} ?>
     </div>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
     	<?php $firstcat = $cat[0]; ?>
       	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $firstcat[0]["Name"]; ?>" data-catid="<?php echo $firstcat[0]["ID"]; ?>">
       		<i class="mdi-content-flag categoryIcon" style="background-color: #c62828;"></i>
@@ -48,7 +49,7 @@ function DisplayGameDiscoverGrid(){
 		} ?>
     </div>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="Active Personalities">
     		<i class="mdi-social-whatshot categoryIcon" style="background-color: rgb(255, 126, 0);"></i>
       		Active Personalities
@@ -87,7 +88,7 @@ function DisplayGameDiscoverGrid(){
     <?php }else{ ?>
         <div class="col discoverDivider"></div>
     <?php } ?>
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="Trending Games">
       		<i class="mdi-action-trending-up categoryIcon" style="background-color: rgb(190, 0, 255);"></i>
       		Trending Games
@@ -102,10 +103,10 @@ function DisplayGameDiscoverGrid(){
 		?>
     </div>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
-      	<div class="discoverCategoryHeader" data-category="Active Users">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader" data-category="Active Members">
       		<i class="mdi-social-people categoryIcon" style="background-color: rgb(255, 0, 97);"></i>
-      		Active Users
+      		Active Members
       		<div class="ViewBtn"><a class="waves-effect waves-light btn" style="background-color: rgb(255, 0, 97);">View</a></div>
       	</div>
     	<?php $experiencedUsers = GetExperiencedUsersCategory();
@@ -138,7 +139,7 @@ function DisplayGameDiscoverGrid(){
     <?php }else{ ?>
     	    <div class="col discoverDivider"></div>
     <?php } ?>
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="Best Experiences">
       		<i class="mdi-action-grade categoryIcon" style="background-color: rgb(0, 119, 255);"></i>
       		Best Experiences
@@ -156,10 +157,10 @@ function DisplayGameDiscoverGrid(){
     <?php
     	$newusers = GetNewUsersCategory(6);
 	if(sizeof($newusers) > 5){ ?>
-	    <div class="col s12 discoverCategory">
-	      	<div class="discoverCategoryHeader" data-category="New Users">
+	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+	      	<div class="discoverCategoryHeader" data-category="New Members">
 	      		<i class="mdi-social-people categoryIcon" style="background-color:#2E7D32;"></i>
-	      		New Users
+	      		New Members
 	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#2E7D32;'>View</a></div>
 	      	</div>
 	    	<?php 
@@ -170,7 +171,7 @@ function DisplayGameDiscoverGrid(){
 			} ?>
 	    </div>
     <?php }else{ ?>
-	    <div class="col s12 discoverCategory">
+	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
 	    	<?php $custcat = $cat[1]; ?>
 	      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
 	      		<i class="mdi-content-flag categoryIcon" style="background-color: #2E7D32;"></i>
@@ -196,7 +197,7 @@ function DisplayGameDiscoverGrid(){
 	    </div>
     <? } ?>
     <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory">
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
     	<?php $custcat = $cat[2]; ?>
       	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
       		<i class="mdi-content-flag categoryIcon" style="background-color: #E64A19;"></i>
@@ -230,11 +231,11 @@ function DisplayDiscoverCategory($category, $catid){
 			DisplayCategoryRecentReleases();
 		else if($category == "Active Personalities")
 			DisplayCategoryActivePersonalities();
-		else if($category == "New Users")
+		else if($category == "New Members")
 			DisplayCategoryNewUsers();
 		else if($category == "Trending Games")
 			DisplayCategoryPopularGames();
-		else if($category == "Active Users")
+		else if($category == "Active Members")
 			DisplayCategoryExperienceUsers();
 		else if($category == "Best Experiences")
 			DisplayCategoryBestExperiences();
