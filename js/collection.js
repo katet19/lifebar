@@ -777,6 +777,10 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 				container.hide(250);
 				container.parent().css({"z-index":"1"});
 				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
 				$(".active-collection-game-icon").addClass("z-depth-1");
 				$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
 			}
@@ -952,6 +956,10 @@ function SearchForGameForCollection(search, collectionID){
 	 		$('html').click(function(){
 				searchResults.hide(250);
 				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
 			});
 		}
      },
