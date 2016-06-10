@@ -612,9 +612,7 @@ function ShowUserXP($userxp){
 				</div>
 			</div>
 			<br>
-			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
-			<br>
-		    <div class="myxp-details-container z-depth-1" style="padding:0;">
+		    <div class="myxp-details-container z-depth-1">
 			    <?php 
 			    if(sizeof($userxp->_playedxp) > 0){
 		    		$played = $userxp->_playedxp[0];
@@ -663,8 +661,10 @@ function ShowUserXP($userxp){
 				    	</div>
 				    </div>
 			    </div>
-			    <br>
     		<?php } ?>
+			<br>
+			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
+			<br>
 		</div>
 	</div>
 <?php
