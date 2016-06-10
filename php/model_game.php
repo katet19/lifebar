@@ -33,11 +33,14 @@ class Game
 		$this->_genre = $genre;
 		$this->_platforms = $platforms;
 		$this->_year = $year;
-		$this->_image = $image;
 		if($imagesmall != '')
 			$this->_imagesmall = $imagesmall;
 		else
 			$this->_imagesmall = $image;
+		if($image != '')
+			$this->_image = $image;
+		else
+			$this->_image = $imagesmall;
 		$this->_highlight = $highlight;
 		$this->_publisher = $publisher;
 		$this->_developer = $developer;

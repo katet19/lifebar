@@ -11,7 +11,7 @@ function DisplayGameDiscoverE3(){
 	$zdepth = 20;
 ?>
 	<div style='width:100%;margin-top:10px;background-color:#0a67a4;height:88px;text-align:center;'>
-		<img src='http://lifebar.io/Images/Generic/e3banner_960.jpg'>
+		<div style='background: url(http://lifebar.io/Images/Generic/e3banner_960.jpg) 50% no-repeat;-webkit-background-size: cover;background-size: contain;width: 100%;-moz-background-size: contain;-o-background-size: contain;height: 88px;'></div>
 	</div>
  <div class="row discover-row">
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
@@ -32,6 +32,7 @@ function DisplayGameDiscoverE3(){
       	</div>
       	<?php 
       	$i = 0;
+      	shuffle($firstcat[1]);
   		while($i < 7){
 			if(isset($firstcat[1][$i]))
   				DisplayGameCard($firstcat[1][$i], $i, "categoryResults");
@@ -57,6 +58,7 @@ function DisplayGameDiscoverE3(){
       	</div>
       	<?php 
       	$i = 0;
+      	shuffle($firstcat[1]);
   		while($i < 7){
 			if(isset($firstcat[1][$i]))
   				DisplayGameCard($firstcat[1][$i], $i, "categoryResults");
@@ -64,29 +66,20 @@ function DisplayGameDiscoverE3(){
 		} ?>
     </div>
     <div class="col discoverDivider"></div>
-        <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $firstcat = $cat[2]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $firstcat[0]["Name"]; ?>" data-catid="<?php echo $firstcat[0]["ID"]; ?>" data-userid="<?php echo $firstcat[0]["Owner"]; ?>">
-      		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
-    		<?php if($firstcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $firstcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $firstcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $firstcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtnCollection"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader" data-category="Active Personalities">
+    		<i class="mdi-social-whatshot categoryIcon" style="background-color: rgb(255, 126, 0);"></i>
+      		Active Personalities
+      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:rgb(255, 126, 0);'>View</a></div>
       	</div>
-      	<?php 
-      	$i = 0;
-  		while($i < 7){
-			if(isset($firstcat[1][$i]))
-  				DisplayGameCard($firstcat[1][$i], $i, "categoryResults");
-  			$i++;
-		} ?>
+      	<?php $activePersonalities = GetActivePersonalitiesCategory();
+      	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
+      	$count = 1;
+  		foreach($activePersonalities as $user){
+  			DisplayUserCard($user, $count, "categoryResults", $connections);
+			$count++; 
+		} 
+		?>
     </div>
 	<?php $suggestedGames = GetE3Zeitgeist();
 	if(sizeof($suggestedGames) > 0){ $game = GetGame($suggestedGames[0]->_coreid); ?>
@@ -112,23 +105,9 @@ function DisplayGameDiscoverE3(){
     <?php }else{ ?>
         <div class="col discoverDivider"></div>
     <?php } ?>
-    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-      	<div class="discoverCategoryHeader" data-category="Active Personalities">
-    		<i class="mdi-social-whatshot categoryIcon" style="background-color: rgb(255, 126, 0);"></i>
-      		Active Personalities
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:rgb(255, 126, 0);'>View</a></div>
-      	</div>
-      	<?php $activePersonalities = GetActivePersonalitiesCategory();
-      	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
-      	$count = 1;
-  		foreach($activePersonalities as $user){
-  			DisplayUserCard($user, $count, "categoryResults", $connections);
-			$count++; 
-		} 
-		?>
-    </div>
-    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $firstcat = $cat[3]; ?>
+    <div class="col discoverDivider"></div>
+        <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+    	<?php $firstcat = $cat[2]; ?>
       	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $firstcat[0]["Name"]; ?>" data-catid="<?php echo $firstcat[0]["ID"]; ?>" data-userid="<?php echo $firstcat[0]["Owner"]; ?>">
       		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
     		<?php if($firstcat[0]["Description"] != ""){ ?>
@@ -145,6 +124,7 @@ function DisplayGameDiscoverE3(){
       	</div>
       	<?php 
       	$i = 0;
+      	shuffle($firstcat[1]);
   		while($i < 7){
 			if(isset($firstcat[1][$i]))
   				DisplayGameCard($firstcat[1][$i], $i, "categoryResults");
@@ -153,27 +133,16 @@ function DisplayGameDiscoverE3(){
     </div>
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $custcat = $cat[4]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
-      		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
-      		<?php if($custcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $custcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $custcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $custcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
+      	<div class="discoverCategoryHeader" data-category="Active Members">
+      		<i class="mdi-social-people categoryIcon" style="background-color: rgb(255, 0, 97);"></i>
+      		Active Members
+      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style="background-color: rgb(255, 0, 97);">View</a></div>
       	</div>
-      	<?php 
-      	$i = 0;
-  		while($i < 7){
-  			if(isset($custcat[1][$i]))
-  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
-  			$i++;
+    	<?php $experiencedUsers = GetExperiencedUsersCategory();
+      	$count = 1;
+  		foreach($experiencedUsers as $user){
+  			DisplayUserCard($user, $count, "categoryResults", $connections);
+			$count++; 
 		} ?>
     </div>
     <?php if(sizeof($suggestedGames) > 1){ $game = GetGame($suggestedGames[1]->_coreid); ?>
@@ -200,7 +169,7 @@ function DisplayGameDiscoverE3(){
     	    <div class="col discoverDivider"></div>
     <?php } ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $custcat = $cat[5]; ?>
+    	<?php $custcat = $cat[3]; ?>
       	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
       		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
       		<?php if($custcat[0]["Description"] != ""){ ?>
@@ -217,69 +186,7 @@ function DisplayGameDiscoverE3(){
       	</div>
       	<?php 
       	$i = 0;
-  		while($i < 7){
-  			if(isset($custcat[1][$i]))
-  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
-  			$i++;
-		} ?>
-    </div>
-    <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-      	<div class="discoverCategoryHeader" data-category="Active Members">
-      		<i class="mdi-social-people categoryIcon" style="background-color: rgb(255, 0, 97);"></i>
-      		Active Members
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style="background-color: rgb(255, 0, 97);">View</a></div>
-      	</div>
-    	<?php $experiencedUsers = GetExperiencedUsersCategory();
-      	$count = 1;
-  		foreach($experiencedUsers as $user){
-  			DisplayUserCard($user, $count, "categoryResults", $connections);
-			$count++; 
-		} ?>
-    </div>
-    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $custcat = $cat[6]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
-      		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
-      		<?php if($custcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $custcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $custcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $custcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
-      	</div>
-      	<?php 
-      	$i = 0;
-  		while($i < 7){
-  			if(isset($custcat[1][$i]))
-  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
-  			$i++;
-		} ?>
-    </div>
-    <div class="col discoverDivider"></div>
-    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-    	<?php $custcat = $cat[7]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
-      		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
-      		<?php if($custcat[0]["Description"] != ""){ ?>
-      		<div class="discoverCatName">
-      			<?php echo $custcat[0]["Name"]; ?>
-      			<div class="discoverCatSubName">
-      				<?php echo $custcat[0]["Description"]; ?>
-      			</div>
-  			</div>
-  			<?php }else{ ?>
-  				<?php echo $custcat[0]["Name"]; ?>
-  			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
-      	</div>
-      	<?php 
-      	$i = 0;
+      	shuffle($firstcat[1]);
   		while($i < 7){
   			if(isset($custcat[1][$i]))
   				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
@@ -300,6 +207,32 @@ function DisplayGameDiscoverE3(){
   		foreach($newusers as $user){
   			DisplayUserCard($user, $count, "categoryResults", $connections);
 			$count++; 
+		} ?>
+    </div>
+    <div class="col discoverDivider"></div>
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+    	<?php $custcat = $cat[4]; ?>
+      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
+      		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
+      		<?php if($custcat[0]["Description"] != ""){ ?>
+      		<div class="discoverCatName">
+      			<?php echo $custcat[0]["Name"]; ?>
+      			<div class="discoverCatSubName">
+      				<?php echo $custcat[0]["Description"]; ?>
+      			</div>
+  			</div>
+  			<?php }else{ ?>
+  				<?php echo $custcat[0]["Name"]; ?>
+  			<?php } ?>
+      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
+      	</div>
+      	<?php 
+      	$i = 0;
+      	shuffle($firstcat[1]);
+  		while($i < 7){
+  			if(isset($custcat[1][$i]))
+  				DisplayGameCard($custcat[1][$i], $i, "categoryResults");
+  			$i++;
 		} ?>
     </div>
 </div>
