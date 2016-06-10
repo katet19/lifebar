@@ -336,7 +336,10 @@ function DisplayGameInfoBackNav(){ ?>
 
 function DisplayGameCard($game, $count, $classId){
 	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id) ?>
-	<div class="col s6 m3 l2">
+	<div class="col s6 m3 l2" style='position:relative;'>
+   		 <div class="collection-quick-add-container z-depth-2">
+ 			Empty Text
+ 		 </div>
 	      <div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
@@ -344,9 +347,9 @@ function DisplayGameCard($game, $count, $classId){
 	          <?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ 
 	          			DisplayGameCardTierIcon($xp);
 	           	}else if($_SESSION['logged-in']->_id > 0){ ?>
-		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
+		          <div class="card-game-tier-container z-depth-1 card-game-collection-add" style='background-color:gray;'>
 		          	<div class="card-game-tier">
-	          			<i class="mdi-content-add"></i>
+	          			<i class="mdi-av-my-library-add"></i>
 		          	</div>
   	  	            <div class="card-tier-details">
 	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
@@ -362,7 +365,7 @@ function DisplayGameCard($game, $count, $classId){
           	  <?php }else{ ?>
 		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
 		          	<div class="card-game-tier">
-	          			<i class="mdi-content-add"></i>
+	          			<i class="mdi-av-my-library-add"></i>
 		          	</div>
   	  	            <div class="card-tier-details">
 	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
@@ -405,9 +408,9 @@ function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
 				</div>
           	  </div>
           	  <?php }else if($_SESSION['logged-in']->_id > 0){ ?>
-		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
+		          <div class="card-game-tier-container z-depth-1 card-game-collection-add" style='background-color:gray;'>
 		          	<div class="card-game-tier">
-	          			<i class="mdi-content-add"></i>
+	          			<i class="mdi-av-my-library-add"></i>
 		          	</div>
   	  	            <div class="card-tier-details">
 	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
@@ -423,7 +426,7 @@ function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
           	  <?php }else{ ?>
 		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
 		          	<div class="card-game-tier">
-	          			<i class="mdi-content-add"></i>
+	          			<i class="mdi-av-my-library-add"></i>
 		          	</div>
   	  	            <div class="card-tier-details">
 	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>

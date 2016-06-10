@@ -323,6 +323,14 @@
 	font-size: 0.5em;
 }
 
+.ViewBtnCollection{
+	position: absolute;
+	display: inline-block;
+	right: 5%;
+	font-weight: 300;
+	font-size: 0.5em;
+}
+
 .searchResultsContainer, .CategoryDetailsContainer{
 	margin: 6em 2.5% 1em;
 }
@@ -544,6 +552,10 @@
     top: 2em;
 }
 
+.active-collection-game-icon{
+	z-index:10001;
+}
+
 @media only screen and (max-width : 992px) {
 	#discover-header{
 		right:0;
@@ -641,12 +653,12 @@
 		font-size: 1.2em;
 		display:inline-block;
 	}
-	.ViewBtn{
+	.ViewBtn, .ViewBtnCollection{
 		font-size:0.6em;
 	    bottom: -2em;
 	    right: 3em;
 	}
-	.ViewBtn .btn{
+	.ViewBtn .btn, .ViewBtnCollection .btn{
 		padding: 0 0.75em;
 		height: 30px;
 		line-height: 30px;

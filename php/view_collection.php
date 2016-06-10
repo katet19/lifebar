@@ -465,9 +465,9 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 	}
 }
 
-function DisplayCollectionManagement($gameid, $userid, $quickAdd){
+function DisplayCollectionManagement($gameid, $userid, $quickAdd, $gbid){
 	//Create collection
-	if($gameid == -1){
+	if($gameid == -1 && $gbid == ''){
 		?>
 		<div class="row">
 			<div class="col s12">
@@ -496,6 +496,10 @@ function DisplayCollectionManagement($gameid, $userid, $quickAdd){
 		</div>
 		<?php
 	}else{
+		if($gameid == -1){
+			$game = GetGameByGBIDFull($gbid);
+			$gameid = $game->_id;
+		}
 		?>
 		<div class="row collection-add-to-existing-collection-container" <?php if($quickAdd == "false"){?> style='height:inherit' <?php } ?> >
 			<div class="col s12">
