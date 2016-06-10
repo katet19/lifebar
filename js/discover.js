@@ -59,6 +59,10 @@ function Search(searchstring){
 				//Clear search input
 	 			$(".searchInput input").val('');
 	 			$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
  				ShowUserPreviewCard($(this).find(".user-preview-card"));
  			});
   			Waves.displayEffect();
@@ -69,6 +73,10 @@ function Search(searchstring){
 				//Clear search input
 	 			$(".searchInput input").val('');
 	 			$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
  				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
  			});
  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
@@ -83,6 +91,10 @@ function Search(searchstring){
 				//Clear search input
 	 			$(".searchInput input").val('');
 	 			$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
 			});
  			GAPage('Search', '/search');
      	},
