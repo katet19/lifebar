@@ -184,6 +184,37 @@ function GetZeitgeist(){
 	return $cards;
 }
 
+function GetE3Zeitgeist(){
+	$cards = array();
+	$mysqli = Connect();
+	$thisquarter = date('Y-m-d', strtotime("now -14 days") );
+	$tomorow = date('Y-m-d', strtotime("now +1 days") );
+	if ($result = $mysqli->query("select g.`ID`, g.`Title` from `Collections` c, `CollectionGames` cg, `Games` g where c.`OwnerID` in ('7','7588') and c.`Name` like '%E3 2016%' and cg.`CollectionID` = c.`ID` and cg.`GameID` = g.`ID` order by rand() LIMIT 5")) {
+		while($row = mysqli_fetch_array($result)){
+			$cards[] = new Notification(-1,
+				-1,
+				$row["ID"],
+				"Games",
+				"",
+				$row["Title"],
+				$row["Title"]." is at E3 2016. What do you think?",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"");
+		}
+	}
+	shuffle($cards);
+	Close($mysqli, $result);
+	return $cards;
+}
+
 function ActionOnNotification($userid, $cardid, $action){	
 	$mysqli = Connect();
 	if($action == "remove"){

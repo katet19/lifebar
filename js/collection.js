@@ -117,6 +117,8 @@ function AttachCollectionDetailsEvents(fromid, from){
  			ShowUserContent(userid,false);
  		else if(from == "Activity")
  			ShowActivityHome();
+  	 	else if(from == "Discover")
+ 			ShowDiscoverHome();
  	});
 	$(".collection-next").on("click", function(){
 		var curroffset = $(this).parent().parent().find(".collection-pagination-offset").attr("data-offset");
