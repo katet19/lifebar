@@ -438,7 +438,7 @@ function ShowEditWatched($exp, $watchid){
 	</div>
 	<div class="row myxp-form-box">
 		<div class="input-field col s12 m12 l8">
-	        <input id="myxp-form-url" type="text" <?php if($watchedxp->_url != ""){ ?> value="<?php echo $watchedxp->_url; ?>" <?php } ?> >
+	        <input id="myxp-form-url" type="text" <?php if($watchedxp->_url != ""){ ?> value="<?php echo htmlentities($watchedxp->_url); ?>" <?php } ?> >
         	<label for="myxp-form-url" <?php if($watchedxp->_url != ""){ ?> class="active"<?php } ?>>Viewed source url</label>
 		</div>
 	</div>

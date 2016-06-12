@@ -53,14 +53,13 @@
 #sideContainer{
 	background-color: white;
 	min-height: 90%;
-	z-index: 2 !important;
+	z-index: 4 !important;
 	top: 40px;
 	bottom: 0;
 	position: fixed;
 	right: 0;
 	text-align: center;
 	overflow: hidden;
-	z-index:2;
 }
 
 #universalPopUp{
