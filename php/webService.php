@@ -83,7 +83,7 @@
 		}
 		if($_POST['action'] =='SaveWatchedCollection' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
-				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], '', $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
 				CalculateWeave($_SESSION['logged-in']->_id);
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
@@ -407,6 +407,17 @@
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
 				echo "|**|";
 				DisplayMyXP($_POST['gameid']);
+			}
+		}
+		if($_POST['action'] =='SaveWatchedVideo' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['quarter'],$_POST['year'],'');
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|**|";
+				DisplayMyXP($_POST['gameid']);
+				echo "|**|".$new;
 			}
 		}
 		if($_POST['action'] =='UpdateWatched' && $_SESSION['logged-in']->_id > 0){

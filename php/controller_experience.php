@@ -77,6 +77,21 @@ function GetGlobalLatestXP(){
 	return $experiences;
 }
 
+function GetGameVideoXP($gameid){
+	$mysqli = Connect();
+	$videos = array();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `URL` != '' group by `URL` order by `DateEntered` DESC")){
+		while($row = mysqli_fetch_array($result)){
+			unset($video);
+			$video['URL'] = $row['URL'];
+			$video['Length'] = $row['Length'];
+			$video['Source'] = $row['Source'];
+			$videos[] = $video;
+		}
+	}
+	return $videos;
+}
+
 function AdvancedFilterWeave($userid, $paramaters, $sort){
 	$mysqli = Connect();
 	

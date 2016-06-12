@@ -1,28 +1,6 @@
 function AttachXPEvents(){
 	$(".myxp-GraphLabel").on('click', function(){
-		if(!$(this).hasClass("myxp-selected-tier")){
-			var oldselection = $(".myxp-selected-tier");	
-			var oldcount = parseInt(oldselection.attr("data-count"));
-			if(oldcount > 0)
-				oldcount = oldcount - 1;
-			oldselection.attr("data-count", oldcount);
-			oldselection.removeClass("myxp-selected-tier tier1BG tier2BG tier3BG tier4BG tier5BG");
-			$(this).addClass("myxp-selected-tier tier"+ $(this).attr("data-tier") +"BG");
-			var newcount = parseInt($(this).attr("data-count"));
-			newcount++;
-			$(this).attr("data-count", newcount);
-			var total = parseInt($(".firsttier").attr("data-total"));
-			if(total > 0){
-				var oldgraph = Math.ceil(oldcount / total * 70);
-				var newgraph = Math.ceil(newcount / total * 70);
-			}else{
-				oldgraph = 0;
-				newgraph = 70;
-			}
-			$(this).next().css({"width": newgraph+"%"});
-			oldselection.next().css({"width": oldgraph+"%"});
-			ValidateXPEntry();
-		}
+		CalculateAndAddTier($(this));
 	});
 	$(".myxp-GraphBar").on('click', function(){
 		var tier = $(this).parent().find(".myxp-GraphLabel").attr("data-tier");
@@ -41,6 +19,32 @@ function AttachXPEvents(){
 	$(".myxp-save").on('click', function(){
 		SaveXPEntry();
 	});
+}
+
+function CalculateAndAddTier(element){
+	if(!element.hasClass("myxp-selected-tier")){
+		var oldselection = $(".myxp-selected-tier");	
+		var oldcount = parseInt(oldselection.attr("data-count"));
+		if(oldcount > 0)
+			oldcount = oldcount - 1;
+		oldselection.attr("data-count", oldcount);
+		oldselection.removeClass("myxp-selected-tier tier1BG tier2BG tier3BG tier4BG tier5BG");
+		element.addClass("myxp-selected-tier tier"+ element.attr("data-tier") +"BG");
+		var newcount = parseInt(element.attr("data-count"));
+		newcount++;
+		element.attr("data-count", newcount);
+		var total = parseInt($(".firsttier").attr("data-total"));
+		if(total > 0){
+			var oldgraph = Math.ceil(oldcount / total * 70);
+			var newgraph = Math.ceil(newcount / total * 70);
+		}else{
+			oldgraph = 0;
+			newgraph = 70;
+		}
+		element.next().css({"width": newgraph+"%"});
+		oldselection.next().css({"width": oldgraph+"%"});
+		ValidateXPEntry();
+	}
 }
 
 function BuildSentenceOnLoad(){
@@ -230,7 +234,7 @@ function ToggleQuarter(year){
 	}
 }
 
-function AddWatchedFabEvent(){
+function AddWatchedFabEvent(url = '', source = '', length = '', tier = '', summary = ''){
 	HideFab();
 	var gameid = $("#gameContentContainer").attr("data-id");
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
@@ -245,6 +249,41 @@ function AddWatchedFabEvent(){
          type: 'post',
          success: function(output) {
          	$("#game-myxp-tab").html(output);
+         	if(url != ''){
+         		$("#myxp-form-url").val(url);
+         		$("#myxp-form-url").next().addClass("active");
+         	}
+     		if(source != '')
+     			$("#myxp-view-source").val(source);
+ 			if(length != ''){
+ 				$('input[type=radio][name=viewingitemgroup]').each(function(){
+ 					if($(this).attr("id") == "watchedtrailer" && length == "Watched trailer(s)")
+ 						$(this).prop("checked", true);
+ 					else if($(this).attr("id") == "watcheddeveloper" && length == "Watched a developer diary")
+ 						$(this).prop("checked", true);
+  					else if($(this).attr("id") == "watchedpromotional" && length == "Watched promotional gameplay")
+ 						$(this).prop("checked", true);
+   					else if($(this).attr("id") == "watchedanhourorless" && (length == "Watched gameplay" || length == 'Watched an hour or less' || length == 'Watched multiple hours'))
+ 						$(this).prop("checked", true);
+					else if($(this).attr("id") == "competitiveplay" && length == "Watched competitive play")
+ 						$(this).prop("checked", true);
+ 	   				else if($(this).attr("id") == "speedrun" && length == "Watched a speed run")
+ 						$(this).prop("checked", true);
+					else if($(this).attr("id") == "completesingleplay" && (length == "Watched a complete single player playthrough" || length == 'Watched a complete playthrough'))
+ 						$(this).prop("checked", true);
+ 				});
+ 			}
+ 			if(summary != ''){
+ 				$("#myxp-quote").val(summary);
+ 				$("#myxp-quote").next().addClass("active");
+ 			}
+ 			if(tier != ''){
+ 				$('.myxp-GraphLabel').each(function(){
+ 					if($(this).attr("data-tier") == tier)
+ 						CalculateAndAddTier($(this));
+ 				});
+ 			}
+         	
          	$("#myxp-quote").focus();
          	AttachXPEvents();
          	window.scrollTo(0, 10);
