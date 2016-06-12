@@ -2368,7 +2368,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	if($result == '' || $result == false){
 		customError('MySQL', mysqli_error($mysqli),'controller_experience','SaveWatchedXP - ('.$insert.')');
 	}else{
-		CreateEventForWatchedXP($user, $gameid, $tier, $quote);
+		CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url);
 	}
 	Close($mysqli, $result);
 	
@@ -2414,12 +2414,9 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 	Close($mysqli, $result);
 }
 
-function CreateEventForWatchedXP($user, $gameid, $tier, $quote){
+function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
-	$hasXP = HasUserGivenXP($user, $gameid);
-	if($hasXP == -1){
-		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','ADDED','$tier','$quote')");
-	}
+	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`) values ('$user','$gameid','ADDED','$tier','$quote','$url')");
 	Close($mysqli, $result);
 }
 
