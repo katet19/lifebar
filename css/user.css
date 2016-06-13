@@ -179,7 +179,7 @@
 	cursor: initial;
 }
 
-.readBtn, .agreeBtn, .disagreeBtn, .detailsBtn{
+.readBtn, .agreeBtn, .disagreeBtn, .detailsBtn, .watchBtn{
 	margin-bottom:5px;
 	color: rgba(0,0,0,0.54);
 	font-weight: bold;
@@ -207,7 +207,7 @@
 	text-transform: none;
 }
 
-.readBtn:hover, .agreeBtn:hover, .detailsBtn:hover, .disagreeBtn:hover{
+.readBtn:hover, .agreeBtn:hover, .detailsBtn:hover, .disagreeBtn:hover, .watchBtn:hover{
 	color: rgba(0,0,0,0.9);
 }
 

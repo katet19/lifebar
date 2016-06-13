@@ -170,7 +170,7 @@ function DisplayGameDiscoverE3(){
     <?php } ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
     	<?php $custcat = $cat[3]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
+      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $firstcat[0]["ID"]; ?>" data-userid="<?php echo $firstcat[0]["Owner"]; ?>">
       		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
       		<?php if($custcat[0]["Description"] != ""){ ?>
       		<div class="discoverCatName">
@@ -212,7 +212,7 @@ function DisplayGameDiscoverE3(){
     <div class="col discoverDivider"></div>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
     	<?php $custcat = $cat[4]; ?>
-      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $custcat[0]["ID"]; ?>">
+      	<div class="discoverCategoryHeader" data-category="Custom Category" data-name="<?php echo $custcat[0]["Name"]; ?>" data-catid="<?php echo $firstcat[0]["ID"]; ?>" data-userid="<?php echo $firstcat[0]["Owner"]; ?>">
       		<i class="categoryIcon" style="background-color: #c62828;font-style: normal;font-weight: 500;">E3</i>
       		<?php if($custcat[0]["Description"] != ""){ ?>
       		<div class="discoverCatName">

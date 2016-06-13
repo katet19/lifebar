@@ -31,7 +31,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>
 		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
-		<?php if(sizeof($videoxp) > 0){ ?>
+		<?php if(sizeof($videoxp) > 0 && $_SESSION['logged-in'] > 0){ ?>
 			<div id="game-video-tab" class="col s12 game-tab" style='z-index:2;'>
 				<?php ShowGameVideos($videoxp, $myxp); ?>
 			</div>
@@ -203,7 +203,7 @@ function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
 						  	</div>
 					  	</div>
 					</div>
-					<div class="input-field col s12 collection-quote-watched-container" style="margin-top: 140px;">
+					<div class="input-field col s12" style="margin-top: 140px;">
 				  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
 						<div class="collection-game-myxp-header">Summary</div>
 						<div class="collection-game-myxp-container" style='top: 75px;'>
@@ -228,7 +228,97 @@ function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
 			</div>
 		</div>
 	</div>
+	<?php
+}
 
+function DisplayVideoForGame($url, $gameid){
+	$video = GetVideoXPForGame($url, $gameid);
+	$xp = GetVideoMyXPForGame($url, $gameid);
+	$tier = $xp->_archivetier;
+	$summary = $xp->_archivequote;
+	$month = date('n');
+ 	if($month > '0' && $month <= '3'){
+		$quarter = "q1";
+	}else if($month > '3' && $month <= '6'){
+		$quarter = "q2";
+	}else if($month > '6' && $month <= '9'){
+		$quarter = "q3";
+	}else if($month > '9' && $month <= '12'){
+		$quarter = "q4";
+	}else if($month == 0){
+		$quarter = "q0";
+	}
+	?>
+	<div class="col s12">
+		<div class="row">
+			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+				<div class="videoWrapper">
+					<?php if(strpos($video['URL'] , 'iframe') === false){
+						if(strpos($video['URL'] , 'giantbomb.com') !== false){
+							$url = "http://www.giantbomb.com/videos/embed/";
+							$vidArray = explode("-", $video['URL']);
+							$video['URL'] = $url.end($vidArray);
+							?>
+							<iframe data-cbsi-video width="640" height="400" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
+						<?php }else if(strpos($video['URL'] , 'youtube.com') !== false || strpos($video['URL'] , 'youtu.be') !== false){
+								$url = "https://www.youtube.com/embed/";
+								$vidArray = explode("/", $video['URL']);
+								$video['URL'] = $url.end($vidArray);
+								?>
+								<iframe width="560" height="315" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
+						<?php }else if(strpos($video['URL'], 'gamespot.com') !== false){
+								$url = "http://www.gamespot.com/videos/embed/";
+								$vidArray = explode("-", $video['URL']);
+								$video['URL'] = $url.end($vidArray); ?>
+								<iframe src="<?php echo $video['URL']; ?>" width="640" height="400" scrolling="no" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+						<?php }else if(strpos($video['URL'] , 'ign.com') !== false){ ?>
+								<iframe src="http://widgets.ign.com/video/embed/content.html?url=<?php echo $video['URL']; ?>" width="468" height="263" scrolling="no" frameborder="0" allowfullscreen></iframe>
+						<?php }
+					}else{
+						echo $video['URL'];
+					} ?>
+				</div>
+			</div>
+			<div class="col m12 l6 video-card" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+					<div class="video-add-watch-container" style="height:375px;">
+						<div class="col s12" style='text-align:left;position:relative;top:15px;'>
+							<div class="collection-game-myxp-gutter"><i class="mdi-social-poll left"></i></div>
+							<div class="collection-game-myxp-header">Tier</div>
+							<div class="collection-game-myxp-container" >
+							 	<div class="collection-myxp-tier-container">
+							  	    <div class="collection-myxp-tier t5 tierBorderColor5 <?php if($tier == 5){ echo "tierBorderColor5selected myxp-selected-tier"; } ?>" data-tier='5' >5 <div class="collection-myxp-label" style='color: #DB0058;'>Worst</div></div>
+								    <div class="collection-myxp-tier t4 tierBorderColor4 <?php if($tier == 4){ echo "tierBorderColor4selected myxp-selected-tier"; } ?>" data-tier='4' >4</div>
+								    <div class="collection-myxp-tier t3 tierBorderColor3 <?php if($tier == 3){ echo "tierBorderColor3selected myxp-selected-tier"; } ?>" data-tier='3' >3</div>
+							  	    <div class="collection-myxp-tier t2 tierBorderColor2 <?php if($tier == 2){ echo "tierBorderColor2selected myxp-selected-tier"; } ?>" data-tier='2' >2</div>
+							  	    <div class="collection-myxp-tier t1 tierBorderColor1 <?php if($tier == 1){ echo "tierBorderColor1selected myxp-selected-tier"; } ?>" data-tier='1' >1 <div class="collection-myxp-label" style='left:15px;color: #0A67A3;'>Best</div></div>
+							  	</div>
+						  	</div>
+						</div>
+						<div class="input-field col s12" style="margin-top: 140px;">
+					  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
+							<div class="collection-game-myxp-header">Summary</div>
+							<div class="collection-game-myxp-container" style='top: 75px;'>
+						  	    <script>
+							      function countChar<?php echo $uniqueID; ?>(val) {
+							        var len = val.value.length;
+							        if (len > 140) {
+							          val.value = val.value.substring(0, 140);
+							        } else {
+							          $('#charNumCollection<?php echo $uniqueID; ?>').html(len);
+							        }
+							      };
+							    </script>
+						        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar<?php echo $uniqueID; ?>(this)" maxlength="140"><?php echo $summary; ?></textarea>
+						        <label for="myxp-collection-quote" <?php if($summary != ""){ echo "class='active'"; } ?> ><?php if($tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
+					        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
+					        	<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
+						        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection<?php echo $uniqueID; ?>'><?php echo strlen($summary); ?></span>/140</div>
+					        </div>
+					      </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	<?php
 }
 
@@ -258,7 +348,7 @@ function ShowGameTabs($myxp, $otherxp, $videoxp){
 		      <ul class="tabs gameNav" style="background-color:transparent">
 		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-community-tab" class="active waves-effect waves-light">Community</a></li>
 		        <li class="tab col s3 userAnalyzeTab" style='background-color:transparent'><a href="#game-analyze-tab" id='analyze-tab-nav' class="waves-effect waves-light">Analyze</a></li>
-		        <?php if(sizeof($videoxp) > 0){ ?>
+		        <?php if(sizeof($videoxp) > 0  && $_SESSION['logged-in'] > 0){ ?>
 		        	<li class="tab col s3 userVideoTab" style='background-color:transparent'><a href="#game-video-tab" id='video-tab-nav' class="waves-effect waves-light">Watch</a></li>
 		        <?php } ?>
 		        <?php if(isset($_SESSION['logged-in']->_id) && $myxp->_tier != 0){ ?> 

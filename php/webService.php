@@ -478,6 +478,9 @@
 		if($_POST['action'] == 'DisplayMyXP' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			DisplayMyXP($_POST['gameid']);
 		}
+		if($_POST['action'] == 'DisplayVideoForGame' && isset($_POST['gameid'])){
+			DisplayVideoForGame($_POST['url'], $_POST['gameid']);
+		}
 		if($_POST['action'] == 'DisplayMyAnalyze' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			$myxp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $_POST['gameid']);
 			$game = GetGame($_POST['gameid']);
