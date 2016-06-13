@@ -9,9 +9,10 @@ class Event
 	public $_date;
 	public $_quote;
 	public $_tier;
+	public $_url;
 	
 	
-	function __construct($id, $userid, $name, $event, $gameid, $date, $quote, $tier) {
+	function __construct($id, $userid, $name, $event, $gameid, $date, $quote, $tier, $url) {
 		$this->_id = $id;
 		$this->_userid = $userid;
 		$this->_name = $name;
@@ -20,6 +21,7 @@ class Event
 		$this->_date = $date;
 		$this->_quote = $quote;
 		$this->_tier = $tier;
+		$this->_url = $url;
 	}
 		
 }

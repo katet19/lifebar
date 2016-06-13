@@ -267,6 +267,9 @@ function AttachVideoEvents(){
 			ValidateVideoXPEntry($(this));
 		}
 	});
+	$(".myxp-quote").bind('input propertychange', function() {
+		ValidateVideoXPEntry($(this));
+	});
 	$(".myxp-video-goto-full").on("click", function(){
 		var element = $(this).parent().parent().parent().parent();
 		var length = element.attr("data-length");

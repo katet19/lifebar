@@ -89,7 +89,57 @@ function GetGameVideoXP($gameid){
 			$videos[] = $video;
 		}
 	}
+	Close($mysqli, $result);
 	return $videos;
+}
+
+function GetVideoXPForGame($url, $gameid){
+	$mysqli = Connect();
+	$video = array();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `URL` = '".$url."' LIMIT 0,1")){
+		while($row = mysqli_fetch_array($result)){
+			$video['URL'] = $row['URL'];
+			$video['Length'] = $row['Length'];
+			$video['Source'] = $row['Source'];
+		}
+	}
+	Close($mysqli, $result);
+	return $video;
+}
+
+function GetVideoMyXPForGame($url, $gameid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `UserID` = '".$_SESSION['logged-in']->_id."' and `URL` = '".$url."' LIMIT 0,1")){
+		while($row = mysqli_fetch_array($result)){
+			$subexp = new SubExperience($row['ID'], 
+				$row['ExpID'], 
+				$row['UserID'], 
+				$row['GameID'],
+				$row['Type'], 
+				$row['Source'], 
+				$row['Date'], 
+				$row['URL'],
+				$row['Length'], 
+				$row['Thoughts'], 
+				$row['ArchiveQuote'], 
+				$row['ArchiveTier'], 
+				$row['DateEntered'], 
+				$row['Completed'], 
+				$row['Mode'], 
+				$row['Platform'],
+				$row['PlatformIDs'],
+				$row['DLC'],
+				$row['Alpha'],
+				$row['Beta'],
+				$row['Early Access'],
+				$row['Demo'],
+				$row['Streamed'],
+				$row['Archived'],
+				$row['AuthenticXP']);
+		}
+	}
+	Close($mysqli, $result);
+	return $subexp;
 }
 
 function AdvancedFilterWeave($userid, $paramaters, $sort){
