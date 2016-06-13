@@ -311,7 +311,6 @@ function DisplayVideoForGame($url, $gameid){
 						        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar<?php echo $uniqueID; ?>(this)" maxlength="140"><?php echo $summary; ?></textarea>
 						        <label for="myxp-collection-quote" <?php if($summary != ""){ echo "class='active'"; } ?> ><?php if($tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
 					        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
-					        	<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
 						        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection<?php echo $uniqueID; ?>'><?php echo strlen($summary); ?></span>/140</div>
 					        </div>
 					      </div>
