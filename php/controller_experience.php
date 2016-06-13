@@ -77,6 +77,71 @@ function GetGlobalLatestXP(){
 	return $experiences;
 }
 
+function GetGameVideoXP($gameid){
+	$mysqli = Connect();
+	$videos = array();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `URL` != '' group by `URL` order by `DateEntered` DESC")){
+		while($row = mysqli_fetch_array($result)){
+			unset($video);
+			$video['URL'] = $row['URL'];
+			$video['Length'] = $row['Length'];
+			$video['Source'] = $row['Source'];
+			$videos[] = $video;
+		}
+	}
+	Close($mysqli, $result);
+	return $videos;
+}
+
+function GetVideoXPForGame($url, $gameid){
+	$mysqli = Connect();
+	$video = array();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `URL` = '".$url."' LIMIT 0,1")){
+		while($row = mysqli_fetch_array($result)){
+			$video['URL'] = $row['URL'];
+			$video['Length'] = $row['Length'];
+			$video['Source'] = $row['Source'];
+		}
+	}
+	Close($mysqli, $result);
+	return $video;
+}
+
+function GetVideoMyXPForGame($url, $gameid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("SELECT * FROM `Sub-Experiences` WHERE `GameID` = '".$gameid."' and `UserID` = '".$_SESSION['logged-in']->_id."' and `URL` = '".$url."' LIMIT 0,1")){
+		while($row = mysqli_fetch_array($result)){
+			$subexp = new SubExperience($row['ID'], 
+				$row['ExpID'], 
+				$row['UserID'], 
+				$row['GameID'],
+				$row['Type'], 
+				$row['Source'], 
+				$row['Date'], 
+				$row['URL'],
+				$row['Length'], 
+				$row['Thoughts'], 
+				$row['ArchiveQuote'], 
+				$row['ArchiveTier'], 
+				$row['DateEntered'], 
+				$row['Completed'], 
+				$row['Mode'], 
+				$row['Platform'],
+				$row['PlatformIDs'],
+				$row['DLC'],
+				$row['Alpha'],
+				$row['Beta'],
+				$row['Early Access'],
+				$row['Demo'],
+				$row['Streamed'],
+				$row['Archived'],
+				$row['AuthenticXP']);
+		}
+	}
+	Close($mysqli, $result);
+	return $subexp;
+}
+
 function AdvancedFilterWeave($userid, $paramaters, $sort){
 	$mysqli = Connect();
 	
@@ -2353,7 +2418,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	if($result == '' || $result == false){
 		customError('MySQL', mysqli_error($mysqli),'controller_experience','SaveWatchedXP - ('.$insert.')');
 	}else{
-		CreateEventForWatchedXP($user, $gameid, $tier, $quote);
+		CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url);
 	}
 	Close($mysqli, $result);
 	
@@ -2399,12 +2464,9 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 	Close($mysqli, $result);
 }
 
-function CreateEventForWatchedXP($user, $gameid, $tier, $quote){
+function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
-	$hasXP = HasUserGivenXP($user, $gameid);
-	if($hasXP == -1){
-		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','ADDED','$tier','$quote')");
-	}
+	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`) values ('$user','$gameid','ADDED','$tier','$quote','$url')");
 	Close($mysqli, $result);
 }
 

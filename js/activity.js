@@ -85,6 +85,30 @@ function AttachActivityEvents(){
  	 	e.stopPropagation();
 		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
 	 });
+	 $(".watchBtn").on("click", function(e){
+ 		e.stopPropagation();
+		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+  		var gameid = $(this).attr("data-gameid");
+  		var url = $(this).attr("data-url");
+ 		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
+	     type: 'post',
+	     success: function(output) {
+ 			$("#BattleProgess").html(output); 
+ 			AttachActivityVideoEvents();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+
+	 });
 	 AttachAgreesFromActivity();
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
@@ -93,6 +117,66 @@ function AttachActivityEvents(){
       			EndlessLoader();
 	 	}
      });
+}
+
+function AttachActivityVideoEvents(){
+	$(".collection-myxp-tier").on('click', function(){
+		if(!$(this).hasClass("myxp-selected-tier")){
+			var parent = $(this).parent();
+			var oldselection = parent.find(".myxp-selected-tier");
+			oldselection.removeClass("myxp-selected-tier tierBorderColor1selected tierBorderColor2selected tierBorderColor3selected tierBorderColor4selected tierBorderColor5selected");
+			$(this).addClass("myxp-selected-tier tierBorderColor"+ $(this).attr("data-tier") +"selected");
+			var tier = $(this).attr("data-tier");
+			ValidateVideoXPEntry($(this));
+		}
+	});
+	$(".myxp-quote").bind('input propertychange', function() {
+		ValidateVideoXPEntry($(this));
+	});
+	$(".myxp-video-goto-full").on("click", function(){
+		var element = $(this).parent().parent().parent().parent();
+		var length = element.attr("data-length");
+		var source = element.attr("data-source");
+		var url = element.attr("data-url");
+		var tier = element.find(".myxp-selected-tier").attr("data-tier");
+		var summary = element.find(".myxp-quote").val();
+		AddWatchedFabEvent(url, source, length, tier, summary);
+	});
+	$(".myxp-post").on("click", function(){
+		if(!$(this).hasClass("disabled")){
+			var button = $(this);
+			var element = $(this).parent().parent().parent().parent();
+			var length = element.attr("data-length");
+			var source = element.attr("data-source");
+			var url = element.attr("data-url");
+			var tier = element.find(".myxp-selected-tier").attr("data-tier");
+			var summary = element.find(".myxp-quote").val();
+			var quarter = element.attr("data-quarter");
+			var year = element.attr("data-year");
+			var gameid = element.attr("data-gameid");
+			$.ajax({ url: '../php/webService.php',
+			     data: {action: 'SaveWatchedVideo', gameid: gameid, quote: summary, tier: tier, viewsrc: source, viewing: length, url: url, quarter: quarter, year: year },
+			     type: 'post',
+			     success: function(output) {
+					var contentsplit = $.trim(output).split("|**|");
+					if(contentsplit[2] == "true"){
+						ShowBattleProgress(contentsplit[0]);
+					}else{
+						Toast("Saved your watched XP");
+					}
+					button.addClass("disabled");
+			     },
+			        error: function(x, t, m) {
+				        if(t==="timeout") {
+				            ToastError("Server Timeout");
+				        } else {
+				            ToastError(t);
+				        }
+			    	},
+			    	timeout:45000
+			});
+		}
+	});
 }
 
 function AttachSecondaryEvents(){

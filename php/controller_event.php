@@ -13,7 +13,8 @@ function GetEventHistoryForGame($userid, $gameid){
 				$row["GameID"],
 				$row["Date"],
 				$row["Quote"],
-				$row["Tier"]);
+				$row["Tier"],
+				$row['URL']);
 		}
 	}
 	Close($mysqli, $result);
@@ -133,7 +134,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -154,7 +156,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -174,7 +177,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -195,7 +199,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -216,7 +221,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -236,7 +242,8 @@ function GetMyFeed($userid, $page, $filter){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -257,7 +264,8 @@ function GetMyFeed($userid, $page, $filter){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $collection;
@@ -279,7 +287,8 @@ function GetMyFeed($userid, $page, $filter){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $collection;
@@ -304,7 +313,8 @@ function GetMyFeed($userid, $page, $filter){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $backlog;
@@ -327,7 +337,8 @@ function GetMyFeed($userid, $page, $filter){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $game;
@@ -362,7 +373,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -382,7 +394,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -401,7 +414,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -421,7 +435,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -441,7 +456,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -460,7 +476,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $game;
@@ -479,7 +496,8 @@ function GetMyEvents($userid){
 						$row["GameID"],
 						$row["Date"],
 						$row["Quote"],
-						$row["Tier"]);
+						$row["Tier"],
+						$row["URL"]);
 						
 				$myfeeditem[] = $event;
 				$myfeeditem[] = $collection;
@@ -503,7 +521,8 @@ function GetMyEvents($userid){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $backlog;
@@ -526,7 +545,8 @@ function GetMyEvents($userid){
 							$row["GameID"],
 							$row["Date"],
 							$row["Quote"],
-							$row["Tier"]);
+							$row["Tier"],
+							$row["URL"]);
 							
 					$myfeeditem[] = $event;
 					$myfeeditem[] = $game;
@@ -614,7 +634,8 @@ function GetLastestXPForUser($userid){
 				$row["GameID"],
 				$row["Date"],
 				$row["Quote"],
-				$row["Tier"]);
+				$row["Tier"],
+				$row["URL"]);
 		
 			$events[] = $event;
 		}
