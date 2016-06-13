@@ -279,7 +279,7 @@ function DisplayVideoForGame($url, $gameid){
 					} ?>
 				</div>
 			</div>
-			<div class="col m12 l6 video-card" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 					<div class="video-add-watch-container" style="height:375px;">
 						<div class="col s12" style='text-align:left;position:relative;top:15px;'>
 							<div class="collection-game-myxp-gutter"><i class="mdi-social-poll left"></i></div>
