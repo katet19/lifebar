@@ -182,7 +182,7 @@ function DisplayGameDiscoverE3(){
   			<?php }else{ ?>
   				<?php echo $custcat[0]["Name"]; ?>
   			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
+      		<div class="ViewBtnCollection"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
       	</div>
       	<?php 
       	$i = 0;
@@ -224,7 +224,7 @@ function DisplayGameDiscoverE3(){
   			<?php }else{ ?>
   				<?php echo $custcat[0]["Name"]; ?>
   			<?php } ?>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
+      		<div class="ViewBtnCollection"><a class="waves-effect waves-light btn" style='background-color:#c62828;'>View</a></div>
       	</div>
       	<?php 
       	$i = 0;
