@@ -2466,7 +2466,11 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 
 function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
-	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`) values ('$user','$gameid','ADDED','$tier','$quote','$url')");
+	$insert = "insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`) values ('$user','$gameid','ADDED','$tier','$quote','$url')";
+	$result = $mysqli->query($insert);
+	if($result == '' || $result == false){
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','CreateEventForWatchedXP - ('.$insert.')');
+	}
 	Close($mysqli, $result);
 }
 

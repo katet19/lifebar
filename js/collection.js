@@ -764,11 +764,14 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 	}
 	ShowLoader(container, 'small', "<br><br><br>");
 	container.show(250);
+		
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayCollectionManagement", gameid: gameid, gbid: gbid, quickAdd: "true" },
      type: 'post',
      success: function(output) {
  		container.html(output); 
+ 		if(!container.is(':entireonscreen'))
+			container.css({"right":"-100px"});
  		container.on("click",function(e){
 			e.stopImmediatePropagation(); 
 		});
