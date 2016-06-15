@@ -131,7 +131,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
  		if(type == "played"){
  			AddPlayedFabEvent();
  		}else{
- 			AddWatchedFabEvent();
+ 			AddWatchedFabEvent('','','','','');
  		}
  		GAPage('Game', '/game/'+title);
      },
@@ -423,7 +423,7 @@ function AttachFloatingIconButtonEvents(){
 	});
 	$(".game-add-watched-btn").on('click touchend', function(){
 		if($(".game-collection-btn").css("opacity") == 1){
-			AddWatchedFabEvent();
+			AddWatchedFabEvent('','','','','');
 		}
 	});
 	$(".game-add-played-btn").on('click touchend', function(){
