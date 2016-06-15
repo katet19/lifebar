@@ -754,13 +754,18 @@ function SearchCollection(searchstring, offset, userid, from){
 function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 	var container = element.parent().parent().find(".collection-quick-add-container");
 	if(fromGameCard){
+		var isNew = true;
+		if($(".active-collection-game-icon") == $(this))
+			isNew = false;
 		$(".active-collection-game-icon").addClass("z-depth-1");
 		$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
-		container.parent().css({"z-index":"10"});
-		container.css({"top":"210px"});
-		var fabIcon = element.find(".card-game-tier-container");
-		fabIcon.removeClass("z-depth-1");
-		fabIcon.addClass("orange darken-2 active-collection-game-icon");
+		if(isNew){
+			container.parent().css({"z-index":"10"});
+			container.css({"top":"210px"});
+			var fabIcon = element.find(".card-game-tier-container");
+			fabIcon.removeClass("z-depth-1");
+			fabIcon.addClass("orange darken-2 active-collection-game-icon");
+		}
 	}
 	ShowLoader(container, 'small', "<br><br><br>");
 	container.show(250);
@@ -770,11 +775,10 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
      type: 'post',
      success: function(output) {
  		container.html(output); 
- 		if(!container.is(':entireonscreen'))
-			container.css({"right":"-100px"});
- 		container.on("click",function(e){
-			e.stopImmediatePropagation(); 
-		});
+ 		var box = container[0].getBoundingClientRect();
+ 		if(box.left < 0)
+			container.css({"right": box.left+"px"});
+			
  		$('html').click(function(){
 			if(container.is(":visible")){
 				container.hide(250);
