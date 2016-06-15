@@ -26,6 +26,28 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 	<link href="../css/font/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="../css/library/webflow.css" rel="stylesheet" type="text/css" />
 	<link href="../css/deployed.css" rel="stylesheet" type="text/css" />
+	<script type="application/ld+json">
+		{
+		  "@context": "http://schema.org",
+		  "@type": "WebSite",
+		  "name": "Lifebar",
+		  "alternateName": "Lifebar.io",
+		  "url": "http://www.lifebar.io",
+		  "potentialAction": {
+		    "@type": "SearchAction",
+		    "target": "http://lifebar.io/#search/{search_term_string}",
+		    "query-input": "required name=search_term_string"
+		  }
+		}
+		</script>
+		<script type="application/ld+json">
+		{
+		  "@context": "http://schema.org",
+		  "@type": "Organization",
+		  "url": "http://www.lifebar.io",
+		  "logo": "http://www.lifebar.io/Images/lifebarlogoforsocial.png"
+		}
+	</script>
 	</head>
 	<body id="applicationContainer">
 		<div id="navigationContainer">
