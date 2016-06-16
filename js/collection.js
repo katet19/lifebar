@@ -779,6 +779,9 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
  		if(box.left < 0)
 			container.css({"right": box.left+"px"});
 			
+ 		container.on("click",function(e){
+			e.stopImmediatePropagation(); 
+		});
  		$('html').click(function(){
 			if(container.is(":visible")){
 				container.hide(250);
