@@ -577,6 +577,8 @@ else {
 	        }
 	      });
       }
+    	$("#BattleProgess").html("");
+      
     }
   })
 
