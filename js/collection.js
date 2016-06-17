@@ -755,11 +755,18 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 	var container = element.parent().parent().find(".collection-quick-add-container");
 	if(fromGameCard){
 		var isNew = true;
-		if($(".active-collection-game-icon") == $(this))
+		if(element.find(".active-collection-game-icon").length > 0){
 			isNew = false;
-		$(".active-collection-game-icon").addClass("z-depth-1");
-		$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
+		}else{
+			var oldContainer = $(".active-collection-game-icon").parent().parent().parent().find(".collection-quick-add-container");
+			oldContainer.hide(250);
+			oldContainer.parent().css({"z-index":"1"});
+			$(".active-collection-game-icon").addClass("z-depth-1");
+			$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
+		}
 		if(isNew){
+			$(".active-collection-game-icon").addClass("z-depth-1");
+			$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
 			container.parent().css({"z-index":"10"});
 			container.css({"top":"210px"});
 			var fabIcon = element.find(".card-game-tier-container");
