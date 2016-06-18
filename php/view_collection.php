@@ -336,7 +336,7 @@ function DisplayCollectionDetailGames($collectiongames, $edit, $disableRemove){
 			 			Empty Text
 			 		</div>
 					<div class="col s12 m4 collection-game-details-container" style='padding:0;position: relative;'>
-						<div class="import-game-image z-depth-1" data-id="<?php echo $xp->_game->_gbid; ?>" style="cursor: pointer;width:200px;height:69px;background: url(<?php echo $xp->_game->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" ></div>
+						<a class="import-game-image z-depth-1" href="http://ryu.lifebar.io/#game/<?php echo $xp->_game->_id; ?>/<?php echo urlencode($xp->_game->_title); ?>/" data-id="<?php echo $xp->_game->_gbid; ?>" style="cursor: pointer;width:200px;height:69px;background: url(<?php echo $xp->_game->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();"></a>
 						<div class="collection-game-name" style='left:220px;padding:0;' data-id="<?php echo $xp->_game->_gbid; ?>" data-gid="<?php echo $xp->_game->_id; ?>">
 							<?php echo $xp->_game->_title; ?>
 						</div>

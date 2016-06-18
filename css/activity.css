@@ -149,7 +149,7 @@
 .feed-card-image{
 	display:inline-block;
 	width: 150px;
-  	height: 115px;
+  height: 115px;
 }
 
 .feed-bookmark-image{
@@ -249,9 +249,19 @@
 }
 
 .feed-agree-box{
-  margin-left: 150px;
-  padding: 5px 10px 5px 0px;
-  display: inline-flex;
+    padding: 0px 0px 0px 0px;
+    display: inline-flex;
+    box-sizing: border-box;
+    background-color: rgba(67, 160, 71, 0.25);
+    margin-top: 0px;
+    margin-left: 0;
+    overflow: hidden;
+    height: 46px;
+    right: 0;
+    width: -moz-calc(100% - 150px);
+    width: -webkit-calc(100% - 150px);
+    width: calc(100% - 150px);
+    left: 150px;
 }
 
 .activity-category-box{
@@ -446,7 +456,8 @@
 		width:100%;
 	}
 	.feed-agree-box{
-		margin-left:0;
+		left:0;
+    width: 100%;
 	}
 	.tierInProgessLarge{
     	background-color: transparent !important;
