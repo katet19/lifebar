@@ -996,7 +996,11 @@ function AddGameToCollectionFromCollectionManage(collectionID, gameid){
      data: {action: "AddGameToCollectionFromCollectionManger", gameid: gameid, collectionID: collectionID },
      type: 'post',
      success: function(output) {
-     	
+     	Toast(output);
+     	$(".toast-collection-link").on("click", function(){
+     		var collectionID = $(this).attr("data-id");
+     		DisplayCollectionDetails(collectionID, "Discover", $(".userContainer").attr("data-id"));
+     	});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
