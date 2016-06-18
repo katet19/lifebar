@@ -692,6 +692,7 @@ function BackOutOfGame(currentTab){
  	}else{
  		$("#gameInnerContainer .backContainer").delay(200).velocity({"opacity":"0"});
  	}
+ 	$("#gameInnerContainer").html("");
  	$(document).unbind("scroll");
    	$(".backButtonLabel").removeClass("GameBackButtonDisappear");
    	var windowWidth = $(window).width();

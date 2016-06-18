@@ -47,6 +47,8 @@
 		if($_POST['action'] == "AddGameToCollectionFromCollectionManger"){
 			$game = GetGame($_POST['gameid']);
 			AddToCollection($_POST['collectionID'],$game->_gbid,$_SESSION['logged-in']->_id);
+			$collection = GetCollectionByID($_POST['collectionID']);
+			echo "<i>".$game->_title."</i>&nbsp; added to &nbsp;<div class='toast-collection-link' data-id='".$_POST['collectionID']."' style='cursor:pointer;font-weight:500;'>".$collection->_name."</div>";
 		}
 		if($_POST['action'] == "RemoveGameFromCollection"){
 			RemoveFromCollection($_POST['collectionID'],$_POST['gameid'],$_SESSION['logged-in']->_id);
