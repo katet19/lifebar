@@ -51,6 +51,7 @@
 	text-align: left;
 	background-color: #474747;
 	height: 185px;
+	display:block;
 }
 
 .user-discover-card .card-image{

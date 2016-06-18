@@ -375,51 +375,47 @@ function FeedXPItem($feed, $conn, $mutualconn){
 
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
-	?>
-  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-    <div class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    </div>
-    <div class="feed-card-content">
-  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
-      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
-      		<i class="mdi-editor-format-quote"></i>
+		if($event->_quote == ''){ ?>
+		  <a class="feed-bookmark-card z-depth-1" href="http://ryu.lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+		    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+		    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title tier<?php echo $xp->_tier; ?>BG"" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+		    </div>
+		  </a>
+	<?php }else{ ?>
+	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	    <a class="feed-card-image waves-effect waves-block" href="http://ryu.lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    </a>
+	    <div class="feed-card-content">
+	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
+	      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
+	      		<i class="mdi-editor-format-quote"></i>
+		  </div>
+	  	<?php }else if($event->_quote != ''){ 
+	  			DisplayFeedTierIcon($xp, $event);
+	   		} ?>
+	      <div class="feed-card-title grey-text text-darken-4">
+	      	<?php if($multiple && $event->_quote != ''){ ?>
+	      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+	      	<?php } ?>
+	  		"<?php echo $event->_quote; ?>"
+	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+	  		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+	  		<?php } ?>
+	      </div>
+	      <div class="feed-action-container">
+	      		<?php if($xp->_link != ''){ ?>
+					<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
+				<?php } ?>
+	      		<?php if($event->_url != '' && $_SESSION['logged-in']->_id > 0){ ?>
+					<div data-url='<?php echo $event->_url; ?>' data-gameid='<?php echo $game->_id; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
+				<?php } ?>
+				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
+					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $xp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+				<?php } ?>
+	      </div>
+	    </div>
 	  </div>
-  	<?php }else if($event->_quote != ''){ 
-  			DisplayFeedTierIcon($xp, $event);
-   		} ?>
-      <div class="feed-card-title grey-text text-darken-4">
-      	<?php if($multiple && $event->_quote != ''){ ?>
-      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-      	<?php } ?>
-      	<?php if($event->_quote != ''){ ?>
-      		"<?php echo $event->_quote; ?>"
-	        	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-	      		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
-	      		<?php } ?>
-      	<?php }else{ ?>
-      		<div style='margin-top:15px;margin-left:-15px;'>
-      			<?php if(sizeof($xp->_playedxp) > 0){ 
-      				BuildPlayedVisualActivitySentence($xp->_playedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
-      			}else if(sizeof($xp->_watchedxp) > 0){
-      				BuildWatchedVisualActivitySentence($xp->_watchedxp[0], $user->_id, $xp->_tier, $game->_title, $game->_gbid);
-      			} ?>
-      		</div>
-
-  		<?php } ?>
-      </div>
-      <div class="feed-action-container">
-      		<?php if($xp->_link != ''){ ?>
-				<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
-			<?php } ?>
-      		<?php if($event->_url != '' && $_SESSION['logged-in']->_id > 0){ ?>
-				<div data-url='<?php echo $event->_url; ?>' data-gameid='<?php echo $game->_id; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
-			<?php } ?>
-			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
-				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $xp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-			<?php } ?>
-      </div>
-    </div>
-  </div>
+   <?php } ?>
    <?php if($agreedcount > 0){ ?>
  	<div class="feed-horizontal-card z-depth-1 feed-agree-box" >
  		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
@@ -429,7 +425,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
     			while($i < sizeof($agrees) && $i < 15){ ?>
     			<div class="myxp-details-agree-listitem">
     				<?php $useragree = GetUser($agrees[$i]); ?>
-    				<div class="user-avatar" style="margin-top:0;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
     				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
     			</div>
     		<?php	
@@ -538,11 +534,11 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 }
 
 function FeedGameCollectionCard($game, $user, $event){ ?>
-  <div class="feed-bookmark-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-    </div>
-  </div>
+	  <a class="feed-bookmark-card z-depth-1" href="http://ryu.lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+	    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+	    </div>
+	  </a>
 <?php
 }
 
@@ -587,12 +583,12 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 }
 
 function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
-  <div class="feed-bookmark-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-    	<i class="mdi-action-bookmark" style='  position: absolute;top: -19px;right: 20px;font-size: 3em;color: red;'></i>
-    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-    </div>
-  </div>
+	<a class="feed-bookmark-card z-depth-1" href="http://ryu.lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+	    	<i class="mdi-action-bookmark" style='  position: absolute;top: -19px;right: 20px;font-size: 3em;color: red;'></i>
+	    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+	    </div>
+	  </a>
 <?php
 }
 
