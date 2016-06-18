@@ -547,7 +547,7 @@ function DisplayGameCard($game, $count, $classId){
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <a class="card game-discover-card <?php echo $classId; ?>" href="http://ryu.lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	      <a class="card game-discover-card <?php echo $classId; ?>" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
 	        <div class="card-content">
