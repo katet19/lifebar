@@ -33,6 +33,7 @@ function Search(searchstring){
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#gameInnerContainer").html("");
 	ManuallyNavigateToTab("#discover");
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -271,6 +272,7 @@ function ShowDiscoverHome(){
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
