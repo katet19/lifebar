@@ -372,7 +372,7 @@ function AttachDiscoverHomeEvents(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
  	});
 	//Category
-	/*$(".ViewBtn, .discoverCategoryHeader .categoryIcon").on("click", function(){
+	$(".ViewBtn").on("click", function(){
 		GLOBAL_TAB_REDIRECT = "CategoryNav";
 		ManuallyNavigateToTab("#discover");
 		ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
@@ -422,7 +422,7 @@ function AttachDiscoverHomeEvents(){
 		
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
-	});*/
+	});
 }
 
 function DisplayGraphs(){
