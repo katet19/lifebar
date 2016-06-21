@@ -415,7 +415,6 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	      </div>
 	    </div>
 	  </div>
-   <?php } ?>
    <?php if($agreedcount > 0){ ?>
  	<div class="feed-horizontal-card z-depth-1 feed-agree-box" >
  		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
@@ -434,6 +433,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
     	</div>
  	</div>
  <?php }
+	}
 }
 
 function FeedConnectionItem($feed, $conn, $mutualconn){
