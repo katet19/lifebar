@@ -124,10 +124,10 @@ function ShowEditPlayed($exp){
 		  <label>Experienced Year</label>
 		  <select id="myxp-year">
 			<?php 
-				$date = explode('-',$xp->_date);
+				$date = explode('-',$watchedxp->_date);
 				$year = date("Y");  
 				$releaseyear = $exp->_game->_year;
-				
+				$releaseyear = $releaseyear - 5;
 				if($exp->_game->_year == 0){
 					$officialrelease = "";
 					$releaseyear = $year - 5;
@@ -135,7 +135,7 @@ function ShowEditPlayed($exp){
 					$officialrelease =  ConvertDateToLongRelationalEnglish($exp->_game->_released);
 				} 
 				while($year >= $releaseyear && ($year - $birthyear) > 2){?>
-					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $releaseyear && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
+					<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $exp->_game->_year  && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
 				<?php
 					$year = $year - 1;
 				}

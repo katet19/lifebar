@@ -364,13 +364,13 @@ function CustomDiscoverQuery($id){
 	return $games;
 }
 
-function GetDiscoverE3Categories($userCollectionIDs){
+function GetDiscoverCollectionCategories($userCollectionIDs){
 	$mysqli = Connect();
 	$categoryList = array();
 	if($userCollectionIDs != '')
-		$query = "select * from `Collections` where (`OwnerID` in ('7588','7') and `Name` like '%E3 2016%') or `ID` in (".$userCollectionIDs.") order by `LastUpdated` DESC LIMIT 0,8";
+		$query = "select * from `Collections` where (`OwnerID` in ('7588','7') and `Name` like '%E3 2016%') or `ID` in (".$userCollectionIDs.") order by rand() DESC LIMIT 0,4";
 	else
-		$query = "select * from `Collections` where `OwnerID` in ('7588','7') and `Name` like '%E3 2016%' order by `LastUpdated` DESC LIMIT 0,8";
+		$query = "select * from `Collections` where `OwnerID` in ('7588','7') and `Name` like '%E3 2016%' order by rand() DESC LIMIT 0,4";
 		
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){

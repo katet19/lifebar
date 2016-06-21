@@ -10,6 +10,7 @@ function ShowNotificationMainContent(){
     $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").css({"display":"none"});
     $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#notifications").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+  	$("#gameInnerContainer").html("");
   	
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayNotificationHome" },

@@ -7,6 +7,7 @@ $(function() {
 	$(window).resize(function() {
 		ResizeEvents();
 	});
+
 	//$(window).bind('hashchange', function(){
 	//	ManageHashEvents();
 	//});

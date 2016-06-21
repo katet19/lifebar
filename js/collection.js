@@ -754,21 +754,38 @@ function SearchCollection(searchstring, offset, userid, from){
 function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 	var container = element.parent().parent().find(".collection-quick-add-container");
 	if(fromGameCard){
-		$(".active-collection-game-icon").addClass("z-depth-1");
-		$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
-		container.parent().css({"z-index":"10"});
-		container.css({"top":"210px"});
-		var fabIcon = element.find(".card-game-tier-container");
-		fabIcon.removeClass("z-depth-1");
-		fabIcon.addClass("orange darken-2 active-collection-game-icon");
+		var isNew = true;
+		if(element.find(".active-collection-game-icon").length > 0){
+			isNew = false;
+		}else{
+			var oldContainer = $(".active-collection-game-icon").parent().parent().parent().find(".collection-quick-add-container");
+			oldContainer.hide(250);
+			oldContainer.parent().css({"z-index":"1"});
+			$(".active-collection-game-icon").addClass("z-depth-1");
+			$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
+		}
+		if(isNew){
+			$(".active-collection-game-icon").addClass("z-depth-1");
+			$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
+			container.parent().css({"z-index":"10"});
+			container.css({"top":"210px"});
+			var fabIcon = element.find(".card-game-tier-container");
+			fabIcon.removeClass("z-depth-1");
+			fabIcon.addClass("orange darken-2 active-collection-game-icon");
+		}
 	}
 	ShowLoader(container, 'small', "<br><br><br>");
 	container.show(250);
+		
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayCollectionManagement", gameid: gameid, gbid: gbid, quickAdd: "true" },
      type: 'post',
      success: function(output) {
  		container.html(output); 
+ 		var box = container[0].getBoundingClientRect();
+ 		if(box.left < 0)
+			container.css({"right": box.left+"px"});
+			
  		container.on("click",function(e){
 			e.stopImmediatePropagation(); 
 		});
@@ -979,7 +996,11 @@ function AddGameToCollectionFromCollectionManage(collectionID, gameid){
      data: {action: "AddGameToCollectionFromCollectionManger", gameid: gameid, collectionID: collectionID },
      type: 'post',
      success: function(output) {
-     	
+     	Toast(output);
+     	$(".toast-collection-link").on("click", function(){
+     		var collectionID = $(this).attr("data-id");
+     		DisplayCollectionDetails(collectionID, "Discover", $(".userContainer").attr("data-id"));
+     	});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

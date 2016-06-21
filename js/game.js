@@ -131,7 +131,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
  		if(type == "played"){
  			AddPlayedFabEvent();
  		}else{
- 			AddWatchedFabEvent();
+ 			AddWatchedFabEvent('','','','','');
  		}
  		GAPage('Game', '/game/'+title);
      },
@@ -423,7 +423,7 @@ function AttachFloatingIconButtonEvents(){
 	});
 	$(".game-add-watched-btn").on('click touchend', function(){
 		if($(".game-collection-btn").css("opacity") == 1){
-			AddWatchedFabEvent();
+			AddWatchedFabEvent('','','','','');
 		}
 	});
 	$(".game-add-played-btn").on('click touchend', function(){
@@ -692,6 +692,7 @@ function BackOutOfGame(currentTab){
  	}else{
  		$("#gameInnerContainer .backContainer").delay(200).velocity({"opacity":"0"});
  	}
+ 	$("#gameInnerContainer").html("");
  	$(document).unbind("scroll");
    	$(".backButtonLabel").removeClass("GameBackButtonDisappear");
    	var windowWidth = $(window).width();

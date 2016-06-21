@@ -33,6 +33,7 @@ function Search(searchstring){
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#gameInnerContainer").html("");
 	ManuallyNavigateToTab("#discover");
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -79,7 +80,7 @@ function Search(searchstring){
 				});
  				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
  			});
- 			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
+ 			$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
  			$(".SeeAllBtn").on('click',function(){
  				var context = $(this).attr("data-context");
  				$("."+context).show(250);
@@ -271,6 +272,7 @@ function ShowDiscoverHome(){
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
     $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
@@ -360,7 +362,7 @@ function AttachDiscoverHomeEvents(){
 	//Game
 	$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
  	$(".suggested-game-link").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
-	$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
+	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	//User
  	$(".user-discover-card").on("click", function(e){
  	 	e.stopPropagation();
@@ -370,7 +372,7 @@ function AttachDiscoverHomeEvents(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
  	});
 	//Category
-	/*$(".ViewBtn, .discoverCategoryHeader .categoryIcon").on("click", function(){
+	$(".ViewBtn").on("click", function(){
 		GLOBAL_TAB_REDIRECT = "CategoryNav";
 		ManuallyNavigateToTab("#discover");
 		ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
@@ -420,7 +422,7 @@ function AttachDiscoverHomeEvents(){
 		
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
-	});*/
+	});
 }
 
 function DisplayGraphs(){
@@ -514,7 +516,7 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
  			});
   			Waves.displayEffect();
   			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
-  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
+  			$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -551,7 +553,7 @@ function CustomCategory(categoryid){
  			});
   			Waves.displayEffect();
   			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
-  			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
+  			$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
      	},
         error: function(x, t, m) {
 	        if(t==="timeout") {

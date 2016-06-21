@@ -121,6 +121,7 @@
 	text-align: left;
     background-color: #0a67a4;
 	height: 280px;
+	display:block;
 }
 
 .game-agree-card .card-content{

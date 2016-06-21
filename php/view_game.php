@@ -279,7 +279,7 @@ function DisplayVideoForGame($url, $gameid){
 					} ?>
 				</div>
 			</div>
-			<div class="col m12 l6 video-card" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 					<div class="video-add-watch-container" style="height:375px;">
 						<div class="col s12" style='text-align:left;position:relative;top:15px;'>
 							<div class="collection-game-myxp-gutter"><i class="mdi-social-poll left"></i></div>
@@ -311,7 +311,6 @@ function DisplayVideoForGame($url, $gameid){
 						        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar<?php echo $uniqueID; ?>(this)" maxlength="140"><?php echo $summary; ?></textarea>
 						        <label for="myxp-collection-quote" <?php if($summary != ""){ echo "class='active'"; } ?> ><?php if($tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
 					        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
-					        	<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
 						        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection<?php echo $uniqueID; ?>'><?php echo strlen($summary); ?></span>/140</div>
 					        </div>
 					      </div>
@@ -548,7 +547,7 @@ function DisplayGameCard($game, $count, $classId){
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	      <a class="card game-discover-card <?php echo $classId; ?>" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
 	        <div class="card-content">
@@ -587,7 +586,7 @@ function DisplayGameCard($game, $count, $classId){
 	        </div>
 	        <div class="card-reveal tier<?php echo $tier; ?>BG" style="width:100%;color:white;">
 	        </div>
-	      </div>
+	      </a>
       </div>
 <?php }
 
