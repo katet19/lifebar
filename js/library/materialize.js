@@ -970,13 +970,19 @@ else {
 			Search(data[1]);
 			$this.find(".indicator").css({"display":"none"});
 		}else{
-			if($("#loginButton").length > 0){
-				ShowLanding();
-				$this.find(".indicator").css({"display":"none"});
-			}else{
-				ShowActivityHome();
-				$this.find(".indicator").css({"display":"block"});
-			}
+      if(getParameterByName("game").length > 0){
+        $("#game").css({"display":"inline-block"});
+  		 	AttachGameEvents($("#discover"));
+		 	  AttachScrollEvents();
+      }else{
+  			if($("#loginButton").length > 0){
+  				ShowLanding();
+  				$this.find(".indicator").css({"display":"none"});
+  			}else{
+  				ShowActivityHome();
+  				$this.find(".indicator").css({"display":"block"});
+  			}
+      }
 		}
 		
 		var updateNavTitle = "";
