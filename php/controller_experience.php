@@ -1,6 +1,29 @@
 <?php
 require_once "includes.php";
 
+function GetEventsForGame($userid, $gameid){
+	$mysqli = Connect();
+	$events = array();
+	if ($result = $mysqli->query("select * from `Events` eve where eve.`UserID` = '".$userid."' and eve.`GameID` = '".$gameid."' and `Event` in ('TIERCHANGED','QUOTECHANGED','ADDED','UPDATE','FINISHED') order by `Date` desc")) {
+		while($row = mysqli_fetch_array($result)){
+			unset($event);
+			$event[] = $row;
+			if($row['S_XPID'] >= -1){
+				if ($result2 = $mysqli->query("select * from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' and `ID` = '".$row['S_XPID']."'")) {
+					while($row2 = mysqli_fetch_array($result2)){
+						$event[] = $row2;	
+					}
+				}
+			}else{
+				$event[] = '';
+			}
+			$events[] = $event;
+		}
+	}
+	Close($mysqli, $result);
+	return array_filter($events);
+}
+
 //RunTierGameUpdater(200);
 function RunTierGameUpdater($gameid){
 	$mysqli = Connect();
