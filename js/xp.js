@@ -13,6 +13,7 @@ function AttachXPEvents(){
 	});
 	ListenAndBuildWatchedSentence();
 	ListenAndBuildPlayedSentence();
+	AttachMyXPEvents();
 	$(".myxp-cancel").on('click', function(){
 		CancelXPEntry();
 	});
@@ -420,6 +421,7 @@ function CancelXPEntry(){
          		$(".criticGameTab a").trigger('click');
          		ShowFab();
          	}
+         	AttachMyXPEvents();
          	AttachEditEvents();
          	window.scrollTo(0, 0);
          },
@@ -504,9 +506,9 @@ function SaveXPEntry(){
 		$(".myxp-save").html("<div class='preloader-wrapper small active' style='vertical-align:text-top;margin-right:1em; width:15px; height:15px;'><div class='spinner-layer spinner-white-only'><div class='circle-clipper left'><div class='circle' style='border-width:2px;'></div></div><div class='gap-patch'><div class='circle' style='border-width:2px;'></div></div><div class='circle-clipper right'><div class='circle' style='border-width:2px;'></div></div></div></div> <span class='myxp-saving-label'>Saving XP</span>");
 		var gameid = $("#gameContentContainer").attr("data-id");
 		var quote = $("#myxp-quote").val();
-		var tier = $(".myxp-selected-tier").attr("data-tier");
+		var tier = $("#game-myxp-tab").find(".myxp-selected-tier").attr("data-tier");
 		var platforms = [];
-		$('.myxp-platforms').each(function() {
+		$("#gameInnerContainer").find('.myxp-platforms').each(function() {
 			if(this.checked){
 				platforms.push($(this).attr("data-text"));
 			}

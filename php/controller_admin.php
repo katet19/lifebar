@@ -9,6 +9,8 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
+// AssociateEventsToSubXP(0);
+
 function AssociateEventsToSubXP($offset){
 	$mysqli = Connect();
 	$count = 1;

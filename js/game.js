@@ -201,6 +201,7 @@ function AttachGameEvents(currentTab){
  	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
+	AttachMyXPEvents();
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
@@ -426,6 +427,7 @@ function AttachFloatingIconButtonEvents(){
 			AddWatchedFabEvent('','','','','');
 		}
 	});
+
 	$(".game-add-played-btn").on('click touchend', function(){
 		if($(".game-collection-btn").css("opacity") == 1){
 			AddPlayedFabEvent();		
@@ -450,6 +452,15 @@ function AttachFloatingIconButtonEvents(){
 		if($(".game-set-fav-btn").css("opacity") == 1){
 			DisplayEquipXP();
 		}	
+	});
+}
+
+function AttachMyXPEvents(){
+ 	$(".game-add-watched-btn-fast").on('click touchend', function(){
+		AddWatchedFabEvent('','','','','');
+	});
+	$(".game-add-played-btn-fast").on('click touchend', function(){
+		AddPlayedFabEvent();		
 	});
 }
 

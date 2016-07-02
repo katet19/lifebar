@@ -4,7 +4,7 @@ require_once "includes.php";
 function GetEventsForGame($userid, $gameid){
 	$mysqli = Connect();
 	$events = array();
-	if ($result = $mysqli->query("select * from `Events` eve where eve.`UserID` = '".$userid."' and eve.`GameID` = '".$gameid."' and `Event` in ('TIERCHANGED','QUOTECHANGED','ADDED','UPDATE','FINISHED') order by `Date` desc")) {
+	if ($result = $mysqli->query("select * from `Events` eve where eve.`UserID` = '".$userid."' and eve.`GameID` = '".$gameid."' and `Event` in ('TIERCHANGED','QUOTECHANGED','ADDED','UPDATE','FINISHED','BUCKETLIST') order by `Date` desc")) {
 		while($row = mysqli_fetch_array($result)){
 			unset($event);
 			$event[] = $row;
@@ -2359,6 +2359,15 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 	return $newXP;
 }
 
+function GetSubXPID($userid, $gameid, $mysqli){
+	if($result = $mysqli->query("select `ID` from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' order by `ID` desc limit 0,1")){
+		while($row = mysqli_fetch_array($result)){
+			$subxpid = $row["ID"];
+		}
+	}
+	return $subxpid;
+}
+
 function GetPlatformIDs($platforms){
 	$mysqli = Connect();
 	foreach($platforms as $platform){ 
@@ -2383,11 +2392,13 @@ function GetPlatformIDs($platforms){
 function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid, $tier, $quote){
 	$mysqli = Connect();
 	//$hasXP = HasUserExperienced($user, $gameid);
-	
+	$sxpid = GetSubXPID($user, $gameid, $mysqli);
 	if($completed == '100' || $completed == '101')
-		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','FINISHED','$tier','$quote')");
+		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`S_XPID`) values ('$user','$gameid','FINISHED','$tier','$quote','$sxpid')");
 	else if($hasPlayedXP == false)
-		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','ADDED','$tier','$quote')");
+		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`S_XPID`) values ('$user','$gameid','ADDED','$tier','$quote','$sxpid')");
+	else
+		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`S_XPID`) values ('$user','$gameid','UPDATE','$tier','$quote','$sxpid')");
 		
 	Close($mysqli, $result);
 }
@@ -2489,7 +2500,8 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 
 function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
-	$insert = "insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`) values ('$user','$gameid','ADDED','$tier','$quote','$url')";
+	$sxpid = GetSubXPID($user, $gameid, $mysqli);
+	$insert = "insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`,`S_XPID`) values ('$user','$gameid','ADDED','$tier','$quote','$url','$sxpid')";
 	$result = $mysqli->query($insert);
 	if($result == '' || $result == false){
 		customError('MySQL', mysqli_error($mysqli),'controller_experience','CreateEventForWatchedXP - ('.$insert.')');

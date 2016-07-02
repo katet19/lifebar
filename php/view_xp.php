@@ -1,9 +1,7 @@
 <?php
 function ShowMyNewXP($gameid, $playedorwatched, $editid){
 	$exp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
-	if($exp->_tier == 0){
-		ShowTierQuote($exp, $gameid, false);
-	}
+	ShowTierQuote($exp, $gameid, false);
 	
 	if($playedorwatched == "Played"){
 		ShowEditPlayed($exp);
@@ -34,11 +32,19 @@ function ShowTierQuote($exp, $gameid, $edit){
 		        ValidateXPEntry();
 		      };
 		    </script>
-	        <textarea id="myxp-quote" class="materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php echo $exp->_quote; ?></textarea>
-	        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> >Enter a summary of your experience here</label>
-	        <div class="myxp-quote-counter"><span id='charNum'><?php echo strlen($exp->_quote); ?></span>/140</div>
+	        <textarea id="myxp-quote" class="materialize-textarea" onkeyup="countChar(this)" maxlength="140"></textarea>
+	        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> >Enter a summary of your experience here (optional)</label>
+	        <div class="myxp-quote-counter"><span id='charNum'>0</span>/140</div>
 	      </div>
 	    </div>
+        <?php if($exp->_quote != ''){ ?>
+	        <div class="col offset-s1 s10">
+        		<div class="collection-myxp-last-quote" style='margin-bottom: 100px;margin-top: -20px;font-size: 1em;'>
+        			<div style='font-weight:500;'>Last time:</div>
+        			<i><?php echo $exp->_quote; ?></i>
+        		</div>
+    	    </div>
+    	<?php } ?>
 	    <div class="row myxp-tiercontainer" data-year="<?php echo $exp->_game->_year; ?>">
 	    	<div class="col s12"><span> Choose a tier relative to other games you have experienced <?php if($exp->_game->_year == 0){ echo "for a date unknown"; } else { echo "in ".$exp->_game->_year; } ?></span></div>
 	    	<div class="col s12 myxp-GraphContainer">
@@ -573,38 +579,21 @@ function ShowMyXP($exp){
 			</div>
 			<div class="myxp-content-col">
 				<?php if(sizeof($exp->_playedxp) > 0){ ?>
-					<div class="col s12 myxp-details-container z-depth-1">
-				    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
-				    		<div class="col s12 myxp-details-items">
-						  	    <script>
-							      function countChar(val) {
-							        var len = val.value.length;
-							        if (len > 140) {
-							          val.value = val.value.substring(0, 140);
-							        } else {
-							          $('#charNumCollection').html(len);
-							        }
-							        ValidateXPEntry();
-							      };
-							    </script>
-						        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php /*echo $exp->_quote;*/ ?></textarea>
-						        <label for="myxp-collection-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> ><?php if($exp->_tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
-				    		</div>
-				    		<div class="col s12 myxp-details-items">
-							 	<div class="collection-myxp-tier-container">
-							  	    <div class="collection-myxp-tier t5 tierBorderColor5 <?php if($exp->_tier == 5){ echo "tierBorderColor5selected myxp-selected-tier"; } ?>" data-tier='5' >5 <div class="collection-myxp-label" style='color: #DB0058;'>Worst</div></div>
-								    <div class="collection-myxp-tier t4 tierBorderColor4 <?php if($exp->_tier == 4){ echo "tierBorderColor4selected myxp-selected-tier"; } ?>" data-tier='4' >4</div>
-								    <div class="collection-myxp-tier t3 tierBorderColor3 <?php if($exp->_tier == 3){ echo "tierBorderColor3selected myxp-selected-tier"; } ?>" data-tier='3' >3</div>
-							  	    <div class="collection-myxp-tier t2 tierBorderColor2 <?php if($exp->_tier == 2){ echo "tierBorderColor2selected myxp-selected-tier"; } ?>" data-tier='2' >2</div>
-							  	    <div class="collection-myxp-tier t1 tierBorderColor1 <?php if($exp->_tier == 1){ echo "tierBorderColor1selected myxp-selected-tier"; } ?>" data-tier='1' >1 <div class="collection-myxp-label" style='left:15px;color: #0A67A3;'>Best</div></div>
-							  	</div>
-  				    			<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>Save</a>
-				    			<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>Cancel</a>
-				    		</div>
-				    	</div>
-			    	</div>
+		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Post</span>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>updates</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'> with your time playing or add a</span>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
+		    		</div>
 		    	<?php }else{ ?>
-		    	
+		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Add a</span>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>or</span>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>played</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
+		    		</div>
 		    	<?php } ?>
 			</div>
 		</div>
@@ -616,7 +605,7 @@ function ShowMyXP($exp){
 			
 			if($event['Tier'] > 0)
 				$prevTier = $event['Tier'];
-			else if($prevTier != '')
+			else if($prevTier != '' && $event['Event'] != 'BUCKETLIST')
 				$event['Tier'] = $prevTier;
 			
 			if($event['Tier'] == 1)
@@ -629,6 +618,9 @@ function ShowMyXP($exp){
 				$color = "#FF4100";
 			else if($event['Tier'] == 5)
 				$color = "#DB0058";
+			else
+				$color = "#464646";
+			
 
 			$vertBG[] =  $color." ".($chunksize * $pos)."%";
 			$pos++;
@@ -657,7 +649,62 @@ function ShowMyXP($exp){
 					</div>
 				</div>
 			<?php 
-			}else if($event["Event"] == 'ADDED' || $event["Event"] == "UPDATE" || $event["Event"] == "FINISHED" || $event["Event"] == "TIERCHANGED"){
+			}else if($event['Event'] == 'BUCKETLIST'){
+				?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier0BG">
+							<i class="mdi-action-bookmark left" style='font-size:2em;color:white;margin-left:10px;'></i>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+									Bookmarked for later
+					    			<br><div class="myxp-edit-played btn-flat waves-effect"></div>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+				    	</div>
+					</div>
+				</div>
+			<?php
+			}else if($event["Event"] == "TIERCHANGED"){ 
+				$tierdata = explode(",",$event['Quote']);
+				$before = $tierdata[0];
+				$after = $tierdata[1];
+			?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier<?php echo $event['Tier']; ?>BG">
+							<i class="mdi-action-swap-vert left" style='font-size:2em;color:white;margin-left:10px;'></i>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+						    		<div class="feed-tier-changed-before tierTextColor<?php echo $before; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $before; ?></div>
+						    		<?php if($before > $after){ ?>
+						    		<i class="feed-tier-rising mdi-action-trending-neutral"></i>
+						    		<?php }else{ ?>
+						    		<i class="feed-tier-falling mdi-action-trending-neutral"></i>
+						    		<?php } ?>
+						    		<div class="feed-tier-changed-after tierTextColor<?php echo $after; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $after; ?></div>
+					    			<br><div class="myxp-edit-played btn-flat waves-effect"></div>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+				    	</div>
+					</div>
+				</div>
+			<?php
+			}else if($event["Event"] == 'ADDED' || $event["Event"] == "UPDATE" || $event["Event"] == "FINISHED"){
 				?>
 				<div class="row" style='margin-bottom: 30px;'>
 					<div class="feed-avatar-col">
@@ -680,7 +727,7 @@ function ShowMyXP($exp){
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 					    			<?php if($event["Quote"] == '' && $xp != ''){
-					    				echo BuildMyXPSentence($xp, $_SESSION['logged-in']->_id, $xp['ArchiveTier'], 'Played');
+					    					echo BuildMyXPSentence($xp, $_SESSION['logged-in']->_id, $xp['ArchiveTier'], $xp['Type']);
 					    			}else{ ?>
 					    				<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div>
 					    				<?php
@@ -704,28 +751,38 @@ function ShowMyXP($exp){
 
 function BuildMyXPSentence($exp, $userid, $tier, $type){
 	$date = explode('-',$exp['Date']);
-	if($exp['Completed'] > 0){
-		if($exp['Completed'] < 100){
-			$completedSentence = "Played ".$exp['Completed']."%";
-		}else if($exp['Completed'] == 100){
-			$completedSentence = "Finished ";
-		}else if($exp['Completed'] == 101){
-			$exp['Completed'] = 100;
-			$completedSentence = "Played multiple playthroughs ";
+	if($type == 'Played'){
+		if($exp['Completed'] > 0){
+			if($exp['Completed'] < 100){
+				$completedSentence = "Played ".$exp['Completed']."%";
+			}else if($exp['Completed'] == 100){
+				$completedSentence = "Finished ";
+			}else if($exp['Completed'] == 101){
+				$exp['Completed'] = 100;
+				$completedSentence = "Played multiple playthroughs ";
+			}
 		}
-	}
-	?>
-	<div class="myxp-visual-sentence-label"><?php echo $completedSentence; ?> on</div>
-	<?php $platforms = str_replace("\n", " ", $exp['Platform']);
-		if(sizeof($platforms) == 1){ ?>
-			<div class="myxp-visual-sentence-label">
-					<?php echo $platforms; ?>
+		?>
+		<div class="myxp-visual-sentence-label"><?php echo $completedSentence; ?> on</div>
+		<?php $platforms = str_replace("\n", " ", $exp['Platform']);
+			if(sizeof($platforms) == 1){ ?>
+				<div class="myxp-visual-sentence-label">
+						<?php echo $platforms; ?>
+				</div>
+		<?php }else{ ?>
+			<div class="myxp-visual-sentence-label" style='text-align:center; text-align: center;vertical-align: middle;font-weight: 500;padding:0px;'>
+				<?php echo sizeof($platforms); ?>
+				<div class="visual-sentence-sublabel">platforms</div>
 			</div>
-	<?php }else{ ?>
-		<div class="myxp-visual-sentence-label" style='text-align:center; text-align: center;vertical-align: middle;font-weight: 500;padding:0px;'>
-			<?php echo sizeof($platforms); ?>
-			<div class="visual-sentence-sublabel">platforms</div>
-		</div>
+		<?php }
+	}else{
+		if($exp['Source'] != ""){
+			$sentence = $exp['Length']." on ".$exp['Source'] ;
+		}else{
+			$sentence = $exp['Length'];
+		}
+		?>
+		<div class='myxp-visual-sentence-label'><?php echo $sentence; ?></div>
 	<?php } ?>
 	<div class="myxp-visual-sentence-label">during</div>
 	<div class="myxp-visual-sentence-label"><?php echo $date[0]; ?></div>
