@@ -17,17 +17,17 @@ function GetAgreesForUser($userid, $limit){
 	return $agrees;
 }
 
-function GetAgreesForXP($expid){
+function GetAgreesForEvent($eventid){
 	$agrees = array();
 	$mysqli = Connect();
 	if($expid > 0){
-		if ($result = $mysqli->query("select count(*) as count from `Liked` exp where `ExpID` =  '".$expid."'")) {
+		if ($result = $mysqli->query("select count(*) as count from `Liked` exp where `EventID` =  '".$eventid."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$agrees[] = $row['count'];
 			}
 		}
 		
-		if ($result = $mysqli->query("select * from `Liked` exp where `ExpID` =  '".$expid."'")) {
+		if ($result = $mysqli->query("select * from `Liked` exp where `EventID` =  '".$eventid."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$agrees[] = $row['UserLiked'];
 			}
@@ -39,10 +39,10 @@ function GetAgreesForXP($expid){
 	return $agrees;
 }
 
-function GetTotalAgreesForXP($expid){
+function GetTotalAgreesForEvent($eventid){
 	$agrees = 0;
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select count(*) as count from `Liked` exp where `ExpID` =  '".$expid."'")) {
+	if ($result = $mysqli->query("select count(*) as count from `Liked` exp where `EventID` =  '".$eventid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$agrees = $row['count'];
 		}
@@ -51,24 +51,24 @@ function GetTotalAgreesForXP($expid){
 	return $agrees;
 }
 
-function SaveAgreed($gameid, $userid, $agreedwith, $expid){
+function SaveAgreed($gameid, $userid, $agreedwith, $eventid){
 	$mysqli = Connect();
 	$found = false;
-	if ($result = $mysqli->query("select * from `Liked` exp where `ExpID` =  '".$expid."' && `UserLiked` = '".$userid."'")) {
+	if ($result = $mysqli->query("select * from `Liked` exp where `EventID` =  '".$eventid."' && `UserLiked` = '".$userid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$found = true;
 		}
 	}
 	if(!$found){
-		$mysqli->query("insert into `Liked` (`GameID`,`UserQuoted`,`UserLiked`,`ExpID`) values ('$gameid','$agreedwith','$userid','$expid')");
-		AddAgreedNotification($gameid, $userid, $agreedwith, $expid);
+		$mysqli->query("insert into `Liked` (`GameID`,`UserQuoted`,`UserLiked`,`EventID`) values ('$gameid','$agreedwith','$userid','$eventid')");
+		AddAgreedNotification($gameid, $userid, $agreedwith, $eventid);
 	}
 	Close($mysqli, $result);
 }
 
-function RemoveAgreed($gameid, $userid, $agreedwith, $expid){
+function RemoveAgreed($gameid, $userid, $agreedwith, $eventid){
 	$mysqli = Connect();
-	$mysqli->query("delete from `Liked` where `GameID`= '$gameid' and `UserQuoted` = '$agreedwith' and `UserLiked` = '$userid' and `ExpID` = '$expid'");
+	$mysqli->query("delete from `Liked` where `GameID`= '$gameid' and `UserQuoted` = '$agreedwith' and `UserLiked` = '$userid' and `EventID` = '$eventid'");
 	Close($mysqli, $result);
 }
 ?>

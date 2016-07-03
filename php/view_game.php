@@ -38,7 +38,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		<?php } ?>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab">
-				<?php if($myxp->_tier != 0){ ShowMyXP($myxp); } ?>
+				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id); } ?>
 			</div>
 		<?php } ?>
 		<div id="game-userxp-tab" class="col s12 game-tab" <?php if($otherxp == -1){ ?> style='display:none;' <?php } ?> >
@@ -322,20 +322,11 @@ function DisplayVideoForGame($url, $gameid){
 }
 
 function DisplayAllCommunityCards($users, $type){
-	$count = 1;
-	$sortarray = array();
-	foreach($users as $v){
-		$sortarray[$v->_id] = GetTotalAgreesForXP($v->_id);
-	}
-	arsort($sortarray);
-	$sortarray = array_keys($sortarray);
-	
-	while($count <= sizeof($sortarray)){
+	foreach($users as $user){
 		if($type == "Critic")
-			DisplayCriticQuoteCard($users[$sortarray[$count-1]]);
+			DisplayCriticQuoteCard($user);
 		else
-			DisplayUserQuoteCard($users[$sortarray[$count-1]]);
-		$count++;
+			DisplayUserQuoteCard($user);
 	}
 }
 
@@ -794,84 +785,28 @@ function ShowUserXP($userxp){
 	$user = $userxp->_username;
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
-	$agrees = GetAgreesForXP($userxp->_id);
-	$agreedcount = array_shift($agrees);
+	//$agrees = 0 ;// GetAgreesForXP($userxp->_id);
+	//$agreedcount = array_shift($agrees);
 	?>
 	<div class="row">
 		<div class="col s12">
-			<div class="myxp-details-container z-depth-1">
+			<div class="myxp-details-container z-depth-1" style='padding: 15px 0;'>
 				<div class="row" style='margin: 0;'>
 					<div class="col s12 userxp-details-lifebar">
 						<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
 					</div>
-				    <div class="row" style='margin: 0;'>
-					  <div class="col s3 m2">
-					  	<div class="myxp-details-tier tierTextColor<?php echo $userxp->_tier; ?>">TIER<div class="myxp-details-tier-number"><?php echo $userxp->_tier; ?></div></div>
-					  </div>
-			  	      <div class="col s9 m10">
-				        <div class="myxp-details-quote-container"><i class="mdi-editor-format-quote prefix quoteflip" style='font-size:2em;'></i><span class="myxp-details-quote"><?php echo $userxp->_quote; ?></span></div>
-				      </div>
-				    </div>
 		    	    <div class="row" style='margin: 0;'>
 		    	    	<div class="myxp-profile-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-person left" style="vertical-align: sub;"></i> View Profile</div>
 				    	<div class="myxp-share-tier-quote btn-flat waves-effect" data-userid='<?php echo  $userxp->_userid; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i> Share</div>
 				    </div>
 				</div>
 			</div>
-			<br>
-		    <div class="myxp-details-container z-depth-1">
-			    <?php 
-			    if(sizeof($userxp->_playedxp) > 0){
-		    		$played = $userxp->_playedxp[0];
-			    	?>
-			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
-			    		<div class="col s0 m2"><i class='mdi-hardware-gamepad' style='font-size:2em;color:white;'></i></div>
-			    		<div class="col s12 m10 myxp-details-items">
-			    			<?php BuildPlayedVisualSentence($played, $userxp->_userid, $userxp->_tier, '', ''); ?>
-			    		</div>
-			    	</div>
-		    	<?php
-			    }
-			    
-			    foreach($userxp->_watchedxp as $watched){ ?>
-			    	<div class="row" style='border-bottom: 1px solid #ddd;padding: 2em 0;'>
-			    		<div class="col s0 m2"><i class='mdi-action-visibility' style='font-size:2em;color:white;'></i></div>
-			    		<div class="col s12 m10 myxp-details-items">
-			    			<?php echo BuildWatchedVisualSentence($watched, $userxp->_userid, $userxp->_tier, '' ,'');	?>
-			    		</div>
-			    	</div>
-		    	<?php
-			    }
-			    ?>
-		    </div>
-			<br>
-		    <?php if($agreedcount > 0){ ?>
-			    <div class="myxp-details-container z-depth-1">
-			    	<div class="row" style='margin: 0;'>
-					  <div class="col s3 m2">
-					  	<div class="myxp-details-agree-count"><?php echo $agreedcount; ?>up</div>
-					  </div>
-				    	<div class="col s9 m10">
-					    	<div class="myxp-details-agree-list">
-					    		<?php
-					    			$i = 0;
-					    			while($i < sizeof($agrees) && $i < 25){ ?>
-					    			<div class="myxp-details-agree-listitem">
-					    				<?php $userAgree = GetUser($agrees[$i]); ?>
-					    				<div class="user-avatar" style="margin-top:0;width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:45px;background:url(<?php echo $userAgree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-					    				<?php DisplayUserPreviewCard($userAgree, $conn, $mutualconn); ?>
-					    			</div>
-					    		<?php	
-					    		$i++;
-					    		} ?>
-					    	</div>
-				    	</div>
-				    </div>
-			    </div>
-    		<?php } ?>
-			<br>
+		</div>
+		<div class="col s12" style='position:relative;'>
+			<?php ShowMyXP($userxp, $userxp->_userid); ?>
+		</div>
+		<div class="col s12">
 			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
-			<br>
 		</div>
 	</div>
 <?php

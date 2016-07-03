@@ -557,18 +557,23 @@ function DisplayTierGameDetails($year, $tier, $userid){
 function DisplayMyXP($gameid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	if($myxp->_tier != 0){ ShowMyXP($myxp); }
+	if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id); }
 }
 
-function ShowMyXP($exp){ 
-	$events = GetEventsForGame($_SESSION['logged-in']->_id, $exp->_game->_id);
+function ShowMyXP($exp, $userid){ 
+	if($userid == $_SESSION['logged-in']->_id)
+		$editAccess = true;
+	else
+		$editAccess = false;
+		
+	$events = GetEventsForGame($userid, $exp->_game->_id);
 	$chunksize = 100 / sizeof($events);
 	$pos = 1;
 	$vertBG = array();
 
-	
 	?>
-	<div class="col s12" style='position: relative;'> 
+	<div class="col s12" style='position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
+		<?php if($editAccess){ ?>
 		<div class="row" style='margin-bottom: 30px;'>
 			<div class="feed-avatar-col">
 			</div>
@@ -597,8 +602,8 @@ function ShowMyXP($exp){
 		    	<?php } ?>
 			</div>
 		</div>
-	
-		<?php
+		<?php }
+		
 		foreach($events as $eventdata){
 			$event = $eventdata[0];
 			$xp = $eventdata[1];

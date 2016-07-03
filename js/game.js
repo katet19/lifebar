@@ -517,11 +517,11 @@ function AttachAgrees(){
 
 function AttachAgree(){
 	$(".agreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		SaveAgree(gameid, agreedwith, expid, username);
+		SaveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		btncount.css({"display":"inline-block"});
@@ -539,11 +539,11 @@ function AttachAgree(){
 
 function AttachDisagree(){
 	$(".disagreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		RemoveAgree(gameid, agreedwith, expid, username);
+		RemoveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		total = total || 0;
@@ -560,9 +560,9 @@ function AttachDisagree(){
 	});
 }
 
-function SaveAgree(gameid, agreedwith, expid, username){
+function SaveAgree(gameid, agreedwith, eventid, username){
 	$.ajax({ url: '../php/webService.php',
-     data: {action: 'SaveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
+     data: {action: 'SaveAgreed', gameid: gameid, agreedwith: agreedwith, eventid: eventid },
      type: 'post',
      success: function(output) {
 		Toast("You appreciated "+username+"'s thoughts ");
@@ -578,9 +578,9 @@ function SaveAgree(gameid, agreedwith, expid, username){
 	});
 }
 
-function RemoveAgree(gameid, agreedwith, expid, username){
+function RemoveAgree(gameid, agreedwith, eventid, username){
 	$.ajax({ url: '../php/webService.php',
-     data: {action: 'RemoveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
+     data: {action: 'RemoveAgreed', gameid: gameid, agreedwith: agreedwith, eventid: eventid },
      type: 'post',
      success: function(output) {
 		Toast("You no longer appreciate "+username+"'s thoughts ");

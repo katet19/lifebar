@@ -21,6 +21,23 @@ function GetEventHistoryForGame($userid, $gameid){
 	return $events;
 }
 
+function GetEvent($eventid){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Events` eve where `ID` = '".$eventid."'");	
+	while($row = mysqli_fetch_array($result)){
+				$event = new Event($row["ID"],
+						$row["UserID"],
+						"",
+						$row["Event"],
+						$row["GameID"],
+						$row["Date"],
+						$row["Quote"],
+						$row["Tier"],
+						$row["URL"]);
+		}
+		return $event;
+}
+
 function GetMyFeed($userid, $page, $filter){
 	$myfeed = array();
 	$seen = array();
