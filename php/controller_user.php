@@ -867,6 +867,27 @@ function GetShareLink($userid, $type, $otherid){
 			$share = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
 			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
 		}
+	}else if($type == "event"){
+		$url = "http://lifebar.io/1/u.php?i=e".$otherid;
+		$event = GetEvent($otherid);
+		$user = GetUser($event->_userid);
+		$game = GetGame($event->_gameid);
+		if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+			$username = $user->_first." ".$user->_last;
+		}else{
+			$username = $user->_username;
+		}
+		$header = "Select how you would like to share this experience";
+		if($user->_id == $_SESSION['logged-in']->_id){
+			$share = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out my experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}else if($user->_security == "Journalist"){
+			$share = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s curated experience playing ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}else{
+			$share = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
+			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
+		}
 	}
 	
 	$shareData[0] = $username;

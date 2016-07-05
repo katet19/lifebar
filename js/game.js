@@ -195,6 +195,9 @@ function AttachGameEvents(currentTab){
 		var gameid = $("#gameContentContainer").attr("data-id");
 		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 	});
+ 	$(".shareBtn").on('click', function(){
+		ShowShareModal("event", $(this).attr("data-eventid"));
+	});
  	$(".myxp-profile-tier-quote").on('click', function(){
 		ShowUserProfile($(this).attr("data-userid"));
 	});
@@ -225,9 +228,12 @@ function DisplayUserDetails(userid, username){
 			var gameid = $("#gameContentContainer").attr("data-id");
 			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 		});
+		var box = $("#game-userxp-tab").find(".myxp-details-container").last();
+		$(".myxp-vert-line-details").css({"bottom": (box.height() - 20)+"px"});
 	 	$(".myxp-profile-tier-quote").on('click', function(){
 			ShowUserProfile($(this).attr("data-userid"));
 		});
+		AttachAgreesFromGame();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -237,6 +243,41 @@ function DisplayUserDetails(userid, username){
 	        }
     	},
     	timeout:45000
+	});
+}
+
+function AttachAgreesFromGame(){
+	$(".agreeBtn").unbind();
+	$(".disagreeBtn").unbind();
+	AttachAgreeFromGame();
+	AttachDisagreeFromGame();
+}
+
+function AttachAgreeFromGame(){
+	$(".agreeBtn").on('click', function(){
+		var eventid = $(this).attr("data-eventid");
+		var gameid = $(this).attr("data-gameid");
+		var agreedwith = $(this).attr("data-agreedwith");
+		var username = $(this).attr("data-username");
+		SaveAgree(gameid, agreedwith, eventid, username);
+		$(this).removeClass("agreeBtn");
+		$(this).addClass("disagreeBtn");
+		$(this).html("- 1up");
+		AttachAgreesFromGame();
+	});
+}
+
+function AttachDisagreeFromGame(){
+	$(".disagreeBtn").on('click', function(){
+		var eventid = $(this).attr("data-eventid");
+		var gameid = $(this).attr("data-gameid");
+		var agreedwith = $(this).attr("data-agreedwith");
+		var username = $(this).attr("data-username");
+		RemoveAgree(gameid, agreedwith, eventid, username);
+		$(this).removeClass("disagreeBtn");
+		$(this).addClass("agreeBtn");
+		$(this).html("+ 1up");
+		AttachAgreesFromGame();
 	});
 }
 

@@ -38,7 +38,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		<?php } ?>
 		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
 			<div id="game-myxp-tab" class="col s12 game-tab">
-				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id); } ?>
+				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); } ?>
 			</div>
 		<?php } ?>
 		<div id="game-userxp-tab" class="col s12 game-tab" <?php if($otherxp == -1){ ?> style='display:none;' <?php } ?> >
@@ -803,7 +803,7 @@ function ShowUserXP($userxp){
 			</div>
 		</div>
 		<div class="col s12" style='position:relative;'>
-			<?php ShowMyXP($userxp, $userxp->_userid); ?>
+			<?php ShowMyXP($userxp, $userxp->_userid, $conn, $mutualconn); ?>
 		</div>
 		<div class="col s12">
 			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>

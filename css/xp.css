@@ -19,6 +19,17 @@
     left: 60px;
 }
 
+.myxp-vert-line-details{
+    position: absolute;
+    z-index: 0;
+    border: 2px solid #ddd;
+    top: 85px;
+    display: block;
+    width: 25px;
+    left: 60px;	
+    bottom:100px;
+}
+
 .myxp-vert-icon{
     border-radius: 50%;
     height: 50px;

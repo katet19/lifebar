@@ -2,6 +2,7 @@
 require_once 'controller_game.php';
 require_once 'controller_user.php';
 require_once 'controller_collection.php';
+require_once 'controller_experience.php';
 
 
 if(isset($_GET['i'])){
@@ -26,6 +27,8 @@ function makeOpenGraph($type, $id) {
 		}else{
 			$og['LINK'] = "http://lifebar.io";
 		}
+	}else if($type == 'e'){
+		$og = ConvertEventtoOG(GetEvent($id));
 	}
     ?>
     <!DOCTYPE html>
@@ -76,6 +79,8 @@ function ConvertGametoOG($game){
 function ConvertGamePlusUsertoOG($user, $game){
 	$og["ID"] = $user->_id;
 	
+	$xp = GetExperienceForUserSurfaceLevel($user->_id, $game->_id);
+	
 	if($user->_security == "Journalist" || $user->_security == "Authenticated")
 		$og["TITLE"] = $user->_first." ".$user->_last;
 	else
@@ -83,9 +88,12 @@ function ConvertGamePlusUsertoOG($user, $game){
 	
 	if($user->_security == "Journalist")
 		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s curated experience with ".$game->_title);
+	else if($xp->_quote != "")
+		$og["DESC"] = htmlspecialchars($xp->_quote." (Tier ".$xp->_tier.")");
 	else
 		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s experience with ".$game->_title);
 		
+	$og['TITLE'] = $og["TITLE"]." | ".$game->_title;
 	$og["IMAGE"] = $game->_imagesmall; 
 	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/";
 	
@@ -127,6 +135,32 @@ function ConvertCollectiontoOG($collection){
 		$og["IMAGE"] = $collection->_games[0]->_image;
 		
 	$og["LINK"] = "http://lifebar.io/#collection/".$collection->_id."/".$collection->_owner."/".htmlspecialchars($collection->_name)."/";
+	
+	return $og;
+}
+
+function ConvertEventtoOG($event){
+	$user = GetUser($event->_userid);
+	$game = GetGame($event->_gameid);
+	$og["ID"] = $user->_id;
+	
+	$xp = GetExperienceForUserSurfaceLevel($user->_id, $game->_id);
+	
+	if($user->_security == "Journalist" || $user->_security == "Authenticated")
+		$og["TITLE"] = $user->_first." ".$user->_last;
+	else
+		$og["TITLE"] = $user->_username;
+	
+	if($user->_security == "Journalist")
+		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s curated experience with ".$game->_title);
+	else if($event->_quote != "")
+		$og["DESC"] = htmlspecialchars($event->_quote." (Tier ".$event->_tier.")");
+	else
+		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s experience with ".$game->_title);
+		
+	$og['TITLE'] = $og["TITLE"]." | ".$game->_title;
+	$og["IMAGE"] = $game->_imagesmall; 
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/";
 	
 	return $og;
 }

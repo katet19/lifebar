@@ -20,14 +20,14 @@ function GetAgreesForUser($userid, $limit){
 function GetAgreesForEvent($eventid){
 	$agrees = array();
 	$mysqli = Connect();
-	if($expid > 0){
-		if ($result = $mysqli->query("select count(*) as count from `Liked` exp where `EventID` =  '".$eventid."'")) {
+	if($eventid > 0){
+		if ($result = $mysqli->query("select count(*) as count from `Liked` where `EventID` = '".$eventid."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$agrees[] = $row['count'];
 			}
 		}
 		
-		if ($result = $mysqli->query("select * from `Liked` exp where `EventID` =  '".$eventid."'")) {
+		if ($result = $mysqli->query("select * from `Liked` where `EventID` = '".$eventid."'")) {
 			while($row = mysqli_fetch_array($result)){
 				$agrees[] = $row['UserLiked'];
 			}

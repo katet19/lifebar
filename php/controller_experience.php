@@ -8,7 +8,7 @@ function GetEventsForGame($userid, $gameid){
 		while($row = mysqli_fetch_array($result)){
 			unset($event);
 			$event[] = $row;
-			if($row['S_XPID'] >= -1){
+			if($row['S_XPID'] > 0){
 				if ($result2 = $mysqli->query("select * from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' and `ID` = '".$row['S_XPID']."'")) {
 					while($row2 = mysqli_fetch_array($result2)){
 						$event[] = $row2;	
