@@ -1,9 +1,7 @@
 <?php
 function ShowMyNewXP($gameid, $playedorwatched, $editid){
 	$exp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
-	if($exp->_tier == 0){
-		ShowTierQuote($exp, $gameid, false);
-	}
+	ShowTierQuote($exp, $gameid, false);
 	
 	if($playedorwatched == "Played"){
 		ShowEditPlayed($exp);
@@ -34,11 +32,19 @@ function ShowTierQuote($exp, $gameid, $edit){
 		        ValidateXPEntry();
 		      };
 		    </script>
-	        <textarea id="myxp-quote" class="materialize-textarea" onkeyup="countChar(this)" maxlength="140"><?php echo $exp->_quote; ?></textarea>
-	        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> >Enter a summary of your experience here</label>
-	        <div class="myxp-quote-counter"><span id='charNum'><?php echo strlen($exp->_quote); ?></span>/140</div>
+	        <textarea id="myxp-quote" class="materialize-textarea" onkeyup="countChar(this)" maxlength="140"></textarea>
+	        <label for="myxp-quote" <?php if($exp->_quote != ""){ echo "class='active'"; } ?> >Enter a summary of your experience here (optional)</label>
+	        <div class="myxp-quote-counter"><span id='charNum'>0</span>/140</div>
 	      </div>
 	    </div>
+        <?php if($exp->_quote != ''){ ?>
+	        <div class="col offset-s1 s10">
+        		<div class="collection-myxp-last-quote" style='margin-bottom: 100px;margin-top: -20px;font-size: 1em;'>
+        			<div style='font-weight:500;'>Last time:</div>
+        			<i><?php echo $exp->_quote; ?></i>
+        		</div>
+    	    </div>
+    	<?php } ?>
 	    <div class="row myxp-tiercontainer" data-year="<?php echo $exp->_game->_year; ?>">
 	    	<div class="col s12"><span> Choose a tier relative to other games you have experienced <?php if($exp->_game->_year == 0){ echo "for a date unknown"; } else { echo "in ".$exp->_game->_year; } ?></span></div>
 	    	<div class="col s12 myxp-GraphContainer">
@@ -551,10 +557,335 @@ function DisplayTierGameDetails($year, $tier, $userid){
 function DisplayMyXP($gameid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	if($myxp->_tier != 0){ ShowMyXP($myxp); }
+	if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); }
 }
 
-function ShowMyXP($exp){ 
+function ShowMyXP($exp, $userid, $conn, $mutualconn){ 
+	if($userid == $_SESSION['logged-in']->_id)
+		$editAccess = true;
+	else
+		$editAccess = false;
+		
+	if($conn == ''){
+		$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+		$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	}
+	$user = GetUser($userid);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	$events = GetEventsForGame($userid, $exp->_game->_id);
+	if($editAccess)
+		$size = sizeof($events) + 1;
+	else
+		$size = sizeof($events);
+		
+	$chunksize = 100 / $size;
+	$pos = 0;
+	$vertBG = array();
+
+	?>
+	<div class="col s12" style='position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
+		<?php if($editAccess){ 
+			$vertBG[] =  "#fff ".($chunksize * $pos)."%";
+			$pos++;
+		?>
+		<div class="row" style='margin-bottom: 30px;'>
+			<div class="feed-avatar-col">
+			</div>
+			<div class="feed-activity-icon-col">
+				<div class="myxp-vert-icon z-depth-2" style='background-color:white;padding-top: 3px;'>
+					<i class="mdi-content-add" style='font-size:2em;color:rgba(0,0,0,0.7);margin-left: 2px;'></i>
+				</div>
+			</div>
+			<div class="myxp-content-col">
+				<?php if(sizeof($exp->_playedxp) > 0){ ?>
+		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Post</span>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>updates</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'> with your time playing or add a</span>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
+		    		</div>
+		    	<?php }else{ ?>
+		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Add a</span>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>or</span>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>played</div>
+		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
+		    		</div>
+		    	<?php } ?>
+			</div>
+		</div>
+		<?php }
+		
+		foreach($events as $eventdata){
+			$event = $eventdata[0];
+			$xp = $eventdata[1];
+			
+			$agrees = GetAgreesForEvent($event['ID']);
+			$agreedcount = array_shift($agrees);
+			
+			if($event['Tier'] > 0)
+				$prevTier = $event['Tier'];
+			else if($prevTier != '' && $event['Event'] != 'BUCKETLIST')
+				$event['Tier'] = $prevTier;
+			
+			if($event['Tier'] == 1)
+				$color = "#0A67A3";
+			else if($event['Tier'] == 2)
+				$color = "#00B25C";
+			else if($event['Tier'] == 3)
+				$color = "#FF8E00";
+			else if($event['Tier'] == 4)
+				$color = "#FF4100";
+			else if($event['Tier'] == 5)
+				$color = "#DB0058";
+			else
+				$color = "#464646";
+			
+
+			$vertBG[] =  $color." ".($chunksize * $pos)."%";
+			$pos++;
+			
+			if($event["Event"] == 'QUOTECHANGED'){
+			?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier<?php echo $event['Tier']; ?>BG">
+							<i class="mdi-editor-format-quote quoteflip left" style='font-size:2em;color:white;'></i>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+					    			<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div>
+					    			<?php echo $event["Quote"]; ?>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
+									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
+								<?php } ?>
+								<?php if($_SESSION['logged-in']->_id != $user->_id && $event['Quote'] != ''){ ?>
+									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+								<?php } ?>
+								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
+					      	</div>
+				    	</div>
+				    	   <?php if($agreedcount > 0){ ?>
+						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
+						     	<div class="myxp-details-agree-list">
+						    		<?php
+						    			$i = 0;
+						    			while($i < sizeof($agrees) && $i < 15){ ?>
+						    			<div class="myxp-details-agree-listitem">
+						    				<?php $useragree = GetUser($agrees[$i]); ?>
+						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
+						    			</div>
+						    		<?php	
+						    		$i++;
+						    		} ?>
+						    	</div>
+						 	</div>
+						 <?php } ?>
+					</div>
+				</div>
+			<?php 
+			}else if($event['Event'] == 'BUCKETLIST'){
+				?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier0BG">
+							<i class="mdi-action-bookmark left" style='font-size:2em;color:white;margin-left:10px;'></i>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+									Bookmarked for later
+					    			<br><div class="myxp-edit-played btn-flat waves-effect"></div>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+				    	</div>
+					</div>
+				</div>
+			<?php
+			}else if($event["Event"] == "TIERCHANGED"){ 
+				$tierdata = explode(",",$event['Quote']);
+				$before = $tierdata[0];
+				$after = $tierdata[1];
+			?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier<?php echo $event['Tier']; ?>BG">
+							<i class="mdi-action-swap-vert left" style='font-size:2em;color:white;margin-left:10px;'></i>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+						    		<div class="feed-tier-changed-before tierTextColor<?php echo $before; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $before; ?></div>
+						    		<?php if($before > $after){ ?>
+						    		<i class="feed-tier-rising mdi-action-trending-neutral"></i>
+						    		<?php }else{ ?>
+						    		<i class="feed-tier-falling mdi-action-trending-neutral"></i>
+						    		<?php } ?>
+						    		<div class="feed-tier-changed-after tierTextColor<?php echo $after; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $after; ?></div>
+					    			<br><div class="myxp-edit-played btn-flat waves-effect"></div>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+								<div class="btn-flat waves-effect" data-userid='<?php echo  $userid; ?>'></div>
+					      	</div>
+				    	</div>
+  			    	   <?php if($agreedcount > 0){ ?>
+						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
+						     	<div class="myxp-details-agree-list">
+						    		<?php
+						    			$i = 0;
+						    			while($i < sizeof($agrees) && $i < 15){ ?>
+						    			<div class="myxp-details-agree-listitem">
+						    				<?php $useragree = GetUser($agrees[$i]); ?>
+						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
+						    			</div>
+						    		<?php	
+						    		$i++;
+						    		} ?>
+						    	</div>
+						 	</div>
+						 <?php } ?>
+					</div>
+				</div>
+			<?php
+			}else if($event["Event"] == 'ADDED' || $event["Event"] == "UPDATE" || $event["Event"] == "FINISHED"){
+				?>
+				<div class="row" style='margin-bottom: 30px;'>
+					<div class="feed-avatar-col">
+					</div>
+					<div class="feed-activity-icon-col">
+						<div class="myxp-vert-icon z-depth-2 tier<?php echo $event['Tier']; ?>BG">
+							<?php if($xp != ''){
+								if($xp['Type'] == 'Played'){ ?>
+									<i class="mdi-hardware-gamepad left" style='font-size:2em;color:white;margin-left:10px;'></i>
+								<?php }else if($xp['Type'] == 'Watched') { ?>
+									<i class="mdi-action-visibility left" style='font-size:2em;color:white;margin-left:10px;'></i>
+								<?php } ?>
+							<?php }else{ ?>
+								<i class="mdi-editor-format-quote quoteflip left" style='font-size:2em;color:white;'></i>
+							<?php } ?>
+						</div>
+					</div>
+					<div class="myxp-content-col">
+						<div class="col s12 myxp-details-container z-depth-1">
+					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
+					    		<div class="col s12 myxp-details-items">
+					    			<?php if($event["Quote"] == '' && $xp != ''){
+					    					echo BuildMyXPSentence($xp, $_SESSION['logged-in']->_id, $xp['ArchiveTier'], $xp['Type']);
+					    			}else{ ?>
+					    				<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div>
+					    				<?php
+					    				echo $event["Quote"]; 
+				    				}?>
+					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
+					    		</div>
+					    	</div>
+		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
+									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
+								<?php } ?>
+								<?php if($_SESSION['logged-in']->_id != $user->_id && $event['Quote'] != ''){ ?>
+									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+								<?php } ?>
+								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
+					      	</div>
+				    	</div>
+  			    	   <?php if($agreedcount > 0){ ?>
+						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
+						     	<div class="myxp-details-agree-list">
+						    		<?php
+						    			$i = 0;
+						    			while($i < sizeof($agrees) && $i < 15){ ?>
+						    			<div class="myxp-details-agree-listitem">
+						    				<?php $useragree = GetUser($agrees[$i]); ?>
+						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
+						    			</div>
+						    		<?php	
+						    		$i++;
+						    		} ?>
+						    	</div>
+						 	</div>
+						 <?php } ?>
+					</div>
+				</div>
+				<?php
+			}
+		}
+		?>
+	</div>
+	<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
+	<?php
+}
+
+function BuildMyXPSentence($exp, $userid, $tier, $type){
+	$date = explode('-',$exp['Date']);
+	if($type == 'Played'){
+		if($exp['Completed'] > 0){
+			if($exp['Completed'] < 100){
+				$completedSentence = "Played ".$exp['Completed']."%";
+			}else if($exp['Completed'] == 100){
+				$completedSentence = "Finished ";
+			}else if($exp['Completed'] == 101){
+				$exp['Completed'] = 100;
+				$completedSentence = "Played multiple playthroughs ";
+			}
+		}
+		?>
+		<div class="myxp-visual-sentence-label"><?php echo $completedSentence; ?> on</div>
+		<?php $platforms = str_replace("\n", " ", $exp['Platform']);
+			if(sizeof($platforms) == 1){ ?>
+				<div class="myxp-visual-sentence-label">
+						<?php echo $platforms; ?>
+				</div>
+		<?php }else{ ?>
+			<div class="myxp-visual-sentence-label" style='text-align:center; text-align: center;vertical-align: middle;font-weight: 500;padding:0px;'>
+				<?php echo sizeof($platforms); ?>
+				<div class="visual-sentence-sublabel">platforms</div>
+			</div>
+		<?php }
+	}else{
+		if($exp['Source'] != ""){
+			$sentence = $exp['Length']." on ".$exp['Source'] ;
+		}else{
+			$sentence = $exp['Length'];
+		}
+		?>
+		<div class='myxp-visual-sentence-label'><?php echo $sentence; ?></div>
+	<?php } ?>
+	<div class="myxp-visual-sentence-label">during</div>
+	<div class="myxp-visual-sentence-label"><?php echo $date[0]; ?></div>
+	
+	<?php
+}
+
+/*function ShowMyXP($exp){ 
 		$agrees = GetAgreesForXP($exp->_id);
 		$agreedcount = array_shift($agrees);
 		?>
@@ -627,7 +958,7 @@ function ShowMyXP($exp){
 	    ?>
     </div>
     <div class="col s12 m12 l10" id='myxp-game-width-box'></div>
-<?php }
+<?php } */
 
 function BuildPlayedVisualSentence($exp, $userid, $tier, $gamename, $gbid){
 	$date = explode('-',$exp->_date);

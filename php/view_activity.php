@@ -362,7 +362,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 						$event = $card[0];
 						$game = $card[1];
 						$xp = $card[3];
-						$agrees = GetAgreesForXP($xp->_id);
+						$agrees = GetAgreesForEvent($event->_id);
 						$agreedcount = array_shift($agrees);
 						FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn);
 				}
@@ -376,14 +376,14 @@ function FeedXPItem($feed, $conn, $mutualconn){
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 		if($event->_quote == ''){ ?>
-		  <a class="feed-bookmark-card z-depth-1" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+		  <a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 		    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 		    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title tier<?php echo $xp->_tier; ?>BG"" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 		    </div>
 		  </a>
 	<?php }else{ ?>
 	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-	    <a class="feed-card-image waves-effect waves-block" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content">
 	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
@@ -410,7 +410,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 					<div data-url='<?php echo $event->_url; ?>' data-gameid='<?php echo $game->_id; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
 				<?php } ?>
 				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
-					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $xp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 				<?php } ?>
 	      </div>
 	    </div>
@@ -534,7 +534,7 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 }
 
 function FeedGameCollectionCard($game, $user, $event){ ?>
-	  <a class="feed-bookmark-card z-depth-1" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	  <a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	    </div>
@@ -583,7 +583,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 }
 
 function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
-	<a class="feed-bookmark-card z-depth-1" href="http://lifebar.io/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	<a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	    	<i class="mdi-action-bookmark" style='  position: absolute;top: -19px;right: 20px;font-size: 3em;color: red;'></i>
 	    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>

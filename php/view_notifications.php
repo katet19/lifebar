@@ -59,12 +59,6 @@ function DisplayNotificationCategories($notifications){
 			</div>
 			<div class="col s12">
 				<div class="notification-category-box">
-					<div id="notification-game" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-hardware-gamepad left"></i> Suggestions</div>
-					<div class="notification-category-total"><?php echo $games; ?></div><?php if($newgames > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
 					<div id="notification-release" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-editor-insert-invitation left"></i> Releases</div>
 					<div class="notification-category-total"><?php echo $releases; ?></div><?php if($newreleases > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
 				</div>
@@ -91,7 +85,6 @@ function DisplayNotificationList($notifications){
 						<li><a href="#!" class="notification-agree" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-favorite">1ups</a></li>
 						<li><a href="#!" class="notification-user" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-people">Connections</a></li>
 						<li><a href="#!" class="notification-critic" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-subject">Reviews</a></li>
-						<li><a href="#!" class="notification-game" style='color:rgba(0,0,0,0.8);' data-icon="mdi-hardware-gamepad">Suggestions</a></li>
 						<li><a href="#!" class="notification-release" style='color:rgba(0,0,0,0.8);' data-icon="mdi-editor-insert-invitation">Releases</a></li>
 					  </ul>
 					</div>

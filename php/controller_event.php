@@ -21,6 +21,23 @@ function GetEventHistoryForGame($userid, $gameid){
 	return $events;
 }
 
+function GetEvent($eventid){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Events` eve where `ID` = '".$eventid."'");	
+	while($row = mysqli_fetch_array($result)){
+				$event = new Event($row["ID"],
+						$row["UserID"],
+						"",
+						$row["Event"],
+						$row["GameID"],
+						$row["Date"],
+						$row["Quote"],
+						$row["Tier"],
+						$row["URL"]);
+		}
+		return $event;
+}
+
 function GetMyFeed($userid, $page, $filter){
 	$myfeed = array();
 	$seen = array();
@@ -123,7 +140,7 @@ function GetMyFeed($userid, $page, $filter){
 	
 	if($result->num_rows > 0){
 		while($row = mysqli_fetch_array($result)){
-			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
+			if(!in_array($row["UserID"]."-".$row["GameID"]."-".$row['Quote'], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
 				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
@@ -144,7 +161,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeeditem[] = 3;
 				$myfeeditem[] = "XP";
 				$myfeed[] = $myfeeditem;
-				$seen[] = $row["UserID"]."-".$row["GameID"];
+				$seen[] = $row["UserID"]."-".$row["GameID"]."-".$row['Quote'];
 			}else if($row["Event"] == "BUCKETLIST"){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
@@ -362,7 +379,7 @@ function GetMyEvents($userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC, eve.`GameID` limit 0,20")) {
 		while($row = mysqli_fetch_array($result)){
-			if(!in_array($row["UserID"]."-".$row["GameID"], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
+			if(!in_array($row["UserID"]."-".$row["GameID"]."-".$row['Quote'], $seen) && ($row["Event"] == "ADDED" || $row["Event"] == "UPDATE" || $row["Event"] == "FINISHED")){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
 				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
@@ -382,7 +399,7 @@ function GetMyEvents($userid){
 				$myfeeditem[] = $exp;
 				$myfeeditem[] = 3;
 				$myfeed[] = $myfeeditem;
-				$seen[] = $row["UserID"]."-".$row["GameID"];
+				$seen[] = $row["UserID"]."-".$row["GameID"]."-".$row['Quote'];
 			}else if($row["Event"] == "BUCKETLIST"){
 				$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);

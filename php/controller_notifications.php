@@ -543,29 +543,30 @@ function AddSimilarGames($userid, $gameid){
 	return $questgames;
 }
 
-function AddAgreedNotification($gameid, $userid, $agreedwith, $expid){
+function AddAgreedNotification($gameid, $userid, $agreedwith, $eventid){
 	$mysqli = Connect();
 	$found = false;
 	$notificationrow = "";
-	if ($result = $mysqli->query("select * from `Quests` where `CoreID` = '".$expid."' and `Category` = 'Agree' and `UserID` = '".$agreedwith."' and `ValueTwo` = '".$gameid."'")) {
+	if ($result = $mysqli->query("select * from `Quests` where `CoreID` = '".$eventid."' and `Category` = 'Agree' and `UserID` = '".$agreedwith."' and `ValueTwo` = '".$gameid."'")) {
 		while($row = mysqli_fetch_array($result)){
 			$found = true;
 			$notificationrow = $row;
 		}
 	}
 	if($found){
-		$count = GetTotalAgreesForXP($expid);
+		$count = GetTotalAgreesForEvent($eventid);
 		if($count > $notificationrow['ValueThree']){
 			$type = "agree";
 			$category = "Agree";
-			$coreid = $expid;
+			$coreid = $eventid;
 			$game = GetGame($gameid, $mysqli);
 			$user = GetUser($userid, $mysqli);
+			$event = GetEvent($eventid);
 			$title = "Your XP has been given ".$count."up's!";
 			if($count == 2){
-				$caption = DisplayNameReturn($user)." and 1 other have liked your thoughts on ".$game->_title;	
+				$caption = "<div style='font-size:1.25em;'>".DisplayNameReturn($user)." and 1 other have appreciated your thoughts on ".$game->_title.".</div> <div style='padding: 0.75em 1em;background-color: #efefef; border-radius: 5px;margin: 5px 10px;'><i class='mdi-editor-format-quote' style='font-weigth:bold;'></i> ".$event->_quote."</div>";	
 			}else{
-				$caption = DisplayNameReturn($user)." and ".($count-1)." others have liked your thoughts on ".$game->_title;	
+				$caption = "<div style='font-size:1.25em;'>".DisplayNameReturn($user)." and ".($count-1)." others have appreciated your thoughts on ".$game->_title."</div> <div style='padding: 0.75em 1em;background-color: #efefef; border-radius: 5px;margin: 5px 10px;'><i class='mdi-editor-format-quote' style='font-weigth:bold;'></i> ".$event->_quote."</div>";	
 			}
 			$valueone= $userid;
 			$valuetwo = $gameid;
@@ -576,14 +577,15 @@ function AddAgreedNotification($gameid, $userid, $agreedwith, $expid){
 			$mysqli->query("insert into `Quests` (`UserID`,`CoreID`,`Category`,`Type`,`Title`,`Caption`,`ValueOne`,`ValueTwo`,`ValueThree`,`Color`, `Icon`) values ('$agreedwith','$coreid','$category','$type','".mysqli_real_escape_string($mysqli,$title)."','".mysqli_real_escape_string($mysqli,$caption)."','$valueone','$valuetwo','$valuethree','$color','$icon')") or die;
 		}
 	}else{
-		$count = GetTotalAgreesForXP($expid);
+		$count = GetTotalAgreesForEvent($eventid);
 		$type = "agree";
 		$category = "Agree";
-		$coreid = $expid;
+		$coreid = $eventid;
 		$game = GetGame($gameid, $mysqli);
 		$user = GetUser($userid, $mysqli);
+		$event = GetEvent($eventid);
 		$title = "Your XP has been given a 1up!";
-		$caption = DisplayNameReturn($user)." liked your thoughts on ".$game->_title." and gave you a 1up.";	
+		$caption = "<div style='font-size:1.25em;'>".DisplayNameReturn($user)." appreciated your thoughts on ".$game->_title." and gave you a 1up.</div> <div style='padding: 0.75em 1em;background-color: #efefef; border-radius: 5px;margin: 5px 10px;'><i class='mdi-editor-format-quote' style='font-weigth:bold;'></i> ".$event->_quote."</div>";	
 		$valueone= $userid;
 		$valuetwo = $gameid;
 		$valuethree = $count;
