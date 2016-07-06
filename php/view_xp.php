@@ -627,7 +627,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			
 			if($event['Tier'] > 0)
 				$prevTier = $event['Tier'];
-			else if($prevTier != '' && $event['Event'] != 'BUCKETLIST')
+			else if($prevTier != '')
 				$event['Tier'] = $prevTier;
 			
 			if($event['Tier'] == 1)
@@ -640,8 +640,6 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 				$color = "#FF4100";
 			else if($event['Tier'] == 5)
 				$color = "#DB0058";
-			else
-				$color = "#464646";
 			
 
 			$vertBG[] =  $color." ".($chunksize * $pos)."%";
