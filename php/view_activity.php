@@ -41,7 +41,7 @@ function DisplayMainActivity($userid, $filter){
 			$last_user = 0;
 		}
 		
-		if($feeditem[5] == $last_type){
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -54,7 +54,7 @@ function DisplayMainActivity($userid, $filter){
 			}
 		}else{
 			if(sizeof($group) > 0){
-				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED" || $feeditem[5] == "COLLECTIONUPDATE") 
+				if(sizeof($group) == 1 && ($feeditem[5] == "XP" || $feeditem[5] == "BUCKETLIST" || $feeditem[5] == "QUOTECHANGED" || $feeditem[5] == "TIERCHANGED") 
 					&& $group[0][1]->_gbid == $feeditem[1]->_gbid){
 						if($feeditem[5] == "BUCKETLIST"){
 							$groupfeed[] = $group;
@@ -71,14 +71,21 @@ function DisplayMainActivity($userid, $filter){
 					$groupfeed[] = $group;
 					unset($group);
 					$group[] = $feeditem;
-					$last_type = $feeditem[5];
+					if($feeditem[5] == "COLLECTIONUPDATE")
+						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else
+						$last_type = $feeditem[5];
+						
 					$last_user = $feeditem[0]->_userid;
 				}
 			}else{
 				$groupfeed[] = $group;
 				unset($group);
 				$group[] = $feeditem;
-				$last_type = $feeditem[5];
+				if($feeditem[5] == "COLLECTIONUPDATE")
+					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else
+					$last_type = $feeditem[5];
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
@@ -155,7 +162,7 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 			$last_user = 0;
 		}
 		
-		if($feeditem[5] == $last_type){
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -185,14 +192,20 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 					$groupfeed[] = $group;
 					unset($group);
 					$group[] = $feeditem;
-					$last_type = $feeditem[5];
+					if($feeditem[5] == "COLLECTIONUPDATE")
+						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else
+						$last_type = $feeditem[5];
 					$last_user = $feeditem[0]->_userid;
 				}
 			}else{
 				$groupfeed[] = $group;
 				unset($group);
 				$group[] = $feeditem;
-				$last_type = $feeditem[5];
+				if($feeditem[5] == "COLLECTIONUPDATE")
+					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else
+					$last_type = $feeditem[5];
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
