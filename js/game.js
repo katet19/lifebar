@@ -503,6 +503,14 @@ function AttachMyXPEvents(){
 	$(".game-add-played-btn-fast").on('click touchend', function(){
 		AddPlayedFabEvent();		
 	});
+	$(".userGameTab").on("click", function(){
+		setTimeout(function(){
+  			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			if(box.innerHeight() > 0)
+				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
+		}
+		,100);
+	});
 }
 
 function DisplayEquipXP(){

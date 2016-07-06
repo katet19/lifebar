@@ -13,10 +13,8 @@
     top: 35px;
     display: block;
     width: 25px;
-    height: -moz-calc(100% - 150px);
-    height: -webkit-calc(100% - 150px);
-    height: calc(100% - 150px);
     left: 60px;
+    bottom:125px;
 }
 
 .myxp-vert-line-details{
