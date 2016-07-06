@@ -820,9 +820,6 @@ function DisplayUserCheckpoints($userid, $conn, $mutualconn, $hiddenusername){
 				$watched = true;
 			else
 				$watched = false;
-			
-				$agrees = GetAgreesForXP($exp->_id);
-				$agreedcount = array_shift($agrees);
 				
 				$hiddenusername = '';
 				if($user->_security == "Journalist"  || $user->_security == "Authenticated")
@@ -879,10 +876,7 @@ function DisplayBestXPForUser($userid, $conn, $mutualconn, $hiddenusername, $lat
 			$watched = true;
 		else
 			$watched = false;
-			
-			$agrees = GetAgreesForXP($exp->_id);
-			$agreedcount = array_shift($agrees);
-			
+
 			$hiddenusername = '';
 			if($user->_security == "Journalist"  || $user->_security == "Authenticated")
 				 $hiddenusername = $user->_first." ".$user->_last;
@@ -935,9 +929,6 @@ function DisplayWorstXPForUser($userid, $conn, $mutualconn, $hiddenusername, $la
 				$watched = true;
 			else
 				$watched = false;
-				
-				$agrees = GetAgreesForXP($exp->_id);
-				$agreedcount = array_shift($agrees);
 				
 				$hiddenusername = '';
 				if($user->_security == "Journalist"  || $user->_security == "Authenticated")
