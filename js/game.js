@@ -195,12 +195,16 @@ function AttachGameEvents(currentTab){
 		var gameid = $("#gameContentContainer").attr("data-id");
 		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 	});
+ 	$(".shareBtn").on('click', function(){
+		ShowShareModal("event", $(this).attr("data-eventid"));
+	});
  	$(".myxp-profile-tier-quote").on('click', function(){
 		ShowUserProfile($(this).attr("data-userid"));
 	});
  	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
+	AttachMyXPEvents();
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
@@ -224,9 +228,12 @@ function DisplayUserDetails(userid, username){
 			var gameid = $("#gameContentContainer").attr("data-id");
 			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 		});
+		var box = $("#game-userxp-tab").find(".myxp-details-container").last();
+		$(".myxp-vert-line-details").css({"bottom": (box.height() - 20)+"px"});
 	 	$(".myxp-profile-tier-quote").on('click', function(){
 			ShowUserProfile($(this).attr("data-userid"));
 		});
+		AttachAgreesFromGame();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -236,6 +243,41 @@ function DisplayUserDetails(userid, username){
 	        }
     	},
     	timeout:45000
+	});
+}
+
+function AttachAgreesFromGame(){
+	$(".agreeBtn").unbind();
+	$(".disagreeBtn").unbind();
+	AttachAgreeFromGame();
+	AttachDisagreeFromGame();
+}
+
+function AttachAgreeFromGame(){
+	$(".agreeBtn").on('click', function(){
+		var eventid = $(this).attr("data-eventid");
+		var gameid = $(this).attr("data-gameid");
+		var agreedwith = $(this).attr("data-agreedwith");
+		var username = $(this).attr("data-username");
+		SaveAgree(gameid, agreedwith, eventid, username);
+		$(this).removeClass("agreeBtn");
+		$(this).addClass("disagreeBtn");
+		$(this).html("- 1up");
+		AttachAgreesFromGame();
+	});
+}
+
+function AttachDisagreeFromGame(){
+	$(".disagreeBtn").on('click', function(){
+		var eventid = $(this).attr("data-eventid");
+		var gameid = $(this).attr("data-gameid");
+		var agreedwith = $(this).attr("data-agreedwith");
+		var username = $(this).attr("data-username");
+		RemoveAgree(gameid, agreedwith, eventid, username);
+		$(this).removeClass("disagreeBtn");
+		$(this).addClass("agreeBtn");
+		$(this).html("+ 1up");
+		AttachAgreesFromGame();
 	});
 }
 
@@ -426,6 +468,7 @@ function AttachFloatingIconButtonEvents(){
 			AddWatchedFabEvent('','','','','');
 		}
 	});
+
 	$(".game-add-played-btn").on('click touchend', function(){
 		if($(".game-collection-btn").css("opacity") == 1){
 			AddPlayedFabEvent();		
@@ -450,6 +493,23 @@ function AttachFloatingIconButtonEvents(){
 		if($(".game-set-fav-btn").css("opacity") == 1){
 			DisplayEquipXP();
 		}	
+	});
+}
+
+function AttachMyXPEvents(){
+ 	$(".game-add-watched-btn-fast").on('click touchend', function(){
+		AddWatchedFabEvent('','','','','');
+	});
+	$(".game-add-played-btn-fast").on('click touchend', function(){
+		AddPlayedFabEvent();		
+	});
+	$(".userGameTab").on("click", function(){
+		setTimeout(function(){
+  			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			if(box.innerHeight() > 0)
+				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
+		}
+		,100);
 	});
 }
 
@@ -506,11 +566,11 @@ function AttachAgrees(){
 
 function AttachAgree(){
 	$(".agreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		SaveAgree(gameid, agreedwith, expid, username);
+		SaveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		btncount.css({"display":"inline-block"});
@@ -528,11 +588,11 @@ function AttachAgree(){
 
 function AttachDisagree(){
 	$(".disagreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		RemoveAgree(gameid, agreedwith, expid, username);
+		RemoveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		total = total || 0;
@@ -549,9 +609,9 @@ function AttachDisagree(){
 	});
 }
 
-function SaveAgree(gameid, agreedwith, expid, username){
+function SaveAgree(gameid, agreedwith, eventid, username){
 	$.ajax({ url: '../php/webService.php',
-     data: {action: 'SaveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
+     data: {action: 'SaveAgreed', gameid: gameid, agreedwith: agreedwith, eventid: eventid },
      type: 'post',
      success: function(output) {
 		Toast("You appreciated "+username+"'s thoughts ");
@@ -567,9 +627,9 @@ function SaveAgree(gameid, agreedwith, expid, username){
 	});
 }
 
-function RemoveAgree(gameid, agreedwith, expid, username){
+function RemoveAgree(gameid, agreedwith, eventid, username){
 	$.ajax({ url: '../php/webService.php',
-     data: {action: 'RemoveAgreed', gameid: gameid, agreedwith: agreedwith, expid: expid },
+     data: {action: 'RemoveAgreed', gameid: gameid, agreedwith: agreedwith, eventid: eventid },
      type: 'post',
      success: function(output) {
 		Toast("You no longer appreciate "+username+"'s thoughts ");

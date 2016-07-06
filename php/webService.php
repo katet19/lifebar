@@ -352,11 +352,11 @@
 		}
 	}
 	function XPServices(){
-		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['expid']) && $_SESSION['logged-in']->_id > 0){
-			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['expid']);
+		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['eventid']) && $_SESSION['logged-in']->_id > 0){
+			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['eventid']);
 		}
-		if($_POST['action'] == 'RemoveAgreed' && isset($_POST['gameid']) && isset($_POST['expid']) && $_SESSION['logged-in']->_id > 0){
-			RemoveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['expid']);
+		if($_POST['action'] == 'RemoveAgreed' && isset($_POST['gameid']) && isset($_POST['eventid']) && $_SESSION['logged-in']->_id > 0){
+			RemoveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['eventid']);
 		}
 		if($_POST['action'] == 'DisplayAddWatched' && isset($_POST['gameid'])){
 			ShowMyNewXP($_POST['gameid'], "Watched", -1);

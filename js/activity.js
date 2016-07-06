@@ -242,11 +242,11 @@ function AttachAgreesFromActivity(){
 
 function AttachAgreeFromActivity(){
 	$(".agreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		SaveAgree(gameid, agreedwith, expid, username);
+		SaveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		btncount.css({"display":"inline-block"});
@@ -262,11 +262,11 @@ function AttachAgreeFromActivity(){
 
 function AttachDisagreeFromActivity(){
 	$(".disagreeBtn").on('click', function(){
-		var expid = $(this).attr("data-expid");
+		var eventid = $(this).attr("data-eventid");
 		var gameid = $(this).attr("data-gameid");
 		var agreedwith = $(this).attr("data-agreedwith");
 		var username = $(this).attr("data-username");
-		RemoveAgree(gameid, agreedwith, expid, username);
+		RemoveAgree(gameid, agreedwith, eventid, username);
 		var btncount = $(this).parent().parent().find(".agreeBtnCount");
 		var total = parseInt(btncount.html(), 10);
 		total = total || 0;

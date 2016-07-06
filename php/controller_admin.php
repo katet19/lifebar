@@ -9,6 +9,90 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
+// AssociateEventsToSubXP(0);
+
+function AssociateLikesToEvents(){
+	$mysqli = Connect();
+	$count = 1;
+	if ($result = $mysqli->query("select * from `Liked` where `EventID` = 0 order by `ID` desc limit 0, 500")) {
+		while($row = mysqli_fetch_array($result)){
+			$found = false;
+			echo "<b>".$count."</b>. ".$row['UserQuoted']." ".$row['GameID']." ".$row['UserLiked'];
+			if ($result2 = $mysqli->query("select * from `Events` where `GameID` = '".$row['GameID']."' and `UserID` = '".$row['UserQuoted']."' and `Event` in ('TIERCHANGED','QUOTECHANGED','ADDED','UPDATE','FINISHED') and `Date` < '".$row['Date']."' order by `Date` LIMIT 0,1")) {
+				if($result2->num_rows == 1){
+					while($row2 = mysqli_fetch_array($result2)){
+						echo "<br><b>EVENT DATA</b>: ".$row2['UserID']." ".$row2['Event']." ".$row2['Quote'];
+						echo "<br>UPDATED: eventID ".$row2['ID']." now linked to liked ".$row['ID'];
+						$mysqli->query("update `Liked` set `EventID` = '".$row2['ID']."' where `ID` = '".$row['ID']."'");
+						echo "<br><hr>";
+						$count++;
+						$found = true;
+					}
+				}
+			}
+			
+			if(!$found){
+				echo "<br><span style='color:red;font-weight:bold;'>NOTHING LINKED</span>";
+				echo "<br><hr>";
+				$mysqli->query("update `Liked` set `EventID` = '-2' where `ID` = '".$row['ID']."'");
+				$count++;
+			}
+		}
+	}
+}
+
+
+function AssociateEventsToSubXP($offset){
+	$mysqli = Connect();
+	$count = 1;
+	if ($result = $mysqli->query("select * from `Events` where `Event` in ('TIERCHANGED','QUOTECHANGED','ADDED','UPDATE','FINISHED') and `S_XPID` = 0 order by `ID` desc limit ".$offset.", 500")) {
+		while($row = mysqli_fetch_array($result)){
+			$found = false;
+			echo "<b>".$count."</b>. ".$row['UserID']." ".$row['GameID']." ".$row['Event']." ".$row['Tier'];
+			if ($result2 = $mysqli->query("select * from `Sub-Experiences` where `GameID` = '".$row['GameID']."' and `UserID` = '".$row['UserID']."'")) {
+				if($result2->num_rows == 1){
+					while($row2 = mysqli_fetch_array($result2)){
+						echo "<br><b>EVENT DATA</b>: ".$row2['UserID']." ".$row2['Type']." ".$row2['GameID']." ".$row2['ArchiveTier'];
+						echo "<br>UPDATED: s_xp ".$row2['ID']." now linked to event ".$row['ID'];
+						$mysqli->query("update `Events` set `S_XPID` = '".$row2['ID']."' where `ID` = '".$row['ID']."'");
+						echo "<br><hr>";
+						$count++;
+						$found = true;
+					}
+				}
+			}
+			
+			if(!$found){
+				if ($result2 = $mysqli->query("select * from `Sub-Experiences` where `DateEntered` = '".$row['Date']."'")) {
+					while($row2 = mysqli_fetch_array($result2)){
+						echo "<br><span style='color:blue;font-weight:bold;'>EVENT DATA BY DATE</span>: ".$row2['UserID']." ".$row2['Type']." ".$row2['GameID']." ".$row2['ArchiveTier'];
+						echo "<br>UPDATED: s_xp ".$row2['ID']." now linked to event ".$row['ID'];
+						$mysqli->query("update `Events` set `S_XPID` = '".$row2['ID']."' where `ID` = '".$row['ID']."'");
+						echo "<br><hr>";
+						$count++;
+						$found = true;
+					}
+				}	
+			}
+			
+			if(!$found && $row['Event'] == 'QUOTECHANGED'){
+				echo "<br><span style='color:green;font-weight:bold;'>LINK NOT REQUIRED</span>";
+				echo "<br><hr>";
+				$mysqli->query("update `Events` set `S_XPID` = '-1' where `ID` = '".$row['ID']."'");
+				$count++;
+				$found = true;
+			}
+			
+			if(!$found){
+				echo "<br><span style='color:red;font-weight:bold;'>NOTHING LINKED</span>";
+				echo "<br><hr>";
+				$mysqli->query("update `Events` set `S_XPID` = '-2' where `ID` = '".$row['ID']."'");
+				$count++;
+			}
+		}
+	}
+}
+
 //FixGameImageURLS();
 //FindMissingNames();
 function FindMissingNames(){

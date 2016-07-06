@@ -31,8 +31,8 @@ function DisplayCriticQuoteCard($exp){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
-	$agrees = GetAgreesForXP($exp->_id);
-	$agreedcount = array_shift($agrees);
+	//$agrees = GetAgreesForXP($exp->_id);
+	//$agreedcount = array_shift($agrees);
 	
 	$hiddenusername = '';
 	if($user->_security == "Journalist" || $user->_security == "Authenticated")
@@ -138,9 +138,10 @@ function DisplayCriticQuoteCard($exp){
 			<?php if($exp->_link != ''){ ?>
 				<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 			<?php } ?>
-			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
+			
+			<?php/* if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-			<?php } ?>
+			<?php } */ ?>
 		</div>
   	</div>
 <?php }
@@ -149,8 +150,8 @@ function DisplayUserQuoteCard($exp){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
-	$agrees = GetAgreesForXP($exp->_id);
-	$agreedcount = array_shift($agrees);
+	//$agrees = GetAgreesForXP($exp->_id);
+	//$agreedcount = array_shift($agrees);
 	
 	$hiddenusername = '';
 	if($user->_security == "Journalist")
@@ -241,9 +242,9 @@ function DisplayUserQuoteCard($exp){
 		</div>
 		<div class="critic-action-container col s12">
 			<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $user->_id; ?>" data-uname="<?php echo $hiddenusername; ?>">DETAILS</div>
-			<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
+			<?php /*if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-			<?php } ?>
+			<?php } */?>
 		</div>
   	</div>
 <?php }
@@ -255,8 +256,8 @@ function DisplayGlobalLatestXP(){
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	foreach($exps as $exp){ 
 		$user = $exp->_username;
-		$agrees = GetAgreesForXP($exp->_id);
-		$agreedcount = array_shift($agrees);
+		//$agrees = GetAgreesForXP($exp->_id);
+		//$agreedcount = array_shift($agrees);
 	
 		$hiddenusername = '';
 		if($user->_security == "Journalist")
@@ -309,9 +310,9 @@ function DisplayGlobalLatestXP(){
 						DETAILS
 					</div>
 				<?php } ?>
-				<?php if($_SESSION['logged-in']->_id != $user->_id){ ?>
+				<?php /* if($_SESSION['logged-in']->_id != $user->_id){ ?>
 					<div class="btn-flat  waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-				<?php } ?>
+				<?php } */ ?>
 			</div>
 	  	</div>
 	<?php 
