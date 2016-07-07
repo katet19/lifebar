@@ -717,7 +717,9 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 						$event = $card[0];
 						$game = $card[1];
 						$xp = $card[3];
-						FeedQuoteChangedCard($game, $user, $event, $xp, $multiple);
+						$agrees = GetAgreesForEvent($event->_id);
+						$agreedcount = array_shift($agrees);
+						FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $agreedcount, $conn, $mutualconn);
 				}
 				?>
 			</div>
@@ -726,7 +728,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 <?php
 }
 
-function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
+function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $agreedcount, $conn, $mutualconn){
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 	?>
   <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
@@ -742,9 +744,31 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple){
       		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
   		<?php } ?>
       </div>
+      <div class="feed-action-container">
+			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
+				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+			<?php } ?>
+       </div>
     </div>
   </div>
-<?php	
+   <?php if($agreedcount > 0){ ?>
+ 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" >
+ 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
+     	<div class="myxp-details-agree-list">
+    		<?php
+    			$i = 0;
+    			while($i < sizeof($agrees) && $i < 15){ ?>
+    			<div class="myxp-details-agree-listitem">
+    				<?php $useragree = GetUser($agrees[$i]); ?>
+    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
+    			</div>
+    		<?php	
+    		$i++;
+    		} ?>
+    	</div>
+ 	</div>
+ <?php }
 }
 
 function FeedGameReleasesItem($feed){ ?>
