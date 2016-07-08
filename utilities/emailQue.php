@@ -110,7 +110,7 @@ function GetHeader(){
 function GetFooter($userid, $type){
 	$body = $body."<div style='border-bottom:1px solid lightgray;width:100%;margin-bottom:30px;'></div>";
 	$body = $body."<div style='color:#d3d3d3;text-align:center;padding:0 50px;font-size:0.9em;'>PO BOX 2321 Hanska MN 56401</div>";
-	$body = $body."<a href='http://lifebar.io/utilities/unsubscribe.php?id=".$userid."&type=".$type."' style='text-decoration:underline;text-align:center;font-size:0.8em;color:rgba(0,0,0,0.8);margin-bottom:30px;display: inline-block;'>unsubscribe from this list</a>";
+	$body = $body."<a href='http://lifebar.io/utilities/unsubscribe.php?id=".$userid."&type=".$type."' style='text-decoration:underline;text-align:center;font-size:0.8em;color:rgba(0,0,0,0.8);margin-bottom:30px;display: inline-block;'>Don't receive these types of notifications</a>";
 	$body = $body."</div>";
 	$body = $body."</div>";
 	$body = $body."<img style='display:none;' src='http://www.google-analytics.com/collect?v=1&tid=UA-52980217-1&cid=".$userid."&t=event&ec=email&ea=open&el=recipient_id&cs=".$type."Emails&cm=email&cn=".$type."_Campaign'>";
