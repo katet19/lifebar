@@ -665,6 +665,9 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+		    		      		<?php if($editAccess){ ?>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
 								<?php } ?>
@@ -746,7 +749,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    			<span class="myxp-when-info"><i class="mdi-action-schedule"></i> Entered <?php echo ConvertTimeStampToRelativeTime($event['Date']);?></span>
 					    		</div>
 					    	</div>
-		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+		    		      	<div class="feed-action-container" style='position: relative;float: right;display:none;'>
 								<div class="btn-flat waves-effect" data-userid='<?php echo  $userid; ?>'></div>
 					      	</div>
 				    	</div>
@@ -804,6 +807,9 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+  		    		      		<?php if($editAccess){ ?>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
 								<?php } ?>

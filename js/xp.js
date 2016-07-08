@@ -557,6 +557,7 @@ function SaveXPEntry(){
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
 		         	AttachEditEvents();
+		         	AttachMyXPEvents();
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -578,6 +579,7 @@ function SaveXPEntry(){
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
 		         	AttachEditEvents();
+		         	AttachMyXPEvents();
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -599,6 +601,7 @@ function SaveXPEntry(){
 	         		GetGameFAB();
 		         	window.scrollTo(0, 0);
 		         	AttachEditEvents();
+		         	AttachMyXPEvents();
 					Waves.displayEffect();
 		         },
 		        error: function(x, t, m) {
@@ -623,6 +626,7 @@ function SaveXPEntry(){
 		         		GetGameFAB();
 			         	window.scrollTo(0, 0);
 			         	AttachEditEvents();
+			         	AttachMyXPEvents();
 						Waves.displayEffect();
 			         },
 			        error: function(x, t, m) {
@@ -644,6 +648,7 @@ function SaveXPEntry(){
 		         		GetGameFAB();
 			         	window.scrollTo(0, 0);
 			         	AttachEditEvents();
+			         	AttachMyXPEvents();
 						Waves.displayEffect();
 			         },
 			        error: function(x, t, m) {
@@ -664,6 +669,7 @@ function SaveXPEntry(){
 		         	GAEvent('XP', 'Update Tier-Quote');
 	         		DisplayBattleProgress(output);
 	         		AttachEditEvents();
+	         		AttachMyXPEvents();
 					Waves.displayEffect();
 		         	window.scrollTo(0, 0);
 		         },
@@ -790,6 +796,7 @@ function DeleteXP(subxpid){
          		$(".userGameTab").hide();
          		$(".criticGameTab a").trigger('click');
 	         	AttachEditEvents();
+	         	AttachMyXPEvents();
 	         	window.scrollTo(0, 0);
          		Toast("Removed All XP");
          		ShowXPDown();
@@ -812,6 +819,7 @@ function DeleteXP(subxpid){
          		$("#game-myxp-tab").html(output);
          		Toast("Removed XP");
          		AttachEditEvents();
+         		AttachMyXPEvents();
 				Waves.displayEffect();
 	         	window.scrollTo(0, 0);
 	         	ShowFab();
@@ -826,6 +834,31 @@ function DeleteXP(subxpid){
 	    	timeout:45000
 		});	
 	}
+}
+
+function DeleteEvent(eventid){
+	HideFab();
+	$.ajax({ url: '../php/webService.php',
+         data: {action: "RemoveEvent", eventid: eventid  },
+         type: 'post',
+         success: function(output) {
+     		$("#game-myxp-tab").html(output);
+     		Toast("Removed XP");
+     		AttachEditEvents();
+     		AttachMyXPEvents();
+			Waves.displayEffect();
+         	window.scrollTo(0, 0);
+         	ShowFab();
+         },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }
 
 function CalculateWeave(){
