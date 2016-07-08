@@ -462,6 +462,11 @@
 			CalculateWeave($_SESSION['logged-in']->_id);
 			DisplayMyXP($_POST['gameid']);
 		}
+		if($_POST['action'] == 'RemoveEvent'){
+			$gameid = RemoveEvent($_POST['eventid'], $_SESSION['logged-in']->_id);
+			CalculateWeave($_SESSION['logged-in']->_id);
+			DisplayMyXP($gameid);
+		}
 	}
 	function GameServices(){
 		if($_POST['action'] == 'DisplayGame' && isset($_POST['gbid'])){

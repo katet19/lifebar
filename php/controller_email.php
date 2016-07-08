@@ -1,6 +1,44 @@
 <?php
 require_once "includes.php";
 
+function AddAgreedEmail($gameid, $userid, $agreedwith, $eventid){
+	if(UserIsSub($agreedwith, '1up')){
+		$activeUser = GetUser($userid);
+		$emailUser = GetUser($agreedwith);
+		$event = GetEvent($eventid);
+		$game = GetGame($gameid);
+		$username = DisplayNameReturn($activeUser);
+		$subject = $username." gave you a 1up!";
+		$from = $username." [via Lifebar]";
+		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
+		$body = $body."<div style='font-size:1.5em;padding: 0 50px 20px;'><b>".$username."</b> <MINDTHEGAP> appreciated your thoughts on <i>".$game->_title."</i> and gave you a 1up!</div>";
+		$body = $body."<a href='http://lifebar.io/1/u.php?i=e".$eventid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW</a>";
+		$body = $body."<div style='color: #212121 !important;padding: 20px 50px 50px;'><b>\"</b>".$event->_quote."<b>\"</b></div>";
+		InsertToEmailQue($emailUser->_email, $from, $agreedwith, $subject, $body, '1up', $eventid);
+	}
+}
+
+function InsertToEmailQue($to, $from, $userid, $subject, $body, $type, $coreid){
+	$mysqli = Connect();
+	if($to != '' && $from != '' && $userid != '' && $subject != '' && $body != '' && $type != ''){
+		$result = $mysqli->query("INSERT INTO `Email` (`ToField`,`FromField`,`UserID`,`Subject`,`Body`,`Type`,`CoreID`,`Expiration`) values ('$to','$from','$userid','".mysqli_real_escape_string($mysqli, $subject)."', '".mysqli_real_escape_string($mysqli, $body)."', '$type', '$coreid', '$expiration')");
+	}
+	Close($mysqli, $result);
+}
+
+function UserIsSub($userid, $type){
+	$mysqli = Connect();
+	$sub = true;
+	if ($result = $mysqli->query("SELECT * FROM  `EmailUnsub` where `UserID` = '".$userid."' and `Type` = '".$type."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$sub = false;
+		}
+	}
+	Close($mysqli, $result);
+	return $sub;
+}
+
+
 function SignupEmail($to){
 	$subject = "Welcome to Lifebar!";
 	$link = "http://lifebar.io";
@@ -41,6 +79,14 @@ function SendForgotPasswordEmail($to){
 function SendEmail($to, $subject, $message){
 	$headers = "From: contact@lifebar.io\r\n";
 	$headers .= "Reply-To: contact@lifebar.io\r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	mail($to, $subject, $message, $headers);
+}
+
+function SendEmailWithFrom($to, $subject, $message, $from){
+	$headers = "From: ".$from." <notify@lifebar.io>\r\n";
+	$headers .= "Reply-To: notify@lifebar.io\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 	mail($to, $subject, $message, $headers);

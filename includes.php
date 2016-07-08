@@ -38,7 +38,6 @@ require_once 'php/controller_admin.php';
 require_once 'php/controller_agree.php';
 require_once 'php/controller_badge.php';
 require_once 'php/controller_collection.php';
-require_once 'php/controller_email.php';
 require_once 'php/controller_event.php';
 require_once 'php/controller_feedbackLoop.php';
 require_once 'php/controller_experience.php';
@@ -49,6 +48,7 @@ require_once 'php/controller_giantbomb.php';
 require_once 'php/controller_notifications.php';
 require_once 'php/controller_profile.php';
 require_once 'php/controller_user.php';
+require_once 'php/controller_email.php';
 //Errors
 require_once 'php/error_handler.php';
 set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING); 

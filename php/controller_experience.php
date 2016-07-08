@@ -2581,4 +2581,31 @@ function RemoveSubExperience($subexpid, $gameid){
 	Close($mysqli, $result);
 }
 
+function RemoveEvent($eventid, $userid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Events` where `ID` = '".$eventid."' and `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$gameid = $row['GameID'];
+			$mysqli->query("Delete from `Sub-Experiences` where `ID` = '".$row['S_XPID']."'");
+		}
+	}
+	$mysqli->query("Delete from `Events` where `ID` = '$eventid' and `UserID` = '".$userid."'");
+	
+	//Check if that was all that is left
+	$found = false;
+	if ($result = $mysqli->query("select * from `Events` where `GameID` = '".$gameid."' and `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$found = true;
+		}
+	}
+	
+	if(!$found){
+		$result = $mysqli->query("Delete from `Experiences` where `UserID` = '$user' and `GameID` = '$gameid'");
+	}
+	
+	Close($mysqli, $result);
+	
+	return $gameid;
+}
+
 ?>

@@ -78,7 +78,6 @@ function UserAccountNav(){
 	});
 	$(".settingsButton").on('click', function(e){
 		e.stopPropagation();
-		HideFocus();
 		$("#userAccountNav").hide(250);
 		CloseSideNavigation();
 		ShowUserSettings();

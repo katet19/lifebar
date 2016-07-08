@@ -62,6 +62,7 @@ function SaveAgreed($gameid, $userid, $agreedwith, $eventid){
 	if(!$found){
 		$mysqli->query("insert into `Liked` (`GameID`,`UserQuoted`,`UserLiked`,`EventID`) values ('$gameid','$agreedwith','$userid','$eventid')");
 		AddAgreedNotification($gameid, $userid, $agreedwith, $eventid);
+		AddAgreedEmail($gameid, $userid, $agreedwith, $eventid);
 	}
 	Close($mysqli, $result);
 }

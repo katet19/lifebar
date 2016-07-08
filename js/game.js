@@ -195,9 +195,6 @@ function AttachGameEvents(currentTab){
 		var gameid = $("#gameContentContainer").attr("data-id");
 		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 	});
- 	$(".shareBtn").on('click', function(){
-		ShowShareModal("event", $(this).attr("data-eventid"));
-	});
  	$(".myxp-profile-tier-quote").on('click', function(){
 		ShowUserProfile($(this).attr("data-userid"));
 	});
@@ -510,6 +507,12 @@ function AttachMyXPEvents(){
 				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
 		}
 		,100);
+	});
+ 	$(".removeEventBtn").on('click', function(){
+		DeleteEvent($(this).attr("data-eventid"));
+	});
+ 	$(".shareBtn").on('click', function(){
+		ShowShareModal("event", $(this).attr("data-eventid"));
 	});
 }
 

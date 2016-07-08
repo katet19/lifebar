@@ -15,12 +15,32 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <?php }else{ ?>
 <!DOCTYPE HTML>
 <html>
-<title>Lifebar | Your gaming life</title>
+	<?php if(isset($_GET['game'])){ 
+		$game = GetGame($_GET['game']);
+		?>
+		<title>Lifebar | <?php echo $game->_title; ?></title>
+		<?php
+	}else{
+		?>
+		<title>Lifebar | Your gaming life</title>
+		<?php
+	} 
+?>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#D32F2F">
+	<?php if(isset($_GET['game'])){ ?>
+		<meta name="description" content="<?php echo $game->_title." "; 
+				if($game->_developer != ''){ echo "developed by ".$game->_developer." "; }
+				if($game->_platforms != ''){ echo "released for ".trim($game->_platforms)." "; }
+				?> 
+		">
+		<?php
+	}
+	?>
+
 <link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
@@ -109,7 +129,12 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<div id="notificationsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236)"></div>
 	</div>
 	<div id="game" class="col s12 m12 l9 outerContainer" style="padding:0;">
-		<div id="gameInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);"></div>
+		<div id="gameInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);">
+			<?php if(isset($_GET['game'])){ 
+				DisplayGameViaID($_GET['game'], -1);	
+			}
+			?>
+		</div>
 	</div>
 	<div id="settings" class="col s12 m12 l9 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
 		<div id="settingsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height: 150%;"></div>

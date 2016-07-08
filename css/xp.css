@@ -17,6 +17,29 @@
     bottom:125px;
 }
 
+.myxp-card-icon{
+  font-size: 1.75em;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  padding-top: 1.25px;
+  border-radius: 50%;
+  margin-left: 14px;
+  position:relative;
+}
+
+.myxp-tier-in-progress{
+    background-color: transparent !important;
+    width: 38px !important;
+    height: 25px !important;
+    left: 7px !important;
+    top: -38px !important;
+    font-size: 30px !important;
+    cursor: default;
+}
+
 .myxp-vert-line-details{
     position: absolute;
     z-index: 0;
