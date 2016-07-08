@@ -5,52 +5,86 @@ ProcessEmailQue();
 function ProcessEmailQue(){
 	$mysqli = Connect();
 	$sentOneUpEmail  = array();
-	$body = '';
+	$body = array();
+	$message = '';
 	$prevUser = '';
 	$prevTo = '';
 	$prevSubject = '';
 	$prevFrom = '';
+	$prevCoreID = '';
 	$count = 0;
-	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = '1up' order by `UserID`")) {
+	$internalcount = 0;
+	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = '1up' order by `UserID`, `CoreID`")) {
 		while($row = mysqli_fetch_array($result)){
 			if($prevTo != $row['ToField'] && $prevTo != ''){
-				$body = GetHeader().$body.GetFooter($prevUser, '1up');
+				$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
 				if($count > 1){
 					$prevSubject = "You have been given 1ups!";
 					$prevFrom = "Lifebar Notifications";
 				}
-				SendEmailWithFrom($prevTo, $prevSubject, $body, $prevFrom);
+				$message = str_replace("<MINDTHEGAP>", "", $message);	
+				SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				
 				$sentOneUpEmail[] = $row['UserID'];
-				$body = '';
+				unset($body);
+				$message= '';
 				$prevSubject = '';
 				$count = 0;
-			}
-				
-				
-			if($count > 0){
-				$body."<div style='border-bottom:1px solid gray;width:100%;margin-bottom:30px;'></div>";
-				$body = $body.$row['Body'];	
-			}else{
-				$body = $body.$row['Body'];
+				$internalcount = 0;
+				$prevCoreID = '';
 			}
 			
-			$count++;
-			$prevUser = $row['UserID'];
-			$prevTo = $row['ToField'];
-			$prevFrom = $row['FromField'];
-			$prevSubject = $row['Subject'];	
-			$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+			if($count >= 3){
+				$mysqli->query("DELETE FROM `Email` where `ID` = '".$row['ID']."'");
+			}else{
+				if($prevCoreID != $row['CoreID']){	
+					if($internalcount == 1){
+						$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." other", $message);	
+					}else if($internalcount > 1){
+						$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." others", $message);
+					}
+					
+					$body[] = $message;
+					$message = '';
+					$internalcount = 0;
+					
+					if($count > 0){
+						$message = $message."<div style='border-bottom:1px solid gray;width:100%;margin-bottom:30px;'></div>";
+						$message = $message.$row['Body'];	
+					}else{
+						$message = $message.$row['Body'];
+					}
+				}else{
+					$internalcount++;
+				}
+				
+				$count++;
+				$prevUser = $row['UserID'];
+				$prevTo = $row['ToField'];
+				$prevFrom = $row['FromField'];
+				$prevSubject = $row['Subject'];	
+				$prevCoreID = $row['CoreID'];
+				$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+			}
 		}
 	}
 	//Catch the last one in the loop
 	if($prevTo != ''){
-		$body = GetHeader().$body.GetFooter($prevUser, '1up');
+		
+		if($internalcount == 1){
+			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." other", $message);	
+		}else if($internalcount > 1){
+			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." others", $message);
+		}
+		$body[] = $message;
+		
+		$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
 		if($count > 1){
 			$prevSubject = "You have been given 1ups!";
 			$prevFrom = "Lifebar Notifications";
 		}
-		SendEmailWithFrom($prevTo, $prevSubject, $body, $prevFrom);
+		$message = str_replace("<MINDTHEGAP>", "", $message);	
+		SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 		$sentOneUpEmail[] = $row['UserID'];
 	}
 	
@@ -79,6 +113,7 @@ function GetFooter($userid, $type){
 	$body = $body."<a href='http://lifebar.io/utilities/unsubscribe.php?id=".$userid."&type=".$type."' style='text-decoration:underline;text-align:center;font-size:0.8em;color:rgba(0,0,0,0.8);margin-bottom:30px;display: inline-block;'>unsubscribe from this list</a>";
 	$body = $body."</div>";
 	$body = $body."</div>";
+	$body = $body."<img style='display:none;' src='http://www.google-analytics.com/collect?v=1&tid=UA-52980217-1&cid=".$userid."&t=event&ec=email&ea=open&el=recipient_id&cs=".$type."Emails&cm=email&cn=".$type."_Campaign'>";
 	return $body;
 }
 
