@@ -60,7 +60,7 @@ function SocialDetails(){
 	?>
 	<div class="col s12 m6 offset-m3" style='text-align:left;'>
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
-		<div class='onboarding-sub-welcome'>Like Twitter you can follow other gamers to see what they <span style='font-weight:500px;'>think</span> about the games they have been playing/watching. Follow a bunch to make your activity feed awesome!</div>
+		<div class='onboarding-sub-welcome'>You can follow other gamers to see what they <span style='font-weight:500;'>think</span> about the games they have been playing/watching. Follow a bunch to make your activity feed awesome!</div>
 	</div>
 	<div class="row" style='margin-bottom:5px;'>
 		<div class="col s12 m6 l4 offset-l4 offset-m4" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
@@ -119,7 +119,7 @@ function GamingPrefDetails(){
 	<div class="row">
 		<div class="col s12 m6 offset-m3" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Your gaming preferences/history</div>
-			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & genre's you are most familiar with.</div>
+			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & developer's you are most familiar with.</div>
 		</div>
 	</div>
 	<div class="row">
@@ -133,7 +133,7 @@ function GamingPrefDetails(){
 						<?php }else{ ?>
 							<div class="onboarding-pref-image" style="background:url(<?php echo $detail->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 						<?php } ?>
-							<div class="knowledge-title">
+							<div class="onboarding-pref-image-title">
 								<?php echo $detail->_name; ?>
 							</div>
 						</div>

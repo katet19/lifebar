@@ -21,8 +21,16 @@ function GetOnboardingMilestones(){
 		$franchises[] = 194; $franchises[] = 6; $franchises[] = 331; $franchises[] = 186; $franchises[] = 1; $franchises[] = 491; $franchises[] = 2; $franchises[] = 397;
 		$franchises[] = 456; $franchises[] = 49; $franchises[] = 7; $franchises[] = 9; $franchises[] = 267; $franchises[] = 125; $franchises[] = 565; $franchises[] = 3; $franchises[] = 609;
 		$franchises[] = 32; $franchises[] = 46; $franchises[] = 240; $franchises[] = 82; $franchises[] = 159; $franchises[] = 82; $franchises[] = 1609; $franchises[] = 1575; $franchises[] = 523;
+		
+	//Developers
+	$developers = array();
+		$developers[] = 476; $developers[] = 827; $developers[] = 463; $developers[] = 397; $developers[] = 1088; $developers[] = 98; $developers[] = 1374; $developers[] = 347; $developers[] = 104;
+		$developers[] = 1408; $developers[] = 367; $developers[] = 1559; $developers[] = 6753; $developers[] = 1488;  $developers[] = 3342; $developers[] = 1412; $developers[] = 1615;
+		$developers[] = 549; $developers[] = 1526; $developers[] = 2545; $developers[] = 3899; $developers[] = 1379; $developers[] = 149; $developers[] = 2215; $developers[] = 6319;
+		$developers[] = 1082; $developers[] = 340; $developers[] = 4880; $developers[] = 174; $developers[] = 293;
+		
 	
-	if ($result = $mysqli->query("select * from `Milestones` where (`Category` = 'Platform' and `ObjectID` in (".implode(",", $platforms).")) or (`Category` = 'Franchises' and `ObjectID` in (".implode(",", $franchises).")) order by rand()")) {
+	if ($result = $mysqli->query("select * from `Milestones` where (`Category` = 'Developers' and `ObjectID` in (".implode(",", $developers).")) or (`Category` = 'Platform' and `ObjectID` in (".implode(",", $platforms).")) or (`Category` = 'Franchises' and `ObjectID` in (".implode(",", $franchises).")) order by rand()")) {
 		while($row = mysqli_fetch_array($result)){
 			$milestone = new Milestone($row['ID'],
 			$row['Name'],
