@@ -264,7 +264,10 @@ function CloseSearch(){
 }
 
 function ShowDiscoverHome(){
-	if(location.hash != "#discover")
+	
+	ShowOnboarding();
+	
+	/*if(location.hash != "#discover")
 		location.hash = "#discover";
   	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
@@ -296,7 +299,7 @@ function ShowDiscoverHome(){
 	        }
     	},
     	timeout:45000
-	});
+	});*/
 }
 
 function ShowExtraSideContent(){

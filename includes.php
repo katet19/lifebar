@@ -72,4 +72,5 @@ require_once 'php/view_settings.php';
 require_once 'php/view_user.php';
 require_once 'php/view_xp.php';
 require_once 'php/view_profile.php';
+require_once 'php/view_onboarding.php';
 ?>

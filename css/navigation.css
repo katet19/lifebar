@@ -1,3 +1,64 @@
+.onboarding-big-welcome{
+	font-size:2em;
+	font-weight:500;
+	margin-top:50px;
+}
+
+.onboarding-sub-welcome{
+	font-size:1.5em;
+	margin:15px 0;
+}
+
+.onboarding-image-welcome{
+    width: 112.5px;
+    height: 150px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-position: 0px 0px;
+    background-size: cover;
+    display:inline-block;
+    box-shadow: 1px 1px 3px 0 #000;
+}
+
+.onboarding-follow-header{
+    display: inline-block;
+    font-size: 1.25em;
+    width: 100%;
+    text-align: left;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+}
+
+.onboarding-follow-personalities-all{
+    position: absolute !important;
+    right: 10px;
+    top: 0;
+}
+
+.onboarding-pref-image{
+	width: 100%;
+	height: 200px;
+	background-color: blue;
+	position: relative;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.onboarding-pref-image-active{
+	opacity:0.5;
+}
+
+.quickfollow{
+	position: absolute !important;
+    right: 0px;
+    top: 10px;
+    z-index:5;
+}
+
 #navigation-header{
 	height:60px;
 }
@@ -581,5 +642,8 @@
 	.identificationContainer{
 		height:75px;
 		display:block;
+	}
+	.onboarding-pref-image{
+		height: 100px;
 	}
 }

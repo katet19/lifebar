@@ -14,10 +14,23 @@
 		GeneralServices();
 		ImportServices();
 		CollectionServices();
+		OnboardingServices();
 	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
 		<?php
+	}
+	
+	function OnboardingServices(){
+		if($_POST['action'] == 'ShowOnboardingAccount'){
+			AccountDetails();
+		}
+		if($_POST['action'] == 'ShowOnboardingSocial'){
+			SocialDetails();
+		}
+		if($_POST['action'] == 'ShowOnboardingGamingPref'){
+			GamingPrefDetails();
+		}
 	}
 	
 	function CollectionServices(){

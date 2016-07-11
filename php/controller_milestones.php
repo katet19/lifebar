@@ -3,6 +3,54 @@ require_once "includes.php";
 
 //MilestonesForCritics(0);
 
+function GetOnboardingMilestones(){
+	$mysqli = Connect();
+	$milestones = array();
+	
+	//Platforms
+	$platforms = array();
+		//Must have
+		$platforms[] = 145;	$platforms[] = 146;	$platforms[] = 94;	$platforms[] = 139;	$platforms[] = 117;
+		//Extra
+		$platforms[] = 20;	$platforms[] = 35;	$platforms[] = 96;	$platforms[] = 43;	$platforms[] = 9;	$platforms[] = 22;
+		$platforms[] = 6;	$platforms[] = 19;	$platforms[] = 21;	$platforms[] = 36;	$platforms[] = 4;
+		
+	//Franchises
+	$franchises = array();
+		$franchises[] = 82; $franchises[] = 654; $franchises[] = 173; $franchises[] = 326; $franchises[] = 383; $franchises[] = 293; $franchises[] = 263; $franchises[] = 156;
+		$franchises[] = 194; $franchises[] = 6; $franchises[] = 331; $franchises[] = 186; $franchises[] = 1; $franchises[] = 491; $franchises[] = 2; $franchises[] = 397;
+		$franchises[] = 456; $franchises[] = 49; $franchises[] = 7; $franchises[] = 9; $franchises[] = 267; $franchises[] = 125; $franchises[] = 565; $franchises[] = 3; $franchises[] = 609;
+		$franchises[] = 32; $franchises[] = 46; $franchises[] = 240; $franchises[] = 82; $franchises[] = 159; $franchises[] = 82; $franchises[] = 1609; $franchises[] = 1575; $franchises[] = 523;
+	
+	if ($result = $mysqli->query("select * from `Milestones` where (`Category` = 'Platform' and `ObjectID` in (".implode(",", $platforms).")) or (`Category` = 'Franchises' and `ObjectID` in (".implode(",", $franchises).")) order by rand()")) {
+		while($row = mysqli_fetch_array($result)){
+			$milestone = new Milestone($row['ID'],
+			$row['Name'],
+			$row['Description'],
+			$row['Type'],
+			$row['Image'],
+			$row['Difficulty'],
+			$row['Validation'],
+			$row['Level1'],
+			$row['Level2'],
+			$row['Level3'],
+			$row['Level4'],
+			$row['Level5'],
+			$row['Enabled'],
+			$row['Parent'],
+			$row['Category'],
+			null,
+			$row['ObjectID']
+			);
+			$milestones[] = $milestone;
+		}
+	}
+	
+	
+	Close($mysqli, $result);
+	return $milestones;
+}
+
 function MilestonesForCritics($i){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Users` where `Access` = 'Journalist' LIMIT ".$i.",10")) {

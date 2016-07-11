@@ -74,4 +74,5 @@ require_once 'view_settings.php';
 require_once 'view_user.php';
 require_once 'view_xp.php';
 require_once 'view_profile.php';
+require_once 'view_onboarding.php';
 ?>

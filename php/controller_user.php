@@ -241,6 +241,43 @@ function CreateDefaultFollowingConnections($userid, $pconn = null){
 	   Close($mysqli, $result);
 }
 
+function GetOnboardingCritics(){
+	$journalist = array();
+	$mysqli = Connect();
+	$date = date('Y-m-d', strtotime("now -30 days") );
+	$query = "select usr.*, Count(`UserID`) as TotalRows from `Events` eve, `Users` usr WHERE eve.`Date` > '".$date."' and usr.`ID` = eve.`UserID` and usr.`Access` = 'Journalist' GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 10";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				$user= new User($row["ID"], 
+						$row["First"],
+						$row["Last"],
+						$row["Username"],
+						$row["Email"],
+						$row["Birthdate"],
+						$row["Facebook"],
+						$row["Twitter"],
+						$row["SteamName"],
+						$row["Xbox"],
+						$row["PSN"],
+						$row["Google"],
+						$row["Access"],
+						$row["DefaultWatched"],
+						$row["WeaveView"],
+						$row["SessionID"],
+						$row["Privacy"],
+						$row["RealNames"],
+						$row["Title"],
+						$row["Image"],
+						$row["Website"],
+						$row["Badge"]);
+						$user->_weave = GetWeave($row["ID"], $mysqli);
+						$journalist[] = $user;
+		}
+	}
+   Close($mysqli, $result);
+   return $journalist;
+}
+
 function GetUser($userid, $pconn = null){
 	$myuser = "";
 	$mysqli = Connect($pconn);
@@ -741,6 +778,27 @@ function GetActiveUsers(){
 		while($row = mysqli_fetch_array($result)){
 				$users[] = GetUser($row["UserID"],$mysqli);
 				$count[] = $row["TotalRows"];
+		}
+	}
+	$total[] = $users;
+	$total[] = $count;
+	Close($mysqli, $result);
+	return $total;
+}
+
+function GetUsersWithPopularQuotes(){
+	$users = array();
+	$tracker = array();
+	$count = array();
+	$mysqli = Connect();
+	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				if(!in_array($row["UserQuoted"], $tracker)){
+					$users[] = GetUser($row["UserQuoted"],$mysqli);
+					$count[] = $row["TotalRows"];
+					$tracker[] = $row["UserQuoted"];
+				}
 		}
 	}
 	$total[] = $users;

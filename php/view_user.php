@@ -27,6 +27,71 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
   </div>
 <?php }
 
+function DisplayFollowUserCard($user, $checked, $showquote){ 
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+?>
+   <div class="col <?php if($showquote){ ?>s12 m12 l6<?php }else{ ?>s6 m4 l3<?php } ?>" >
+      <div class="card user-follow-card" data-id="<?php echo $user->_id; ?>"  <?php if($showquote){ ?>style='height: 300px;'<?php } ?> >
+        <div class="card-image waves-effect waves-block">
+        	<div class="col s12 valign-wrapper">
+	        	<input type="checkbox" id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
+	        	<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
+        		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
+        			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+        		</div>
+		      	<?php if($showquote && $user->_security == "Authenticated"){ ?> 
+		      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
+		  		<?php } ?>
+	        	<?php if($showquote && ($user->_security == "Journalist" || $user->_security == "Authenticated")){ ?>
+	          		<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
+	        	<?php }else if($showquote){ ?>
+	        		<span class="card-title activator grey-text text-darken-4" style='position: relative;bottom: 0;right: 0;display: inline-block;width: 50%;left: 0;padding: 16px;text-align: left;cursor: default;'><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
+	        	<?php } ?>
+        		<?php /**DisplayUserPreviewCard($user, $conn, $mutualconn);**/ ?>
+        	</div>
+        </div>
+        <div class="card-content" style='position:relative;<?php if($showquote){ ?>height: 185px;<?php } ?>' >
+	      	<?php if(!$showquote && $user->_security == "Authenticated"){ ?> 
+	      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
+	  		<?php } ?>
+        	<?php if(!$showquote && ($user->_security == "Journalist" || $user->_security == "Authenticated")){ ?>
+          		<span class="card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
+        	<?php }else if(!$showquote){ ?>
+        		<span class="card-title activator grey-text text-darken-4" style='cursor: default;'><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
+        	<?php } ?>
+        	<?php if($showquote){ 
+        		$event = GetMostAgreedQuoteForUser($user->_id);
+        		$game = GetGame($event->_gameid);
+        	?>
+        		<div class="feed-horizontal-card"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				    <a class="feed-card-image waves-effect waves-block" style="width:100px;display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+				    </a>
+			    	<div class="feed-card-content" <?php if($showquote){ ?>style='left:100px;'<?php } ?>>
+					  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes" && !$showquote)){ ?>
+					      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
+					      		<i class="mdi-editor-format-quote"></i>
+						  </div>
+					  	<?php }else if($event->_quote != '' && !$showquote){ ?>
+	  						      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier; ?>">
+							      		<i class="mdi-editor-format-quote"></i>
+								  </div>
+			  			<?php } ?>
+	      				<div class="feed-card-title grey-text text-darken-4">
+				      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+					  		<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div> <?php echo $event->_quote; ?>
+					    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+					  			<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+					  		<?php } ?>
+				      	</div>
+				    </div>
+				 </div>
+        	<?php } ?>
+        </div>
+      </div>
+  </div>
+<?php }
+
 function DisplayCriticQuoteCard($exp){ 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
