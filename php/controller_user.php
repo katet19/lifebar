@@ -786,12 +786,16 @@ function GetActiveUsers(){
 	return $total;
 }
 
-function GetUsersWithPopularQuotes(){
+function GetUsersWithPopularQuotes($exclude){
 	$users = array();
 	$tracker = array();
 	$count = array();
 	$mysqli = Connect();
-	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";
+	if($exclude != '')
+		$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` not in (".$exclude.") GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
+	else
+		$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";
+	
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				if(!in_array($row["UserQuoted"], $tracker)){

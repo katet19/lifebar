@@ -47,16 +47,16 @@ function AccountDetails(){
 	  		<div class="onboarding-description" style='left: 0;text-align: left;position: absolute;bottom: 0;'>Your age is used to build an accurate timeline of your gaming history</div>
 	  	</div>
   	</div>
-  	<div class="row" style='margin-top:100px;'>
-  		<div class="btn onboarding-accountdetails-next">Next</div>
-  		<div class="btn-flat onboarding-accountdetails-skip">Skip</div>
+  	<div class="onboarding-top-level" style='margin-top:100px;'>
+  		<div class="btn onboarding-next">Next</div>
+  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }
 
 function SocialDetails(){
 	$critics = GetActivePersonalities();
-	$users = GetUsersWithPopularQuotes();
+	$users = GetUsersWithPopularQuotes('');
 	?>
 	<div class="col s12 m6 offset-m3" style='text-align:left;'>
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
@@ -96,20 +96,35 @@ function SocialDetails(){
 		</div>
 		<div class="col s12 m8 offset-m2">
 			<?php 
-			$count = 0;
-			while($count < 6){
+			$count = 0; $list = array();
+			while($count < 8){
 				DisplayFollowUserCard($users[0][$count], false, true);
+				$list[] = $users[0][$count]->_id;
 				$count++;
 			}?>
 		</div>
 		<div class="col s12 m8 offset-m2" style='margin-top:20px;'>
-			<div class="btn-flat onboarding-member-view-more">Take a look at more members of Lifebar</div>
+			<div class="btn onboarding-member-view-more" data-alreadyshowing='<?php echo implode(",",$list); ?>'>Load More Lifebar Members</div>
 		</div>
 	</div>
-  	<div class="row" style='margin-top:100px;'>
-  		<div class="btn onboarding-social-next">Next</div>
-  		<div class="btn-flat onboarding-social-skip">Skip</div>
+  	<div class="onboarding-top-level" style='margin-top:100px;'>
+  		<div class="btn onboarding-next">Next</div>
+  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
+	<?php
+}
+
+function ViewMoreMembers($exclude){
+		$users = GetUsersWithPopularQuotes($exclude);
+		$count = 0; $list = array();
+		while($count < 8){
+			DisplayFollowUserCard($users[0][$count], false, true);
+			$list[] = $users[0][$count]->_id;
+			$count++;
+		}?>
+		<div class="col s12 m8 offset-m2" style='margin-top:20px;'>
+			<div class="btn onboarding-member-view-more" data-alreadyshowing='<?php echo implode(",",$list).",".$exclude; ?>'>Load More Lifebar Members</div>
+		</div>
 	<?php
 }
 
@@ -126,13 +141,14 @@ function GamingPrefDetails(){
 		<div class="col s12 m10 offset-m1">
 			<div class="row">
 				<?php foreach($details as $detail){ ?>
-				<div class="col s4 m3 l2">
+				<div class="col s6 m4 l3">
 					<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $detail->_id; ?>" data-objectid="<?php echo $detail->_objectid; ?>">
 						<?php if($detail->_image == ""){ ?>
 							<div class="onboarding-pref-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
 						<?php }else{ ?>
 							<div class="onboarding-pref-image" style="background:url(<?php echo $detail->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 						<?php } ?>
+							<i class="pref-checkmark fa fa-check"></i>
 							<div class="onboarding-pref-image-title">
 								<?php echo $detail->_name; ?>
 							</div>
@@ -143,9 +159,9 @@ function GamingPrefDetails(){
 			</div>
 		</div>
 	</div>
-  	<div class="row" style='margin-top:100px;'>
-  		<div class="btn onboarding-gamingpref-next">Finish</div>
-  		<div class="btn-flat onboarding-gamingpref-skip">Skip</div>
+  	<div class="onboarding-top-level" style='margin-top:100px;'>
+  		<div class="btn onboarding-next">Finish</div>
+  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }

@@ -31,6 +31,9 @@
 		if($_POST['action'] == 'ShowOnboardingGamingPref'){
 			GamingPrefDetails();
 		}
+		if($_POST['action'] == 'OnboardingViewMore'){
+			ViewMoreMembers($_POST['exclude']);
+		}
 	}
 	
 	function CollectionServices(){

@@ -1,6 +1,7 @@
 function ShowOnboarding(){
 	var windowWidth = $(window).width();
     $("#onboarding").css({"display":"inline-block", "left": -windowWidth});
+    $("#onboarding-header").css({"display":"inline-block"});
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #game, .mainNav, .userContainer").css({"display":"none"});
     $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
 	$("#activity, #discover, #analytics, #admin, #notifications, #user, #game").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
@@ -12,11 +13,14 @@ function ShowOnboarding(){
 	     success: function(output) {
 	 		$("#onboardingInnerContainer").html(output);
 	 		location.hash = "onboarding";
-	 		$(".onboarding-accountdetails-next").on("click", function(){
+	 		$(".onboarding-next, .onboarding-skip").unbind();
+	 		$(".onboarding-next").on("click", function(e){
 	 			//Save here
+	 			e.stopPropagation();
 	 			ShowSocial();
 	 		});
- 	 		$(".onboarding-accountdetails-skip").on("click", function(){
+ 	 		$(".onboarding-skip").on("click", function(e){
+ 	 			e.stopPropagation();
 	 			ShowSocial();
 	 		});
 	     },
@@ -39,11 +43,18 @@ function ShowSocial(){
      success: function(output) {
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
- 		$(".onboarding-social-next").on("click", function(){
+ 		$(".onboarding-next, .onboarding-skip").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			e.stopPropagation();
  			ShowGamingPref();
  		});
-  		$(".onboarding-social-skip").on("click", function(){
+  		$(".onboarding-skip").on("click", function(e){
+  			e.stopPropagation();
  			ShowGamingPref();
+ 		});
+ 		$(".onboarding-member-view-more").on("click", function(){
+ 			var exclude = $(this).attr("data-alreadyshowing");	
+ 			ViewMoreMembers(exclude, $(this).parent());
  		});
      },
         error: function(x, t, m) {
@@ -65,20 +76,47 @@ function ShowGamingPref(){
      success: function(output) {
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
- 		$(".onboarding-gamingpref-next").on("click", function(){
+ 		$(".onboarding-next, .onboarding-skip").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
+ 			$("#onboarding-header").css({"display":"none"});
  			ShowDiscoverHome();
  		});
-  		$(".onboarding-gamingpref-skip").on("click", function(){
+  		$(".onboarding-skip").on("click", function(e){
   			$(".mainNav, .userContainer").css({"display":"inherit"});
+  			$("#onboarding-header").css({"display":"none"});
+  			e.stopPropagation();
  			ShowDiscoverHome();
  		});
  		$(".onboarding-pref-image").on("click", function(){
- 			if($(this).hasClass("onboarding-pref-image-active"))
- 				$(this).removeClass("onboarding-pref-image-active");	
- 			else
- 				$(this).addClass("onboarding-pref-image-active");	
+ 			if($(this).hasClass("onboarding-pref-image-active")){
+ 				$(this).removeClass("onboarding-pref-image-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"0"});
+ 			}else{
+ 				$(this).addClass("onboarding-pref-image-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"1"});
+ 			}
  		});
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function ViewMoreMembers(exclude, parent){
+	ShowLoader(parent, 'small', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "OnboardingViewMore", exclude: exclude },
+     type: 'post',
+     success: function(output) {
+     	parent.append(output);
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
