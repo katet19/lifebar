@@ -17,13 +17,16 @@ function ProcessEmailQue(){
 	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = '1up' order by `UserID`, `CoreID`")) {
 		while($row = mysqli_fetch_array($result)){
 			if($prevTo != $row['ToField'] && $prevTo != ''){
-				$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
-				if($count > 1){
-					$prevSubject = "You have been given 1ups!";
-					$prevFrom = "Lifebar Notifications";
+				$imploded = implode($body);
+				if($imploded != ''){
+					$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+					if($count > 1){
+						$prevSubject = "You have been given 1ups!";
+						$prevFrom = "Lifebar Notifications";
+					}
+					$message = str_replace("<MINDTHEGAP>", "", $message);	
+					SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				}
-				$message = str_replace("<MINDTHEGAP>", "", $message);	
-				SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				
 				$sentOneUpEmail[] = $row['UserID'];
 				unset($body);
@@ -77,15 +80,17 @@ function ProcessEmailQue(){
 			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." others", $message);
 		}
 		$body[] = $message;
-		
-		$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
-		if($count > 1){
-			$prevSubject = "You have been given 1ups!";
-			$prevFrom = "Lifebar Notifications";
+		$imploded = implode($body);
+		if($imploded != ''){
+			$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+			if($count > 1){
+				$prevSubject = "You have been given 1ups!";
+				$prevFrom = "Lifebar Notifications";
+			}
+			$message = str_replace("<MINDTHEGAP>", "", $message);	
+			SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
+			$sentOneUpEmail[] = $row['UserID'];
 		}
-		$message = str_replace("<MINDTHEGAP>", "", $message);	
-		SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
-		$sentOneUpEmail[] = $row['UserID'];
 	}
 	
 	$sentFollowingEmail  = array();
