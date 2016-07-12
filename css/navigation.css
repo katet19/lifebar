@@ -79,6 +79,27 @@
     z-index:5;
 }
 
+.onboarding-search-icon{
+    color: white;
+    display: inline-block;
+    font-size: 1.5rem !important;
+    position: absolute;
+    z-index: 1;
+    right: 320px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.onboarding-search-box{
+    width: 350px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 10px 0 35px;
+    background-color: rgb(63, 128, 202);
+}
+
 .pref-checkmark{
     position: absolute;
     top: 10px;
@@ -687,4 +708,12 @@
 	.onboarding-pref-image{
 		height: 100px;
 	}
+    .onboarding-search-icon{
+        left: 10px !important;
+        right: inherit;
+    }
+    .onboarding-search-box{
+        width:100%;
+        padding: 0 10px 0 45px;
+    }
 }

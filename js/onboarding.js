@@ -86,17 +86,18 @@ function ShowSocial(){
 				});
 			}
  		});
- 		$("#collection-search").on('keypress keyup', function (e) {
+ 		$("#onboarding-search").on('keypress keyup', function (e) {
 			if (e.keyCode === 13) { 
 				e.stopPropagation(); 	
-				if($("#collection-search").val() != '' && $("#collection-search").val() != ''){
-					SearchForUsers($("#collection-search").val());
+				if($("#onboarding-search").val() != ''){
+					SearchForUsers($("#onboarding-search").val());
 				}
 			} 
 		});
-		$(".collection-search-icon").on('click', function (e) {
-			if($("#collection-search").val() != '' && $("#collection-search").val() != ''){
-				SearchForUsers($("#collection-search").val());
+		$(".onboarding-search-icon").on('click', function (e) {
+			if($("#onboarding-search").val() != ''){
+				e.stopPropagation(); 
+				SearchForUsers($("#onboarding-search").val());
 			}
 		});
  		
@@ -156,22 +157,37 @@ function ShowGamingPref(){
 
 function SearchForUsers(searchstring){
 	var searchbox = $(".search-results").css({"display":"inline-block"});
-	ShowLoader(searchbox, 'small', "<br><br><br>");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "OnboardingUserSearch", searchstring: searchstring  },
-     type: 'post',
-     success: function(output) {
-     	searchbox.html(output);
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
+	if(searchbox.find(".search-results-loading").length == 0){
+		searchbox.prepend("<div class='search-results-loading'></div>");
+		ShowLoader($(".search-results-loading"), 'small', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "OnboardingUserSearch", searchstring: searchstring  },
+	     type: 'post',
+	     success: function(output) {
+	     	var moved = false;
+	     	$(".searchfollow").each(function(){
+	     		if(this.checked == false){
+	     			$(this).parent().parent().parent().parent().remove();
+				}else{
+					moved = true;
+					$(this).parent().parent().parent().parent().detach().appendTo($(".search-results-selected"));
+				}
+	     	});
+	     	if(moved)
+	     		$(".search-results-selected").css({"display":"inline-block"});
+	     	
+	     	searchbox.html(output);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	}
 }
 
 function ViewMoreMembers(exclude, element){

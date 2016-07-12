@@ -39,16 +39,17 @@ function AccountDetails(){
 	  	</div>
   	</div>
     <div class="row">
-      	<div class="input-field col s3 m2 offset-m3">
-	        <input id="age_id" type="text" value="">
-	        <label for="age_id">Age</label>
-	  	</div>
-	  	<div class="col s5 m4" style='position: relative;height: 40px;'>
-	  		<div class="onboarding-description" style='left: 0;text-align: left;position: absolute;bottom: 0;'>Your age is used to build an accurate timeline of your gaming history</div>
-	  	</div>
+      	<div class="input-field col s3 m6 offset-m3">
+      		<?php if($_SESSION['logged-in']->_birthdate != ''){ $now = Date('Y');$age = $now - $_SESSION['logged-in']->_birthdate; }else{ $age = 25; } ?>
+      		<div style='float: left;margin-right: 10px;line-height: 50px;font-size: 1.5em;font-weight: 400;display: inline-block;'>Age</div>
+	        <input id="age_id" style='font-size:1.25em;width:50px;float:left;text-align:center;' type="text" value="<?php echo $age; ?>">
+		  	<div class="" style='position: relative;height: 40px;float:left;width:75%;'>
+		  		<div class="onboarding-description" style='display:none;left: 0;text-align: left;position: absolute;bottom: 0;right:0;'>Your age is used to build an accurate timeline of your gaming history</div>
+		  	</div>
+  	  	</div>
   	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next">Next</div>
+  		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
   		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
@@ -64,20 +65,23 @@ function SocialDetails(){
 	</div>
 	<div class="row" style='margin-bottom:5px;'>
 		<div class="col s12 m6 l4 offset-l4 offset-m4" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
-			<i class="mdi-action-search small collection-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
-			<div class='collection-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
-				<input id="collection-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
+			<i class="mdi-action-search small onboarding-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
+			<div class='onboarding-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
+				<input id="onboarding-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col s12 m6 l4 offset-l4 offset-m4">
-			<div class='onboarding-description'>Search for your favorite personalities by name or friends by username/email</div>
+			<div class='onboarding-description'>Search for personalities by name or friends by username or gamertag</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m6 l4 offset-l4 offset-m4 search-results" style="margin:20px 0 50px;display:none;">
+		<div class="col s12 m8 offset-m2 search-results" style="margin-top:20px;margin-bottom:50px;display:none;">
 			
+		</div>
+		<div class="col s12 m8 offset-m2 search-results-selected" style="margin-bottom:50px;display:none;">
+			<div class="onboarding-follow-header">Following from Search Results</div>
 		</div>
 	</div>
 	<div class="row">
@@ -87,7 +91,6 @@ function SocialDetails(){
 	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow all personalities</label>
 		</div>
 		<div class="col s12 m8 offset-m2">
-			
 			<?php foreach($critics as $critic){
 				DisplayFollowUserCard($critic, true, false);	
 			}?>
@@ -113,7 +116,7 @@ function SocialDetails(){
 		</div>
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next">Next</div>
+  		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
   		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
@@ -165,14 +168,19 @@ function GamingPrefDetails(){
 		</div>
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next">Finish</div>
+  		<div class="btn onboarding-next" style='font-weight:bold;'>Finish</div>
   		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }
 
 function ViewOnboardingUserSearch($searchstring){
-	?>
-	Search Results <?php echo $searchstring; ?>
-	<?php
+	$results = SearchForUser($searchstring);
+	if(sizeof($results) > 0){
+		foreach($results as $result){ 
+			DisplayFollowUserCard($result, false, false);
+		}
+	}else{
+		echo "<div style='font-size:1.25em;'>0 results found</div>";
+	}
 }
