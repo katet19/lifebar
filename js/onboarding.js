@@ -54,8 +54,52 @@ function ShowSocial(){
  		});
  		$(".onboarding-member-view-more").on("click", function(){
  			var exclude = $(this).attr("data-alreadyshowing");	
- 			ViewMoreMembers(exclude, $(this).parent());
+ 			ViewMoreMembers(exclude, $(this));
  		});
+ 		$("#onboarding-follow-personalities-all").change(function() {
+			if(this.checked){
+				$(".criticquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".criticquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#onboarding-follow-users-all").change(function() {
+			if(this.checked){
+				$(".userquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".userquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#collection-search").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if($("#collection-search").val() != '' && $("#collection-search").val() != ''){
+					SearchForUsers($("#collection-search").val());
+				}
+			} 
+		});
+		$(".collection-search-icon").on('click', function (e) {
+			if($("#collection-search").val() != '' && $("#collection-search").val() != ''){
+				SearchForUsers($("#collection-search").val());
+			}
+		});
+ 		
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -110,13 +154,38 @@ function ShowGamingPref(){
 	});
 }
 
-function ViewMoreMembers(exclude, parent){
+function SearchForUsers(searchstring){
+	var searchbox = $(".search-results").css({"display":"inline-block"});
+	ShowLoader(searchbox, 'small', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "OnboardingUserSearch", searchstring: searchstring  },
+     type: 'post',
+     success: function(output) {
+     	searchbox.html(output);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function ViewMoreMembers(exclude, element){
+	var parent = element.parent();
 	ShowLoader(parent, 'small', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "OnboardingViewMore", exclude: exclude },
      type: 'post',
      success: function(output) {
-     	parent.append(output);
+     	parent.html(output);
+  		$(".onboarding-member-view-more").on("click", function(){
+ 			var exclude = $(this).attr("data-alreadyshowing");	
+ 			ViewMoreMembers(exclude, $(this));
+ 		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

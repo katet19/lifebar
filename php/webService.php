@@ -34,6 +34,9 @@
 		if($_POST['action'] == 'OnboardingViewMore'){
 			ViewMoreMembers($_POST['exclude']);
 		}
+		if($_POST['action'] == 'OnboardingUserSearch'){
+			ViewOnboardingUserSearch($_POST['searchstring']);
+		}
 	}
 	
 	function CollectionServices(){

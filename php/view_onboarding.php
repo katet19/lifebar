@@ -76,10 +76,15 @@ function SocialDetails(){
 		</div>
 	</div>
 	<div class="row">
+		<div class="col s12 m6 l4 offset-l4 offset-m4 search-results" style="margin:20px 0 50px;display:none;">
+			
+		</div>
+	</div>
+	<div class="row">
 		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
 			<div class="onboarding-follow-header">Personalities you might like</div>
 	        	<input type="checkbox" id="onboarding-follow-personalities-all"   checked />
-	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow all <?php echo sizeof($critics); ?> personalities</label>
+	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow all personalities</label>
 		</div>
 		<div class="col s12 m8 offset-m2">
 			
@@ -102,9 +107,9 @@ function SocialDetails(){
 				$list[] = $users[0][$count]->_id;
 				$count++;
 			}?>
-		</div>
-		<div class="col s12 m8 offset-m2" style='margin-top:20px;'>
-			<div class="btn onboarding-member-view-more" data-alreadyshowing='<?php echo implode(",",$list); ?>'>Load More Lifebar Members</div>
+			<div>
+				<div class="btn-flat onboarding-member-view-more" style='margin-top:20px;font-weight:bold;' data-alreadyshowing='<?php echo implode(",",$list); ?>'><i class="fa fa-refresh" style='margin-right:10px;'></i> View More Lifebar Members</div>
+			</div>
 		</div>
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
@@ -122,8 +127,8 @@ function ViewMoreMembers($exclude){
 			$list[] = $users[0][$count]->_id;
 			$count++;
 		}?>
-		<div class="col s12 m8 offset-m2" style='margin-top:20px;'>
-			<div class="btn onboarding-member-view-more" data-alreadyshowing='<?php echo implode(",",$list).",".$exclude; ?>'>Load More Lifebar Members</div>
+		<div>
+			<div class="btn-flat onboarding-member-view-more" style='margin-top:40px;font-weight:bold;' data-alreadyshowing='<?php echo implode(",",$list).",".$exclude; ?>'><i class="fa fa-refresh" style='margin-right:10px;'></i> View More Lifebar Members</div>
 		</div>
 	<?php
 }
@@ -163,5 +168,11 @@ function GamingPrefDetails(){
   		<div class="btn onboarding-next">Finish</div>
   		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
+	<?php
+}
+
+function ViewOnboardingUserSearch($searchstring){
+	?>
+	Search Results <?php echo $searchstring; ?>
 	<?php
 }
