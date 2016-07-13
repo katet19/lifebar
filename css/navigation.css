@@ -115,9 +115,21 @@
 	transition: all 1s ease;
 }
 
+.onboarding-progress{
+    color: white;
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-top: 3px;
+    display: inline-block;
+}
+
 #onboarding-header{
 	display:none;
-	float: right;
+	position:absolute;
+	left:0;
+	right:0;
+	width:100%;
+	text-align:center;
     padding-top: 9px;
 }
 

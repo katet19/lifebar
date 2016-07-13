@@ -50,7 +50,6 @@ function AccountDetails(){
   	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
   		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
-  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }
@@ -117,7 +116,6 @@ function SocialDetails(){
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
   		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
-  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }
@@ -146,7 +144,7 @@ function GamingPrefDetails(){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m10 offset-m1">
+		<div class="col s12 m8 offset-m2">
 			<div class="row">
 				<?php foreach($details as $detail){ ?>
 				<div class="col s6 m4 l3">
@@ -169,7 +167,6 @@ function GamingPrefDetails(){
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
   		<div class="btn onboarding-next" style='font-weight:bold;'>Finish</div>
-  		<div class="btn-flat onboarding-skip">Skip</div>
   	</div>
 	<?php
 }

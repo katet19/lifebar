@@ -19,10 +19,6 @@ function ShowOnboarding(){
 	 			e.stopPropagation();
 	 			ShowSocial();
 	 		});
- 	 		$(".onboarding-skip").on("click", function(e){
- 	 			e.stopPropagation();
-	 			ShowSocial();
-	 		});
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -41,15 +37,12 @@ function ShowSocial(){
      data: {action: "ShowOnboardingSocial" },
      type: 'post',
      success: function(output) {
+     	$(".onboarding-progress").html("Step: 2 of 3");
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
  		$(".onboarding-next, .onboarding-skip").unbind();
  		$(".onboarding-next").on("click", function(e){
  			e.stopPropagation();
- 			ShowGamingPref();
- 		});
-  		$(".onboarding-skip").on("click", function(e){
-  			e.stopPropagation();
  			ShowGamingPref();
  		});
  		$(".onboarding-member-view-more").on("click", function(){
@@ -119,6 +112,8 @@ function ShowGamingPref(){
      data: {action: "ShowOnboardingGamingPref" },
      type: 'post',
      success: function(output) {
+     	$(".onboarding-progress").html("Step: 3 of 3");
+     	$(".onboarding-next").html("FINISH");
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
  		$(".onboarding-next, .onboarding-skip").unbind();
@@ -126,12 +121,6 @@ function ShowGamingPref(){
  			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
  			$("#onboarding-header").css({"display":"none"});
- 			ShowDiscoverHome();
- 		});
-  		$(".onboarding-skip").on("click", function(e){
-  			$(".mainNav, .userContainer").css({"display":"inherit"});
-  			$("#onboarding-header").css({"display":"none"});
-  			e.stopPropagation();
  			ShowDiscoverHome();
  		});
  		$(".onboarding-pref-image").on("click", function(){
