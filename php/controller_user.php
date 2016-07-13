@@ -48,6 +48,18 @@ function UpdateRoleManagement($userid, $role){
 	Close($mysqli, $result);
 }
 
+function GetAllPublications(){
+	$mysqli = Connect();
+	$pubs = array();
+	if ($result = $mysqli->query("SELECT `Title` FROM  `Users` WHERE  `Title` !=  '' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist') GROUP BY  `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			$pubs[] = $row['Title'];
+		}
+	}
+	Close($mysqli, $result);
+	return $pubs;
+}
+
 function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $title, $weburl, $twitter, $image){
 	$mysqli = Connect();
 	if($password != ""){

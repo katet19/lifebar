@@ -57,6 +57,7 @@ function AccountDetails(){
 function SocialDetails(){
 	$critics = GetActivePersonalities();
 	$users = GetUsersWithPopularQuotes('');
+	$pubs = GetAllPublications();
 	?>
 	<div class="col s12 m6 offset-m3" style='text-align:left;'>
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
@@ -92,6 +93,25 @@ function SocialDetails(){
 		<div class="col s12 m8 offset-m2">
 			<?php foreach($critics as $critic){
 				DisplayFollowUserCard($critic, true, false);	
+			}?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
+			<div class="onboarding-follow-header">Follow personalities from your favorite sites</div>
+		</div>
+		<div class="col s12 m8 offset-m2">
+			<?php foreach($pubs as $pub){
+				?>
+				<div class="col s4 m3 l2">
+					<div class="onboarding-pub z-depth-1">
+						<i class="pref-checkmark fa fa-check" style='top: 5px;right: 5px;font-size: 1.25em;'></i>
+     					<div style="display: table-cell; vertical-align: middle;">
+							<?php echo $pub; ?>
+						</div>
+					</div>
+				</div>
+				<?php
 			}?>
 		</div>
 	</div>

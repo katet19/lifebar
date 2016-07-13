@@ -93,6 +93,16 @@ function ShowSocial(){
 				SearchForUsers($("#onboarding-search").val());
 			}
 		});
+		
+ 		$(".onboarding-pub").on("click", function(){
+ 			if($(this).hasClass("onboarding-pub-active")){
+ 				$(this).removeClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"0"});
+ 			}else{
+ 				$(this).addClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"1"});
+ 			}
+ 		});
  		
      },
         error: function(x, t, m) {
