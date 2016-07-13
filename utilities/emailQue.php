@@ -4,7 +4,7 @@ ProcessEmailQue();
 
 function ProcessEmailQue(){
 	$mysqli = Connect();
-	$sentOneUpEmail  = array();
+	$sentEmail  = array();
 	$body = array();
 	$message = '';
 	$prevUser = '';
@@ -17,15 +17,18 @@ function ProcessEmailQue(){
 	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = '1up' order by `UserID`, `CoreID`")) {
 		while($row = mysqli_fetch_array($result)){
 			if($prevTo != $row['ToField'] && $prevTo != ''){
-				$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
-				if($count > 1){
-					$prevSubject = "You have been given 1ups!";
-					$prevFrom = "Lifebar Notifications";
+				$imploded = implode($body);
+				if($imploded != ''){
+					$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+					if($count > 1){
+						$prevSubject = "You have been given 1ups!";
+						$prevFrom = "Lifebar Notifications";
+					}
+					$message = str_replace("<MINDTHEGAP>", "", $message);	
+					SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				}
-				$message = str_replace("<MINDTHEGAP>", "", $message);	
-				SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				
-				$sentOneUpEmail[] = $row['UserID'];
+				$sentEmail[] = $row['UserID'];
 				unset($body);
 				$message= '';
 				$prevSubject = '';
@@ -70,7 +73,6 @@ function ProcessEmailQue(){
 	}
 	//Catch the last one in the loop
 	if($prevTo != ''){
-		
 		if($internalcount == 1){
 			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." other", $message);	
 		}else if($internalcount > 1){
@@ -78,24 +80,91 @@ function ProcessEmailQue(){
 		}
 		$body[] = $message;
 		
-		$message = GetHeader().implode($body).GetFooter($prevUser, '1up');
-		if($count > 1){
-			$prevSubject = "You have been given 1ups!";
-			$prevFrom = "Lifebar Notifications";
+		$imploded = implode($body);
+		if($imploded != ''){
+			$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+			if($count > 1){
+				$prevSubject = "You have been given 1ups!";
+				$prevFrom = "Lifebar Notifications";
+			}
+			$message = str_replace("<MINDTHEGAP>", "", $message);	
+			SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
+			$sentEmail[] = $row['UserID'];
 		}
-		$message = str_replace("<MINDTHEGAP>", "", $message);	
-		SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
-		$sentOneUpEmail[] = $row['UserID'];
 	}
 	
-	$sentFollowingEmail  = array();
+	
+	//Reset vars for Following Emails
+	$body = array();
+	$message = '';
+	$prevUser = '';
+	$prevTo = '';
+	$prevSubject = '';
+	$prevFrom = '';
+	$prevCoreID = '';
+	$count = 0;
+	$internalcount = 0;
 	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = 'Following' order by `UserID`")) {
 		while($row = mysqli_fetch_array($result)){
-			if(!in_array($row['UserID'], $sentOneUpEmail)){
+			if(!in_array($row['UserID'], $sentEmail)){
+				if($prevTo != $row['ToField'] && $prevTo != ''){
+					$imploded = implode($body);
+					if($imploded != ''){
+						$message = GetHeader().$imploded.GetFooter($prevUser, 'Following');
+						if($count > 1){
+							$prevSubject = "You have new followers!";
+							$prevFrom = "Lifebar Notifications";
+						}
+						SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
+					}
+					
+					$sentEmail[] = $row['UserID'];
+					unset($body);
+					$message= '';
+					$prevSubject = '';
+					$count = 0;
+					$internalcount = 0;
+					$prevCoreID = '';
+				}
 				
-				
+				if($count >= 3){
+					$mysqli->query("DELETE FROM `Email` where `ID` = '".$row['ID']."'");
+				}else{
+					if($prevCoreID != $row['CoreID']){	
+						$body[] = $message;
+						$message = '';
+						
+						if($count > 0){
+							$message = $message."<div style='border-bottom:1px solid gray;width:100%;margin-bottom:30px;'></div>";
+							$message = $message.$row['Body'];	
+						}else{
+							$message = $message.$row['Body'];
+						}
+					}
+					
+					$count++;
+					$prevUser = $row['UserID'];
+					$prevTo = $row['ToField'];
+					$prevFrom = $row['FromField'];
+					$prevSubject = $row['Subject'];	
+					$prevCoreID = $row['CoreID'];
+					$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+				}
 			}
-			$sentFollowingEmail[] = $row['UserID'];
+		}
+	}
+	
+	//Catch the last one in the loop
+	if($prevTo != ''){
+		$body[] = $message;
+		$imploded = implode($body);
+		if($imploded != ''){
+			$message = GetHeader().$imploded.GetFooter($prevUser, 'Following');
+			if($count > 1){
+				$prevSubject = "You have new followers!";
+				$prevFrom = "Lifebar Notifications";
+			}
+			SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 		}
 	}
 }

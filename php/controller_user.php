@@ -611,6 +611,7 @@ function AddConnection($userid, $addid){
         $result = $mysqli->query("insert into `Events` (`UserID`,`Event`,`Quote`) values ('$userid','CONNECTIONS','$addid')");
         Close($mysqli, $result);
         AddNewFollower($userid, $addid);
+        AddFollowingEmail($userid, $addid);
     }else{
         Close($mysqli, $result);
     }
