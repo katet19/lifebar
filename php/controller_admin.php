@@ -1,7 +1,7 @@
 <?php
 require_once "includes.php";
 
-//RemoveUser(10096);
+//RemoveUser(10160);
 //ClearEmptyUsers();
 
 //$list = array(8263,8898,8897,8894,8893,9031,9032,9128,9129,9205,9206,9247);
@@ -9,7 +9,6 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
-// AssociateEventsToSubXP(0);
 
 function AssociateLikesToEvents(){
 	$mysqli = Connect();

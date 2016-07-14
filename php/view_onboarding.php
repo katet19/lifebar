@@ -168,7 +168,7 @@ function GamingPrefDetails(){
 			<div class="row">
 				<?php foreach($details as $detail){ ?>
 				<div class="col s6 m4 l3">
-					<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $detail->_id; ?>" data-objectid="<?php echo $detail->_objectid; ?>">
+					<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $detail->_id; ?>" data-objectid="<?php echo $detail->_category."_".$detail->_objectid; ?>">
 						<?php if($detail->_image == ""){ ?>
 							<div class="onboarding-pref-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
 						<?php }else{ ?>

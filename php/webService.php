@@ -37,6 +37,15 @@
 		if($_POST['action'] == 'OnboardingUserSearch'){
 			ViewOnboardingUserSearch($_POST['searchstring']);
 		}
+		if($_POST['action'] == 'SaveAccountInfo'){
+			SaveOnboardingAccount($_POST['steam'], $_POST['xbox'], $_POST['psn'], $_POST['age']);
+		}
+		if($_POST['action'] == 'SaveSocialInfo'){
+			SaveOnboardingFollowing($_POST['following'], $_POST['pubs']);
+		}
+		if($_POST['action'] == 'SaveGamingPrefInfo'){
+			SaveOnboardingPrefs($_POST['prefs']);
+		}
 	}
 	
 	function CollectionServices(){

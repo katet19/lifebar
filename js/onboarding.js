@@ -13,12 +13,34 @@ function ShowOnboarding(){
 	     success: function(output) {
 	 		$("#onboardingInnerContainer").html(output);
 	 		location.hash = "onboarding";
-	 		$(".onboarding-next, .onboarding-skip").unbind();
+	 		$(".onboarding-next").unbind();
 	 		$(".onboarding-next").on("click", function(e){
-	 			//Save here
+	 			SaveOnboardingAccount();
 	 			e.stopPropagation();
 	 			ShowSocial();
 	 		});
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+}
+
+function SaveOnboardingAccount(){
+	var steam = $("#steam_id").val();
+	var xbox = $("#xbox_id").val();
+	var psn = $("#psn_id").val();
+	var age = $("#age_id").val();
+	$.ajax({ url: '../php/webService.php',
+	     data: {action: "SaveAccountInfo", steam: steam, xbox: xbox, psn: psn, age: age },
+	     type: 'post',
+	     success: function(output) {
+
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -40,8 +62,9 @@ function ShowSocial(){
      	$(".onboarding-progress").html("Step: 2 of 3");
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
- 		$(".onboarding-next, .onboarding-skip").unbind();
+ 		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
+ 			SaveOnboardingSocial();
  			e.stopPropagation();
  			ShowGamingPref();
  		});
@@ -116,6 +139,41 @@ function ShowSocial(){
 	});
 }
 
+function SaveOnboardingSocial(){
+	var following = '';
+	var pubs = '';
+	$(".searchfollow").each(function(){
+		if(this.checked)
+			following = following + $(this).attr("data-id") + ",";	
+	});
+	$(".criticquickfollow").each(function(){
+		if(this.checked)
+			following = following + $(this).attr("data-id") + ",";	
+	});
+	$(".userquickfollow").each(function(){
+		if(this.checked)
+			following = following + $(this).attr("data-id") + ",";	
+	});
+	$(".onboarding-pub-active").each(function(){
+		pubs = pubs + $.trim($(this).find("div").text()) + ",";
+	});
+	$.ajax({ url: '../php/webService.php',
+	     data: {action: "SaveSocialInfo", following: following, pubs: pubs  },
+	     type: 'post',
+	     success: function(output) {
+
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+}
+
 function ShowGamingPref(){
 	ShowLoader($("#onboardingInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
@@ -126,8 +184,9 @@ function ShowGamingPref(){
      	$(".onboarding-next").html("FINISH");
  		$("#onboardingInnerContainer").html(output);
  		location.hash = "onboarding";
- 		$(".onboarding-next, .onboarding-skip").unbind();
+ 		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
+ 			SaveOnboardingGamingPref();
  			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
  			$("#onboarding-header").css({"display":"none"});
@@ -152,6 +211,28 @@ function ShowGamingPref(){
     	},
     	timeout:45000
 	});
+}
+
+function SaveOnboardingGamingPref(){
+	var prefs = '';
+	$(".onboarding-pref-image-active").each(function(){
+		prefs = prefs + $(this).parent().attr("data-objectid") + ",";	
+	});
+	$.ajax({ url: '../php/webService.php',
+	     data: {action: "SaveGamingPrefInfo", prefs: prefs },
+	     type: 'post',
+	     success: function(output) {
+
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
 }
 
 function SearchForUsers(searchstring){

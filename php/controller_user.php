@@ -75,6 +75,49 @@ function SaveAccountChanges($id, $username, $password, $first, $last, $email, $b
 	Close($mysqli, $result);
 	FastLogin($id);
 }
+
+function SaveOnboardingAccount($steam, $xbox, $psn, $age){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$now = Date('Y');
+	$birthyear = $now - $age;
+	$mysqli->query("Update `Users` SET `Birthdate`='".$birthyear."-01-01', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
+	Close($mysqli, $result);
+}
+
+function SaveOnboardingFollowing($following, $pubs){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$followarray = explode(",",$following);
+	foreach($followarray as $follow){
+		if($follow > 0)
+			AddConnection($id, $follow);
+	}
+	$pubsarray = explode(",", $pubs);
+	foreach($pubsarray as $pub){
+		if ($result = $mysqli->query("SELECT * FROM  `Users` WHERE  `Title` =  '".$pub."' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist')")) {
+			while($row = mysqli_fetch_array($result)){
+				AddConnection($id, $row['ID']);
+			}
+		}
+	}
+	Close($mysqli, $result);
+}
+
+function SaveOnboardingPrefs($prefs){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$prefarray = explode(",", $prefs);
+	foreach($prefarray as $pref){
+		if($pref != ''){
+			$prefdata = explode("_",$pref);
+			if(sizeof($prefdata) == 2)
+				$mysqli->query("Insert into `UserPref` SET (`UserID`,`Type`,`ObjectID`) VALUES ('".$id."', '".$prefdata[0]."', '".$prefdata[1]."')");
+		}
+	}
+	Close($mysqli, $result);
+}
+
 /*
 	$Salt = uniqid();
 	$Algo = '6';
@@ -105,7 +148,6 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Birthdate`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$birthdate."-01-01','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
-		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
 		//SignupEmail($email);
 	}
