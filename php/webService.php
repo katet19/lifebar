@@ -580,7 +580,7 @@
 			VerifyUniqueEmail($_POST['email']);
 		}
 		if($_POST['action'] == "Signup" && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
-			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear']."-01-01","Public");
+			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'],"Public");
 		}
 	}
 	function LoginServices(){

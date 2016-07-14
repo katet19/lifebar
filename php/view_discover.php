@@ -1,8 +1,12 @@
-<?php function DisplayDiscoverTab(){ ?>
+<?php function DisplayDiscoverTab(){ 
+	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id)){
+		AccountDetails();
+	}else{ ?>
 	<div class="discover-top-level">
 		<?php DisplayGameDiscover(); ?>
 	</div>
 	<?php
+	}
 }
 
 function DisplayGameDiscover(){ 

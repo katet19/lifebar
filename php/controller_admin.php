@@ -1,7 +1,7 @@
 <?php
 require_once "includes.php";
 
-//RemoveUser(10160);
+//RemoveUser(10162);
 //ClearEmptyUsers();
 
 //$list = array(8263,8898,8897,8894,8893,9031,9032,9128,9129,9205,9206,9247);
@@ -186,6 +186,8 @@ function RemoveUser($userid){
 	$mysqli->query("Delete from `Events` where `UserID` = '".$userid."'");
 	$mysqli->query("Delete from `Users` where `ID` = '".$userid."'");
 	$mysqli->query("Delete from `ImportReview` where `AuthorID` = '".$userid."'");
+	$mysqli->query("Delete from `UserPref` where `UserID` = '".$userid."'");
+	$mysqli->query("Delete from `UsersSync` where `UserID` = '".$userid."'");
 	Close($mysqli, $result);
 }
 

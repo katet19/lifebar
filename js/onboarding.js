@@ -1,34 +1,14 @@
 function ShowOnboarding(){
-	var windowWidth = $(window).width();
-    $("#onboarding").css({"display":"inline-block", "left": -windowWidth});
-    $("#onboarding-header").css({"display":"inline-block"});
-    $("#activity, #discover, #analytics, #admin, #notifications, #user, #game, .mainNav, .userContainer").css({"display":"none"});
-    $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
-	$("#activity, #discover, #analytics, #admin, #notifications, #user, #game").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#onboarding").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-		ShowLoader($("#onboardingInnerContainer"), 'big', "<br><br><br>");
-		$.ajax({ url: '../php/webService.php',
-	     data: {action: "ShowOnboardingAccount" },
-	     type: 'post',
-	     success: function(output) {
-	 		$("#onboardingInnerContainer").html(output);
-	 		location.hash = "onboarding";
-	 		$(".onboarding-next").unbind();
-	 		$(".onboarding-next").on("click", function(e){
-	 			SaveOnboardingAccount();
-	 			e.stopPropagation();
-	 			ShowSocial();
-	 		});
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
+	$("#onboarding-header").css({"display":"inline-block"});
+	$(".mainNav, .userContainer").css({"display":"none"});
+	$("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
+ 	GAPage('Onboarding1of3', '/onboarding1of3');
+ 	$(".onboarding-next").unbind();
+ 	$(".onboarding-next").on("click", function(e){
+ 		SaveOnboardingAccount();
+ 		e.stopPropagation();
+ 		ShowSocial();
+ 	});
 }
 
 function SaveOnboardingAccount(){
@@ -54,13 +34,13 @@ function SaveOnboardingAccount(){
 }
 
 function ShowSocial(){
-	ShowLoader($("#onboardingInnerContainer"), 'big', "<br><br><br>");
+	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "ShowOnboardingSocial" },
      type: 'post',
      success: function(output) {
      	$(".onboarding-progress").html("Step: 2 of 3");
- 		$("#onboardingInnerContainer").html(output);
+ 		$("#discoverInnerContainer").html(output);
  		location.hash = "onboarding";
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
@@ -175,14 +155,14 @@ function SaveOnboardingSocial(){
 }
 
 function ShowGamingPref(){
-	ShowLoader($("#onboardingInnerContainer"), 'big', "<br><br><br>");
+	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "ShowOnboardingGamingPref" },
      type: 'post',
      success: function(output) {
      	$(".onboarding-progress").html("Step: 3 of 3");
      	$(".onboarding-next").html("FINISH");
- 		$("#onboardingInnerContainer").html(output);
+ 		$("#discoverInnerContainer").html(output);
  		location.hash = "onboarding";
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
