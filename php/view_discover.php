@@ -1,8 +1,66 @@
-<?php function DisplayDiscoverTab(){ ?>
+<?php function DisplayDiscoverTab(){ 
+	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id)){
+		AccountDetails();
+	}else{ ?>
 	<div class="discover-top-level">
-		<?php DisplayGameDiscover(); ?>
+		<?php DisplayDynamicDiscover(); ?>
 	</div>
 	<?php
+	}
+}
+
+function DisplayDynamicDiscover(){
+	$zdepth = 25;
+  	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
+  	$discoverItems = BuildDiscoverFlow($_SESSION['logged-in']->_id);
+?>
+	<div class="row discover-row">
+		<?php 
+			foreach($discoverItems as $item){
+				if($item["DTYPE"] == "GAMELIST")
+					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR']);
+				else if($item["DTYPE"] == "USERLIST")
+					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $connections);
+				
+				$zdepth--;
+			}
+		?>
+	</div>	
+<?php
+}
+
+function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color){ ?>
+	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+	      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
+	      		<i class="mdi-notification-event-note categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
+	      		<?php echo $category; ?>
+	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
+	      	</div>
+	      	<?php $count = 1;
+	  		foreach($games as $game){
+	  			DisplayGameCard($game, $count, $type);
+				$count++; 
+			} ?>
+	    </div>
+	<?php
+}
+
+function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $connections){ ?>
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
+    		<i class="mdi-social-whatshot categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
+      		<?php echo $category; ?>
+      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
+      	</div>
+      	<?php 
+      	$count = 1;
+  		foreach($users as $user){
+  			DisplayUserCard($user, $count, "categoryResults", $connections);
+			$count++; 
+		} 
+		?>
+    </div>
+<?php
 }
 
 function DisplayGameDiscover(){ 

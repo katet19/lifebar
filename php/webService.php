@@ -15,10 +15,20 @@
 		ImportServices();
 		CollectionServices();
 		OnboardingServices();
+		FormServices();
 	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
 		<?php
+	}
+	
+	function FormServices(){
+		if($_POST['action'] == 'DisplayDailyCreationForm'){
+			DailyForm();
+		}
+		if($_POST['action'] == 'SubmitDailyForm'){
+			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], 'Yes', $_POST['gameid'], 'Daily', $_POST['defaultResponse'], $_POST['responses'], $_POST['type']);
+		}
 	}
 	
 	function OnboardingServices(){
@@ -580,7 +590,7 @@
 			VerifyUniqueEmail($_POST['email']);
 		}
 		if($_POST['action'] == "Signup" && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
-			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear']."-01-01","Public");
+			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'],"Public");
 		}
 	}
 	function LoginServices(){
