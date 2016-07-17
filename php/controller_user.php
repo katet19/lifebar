@@ -95,9 +95,11 @@ function SaveOnboardingFollowing($following, $pubs){
 	}
 	$pubsarray = explode(",", $pubs);
 	foreach($pubsarray as $pub){
-		if ($result = $mysqli->query("SELECT * FROM  `Users` WHERE  `Title` =  '".$pub."' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist')")) {
-			while($row = mysqli_fetch_array($result)){
-				AddConnection($id, $row['ID']);
+		if($pub != ''){
+			if ($result = $mysqli->query("SELECT * FROM  `Users` WHERE  `Title` =  '".$pub."' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist')")) {
+				while($row = mysqli_fetch_array($result)){
+					AddConnection($id, $row['ID']);
+				}
 			}
 		}
 	}
@@ -111,25 +113,25 @@ function SaveOnboardingPrefs($prefs){
 	foreach($prefarray as $pref){
 		if($pref != ''){
 			$prefdata = explode("_",$pref);
-			if(sizeof($prefdata) == 2)
-				$mysqli->query("Insert into `UserPref` SET (`UserID`,`Type`,`ObjectID`) VALUES ('".$id."', '".$prefdata[0]."', '".$prefdata[1]."')");
+			$mysqli->query("Insert into `UserPref` (`UserID`,`Type`,`ObjectID`) VALUES ('".$id."', '".$prefdata[0]."', '".$prefdata[1]."')");
 		}
 	}
 	Close($mysqli, $result);
 }
 
-/*
-	$Salt = uniqid();
-	$Algo = '6';
-	$Rounds = '5000';
-	$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
-	$pw = "test";
-	$hashedpw = crypt($pw, $CryptSalt);
-	$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-	echo $hashedpw;
-	echo $randomToken;
-*/
-function RegisterUser($username, $password, $first, $last, $email, $birthdate,$privacy){
+function HasOnboardingPrefs($userid){
+	$mysqli = Connect();
+	$hasPrefs = false;
+	if ($result = $mysqli->query("select * from `UserPref` where `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$hasPrefs = true;
+		}
+	}
+	Close($mysqli, $result);
+	return $hasPrefs;
+}
+
+function RegisterUser($username, $password, $first, $last, $email, $privacy){
 	$Salt = uniqid();
 	$Algo = '6';
 	$Rounds = '5000';
@@ -145,11 +147,10 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 	}
 	if($founduser == false){
 		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Birthdate`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$birthdate."-01-01','".$privacy."', '".$randomToken."')");
+		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
-		//SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -198,10 +199,7 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 		}
 		
 		AddIntroNotifications($user->_id, $mysqli);
-		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
-		if($email != '')
-			SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -218,31 +216,6 @@ function FinishRegisterUser($userid, $email, $username){
 		FastLogin($userid);
 	}
 	Close($mysqli, $result);
-}
-
-function RegisterUserEarly($username, $password, $first, $last, $birthdate, $email){
-	$Salt = uniqid();
-	$Algo = '6';
-	$Rounds = '5000';
-	$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
-	$hashedpw = crypt($password, $CryptSalt);
-	$mysqli = Connect();
-	$founduser = false;
-	if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$founduser = true;
-			$user = Login($username, $password);
-		}
-	}
-	if($founduser == false){
-		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-		$mysqli->query("UPDATE `Users` SET `Username` = '".$username."',`Hash`='".$hashedpw."',`First`='".$first."',`Last`='".$last."',`Birthdate`='".$birthdate."-01-01', `SessionID`='".$randomToken."', `Key`='ACTIVE' WHERE `Email` = '".$email."'");
-		$user = Login($username, $password);
-		CreateDefaultFollowingConnections($user->_id);
-		AddIntroQuests($user->_id);
-	}
-	Close($mysqli, $result);
-	return $user;
 }
 
 function VerifyUniqueUsername($username){

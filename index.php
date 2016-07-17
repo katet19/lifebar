@@ -146,9 +146,6 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	<div id="landing" class="col s12 m12 l9 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 0px;position: absolute;  width: 100%;  z-index: 99;">
 		<div id="landingInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height:100%;"></div>
 	</div>
-	<div id="onboarding" class="col s12 outerContainer" style="padding:0;">
-		<div id="onboardingInnerContainer" class="innerContainer" style="top:10px; background-color:rgb(237, 236, 236);"></div>
-	</div>
 </div>
 <div id='fb-root'></div>
 <?php LoadThirdPartyTools(); ?>

@@ -35,12 +35,12 @@ function AttachSignUpEvents(){
 function Signup(username, password, email, first, last, birthyear){
 	ShowLoader($("#SignupSubmitBtn"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
-         data: {action: "Signup", username: username, password: password, email: email, first: first, last: last, birthyear: birthyear },
+         data: {action: "Signup", username: username, password: password, email: email, first: first, last: last },
          type: 'post',
          success: function(output) {
          			GAEvent('Signup', email);
          			setCookie("RememberMe", $.trim(output), 14);
-          			window.location.hash = "#notifications";
+          			window.location.hash = "#discover";
 					window.location.reload(true);
   		},
         error: function(x, t, m) {
