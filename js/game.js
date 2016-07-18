@@ -410,6 +410,11 @@ function AttachFormCreationEvents(){
 		var responses = '';
 		var gameid = $("#gameContentContainer").attr("data-id");
 		var defaultResponse = "No";
+		var finished = "No";
+		$("#daily-finished").each(function(){
+			if(this.checked	)
+				finished = "Yes";
+		});
 		$("#daily-default").each(function(){
 			if(this.checked	)
 				defaultResponse = "Yes";
@@ -419,7 +424,7 @@ function AttachFormCreationEvents(){
 		});
 		
 		$.ajax({ url: '../php/webService.php',
-		     data: {action: 'SubmitDailyForm', question: question, type: type, responses: responses, defaultResponse: defaultResponse, gameid: gameid },
+		     data: {action: 'SubmitDailyForm', question: question, type: type, responses: responses, defaultResponse: defaultResponse, gameid: gameid, finished: finished },
 		     type: 'post',
 		     success: function(output) {
 		     	Toast("Daily Submitted!");

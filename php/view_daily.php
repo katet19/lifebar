@@ -52,6 +52,12 @@ function DailyForm($game, $user){
 			</div>
 		</div>
 		<div class="row">
+			<div class="col s10 offset-s1">
+				<input type="checkbox" id="daily-finished">
+				<label for="daily-finished" style='float:left;'>Only show for members that have finished the game</label>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col s10 offset-s1" style='margin-top: 75px;'>
 				<div class='btn submit-daily'>Submit Daily For Review</div>
 				<div class='btn cancel-daily' style='background-color:#F44336'>Cancel</div>

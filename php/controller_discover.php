@@ -16,7 +16,7 @@ function BuildDiscoverFlow($userid){
 
 	//Get the Daily
 	$daily = GetDaily($mysqli);
-
+	print_r($daily);
 	//Get a This or That
 	
 	//Get Collections that have games they liked
@@ -60,7 +60,9 @@ function GetUserPrefs($userid, $mysqli){
 
 function GetDaily($mysqli){
 	$date = Date('Y-m-d');
-	if ($result = $mysqli->query("SELECT * FROM  `Daily` WHERE  `Scheduled` =  '".$date."'")) {
+	//$query = "SELECT * FROM  `Daily` WHERE  `Scheduled` =  '".$date."'";
+	$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' order by Rand() limit 0,1";
+	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$daily = $row;
 		}

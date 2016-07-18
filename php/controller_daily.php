@@ -1,8 +1,8 @@
 <?php
 
-function SubmitDailyForm($userid, $question, $approved, $objectid, $objectType, $default, $items, $itemtype){
+function SubmitDailyForm($userid, $question, $formtype, $approved, $objectid, $objectType, $default, $items, $itemtype, $finished){
 	$mysqli = Connect();
-	$mysqli->query("insert into `Forms` (`Header`,`CreatedBy`,`Approved`,`ObjectID`, `ObjectType`) values ('".mysqli_real_escape_string($mysqli, $question)."','$userid','$approved','$objectid','$objectType')");
+	$mysqli->query("insert into `Forms` (`Header`,`FormType`,`CreatedBy`,`Approved`,`ObjectID`, `ObjectType`,`Finished`) values ('".mysqli_real_escape_string($mysqli, $question)."','$formtype','$userid','$approved','$objectid','$objectType','$finished')");
 	if ($result = $mysqli->query("select * from `Forms` where `CreatedBy` = '".$userid."' order by `ID` DESC LIMIT 0,1")) {
 		while($row = mysqli_fetch_array($result)){
 			$formID = $row['ID'];
