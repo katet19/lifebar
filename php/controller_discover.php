@@ -16,7 +16,14 @@ function BuildDiscoverFlow($userid){
 
 	//Get the Daily
 	$daily = GetDaily($mysqli);
-	print_r($daily);
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'DAILY';
+		$dAtts['QUESTION'] = $daily['Header'];
+		$dAtts['ID'] = $daily['ID'];
+		$dAtts['OBJECTID'] = $daily['ObjectID'];
+		$dAtts['OBJECTTYPE'] = $daily['OBJECTTYPE'];
+		$dAtts['ITEMS'] = $daily["Items"];
+		$dItems[] = $dAtts;
 	//Get a This or That
 	
 	//Get Collections that have games they liked
@@ -26,6 +33,7 @@ function BuildDiscoverFlow($userid){
 	
 	//Recent Releases (ALWAYS SHOWS UP)
 	$recentGames = RecentlyReleasedCategory(); 
+		unset($dAtts);
 		$dAtts['DTYPE'] = 'GAMELIST';
 		$dAtts['CATEGORY'] = "Recent Releases";
 		$dAtts['GAMES'] = $recentGames;
@@ -35,6 +43,7 @@ function BuildDiscoverFlow($userid){
 		
 	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
 	$activePersonalities = GetActivePersonalitiesCategory(); 
+		unset($dAtts);
 		$dAtts['DTYPE'] = 'USERLIST';
 		$dAtts['CATEGORY'] = "Active Personalities";
 		$dAtts['USERS'] = $activePersonalities;
@@ -66,6 +75,16 @@ function GetDaily($mysqli){
 		while($row = mysqli_fetch_array($result)){
 			$daily = $row;
 		}
+	}
+	
+	if(sizeof($daily) > 0 ){
+		$query = "SELECT * FROM `FormItems` where `FormID` = '".$daily["ID"]."'"; 
+		if ($result = $mysqli->query($query)) {
+			while($row = mysqli_fetch_array($result)){
+				$items[] = $row;
+			}
+		}
+		$daily['Items'] = $items;
 	}
 	return $daily;
 }

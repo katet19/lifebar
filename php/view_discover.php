@@ -21,12 +21,52 @@ function DisplayDynamicDiscover(){
 					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR']);
 				else if($item["DTYPE"] == "USERLIST")
 					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $connections);
-				
+				else if($item['DTYPE'] == 'DAILY')
+					DisplayDailyHeader($zdepth, $item);
 				$zdepth--;
 			}
 		?>
 	</div>	
 <?php
+}
+
+function DisplayDailyHeader($zdepth, $item){ 
+	$game = GetGame($item['OBJECTID']);
+	?>
+	<div class='row' style='z-index:<?php echo $zdepth--; ?>'>
+	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
+			<div class="daily-header-image" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+				<div class="daily-header-banner"><i class="mdi-action-question-answer"></i> Daily Reflection Point</div>
+				<div class="daily-header-question"><?php echo $item['QUESTION']; ?> <i class="mdi-content-reply-all daily-reply-button z-depth-2"></i></div>
+				<div class="daily-header-game-title"><?php echo $game->_title; ?></div>
+				<div class="daily-answers-container">
+					<div class="row">
+						<div class="col s10 offset-s1">
+							<div class="daily-header-game-title-hidden"><?php echo $game->_title; ?></div>
+							<div class="daily-header-question-hidden"><?php echo $item['QUESTION']; ?></div>
+							<?php
+								foreach($item['ITEMS'] as $response){
+									?>
+									<div class="daily-item-row input-field">
+										<?php if($response['Type'] == 'radio'){ ?>
+											<input type='radio' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['Default'] == 'Yes'){ ?> checked <?php } ?> >
+											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+										<?php }else if($response['Type'] == 'dropdown'){ ?>
+										
+										<?php }else if($response['Type'] == 'checkbox'){ ?>
+										
+										<?php } ?>
+									</div>
+									<?php
+								}
+							?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
 }
 
 function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color){ ?>

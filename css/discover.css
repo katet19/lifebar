@@ -11,6 +11,112 @@
 	margin-top:1em;
 }
 
+.daily-header-image{
+    width: 100%;
+    height: 500px;
+    position:relative;
+}
+
+.daily-header-banner{
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.daily-header-question{
+    font-size: 3em;
+    color: white;
+    font-weight: 500;
+    position: absolute;
+    line-height: 45px;
+    top: 350px;
+    left: 50px;
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.daily-header-question-hidden{
+    font-size: 3em;
+    color: white;
+    font-weight: 500;
+    line-height: 45px;
+    margin-left: 0;
+    text-align: left;
+    margin-bottom:25px;
+}
+
+.daily-header-game-title{
+    color: white;
+    font-weight: bold;
+    top: 325px;
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.daily-header-game-title-hidden{
+    color: white;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: 0px;
+    text-align: left;
+}
+
+.daily-reply-button{
+    background-color: #2196F3 !important;
+    padding: 2px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    vertical-align:middle;
+}
+
+.daily-answers-container{
+	display:none;
+	position:absolute;
+	width:100%;
+	right:100%;
+	top:0;
+    height:100%;
+	background-color:rgba(0,0,0,0.4);
+	color:white;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+    overflow-y:auto;
+}
+
+.daily-answers-container-active{
+	display:inline-block;
+	right:0%;
+}
+
+.daily-item-row{
+    text-align: left;
+    display: block;
+    width: 100%;
+}
+
+.daily-response-label{
+	color:white !important;
+	font-weight:400;
+	font-size:1.25em !important;
+}
+
 .card-agree-quote{
     color: white;
     font-size: 1.25em;
@@ -692,5 +798,8 @@
 	.discoverCatSubName{
 	    top: 2.5em;
     	line-height: 1.2em;
+	}
+	.daily-header-question{
+		font-size:2em;
 	}
 }

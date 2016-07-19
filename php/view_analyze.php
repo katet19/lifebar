@@ -15,7 +15,6 @@
 		?>
 	</div>
 	<?php
-	DisplayDailyCreationForm($user, $game);
 	BuildCommunitySpectrum($user, $myxp, $game);
 	BuildAgeGraph($user, $myxp, $game);
 	//BuildSimilarGames($game, $user->_id, $myxp);
@@ -82,17 +81,6 @@
 	<?php
 	}
 } 
-
-function DisplayDailyCreationForm($user, $game){
-	if($user->_security == 'Admin'){
-	?>
-		<div class="row">
-			<div class="col s12 analyze-card z-depth-1" style='width:100%;padding-bottom: 1em !important;' >
-				<?php DailyForm($game, $user);  ?>
-			</div>
-		</div>
-	<?php }
-}
 
 function BuildCommunitySpectrum($user, $myxp, $game){
 	if($user->_id > 0){

@@ -283,7 +283,6 @@ function AttachAnalyzeEvents(){
 	DisplayAgeGraph();
 	DisplayRelationalGraphs();
 	AnalyzeViewMoreButtons();
-	AttachFormCreationEvents();
 	$(".analyze-card-list-item").on('click', function(){ 
 		var game = $(this).attr("data-gbid");
 		ShowGame($(this).attr("data-gbid"), $("#discover"));
@@ -398,12 +397,7 @@ function AnalyzeViewMoreButtons(){
 }
 
 function AttachFormCreationEvents(){
-	$(".daily-add-another").on("click", function(){
-		var count = $(this).parent().attr("data-count");
-		count++;
-		$(this).parent().attr("data-count", count);
-        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div></div>");
-	});
+	AttachQuickAddFormCreationEvents();
 	$(".submit-daily").on("click", function(){
 		var question = $("#daily-question").val();
 		var type = $("input[type=radio][name=typeofresponse]:checked").attr("data-type");
@@ -440,9 +434,32 @@ function AttachFormCreationEvents(){
 		});
 	});
 	$(".cancel-daily").on("click", function(){
-		
+		$("#BattleProgess").closeModal();
+  		HideFocus();
 	});
 	
+}
+
+function AttachQuickAddFormCreationEvents(){
+	$(".daily-add-another, .daily-response-items").unbind();
+	$(".daily-add-another").on("click", function(){
+		var count = $(this).parent().attr("data-count");
+		count++;
+		$(this).parent().attr("data-count", count);
+        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div></div>");
+		$("#dailyresponse"+count).focus();
+		AttachQuickAddFormCreationEvents();
+	});
+	$(".daily-response-items").on('keydown keypress', function(e){
+		if(e.keyCode == 9)
+		{
+			var count = $(".daily-add-another").parent().attr("data-count");
+			count++;
+			$(".daily-add-another").parent().attr("data-count", count);
+	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div></div>");
+			AttachQuickAddFormCreationEvents();
+		}
+	});
 }
 
 
@@ -527,6 +544,9 @@ function AttachFloatingIconButtonEvents(){
 	$(".game-add-image-btn").on('click', function(){
 		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
+	});
+	$(".game-create-reflection-point").on('click', function(){
+		DisplayReflectionPopUp($(this).attr("data-gameid"));
 	});
 	$(".game-share-btn").on("click", function(){
 		var gameid = $("#gameContentContainer").attr("data-id");
@@ -882,6 +902,26 @@ function AttachEditEvents(){
 	});
 	$(".myxp-edit-tier-quote").on('click', function(){
 		UpdateTierQuoteEvent();	
+	});
+}
+
+
+function DisplayReflectionPopUp(gameid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayDailyCreationForm", gameid: gameid },
+     type: 'post',
+     success: function(output) {
+ 		ShowBattleProgress(output); 
+ 		AttachFormCreationEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
 	});
 }
 

@@ -1,11 +1,11 @@
 <?php 
 function DailyForm($game, $user){
 	?>
-	<div class="row">
+	<div class="row" style='overflow:auto;height:100%;'>
 		<div class="col s12">
 			<div class='analyze-card-header'>
-				<div class='analyze-card-title'>Submit your own Daily!</div>
-				<div class='analyze-card-sub-title'>Have a great idea for a fun or insightful daily? Submit one and we will take a look</div>
+				<div class='analyze-card-title'>Submit your own Reflection Point!</div>
+				<div class='analyze-card-sub-title'>Have a great idea for a fun or insightful reflection point? Submit one and we will take a look</div>
 			</div>
 		</div>
 		<div class="row" style='margin-bottom: 0;'>
@@ -59,7 +59,7 @@ function DailyForm($game, $user){
 		</div>
 		<div class="row">
 			<div class="col s10 offset-s1" style='margin-top: 75px;'>
-				<div class='btn submit-daily'>Submit Daily For Review</div>
+				<div class='btn submit-daily'>Submit for review</div>
 				<div class='btn cancel-daily' style='background-color:#F44336'>Cancel</div>
 			</div>
 		</div>
