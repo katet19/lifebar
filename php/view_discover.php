@@ -18,15 +18,37 @@ function DisplayDynamicDiscover(){
 		<?php 
 			foreach($discoverItems as $item){
 				if($item["DTYPE"] == "GAMELIST")
-					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR']);
+					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC']);
 				else if($item["DTYPE"] == "USERLIST")
-					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $connections);
+					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC'], $connections);
 				else if($item['DTYPE'] == 'DAILY')
 					DisplayDailyHeader($zdepth, $item);
+				else if($item['DTYPE'] == 'WATCHLIST')
+					DisplayHorizontalWatchList($zdepth, $item);
+					
 				$zdepth--;
 			}
 		?>
 	</div>	
+<?php
+}
+
+function DisplayHorizontalWatchList($zdepth, $item){ 
+	$videos = $item['VIDEOS']; ?>
+	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader">
+      		<i class="mdi-notification-event-note categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
+      		<div class="discoverCatName">
+	      		<?php echo $item['CATEGORY']; ?>
+  			</div>
+      	</div>
+		<?php $i = 0; 
+			foreach($videos as $video){
+			$videoxp = GetVideoXPForGame($video[0], $video[1]);
+			DisplayGameVideoCard($videoxp, $i);
+			$i++;
+		} ?>
+	</div>
 <?php
 }
 
@@ -69,11 +91,16 @@ function DisplayDailyHeader($zdepth, $item){
 	<?php
 }
 
-function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color){ ?>
+function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $subcategorymsg){ ?>
 	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
 	      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
 	      		<i class="mdi-notification-event-note categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
-	      		<?php echo $category; ?>
+	      		<div class="discoverCatName">
+		      		<?php echo $category; ?>
+		      		<div class="discoverCatSubName">
+	      				<?php echo $subcategorymsg; ?>
+	      			</div>
+      			</div>
 	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
 	      	</div>
 	      	<?php $count = 1;
@@ -85,11 +112,16 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color){ ?
 	<?php
 }
 
-function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $connections){ ?>
+function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $subcategorymsg, $connections){ ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
     		<i class="mdi-social-whatshot categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
-      		<?php echo $category; ?>
+      		<div class="discoverCatName">
+	      		<?php echo $category; ?>
+	      		<div class="discoverCatSubName">
+      				<?php echo $subcategorymsg; ?>
+      			</div>
+  			</div>
       		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
       	</div>
       	<?php 

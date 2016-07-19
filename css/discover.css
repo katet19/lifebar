@@ -105,16 +105,20 @@
 	right:0%;
 }
 
+.daily-response-label:before{
+	border: 2px solid #fff !important;
+}
 .daily-item-row{
     text-align: left;
     display: block;
     width: 100%;
+    line-height:35px;
 }
 
 .daily-response-label{
 	color:white !important;
 	font-weight:400;
-	font-size:1.25em !important;
+	font-size:1.5em !important;
 }
 
 .card-agree-quote{

@@ -28,7 +28,6 @@ function BuildDiscoverFlow($userid){
 	
 	//Get Collections that have games they liked
 	
-	
 	//Determine the order & content
 	
 	//Recent Releases (ALWAYS SHOWS UP)
@@ -42,13 +41,24 @@ function BuildDiscoverFlow($userid){
 		$dItems[] = $dAtts;
 		
 	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
-	$activePersonalities = GetActivePersonalitiesCategory(); 
+	
+	//Get Suggester Personalities 
+	$suggestedPersonalities = GetSuggestedPersonalities(); 
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'USERLIST';
-		$dAtts['CATEGORY'] = "Active Personalities";
-		$dAtts['USERS'] = $activePersonalities;
+		$dAtts['CATEGORY'] = "Suggested Personalities";
+		$dAtts['CATEGORYDESC'] = "Follow the gaming industries brightest critics & influencers";
+		$dAtts['USERS'] = $suggestedPersonalities;
 		$dAtts['TYPE'] = "categoryResults";
 		$dAtts['COLOR'] = "rgb(255, 126, 0)";
+		$dItems[] = $dAtts;
+		
+	//Get Watched
+	$suggestedWatch = GetSuggestedWatch($mysqli);
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'WATCHLIST';
+		$dAtts['CATEGORY'] = 'You should be watching';
+		$dAtts['VIDEOS'] = $suggestedWatch;
 		$dItems[] = $dAtts;
 	
 	
@@ -87,6 +97,38 @@ function GetDaily($mysqli){
 		$daily['Items'] = $items;
 	}
 	return $daily;
+}
+
+function GetSuggestedPersonalities(){
+	$users = array();
+	$count = array();
+	$mysqli = Connect();
+	$date = date('Y-m-d', strtotime("now -30 days") );
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 10";
+	//echo $query;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				$users[] = GetUser($row["UserID"], $mysqli);
+		}
+	}
+	Close($mysqli, $result);
+	return $users;
+}
+
+function GetSuggestedWatch(){
+	$videos = array();
+	$mysqli = Connect();
+	$query = "select * from `Events` event WHERE `URL` != '' GROUP BY `URL` ORDER BY `ID` DESC LIMIT 0,4";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				unset($video);
+				$video[] = $row['URL'];
+				$video[] = $row['GameID'];
+				$videos[] = $video;
+		}
+	}
+	Close($mysqli, $result);
+	return $videos;
 }
 
 ?>
