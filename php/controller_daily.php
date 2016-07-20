@@ -18,3 +18,14 @@ function SubmitDailyForm($userid, $question, $formtype, $approved, $objectid, $o
 	}
 	Close($mysqli, $result);
 }
+
+function GetReflectionPointsForGame($gameid){
+	$mysqli = Connect();
+	$refpts = array();	if ($result = $mysqli->query("select * from `Forms` where `ObjectID` = '".$gameid."' and `ObjectType` = 'Game'")) {
+		while($row = mysqli_fetch_array($result)){
+			$refpts[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $refpts;
+}

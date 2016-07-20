@@ -468,6 +468,17 @@ function DisplayGameInfo($game){	?>
 			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
 		</div>
 	</div>
+	
+	<div class="row">
+		<?php $refpts = GetReflectionPointsForGame($game->_id);
+			foreach($refpts as $pt){ ?>
+				<div class="col s12" style='text-align:left;margin-bottom:5px;'>
+					<?php echo $pt['Header']; ?>
+				</div>
+				<?php
+			}
+		?>
+	</div>
 </div>
 	
 	<div id="infoModal" class="modal dynamicModal" style="background-color:white;">

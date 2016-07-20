@@ -367,6 +367,7 @@ function AttachDiscoverHomeEvents(){
 	$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
  	$(".suggested-game-link").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
 	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
+	$("select").material_select();
  	$(".daily-reply-button").on("click", function(){
  		DisplayQuestionsForDaily();	
  	});

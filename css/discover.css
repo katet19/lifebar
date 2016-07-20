@@ -76,11 +76,11 @@
 }
 
 .daily-reply-button{
-    background-color: #2196F3 !important;
-    padding: 2px 10px;
+	background-color: #2196F3 !important;
+    padding: 8px 10px;
     border-radius: 5px;
+    font-size: 0.7em;
     cursor: pointer;
-    vertical-align:middle;
 }
 
 .daily-answers-container{
@@ -105,9 +105,10 @@
 	right:0%;
 }
 
-.daily-response-label:before{
+.daily-response-label-radio:before{
 	border: 2px solid #fff !important;
 }
+
 .daily-item-row{
     text-align: left;
     display: block;
@@ -115,7 +116,16 @@
     line-height:35px;
 }
 
-.daily-response-label{
+.daily-item-row .select-wrapper .select-dropdown{
+	color: white;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 4rem;
+    height: 4rem;
+    border-bottom:3px solid white;
+}
+
+.daily-response-label, .daily-response-label-radio{
 	color:white !important;
 	font-weight:400;
 	font-size:1.5em !important;
