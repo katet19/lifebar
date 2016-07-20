@@ -628,8 +628,19 @@ function ResizeDiscoverEvents(){
 }
 
 function DisplayQuestionsForDaily(){
-	$(".daily-answers-container").addClass("daily-answers-container-active");
+	$(".daily-answers-container").css({"left":"0"});
 	$(".daily-header-question").css({"opacity":"0"});
 	$(".daily-header-game-title").css({"opacity":"0"});
+	
+	$(".submit-daily-response").on('click', function(){
+		$(".daily-answers-container").css({"left":"100%"});
+		$(".daily-header-question").css({"opacity":"1"});
+		$(".daily-header-game-title").css({"opacity":"1"});
+	});
+	$(".cancel-daily-response").on('click', function(){
+		$(".daily-answers-container").css({"left":"100%"});
+		$(".daily-header-question").css({"opacity":"1"});
+		$(".daily-header-game-title").css({"opacity":"1"});
+	});
 }
  

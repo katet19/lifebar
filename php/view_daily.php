@@ -13,6 +13,10 @@ function DailyForm($game, $user){
 				<textarea id="daily-question" class="materialize-textarea" style='font-size: 1.25em;' maxlength="250"></textarea>
 				<label for="daily-question" style='font-weight: 500;'>Question</label>
 			</div>
+			<div class="input-field col s10 offset-s1">
+				<textarea id="daily-subquestion" class="materialize-textarea" maxlength="250"></textarea>
+				<label for="daily-subquestion" style='font-weight: 500;'>Sub-description (add any extra bits of info)</label>
+			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s10 offset-s1">
@@ -26,8 +30,16 @@ function DailyForm($game, $user){
 			    <label for="typeofresponsedropdown">Single-pick (dropdown)</label>
 		  	  </div>
 			  <div class="myxp-form-select-item"style="display:inline-block;float: left;">
+		  	    <input name="typeofresponse" class="with-gap" type="radio" id="typeofresponsesinglegrid" data-type='grid-single' />
+			    <label for="typeofresponsesinglegrid">Single-pick (image grid)</label>
+		  	  </div>
+			  <div class="myxp-form-select-item"style="display:inline-block;float: left;">
 		  	    <input name="typeofresponse" class="with-gap" type="radio" id="typeofresponsecheckbox" data-type='checkbox' />
 			    <label for="typeofresponsecheckbox">Multi-pick (checkbox)</label>
+		  	  </div>
+			  <div class="myxp-form-select-item"style="display:inline-block;float: left;">
+		  	    <input name="typeofresponse" class="with-gap" type="radio" id="typeofresponsemultigrid" data-type='grid-multi' />
+			    <label for="typeofresponsemultigrid">Multi-pick (image grid)</label>
 		  	  </div>
 			</div>
 		</div>
@@ -40,6 +52,10 @@ function DailyForm($game, $user){
 					<div class="input-field">
 				        <input id="daily-response" class='daily-response-items' type="text" value="" >
 			        	<label for="daily-response">Response #1</label>
+		        	</div>
+					<div class="input-field" style='display:hidden'>
+				        <input id="daily-response-url" class='daily-response-items-url' type="text" value="" >
+			        	<label for="daily-response-url">Response #1 Image URL</label>
 		        	</div>
 	        	</div>
 	    		<div class='btn daily-add-another' style='float:left;padding: 0 1rem;font-size: 0.8em;height: 28px;line-height: 28px;'>Add another Response</div>

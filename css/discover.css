@@ -15,6 +15,7 @@
     width: 100%;
     height: 500px;
     position:relative;
+    overflow:hidden;
 }
 
 .daily-header-banner{
@@ -49,7 +50,14 @@
     line-height: 45px;
     margin-left: 0;
     text-align: left;
-    margin-bottom:25px;
+}
+
+.daily-header-subquestion-hidden{
+	font-size: 1.25em;
+    color: white;
+    margin-left: 0;
+    text-align: left;
+    margin-bottom: 25px;
 }
 
 .daily-header-game-title{
@@ -84,25 +92,19 @@
 }
 
 .daily-answers-container{
-	display:none;
 	position:absolute;
 	width:100%;
-	right:100%;
+	left:100%;
 	top:0;
     height:100%;
 	background-color:rgba(0,0,0,0.4);
 	color:white;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
     overflow-y:auto;
-}
-
-.daily-answers-container-active{
-	display:inline-block;
-	right:0%;
 }
 
 .daily-response-label-radio:before{

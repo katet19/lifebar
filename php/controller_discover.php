@@ -19,6 +19,7 @@ function BuildDiscoverFlow($userid){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'DAILY';
 		$dAtts['QUESTION'] = $daily['Header'];
+		$dAtts['SUBQUESTION'] = $daily['SubHeader'];
 		$dAtts['ID'] = $daily['ID'];
 		$dAtts['OBJECTID'] = $daily['ObjectID'];
 		$dAtts['OBJECTTYPE'] = $daily['OBJECTTYPE'];

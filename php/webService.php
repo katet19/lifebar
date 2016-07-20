@@ -27,7 +27,7 @@
 			DailyForm(GetGame($_POST['gameid']), $_SESSION['logged-in']);
 		}
 		if($_POST['action'] == 'SubmitDailyForm'){
-			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], 'Daily', 'Yes', $_POST['gameid'], 'Game', $_POST['defaultResponse'], $_POST['responses'], $_POST['type'], $_POST['finished']);
+			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], $_POST['subquestion'], 'Daily', 'Yes', $_POST['gameid'], 'Game', $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
 		}
 	}
 	

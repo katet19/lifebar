@@ -397,11 +397,21 @@ function AnalyzeViewMoreButtons(){
 }
 
 function AttachFormCreationEvents(){
+	$(".daily-response-items-url").parent().hide();
 	AttachQuickAddFormCreationEvents();
+	$("input[type=radio][name=typeofresponse]").on('change', function(){
+		if($(this).attr("data-type") == "grid-single" || $(this).attr("data-type") == "grid-multi"){
+			$(".daily-response-items-url").parent().show();
+		}else{
+			$(".daily-response-items-url").parent().hide();
+		}	
+	});
 	$(".submit-daily").on("click", function(){
 		var question = $("#daily-question").val();
+		var subquestion = $("#daily-subquestion").val();
 		var type = $("input[type=radio][name=typeofresponse]:checked").attr("data-type");
 		var responses = '';
+		var responseurls = '';
 		var gameid = $("#gameContentContainer").attr("data-id");
 		var defaultResponse = "No";
 		var finished = "No";
@@ -416,11 +426,16 @@ function AttachFormCreationEvents(){
 		$(".daily-response-items").each(function(){
 			responses = responses + $(this).val()+"||";	
 		});
+		$(".daily-response-items-url").each(function(){
+			responseurls = responseurls + $(this).val()+"||";	
+		});
 		
 		$.ajax({ url: '../php/webService.php',
-		     data: {action: 'SubmitDailyForm', question: question, type: type, responses: responses, defaultResponse: defaultResponse, gameid: gameid, finished: finished },
+		     data: {action: 'SubmitDailyForm', question: question, subquestion: subquestion, type: type, responses: responses, responseurls: responseurls, defaultResponse: defaultResponse, gameid: gameid, finished: finished },
 		     type: 'post',
 		     success: function(output) {
+     			$("#BattleProgess").closeModal();
+  				HideFocus();
 		     	Toast("Daily Submitted!");
 		     },
 		        error: function(x, t, m) {
@@ -446,8 +461,13 @@ function AttachQuickAddFormCreationEvents(){
 		var count = $(this).parent().attr("data-count");
 		count++;
 		$(this).parent().attr("data-count", count);
-        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div></div>");
+        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
 		$("#dailyresponse"+count).focus();
+		if($("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-single" || $("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-multi"){
+			$(".daily-response-items-url").parent().show();
+		}else{
+			$(".daily-response-items-url").parent().hide();
+		}
 		AttachQuickAddFormCreationEvents();
 	});
 	$(".daily-response-items").on('keydown keypress', function(e){
@@ -456,7 +476,12 @@ function AttachQuickAddFormCreationEvents(){
 			var count = $(".daily-add-another").parent().attr("data-count");
 			count++;
 			$(".daily-add-another").parent().attr("data-count", count);
-	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div></div>");
+	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
+			if($("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-single" || $("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-multi"){
+				$(".daily-response-items-url").parent().show();
+			}else{
+				$(".daily-response-items-url").parent().hide();
+			}
 			AttachQuickAddFormCreationEvents();
 		}
 	});
