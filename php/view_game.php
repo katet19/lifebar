@@ -470,12 +470,15 @@ function DisplayGameInfo($game){	?>
 	</div>
 	
 	<div class="row">
-		<?php $refpts = GetReflectionPointsForGame($game->_id);
-			foreach($refpts as $pt){ ?>
-				<div class="col s12" style='text-align:left;margin-bottom:5px;'>
-					<?php echo $pt['Header']; ?>
-				</div>
-				<?php
+		<?php 
+			if($_SESSION['logged-in']->_security == 'Admin'){
+				$refpts = GetReflectionPointsForGame($game->_id);
+				foreach($refpts as $pt){ ?>
+					<div class="col s12" style='text-align:left;margin-bottom:5px;'>
+						<?php echo $pt['Header']; ?><span class='btn-flat edit-ref-pt' data-id='<?php echo $pt['ID']; ?>'>Edit</span>
+					</div>
+					<?php
+				}
 			}
 		?>
 	</div>

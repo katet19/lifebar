@@ -198,6 +198,10 @@ function AttachGameEvents(currentTab){
  	$(".myxp-profile-tier-quote").on('click', function(){
 		ShowUserProfile($(this).attr("data-userid"));
 	});
+	$(".edit-ref-pt").on("click", function(){
+		var refptID = $(this).attr("data-id");
+		EditReflectionPopUp(refptID);
+	});
  	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
@@ -415,6 +419,7 @@ function AttachFormCreationEvents(){
 				$(this).attr("data-meta", currentVal);
 				$(this).val(currentTxt);
 				$(this).next().addClass("active");
+				$(this).addClass("daily-repsonse-items-with-meta");
 				found = true;
 			}
 		});
@@ -429,6 +434,7 @@ function AttachFormCreationEvents(){
 				$(".daily-response-items-url").parent().hide();
 			}
 			$("#dailyresponse"+count+"").val(currentTxt);
+			$("#dailyresponse"+count+"").addClass("daily-repsonse-items-with-meta");
 			AttachQuickAddFormCreationEvents();
 		}
 	})
@@ -474,9 +480,71 @@ function AttachFormCreationEvents(){
 		    	timeout:45000
 		});
 	});
+	$(".update-daily").on("click", function(){
+		var question = $("#daily-question").val();
+		var subquestion = $("#daily-subquestion").val();
+		var type = $("input[type=radio][name=typeofresponse]:checked").attr("data-type");
+		var responses = '';
+		var responseurls = '';
+		var formid = $("#daily-question").attr("data-formid");
+		var defaultResponse = "No";
+		var finished = "No";
+		$("#daily-finished").each(function(){
+			if(this.checked	)
+				finished = "Yes";
+		});
+		$("#daily-default").each(function(){
+			if(this.checked	)
+				defaultResponse = "Yes";
+		});
+		$(".daily-response-items").each(function(){
+			responses = responses + $(this).val()+"^^^"+$(this).attr("data-meta")+"^^^"+$(this).attr("data-existID")+"@@@";	
+		});
+		$(".daily-response-items-url").each(function(){
+			responseurls = responseurls + $(this).val()+"||";	
+		});
+		
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: 'UpdateDailyForm', question: question, subquestion: subquestion, type: type, responses: responses, responseurls: responseurls, defaultResponse: defaultResponse, formid: formid, finished: finished },
+		     type: 'post',
+		     success: function(output) {
+     			$("#BattleProgess").closeModal();
+  				HideFocus();
+		     	Toast("Reflection Point Updated!");
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+		});
+	});
 	$(".cancel-daily").on("click", function(){
 		$("#BattleProgess").closeModal();
   		HideFocus();
+	});
+	$(".delete-daily").on("click", function(){
+		var formid = $("#daily-question").attr("data-formid");
+		$.ajax({ url: '../php/webService.php',
+		     data: {action: 'DeleteDaily', formid: formid },
+		     type: 'post',
+		     success: function(output) {
+				Toast("Delete Reflection Point");
+				$("#BattleProgess").closeModal();
+		  		HideFocus();
+		     },
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+		});
 	});
 	
 }
@@ -960,6 +1028,25 @@ function AttachEditEvents(){
 function DisplayReflectionPopUp(gameid){
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayDailyCreationForm", gameid: gameid },
+     type: 'post',
+     success: function(output) {
+ 		ShowBattleProgress(output); 
+ 		AttachFormCreationEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function EditReflectionPopUp(refptid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "EditDailyCreationForm", refptid: refptid },
      type: 'post',
      success: function(output) {
  		ShowBattleProgress(output); 

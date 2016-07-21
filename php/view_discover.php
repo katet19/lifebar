@@ -59,8 +59,16 @@ function DisplayDailyHeader($zdepth, $item){
 	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
 			<div class="daily-header-image" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
 				<div class="daily-header-banner">Daily Reflection Point</div>
-				<div class="daily-header-question"><?php echo $item['QUESTION']; ?> <i class="mdi-action-question-answer daily-reply-button z-depth-2"></i></div>
-				<div class="daily-header-game-title"><?php echo $game->_title; ?></div>
+				<div class="daily-header-question">
+					<?php echo $item['QUESTION']; ?> 
+					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
+				</div>
+				<div class="daily-header-game-title">
+					<?php echo $game->_title; ?>
+					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
+					<?php } ?>
+				</div>
 				<div class="daily-answers-container">
 					<div class="row" style='margin-top:150px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
@@ -68,7 +76,7 @@ function DisplayDailyHeader($zdepth, $item){
 							<?php if(sizeof($item['ITEMS']) >= 5){ $horizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>
-									<div class="daily-item-row input-field" <?php if($horizontal && $response['Type'] != 'dropdown' && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php }else if($horizontal && ($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi')){ ?>style='width:100px;display:inline-block;'<?php } ?>>
+									<div class="daily-item-row input-field <?php if($horizontal && ($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi')){ ?>daily-response-item-small<?php } ?>" <?php if($horizontal && $response['Type'] != 'dropdown' && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?>>
 										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 										<?php if($response['Type'] == 'radio'){ ?>
 											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
@@ -80,19 +88,19 @@ function DisplayDailyHeader($zdepth, $item){
 											<input type="checkbox" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'grid-single'){ ?>
-												<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $response['ID']; ?>">
+												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
 														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 														<i class="pref-checkmark fa fa-check"></i>
-														<div class="onboarding-pref-image-title">
+														<div class="onboarding-pref-image-title" style='line-height:20px;'>
 															<?php echo $response["Choice"]; ?>
 														</div>
 													</div>
 												</div>
 										<?php }else if($response['Type'] == 'grid-multi'){ ?>
-												<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $response['ID']; ?>">
+												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
 														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 														<i class="pref-checkmark fa fa-check"></i>
-														<div class="onboarding-pref-image-title">
+														<div class="onboarding-pref-image-title" style='line-height:20px;'>
 															<?php echo $response["Choice"]; ?>
 														</div>
 													</div>

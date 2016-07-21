@@ -24,10 +24,19 @@
 	
 	function FormServices(){
 		if($_POST['action'] == 'DisplayDailyCreationForm'){
-			DailyForm(GetGame($_POST['gameid']), $_SESSION['logged-in']);
+			DailyForm(GetGameByGBID($_POST['gameid']), $_SESSION['logged-in'], '');
+		}
+		if($_POST['action'] == 'EditDailyCreationForm'){
+			DailyForm('',$_SESSION['logged-in'], $_POST['refptid']);
 		}
 		if($_POST['action'] == 'SubmitDailyForm'){
 			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], $_POST['subquestion'], 'Daily', 'Yes', $_POST['gameid'], 'Game', $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
+		}
+		if($_POST['action'] == 'UpdateDailyForm'){
+			UpdateDailyForm($_POST['formid'], $_POST['question'], $_POST['subquestion'], $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
+		}
+		if($_POST['action'] == 'DeleteDaily'){
+			DeleteReflectionPoint($_POST['formid']);
 		}
 	}
 	

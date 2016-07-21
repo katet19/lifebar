@@ -145,6 +145,26 @@
 	font-size:1.5em !important;
 }
 
+.daily-repsonse-items-with-meta{
+	color:green;
+	font-weight:400;
+}
+
+.daily-response-item-small{
+	width:100px !important;
+	display:inline-block !important;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.daily-response-item-small:hover{
+	width:140px !important;
+}
+
 .card-agree-quote{
     color: white;
     font-size: 1.25em;

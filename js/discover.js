@@ -371,6 +371,10 @@ function AttachDiscoverHomeEvents(){
  	$(".daily-header-question").on("click", function(){
  		DisplayQuestionsForDaily();	
  	});
+ 	$(".edit-ref-pt").on("click", function(){
+		var refptID = $(this).attr("data-id");
+		EditReflectionPopUp(refptID);
+	});
 	//User
  	$(".user-discover-card").on("click", function(e){
  	 	e.stopPropagation();
