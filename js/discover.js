@@ -628,7 +628,6 @@ function ResizeDiscoverEvents(){
 }
 
 function DisplayQuestionsForDaily(){
-<<<<<<< HEAD
 	$(".daily-answers-container").css({"top":"0"});
 	$(".daily-header-question").css({"top":"75px"});
 	$(".daily-header-game-title").css({"top":"50px"});
@@ -642,21 +641,6 @@ function DisplayQuestionsForDaily(){
 		$(".daily-answers-container").css({"top":"100%"});
 		$(".daily-header-question").css({"top":"350px"});
 		$(".daily-header-game-title").css({"top":"325px"});
-=======
-	$(".daily-answers-container").css({"left":"0"});
-	$(".daily-header-question").css({"opacity":"0"});
-	$(".daily-header-game-title").css({"opacity":"0"});
-	
-	$(".submit-daily-response").on('click', function(){
-		$(".daily-answers-container").css({"left":"100%"});
-		$(".daily-header-question").css({"opacity":"1"});
-		$(".daily-header-game-title").css({"opacity":"1"});
-	});
-	$(".cancel-daily-response").on('click', function(){
-		$(".daily-answers-container").css({"left":"100%"});
-		$(".daily-header-question").css({"opacity":"1"});
-		$(".daily-header-game-title").css({"opacity":"1"});
->>>>>>> origin/Ken
 	});
 }
  

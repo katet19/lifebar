@@ -8,12 +8,19 @@ function SubmitDailyForm($userid, $question, $subquestion, $formtype, $approved,
 			$formID = $row['ID'];
 		}
 	}
-	$itemarray = explode("||",$items);
+	$itemarray = explode("@@@",$items);
 	$itemurlarray = explode("||",$itemurls);
 	$i=0;
 	foreach($itemarray as $item){
-		if($item != ''){
-			$mysqli->query("insert into `FormItems` (`Choice`,`FormID`,`Type`,`IsDefault`,`URL`) values ('".mysqli_real_escape_string($mysqli, $item)."','$formID','$itemtype','$default','".mysqli_real_escape_string($mysqli, $itemurlarray[$i])."')");
+		$subitems = explode("^^^",$item);
+		if($subitems[1] != ''){
+			$submeta = explode("||", $subitems[1]);
+		}else{
+			$submeta[] = '0';
+			$submeta[] = '';
+		}
+		if($subitems[0] != ''){
+			$mysqli->query("insert into `FormItems` (`Choice`,`FormID`,`Type`,`IsDefault`,`URL`,`ObjID`,`ObjType`) values ('".mysqli_real_escape_string($mysqli, $subitems[0])."','$formID','$itemtype','$default','".mysqli_real_escape_string($mysqli, $itemurlarray[$i])."','".$submeta[1]."','".$submeta[0]."')");
 			if($default != "No")
 				$default = "No";
 		}

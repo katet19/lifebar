@@ -43,6 +43,23 @@ function DailyForm($game, $user){
 		  	  </div>
 			</div>
 		</div>
+		<div class="row" style='margin-top: 60px;'>
+			<div class="input-field col s8 offset-s1">
+				<select id='gbmetadata' class="browser-default">
+					<?php
+					$gamemeta = GetRelatedDataForGame($game->_id);
+					foreach($gamemeta as $meta){
+						?>
+						<option value='<?php echo $meta[1]; ?>'><?php echo $meta[0]; ?></option>
+						<?php
+					}
+					?>
+				</select>
+			</div>
+			<div class="col s2">
+				<div class="btn set-current-to-response" style='padding: 0 1rem;font-size: 0.8em;height: 28px;line-height: 28px;'>Add Response</div>
+			</div>
+		</div>
 		<div class="row" style='margin-top: 50px;'>
 			<div class="input-field col s10 offset-s1">
 				<label class="daily-type" style='position: relative;float: left;left: 0;color: #9e9e9e;top: 0.8rem;font-weight: 500;font-size: 1rem;width: 100%;cursor: text;text-align: left;margin-bottom: 30px;'>Responses</label>
@@ -50,7 +67,7 @@ function DailyForm($game, $user){
 			<div class="col s10 offset-s1" data-count="1">
 				<div class="row">
 					<div class="input-field">
-				        <input id="daily-response" class='daily-response-items' type="text" value="" >
+				        <input id="daily-response" class='daily-response-items' type="text" value="" data-meta='' >
 			        	<label for="daily-response">Response #1</label>
 		        	</div>
 					<div class="input-field" style='display:hidden'>

@@ -406,6 +406,32 @@ function AttachFormCreationEvents(){
 			$(".daily-response-items-url").parent().hide();
 		}	
 	});
+	$(".set-current-to-response").on("click", function(){
+		var currentVal = $(this).parent().parent().find("#gbmetadata").val();
+		var currentTxt = $(this).parent().parent().find("#gbmetadata option:selected").text();
+		var found = false;
+		$(".daily-response-items").each(function(){
+			if($(this).val() == '' && found == false){
+				$(this).attr("data-meta", currentVal);
+				$(this).val(currentTxt);
+				$(this).next().addClass("active");
+				found = true;
+			}
+		});
+		if(found == false){
+			var count = $(".daily-add-another").parent().attr("data-count");
+			count++;
+			$(".daily-add-another").parent().attr("data-count", count);
+	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' data-meta='"+currentVal+"' ><label for='dailyresponse"+count+"' class='active'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
+			if($("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-single" || $("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-multi"){
+				$(".daily-response-items-url").parent().show();
+			}else{
+				$(".daily-response-items-url").parent().hide();
+			}
+			$("#dailyresponse"+count+"").val(currentTxt);
+			AttachQuickAddFormCreationEvents();
+		}
+	})
 	$(".submit-daily").on("click", function(){
 		var question = $("#daily-question").val();
 		var subquestion = $("#daily-subquestion").val();
@@ -424,7 +450,7 @@ function AttachFormCreationEvents(){
 				defaultResponse = "Yes";
 		});
 		$(".daily-response-items").each(function(){
-			responses = responses + $(this).val()+"||";	
+			responses = responses + $(this).val()+"^^^"+$(this).attr("data-meta")+"@@@";	
 		});
 		$(".daily-response-items-url").each(function(){
 			responseurls = responseurls + $(this).val()+"||";	
@@ -461,7 +487,7 @@ function AttachQuickAddFormCreationEvents(){
 		var count = $(this).parent().attr("data-count");
 		count++;
 		$(this).parent().attr("data-count", count);
-        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
+        $(this).before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' data-meta='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
 		$("#dailyresponse"+count).focus();
 		if($("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-single" || $("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-multi"){
 			$(".daily-response-items-url").parent().show();
@@ -476,7 +502,7 @@ function AttachQuickAddFormCreationEvents(){
 			var count = $(".daily-add-another").parent().attr("data-count");
 			count++;
 			$(".daily-add-another").parent().attr("data-count", count);
-	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
+	        $(".daily-add-another").before("<div class='row'><div class='input-field'><input id='dailyresponse"+count+"' class='daily-response-items' type='text' value='' data-meta='' ><label for='dailyresponse"+count+"'>Response #"+count+"</label></div><div class='input-field' style='display:hidden'><input id='daily-response-url"+count+"' class='daily-response-items-url' type='text' value='' ><label for='daily-response-url"+count+"'>Response #"+count+" Image URL</label></div></div>");
 			if($("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-single" || $("input[type=radio][name=typeofresponse]:checked").attr("data-type") == "grid-multi"){
 				$(".daily-response-items-url").parent().show();
 			}else{

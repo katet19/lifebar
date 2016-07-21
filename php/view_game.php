@@ -393,7 +393,7 @@ function ShowMyGameFAB($gameid, $myxp){
 	      	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
 	      	<li><span class="GameHiddenActionLabel">Request update from GB</span><a class="btn-floating  red accent-4 game-update-info-btn" data-gameid='<?php echo $myxp->_game->_gbid; ?>'><i class="mdi-action-cached"></i></a></li>
 	      	<li><span class="GameHiddenActionLabel">Upload hi-res jpg</span><a class="btn-floating light-green darken-3 game-add-image-btn" data-gameid='<?php echo $myxp->_game->_id; ?>' data-gameyear='<?php echo $myxp->_game->_year; ?>'><i class="mdi-file-cloud-upload"></i></a></li>
-	      	<li><span class="GameHiddenActionLabel">Create a Reflection Point</span><a class="btn-floating pink game-create-reflection-point" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-action-question-answer"></i></a></li>
+	      	<li><span class="GameHiddenActionLabel">Create a Reflection Point</span><a class="btn-floating pink game-create-reflection-point" data-gameid='<?php echo $myxp->_game->_gbid; ?>'><i class="mdi-action-question-answer"></i></a></li>
 	      	<?php } ?>
 	      	<li><span class="GameHiddenActionLabel">Add to Collection</span><a class="btn-floating orange darken-2 game-collection-btn" data-gameid='<?php echo $myxp->_game->_id; ?>'><i class="mdi-av-my-library-add"></i></a></li>
 	    	<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){ ?>

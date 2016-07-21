@@ -97,13 +97,8 @@
 .daily-answers-container{
 	position:absolute;
 	width:100%;
-<<<<<<< HEAD
 	left:0;
 	top:100%;
-=======
-	left:100%;
-	top:0;
->>>>>>> origin/Ken
     height:100%;
     z-index: 5;
 	background-color:rgba(0,0,0,0.4);
