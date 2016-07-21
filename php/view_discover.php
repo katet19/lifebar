@@ -62,8 +62,15 @@ function DisplayDailyHeader($zdepth, $item){
 				<div class="daily-header-question"><?php echo $item['QUESTION']; ?> <i class="mdi-action-question-answer daily-reply-button z-depth-2"></i></div>
 				<div class="daily-header-game-title"><?php echo $game->_title; ?></div>
 				<div class="daily-answers-container">
+<<<<<<< HEAD
 					<div class="row" style='margin-top:150px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
+=======
+					<div class="row">
+						<div class="col s10 offset-s1" style='text-align:left;'>
+							<div class="daily-header-game-title-hidden"><?php echo $game->_title; ?></div>
+							<div class="daily-header-question-hidden"><?php echo $item['QUESTION']; ?></div>
+>>>>>>> origin/Ken
 							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
 							<?php if(sizeof($item['ITEMS']) >= 5){ $horizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
