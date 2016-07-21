@@ -62,23 +62,41 @@ function DisplayDailyHeader($zdepth, $item){
 				<div class="daily-header-question"><?php echo $item['QUESTION']; ?> <i class="mdi-action-question-answer daily-reply-button z-depth-2"></i></div>
 				<div class="daily-header-game-title"><?php echo $game->_title; ?></div>
 				<div class="daily-answers-container">
-					<div class="row">
-						<div class="col s10 offset-s1">
-							<div class="daily-header-game-title-hidden"><?php echo $game->_title; ?></div>
-							<div class="daily-header-question-hidden"><?php echo $item['QUESTION']; ?></div>
+					<div class="row" style='margin-top:150px;'>
+						<div class="col s10 offset-s1" style='text-align:left;'>
+							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
 							<?php if(sizeof($item['ITEMS']) >= 5){ $horizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>
-									<div class="daily-item-row input-field" <?php if($horizontal && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?>>
+									<div class="daily-item-row input-field" <?php if($horizontal && $response['Type'] != 'dropdown' && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php }else if($horizontal && ($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi')){ ?>style='width:100px;display:inline-block;'<?php } ?>>
 										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 										<?php if($response['Type'] == 'radio'){ ?>
 											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'dropdown'){ ?>
+											<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
 											<option value="<?php echo $response["Choice"]; ?>"><?php echo $response["Choice"]; ?></option>
 										<?php }else if($response['Type'] == 'checkbox'){ ?>
 											<input type="checkbox" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+										<?php }else if($response['Type'] == 'grid-single'){ ?>
+												<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $response['ID']; ?>">
+														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="pref-checkmark fa fa-check"></i>
+														<div class="onboarding-pref-image-title">
+															<?php echo $response["Choice"]; ?>
+														</div>
+													</div>
+												</div>
+										<?php }else if($response['Type'] == 'grid-multi'){ ?>
+												<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $response['ID']; ?>">
+														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="pref-checkmark fa fa-check"></i>
+														<div class="onboarding-pref-image-title">
+															<?php echo $response["Choice"]; ?>
+														</div>
+													</div>
+												</div>
 										<?php } ?>
 									</div>
 									<?php
@@ -87,6 +105,10 @@ function DisplayDailyHeader($zdepth, $item){
 							?>
 							<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
 						</div>
+					<div class="col s10 offset-s1" style='margin-top: 60px;text-align:left;' >
+						<div class='btn submit-daily-response'>Save</div>
+						<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+					</div>
 					</div>
 				</div>
 			</div>

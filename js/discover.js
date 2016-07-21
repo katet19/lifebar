@@ -368,7 +368,7 @@ function AttachDiscoverHomeEvents(){
  	$(".suggested-game-link").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
 	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	$("select").material_select();
- 	$(".daily-reply-button").on("click", function(){
+ 	$(".daily-header-question").on("click", function(){
  		DisplayQuestionsForDaily();	
  	});
 	//User
@@ -628,8 +628,19 @@ function ResizeDiscoverEvents(){
 }
 
 function DisplayQuestionsForDaily(){
-	$(".daily-answers-container").addClass("daily-answers-container-active");
-	$(".daily-header-question").css({"opacity":"0"});
-	$(".daily-header-game-title").css({"opacity":"0"});
+	$(".daily-answers-container").css({"top":"0"});
+	$(".daily-header-question").css({"top":"75px"});
+	$(".daily-header-game-title").css({"top":"50px"});
+	
+	$(".submit-daily-response").on('click', function(){
+		$(".daily-answers-container").css({"top":"100%"});
+		$(".daily-header-question").css({"top":"350px"});
+		$(".daily-header-game-title").css({"top":"325px"});
+	});
+	$(".cancel-daily-response").on('click', function(){
+		$(".daily-answers-container").css({"top":"100%"});
+		$(".daily-header-question").css({"top":"350px"});
+		$(".daily-header-game-title").css({"top":"325px"});
+	});
 }
  
