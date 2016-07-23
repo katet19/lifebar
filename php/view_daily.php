@@ -14,7 +14,7 @@ function DailyForm($game, $user, $refptid){
 		</div>
 		<div class="row" style='margin-bottom: 0;'>
 			<div class="input-field col s10 offset-s1">
-				<textarea id="daily-question" class="materialize-textarea" style='font-size: 1.25em;' maxlength="250" data-formid='<?php echo $refpt['ID']; ?>'><?php echo $refpt['Header']; ?></textarea>
+				<textarea id="daily-question" class="materialize-textarea" style='font-size: 1.25em;' maxlength="250" data-gameid="<?php echo $game->_id; ?>" data-formid='<?php echo $refpt['ID']; ?>'><?php echo $refpt['Header']; ?></textarea>
 				<label for="daily-question" style='font-weight: 500;' <?php if($refpt['Header'] != ''){ echo "class='active'"; } ?>>Question</label>
 			</div>
 			<div class="input-field col s10 offset-s1">
@@ -116,6 +116,7 @@ function DailyForm($game, $user, $refptid){
 				<div class='btn <?php if($refpt != ''){ ?>update-daily<?php }else{ ?>submit-daily<?php } ?>'><?php if($refpt != ''){ ?>Update Reflection Point<?php }else{ ?>Submit for review<?php } ?></div>
 				<div class='btn cancel-daily' style='background-color:#F44336'>Cancel</div>
 				<?php if($refpt != ''){ ?>
+					<div class='btn save-as-daily'>Save as New Reflection Point</div>
 					<div class='btn-flat delete-daily' style='color:red;'>Delete</div>
 				<?php } ?>
 			</div>

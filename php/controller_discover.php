@@ -36,6 +36,7 @@ function BuildDiscoverFlow($userid){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'GAMELIST';
 		$dAtts['CATEGORY'] = "Recent Releases";
+		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
 		$dAtts['GAMES'] = $recentGames;
 		$dAtts['TYPE'] = "categoryResults";
 		$dAtts['COLOR'] = "#009688";
@@ -44,21 +45,22 @@ function BuildDiscoverFlow($userid){
 	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
 	
 	//Get Suggester Personalities 
-	$suggestedPersonalities = GetSuggestedPersonalities(); 
+	$suggestedPersonalities = GetSuggestedPersonalities($mysqli, $userid); 
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'USERLIST';
 		$dAtts['CATEGORY'] = "Suggested Personalities";
 		$dAtts['CATEGORYDESC'] = "Follow the gaming industries brightest critics & influencers";
 		$dAtts['USERS'] = $suggestedPersonalities;
-		$dAtts['TYPE'] = "categoryResults";
+		$dAtts['TYPE'] = "";
 		$dAtts['COLOR'] = "rgb(255, 126, 0)";
 		$dItems[] = $dAtts;
 		
 	//Get Watched
-	$suggestedWatch = GetSuggestedWatch($mysqli);
+	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'WATCHLIST';
-		$dAtts['CATEGORY'] = 'You should be watching';
+		$dAtts['CATEGORY'] = 'Playing Now';
+		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
 		$dAtts['VIDEOS'] = $suggestedWatch;
 		$dItems[] = $dAtts;
 	
@@ -100,26 +102,23 @@ function GetDaily($mysqli){
 	return $daily;
 }
 
-function GetSuggestedPersonalities(){
+function GetSuggestedPersonalities($mysqli, $userid){
 	$users = array();
 	$count = array();
-	$mysqli = Connect();
-	$date = date('Y-m-d', strtotime("now -30 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 10";
+	$date = date('Y-m-d', strtotime("now -90 days") );
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				$users[] = GetUser($row["UserID"], $mysqli);
 		}
 	}
-	Close($mysqli, $result);
 	return $users;
 }
 
-function GetSuggestedWatch(){
+function GetSuggestedWatch($mysqli, $userid){
 	$videos = array();
-	$mysqli = Connect();
-	$query = "select * from `Events` event WHERE `URL` != '' GROUP BY `URL` ORDER BY `ID` DESC LIMIT 0,4";
+	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,6";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				unset($video);
@@ -128,7 +127,6 @@ function GetSuggestedWatch(){
 				$videos[] = $video;
 		}
 	}
-	Close($mysqli, $result);
 	return $videos;
 }
 

@@ -97,6 +97,7 @@ function AttachActivityEvents(){
 	     type: 'post',
 	     success: function(output) {
  			$("#BattleProgess").html(output); 
+ 			$(".myxp-video-goto-full").hide();
  			AttachActivityVideoEvents();
 	     },
 	        error: function(x, t, m) {
@@ -135,7 +136,7 @@ function AttachActivityVideoEvents(){
 		ValidateVideoXPEntry($(this));
 	});
 	$(".myxp-video-goto-full").on("click", function(){
-		var element = $(this).parent().parent().parent().parent();
+		var element = $(this).parent().parent().parent();
 		var length = element.attr("data-length");
 		var source = element.attr("data-source");
 		var url = element.attr("data-url");
@@ -146,7 +147,7 @@ function AttachActivityVideoEvents(){
 	$(".myxp-post").on("click", function(){
 		if(!$(this).hasClass("disabled")){
 			var button = $(this);
-			var element = $(this).parent().parent().parent().parent();
+			var element = $(this).parent().parent().parent();
 			var length = element.attr("data-length");
 			var source = element.attr("data-source");
 			var url = element.attr("data-url");

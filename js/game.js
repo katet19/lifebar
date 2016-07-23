@@ -202,6 +202,11 @@ function AttachGameEvents(currentTab){
 		var refptID = $(this).attr("data-id");
 		EditReflectionPopUp(refptID);
 	});
+	
+	$(".preview-ref-pt").on("click", function(){
+		var refptID = $(this).attr("data-id");
+		PreviewReflectionPopUp(refptID);
+	});
  	
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
@@ -438,13 +443,13 @@ function AttachFormCreationEvents(){
 			AttachQuickAddFormCreationEvents();
 		}
 	})
-	$(".submit-daily").on("click", function(){
+	$(".submit-daily, .save-as-daily").on("click", function(){
 		var question = $("#daily-question").val();
 		var subquestion = $("#daily-subquestion").val();
 		var type = $("input[type=radio][name=typeofresponse]:checked").attr("data-type");
 		var responses = '';
 		var responseurls = '';
-		var gameid = $("#gameContentContainer").attr("data-id");
+		var gameid = $("#daily-question").attr("data-gameid");
 		var defaultResponse = "No";
 		var finished = "No";
 		$("#daily-finished").each(function(){
@@ -468,7 +473,7 @@ function AttachFormCreationEvents(){
 		     success: function(output) {
      			$("#BattleProgess").closeModal();
   				HideFocus();
-		     	Toast("Daily Submitted!");
+		     	Toast("Reflection Point Submitted!");
 		     },
 		        error: function(x, t, m) {
 			        if(t==="timeout") {
@@ -1051,6 +1056,28 @@ function EditReflectionPopUp(refptid){
      success: function(output) {
  		ShowBattleProgress(output); 
  		AttachFormCreationEvents();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function PreviewReflectionPopUp(refptid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "PreviewRefPt", refptid: refptid },
+     type: 'post',
+     success: function(output) {
+ 		ShowBattleProgress(output); 
+ 		$("select").material_select();
+	 	$(".daily-header-question").on("click", function(){
+	 		DisplayQuestionsForDaily();	
+	 	});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

@@ -29,6 +29,17 @@
 		if($_POST['action'] == 'EditDailyCreationForm'){
 			DailyForm('',$_SESSION['logged-in'], $_POST['refptid']);
 		}
+		if($_POST['action'] == 'PreviewRefPt'){
+			$item = GetReflectionPoint($_POST['refptid']);
+			$data['DTYPE'] = 'DAILY';
+			$data['QUESTION'] = $item['Header'];
+			$data['SUBQUESTION'] = $item['SubHeader'];
+			$data['ID'] = $item['ID'];
+			$data['OBJECTID'] = $item['ObjectID'];
+			$data['OBJECTTYPE'] = $item['OBJECTTYPE'];
+			$data['ITEMS'] = $item["Items"];
+			DisplayDailyHeader(0, $data);
+		}
 		if($_POST['action'] == 'SubmitDailyForm'){
 			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], $_POST['subquestion'], 'Daily', 'Yes', $_POST['gameid'], 'Game', $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
 		}
@@ -591,6 +602,9 @@
 		}
 		if($_POST['action'] == 'DisplayDiscoverCategory' && isset($_POST['category'])){
 			DisplayDiscoverCategory($_POST['category'], $_POST['catid']);
+		}
+		if($_POST['action'] == 'DisplayWatchedXPEntry'){
+			DisplayWatchedXPEntryAjax($_POST['url'], $_POST['gameid']);
 		}
 	}
 	function SignupServices(){

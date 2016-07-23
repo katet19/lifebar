@@ -371,6 +371,22 @@ function AttachDiscoverHomeEvents(){
  	$(".daily-header-question").on("click", function(){
  		DisplayQuestionsForDaily();	
  	});
+ 	$(".daily-watch-title").on("click", function(){
+ 		if(!$(this).hasClass("daily-watch-title-active")){
+ 			$(".daily-watch-title-active").find(".daily-watch-title-xp").hide();
+ 			$(".daily-watch-title-active").removeClass("daily-watch-title-active");
+ 			$(this).addClass("daily-watch-title-active");
+ 			$(this).find(".daily-watch-title-xp").show();
+ 			var selected = $(this).attr("data-gameid");
+ 			$(".daily-watch-video-box-active").removeClass("daily-watch-video-box-active");
+ 			$(".daily-watch-video-box").each(function(){
+ 				if($(this).attr("data-gameid") == selected){
+ 					$(this).addClass("daily-watch-video-box-active");
+ 				}	
+ 			});
+ 		}	
+ 	});
+ 	AttachWatchedDiscoverXP();
  	$(".edit-ref-pt").on("click", function(){
 		var refptID = $(this).attr("data-id");
 		EditReflectionPopUp(refptID);
@@ -435,6 +451,45 @@ function AttachDiscoverHomeEvents(){
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
 	});
+}
+
+function AttachWatchedDiscoverXP(){
+	$(".daily-watch-title-xp").unbind();
+	$(".daily-watch-title-xp").on("click", function(){
+ 		var xpElement = $(this);
+ 		$(".daily-watch-title").hide();
+ 		$(".daily-watch-title-active").show();
+ 		$(".daily-watch-xp-entry").show();
+ 		ShowLoader($(".daily-watch-xp-entry"), 'big', "<br><br><br>");
+ 		$.ajax({ url: '../php/webService.php',
+	         data: {action: "DisplayWatchedXPEntry", url: $(".daily-watch-title-active").attr("data-url"), gameid: $(".daily-watch-title-active").attr("data-gameid") },
+	         type: 'post',
+	         success: function(output) {
+	            $(".daily-watch-xp-entry").html(output);
+	            $(".myxp-video-goto-full").hide();
+	            AttachActivityVideoEvents();
+	            xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
+	            xpElement.css({"background-color":"#F44336"});
+	            $(".daily-watch-title-xp").unbind();
+	            $(".daily-watch-title-xp").on('click', function(){
+	            	$(".daily-watch-title").show();
+	            	$(".daily-watch-xp-entry").hide();
+	            	$(".daily-watch-xp-entry").html("");
+		            xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+	        		xpElement.css({"background-color":"#0e4c7b"});
+	            	AttachWatchedDiscoverXP();
+	            });
+	     	},
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+ 	});
 }
 
 function DisplayGraphs(){
@@ -635,16 +690,38 @@ function DisplayQuestionsForDaily(){
 	$(".daily-answers-container").css({"top":"0"});
 	$(".daily-header-question").css({"top":"75px"});
 	$(".daily-header-game-title").css({"top":"50px"});
+	$(".daily-header-image").addClass('daily-header-image-active');
+	var bg = $(".daily-header-image").attr("data-webkit");
+	$(".daily-header-image").css({"background": bg });
+	
+ 	$(".daily-pref-image").on("click", function(){
+ 		if($(this).hasClass("daily-pref-image-active")){
+ 			$(this).removeClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"0"});
+ 		}else{
+ 			if($(this).hasClass("singlegrid")){
+ 				var current = $(".daily-pref-image-active");
+ 				current.removeClass("daily-pref-image-active");
+ 				current.find(".daily-checkmark").css({"opacity":"0"});
+ 			}
+ 			$(this).addClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"1"});
+ 		}
+ 	});
 	
 	$(".submit-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
-		$(".daily-header-question").css({"top":"350px"});
-		$(".daily-header-game-title").css({"top":"325px"});
+		$(".daily-header-question").css({"top":"250px"});
+		$(".daily-header-game-title").css({"top":"225px"});
+		$(".daily-header-image").removeClass('daily-header-image-active');
+		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
 	});
 	$(".cancel-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
-		$(".daily-header-question").css({"top":"350px"});
-		$(".daily-header-game-title").css({"top":"325px"});
+		$(".daily-header-question").css({"top":"250px"});
+		$(".daily-header-game-title").css({"top":"225px"});
+		$(".daily-header-image").removeClass('daily-header-image-active');
+		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
 	});
 }
  

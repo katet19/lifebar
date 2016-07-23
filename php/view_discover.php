@@ -37,17 +37,42 @@ function DisplayHorizontalWatchList($zdepth, $item){
 	$videos = $item['VIDEOS']; ?>
 	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader">
-      		<i class="mdi-notification-event-note categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
       		<div class="discoverCatName">
 	      		<?php echo $item['CATEGORY']; ?>
+	      		<div class="discoverCatSubName">
+      				<?php echo $item['CATEGORYDESC']; ?>
+      			</div>
   			</div>
       	</div>
-		<?php $i = 0; 
+      	<div class="row">
+      		<div class="col s12 m6">
+				<?php $first = true;
+				foreach($videos as $video){
+					$game = GetGame($video[1]);
+					?>
+					<div class="daily-watch-title <?php if($first){ echo "daily-watch-title-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>' data-url="<?php echo $video[0]; ?>">
+						<?php echo $game->_title; ?>
+						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="mdi-action-visibility"></i></span>
+					</div>
+					<?php
+					if($first)
+						$first = false;
+				} ?>
+				<div class="daily-watch-xp-entry" style='margin-top: -16px;'>
+					
+				</div>
+			</div>
+			<?php $first = true;
 			foreach($videos as $video){
-			$videoxp = GetVideoXPForGame($video[0], $video[1]);
-			DisplayGameVideoCard($videoxp, $i);
-			$i++;
-		} ?>
+				$videoxp = GetVideoXPForGame($video[0], $video[1]);
+				?>
+				<div class="col s12 m6 daily-watch-video-box <?php if($first){ echo "daily-watch-video-box-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>'>
+					<?php DisplayEmbeddedVideo($videoxp); ?>
+				</div>
+			<?php if($first)
+					$first = false;
+				} ?>
+		</div>
 	</div>
 <?php
 }
@@ -57,7 +82,7 @@ function DisplayDailyHeader($zdepth, $item){
 	?>
 	<div class='row' style='z-index:<?php echo $zdepth--; ?>'>
 	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
-			<div class="daily-header-image" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
 				<div class="daily-header-banner">Daily Reflection Point</div>
 				<div class="daily-header-question">
 					<?php echo $item['QUESTION']; ?> 
@@ -70,13 +95,16 @@ function DisplayDailyHeader($zdepth, $item){
 					<?php } ?>
 				</div>
 				<div class="daily-answers-container">
-					<div class="row" style='margin-top:150px;'>
+					<div class="row" style='margin-top:175px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
 							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
-							<?php if(sizeof($item['ITEMS']) >= 5){ $horizontal = true; }else{ $horizontal = false; } $first = true;
+							<?php 
+								$imagehorizontal = false;
+								$horizontal = false;
+								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>
-									<div class="daily-item-row input-field <?php if($horizontal && ($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi')){ ?>daily-response-item-small<?php } ?>" <?php if($horizontal && $response['Type'] != 'dropdown' && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?>>
+									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?>>
 										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 										<?php if($response['Type'] == 'radio'){ ?>
 											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
@@ -89,18 +117,18 @@ function DisplayDailyHeader($zdepth, $item){
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'grid-single'){ ?>
 												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-														<i class="pref-checkmark fa fa-check"></i>
-														<div class="onboarding-pref-image-title" style='line-height:20px;'>
+													<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="daily-checkmark fa fa-check"></i>
+														<div class="daily-pref-image-title">
 															<?php echo $response["Choice"]; ?>
 														</div>
 													</div>
 												</div>
 										<?php }else if($response['Type'] == 'grid-multi'){ ?>
 												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-														<div class="onboarding-pref-image" style="background:url(<?php echo $response['URL']; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-														<i class="pref-checkmark fa fa-check"></i>
-														<div class="onboarding-pref-image-title" style='line-height:20px;'>
+													<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="daily-checkmark fa fa-check"></i>
+														<div class="daily-pref-image-title">
 															<?php echo $response["Choice"]; ?>
 														</div>
 													</div>
@@ -128,14 +156,16 @@ function DisplayDailyHeader($zdepth, $item){
 function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $subcategorymsg){ ?>
 	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
 	      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
-	      		<i class="mdi-notification-event-note categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
+	      		<i class="mdi-notification-event-note categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
 	      		<div class="discoverCatName">
 		      		<?php echo $category; ?>
 		      		<div class="discoverCatSubName">
 	      				<?php echo $subcategorymsg; ?>
 	      			</div>
+  	      			<?php if($type != ''){ ?>
+		      			<div class="ViewBtn"><a class="waves-effect waves-light btn-flat" style='padding: 0;font-weight:500;'>View more</a></div>
+		      		<?php } ?>
       			</div>
-	      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
 	      	</div>
 	      	<?php $count = 1;
 	  		foreach($games as $game){
@@ -149,14 +179,16 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $s
 function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $subcategorymsg, $connections){ ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
-    		<i class="mdi-social-whatshot categoryIcon" style="background-color: <?php echo $color; ?>;"></i>
+    		<i class="mdi-social-whatshot categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
       		<div class="discoverCatName">
 	      		<?php echo $category; ?>
 	      		<div class="discoverCatSubName">
       				<?php echo $subcategorymsg; ?>
       			</div>
+  	  			<?php if($type != ''){ ?>
+      				<div class="ViewBtn"><a class="waves-effect waves-light btn-flat" style='padding: 0;font-weight:500;'>View more</a></div>
+      			<?php } ?>
   			</div>
-      		<div class="ViewBtn"><a class="waves-effect waves-light btn" style='background-color:<?php echo $color; ?>;'>View</a></div>
       	</div>
       	<?php 
       	$count = 1;
