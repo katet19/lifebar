@@ -693,6 +693,7 @@ function DisplayQuestionsForDaily(){
 	$(".daily-header-image").addClass('daily-header-image-active');
 	var bg = $(".daily-header-image").attr("data-webkit");
 	$(".daily-header-image").css({"background": bg });
+	$(".daily-header-image").css({"background-size": "cover"});
 	
  	$(".daily-pref-image").on("click", function(){
  		if($(this).hasClass("daily-pref-image-active")){
@@ -715,6 +716,7 @@ function DisplayQuestionsForDaily(){
 		$(".daily-header-game-title").css({"top":"225px"});
 		$(".daily-header-image").removeClass('daily-header-image-active');
 		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
+		$(".daily-header-image").css({"background-size": "cover"});
 	});
 	$(".cancel-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
@@ -722,6 +724,7 @@ function DisplayQuestionsForDaily(){
 		$(".daily-header-game-title").css({"top":"225px"});
 		$(".daily-header-image").removeClass('daily-header-image-active');
 		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
+		$(".daily-header-image").css({"background-size": "cover"});
 	});
 }
  
