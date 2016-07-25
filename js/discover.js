@@ -386,6 +386,11 @@ function AttachDiscoverHomeEvents(){
  			});
  		}	
  	});
+ 	$(".follow-from-discover").on("click", function(){
+ 		var userid = $(this).attr("data-id");
+ 		var username = $(this).attr("data-name");
+ 		FollowUser(userid, $(this), username);
+ 	});
  	AttachWatchedDiscoverXP();
  	$(".edit-ref-pt").on("click", function(){
 		var refptID = $(this).attr("data-id");

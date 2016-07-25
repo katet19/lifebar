@@ -36,7 +36,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
         		<?php if($showbtn){ ?>
-        			<div class='btn follow-from-discover' style='padding: 0 1rem; position: absolute;top: 10px;left: 10px;'>Follow</div>
+        			<div class='btn follow-from-discover' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>" style='padding: 0 1rem; position: absolute;top: 10px;left: 10px;'>Follow</div>
         		<?php }else{ ?>
 	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
 	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>

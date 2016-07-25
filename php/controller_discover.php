@@ -11,10 +11,7 @@ function BuildDiscoverFlow($userid){
 	//Get Lifebar Backlog
 	
 
-	//Get Active personalities they aren't following
-	
-
-	//Get the Daily
+	//Get the Daily (always the header)
 	$daily = GetDaily($mysqli);
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'DAILY';
@@ -25,22 +22,36 @@ function BuildDiscoverFlow($userid){
 		$dAtts['OBJECTTYPE'] = $daily['OBJECTTYPE'];
 		$dAtts['ITEMS'] = $daily["Items"];
 		$dItems[] = $dAtts;
-	//Get a This or That
 	
-	//Get Collections that have games they liked
+	/*
+	* Determine the order & content
+	*/
 	
-	//Determine the order & content
-	
-	//Recent Releases (ALWAYS SHOWS UP)
-	$recentGames = RecentlyReleasedCategory(); 
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = "Recent Releases";
-		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
-		$dAtts['GAMES'] = $recentGames;
-		$dAtts['TYPE'] = "categoryResults";
-		$dAtts['COLOR'] = "#009688";
-		$dItems[] = $dAtts;
+	//Games pref list
+	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
+	$backlog = GetGamesFromBacklog($userid);
+	$backlogShow = false;
+	if(sizeof($backlog) > 5){
+			unset($dAtts);
+			$dAtts['DTYPE'] = 'GAMELIST';
+			$dAtts['CATEGORY'] = "Lifebar Backlog";
+			$dAtts['CATEGORYDESC'] = "Games similar to other games you have experienced";
+			$dAtts['GAMES'] = $backlog;
+			$dAtts['TYPE'] = "";
+			$dAtts['COLOR'] = "#009688";
+			$dItems[] = $dAtts;	
+			$backlogShow = true;
+	}else if(sizeof($prefList['Games']) > 0){
+			unset($dAtts);
+			$dAtts['DTYPE'] = 'GAMELIST';
+			$dAtts['CATEGORY'] = $prefList['Title'];
+			$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
+			$dAtts['GAMES'] = $prefList['Games'];
+			$dAtts['TYPE'] = "";
+			$dAtts['COLOR'] = "#009688";
+			$dItems[] = $dAtts;	
+	}
+
 		
 	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
 	
@@ -64,6 +75,17 @@ function BuildDiscoverFlow($userid){
 		$dAtts['VIDEOS'] = $suggestedWatch;
 		$dItems[] = $dAtts;
 		
+	//Recent Releases (ALWAYS SHOWS UP)
+	$recentGames = RecentlyReleasedCategory(); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recent Releases";
+		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
+		$dAtts['GAMES'] = $recentGames;
+		$dAtts['TYPE'] = "categoryResults";
+		$dAtts['COLOR'] = "#009688";
+		$dItems[] = $dAtts;
+		
 	//Get Suggested Users that have 1ups that arent' being followed
 	$suggestedMembers = GetSuggestedMembers($mysqli, $userid); 
 		unset($dAtts);
@@ -80,23 +102,59 @@ function BuildDiscoverFlow($userid){
 		$dAtts['DTYPE'] = 'INVITEFRIENDS';
 		$dItems[] = $dAtts;
 		
-	//Interested games list
-	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
-		if(sizeof($prefList['Games']) > 0){
-			unset($dAtts);
-			$dAtts['DTYPE'] = 'GAMELIST';
-			$dAtts['CATEGORY'] = $prefList['Title'];
-			$dAtts['CATEGORYDESC'] = "Suggested these games based on your gaming preferences";
-			$dAtts['GAMES'] = $prefList['Games'];
-			$dAtts['TYPE'] = "";
-			$dAtts['COLOR'] = "#009688";
-			$dItems[] = $dAtts;	
-		}
+	//Check if we can show gaming prefs
+	if($backlogShow && sizeof($prefList['Games']) > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = $prefList['Title'];
+		$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
+		$dAtts['GAMES'] = $prefList['Games'];
+		$dAtts['TYPE'] = "";
+		$dAtts['COLOR'] = "#009688";
+		$dItems[] = $dAtts;	
+	}
+	
+	
+	$notmutual = GetNotMutualFollower($mysqli, $userid);
+	if(sizeof($notmutual) > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'USERLIST';
+		$dAtts['CATEGORY'] = "Members that like your content";
+		$dAtts['CATEGORYDESC'] = "Follow back members that are following you";
+		$dAtts['USERS'] = $notmutual;
+		$dAtts['TYPE'] = "";
+		$dAtts['COLOR'] = "rgb(255, 126, 0)";
+		$dItems[] = $dAtts;
+	}
 	
 	
 	Close($mysqli, $result);
 	
 	return $dItems;
+}
+
+function GetNotMutualFollower($mysqli, $userid){
+	$query = "SELECT * FROM  `Connections` c where c.`Celebrity` = '".$userid."' and c.`Fan` not in (select `Celebrity` cc from `Connections` where cc.`Fan` = '".$userid."' ) limit 0,6";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$users[] = GetUser($row["Fan"], $mysqli);
+		}
+	}
+	return $users;
+}
+
+function GetGamesFromBacklog($userid){
+	$collection = GetCollectionByName('Lifebar Backlog',$userid);
+	$games = $collection->_games;
+	if(sizeof($games) > 0){
+		$count=0;
+		shuffle($games);
+		while($count < sizeof($games) && $count < 6){
+			$list[] = $games[$count];
+			$count++;
+		}
+	}
+	return $list;
 }
 
 function GetAGamingPreferenceList($mysqli, $userid, $prefs){
@@ -106,13 +164,16 @@ function GetAGamingPreferenceList($mysqli, $userid, $prefs){
 		$first = $prefs[$pointer];
 		if($first['Type'] == 'Franchises'){
 			$games = GetKnowledgeGamesForDiscover($first['ObjectID'], $userid);
-			$gprefs['Title'] = 'Suggested based on Franchise';
+			if(sizeof($games) > 0)
+				$gprefs['Title'] = 'Games from the '.$games[0]->_first." franchise";
 		}else if($first['Type'] == 'Platform'){
 			$games = GetPlatformGamesForDiscover($first['ObjectID'], $userid);
-			$gprefs['Title'] = 'Suggested based on Platform';
+			if(sizeof($games) > 0)
+				$gprefs['Title'] = 'Games released on the '.$games[0]->_first;
 		}else if($first['Type'] == 'Developers'){
 			$games = GetDeveloperGamesForDiscover($first['ObjectID'], $userid);
-			$gprefs['Title'] = 'Suggested based on Developer';
+			if(sizeof($games) > 0)
+				$gprefs['Title'] = 'Games developed by '.$games[0]->_first;
 		}
 		
 		$count = 0;

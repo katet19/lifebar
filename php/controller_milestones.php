@@ -330,30 +330,25 @@ function GetKnowledgeGames($knowledgeid, $userid){
 function GetKnowledgeGamesForDiscover($knowledgeid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = "select * from `Game_Franchises` f, `Games` g where f.`FranchiseID` = '".$knowledgeid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
+	$query = "select *, (select `Name` from `Link_Franchises` l where l.`GBID` = '".$knowledgeid."') as 'RealName' from `Game_Franchises` f, `Games` g where f.`FranchiseID` = '".$knowledgeid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
-			if($xp->_id == ""){
-				$user = GetUser($userid);
-				$experience = new Experience(-1,
-					$user->_first,
-					$user->_last,
-					$user->_username,
-					$userid,
-					$row["ID"],
-					GetGame($row["ID"], $mysqli),
-					0,
-					'',
-					'',
-					'',
-					$row["Owned"],
-					$row["BucketList"],
-					$row["AuthenticXP"]);
-					$myxp[] = $experience; 
-			}else{
-				$myxp[] = $xp;
-			}
+			$user = GetUser($userid);
+			$experience = new Experience(-1,
+				$row['RealName'],
+				$user->_last,
+				$user->_username,
+				$userid,
+				$row["ID"],
+				GetGame($row["ID"], $mysqli),
+				0,
+				'',
+				'',
+				'',
+				$row["Owned"],
+				$row["BucketList"],
+				$row["AuthenticXP"]);
+				$myxp[] = $experience; 
 		}
 	}
 	Close($mysqli, $result);
@@ -436,30 +431,25 @@ function GetPlatformGames($platformid, $userid){
 function GetPlatformGamesForDiscover($platformid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = $query = "select * from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 6";
+	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 6";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
-			if($xp->_id == ""){
-				$user = GetUser($userid);
-				$experience = new Experience(-1,
-					$user->_first,
-					$user->_last,
-					$user->_username,
-					$userid,
-					$row["ID"],
-					GetGame($row["ID"], $mysqli),
-					0,
-					'',
-					'',
-					'',
-					$row["Owned"],
-					$row["BucketList"],
-					$row["AuthenticXP"]);
-					$myxp[] = $experience; 
-			}else{
-				$myxp[] = $xp;
-			}
+			$user = GetUser($userid);
+			$experience = new Experience(-1,
+				$row['RealName'],
+				$user->_last,
+				$user->_username,
+				$userid,
+				$row["ID"],
+				GetGame($row["ID"], $mysqli),
+				0,
+				'',
+				'',
+				'',
+				$row["Owned"],
+				$row["BucketList"],
+				$row["AuthenticXP"]);
+				$myxp[] = $experience; 
 		}
 	}
 	Close($mysqli, $result);
@@ -539,14 +529,13 @@ function GetDeveloperMilestoneForUser($milestoneid, $userid){
 function GetDeveloperGamesForDiscover($devid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = "select * from `Game_Developers` f, `Games` g where f.`DeveloperID` = '".$devid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
+	$query = "select *, (select `Name` from `Link_Developers` l where l.`GBID` = '".$devid."') as 'RealName' from `Game_Developers` f, `Games` g where f.`DeveloperID` = '".$devid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
 			if($xp->_id == ""){
 				$user = GetUser($userid);
 				$experience = new Experience(-1,
-					$user->_first,
+					$row['RealName'],
 					$user->_last,
 					$user->_username,
 					$userid,
@@ -560,8 +549,6 @@ function GetDeveloperGamesForDiscover($devid, $userid){
 					$row["BucketList"],
 					$row["AuthenticXP"]);
 					$myxp[] = $experience; 
-			}else{
-				$myxp[] = $xp;
 			}
 		}
 	}
