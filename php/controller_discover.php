@@ -63,11 +63,51 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
 		$dAtts['VIDEOS'] = $suggestedWatch;
 		$dItems[] = $dAtts;
+		
+	//Get Suggested Users that have 1ups that arent' being followed
+	$suggestedMembers = GetSuggestedMembers($mysqli, $userid); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'MEMBERLIST';
+		$dAtts['CATEGORY'] = "Suggested Members";
+		$dAtts['CATEGORYDESC'] = "Follow members who are thoughtful & appreciated by others";
+		$dAtts['USERS'] = $suggestedMembers;
+		$dAtts['TYPE'] = "";
+		$dAtts['COLOR'] = "rgb(255, 126, 0)";
+		$dItems[] = $dAtts;
+		
+	//Ask if they want to invite friends		
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'INVITEFRIENDS';
+		$dItems[] = $dAtts;
+		
+	//Interested games list
+	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = $prefList[0]['Title'];
+		$dAtts['CATEGORYDESC'] = "Suggested these games based on your gaming preferences";
+		$dAtts['GAMES'] = $prefList;
+		$dAtts['TYPE'] = "";
+		$dAtts['COLOR'] = "#009688";
+		$dItems[] = $dAtts;	
 	
 	
 	Close($mysqli, $result);
 	
 	return $dItems;
+}
+
+function GetAGamingPreferenceList($mysqli, $userid, $prefs){
+	$pointers = array_rand($prefs, 2);
+	$first = $prefs[$pointers[0]];
+	if($first['Type'] == 'Franchises')
+		$gprefs[] = GetKnowledgeGames($first['ObjectID'], $userid);
+	else if($first['Type'] == 'Platform')
+		$gprefs[] = GetPlatformGames($first['ObjectID'], $userid);
+	else if($first['Type'] == 'Developers')
+		$gprefs[] = GetDeveloperGames($first['ObjectID'], $userid);
+	
+	return $gprefs;
 }
 
 function GetUserPrefs($userid, $mysqli){
@@ -114,6 +154,28 @@ function GetSuggestedPersonalities($mysqli, $userid){
 		}
 	}
 	return $users;
+}
+
+function GetSuggestedMembers($mysqli, $userid){
+	$users = array();
+	$tracker = array();
+	$count = array();
+	$mysqli = Connect();
+	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` != '".$userid."' and u.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
+
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				if(!in_array($row["UserQuoted"], $tracker)){
+					$users[] = GetUser($row["UserQuoted"],$mysqli);
+					$count[] = $row["TotalRows"];
+					$tracker[] = $row["UserQuoted"];
+				}
+		}
+	}
+	$total[] = $users;
+	$total[] = $count;
+	Close($mysqli, $result);
+	return $total;
 }
 
 function GetSuggestedWatch($mysqli, $userid){

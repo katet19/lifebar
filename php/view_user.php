@@ -27,7 +27,7 @@ function DisplayUserCard($user, $count, $classId, $myConnections){
   </div>
 <?php }
 
-function DisplayFollowUserCard($user, $checked, $showquote){ 
+function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){ 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 ?>
@@ -35,8 +35,12 @@ function DisplayFollowUserCard($user, $checked, $showquote){
       <div class="card user-follow-card" data-id="<?php echo $user->_id; ?>"  <?php if($showquote){ ?>style='height: 300px;'<?php } ?> >
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
-	        	<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
-	        	<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
+        		<?php if($showbtn){ ?>
+        			<div class='btn follow-from-discover' style='padding: 0 1rem; position: absolute;top: 10px;left: 10px;'>Follow</div>
+        		<?php }else{ ?>
+	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
+	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
+	        	<?php } ?>
         		<div style="width:90px;border-radius:50%;margin-left: auto;margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
         			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>

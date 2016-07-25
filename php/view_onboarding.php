@@ -92,7 +92,7 @@ function SocialDetails(){
 		</div>
 		<div class="col s12 m8 offset-m2">
 			<?php foreach($critics as $critic){
-				DisplayFollowUserCard($critic, true, false);	
+				DisplayFollowUserCard($critic, true, false, false);	
 			}?>
 		</div>
 	</div>
@@ -125,7 +125,7 @@ function SocialDetails(){
 			<?php 
 			$count = 0; $list = array();
 			while($count < 8){
-				DisplayFollowUserCard($users[0][$count], false, true);
+				DisplayFollowUserCard($users[0][$count], false, true, false);
 				$list[] = $users[0][$count]->_id;
 				$count++;
 			}?>
@@ -144,7 +144,7 @@ function ViewMoreMembers($exclude){
 		$users = GetUsersWithPopularQuotes($exclude);
 		$count = 0; $list = array();
 		while($count < 8){
-			DisplayFollowUserCard($users[0][$count], false, true);
+			DisplayFollowUserCard($users[0][$count], false, true, false);
 			$list[] = $users[0][$count]->_id;
 			$count++;
 		}?>
@@ -195,7 +195,7 @@ function ViewOnboardingUserSearch($searchstring){
 	$results = SearchForUser($searchstring);
 	if(sizeof($results) > 0){
 		foreach($results as $result){ 
-			DisplayFollowUserCard($result, false, false);
+			DisplayFollowUserCard($result, false, false, false);
 		}
 	}else{
 		echo "<div style='font-size:1.25em;'>0 results found</div>";
