@@ -234,7 +234,7 @@ function DisplayUserDetails(userid, username){
 			var gameid = $("#gameContentContainer").attr("data-id");
 			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 		});
-		var box = $("#game-userxp-tab").find(".myxp-details-container").last();
+		var box = $("#game-userxp-tab").find(".myxp-details-container").last().parent();
 		$(".myxp-vert-line-details").css({"bottom": (box.height() - 20)+"px"});
 	 	$(".myxp-profile-tier-quote").on('click', function(){
 			ShowUserProfile($(this).attr("data-userid"));
@@ -696,7 +696,7 @@ function AttachMyXPEvents(){
 	});
 	$(".userGameTab").on("click", function(){
 		setTimeout(function(){
-  			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+  			var box = $("#game-myxp-tab").find(".myxp-details-container").last().parent();
 			if(box.innerHeight() > 0)
 				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
 		}

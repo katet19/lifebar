@@ -98,7 +98,11 @@ function BuildDiscoverFlow($userid){
 }
 
 function GetAGamingPreferenceList($mysqli, $userid, $prefs){
-	$pointers = array_rand($prefs, 2);
+	if(sizeof($prefs) > 1)
+		$pointers = array_rand($prefs, 2);
+	else if(sizeof($prefs) > 0)
+		$pointers[] = array_rand($prefs);
+
 	$first = $prefs[$pointers[0]];
 	if($first['Type'] == 'Franchises')
 		$gprefs[] = GetKnowledgeGames($first['ObjectID'], $userid);
