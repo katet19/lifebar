@@ -82,14 +82,16 @@ function BuildDiscoverFlow($userid){
 		
 	//Interested games list
 	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = $prefList[0]['Title'];
-		$dAtts['CATEGORYDESC'] = "Suggested these games based on your gaming preferences";
-		$dAtts['GAMES'] = $prefList;
-		$dAtts['TYPE'] = "";
-		$dAtts['COLOR'] = "#009688";
-		$dItems[] = $dAtts;	
+		if(sizeof($prefList['Games']) > 0){
+			unset($dAtts);
+			$dAtts['DTYPE'] = 'GAMELIST';
+			$dAtts['CATEGORY'] = $prefList['Title'];
+			$dAtts['CATEGORYDESC'] = "Suggested these games based on your gaming preferences";
+			$dAtts['GAMES'] = $prefList['Games'];
+			$dAtts['TYPE'] = "";
+			$dAtts['COLOR'] = "#009688";
+			$dItems[] = $dAtts;	
+		}
 	
 	
 	Close($mysqli, $result);
@@ -98,18 +100,27 @@ function BuildDiscoverFlow($userid){
 }
 
 function GetAGamingPreferenceList($mysqli, $userid, $prefs){
-	if(sizeof($prefs) > 1)
-		$pointers = array_rand($prefs, 2);
-	else if(sizeof($prefs) > 0)
-		$pointers[] = array_rand($prefs);
+	if(sizeof($prefs) > 0){
+		$pointer = array_rand($prefs);
 
-	$first = $prefs[$pointers[0]];
-	if($first['Type'] == 'Franchises')
-		$gprefs[] = GetKnowledgeGames($first['ObjectID'], $userid);
-	else if($first['Type'] == 'Platform')
-		$gprefs[] = GetPlatformGames($first['ObjectID'], $userid);
-	else if($first['Type'] == 'Developers')
-		$gprefs[] = GetDeveloperGames($first['ObjectID'], $userid);
+		$first = $prefs[$pointer];
+		if($first['Type'] == 'Franchises'){
+			$games = GetKnowledgeGamesForDiscover($first['ObjectID'], $userid);
+			$gprefs['Title'] = 'Suggested based on Franchise';
+		}else if($first['Type'] == 'Platform'){
+			$games = GetPlatformGamesForDiscover($first['ObjectID'], $userid);
+			$gprefs['Title'] = 'Suggested based on Platform';
+		}else if($first['Type'] == 'Developers'){
+			$games = GetDeveloperGamesForDiscover($first['ObjectID'], $userid);
+			$gprefs['Title'] = 'Suggested based on Developer';
+		}
+		
+		$count = 0;
+		while($count < sizeof($games) && $count < 6){
+			$gprefs['Games'][] = $games[$count]->_game;
+			$count++;
+		}
+	}
 	
 	return $gprefs;
 }

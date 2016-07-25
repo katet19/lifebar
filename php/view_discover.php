@@ -42,9 +42,9 @@ function DisplayInviteFriends($userid){
 	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader">
       		<div class="discoverCatName">
-	      		Invite Friends & Family
+	      		Invite people you know
 	      		<div class="discoverCatSubName">
-      				Tell your friends, clan, everyone about Lifebar to really get your activity feed flowing
+      				Tell your friends & family about Lifebar to really get your activity feed flowing
       			</div>
   			</div>
       	</div>
@@ -68,7 +68,7 @@ function DisplayHorizontalUserWithDetailsList($zdepth, $item){
 				<div class="col s12">
 					<?php 
 					$count = 0;
-					while($count < 8){
+					while($count < 4){
 						if($item['USERS'][0][$count]->_id > 0)
 							DisplayFollowUserCard($item['USERS'][0][$count], false, true, true);
 						$count++;
