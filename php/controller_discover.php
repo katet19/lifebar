@@ -2,15 +2,7 @@
 
 function BuildDiscoverFlow($userid){
 	$mysqli = Connect();
-	//Get Preferences
-	$prefs = GetUserPrefs($userid, $mysqli);
-
-	//Get GNow Cards
 	
-
-	//Get Lifebar Backlog
-	
-
 	//Get the Daily (always the header)
 	$daily = GetDaily($mysqli);
 		unset($dAtts);
@@ -28,6 +20,7 @@ function BuildDiscoverFlow($userid){
 	*/
 	
 	//Games pref list
+	$prefs = GetUserPrefs($userid, $mysqli);
 	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
 	$backlog = GetGamesFromBacklog($userid);
 	$backlogShow = false;
@@ -37,8 +30,6 @@ function BuildDiscoverFlow($userid){
 			$dAtts['CATEGORY'] = "Lifebar Backlog";
 			$dAtts['CATEGORYDESC'] = "Games similar to other games you have experienced";
 			$dAtts['GAMES'] = $backlog;
-			$dAtts['TYPE'] = "";
-			$dAtts['COLOR'] = "#009688";
 			$dItems[] = $dAtts;	
 			$backlogShow = true;
 	}else if(sizeof($prefList['Games']) > 0){
@@ -47,13 +38,8 @@ function BuildDiscoverFlow($userid){
 			$dAtts['CATEGORY'] = $prefList['Title'];
 			$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
 			$dAtts['GAMES'] = $prefList['Games'];
-			$dAtts['TYPE'] = "";
-			$dAtts['COLOR'] = "#009688";
 			$dItems[] = $dAtts;	
 	}
-
-		
-	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
 	
 	//Get Suggester Personalities 
 	$suggestedPersonalities = GetSuggestedPersonalities($mysqli, $userid); 
@@ -62,8 +48,6 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORY'] = "Suggested Personalities";
 		$dAtts['CATEGORYDESC'] = "Follow the gaming industries brightest critics & influencers";
 		$dAtts['USERS'] = $suggestedPersonalities;
-		$dAtts['TYPE'] = "";
-		$dAtts['COLOR'] = "rgb(255, 126, 0)";
 		$dItems[] = $dAtts;
 		
 	//Get Watched
@@ -83,7 +67,6 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
 		$dAtts['GAMES'] = $recentGames;
 		$dAtts['TYPE'] = "categoryResults";
-		$dAtts['COLOR'] = "#009688";
 		$dItems[] = $dAtts;
 		
 	//Get Suggested Users that have 1ups that arent' being followed
@@ -93,8 +76,6 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORY'] = "Suggested Members";
 		$dAtts['CATEGORYDESC'] = "Follow members who are thoughtful & appreciated by others";
 		$dAtts['USERS'] = $suggestedMembers;
-		$dAtts['TYPE'] = "";
-		$dAtts['COLOR'] = "rgb(255, 126, 0)";
 		$dItems[] = $dAtts;
 		
 	//Ask if they want to invite friends		
@@ -109,32 +90,56 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORY'] = $prefList['Title'];
 		$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
 		$dAtts['GAMES'] = $prefList['Games'];
-		$dAtts['TYPE'] = "";
-		$dAtts['COLOR'] = "#009688";
 		$dItems[] = $dAtts;	
 	}
 	
-	
-	$notmutual = GetNotMutualFollower($mysqli, $userid);
+	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
+	$notmutual = GetNotMutualFollowers($mysqli, $userid);
 	if(sizeof($notmutual) > 0){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'USERLIST';
 		$dAtts['CATEGORY'] = "Members that like your content";
 		$dAtts['CATEGORYDESC'] = "Follow back members that are following you";
 		$dAtts['USERS'] = $notmutual;
-		$dAtts['TYPE'] = "";
-		$dAtts['COLOR'] = "rgb(255, 126, 0)";
 		$dItems[] = $dAtts;
 	}
 	
+	
+	$suggcoll = GetSuggestedCollection($mysqli, $userid);
+	if(sizeof($notmutual) > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'COLLECTION';
+		$dAtts['COLLECTION'] = $suggcoll;
+		$dItems[] = $dAtts;
+	}
+	
+	//Trending games
+	$trendingGames = GetTrendingGamesCategory();
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Trending on Lifebar";
+		$dAtts['CATEGORYDESC'] = "See what everyone else has been talking about";
+		$dAtts['GAMES'] = $trendingGames;
+		$dAtts['TYPE'] = "";
+		$dItems[] = $dAtts;
 	
 	Close($mysqli, $result);
 	
 	return $dItems;
 }
 
-function GetNotMutualFollower($mysqli, $userid){
-	$query = "SELECT * FROM  `Connections` c where c.`Celebrity` = '".$userid."' and c.`Fan` not in (select `Celebrity` cc from `Connections` where cc.`Fan` = '".$userid."' ) limit 0,6";
+function GetSuggestedCollection($mysqli, $userid){
+	$query = "SELECT `CollectionID` FROM  `Collections` c, `CollectionSubs` s where c.`Visibility` = 'Yes' and c.`OwnerID` != '".$userid."' and `CreatedBy` > 0 and c.`ID` = s.`CollectionID` and c.`ID` not in (select `CollectionID` from `CollectionSubs` where `UserID` = '".$userid."') group by s.`CollectionID` order by rand() limit 0, 1";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$collection = GetCollectionByID($row['CollectionID'], $mysqli);
+		}
+	}
+	return $collection;
+}
+
+function GetNotMutualFollowers($mysqli, $userid){
+	$query = "SELECT * FROM  `Connections` c where c.`Celebrity` = '".$userid."' and c.`Fan` not in (select `Celebrity` from `Connections` cc where cc.`Fan` = '".$userid."' ) limit 0,6";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["Fan"], $mysqli);
@@ -176,6 +181,7 @@ function GetAGamingPreferenceList($mysqli, $userid, $prefs){
 				$gprefs['Title'] = 'Games developed by '.$games[0]->_first;
 		}
 		
+		shuffle($games);
 		$count = 0;
 		while($count < sizeof($games) && $count < 6){
 			$gprefs['Games'][] = $games[$count]->_game;

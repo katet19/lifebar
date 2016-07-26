@@ -29,12 +29,50 @@ function DisplayDynamicDiscover(){
 					DisplayHorizontalUserWithDetailsList($zdepth, $item);
 				else if($item['DTYPE'] == 'INVITEFRIENDS')
 					DisplayInviteFriends($_SESSION['logged-in']->_id);
+				else if($item['DTYPE'] == 'COLLECTION')
+					DisplayCollectionHighlighted($_SESSION['logged-in']->_id, $item['COLLECTION']);
 					
 				$zdepth--;
 			}
 		?>
 	</div>	
 <?php
+}
+
+function DisplayCollectionHighlighted($userid, $collection){
+	if(sizeof($collection->_games) >= 3){
+		$coverimage = $collection->_games[0]->_imagesmall;
+		$two = $collection->_games[1];
+		$three = $collection->_games[2];
+	}else if(sizeof($collection->_games) >= 2){
+		$coverimage = $collection->_games[0]->_imagesmall;
+		$two = $collection->_games[1];
+	}else{
+		$coverimage = $collection->_games[0]->_imagesmall;
+	}
+	
+	if($collection->_coversmall != ''){
+		$coverimage = $collection->_coversmall;
+	}
+	?>
+	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader">
+      		<div class="discoverCatName">
+	      		<?php echo $collection->_name; ?>
+	      		<div class="discoverCatSubName">
+      				<?php echo $collection->_desc; ?>
+      			</div>
+  			</div>
+      	</div>
+  	</div>
+	<div class='row'>
+	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
+			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+			
+			</div>
+		</div>
+	</div>
+	<?php
 }
 
 function DisplayInviteFriends($userid){
@@ -202,9 +240,9 @@ function DisplayDailyHeader($zdepth, $item){
 
 function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $subcategorymsg){ ?>
 	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-	      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
+	      	<div class="discoverCategoryHeader">
 	      		<i class="mdi-notification-event-note categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
-	      		<div class="discoverCatName">
+	      		<div class="discoverCatName" data-category="<?php echo $category; ?>">
 		      		<?php echo $category; ?>
 		      		<div class="discoverCatSubName">
 	      				<?php echo $subcategorymsg; ?>
