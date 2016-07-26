@@ -40,19 +40,10 @@ function DisplayDynamicDiscover(){
 }
 
 function DisplayCollectionHighlighted($userid, $collection){
-	if(sizeof($collection->_games) >= 3){
-		$coverimage = $collection->_games[0]->_imagesmall;
-		$two = $collection->_games[1];
-		$three = $collection->_games[2];
-	}else if(sizeof($collection->_games) >= 2){
-		$coverimage = $collection->_games[0]->_imagesmall;
-		$two = $collection->_games[1];
-	}else{
-		$coverimage = $collection->_games[0]->_imagesmall;
-	}
-	
 	if($collection->_coversmall != ''){
 		$coverimage = $collection->_coversmall;
+	}else{
+		$coverimage = $collection->_games[0]->_imagesmall;
 	}
 	?>
 	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
@@ -67,8 +58,18 @@ function DisplayCollectionHighlighted($userid, $collection){
   	</div>
 	<div class='row'>
 	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
-			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
-			
+			<div class="discover-collection-header" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+			<div class="discover-collection-owner-container">
+				<div class="discover-collection-owner"></div>
+			</div>
+			<div class='discover-collection-game-list'>
+				<?php $count = 0; $games = $collection->_games; 
+				while(sizeof($games) > $count && $count < 12){ ?>
+					<a class="discover-collection-game-image z-depth-1" href="/#game/<?php echo $games[$count]->_id; ?>/<?php echo urlencode($games[$count]->_title); ?>/" data-id="<?php echo $games[$count]->_gbid; ?>" style="cursor: pointer;background: url(<?php echo $games[$count]->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();"></a>
+					<?php
+					$count++;
+				} ?>
+			</div>
 			</div>
 		</div>
 	</div>
