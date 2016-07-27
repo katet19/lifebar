@@ -391,9 +391,10 @@
 
 .discover-collection-game-list{
     position: absolute;
-    top: 0;
+    top: 100px;
     right: 0px;
-    width: 50%;
+    width: 60%;
+    height: 375px;
 }
 
 .discover-collection-header{
@@ -413,7 +414,26 @@
     display: inline-block;
     width: 300px;
     margin: 5px;
-    height: 120px;
+    height: 115px;
+}
+
+.discover-collection-game-image-view{
+    display: inline-block;
+    width: 300px;
+    position: absolute;
+    height: 115px;
+    bottom: 5px;
+    padding-top: 40px;
+    cursor: pointer;
+    right: 5px;
+    background-color: #2196F3;
+}
+
+.discover-collection-game-image-view span{
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .discover-collection-game-image:hover{

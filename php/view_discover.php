@@ -47,29 +47,30 @@ function DisplayCollectionHighlighted($userid, $collection){
 	}
 	?>
 	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-      	<div class="discoverCategoryHeader">
-      		<div class="discoverCatName">
-	      		<?php echo $collection->_name; ?>
-	      		<div class="discoverCatSubName">
-      				<?php echo $collection->_desc; ?>
-      			</div>
-  			</div>
-      	</div>
-  	</div>
-	<div class='row'>
-	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
-			<div class="discover-collection-header" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
-			<div class="discover-collection-owner-container">
+		<div class="discover-collection-header" >
+			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div style='background-color:black;width:40%;z-index:0;float:right;height:500px;'></div>
+	      	<div class="discoverCategoryHeader" style='color: white;margin: 1em 1.5em 1.5em 0.5em;z-index:1;position: absolute;left: 0;right: 0;'>
+	      		<div class="discoverCatName" style='border-bottom-color: white;font-weight: 400;z-index:1;'>
+		      		<?php echo $collection->_name; ?>
+		      		<div class="discoverCatSubName">
+	      				<?php echo $collection->_desc; ?>
+	      			</div>
+	  			</div>
+	      	</div>
+			<div class="discover-collection-owner-container" style='z-index:1;'>
 				<div class="discover-collection-owner"></div>
 			</div>
-			<div class='discover-collection-game-list'>
+			<div class='discover-collection-game-list' style='z-index:1;'>
 				<?php $count = 0; $games = $collection->_games; 
 				while(sizeof($games) > $count && $count < 12){ ?>
 					<a class="discover-collection-game-image z-depth-1" href="/#game/<?php echo $games[$count]->_id; ?>/<?php echo urlencode($games[$count]->_title); ?>/" data-id="<?php echo $games[$count]->_gbid; ?>" style="cursor: pointer;background: url(<?php echo $games[$count]->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();"></a>
 					<?php
 					$count++;
 				} ?>
-			</div>
+				<div class="discover-collection-game-image-view z-depth-1">
+					<span>View Collection</span>
+				</div>
 			</div>
 		</div>
 	</div>
