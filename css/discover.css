@@ -392,8 +392,8 @@
 .discover-collection-game-list{
     position: absolute;
     top: 100px;
-    right: 0px;
-    width: 60%;
+    right: 2em;
+    width: 65%;
     height: 375px;
 }
 
@@ -412,14 +412,14 @@
 .discover-collection-game-image{
     float: right;
     display: inline-block;
-    width: 300px;
+    width: 30%;
     margin: 5px;
     height: 115px;
 }
 
 .discover-collection-game-image-view{
     display: inline-block;
-    width: 300px;
+    width: 30%;
     position: absolute;
     height: 115px;
     bottom: 5px;
@@ -427,6 +427,11 @@
     cursor: pointer;
     right: 5px;
     background-color: #2196F3;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .discover-collection-game-image-view span{
@@ -436,8 +441,18 @@
     text-transform: uppercase;
 }
 
+.discover-collection-game-image-view:hover{
+	background-color: #0D47A1;
+}
+
 .discover-collection-game-image:hover{
 	opacity:0.9;
+}
+
+.discoverCollectionAuthor{
+	display:inline-block;
+	color:white;
+	font-size:0.7em;
 }
 
 .card-agree-quote{

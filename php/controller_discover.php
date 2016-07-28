@@ -98,8 +98,8 @@ function BuildDiscoverFlow($userid){
 	if(sizeof($notmutual) > 0){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'USERLIST';
-		$dAtts['CATEGORY'] = "Members that like your content";
-		$dAtts['CATEGORYDESC'] = "Follow back members that are following you";
+		$dAtts['CATEGORY'] = "Members that like to know what you are up to";
+		$dAtts['CATEGORYDESC'] = "Check out members that are following you";
 		$dAtts['USERS'] = $notmutual;
 		$dItems[] = $dAtts;
 	}

@@ -40,19 +40,43 @@ function DisplayDynamicDiscover(){
 }
 
 function DisplayCollectionHighlighted($userid, $collection){
+	$games = $collection->_games; shuffle($games);
 	if($collection->_coversmall != ''){
 		$coverimage = $collection->_coversmall;
 	}else{
 		$coverimage = $collection->_games[0]->_imagesmall;
 	}
+	$user = GetUser($collection->_createdby);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+		$username = $user->_first." ".$user->_last;
+	}else{
+		$username = $user->_username;
+	}
+	
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	
+	$totalsize = sizeof($games);
 	?>
 	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
-		<div class="discover-collection-header" >
-			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+		<div class="discover-collection-header" style='margin-top: 50px;'>
+			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<div class="collection-details-total discover-collection-user" style='cursor:pointer;display:inline-block;position:absolute;color:white;font-size: 2.5em;margin: 0;left: 15%;float: none;top: 150px;'>
+					<div class="collection-details-total-num collection-total-counter" data-id="<?php echo $user->_id; ?>">
+						<div class="user-avatar" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+					</div>
+					<div class='collection-details-total-lbl' style='font-size: 0.6em;font-weight: 500;margin-top:-30px;'>
+						<span style='font-size: 0.7em;display: block;font-weight: 300;'>created by</span>
+						<?php echo $username; ?>
+						
+					</div>
+				</div>
+			</div>
 			<div style='background-color:black;width:40%;z-index:0;float:right;height:500px;'></div>
 	      	<div class="discoverCategoryHeader" style='color: white;margin: 1em 1.5em 1.5em 0.5em;z-index:1;position: absolute;left: 0;right: 0;'>
 	      		<div class="discoverCatName" style='border-bottom-color: white;font-weight: 400;z-index:1;'>
-		      		<?php echo $collection->_name; ?>
+		      		<?php echo $collection->_name; ?> 
 		      		<div class="discoverCatSubName">
 	      				<?php echo $collection->_desc; ?>
 	      			</div>
@@ -62,13 +86,13 @@ function DisplayCollectionHighlighted($userid, $collection){
 				<div class="discover-collection-owner"></div>
 			</div>
 			<div class='discover-collection-game-list' style='z-index:1;'>
-				<?php $count = 0; $games = $collection->_games; 
+				<?php $count = 0; 
 				while(sizeof($games) > $count && $count < 12){ ?>
 					<a class="discover-collection-game-image z-depth-1" href="/#game/<?php echo $games[$count]->_id; ?>/<?php echo urlencode($games[$count]->_title); ?>/" data-id="<?php echo $games[$count]->_gbid; ?>" style="cursor: pointer;background: url(<?php echo $games[$count]->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();"></a>
 					<?php
 					$count++;
 				} ?>
-				<div class="discover-collection-game-image-view z-depth-1">
+				<div class="discover-collection-game-image-view z-depth-1" data-cid="<?php echo $collection->_id; ?>" data-ownerid="<?php echo $collection->_createdby; ?>">
 					<span>View Collection</span>
 				</div>
 			</div>

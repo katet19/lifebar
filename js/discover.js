@@ -391,6 +391,12 @@ function AttachDiscoverHomeEvents(){
  		var username = $(this).attr("data-name");
  		FollowUser(userid, $(this), username);
  	});
+ 	$(".discover-collection-game-image-view").on("click", function(){
+ 		DisplayCollectionDetails($(this).attr("data-cid"), 'Discover', $(this).attr("data-ownerid"), false);
+ 	});
+ 	$(".discover-collection-game-image").on("click", function(){
+ 		ShowGame($(this).attr("data-id"), $("#discover"));
+ 	});
  	AttachWatchedDiscoverXP();
  	$(".edit-ref-pt").on("click", function(){
 		var refptID = $(this).attr("data-id");
@@ -398,6 +404,10 @@ function AttachDiscoverHomeEvents(){
 	});
 	//User
  	$(".user-discover-card").on("click", function(e){
+ 	 	e.stopPropagation();
+ 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 	});
+  	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
  		ShowUserPreviewCard($(this).find(".user-preview-card"));
  	});
