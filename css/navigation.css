@@ -20,6 +20,24 @@
     box-shadow: 1px 1px 3px 0 #000;
 }
 
+.onboarding-pub div{
+	opacity:0;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.onboarding-pub:hover{
+	background:#39a1f4 !important;
+	color:white;
+}
+
+.onboarding-pub:hover div{
+	opacity:1;
+}
+
 .onboarding-follow-header{
     display: inline-block;
     font-size: 1.25em;
@@ -133,8 +151,12 @@
 }
 
 .onboarding-pub-active{
-	background-color:#39a1f4;
+	background:#39a1f4 !important;
 	color:white;
+}
+
+.onboarding-pub-active div{
+	opacity:1 !important;
 }
 
 .onboarding-progress{

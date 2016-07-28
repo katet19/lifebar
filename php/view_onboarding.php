@@ -9,13 +9,6 @@ function AccountDetails(){
 			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
 			<div class='onboarding-sub-welcome'>Tell us a little bit about your yourself and we'll help you get set up.</div>
 		</div>
-		<!--<div class="col s12 m3">
-			<div class="onboarding-image-welcome" style="background-image: url('http://lifebar.io/Images/LandingBeta/HyperLightDrifterBoxArt.png');"></div>
-			<div class="onboarding-image-welcome" style="background-image: url('http://lifebar.io/Images/LandingBeta/doom-boxart.jpg');"></div>
-			<div class="onboarding-image-welcome" style="background-image: url('http://lifebar.io/Images/LandingBeta/AndrewReinerCard.png');"></div>
-			<div class="onboarding-image-welcome" style="background-image: url('http://lifebar.io/Images/LandingBeta/Stardew_valley_boxart.png');"></div>
-			<div class="onboarding-image-welcome" style="background-image: url('http://lifebar.io/Images/LandingBeta/ChrisCarterCard.png');"></div>
-		</div>-->
 	</div>
   	<div class="row">
       	<div class="input-field col s12 m6 offset-m3">
@@ -104,9 +97,9 @@ function SocialDetails(){
 			<?php foreach($pubs as $pub){
 				?>
 				<div class="col s4 m3 l2">
-					<div class="onboarding-pub z-depth-1">
+					<div class="onboarding-pub z-depth-1" style="background:url(http://lifebar.io/Images/Generic/Logos/<?php echo strtolower(str_replace(" ","",$pub)).".png"; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 						<i class="pref-checkmark fa fa-check" style='top: 5px;right: 5px;font-size: 1.25em;'></i>
-     					<div style="display: table-cell; vertical-align: middle;">
+     					<div style="display: block;vertical-align: middle;height: 45px;padding-top: 10px;overflow: hidden;color:white;">
 							<?php echo $pub; ?>
 						</div>
 					</div>

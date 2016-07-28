@@ -769,7 +769,7 @@ function GetActivePersonalities(){
 	$count = array();
 	$mysqli = Connect();
 	$date = date('Y-m-d', strtotime("now -30 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 12";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
