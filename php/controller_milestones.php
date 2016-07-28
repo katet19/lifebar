@@ -21,6 +21,7 @@ function GetOnboardingMilestones(){
 		$franchises[] = 194; $franchises[] = 6; $franchises[] = 331; $franchises[] = 186; $franchises[] = 1; $franchises[] = 491; $franchises[] = 2; $franchises[] = 397;
 		$franchises[] = 456; $franchises[] = 49; $franchises[] = 7; $franchises[] = 9; $franchises[] = 267; $franchises[] = 125; $franchises[] = 565; $franchises[] = 3; $franchises[] = 609;
 		$franchises[] = 32; $franchises[] = 46; $franchises[] = 240; $franchises[] = 82; $franchises[] = 159; $franchises[] = 82; $franchises[] = 1609; $franchises[] = 1575; $franchises[] = 523;
+		$franchises[] = 338; $franchises[] = 10;
 		
 	//Developers
 	$developers = array();

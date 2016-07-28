@@ -99,7 +99,7 @@ function SocialDetails(){
 				<div class="col s4 m3 l2">
 					<div class="onboarding-pub z-depth-1" style="background:url(http://lifebar.io/Images/Generic/Logos/<?php echo strtolower(str_replace(" ","",$pub)).".png"; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 						<i class="pref-checkmark fa fa-check" style='top: 5px;right: 5px;font-size: 1.25em;'></i>
-     					<div style="display: block;vertical-align: middle;height: 45px;padding-top: 10px;overflow: hidden;color:white;">
+     					<div style="display: block;vertical-align: middle;height: 45px;padding-top: 10px;overflow: hidden;color:white;line-height: 14px;">
 							<?php echo $pub; ?>
 						</div>
 					</div>

@@ -1,5 +1,5 @@
 <?php function DisplayDiscoverTab(){ 
-	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id)){
+	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id) && $_SESSION['logged-in']->_id > 0){
 		AccountDetails();
 	}else{ ?>
 	<div class="discover-top-level">
