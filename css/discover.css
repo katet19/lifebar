@@ -81,6 +81,12 @@
     transition: all 0.3s ease;
 }
 
+.daily-answers-results-container{
+    position: absolute;
+    top: 180px;
+    left: 75px;
+}
+
 .daily-header-image-active{
 	height:100vh;
 }

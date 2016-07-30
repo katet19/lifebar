@@ -49,6 +49,10 @@
 		if($_POST['action'] == 'DeleteDaily'){
 			DeleteReflectionPoint($_POST['formid']);
 		}
+		if($_POST['action'] == 'SubmitDailyChoice'){
+			SaveFormChoices($_SESSION['logged-in']->_id, $_POST['formid'], $_POST['formitemid'], $_POST['gameid'], $_POST['objectid'], $_POST['objectType']);
+			ShowFormResults($_POST['formid']);
+		}
 	}
 	
 	function OnboardingServices(){

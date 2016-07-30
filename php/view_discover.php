@@ -205,7 +205,13 @@ function DisplayDailyHeader($zdepth, $item){
 						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
 					<?php } ?>
 				</div>
-				<div class="daily-answers-container">
+				<div class="daily-answers-results-container">
+					<?php 
+						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
+							ShowFormResults($item['ID']);
+					?>
+				</div>
+				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
 					<div class="row" style='margin-top:175px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
 							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
@@ -215,7 +221,7 @@ function DisplayDailyHeader($zdepth, $item){
 								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>
-									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?>>
+									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
 										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 										<?php if($response['Type'] == 'radio'){ ?>
 											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >

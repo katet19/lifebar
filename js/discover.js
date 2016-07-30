@@ -386,6 +386,14 @@ function AttachDiscoverHomeEvents(){
  			});
  		}	
  	});
+	if($(".ResultsDougnut").length > 0){
+ 		$(".daily-header-question").css({"top":"75px"});
+		$(".daily-header-game-title").css({"top":"50px"});
+		var bg = $(".daily-header-image").attr("data-webkit");
+		$(".daily-header-image").css({"background": bg });
+		$(".daily-header-image").css({"background-size": "cover"});
+		DisplayFormResultsGraph();	
+	}
  	$(".follow-from-discover").on("click", function(){
  		var userid = $(this).attr("data-id");
  		var username = $(this).attr("data-name");
@@ -709,6 +717,7 @@ function DisplayQuestionsForDaily(){
 	var bg = $(".daily-header-image").attr("data-webkit");
 	$(".daily-header-image").css({"background": bg });
 	$(".daily-header-image").css({"background-size": "cover"});
+	$(".daily-answers-results-container").hide();
 	
  	$(".daily-pref-image").on("click", function(){
  		if($(this).hasClass("daily-pref-image-active")){
@@ -727,11 +736,13 @@ function DisplayQuestionsForDaily(){
 	
 	$(".submit-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
-		$(".daily-header-question").css({"top":"250px"});
-		$(".daily-header-game-title").css({"top":"225px"});
+		//$(".daily-header-question").css({"top":"250px"});
+		//$(".daily-header-game-title").css({"top":"225px"});
 		$(".daily-header-image").removeClass('daily-header-image-active');
-		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
-		$(".daily-header-image").css({"background-size": "cover"});
+		$(".daily-answers-results-container").show();
+		//$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
+		//$(".daily-header-image").css({"background-size": "cover"});
+		SaveSubmission();
 	});
 	$(".cancel-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
@@ -740,6 +751,76 @@ function DisplayQuestionsForDaily(){
 		$(".daily-header-image").removeClass('daily-header-image-active');
 		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
 		$(".daily-header-image").css({"background-size": "cover"});
+		$(".daily-answers-results-container").show();
 	});
+}
+
+function SaveSubmission(){
+	var formType = $(".daily-answers-container").attr("data-type");
+	var formitemid = 0;
+	var formid = 0;
+	var objectid = 0;
+	var objectType = '';
+	var gameid = 0;
+	if(formType == 'grid-single'){
+		formitemid = $(".daily-pref-image-active").parent().parent().attr("data-formitemid");
+		formid = $(".daily-pref-image-active").parent().parent().attr("data-formid");
+		objectid = $(".daily-pref-image-active").parent().parent().attr("data-objid");
+		objectType = $(".daily-pref-image-active").parent().parent().attr("data-objtype");
+		gameid = $(".daily-pref-image-active").parent().parent().attr("data-gameid");
+	}else if(formType == 'radio'){
+		formitemid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formitemid");
+		formid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formid");
+		objectid = $("input[type=radio][name=dailyresposne]:checked").parent().parent().attr("data-objid");
+		objectType = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
+		gameid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
+	}
+	
+	$.ajax({ url: '../php/webService.php',
+         data: {action: "SubmitDailyChoice", formid: formid, formitemid: formitemid, gameid: gameid, objectid: objectid, objectType: objectType },
+         type: 'post',
+         success: function(output) {
+         	$(".daily-answers-results-container").html(output);
+         	DisplayFormResultsGraph();
+         	Toast("Saved your Reflection Point!");
+     	},
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayFormResultsGraph(){
+	if($(".ResultsDougnut").length > 0){
+		$(".ResultsDougnut").each(function(){
+			var reflectionPointGraph = $(this).get(0).getContext("2d");
+			var total = parseInt($(this).attr("data-total"));
+			var i = 0;
+			var data = [];
+			while(i < total){
+				data.push({
+					value: ($(this).attr("data-e"+i) > 0) ? Math.round((parseInt($(this).attr("data-e"+i)) / total) * 100) : 0,
+			        color:$(this).attr("data-ec"+i),
+			        highlight: $(this).attr("data-ech"+i),
+			        label: $(this).attr("data-ed"+i)
+				});
+				i++;
+			}
+			
+	    if($(window).width() >=600){
+	    	$(this).attr('height', 175);
+	    	$(this).attr('width', 175);
+	    }else{
+	    	$(this).attr('height', 125);
+	    	$(this).attr('width', 125);
+	    }
+      	var tierChart = new Chart(reflectionPointGraph).Doughnut(data, { animation: true, showTooltips: true });
+		});
+	}
 }
  

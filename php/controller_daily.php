@@ -1,5 +1,52 @@
 <?php
 
+function SaveFormChoices($userid, $formid, $formitemid, $gameid, $objectid, $objectType){
+	$mysqli = Connect();
+	$updating=false;
+	if ($result = $mysqli->query("select * from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$updating = true;
+			$choiceID  = $row['ID'];
+		}
+	}
+	
+	//Calculate Current Results
+	if ($result = $mysqli->query("select * from `FormResults` where `FormID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$formresult[$row['FormItemID']]  = $formresult[$row['FormItemID']] + 1;
+		}
+	}
+	if(sizeof($formresult) > 0){
+		while (list($key, $val) = each($formresult)) {
+	    	$lastresults[] = $key.",".$val;
+		}
+		$results = implode("||", $lastresults);
+	}else{
+		$results = '';
+	}
+	
+	//Save or Update the data
+	//if($updating){
+	//	$date = date('Y-m-d H:i:s');
+	//	$mysqli->query("UPDATE `FormResults` set `FormItemID`='".$formitemid."', `Date`='".$date."',`LastResults`='$results' where `ID` = '".$choiceID."'");
+	//}else{
+		$mysqli->query("insert into `FormResults` (`UserID`,`FormID`,`FormItemID`,`GameID`,`ObjectID`, `ObjectType`,`LastResults`) values ('$userid','$formid','$formitemid','$gameid','$objectid','$objectType','$results')");
+	//}
+	
+	Close($mysqli, $result);
+}
+
+function HasFormResults($userid, $formid){
+	$mysqli = Connect();
+	$done = false;
+	if ($result = $mysqli->query("select * from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$done = true;	
+		}
+	}
+	return $done;
+}
+
 function SubmitDailyForm($userid, $question, $subquestion, $formtype, $approved, $objectid, $objectType, $default, $items, $itemurls, $itemtype, $finished){
 	$mysqli = Connect();
 	$mysqli->query("insert into `Forms` (`Header`,`SubHeader`,`FormType`,`CreatedBy`,`Approved`,`ObjectID`, `ObjectType`,`Finished`) values ('".mysqli_real_escape_string($mysqli, $question)."','".mysqli_real_escape_string($mysqli, $subquestion)."','$formtype','$userid','$approved','$objectid','$objectType','$finished')");
@@ -56,6 +103,34 @@ function UpdateDailyForm($formid, $question, $subquestion, $default, $items, $it
 		$i++;
 	}
 	Close($mysqli, $result);
+}
+
+function GetFormResults($formid){
+	$mysqli = Connect();
+	$refpts = array();	
+	if ($result = $mysqli->query("select * from `Forms` where `ID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$refpts["FORM"] = $row;
+		}
+	}
+	$total = 0;
+	$formitems = array();
+	if ($result = $mysqli->query("select * from `FormItems` where `FormID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			if ($result2 = $mysqli->query("select count(*) as 'cnt' from `FormResults` where `FormItemID` = '".$row['ID']."'")) {
+				while($row2 = mysqli_fetch_array($result2)){
+					$row['TOTAL'] = $row2['cnt'];
+					$total = $total + $row2['cnt'];
+				}
+			}
+			$formitems[] = $row;
+		}
+	}
+	$refpts["FORMITEMS"] = $formitems;
+	$refpts["TOTAL"] = $total;
+	
+	Close($mysqli, $result);
+	return $refpts;
 }
 
 function GetReflectionPointsForGame($gameid){
