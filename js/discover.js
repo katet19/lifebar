@@ -67,7 +67,7 @@ function Search(searchstring){
  				ShowUserPreviewCard($(this).find(".user-preview-card"));
  			});
   			Waves.displayEffect();
- 			FilterResults();
+ 			//FilterResults();
  			$(".game-discover-card .card-image").on("click", function(e){ 
  				e.stopPropagation(); 
  				CloseSearch();
@@ -285,7 +285,7 @@ function ShowDiscoverHome(){
      			if($(".onboarding-big-welcome").length > 0){
      				ShowOnboarding();
      			}else{
-	     			FilterCategories();
+	     			//FilterCategories();
 	 				AttachDiscoverHomeEvents();
 	 				AttachDiscoverSecondaryEvents();
 	      			Waves.displayEffect();
@@ -706,7 +706,7 @@ function typeaheadMatches(typed, data, filter) {
 };
 
 function ResizeDiscoverEvents(){
-	FilterCategories();
+	//FilterCategories();
 }
 
 function DisplayQuestionsForDaily(){
@@ -819,7 +819,7 @@ function DisplayFormResultsGraph(){
 	    	$(this).attr('height', 125);
 	    	$(this).attr('width', 125);
 	    }
-      	var tierChart = new Chart(reflectionPointGraph).Doughnut(data, { animation: true, showTooltips: true });
+      	var tierChart = new Chart(reflectionPointGraph).Doughnut(data, { animation: false, showTooltips: true });
 		});
 	}
 }

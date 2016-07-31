@@ -5,7 +5,7 @@ function ShowFormResults($formid){
 	?>
 	<canvas class="ResultsDougnut analyze-doughnut-relational" 
 	data-total="<?php echo $results['TOTAL']; ?>"
-	<?php $i=0; $colors = GetRandomColors();
+	<?php $i=0; $colors = GetRandomColors(false);
 	foreach($results['FORMITEMS'] as $item){
 		if($item['TOTAL'] > 0){
 			echo "data-e".$i."='".$item['TOTAL']."' ";
@@ -18,32 +18,28 @@ function ShowFormResults($formid){
 	}?>
 	></canvas>
 	<div class="analyze-doughnut-key">
-		<div class="analyze-doughnut-header">
+		<div class="analyze-doughnut-header" style='color:white;'>
 			Overall results from Reflection Point
 		</div>
 		<?php foreach($legend as $ref){ ?>
 			<div class="analyze-doughnut-item">
-				<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>'></div>
-				<div class="analyze-doughnut-desc"><?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%</div>
+				<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
+				<div class="analyze-doughnut-desc" style='color:white;'><?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%</div>
 			</div>
 		<?php } ?>
 	</div>
 	<?php
 }
 
-function GetRandomColors(){
+function GetRandomColors($random){
 	$colors = array();
 	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#E91E63","#EC407A"];
 	$colors[] = ["#9C27B0","#AB47BC"];
-	$colors[] = ["#673AB7","#7E57C2"];
 	$colors[] = ["#3F51B5","#5C6BC0"];
 	$colors[] = ["#2196F3","#42A5F5"];
-	$colors[] = ["#03A9F4","#29B6F6"];
-	$colors[] = ["#00BCD4","#26C6DA"];
 	$colors[] = ["#009688","#26A69A"];
 	$colors[] = ["#4CAF50","#66BB6A"];
-	$colors[] = ["#8BC34A","#9CCC65"];
+
 	$colors[] = ["#CDDC39","#D4E157"];
 	$colors[] = ["#FFEB3B","#FFF176"];
 	$colors[] = ["#FFC107","#FFCA28"];
@@ -51,6 +47,12 @@ function GetRandomColors(){
 	$colors[] = ["#FF5722","#FF7043"];
 	$colors[] = ["#795548","#8D6E63"];
 	$colors[] = ["#607D8B","#78909C"];
+	
+	$colors[] = ["#E91E63","#EC407A"];
+	$colors[] = ["#00BCD4","#26C6DA"];
+	$colors[] = ["#673AB7","#7E57C2"];
+	$colors[] = ["#03A9F4","#29B6F6"];
+	$colors[] = ["#8BC34A","#9CCC65"];
 	/*$colors[] = ["#F44336","#EF5350"];
 	$colors[] = ["#F44336","#EF5350"];
 	$colors[] = ["#F44336","#EF5350"];
@@ -62,7 +64,10 @@ function GetRandomColors(){
 	$colors[] = ["#F44336","#EF5350"];
 	$colors[] = ["#F44336","#EF5350"];
 	$colors[] = ["#F44336","#EF5350"];*/
-	shuffle($colors);
+	
+	if($random)
+		shuffle($colors);
+		
 	return $colors;
 }
 

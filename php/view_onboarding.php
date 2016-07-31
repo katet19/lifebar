@@ -4,35 +4,35 @@ function AccountDetails(){
 	?>
 	
 	<div class="row" style='margin-bottom:50px;'>
-		<div class="col s12 m6 offset-m3" style='text-align:left;'>
+		<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
 			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
 			<div class='onboarding-sub-welcome'>Tell us a little bit about your yourself and we'll help you get set up.</div>
 		</div>
 	</div>
   	<div class="row">
-      	<div class="input-field col s12 m6 offset-m3">
+      	<div class="input-field col s10 offset-s1 m6 offset-m3">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/steam-badge.png' style='height:45px;width:45px;'></i>
 	        <input id="steam_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
 	        <label for="steam_id" style='margin-left: 4rem;'  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
 	  	</div>
   	</div>
   	<div class="row">
-		<div class="input-field col s12 m6 offset-m3">
+		<div class="input-field col s10 offset-s1 m6 offset-m3">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/xbox-badge.png' style='height:45px;width:45px;border-radius: 5px;'></i>
 	        <input id="xbox_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
 	        <label for="xbox_id"  style='margin-left: 4rem;' <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
 	  	</div>
   	</div>
   	<div class="row">
-	  	<div class="input-field col s12 m6 offset-m3">
+	  	<div class="input-field col s10 offset-s1 m6 offset-m3">
 		    <img class="prefix" src='http://lifebar.io/Images/Generic/playstation-badge.png' style='height:45px;width:45px;'>
 		    <input id="psn_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
 		    <label for="psn_id" style='margin-left: 4rem;'  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
 	  	</div>
   	</div>
     <div class="row">
-      	<div class="input-field col s3 m6 offset-m3">
+      	<div class="input-field col s6 offset-s1 m6 offset-m3">
       		<?php if($_SESSION['logged-in']->_birthdate != ''){ $now = Date('Y');$age = $now - $_SESSION['logged-in']->_birthdate; }else{ $age = 25; } ?>
       		<div style='float: left;margin-right: 10px;line-height: 50px;font-size: 1.5em;font-weight: 400;display: inline-block;'>Age</div>
 	        <input id="age_id" style='font-size:1.25em;width:50px;float:left;text-align:center;' type="text" value="<?php echo $age; ?>">
@@ -52,12 +52,12 @@ function SocialDetails(){
 	$users = GetUsersWithPopularQuotes('');
 	$pubs = GetAllPublications();
 	?>
-	<div class="col s12 m6 offset-m3" style='text-align:left;'>
+	<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
-		<div class='onboarding-sub-welcome'>You can follow other gamers to see what they <span style='font-weight:500;'>think</span> about the games they have been playing/watching. Follow a bunch to make your activity feed awesome!</div>
+		<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
 	</div>
 	<div class="row" style='margin-bottom:5px;'>
-		<div class="col s12 m6 l4 offset-l4 offset-m4" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
+		<div class="col s10 offset-s1 m6 l4 offset-l4 offset-m4" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
 			<i class="mdi-action-search small onboarding-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
 			<div class='onboarding-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
 				<input id="onboarding-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
@@ -66,7 +66,7 @@ function SocialDetails(){
 	</div>
 	<div class="row">
 		<div class="col s12 m6 l4 offset-l4 offset-m4">
-			<div class='onboarding-description'>Search for personalities by name or friends by username or gamertag</div>
+			<div class='onboarding-description'>Search for <span style='font-weight:400;'>personalities</span> by name or <span style='font-weight:400;'>friends</span> by username/gamertag</div>
 		</div>
 	</div>
 	<div class="row">
@@ -81,7 +81,7 @@ function SocialDetails(){
 		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
 			<div class="onboarding-follow-header">Personalities you might like</div>
 	        	<input type="checkbox" id="onboarding-follow-personalities-all"   checked />
-	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow all personalities</label>
+	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow All</label>
 		</div>
 		<div class="col s12 m8 offset-m2">
 			<?php foreach($critics as $critic){
@@ -151,9 +151,9 @@ function GamingPrefDetails(){
 	$details = GetOnboardingMilestones();
 	?>
 	<div class="row">
-		<div class="col s12 m6 offset-m3" style='text-align:left;'>
+		<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Your gaming preferences/history</div>
-			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & developer's you are most familiar with.</div>
+			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & developers you are <span style='font-weight:500;'>most familiar</span> with.</div>
 		</div>
 	</div>
 	<div class="row">

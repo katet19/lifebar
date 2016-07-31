@@ -542,6 +542,25 @@
     font-weight: 500;
 }
 
+.user-follow-card-image{
+	width:90px;
+	border-radius:50%;
+	margin-left: auto;
+	margin-top:15px;
+	height:90px;
+}
+
+.user-follow-card-title{
+	position: relative !important;
+	right: 0 !important;
+	display: inline-block !important;
+	width: 50% !important;
+	left: 0 !important;
+	padding: 16px !important;
+	text-align: left !important; 
+	cursor: default !important;
+}
+
 @media only screen and (max-width : 992px) {
 	.critic-quote{
 		padding-left:70px;
@@ -551,6 +570,18 @@
 	}
 }
 @media only screen and (max-width : 600px) {
+	.user-follow-card-image{
+		width:90px;
+		border-radius:50%;
+		margin-left: 0;
+		margin-right:auto !important;
+		margin-top:15px;
+	}
+	.user-follow-card-title{
+	    right: auto !important;
+	    width: calc(100% - 100px)!important;
+	    left: auto !important;
+	}
 	.social-login-btn{
 		font-size: 20px;
 	    border-radius: 50%;

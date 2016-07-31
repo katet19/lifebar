@@ -58,7 +58,7 @@ function DisplayCollectionHighlighted($userid, $collection){
 	
 	$totalsize = sizeof($games);
 	?>
-	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+	<div class="col s12 discoverCategory discover-category-collection" style='z-index:<?php echo $zdepth--; ?>'>
 		<div class="discover-collection-header" style='margin-top: 50px;'>
 			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<div class="collection-details-total discover-collection-user" style='cursor:pointer;display:inline-block;position:absolute;color:white;font-size: 2.5em;margin: 0;left: 15%;float: none;top: 150px;'>

@@ -1009,6 +1009,13 @@
 	z-index:10001;
 }
 
+.follow-from-discover{
+    padding: 0 1rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 @media only screen and (max-width : 992px) {
 	#discover-header{
 		right:0;
@@ -1063,7 +1070,7 @@
 	}
 	
 	.discover-row{
-		margin-top:6em;
+    	margin-top: 10px;
 	}
 	
 	#discover-header .row .col .tabs .tab a:hover{
@@ -1142,10 +1149,38 @@
 		padding: 8px 24px 2px 16px !important;
 	}
 	.discoverCatSubName{
-	    top: 2.5em;
-    	line-height: 1.2em;
+		top: 30px;
 	}
 	.daily-header-question{
 		font-size:2em;
+	}
+	.discover-collection-game-image, .discover-collection-game-image-view{
+		width: 60%;
+	}
+	.follow-from-discover{
+		padding: 0 1rem;
+	    position: absolute;
+	    bottom: 0px;
+	    display: block;
+	    left: 125px;
+	    line-height: 30px;
+	    height: 30px;
+	    top: auto;
+	}
+	.daily-watch-title-xp{
+		padding: 7px 10px;
+	}
+	.daily-watch-video-box{
+		margin-top: 20px;
+	}
+	.discover-category-collection{
+		padding:0 !important;
+	}
+	.discover-collection-game-image-view span{
+		line-height: 16px;
+	}
+	.daily-header-game-title, .daily-header-question, .daily-answers-results-container{
+		left:20px;
+		right:20px;
 	}
 }

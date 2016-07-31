@@ -2,6 +2,10 @@ function ShowOnboarding(){
 	$("#onboarding-header").css({"display":"inline-block"});
 	$(".mainNav, .userContainer").css({"display":"none"});
 	$("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
+	var windowWidth = $(window).width();
+	if($(window).width() < 599){
+		$(".identificationContainer").css({"display":"none"});
+	}
  	GAPage('Onboarding1of3', '/onboarding1of3');
  	$(".onboarding-next").unbind();
  	$(".onboarding-next").on("click", function(e){
@@ -170,6 +174,10 @@ function ShowGamingPref(){
  			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
  			$("#onboarding-header").css({"display":"none"});
+ 			var windowWidth = $(window).width();
+			if($(window).width() < 599){
+ 				$(".identificationContainer").css({"display":"inline-block"});
+			}
  			ShowDiscoverHome();
  		});
  		$(".onboarding-pref-image").on("click", function(){
