@@ -399,6 +399,26 @@ function AttachDiscoverHomeEvents(){
  		var username = $(this).attr("data-name");
  		FollowUser(userid, $(this), username);
  	});
+ 	$(".discover-invite-users").on("click", function(){
+ 		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayInviteUsers" },
+	     type: 'post',
+	     success: function(output) {
+	 			$("#BattleProgess").html(output); 
+				
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});	
+ 	});
  	$(".discover-collection-game-image-view").on("click", function(){
  		DisplayCollectionDetails($(this).attr("data-cid"), 'Discover', $(this).attr("data-ownerid"), false);
  	});

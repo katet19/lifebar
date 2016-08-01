@@ -610,6 +610,9 @@
 		if($_POST['action'] == 'DisplayWatchedXPEntry'){
 			DisplayWatchedXPEntryAjax($_POST['url'], $_POST['gameid']);
 		}
+		if($_POST['action'] == 'DisplayInviteUsers'){
+			InviteUsers($_SESSION['logged-in']->_id);
+		}
 	}
 	function SignupServices(){
 		if($_POST['action'] == 'VerifyNewUser' && isset($_POST['username']) && isset($_POST['email'])){

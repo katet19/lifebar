@@ -11,6 +11,35 @@
 	margin-top:1em;
 }
 
+.discover-gnow-card{
+	padding: 1em !important;
+    text-align: left;
+    overflow: hidden;
+    margin-top:2em;
+    position: relative;
+    background-color: white;
+}
+
+.discover-gnow-header{
+    margin: 0 1em 0 0.5em;
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.discover-gnow-title{
+    padding: 0 1em 0.5em;
+    font-weight: bold;	
+}
+
+.discover-gnow-action{
+	float: right;
+    margin-bottom: 0;
+    font-weight: bold;
+    margin-top: 25px;
+    color: #2196F3
+}
+
 .daily-watch-title{
     text-align: left;
     position:relative;

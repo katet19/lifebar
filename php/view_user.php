@@ -537,4 +537,35 @@ function DisplayRoleManagement($userid){
 	<?php
 }
 
+function InviteUsers($userid){
+	?>
+	<div class="row" style='overflow:auto;height:100%;'>
+		<div class="col s10 offset-s1">
+			<div class='analyze-card-header' style='border-bottom:none;padding:0;'>
+				<div class='analyze-card-title'>Email Invite</div>
+				<div class='analyze-card-sub-title' style='display:block;margin:0;'>Send an email invitation to fellow gamers to help fill your activity feed with people you care about</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s10 offset-s1">
+				<textarea id="invite-to" class="materialize-textarea" style='font-size: 1.25em;' maxlength="500"></textarea>
+				<label for="invite-to" style='font-weight: 500;'>Send To</label>
+				<div style='font-size: 0.9em;margin-top: -15px;margin-bottom: 40px;'>Enter email addresses separated by commas. i.e. <span style='font-weight:400;'>drmario@hotmail.com, darealrobotnik@yahoo.com, liquidsnake@gmail.com</span></div>
+			</div>
+			<div class="input-field col s10 offset-s1">
+				<textarea id="invite-body" class="materialize-textarea" style='font-size: 1.25em;' maxlength="400"></textarea>
+				<label for="invite-body" style='font-weight: 500;' class='active'>Message (optional)</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s10 offset-s1">
+				<div class="btn invite-send-btn">Send invite</div>
+				<div class="btn-flat invite-cancel-btn">Cancel</div>
+				<div style='font-size: 0.9em'>Lifebar will send a custom invitation in your name asking them to join Lifebar.io</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
 ?>
