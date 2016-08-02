@@ -1,6 +1,22 @@
 <?php
 require_once "includes.php";
 
+
+function SubmitInviteUsers($userid, $emails, $message){
+	$mysqli = Connect();
+	$allemails = explode(",", $emails);
+	$user = GetUser($userid);
+	if(sizeof($allemails) > 0){
+		foreach($allemails as $invite){
+			if($invite != '' && strpos($invite, '@') != false){
+				$mysqli->query("insert into `Referrals` (`UserID`,`Email`) VALUES ('".$userid."', '".$invite."')");
+				AddInviteEmail($user, $invite, $message);
+			}
+		}
+	}
+	Close($mysqli, $result);
+}
+
 function SetTitles(){
 	$journalists = GetJournalists();
 	foreach($journalists as $jo){

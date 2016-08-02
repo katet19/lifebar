@@ -407,7 +407,7 @@ function AttachDiscoverHomeEvents(){
 	     type: 'post',
 	     success: function(output) {
 	 			$("#BattleProgess").html(output); 
-				
+				AttachInviteUserEvents();
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -842,5 +842,44 @@ function DisplayFormResultsGraph(){
       	var tierChart = new Chart(reflectionPointGraph).Doughnut(data, { animation: false, showTooltips: true });
 		});
 	}
+}
+
+function AttachInviteUserEvents(){
+	$(".invite-cancel-btn").on("click", function(){
+  		$("#BattleProgess").closeModal();
+  		HideFocus();
+	});
+	$(".invite-send-btn").on("click", function(){
+		var emails = $("#invite-to").val();
+		var message = $("#invite-body").val();
+		var err = '';
+		if(emails == ''){
+			err = "Please enter at least one email address <br>";	
+		}
+		
+		if(err == ''){
+			$.ajax({ url: '../php/webService.php',
+		         data: {action: "SubmitInviteUsers", emails: emails, message: message  },
+		         type: 'post',
+		         success: function(output) {
+		         	Toast("Invites will be sent shortly!");
+         	  		$("#BattleProgess").closeModal();
+  					HideFocus();
+		     	},
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+		}else{
+			$(".invite-error-msg").show();
+			$(".invite-error-msg").html(err);
+		}
+		
+	});
 }
  

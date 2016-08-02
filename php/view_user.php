@@ -562,6 +562,7 @@ function InviteUsers($userid){
 				<div class="btn invite-send-btn">Send invite</div>
 				<div class="btn-flat invite-cancel-btn">Cancel</div>
 				<div style='font-size: 0.9em'>Lifebar will send a custom invitation in your name asking them to join Lifebar.io</div>
+				<div class="invite-error-msg" style='color:red;font-weight:400;margin:1em 0;display:none;'></div>
 			</div>
 		</div>
 	</div>

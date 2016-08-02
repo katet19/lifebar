@@ -613,6 +613,9 @@
 		if($_POST['action'] == 'DisplayInviteUsers'){
 			InviteUsers($_SESSION['logged-in']->_id);
 		}
+		if($_POST['action'] == 'SubmitInviteUsers'){
+			SubmitInviteUsers($_SESSION['logged-in']->_id, $_POST['emails'], $_POST['message']);
+		}
 	}
 	function SignupServices(){
 		if($_POST['action'] == 'VerifyNewUser' && isset($_POST['username']) && isset($_POST['email'])){

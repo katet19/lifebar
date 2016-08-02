@@ -4,7 +4,7 @@ ProcessEmailQue();
 
 function ProcessEmailQue(){
 	$mysqli = Connect();
-	$sentOneUpEmail  = array();
+	$sentEmail  = array();
 	$body = array();
 	$message = '';
 	$prevUser = '';
@@ -19,7 +19,7 @@ function ProcessEmailQue(){
 			if($prevTo != $row['ToField'] && $prevTo != ''){
 				$imploded = implode($body);
 				if($imploded != ''){
-					$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+					$message = GetHeader(500).$imploded.GetFooter($prevUser, '1up');
 					if($count > 1){
 						$prevSubject = "You have been given 1ups!";
 						$prevFrom = "Lifebar Notifications";
@@ -28,7 +28,7 @@ function ProcessEmailQue(){
 					SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
 				}
 				
-				$sentOneUpEmail[] = $row['UserID'];
+				$sentEmail[] = $row['UserID'];
 				unset($body);
 				$message= '';
 				$prevSubject = '';
@@ -73,41 +73,122 @@ function ProcessEmailQue(){
 	}
 	//Catch the last one in the loop
 	if($prevTo != ''){
-		
 		if($internalcount == 1){
 			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." other", $message);	
 		}else if($internalcount > 1){
 			$message = str_replace("<MINDTHEGAP>", "and ".$internalcount." others", $message);
 		}
 		$body[] = $message;
+		
 		$imploded = implode($body);
 		if($imploded != ''){
-			$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
+			$message = GetHeader(500).$imploded.GetFooter($prevUser, '1up');
 			if($count > 1){
 				$prevSubject = "You have been given 1ups!";
 				$prevFrom = "Lifebar Notifications";
 			}
 			$message = str_replace("<MINDTHEGAP>", "", $message);	
 			SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
-			$sentOneUpEmail[] = $row['UserID'];
+			$sentEmail[] = $row['UserID'];
 		}
 	}
 	
-	$sentFollowingEmail  = array();
+	
+	//Reset vars for Following Emails
+	$body = array();
+	$message = '';
+	$prevUser = '';
+	$prevTo = '';
+	$prevSubject = '';
+	$prevFrom = '';
+	$prevCoreID = '';
+	$count = 0;
+	$internalcount = 0;
 	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = 'Following' order by `UserID`")) {
 		while($row = mysqli_fetch_array($result)){
-			if(!in_array($row['UserID'], $sentOneUpEmail)){
+			if(!in_array($row['UserID'], $sentEmail)){
+				if($prevTo != $row['ToField'] && $prevTo != ''){
+					$imploded = implode($body);
+					if($imploded != ''){
+						$message = GetHeader(500).$imploded.GetFooter($prevUser, 'Following');
+						if($count > 1){
+							$prevSubject = "You have new followers!";
+							$prevFrom = "Lifebar Notifications";
+						}
+						SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
+					}
+					
+					$sentEmail[] = $row['UserID'];
+					unset($body);
+					$message= '';
+					$prevSubject = '';
+					$count = 0;
+					$internalcount = 0;
+					$prevCoreID = '';
+				}
 				
-				
+				if($count >= 3){
+					$mysqli->query("DELETE FROM `Email` where `ID` = '".$row['ID']."'");
+				}else{
+					if($prevCoreID != $row['CoreID']){	
+						$body[] = $message;
+						$message = '';
+						
+						if($count > 0){
+							$message = $message."<div style='border-bottom:1px solid gray;width:100%;margin-bottom:30px;'></div>";
+							$message = $message.$row['Body'];	
+						}else{
+							$message = $message.$row['Body'];
+						}
+					}
+					
+					$count++;
+					$prevUser = $row['UserID'];
+					$prevTo = $row['ToField'];
+					$prevFrom = $row['FromField'];
+					$prevSubject = $row['Subject'];	
+					$prevCoreID = $row['CoreID'];
+					$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+				}
 			}
-			$sentFollowingEmail[] = $row['UserID'];
 		}
 	}
+	
+	//Catch the last one in the loop
+	if($prevTo != ''){
+		$body[] = $message;
+		$imploded = implode($body);
+		if($imploded != ''){
+			$message = GetHeader(500).$imploded.GetFooter($prevUser, 'Following');
+			if($count > 1){
+				$prevSubject = "You have new followers!";
+				$prevFrom = "Lifebar Notifications";
+			}
+			SendEmailWithFrom($prevTo, $prevSubject, $message, $prevFrom);
+		}
+	}
+	
+	
+	
+	//Reset vars for Invite Emails
+	$message = '';
+	if ($result = $mysqli->query("SELECT * FROM  `Email` where `Type` = 'Invite' order by `ToField`")) {
+		while($row = mysqli_fetch_array($result)){
+			if(!in_array($row['ToField'], $sentEmail)){
+				SendEmailWithFrom($row['ToField'], $row['Subject'], GetHeader(800).$row['Body']."</div></div>", $row['FromField']);
+				$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+				$sentEmail[] = $row['ToField'];
+			}else{
+				$mysqli->query("DELETE FROM  `Email` where `ID` = '".$row['ID']."'");
+			}
+		}
+	}
+	
 }
 
-function GetHeader(){
+function GetHeader($width){
 	$body = $body."<div style='background-color:rgb(237, 236, 236);width:100%;text-align:center;position:relative;'>";
-	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;'>";
+	$body = $body."<div style='display:inline-block;width:".$width."px;padding:0 15px;background-color:#fff;'>";
 	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#D32F2F;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/LifebarLogoEmail.png'></div>";
 	return $body;
 }
