@@ -1,0 +1,16 @@
+{
+    "remotePath": "./",
+    "host": "vps18056.inmotionhosting.com",
+    "username": "ryu@lifebar.io",
+    "password": "W1k1W3av3",
+    "port": 21,
+    "protocol": "ftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git"
+    ]
+}
