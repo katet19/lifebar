@@ -33,6 +33,14 @@ function ShowFormResults($formid){
 
 function GetRandomColors($random){
 	$colors = array();
+	$colors[] = ["rgba(38,63,159,0.7)","rgba(38,63,159,1)"];
+	$colors[] = ["rgba(96,125,139,0.7)","rgba(96,125,139,1)"];
+	$colors[] = ["#3F51B5","#5C6BC0"];
+	$colors[] = ["#1A237E","#283593"];
+	$colors[] = ["#4527A0","#512DA8"];
+	$colors[] = ["#5E35B1","#673AB7"];
+	$colors[] = ["#7E57C2","#9575CD"];
+	
 	$colors[] = ["#F44336","#EF5350"];
 	$colors[] = ["#9C27B0","#AB47BC"];
 	$colors[] = ["#3F51B5","#5C6BC0"];
@@ -53,17 +61,6 @@ function GetRandomColors($random){
 	$colors[] = ["#673AB7","#7E57C2"];
 	$colors[] = ["#03A9F4","#29B6F6"];
 	$colors[] = ["#8BC34A","#9CCC65"];
-	/*$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];
-	$colors[] = ["#F44336","#EF5350"];*/
 	
 	if($random)
 		shuffle($colors);
