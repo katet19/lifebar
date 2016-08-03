@@ -1182,7 +1182,8 @@
 		top: 30px;
 	}
 	.daily-header-question{
-		font-size:2em;
+		font-size:1.5em;
+		line-height: 25px;
 	}
 	.discover-collection-game-image, .discover-collection-game-image-view{
 		width: 60%;
@@ -1209,8 +1210,25 @@
 	.discover-collection-game-image-view span{
 		line-height: 16px;
 	}
-	.daily-header-game-title, .daily-header-question, .daily-answers-results-container{
+	.daily-header-game-title, .daily-header-question{
 		left:20px;
 		right:20px;
+	}
+	.daily-answers-results-container{
+		left:20px;
+		right:20px;
+		top: 180px;
+	}
+	.daily-answers-results-container .analyze-doughnut-key{
+		width: calc(100% - 150px);
+	}
+	.daily-reply-button{
+		padding: 4px 6px;
+	}
+	.daily-response-label, .daily-response-label-radio{
+		font-size:1em !important;
+	}
+	.daily-item-row{
+		line-height: 25px;
 	}
 }
