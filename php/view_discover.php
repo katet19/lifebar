@@ -102,6 +102,7 @@ function DisplayCollectionHighlighted($userid, $collection){
 }
 
 function DisplayInviteFriends($userid){
+	if($userid > 0){
 	?>
 	<div class="col s12 discoverCategory">
 		<div class="row">
@@ -113,6 +114,7 @@ function DisplayInviteFriends($userid){
 		</div>
 	</div>
 	<?php
+	}
 }
 
 function DisplayHorizontalUserWithDetailsList($zdepth, $item){

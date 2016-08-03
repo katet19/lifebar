@@ -372,19 +372,19 @@ function AttachDiscoverHomeEvents(){
  		DisplayQuestionsForDaily();	
  	});
  	$(".daily-watch-title").on("click", function(){
- 		if(!$(this).hasClass("daily-watch-title-active")){
- 			$(".daily-watch-title-active").find(".daily-watch-title-xp").hide();
- 			$(".daily-watch-title-active").removeClass("daily-watch-title-active");
- 			$(this).addClass("daily-watch-title-active");
- 			$(this).find(".daily-watch-title-xp").show();
- 			var selected = $(this).attr("data-gameid");
- 			$(".daily-watch-video-box-active").removeClass("daily-watch-video-box-active");
- 			$(".daily-watch-video-box").each(function(){
- 				if($(this).attr("data-gameid") == selected){
- 					$(this).addClass("daily-watch-video-box-active");
- 				}	
- 			});
- 		}	
+		if(!$(this).hasClass("daily-watch-title-active")){
+			$(".daily-watch-title-active").find(".daily-watch-title-xp").hide();
+			$(".daily-watch-title-active").removeClass("daily-watch-title-active");
+			$(this).addClass("daily-watch-title-active");
+			$(this).find(".daily-watch-title-xp").show();
+			var selected = $(this).attr("data-gameid");
+			$(".daily-watch-video-box-active").removeClass("daily-watch-video-box-active");
+			$(".daily-watch-video-box").each(function(){
+				if($(this).attr("data-gameid") == selected){
+					$(this).addClass("daily-watch-video-box-active");
+				}	
+			});
+		}	
  	});
 	if($(".ResultsDougnut").length > 0){
  		$(".daily-header-question").css({"top":"75px"});
@@ -398,9 +398,13 @@ function AttachDiscoverHomeEvents(){
 		ShowGame($(this).attr("data-id"), $("#discover"));
 	});
  	$(".follow-from-discover").on("click", function(){
- 		var userid = $(this).attr("data-id");
- 		var username = $(this).attr("data-name");
- 		FollowUser(userid, $(this), username);
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			FollowUser(userid, $(this), username);
+		}
  	});
  	$(".discover-invite-users").on("click", function(){
  		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
@@ -502,39 +506,43 @@ function AttachDiscoverHomeEvents(){
 function AttachWatchedDiscoverXP(){
 	$(".daily-watch-title-xp").unbind();
 	$(".daily-watch-title-xp").on("click", function(){
- 		var xpElement = $(this);
- 		$(".daily-watch-title").hide();
- 		$(".daily-watch-title-active").show();
- 		$(".daily-watch-xp-entry").show();
- 		ShowLoader($(".daily-watch-xp-entry"), 'big', "<br><br><br>");
- 		$.ajax({ url: '../php/webService.php',
-	         data: {action: "DisplayWatchedXPEntry", url: $(".daily-watch-title-active").attr("data-url"), gameid: $(".daily-watch-title-active").attr("data-gameid") },
-	         type: 'post',
-	         success: function(output) {
-	            $(".daily-watch-xp-entry").html(output);
-	            $(".myxp-video-goto-full").hide();
-	            AttachActivityVideoEvents();
-	            xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
-	            xpElement.css({"background-color":"#F44336"});
-	            $(".daily-watch-title-xp").unbind();
-	            $(".daily-watch-title-xp").on('click', function(){
-	            	$(".daily-watch-title").show();
-	            	$(".daily-watch-xp-entry").hide();
-	            	$(".daily-watch-xp-entry").html("");
-		            xpElement.html("ADD <i class='mdi-action-visibility'></i>");
-	        		xpElement.css({"background-color":"#0e4c7b"});
-	            	AttachWatchedDiscoverXP();
-	            });
-	     	},
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var xpElement = $(this);
+			$(".daily-watch-title").hide();
+			$(".daily-watch-title-active").show();
+			$(".daily-watch-xp-entry").show();
+			ShowLoader($(".daily-watch-xp-entry"), 'big', "<br><br><br>");
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "DisplayWatchedXPEntry", url: $(".daily-watch-title-active").attr("data-url"), gameid: $(".daily-watch-title-active").attr("data-gameid") },
+				type: 'post',
+				success: function(output) {
+					$(".daily-watch-xp-entry").html(output);
+					$(".myxp-video-goto-full").hide();
+					AttachActivityVideoEvents();
+					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
+					xpElement.css({"background-color":"#F44336"});
+					$(".daily-watch-title-xp").unbind();
+					$(".daily-watch-title-xp").on('click', function(){
+						$(".daily-watch-title").show();
+						$(".daily-watch-xp-entry").hide();
+						$(".daily-watch-xp-entry").html("");
+						xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+						xpElement.css({"background-color":"#0e4c7b"});
+						AttachWatchedDiscoverXP();
+					});
+				},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
+		}
  	});
 }
 
@@ -758,10 +766,14 @@ function DisplayQuestionsForDaily(){
  		}
  	});
 	$(".submit-daily-response").on('click', function(){
-		$(".daily-answers-container").css({"top":"100%"});
-		$(".daily-header-image").removeClass('daily-header-image-active');
-		$(".daily-answers-results-container").show();
-		SaveSubmission();
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			$(".daily-answers-container").css({"top":"100%"});
+			$(".daily-header-image").removeClass('daily-header-image-active');
+			$(".daily-answers-results-container").show();
+			SaveSubmission();
+		}
 	});
 	$(".cancel-daily-response").on('click', function(){
 		if($(".ResultsDougnut").length == 0){
