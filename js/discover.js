@@ -394,6 +394,9 @@ function AttachDiscoverHomeEvents(){
 		$(".daily-header-image").css({"background-size": "cover"});
 		DisplayFormResultsGraph();	
 	}
+	$(".daily-header-game-title").on('click', function(){
+		ShowGame($(this).attr("data-id"), $("#discover"));
+	});
  	$(".follow-from-discover").on("click", function(){
  		var userid = $(this).attr("data-id");
  		var username = $(this).attr("data-name");
@@ -739,6 +742,7 @@ function DisplayQuestionsForDaily(){
 	$(".daily-header-image").css({"background-size": "cover"});
 	$(".daily-answers-results-container").hide();
 	
+	$(".daily-pref-image,.submit-daily-response,.cancel-daily-response").unbind();
  	$(".daily-pref-image").on("click", function(){
  		if($(this).hasClass("daily-pref-image-active")){
  			$(this).removeClass("daily-pref-image-active");
@@ -753,24 +757,21 @@ function DisplayQuestionsForDaily(){
  			$(this).find(".daily-checkmark").css({"opacity":"1"});
  		}
  	});
-	
 	$(".submit-daily-response").on('click', function(){
 		$(".daily-answers-container").css({"top":"100%"});
-		//$(".daily-header-question").css({"top":"250px"});
-		//$(".daily-header-game-title").css({"top":"225px"});
 		$(".daily-header-image").removeClass('daily-header-image-active');
 		$(".daily-answers-results-container").show();
-		//$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
-		//$(".daily-header-image").css({"background-size": "cover"});
 		SaveSubmission();
 	});
 	$(".cancel-daily-response").on('click', function(){
+		if($(".ResultsDougnut").length == 0){
+			$(".daily-header-question").css({"top":"250px"});
+			$(".daily-header-game-title").css({"top":"225px"});
+			$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
+			$(".daily-header-image").css({"background-size": "cover"});
+		}
 		$(".daily-answers-container").css({"top":"100%"});
-		$(".daily-header-question").css({"top":"250px"});
-		$(".daily-header-game-title").css({"top":"225px"});
 		$(".daily-header-image").removeClass('daily-header-image-active');
-		$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
-		$(".daily-header-image").css({"background-size": "cover"});
 		$(".daily-answers-results-container").show();
 	});
 }
@@ -791,9 +792,15 @@ function SaveSubmission(){
 	}else if(formType == 'radio'){
 		formitemid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formitemid");
 		formid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formid");
-		objectid = $("input[type=radio][name=dailyresposne]:checked").parent().parent().attr("data-objid");
+		objectid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objid");
 		objectType = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
 		gameid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
+	}else if(formType == 'dropdown'){
+		formitemid = $("#daily-response-dropdown").parent().parent().attr("data-formitemid");
+		formid = $("#daily-response-dropdown").parent().parent().attr("data-formid");
+		objectid = $("#daily-response-dropdown").parent().parent().attr("data-objid");
+		objectType = $("#daily-response-dropdown").parent().parent().attr("data-objtype");
+		gameid = $("#daily-response-dropdown").parent().parent().attr("data-gameid");
 	}
 	
 	$.ajax({ url: '../php/webService.php',

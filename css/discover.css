@@ -112,8 +112,9 @@
 
 .daily-answers-results-container{
     position: absolute;
-    top: 180px;
+    top: 150px;
     left: 75px;
+    right: 75px;
 }
 
 .daily-header-image-active{
@@ -171,9 +172,9 @@
     top: 225px;
     position: absolute;
     left: 75px;
-    right: 75px;
     z-index: 10;
     text-align: left;
+	cursor: pointer;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;

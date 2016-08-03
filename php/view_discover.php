@@ -198,7 +198,7 @@ function DisplayDailyHeader($zdepth, $item){
 					<?php echo $item['QUESTION']; ?> 
 					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
 				</div>
-				<div class="daily-header-game-title">
+				<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
 					<?php echo $game->_title; ?>
 					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
 						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
