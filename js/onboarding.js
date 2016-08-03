@@ -206,6 +206,8 @@ function SaveOnboardingGamingPref(){
 	$(".onboarding-pref-image-active").each(function(){
 		prefs = prefs + $(this).parent().attr("data-objectid") + ",";	
 	});
+	if(prefs == '')
+		prefs = 'Platform_145,Platform_146,Platform_94';
 	$.ajax({ url: '../php/webService.php',
 	     data: {action: "SaveGamingPrefInfo", prefs: prefs },
 	     type: 'post',
