@@ -18,15 +18,17 @@ function ShowFormResults($formid){
 	}?>
 	></canvas>
 	<div class="analyze-doughnut-key">
-		<div class="analyze-doughnut-header" style='color:white;'>
-			Overall results from Reflection Point
-		</div>
-		<?php foreach($legend as $ref){ ?>
+		<?php 
+		$i = 0;
+		foreach($legend as $ref){ 
+			if($i == 0){ echo "<div style='float:left;'>"; }else if($i == 6){ echo "</div><div style='float:left;'>"; } ?>
 			<div class="analyze-doughnut-item">
 				<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
 				<div class="analyze-doughnut-desc" style='color:white;'><?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%</div>
 			</div>
-		<?php } ?>
+			<?php 
+			$i++;
+		} echo "</div>"; ?>
 	</div>
 	<?php
 }
