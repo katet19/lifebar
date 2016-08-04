@@ -229,9 +229,9 @@ function DisplayDailyHeader($zdepth, $item){
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'dropdown'){ ?>
 											<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
-											<option value="<?php echo $response["Choice"]; ?>"><?php echo $response["Choice"]; ?></option>
+											<option value="<?php echo $response["ID"]; ?>"><?php echo $response["Choice"]; ?></option>
 										<?php }else if($response['Type'] == 'checkbox'){ ?>
-											<input type="checkbox" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
+											<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'grid-single'){ ?>
 												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">

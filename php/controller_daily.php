@@ -3,13 +3,8 @@
 function SaveFormChoices($userid, $formid, $formitemid, $gameid, $objectid, $objectType){
 	$mysqli = Connect();
 	$updating=false;
-	if ($result = $mysqli->query("select * from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$updating = true;
-			$choiceID  = $row['ID'];
-		}
-	}
-	
+	$allitems = explode("||", $formitemid);
+
 	//Calculate Current Results
 	if ($result = $mysqli->query("select * from `FormResults` where `FormID` = '".$formid."'")) {
 		while($row = mysqli_fetch_array($result)){
@@ -24,15 +19,32 @@ function SaveFormChoices($userid, $formid, $formitemid, $gameid, $objectid, $obj
 	}else{
 		$results = '';
 	}
-	
-	//Save or Update the data
-	//if($updating){
-	//	$date = date('Y-m-d H:i:s');
-	//	$mysqli->query("UPDATE `FormResults` set `FormItemID`='".$formitemid."', `Date`='".$date."',`LastResults`='$results' where `ID` = '".$choiceID."'");
-	//}else{
-		$mysqli->query("insert into `FormResults` (`UserID`,`FormID`,`FormItemID`,`GameID`,`ObjectID`, `ObjectType`,`LastResults`) values ('$userid','$formid','$formitemid','$gameid','$objectid','$objectType','$results')");
-	//}
-	
+
+
+	if(sizeof($allitems) == 1){
+		if ($result = $mysqli->query("select * from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'")) {
+			while($row = mysqli_fetch_array($result)){
+				$updating = true;
+				$choiceID  = $row['ID'];
+			}
+		}
+
+		if($updating){
+			$date = date('Y-m-d H:i:s');
+			$mysqli->query("UPDATE `FormResults` set `FormItemID`='".$allitems[0]."', `Date`='".$date."',`LastResults`='$results' where `ID` = '".$choiceID."'");
+		}else{
+			$mysqli->query("insert into `FormResults` (`UserID`,`FormID`,`FormItemID`,`GameID`,`ObjectID`, `ObjectType`,`LastResults`) values ('$userid','$formid','".$allitems[0]."','$gameid','$objectid','$objectType','$results')");
+		}
+
+	}else if (sizeof($allitems) > 1){
+		$mysqli->query("delete from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'");
+		foreach($allitems as $myitem){
+			if($myitem != ''){
+				$mysqli->query("insert into `FormResults` (`UserID`,`FormID`,`FormItemID`,`GameID`,`ObjectID`, `ObjectType`,`LastResults`) values ('$userid','$formid','$myitem','$gameid','$objectid','$objectType','$results')");
+			}
+		}
+	}
+
 	Close($mysqli, $result);
 }
 

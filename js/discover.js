@@ -808,11 +808,35 @@ function SaveSubmission(){
 		objectType = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
 		gameid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
 	}else if(formType == 'dropdown'){
-		formitemid = $("#daily-response-dropdown").parent().parent().attr("data-formitemid");
+		formitemid = $("#daily-response-dropdown").val();
 		formid = $("#daily-response-dropdown").parent().parent().attr("data-formid");
 		objectid = $("#daily-response-dropdown").parent().parent().attr("data-objid");
 		objectType = $("#daily-response-dropdown").parent().parent().attr("data-objtype");
 		gameid = $("#daily-response-dropdown").parent().parent().attr("data-gameid");
+	}else if(formType == 'grid-multi'){
+		formitemid = '';
+		$(".daily-pref-image-active").each(function(){
+			formitemid = formitemid + $(this).parent().parent().attr("data-formitemid") + "||";
+			if(formid == 0){
+				formid = $(this).parent().parent().attr("data-formid");
+				objectid = $(this).parent().parent().attr("data-objid");
+				objectType = $(this).parent().parent().attr("data-objtype");
+				gameid = $(this).parent().parent().attr("data-gameid");
+			}
+		});	
+	}else if(formType == 'checkbox'){
+		formitemid = '';
+		$(".response-checkbox").each(function(){
+			if(this.checked){
+				formitemid = formitemid + $(this).parent().attr("data-formitemid") + "||";
+				if(formid == 0){
+					formid = $(this).parent().attr("data-formid");
+					objectid = $(this).parent().attr("data-objid");
+					objectType = $(this).parent().attr("data-objtype");
+					gameid = $(this).parent().attr("data-gameid");
+				}
+			}
+		});		
 	}
 	
 	$.ajax({ url: '../php/webService.php',
