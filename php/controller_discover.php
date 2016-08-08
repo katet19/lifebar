@@ -12,6 +12,7 @@ function BuildDiscoverFlow($userid){
 		$dAtts['ID'] = $daily['ID'];
 		$dAtts['OBJECTID'] = $daily['ObjectID'];
 		$dAtts['OBJECTTYPE'] = $daily['OBJECTTYPE'];
+		$dAtts['FINISHED'] = $daily['Finished'];
 		$dAtts['ITEMS'] = $daily["Items"];
 		$dItems[] = $dAtts;
 	
@@ -204,12 +205,20 @@ function GetUserPrefs($userid, $mysqli){
 
 function GetDaily($mysqli){
 	$date = Date('Y-m-d');
-	//$query = "SELECT * FROM  `Daily` WHERE  `Scheduled` =  '".$date."'";
-	$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' order by Rand() limit 0,1";
+	$query = "SELECT * FROM  `Forms` WHERE `FormType` = 'Daily' and `Daily` =  '".$date."'";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$daily = $row;
 		}
+	}
+	
+	if(sizeof($daily) == 0 ){
+		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' and `Daily` = '0000-00-00' order by Rand() limit 0,1";
+		if ($result = $mysqli->query($query)) {
+			while($row = mysqli_fetch_array($result)){
+				$daily = $row;
+			}
+		}		
 	}
 	
 	if(sizeof($daily) > 0 ){

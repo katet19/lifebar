@@ -191,6 +191,13 @@ function DisplayHorizontalWatchList($zdepth, $item){
 
 function DisplayDailyHeader($zdepth, $item){ 
 	$game = GetGame($item['OBJECTID']);
+	$showsplrwrng = false;
+	if($item['FINISHED'] == 'Yes'){
+		$xp = HasFinished($_SESSION['logged-in']->_id, $game->_id);
+		if($xp < 1)
+			$showsplrwrng = true;
+	}
+	
 	?>
 	<div class='row' style='z-index:<?php echo $zdepth--; ?>'>
 	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
@@ -213,6 +220,7 @@ function DisplayDailyHeader($zdepth, $item){
 					?>
 				</div>
 				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
+					<?php if(!$showsplrwrng){ ?>
 					<div class="row" style='margin-top:175px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
 							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
@@ -259,11 +267,23 @@ function DisplayDailyHeader($zdepth, $item){
 							?>
 							<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
 						</div>
-					<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
-						<div class='btn submit-daily-response'>Save</div>
-						<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
+							<div class='btn submit-daily-response'>Save</div>
+							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+						</div>
 					</div>
-					</div>
+					<?php }else{ ?>
+						<div class="row" style='margin-top:175px;'>
+							<div class="col s10 offset-s1" style='text-align:left;'>
+								<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
+									<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
+									Spoiler Warning!
+								</div>
+								<div style='font-size: 1.25em;font-weight: 400;margin-bottom: 40px;margin-top: -25px;'>You haven't finished this game yet. This reflection point will spoil your playthrough until you finish.</div>
+								<div class="btn view-game-spoiler" data-id="<?php echo $game->_gbid; ?>">Update your experience now</div>
+							</div>
+						</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

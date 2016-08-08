@@ -394,7 +394,7 @@ function AttachDiscoverHomeEvents(){
 		$(".daily-header-image").css({"background-size": "cover"});
 		DisplayFormResultsGraph();	
 	}
-	$(".daily-header-game-title").on('click', function(){
+	$(".daily-header-game-title, .view-game-spoiler").on('click', function(){
 		ShowGame($(this).attr("data-id"), $("#discover"));
 	});
  	$(".follow-from-discover").on("click", function(){
