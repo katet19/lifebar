@@ -229,23 +229,24 @@ function DisplayDailyHeader($zdepth, $item){
 							<?php 
 								$imagehorizontal = false;
 								$horizontal = false;
+								$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
 								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>
 									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
 										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 										<?php if($response['Type'] == 'radio'){ ?>
-											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
+											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'dropdown'){ ?>
 											<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
-											<option value="<?php echo $response["ID"]; ?>"><?php echo $response["Choice"]; ?></option>
+											<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
 										<?php }else if($response['Type'] == 'checkbox'){ ?>
-											<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes'){ ?> checked <?php } ?> >
+											<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
 											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
 										<?php }else if($response['Type'] == 'grid-single'){ ?>
 												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-													<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+													<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 														<i class="daily-checkmark fa fa-check"></i>
 														<div class="daily-pref-image-title">
 															<?php echo $response["Choice"]; ?>
@@ -254,7 +255,7 @@ function DisplayDailyHeader($zdepth, $item){
 												</div>
 										<?php }else if($response['Type'] == 'grid-multi'){ ?>
 												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-													<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+													<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
 														<i class="daily-checkmark fa fa-check"></i>
 														<div class="daily-pref-image-title">
 															<?php echo $response["Choice"]; ?>

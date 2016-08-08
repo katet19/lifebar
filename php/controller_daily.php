@@ -48,6 +48,17 @@ function SaveFormChoices($userid, $formid, $formitemid, $gameid, $objectid, $obj
 	Close($mysqli, $result);
 }
 
+function GetFormChoices($userid, $formid){
+	$mysqli = Connect();
+	$choices = array();
+	if ($result = $mysqli->query("select `FormItemID` from `FormResults` where `UserID` = '".$userid."' and `FormID` = '".$formid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$choices[] = $row['FormItemID'];	
+		}
+	}
+	return $choices;
+}
+
 function HasFormResults($userid, $formid){
 	$mysqli = Connect();
 	$done = false;
