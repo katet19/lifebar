@@ -972,6 +972,15 @@ function GetShareLink($userid, $type, $otherid){
 			$share = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
 			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
 		}
+	}else if($type == "daily"){
+		$url = "http://lifebar.io/1/u.php?i=daily";
+		$mysqli = Connect();
+		$daily = GetDaily($mysqli);
+		$game = GetGame($daily['ObjectID']);
+		Close($mysqli, $result);
+		$header = "Select how you would like to share the Daily Reflection Point";
+		$share = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!");
+		$shareEmail = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!".$url);	
 	}else if($type == "event"){
 		$url = "http://lifebar.io/1/u.php?i=e".$otherid;
 		$event = GetEvent($otherid);

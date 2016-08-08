@@ -750,7 +750,7 @@ function DisplayQuestionsForDaily(){
 	$(".daily-header-image").css({"background-size": "cover"});
 	$(".daily-answers-results-container").hide();
 	
-	$(".daily-pref-image,.submit-daily-response,.cancel-daily-response").unbind();
+	$(".daily-pref-image,.submit-daily-response,.cancel-daily-response, .share-daily-response").unbind();
  	$(".daily-pref-image").on("click", function(){
  		if($(this).hasClass("daily-pref-image-active")){
  			$(this).removeClass("daily-pref-image-active");
@@ -765,6 +765,9 @@ function DisplayQuestionsForDaily(){
  			$(this).find(".daily-checkmark").css({"opacity":"1"});
  		}
  	});
+ 	$(".share-daily-response").on("click", function(){
+		ShowShareModal("daily", '');
+	});
 	$(".submit-daily-response").on('click', function(){
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();

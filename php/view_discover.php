@@ -223,7 +223,9 @@ function DisplayDailyHeader($zdepth, $item){
 					<?php if(!$showsplrwrng){ ?>
 					<div class="row" style='margin-top:175px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
-							<div class="daily-header-subquestion-hidden"><?php echo $item['SUBQUESTION']; ?></div>
+							<div class="daily-header-subquestion-hidden">
+								<?php echo $item['SUBQUESTION']; ?>
+							</div>
 							<?php 
 								$imagehorizontal = false;
 								$horizontal = false;
@@ -270,6 +272,8 @@ function DisplayDailyHeader($zdepth, $item){
 						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
 							<div class='btn submit-daily-response'>Save</div>
 							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+							<br>
+							<div class="btn share-daily-response purple"><i class="mdi-social-share left"></i> Share</div>
 						</div>
 					</div>
 					<?php }else{ ?>
