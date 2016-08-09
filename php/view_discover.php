@@ -215,8 +215,9 @@ function DisplayDailyHeader($zdepth, $item){
 				</div>
 				<div class="daily-answers-results-container">
 					<?php 
+						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
 						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
-							ShowFormResults($item['ID']);
+							ShowFormResults($item['ID'], $choicesMade);
 					?>
 				</div>
 				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
@@ -229,7 +230,6 @@ function DisplayDailyHeader($zdepth, $item){
 							<?php 
 								$imagehorizontal = false;
 								$horizontal = false;
-								$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
 								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
 								foreach($item['ITEMS'] as $response){
 									?>

@@ -1,6 +1,6 @@
 <?php 
 
-function ShowFormResults($formid){
+function ShowFormResults($formid, $choices){
 	$results = GetFormResults($formid);
 	?>
 	<canvas class="ResultsDougnut analyze-doughnut-relational" 
@@ -12,7 +12,7 @@ function ShowFormResults($formid){
 			echo "data-ed".$i."='".$item['Choice']."' ";
 			echo "data-ec".$i."='".$colors[$i][0]."' ";
 			echo "data-ech".$i."='".$colors[$i][1]."' ";
-			$legend[$i] = [$item['TOTAL'], $item['Choice'], $colors[$i][0] ];
+			$legend[$i] = [$item['TOTAL'], $item['Choice'], $colors[$i][0], $item['ID'] ];
 			$i++;
 		}
 	}?>
@@ -23,8 +23,15 @@ function ShowFormResults($formid){
 		foreach($legend as $ref){ 
 			if($i == 0){ echo "<div style='float:left;'>"; }else if($i == 6){ echo "</div><div style='float:left;'>"; } ?>
 			<div class="analyze-doughnut-item">
-				<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
-				<div class="analyze-doughnut-desc" style='color:white;'><?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%</div>
+				<?php if(sizeof($choices) > 0 && in_array($ref[3], $choices)){ ?>
+					<i class='fa fa-check' style='color:<?php echo $ref[2]; ?>;display:inline-block;background: rgba(255,255,255,0.8); border-radius: 50%;padding: 1px;' ></i>
+				<?php 
+				}else{ ?>
+					<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
+				<?php } ?>
+				<div class="analyze-doughnut-desc" style='color:white;'>
+					<?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%
+				</div>
 			</div>
 			<?php 
 			$i++;
