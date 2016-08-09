@@ -1,6 +1,33 @@
 <?php
 require_once "includes.php";
 
+function AddInviteEmail($user, $email, $custom){
+	$subject = $user->_username." invited you to Lifebar!";
+	$from = $user->_username." [via Lifebar]";
+	$link = "http://lifebar.io";
+	$message = $message."<h1 style='color:#0a67a3;'>".$user->_username." wants you to join them on Lifebar!</h1>";
+	if($custom != ''){
+		$message = $message."<p style='font-size:16px;font-weight:400;'>".$user->_username." says:</p>";
+		$message = $message."<p style='font-size:16px;font-style:italic;text-align:left;'>".$custom."</p><br><br>";
+	}
+	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>Sign Up!</a>";
+	$message = $message."<p style='font-size:1.5em;text-align:left;'>Lifebar will help you <b>discover</b> new games, <b>share</b> your experiences and <b>visualize</b> a lifetime of gaming.</p>";
+	$message = $message."<div style='text-align:left;'>";
+	$message = $message."<p style='color:#0a67a3;font-size:20px;'>Play Games. Watch Games. <b>Earn XP!</b></p>";
+	$message = $message."Whether you played a game or watched others play it, your time spent informs your thoughts on that game. At Lifebar we acknowledge they are different types of experiences, but want to recognize the way we experience games is changing rapidly and capturing that variety is important.<br><br>";
+	$message = $message."<p style='color:#0a67a3;font-size:20px;'>A profile that <b>reflects</b> your gaming life</p>";
+	$message = $message."As you enter gaming experiences your profile will display franchises and developers you tend to favor, what you have recently played/watched, your favorite games, anticipated new releases and more!<br><br>";
+	$message = $message."<p style='color:#0a67a3;font-size:20px;'>Don't aggregate. <b>Personalize.</b></p>";
+	$message = $message."Your activity feed will show only the critic reviews that you trust and enjoy reading. As your friends play games, share their feelings about games they have watched, bookmark games for later and update their thoughts you will see it all on your personalized activity feed.<br><br>";
+	$message = $message."<p style='color:#0a67a3;font-size:20px;font-weight:500;'>Try out the <b>beta</b>!</p>";
+	$message = $message."Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. Please join us in building a service that captures what we experience, why we experience it and how we experience video games!<br><br>";
+	$message = $message."</div>";
+	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 15px;margin-bottom:30px;display:inline-block;'>Start building your Lifebar today!</a><br>";
+	$message = $message."Thanks,<br>The Lifebar Team<br><br>";
+	InsertToEmailQue(trim($email), $from, $user->_id, $subject, $message, 'Invite', '');
+	
+}
+
 function AddAgreedEmail($gameid, $userid, $agreedwith, $eventid){
 	if(UserIsSub($agreedwith, '1up')){
 		$activeUser = GetUser($userid);

@@ -3,6 +3,63 @@ require_once "includes.php";
 
 //MilestonesForCritics(0);
 
+function GetOnboardingMilestones(){
+	$mysqli = Connect();
+	$milestones = array();
+	
+	//Platforms
+	$platforms = array();
+		//Must have
+		$platforms[] = 145;	$platforms[] = 146;	$platforms[] = 94;	$platforms[] = 139;	$platforms[] = 117;
+		//Extra
+		$platforms[] = 20;	$platforms[] = 35;	$platforms[] = 96;	$platforms[] = 43;	$platforms[] = 9;	$platforms[] = 22;
+		$platforms[] = 6;	$platforms[] = 19;	$platforms[] = 21;	$platforms[] = 36;	$platforms[] = 4;
+		
+	//Franchises
+	$franchises = array();
+		$franchises[] = 82; $franchises[] = 654; $franchises[] = 173; $franchises[] = 326; $franchises[] = 383; $franchises[] = 293; $franchises[] = 263; $franchises[] = 156;
+		$franchises[] = 194; $franchises[] = 6; $franchises[] = 331; $franchises[] = 186; $franchises[] = 1; $franchises[] = 491; $franchises[] = 2; $franchises[] = 397;
+		$franchises[] = 456; $franchises[] = 49; $franchises[] = 7; $franchises[] = 9; $franchises[] = 267; $franchises[] = 125; $franchises[] = 565; $franchises[] = 3; $franchises[] = 609;
+		$franchises[] = 32; $franchises[] = 46; $franchises[] = 240; $franchises[] = 82; $franchises[] = 159; $franchises[] = 82; $franchises[] = 1609; $franchises[] = 1575; $franchises[] = 523;
+		$franchises[] = 338; $franchises[] = 10;
+		
+	//Developers
+	$developers = array();
+		$developers[] = 476; $developers[] = 827; $developers[] = 463; $developers[] = 397; $developers[] = 1088; $developers[] = 98; $developers[] = 1374; $developers[] = 347; $developers[] = 104;
+		$developers[] = 1408; $developers[] = 367; $developers[] = 1559; $developers[] = 6753; $developers[] = 1488;  $developers[] = 3342; $developers[] = 1412; $developers[] = 1615;
+		$developers[] = 549; $developers[] = 1526; $developers[] = 2545; $developers[] = 3899; $developers[] = 1379; $developers[] = 149; $developers[] = 2215; $developers[] = 6319;
+		$developers[] = 1082; $developers[] = 340; $developers[] = 4880; $developers[] = 174; $developers[] = 293;
+		
+	
+	if ($result = $mysqli->query("select * from `Milestones` where (`Category` = 'Developers' and `ObjectID` in (".implode(",", $developers).")) or (`Category` = 'Platform' and `ObjectID` in (".implode(",", $platforms).")) or (`Category` = 'Franchises' and `ObjectID` in (".implode(",", $franchises).")) order by rand()")) {
+		while($row = mysqli_fetch_array($result)){
+			$milestone = new Milestone($row['ID'],
+			$row['Name'],
+			$row['Description'],
+			$row['Type'],
+			$row['Image'],
+			$row['Difficulty'],
+			$row['Validation'],
+			$row['Level1'],
+			$row['Level2'],
+			$row['Level3'],
+			$row['Level4'],
+			$row['Level5'],
+			$row['Enabled'],
+			$row['Parent'],
+			$row['Category'],
+			null,
+			$row['ObjectID']
+			);
+			$milestones[] = $milestone;
+		}
+	}
+	
+	
+	Close($mysqli, $result);
+	return $milestones;
+}
+
 function MilestonesForCritics($i){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Users` where `Access` = 'Journalist' LIMIT ".$i.",10")) {
@@ -271,6 +328,34 @@ function GetKnowledgeGames($knowledgeid, $userid){
 	return $myxp;
 }
 
+function GetKnowledgeGamesForDiscover($knowledgeid, $userid){
+	$mysqli = Connect();
+	$myxp = array();
+	$query = "select *, (select `Name` from `Link_Franchises` l where l.`GBID` = '".$knowledgeid."') as 'RealName' from `Game_Franchises` f, `Games` g where f.`FranchiseID` = '".$knowledgeid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($userid);
+			$experience = new Experience(-1,
+				$row['RealName'],
+				$user->_last,
+				$user->_username,
+				$userid,
+				$row["ID"],
+				GetGame($row["ID"], $mysqli),
+				0,
+				'',
+				'',
+				'',
+				$row["Owned"],
+				$row["BucketList"],
+				$row["AuthenticXP"]);
+				$myxp[] = $experience; 
+		}
+	}
+	Close($mysqli, $result);
+	return $myxp;
+}
+
 function GetPlatformMilestones($userid){
 	$mysqli = Connect();
 	$milestones = array();
@@ -344,6 +429,35 @@ function GetPlatformGames($platformid, $userid){
 	return $myxp;
 }
 
+function GetPlatformGamesForDiscover($platformid, $userid){
+	$mysqli = Connect();
+	$myxp = array();
+	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 6";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($userid);
+			$experience = new Experience(-1,
+				$row['RealName'],
+				$user->_last,
+				$user->_username,
+				$userid,
+				$row["ID"],
+				GetGame($row["ID"], $mysqli),
+				0,
+				'',
+				'',
+				'',
+				$row["Owned"],
+				$row["BucketList"],
+				$row["AuthenticXP"]);
+				$myxp[] = $experience; 
+		}
+	}
+	Close($mysqli, $result);
+	return $myxp;
+}
+
+
 function GetDeveloperMilestones($userid, $limit, $type){
 	$mysqli = Connect();
 	$milestones = array();
@@ -413,17 +527,16 @@ function GetDeveloperMilestoneForUser($milestoneid, $userid){
 	return $milestone;
 }
 
-function GetDeveloperGames($devid, $userid){
+function GetDeveloperGamesForDiscover($devid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = "select * from `Game_Developers` f, `Games` g where f.`DeveloperID` = '".$devid."' and g.`GBID` = f.`GBID`";
+	$query = "select *, (select `Name` from `Link_Developers` l where l.`GBID` = '".$devid."') as 'RealName' from `Game_Developers` f, `Games` g where f.`DeveloperID` = '".$devid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."')";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$xp = GetExperienceForUserComplete($userid, $row['ID'], $mysqli);
 			if($xp->_id == ""){
 				$user = GetUser($userid);
 				$experience = new Experience(-1,
-					$user->_first,
+					$row['RealName'],
 					$user->_last,
 					$user->_username,
 					$userid,
@@ -437,8 +550,6 @@ function GetDeveloperGames($devid, $userid){
 					$row["BucketList"],
 					$row["AuthenticXP"]);
 					$myxp[] = $experience; 
-			}else{
-				$myxp[] = $xp;
 			}
 		}
 	}

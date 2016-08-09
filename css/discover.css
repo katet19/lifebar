@@ -11,6 +11,497 @@
 	margin-top:1em;
 }
 
+.discover-gnow-card{
+	padding: 1em !important;
+    text-align: left;
+    overflow: hidden;
+    margin-top:2em;
+    position: relative;
+    background-color: white;
+}
+
+.discover-gnow-header{
+    margin: 0 1em 0 0.5em;
+    font-size: 1.5em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.discover-gnow-title{
+    padding: 0 1em 0.5em;
+    font-weight: bold;	
+}
+
+.discover-gnow-action{
+	float: right;
+    margin-bottom: 0;
+    font-weight: bold;
+    margin-top: 25px;
+    color: #2196F3
+}
+
+.daily-watch-title{
+    text-align: left;
+    position:relative;
+    font-size: 1.2em;
+    padding: 12px 45px 12px 10px;
+    background-color: #ddd;
+    width: 100%;
+    height: 50px;
+    color: rgba(0, 0, 0, 0.87);
+    overflow: hidden;
+    margin-bottom: 6px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.daily-watch-title:hover{
+	background-color: #167ac6;
+	color:#fff;
+}
+
+.daily-watch-title-active{
+	background-color: #167ac6;
+	color:#fff;
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.daily-watch-video-box{
+	display:none;
+}
+
+.daily-watch-video-box-active{
+	display:inline-block;	
+}
+
+.daily-watch-title-xp{
+	display:none;
+	position: absolute;
+    right: 0;
+    color: white;
+    top: 0;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: #0e4c7b;
+    padding: 5px 10px;
+}
+
+.daily-watch-title-xp i{
+    font-size: 1.5em;
+    vertical-align: middle;
+    margin-left:5px;
+}
+
+.daily-header-image{
+    width: 100%;
+    height: 400px;
+    position:relative;
+    overflow:hidden;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.daily-answers-results-container{
+    position: absolute;
+    top: 150px;
+    left: 75px;
+    right: 75px;
+}
+
+.daily-header-image-active{
+	height:100vh;
+}
+
+.daily-header-banner{
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.daily-header-question{
+    font-size: 3em;
+    color: white;
+    font-weight: 500;
+    position: absolute;
+    line-height: 45px;
+    top: 250px;
+    z-index: 10;
+    left: 75px;
+    right:75px;
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.daily-header-question-hidden{
+    font-size: 3em;
+    color: white;
+    font-weight: 500;
+    line-height: 45px;
+    margin-left: 0;
+    text-align: left;
+}
+
+.daily-header-subquestion-hidden{
+	font-size: 1.25em;
+    color: white;
+    margin-left: 0;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.daily-header-game-title{
+    color: white;
+    font-weight: bold;
+    top: 225px;
+    position: absolute;
+    left: 75px;
+    z-index: 10;
+    text-align: left;
+	cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.daily-header-game-title-hidden{
+    color: white;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: 0px;
+    text-align: left;
+}
+
+.daily-reply-button{
+	background-color: #2196F3 !important;
+    padding: 6px 8px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    cursor: pointer;
+    position: relative;
+    top: -5px;
+}
+
+.daily-answers-container{
+	position:absolute;
+	width:100%;
+	left:0;
+	top:100%;
+    height:100%;
+    z-index: 5;
+	color:white;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    overflow-y:auto;
+}
+
+.share-daily-response{
+    color: white;
+    cursor: pointer;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    margin-top: 10px;
+    padding-left: 0;
+    text-align: left;
+    font-weight: 500;
+    margin-left: 35px;
+}
+
+.daily-pref-image{
+    width: 100%;
+    height: 125px;
+    background-color: blue;
+    position: relative;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.daily-response-label-radio:before{
+	border: 2px solid #fff !important;
+}
+
+.daily-item-row{
+    text-align: left;
+    display: block;
+    width: 100%;
+    line-height:35px;
+}
+
+.daily-item-row .select-wrapper .select-dropdown{
+	color: white;
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 3rem;
+    height: 3rem;
+    border-bottom:3px solid white;
+    background-color:rgba(255,255,255,0.4);
+    padding: 0 10px;
+}
+
+.daily-item-row .select-wrapper .mdi-navigation-arrow-drop-down{
+	color: white;
+    font-size: 50px;
+    top: 5px;
+}
+
+.daily-response-label, .daily-response-label-radio{
+	color:white !important;
+	font-weight:400;
+	font-size:1.5em !important;
+}
+
+.daily-repsonse-items-with-meta{
+	color:green;
+	font-weight:400;
+}
+
+.daily-response-item-small{
+	width:100px !important;
+	display:inline-block !important;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.daily-resp-grid .knowledge-container .daily-pref-image{
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow: hidden;
+}
+.daily-resp-grid .knowledge-container .daily-pref-image:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 100%;
+  top: 0;
+  background: #2196F3;
+  height: 6px;
+  -webkit-transition-property: right;
+  transition-property: right;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.daily-resp-grid .knowledge-container .daily-pref-image:hover:before, .daily-resp-grid .knowledge-container .daily-pref-image:focus:before, .daily-resp-grid .knowledge-container .daily-pref-image:active:before {
+  right: 0;
+}
+
+.daily-pref-image-active .daily-pref-image-title {
+	background-color: #2196F3;
+    padding: 20px 5px;
+}
+
+.daily-checkmark{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    color: white;
+    font-size: 1em;
+    opacity: 0;
+    text-align: center;
+    background-color: #2196F3;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding-top: 4px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.daily-pref-image-title {
+    color: white;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    font-weight: 500;
+    height: auto;
+    font-size: 1em;
+    line-height:16px;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    padding: 10px 5px;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.daily-response-item-dynm-2{
+	width:45%;
+	height:300px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-2{
+	height:300px;
+}
+
+.daily-response-item-dynm-3{
+	width:30%;
+	height:300px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-3{
+	height:300px;
+}
+
+.daily-response-item-dynm-4{
+	width:22%;
+	height:300px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-4{
+	height:300px;
+}
+
+.daily-response-item-dynm-5{
+	width:18%;
+	height:300px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-5{
+	height:300px;
+}
+
+.daily-response-item-dynm-6{
+	width:30%;
+	height:150px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-6{
+	height:150px;
+}
+
+.daily-response-item-dynm-7, .daily-response-item-dynm-8{
+	width:22%;
+	height:150px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-7, .daily-response-item-dynm-h-8{
+	height:150px;
+}
+
+.daily-response-item-dynm-9, .daily-response-item-dynm-10{
+	width:18%;
+	height:150px;
+	display:inline-block;
+}
+
+.daily-response-item-dynm-h-9, .daily-response-item-dynm-h-10{
+	height:150px;
+}
+
+.discover-collection-game-list{
+    position: absolute;
+    top: 100px;
+    right: 2em;
+    width: 65%;
+    height: 375px;
+}
+
+.discover-collection-header{
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.discover-collection-game-image{
+    float: right;
+    display: inline-block;
+    width: 30%;
+    margin: 5px;
+    height: 115px;
+}
+
+.discover-collection-game-image-view{
+    display: inline-block;
+    width: 30%;
+    position: absolute;
+    height: 115px;
+    bottom: 5px;
+    padding-top: 40px;
+    cursor: pointer;
+    right: 5px;
+    background-color: #2196F3;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.discover-collection-game-image-view span{
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.discover-collection-game-image-view:hover{
+	background-color: #0D47A1;
+}
+
+.discover-collection-game-image:hover{
+	opacity:0.9;
+}
+
+.discoverCollectionAuthor{
+	display:inline-block;
+	color:white;
+	font-size:0.7em;
+}
+
 .card-agree-quote{
     color: white;
     font-size: 1.25em;
@@ -299,7 +790,7 @@
 
 .discoverCategoryHeader{
 	font-size: 1.75em;
-	margin: 2em 0 1em 0.5em;
+	margin: 2em 0 1.5em 0.5em;
 	text-align: left;
 }
 
@@ -319,9 +810,10 @@
 .ViewBtn{
 	position: absolute;
 	display: inline-block;
-	right: 5%;
 	font-weight: 300;
-	font-size: 0.5em;
+	font-size: 0.6em;
+	top: 0px;
+    right: 0px;
 }
 
 .ViewBtnCollection{
@@ -541,20 +1033,28 @@
 }
 
 .discoverCatName{
-	display: inline-block;
+    display: inline-block;
     top: -0.25em;
     position: relative;
-    width: 80%;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
 .discoverCatSubName{
     position: absolute;
     font-size: 0.6em;
-    top: 2em;
+	top: 45px;
 }
 
 .active-collection-game-icon{
 	z-index:10001;
+}
+
+.follow-from-discover{
+    padding: 0 1rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
 @media only screen and (max-width : 992px) {
@@ -611,7 +1111,7 @@
 	}
 	
 	.discover-row{
-		margin-top:6em;
+    	margin-top: 10px;
 	}
 	
 	#discover-header .row .col .tabs .tab a:hover{
@@ -690,7 +1190,56 @@
 		padding: 8px 24px 2px 16px !important;
 	}
 	.discoverCatSubName{
-	    top: 2.5em;
-    	line-height: 1.2em;
+		top: 30px;
+	}
+	.daily-header-question{
+		font-size:1.5em;
+		line-height: 25px;
+	}
+	.discover-collection-game-image, .discover-collection-game-image-view{
+		width: 60%;
+	}
+	.follow-from-discover{
+		padding: 0 1rem;
+	    position: absolute;
+	    bottom: 0px;
+	    display: block;
+	    left: 125px;
+	    line-height: 30px;
+	    height: 30px;
+	    top: auto;
+	}
+	.daily-watch-title-xp{
+		padding: 7px 10px;
+	}
+	.daily-watch-video-box{
+		margin-top: 20px;
+	}
+	.discover-category-collection{
+		padding:0 !important;
+	}
+	.discover-collection-game-image-view span{
+		line-height: 16px;
+	}
+	.daily-header-game-title, .daily-header-question{
+		left:20px;
+		right:20px;
+	}
+	.daily-answers-results-container{
+		left:20px;
+		right:20px;
+		top: 180px;
+	}
+	.daily-answers-results-container .analyze-doughnut-key{
+		width: calc(100% - 150px);
+	}
+	.daily-reply-button{
+		padding: 4px 6px;
+	}
+	.daily-response-label, .daily-response-label-radio{
+		font-size:1em !important;
+	}
+	.daily-item-row{
+		line-height: 25px;
 	}
 }

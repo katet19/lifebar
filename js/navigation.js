@@ -27,8 +27,12 @@ function AttachTabLoadingEvents(){
 		  }else if($(this).attr('href') == "#activity"){
 		  	ShowActivityHome();
 		  }else if($(this).attr('href') == "#profile"){
-  			var id = $(".userContainer").attr("data-id");
-			ShowUserProfile(id, true);
+			if($("#loginButton").length > 0){
+				$('#signupModal').openModal(); $("#username").focus();
+			}else{
+				var id = $(".userContainer").attr("data-id");
+				ShowUserProfile(id, true);
+			}
 		  }
 	  });
 	  $(".userNotificiations").on("click", function(){

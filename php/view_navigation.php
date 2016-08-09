@@ -15,6 +15,10 @@ function DisplayHeaderNavigation(){ ?>
 			<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 		</div>
 	</div>
+	<div id='onboarding-header'>
+		<div class="onboarding-progress">Step: 1 of 3</div>
+  		<div class="btn onboarding-next" style='color:#D32F2F;background-color:white;font-weight:bold;-webkit-box-shadow:none;box-shadow:none;margin-right: 30px;float:right;'>Next</div>
+	</div>
 	<div id="navigation-header">
 		<div class="row" style='margin:0;'>
 			<div class="col s3 m2 l3">

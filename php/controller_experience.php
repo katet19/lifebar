@@ -2523,10 +2523,10 @@ function HasUserExperienced($userid, $gameid, $pconn = null){
 	return $hasexp;
 }
 
-function HasFinished($user, $gameid, $date){
+function HasFinished($userid, $gameid){
 	$mysqli = Connect();
 	$hasexp = false;
-	if ($result = $mysqli->query("select * from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' and (`Completed` = '100' or `Completed` = '101') and `Date` = '".$date."' and `Type` = 'Played'  Limit 0,1")) {
+	if ($result = $mysqli->query("select * from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' and ((`Completed` = '100' or `Completed` = '101')  and `Type` = 'Played') or (`Type` = 'Watched' and (`Length` = 'Watched a speed run' or `Length` like 'Watched a complete%')) Limit 0,1")) {
 		while($row = mysqli_fetch_array($result)){
 			$hasexp = $row["ID"];
 		}

@@ -54,34 +54,43 @@
 	display:block;
 }
 
-.user-discover-card .card-image{
+.user-follow-card{
+	position: relative;
+	text-align: left;
+	background-color: #474747;
+	height: 185px;
+	display:block;
+	cursor: default;
+}
+
+.user-discover-card .card-image, .user-follow-card .card-image{
 	height:120px !important;
 }	
 
-.user-discover-card .card-content{
+.user-discover-card .card-content, .user-follow-card .card-content{
 	background-color: white;
 	height: 65px;
 	padding: 10px 24px 8px 16px !important;
 }
 
-.user-discover-card .card-reveal{
+.user-discover-card .card-reveal, .user-follow-card .card-reveal{
 	padding: 10px 24px 8px 16px !important;
 	z-index:4;
 }
 
-.user-discover-card .card-content .card-title{
+.user-discover-card .card-content .card-title, .user-follow-card .card-content .card-title{
 	font-size: 1em;
 	line-height: 15px;
 	font-weight: 500;
 }
 
-.user-discover-card .card-reveal .card-title{
+.user-discover-card .card-reveal .card-title, .user-follow-card .card-reveal .card-title{
 	font-size:1em;
 	line-height: 17px;
 	font-weight: 500;
 }
 
-.user-discover-card .card-image{
+.user-discover-card .card-image, .user-follow-card .card-image{
 	background-color:#F1F5F8;
 }
 
@@ -533,6 +542,25 @@
     font-weight: 500;
 }
 
+.user-follow-card-image{
+	width:90px;
+	border-radius:50%;
+	margin-left: auto;
+	margin-top:15px;
+	height:90px;
+}
+
+.user-follow-card-title{
+	position: relative !important;
+	right: 0 !important;
+	display: inline-block !important;
+	width: 50% !important;
+	left: 0 !important;
+	padding: 16px !important;
+	text-align: left !important; 
+	cursor: default !important;
+}
+
 @media only screen and (max-width : 992px) {
 	.critic-quote{
 		padding-left:70px;
@@ -542,6 +570,18 @@
 	}
 }
 @media only screen and (max-width : 600px) {
+	.user-follow-card-image{
+		width:90px;
+		border-radius:50%;
+		margin-left: 0;
+		margin-right:auto !important;
+		margin-top:15px;
+	}
+	.user-follow-card-title{
+	    right: auto !important;
+	    width: calc(100% - 100px)!important;
+	    left: auto !important;
+	}
 	.social-login-btn{
 		font-size: 20px;
 	    border-radius: 50%;

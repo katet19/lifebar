@@ -64,6 +64,9 @@ function DeployJS($version){
         $import = file_get_contents("js/import.js");
 		fwrite($deployed, $import);
 		
+        $onboarding = file_get_contents("js/onboarding.js");
+		fwrite($deployed, $onboarding);
+		
 		echo "Finished deploying JS";
 		fclose($deployed);
 	}else{

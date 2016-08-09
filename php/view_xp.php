@@ -213,71 +213,6 @@ function ShowEditPlayed($exp){
 		ShowDelete($xp->_id);
 	} ?>
 </div>
-<br>
-<div class="myxp-edit-container z-depth-1">
-	<div class="row">
-		<div class="col s12 myxp-sentence" style="margin-left: 20px;">
-			My played details	
-		</div>
-	</div>
-	<div class="row myxp-form-box">
-		<div class="col s12">
-			<label class="myxp-form-box-header">Modes experienced</label>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="singleplayer" <?php if($xp->_mode == "Single Player" || $xp->_mode == "Single and Multiplayer"){ echo "checked"; } ?> />
-				<label for="singleplayer">Single Player</label>
-			</div>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="multiplayer" <?php if($xp->_mode == "Multiplayer" || $xp->_mode == "Single and Multiplayer"){ echo "checked"; } ?> />
-				<label for="multiplayer">Mutliplayer</label>
-			</div>
-		</div> 
-	</div>
-	<div class="row myxp-form-box">
-		<div class="col s12">
-			<label class="myxp-form-box-header">Played before release</label>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="alpha" <?php if($xp->_alpha == "1"){ echo "checked"; } ?> />
-				<label for="alpha">Alpha</label>
-			</div>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="beta" <?php if($xp->_beta == "1"){ echo "checked"; } ?>/>
-				<label for="beta">Beta</label>
-			</div>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="earlyaccess" <?php if($xp->_earlyaccess == "1"){ echo "checked"; } ?>/>
-				<label for="earlyaccess">Early Access</label>
-			</div>
-		</div> 
-	</div>
-	<div class="row myxp-form-box">
-		<div class="col s12">
-			<label class="myxp-form-box-header">Played a small slice of the game</label>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="demo" <?php if($xp->_demo == "1"){ echo "checked"; } ?>/>
-				<label for="demo">Demo</label>
-			</div>
-		</div> 
-	</div>
-	<div class="row myxp-form-box">
-		<div class="col s12">
-			<label class="myxp-form-box-header">Played the post release content</label>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="dlc" <?php if($xp->_dlc == "true"){ echo "checked"; } ?>/>
-				<label for="dlc">DLC</label>
-			</div>
-		</div> 
-	</div>
-	<div class="row myxp-form-box">
-		<div class="col s12">
-			<label class="myxp-form-box-header">Streamed my experience</label>
-			<div style="display:block;margin-bottom:5px;margin-left:20px">
-			    <input type="checkbox" id="streamed" <?php if($xp->_streamed == "true"){ echo "checked"; } ?>/>
-				<label for="streamed">I streamed myself</label>
-			</div>
-		</div> 
-	</div>
-</div>
 <?php
 }
 
@@ -843,9 +778,9 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			}
 		}
 		?>
-	</div>
-	<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
-	<?php
+		</div>
+		<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
+<?php
 }
 
 function DisplayMyXpTierIcon($xp, $event, $type){ 

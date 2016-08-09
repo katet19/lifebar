@@ -940,7 +940,7 @@ else {
     
 	var data = location.hash.split('/');
 	if($this.hasClass("mainNav")){
-		if(location.hash == "#discover"){
+		if(location.hash == "#discover" || location.hash == "#daily"){
 			ShowDiscoverHome();
 			$this.find(".indicator").css({"display":"block"});
 		}else if(location.hash == "#notifications"){
@@ -990,7 +990,7 @@ else {
 			updateNavTitle = "Activity";
 		}else if(location.hash == "#profile"){
 			updateNavTitle = "Profile";
-		}else if(location.hash == "#discover"){
+		}else if(location.hash == "#discover" || location.hash == "#daily"){
 			updateNavTitle = "Discover";
 		}else if(location.hash == "#notifications"){
 			updateNavTitle = "Notifications";

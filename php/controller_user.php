@@ -1,6 +1,22 @@
 <?php
 require_once "includes.php";
 
+
+function SubmitInviteUsers($userid, $emails, $message){
+	$mysqli = Connect();
+	$allemails = explode(",", $emails);
+	$user = GetUser($userid);
+	if(sizeof($allemails) > 0){
+		foreach($allemails as $invite){
+			if($invite != '' && strpos($invite, '@') != false){
+				$mysqli->query("insert into `Referrals` (`UserID`,`Email`) VALUES ('".$userid."', '".$invite."')");
+				AddInviteEmail($user, $invite, $message);
+			}
+		}
+	}
+	Close($mysqli, $result);
+}
+
 function SetTitles(){
 	$journalists = GetJournalists();
 	foreach($journalists as $jo){
@@ -48,6 +64,18 @@ function UpdateRoleManagement($userid, $role){
 	Close($mysqli, $result);
 }
 
+function GetAllPublications(){
+	$mysqli = Connect();
+	$pubs = array();
+	if ($result = $mysqli->query("SELECT `Title` FROM  `Users` WHERE  `Title` !=  '' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist') GROUP BY  `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			$pubs[] = $row['Title'];
+		}
+	}
+	Close($mysqli, $result);
+	return $pubs;
+}
+
 function SaveAccountChanges($id, $username, $password, $first, $last, $email, $birthdate, $watchedsource, $steam, $psn, $xbox, $title, $weburl, $twitter, $image){
 	$mysqli = Connect();
 	if($password != ""){
@@ -63,18 +91,63 @@ function SaveAccountChanges($id, $username, $password, $first, $last, $email, $b
 	Close($mysqli, $result);
 	FastLogin($id);
 }
-/*
-	$Salt = uniqid();
-	$Algo = '6';
-	$Rounds = '5000';
-	$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
-	$pw = "test";
-	$hashedpw = crypt($pw, $CryptSalt);
-	$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-	echo $hashedpw;
-	echo $randomToken;
-*/
-function RegisterUser($username, $password, $first, $last, $email, $birthdate,$privacy){
+
+function SaveOnboardingAccount($steam, $xbox, $psn, $age){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$now = Date('Y');
+	$birthyear = $now - $age;
+	$mysqli->query("Update `Users` SET `Birthdate`='".$birthyear."-01-01', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
+	Close($mysqli, $result);
+}
+
+function SaveOnboardingFollowing($following, $pubs){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$followarray = explode(",",$following);
+	foreach($followarray as $follow){
+		if($follow > 0)
+			AddConnection($id, $follow);
+	}
+	$pubsarray = explode(",", $pubs);
+	foreach($pubsarray as $pub){
+		if($pub != ''){
+			if ($result = $mysqli->query("SELECT * FROM  `Users` WHERE  `Title` =  '".$pub."' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist')")) {
+				while($row = mysqli_fetch_array($result)){
+					AddConnection($id, $row['ID']);
+				}
+			}
+		}
+	}
+	Close($mysqli, $result);
+}
+
+function SaveOnboardingPrefs($prefs){
+	$mysqli = Connect();
+	$id = $_SESSION['logged-in']->_id;
+	$prefarray = explode(",", $prefs);
+	foreach($prefarray as $pref){
+		if($pref != ''){
+			$prefdata = explode("_",$pref);
+			$mysqli->query("Insert into `UserPref` (`UserID`,`Type`,`ObjectID`) VALUES ('".$id."', '".$prefdata[0]."', '".$prefdata[1]."')");
+		}
+	}
+	Close($mysqli, $result);
+}
+
+function HasOnboardingPrefs($userid){
+	$mysqli = Connect();
+	$hasPrefs = false;
+	if ($result = $mysqli->query("select * from `UserPref` where `UserID` = '".$userid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$hasPrefs = true;
+		}
+	}
+	Close($mysqli, $result);
+	return $hasPrefs;
+}
+
+function RegisterUser($username, $password, $first, $last, $email, $privacy){
 	$Salt = uniqid();
 	$Algo = '6';
 	$Rounds = '5000';
@@ -90,12 +163,10 @@ function RegisterUser($username, $password, $first, $last, $email, $birthdate,$p
 	}
 	if($founduser == false){
 		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Birthdate`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$birthdate."-01-01','".$privacy."', '".$randomToken."')");
+		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
-		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
-		//SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -144,10 +215,7 @@ function RegisterThirdPartyUser($username, $email, $first, $last, $image, $third
 		}
 		
 		AddIntroNotifications($user->_id, $mysqli);
-		CreateDefaultFollowingConnections($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
-		if($email != '')
-			SignupEmail($email);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -164,31 +232,6 @@ function FinishRegisterUser($userid, $email, $username){
 		FastLogin($userid);
 	}
 	Close($mysqli, $result);
-}
-
-function RegisterUserEarly($username, $password, $first, $last, $birthdate, $email){
-	$Salt = uniqid();
-	$Algo = '6';
-	$Rounds = '5000';
-	$CryptSalt = '$' . $Algo . '$rounds=' . $Rounds . '$' . $Salt;
-	$hashedpw = crypt($password, $CryptSalt);
-	$mysqli = Connect();
-	$founduser = false;
-	if ($result = $mysqli->query("select * from `Users` where `Username` = '".$username."'")) {
-		while($row = mysqli_fetch_array($result)){
-			$founduser = true;
-			$user = Login($username, $password);
-		}
-	}
-	if($founduser == false){
-		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
-		$mysqli->query("UPDATE `Users` SET `Username` = '".$username."',`Hash`='".$hashedpw."',`First`='".$first."',`Last`='".$last."',`Birthdate`='".$birthdate."-01-01', `SessionID`='".$randomToken."', `Key`='ACTIVE' WHERE `Email` = '".$email."'");
-		$user = Login($username, $password);
-		CreateDefaultFollowingConnections($user->_id);
-		AddIntroQuests($user->_id);
-	}
-	Close($mysqli, $result);
-	return $user;
 }
 
 function VerifyUniqueUsername($username){
@@ -239,6 +282,43 @@ function CreateDefaultFollowingConnections($userid, $pconn = null){
 	}
     if($pconn == null)
 	   Close($mysqli, $result);
+}
+
+function GetOnboardingCritics(){
+	$journalist = array();
+	$mysqli = Connect();
+	$date = date('Y-m-d', strtotime("now -30 days") );
+	$query = "select usr.*, Count(`UserID`) as TotalRows from `Events` eve, `Users` usr WHERE eve.`Date` > '".$date."' and usr.`ID` = eve.`UserID` and usr.`Access` = 'Journalist' GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 10";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				$user= new User($row["ID"], 
+						$row["First"],
+						$row["Last"],
+						$row["Username"],
+						$row["Email"],
+						$row["Birthdate"],
+						$row["Facebook"],
+						$row["Twitter"],
+						$row["SteamName"],
+						$row["Xbox"],
+						$row["PSN"],
+						$row["Google"],
+						$row["Access"],
+						$row["DefaultWatched"],
+						$row["WeaveView"],
+						$row["SessionID"],
+						$row["Privacy"],
+						$row["RealNames"],
+						$row["Title"],
+						$row["Image"],
+						$row["Website"],
+						$row["Badge"]);
+						$user->_weave = GetWeave($row["ID"], $mysqli);
+						$journalist[] = $user;
+		}
+	}
+   Close($mysqli, $result);
+   return $journalist;
 }
 
 function GetUser($userid, $pconn = null){
@@ -632,7 +712,7 @@ function SearchForUser($search){
 	}else{
 		$query = "select * from `Users` where `Username` like '%".$search."%' or (`First` like '%".$search."%' or `Last` like '%".$search."%') order by `First`";
 	}*/
-	$query = "select * from `Users` where `Username` like '%".$search."%' or ((`Access` = 'Journalist' or `Access` = 'Authenticated') and (`First` like '%".$search."%' or `Last` like '%".$search."%' or `First` like '%".$namedivided[0]."%' and `Last` like '%".$namedivided[1]."%')) order by `Username`";
+	$query = "select * from `Users` where `Username` like '%".$search."%' or `PSN` like '%".$search."%' or `SteamName` like '%".$search."%' or `Xbox` like '%".$search."%' or ((`Access` = 'Journalist' or `Access` = 'Authenticated') and (`First` like '%".$search."%' or `Last` like '%".$search."%' or `First` like '%".$namedivided[0]."%' and `Last` like '%".$namedivided[1]."%')) order by `Username`";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Privacy"] != "Private"){
@@ -706,7 +786,7 @@ function GetActivePersonalities(){
 	$count = array();
 	$mysqli = Connect();
 	$date = date('Y-m-d', strtotime("now -30 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 15";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 12";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -742,6 +822,31 @@ function GetActiveUsers(){
 		while($row = mysqli_fetch_array($result)){
 				$users[] = GetUser($row["UserID"],$mysqli);
 				$count[] = $row["TotalRows"];
+		}
+	}
+	$total[] = $users;
+	$total[] = $count;
+	Close($mysqli, $result);
+	return $total;
+}
+
+function GetUsersWithPopularQuotes($exclude){
+	$users = array();
+	$tracker = array();
+	$count = array();
+	$mysqli = Connect();
+	if($exclude != '')
+		$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` not in (".$exclude.") GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
+	else
+		$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";
+	
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+				if(!in_array($row["UserQuoted"], $tracker)){
+					$users[] = GetUser($row["UserQuoted"],$mysqli);
+					$count[] = $row["TotalRows"];
+					$tracker[] = $row["UserQuoted"];
+				}
 		}
 	}
 	$total[] = $users;
@@ -868,6 +973,15 @@ function GetShareLink($userid, $type, $otherid){
 			$share = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario!");
 			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
 		}
+	}else if($type == "daily"){
+		$url = "http://lifebar.io/1/u.php?i=daily";
+		$mysqli = Connect();
+		$daily = GetDaily($mysqli);
+		$game = GetGame($daily['ObjectID']);
+		Close($mysqli, $result);
+		$header = "Select how you would like to share the Daily Reflection Point";
+		$share = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!");
+		$shareEmail = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!".$url);	
 	}else if($type == "event"){
 		$url = "http://lifebar.io/1/u.php?i=e".$otherid;
 		$event = GetEvent($otherid);
