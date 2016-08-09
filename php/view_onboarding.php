@@ -80,12 +80,12 @@ function SocialDetails(){
 	<div class="row">
 		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
 			<div class="onboarding-follow-header">Personalities you might like</div>
-	        	<input type="checkbox" id="onboarding-follow-personalities-all"   checked />
+	        	<input type="checkbox" id="onboarding-follow-personalities-all" />
 	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow All</label>
 		</div>
 		<div class="col s12 m8 offset-m2">
 			<?php foreach($critics as $critic){
-				DisplayFollowUserCard($critic, true, false, false);	
+				DisplayFollowUserCard($critic, false, false, false);	
 			}?>
 		</div>
 	</div>
