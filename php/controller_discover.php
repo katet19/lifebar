@@ -107,7 +107,7 @@ function BuildDiscoverFlow($userid){
 	
 	
 	$suggcoll = GetSuggestedCollection($mysqli, $userid);
-	if(sizeof($notmutual) > 0){
+	if($suggcoll != ''){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'COLLECTION';
 		$dAtts['COLLECTION'] = $suggcoll;
@@ -130,10 +130,10 @@ function BuildDiscoverFlow($userid){
 }
 
 function GetSuggestedCollection($mysqli, $userid){
-	$query = "SELECT `CollectionID` FROM  `Collections` c, `CollectionSubs` s where c.`Visibility` = 'Yes' and c.`OwnerID` != '".$userid."' and `CreatedBy` > 0 and c.`ID` = s.`CollectionID` and c.`ID` not in (select `CollectionID` from `CollectionSubs` where `UserID` = '".$userid."') group by s.`CollectionID` order by rand() limit 0, 1";
+	$query = "SELECT c.`ID` as `ID` FROM  `Collections` c, `CollectionSubs` s where c.`Visibility` = 'Yes' and c.`OwnerID` != '".$userid."' and `CreatedBy` > 0 and c.`ID` = s.`CollectionID` and c.`ID` not in (select `CollectionID` from `CollectionSubs` where `UserID` = '".$userid."') group by c.`ID` order by rand() limit 0, 1";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$collection = GetCollectionByID($row['CollectionID'], $mysqli);
+			$collection = GetCollectionByID($row['ID'], $mysqli);
 		}
 	}
 	return $collection;
