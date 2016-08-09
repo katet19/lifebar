@@ -203,7 +203,6 @@ function DisplayDailyHeader($zdepth, $item){
 	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
 			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
 				<div class="daily-header-banner">Daily Reflection Point </div>
-				<div class="share-daily-response"><i class="mdi-social-share"></i></div>
 				<div class="daily-header-question">
 					<?php echo $item['QUESTION']; ?> 
 					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
@@ -274,6 +273,7 @@ function DisplayDailyHeader($zdepth, $item){
 						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
 							<div class='btn submit-daily-response'>Save</div>
 							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+							<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
 						</div>
 					</div>
 					<?php }else{ ?>
