@@ -5,9 +5,15 @@ function AccountDetails(){
 	
 	<div class="row" style='margin-bottom:50px;'>
 		<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
-			<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
-			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
-			<div class='onboarding-sub-welcome'>Tell us a little bit about your yourself and we'll help you get set up.</div>
+			<?php if($_SESSION['logged-in']->_weave->_totalXP > 0){ ?>
+				<div class='onboarding-big-welcome'>Welcome back, <?php echo $_SESSION['logged-in']->_username; ?>!</div>
+				<div class='onboarding-sub-welcome'>Thank you for your help in making Lifebar the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
+				<div class='onboarding-sub-welcome'>We want to personalize Lifebar for you. Tell us a little bit about your yourself, so you can get the most out of Lifebar.</div>
+			<?php }else{ ?>
+				<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
+				<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
+				<div class='onboarding-sub-welcome'>Tell us a little bit about your yourself and we'll help you get set up.</div>
+			<?php } ?>
 		</div>
 	</div>
   	<div class="row">

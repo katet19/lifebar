@@ -45,6 +45,20 @@ function AddAgreedEmail($gameid, $userid, $agreedwith, $eventid){
 	}
 }
 
+function AddFollowingEmail($userid, $following){
+	if(UserIsSub($following, 'Following')){
+		$activeUser = GetUser($userid);
+		$emailUser = GetUser($following);
+		$username = DisplayNameReturn($activeUser);
+		$subject = $username." is following you!";
+		$from = $username." [via Lifebar]";
+		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
+		$body = $body."<div style='font-size:1.5em;padding: 0 50px 20px;'><b>".$username."</b> wants to see what you think about games, who you follow and what collections you will build!</div>";
+		$body = $body."<a href='http://lifebar.io/1/u.php?i=u".$userid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW PROFILE</a>";
+		InsertToEmailQue($emailUser->_email, $from, $following, $subject, $body, 'Following', $userid);
+	}
+}
+
 function InsertToEmailQue($to, $from, $userid, $subject, $body, $type, $coreid){
 	$mysqli = Connect();
 	if($to != '' && $from != '' && $userid != '' && $subject != '' && $body != '' && $type != ''){
