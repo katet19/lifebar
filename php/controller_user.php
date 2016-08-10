@@ -107,14 +107,14 @@ function SaveOnboardingFollowing($following, $pubs){
 	$followarray = explode(",",$following);
 	foreach($followarray as $follow){
 		if($follow > 0)
-			AddConnection($id, $follow);
+			AddConnection($id, $follow, false);
 	}
 	$pubsarray = explode(",", $pubs);
 	foreach($pubsarray as $pub){
 		if($pub != ''){
 			if ($result = $mysqli->query("SELECT * FROM  `Users` WHERE  `Title` =  '".$pub."' AND ( `Access` =  'Authenticated' OR  `Access` =  'Journalist')")) {
 				while($row = mysqli_fetch_array($result)){
-					AddConnection($id, $row['ID']);
+					AddConnection($id, $row['ID'], false);
 				}
 			}
 		}
@@ -677,7 +677,7 @@ function RemoveConnection($userid, $removeid){
 	return "Delete from `Connections` where `Fan` = '".$userid."' and `Celebrity` = '".$removeid."'";
 }
 
-function AddConnection($userid, $addid){
+function AddConnection($userid, $addid, $addEvent){
 	$mysqli = Connect();
     $brandnew = true;
     if ($result = $mysqli->query("select * from `Connections` where `Celebrity` = '".$addid."' and `Fan` = '".$userid."'")) {
@@ -688,7 +688,9 @@ function AddConnection($userid, $addid){
     }
     if($brandnew){
         $mysqli->query("INSERT INTO `Connections`  (`Fan`, `Celebrity`) VALUES ('".$userid."', '".$addid."')");
-        $result = $mysqli->query("insert into `Events` (`UserID`,`Event`,`Quote`) values ('$userid','CONNECTIONS','$addid')");
+		if($addEvent){
+        	$result = $mysqli->query("insert into `Events` (`UserID`,`Event`,`Quote`) values ('$userid','CONNECTIONS','$addid')");
+		}
         Close($mysqli, $result);
         AddNewFollower($userid, $addid);
         AddFollowingEmail($userid, $addid);

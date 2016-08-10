@@ -565,7 +565,7 @@
 	}
 	function UserServices(){
 		if($_POST['action'] == 'FollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){
-			AddConnection($_SESSION['logged-in']->_id, $_POST['followid']);
+			AddConnection($_SESSION['logged-in']->_id, $_POST['followid'], true);
 		}
 		if($_POST['action'] == 'UnfollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){
 			RemoveConnection($_SESSION['logged-in']->_id, $_POST['followid']);
