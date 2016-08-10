@@ -75,15 +75,15 @@ function AttachSignUpLandingEvents(){
 	});*/
 }
 
-function SignupFromLanding(username, password, email, first, last, birthyear){
+function SignupFromLanding(username, password, email, first, last){
 	$("#SignupSubmitBtnLanding").hide();
 	$("#landing-sign-up").find(".validation").show();
 	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');
 	$.ajax({ url: '../php/webService.php',
-         data: {action: "Signup", username: username, password: password, email: email, first: first, last: last, birthyear: birthyear },
+         data: {action: "Signup", username: username, password: password, email: email, first: first, last: last },
          type: 'post',
          success: function(output) {
-         			window.location.hash = "#notifications";
+         			window.location.hash = "#discover";
          			setCookie("RememberMe", $.trim(output), 14);
 					window.scrollTo(0,0);
 					window.location.reload(true);
@@ -114,7 +114,7 @@ function VerifyNewUserDataLanding(username, email){
          				$("#landing-sign-up").find(".validation").html(errors);
 						$("#landing-sign-up").find(".validation").show();
          			}else{
-         				SignupFromLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_password").val(), $("#landing-sign-up").find("#signup_email").val(), '', '', $("#landing-sign-up").find("#birthyear").val());
+         				SignupFromLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_password").val(), $("#landing-sign-up").find("#signup_email").val(), '', '');
          			}
         },
         error: function(x, t, m) {

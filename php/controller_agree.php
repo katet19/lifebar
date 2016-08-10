@@ -1,6 +1,20 @@
 <?php
 require_once "includes.php";
 
+function GetMostAgreedQuoteForUser($userid){
+	$mysqli = Connect();
+	$query = "select *, Count(`EventID`) as TotalRows from `Liked` WHERE `UserQuoted` = '".$userid."' and `EventID` > 0 GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,1";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$eventid = $row['EventID'];
+		}
+	}
+	$event = GetEvent($eventid);
+
+	Close($mysqli, $result);
+	return $event;
+}
+
 function GetAgreesForUser($userid, $limit){
 	$agrees = array();
 	$agree = array();

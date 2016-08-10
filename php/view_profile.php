@@ -5,7 +5,7 @@ function DisplayWeave($userid){
 	$user = GetUser($userid);
 	if($user->_security == "Journalist")
 		DisplayCriticWeave($userid, $user, $conn, $mutualconn);
-	else
+	else if($user->_id > 0)
 		DisplayUserWeave($userid, $user, $conn, $mutualconn);
 }
 

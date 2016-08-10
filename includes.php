@@ -49,6 +49,8 @@ require_once 'php/controller_notifications.php';
 require_once 'php/controller_profile.php';
 require_once 'php/controller_user.php';
 require_once 'php/controller_email.php';
+require_once 'php/controller_discover.php';
+require_once 'php/controller_daily.php';
 //Errors
 require_once 'php/error_handler.php';
 set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING); 
@@ -72,4 +74,6 @@ require_once 'php/view_settings.php';
 require_once 'php/view_user.php';
 require_once 'php/view_xp.php';
 require_once 'php/view_profile.php';
+require_once 'php/view_onboarding.php';
+require_once 'php/view_daily.php';
 ?>

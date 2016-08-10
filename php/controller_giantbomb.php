@@ -1066,4 +1066,78 @@ function SaveTheme($name, $id, $gameid, $gbid, $mysqli){
 		$result = $mysqli->query("insert into `Game_Themes` (`GameID`,`GBID`,`ThemeID`) values ('".$gameid."','".$gbid."','".$id."')");
 	}
 }
+
+function GetRelatedDataForGame($gameid){
+	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
+	
+	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=characters,objects,concepts,locations';
+	$curl = curl_init($request);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
+	$curl_response = curl_exec($curl);
+	if ($curl_response === false) {
+    		$info = curl_getinfo($curl);
+    		curl_close($curl);
+   		die('error occured during curl exec. Additioanl info: ' . var_export($info));
+	}
+	curl_close($curl);
+	$decoded = json_decode($curl_response);
+	if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+    		die('error occured: ' . $decoded->response->errormessage);
+	}
+	$newgame = "";
+	$game = $decoded->results;
+	
+	$gamedata = array();
+	if($game->characters != ""){
+		unset($gamepiece);
+		$gamepiece[] = "---Characters---";
+		$gamepiece[] = -1;
+		$gamedata[] = $gamepiece;
+		foreach($game->characters as $characters){
+			unset($gamepiece);
+			$gamepiece[] = $characters->name;
+			$gamepiece[] = "Characters||".$characters->id;
+			$gamedata[] = $gamepiece;
+		}
+	}
+	if($game->locations != ""){
+		unset($gamepiece);
+		$gamepiece[] = "---Locations---";
+		$gamepiece[] = -1;
+		$gamedata[] = $gamepiece;
+		foreach($game->locations as $locations){
+			unset($gamepiece);
+			$gamepiece[] = $locations->name;
+			$gamepiece[] = "Locations||".$locations->id;
+			$gamedata[] = $gamepiece;
+		}
+	}
+	if($game->objects != ""){
+		unset($gamepiece);
+		$gamepiece[] = "---Objects---";
+		$gamepiece[] = -1;
+		$gamedata[] = $gamepiece;
+		foreach($game->objects as $objects){
+			unset($gamepiece);
+			$gamepiece[] = $objects->name;
+			$gamepiece[] = "Objects||".$objects->id;
+			$gamedata[] = $gamepiece;
+		}
+	}
+	if($game->concepts != ""){
+		unset($gamepiece);
+		$gamepiece[] = "---Concepts---";
+		$gamepiece[] = -1;
+		$gamedata[] = $gamepiece;
+		foreach($game->concepts as $concepts){
+			unset($gamepiece);
+			$gamepiece[] = $concepts->name;
+			$gamepiece[] = "Concepts||".$concepts->id;
+			$gamedata[] = $gamepiece;
+		}
+	}
+	return $gamedata;
+}
 ?>

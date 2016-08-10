@@ -67,7 +67,7 @@ function Search(searchstring){
  				ShowUserPreviewCard($(this).find(".user-preview-card"));
  			});
   			Waves.displayEffect();
- 			FilterResults();
+ 			//FilterResults();
  			$(".game-discover-card .card-image").on("click", function(e){ 
  				e.stopPropagation(); 
  				CloseSearch();
@@ -282,11 +282,15 @@ function ShowDiscoverHome(){
      type: 'post',
      success: function(output) {
      			$("#discoverInnerContainer").html(output);
-     			FilterCategories();
- 				AttachDiscoverHomeEvents();
- 				AttachDiscoverSecondaryEvents();
-      			Waves.displayEffect();
-      			GAPage('Discover', '/discover');
+     			if($(".onboarding-big-welcome").length > 0){
+     				ShowOnboarding();
+     			}else{
+	     			//FilterCategories();
+	 				AttachDiscoverHomeEvents();
+	 				AttachDiscoverSecondaryEvents();
+	      			Waves.displayEffect();
+	      			GAPage('Discover', '/discover');
+     			}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -363,8 +367,82 @@ function AttachDiscoverHomeEvents(){
 	$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
  	$(".suggested-game-link").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
 	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
+	$("select").material_select();
+ 	$(".daily-header-question").on("click", function(){
+ 		DisplayQuestionsForDaily();	
+ 	});
+ 	$(".daily-watch-title").on("click", function(){
+		if(!$(this).hasClass("daily-watch-title-active")){
+			$(".daily-watch-title-active").find(".daily-watch-title-xp").hide();
+			$(".daily-watch-title-active").removeClass("daily-watch-title-active");
+			$(this).addClass("daily-watch-title-active");
+			$(this).find(".daily-watch-title-xp").show();
+			var selected = $(this).attr("data-gameid");
+			$(".daily-watch-video-box-active").removeClass("daily-watch-video-box-active");
+			$(".daily-watch-video-box").each(function(){
+				if($(this).attr("data-gameid") == selected){
+					$(this).addClass("daily-watch-video-box-active");
+				}	
+			});
+		}	
+ 	});
+	if($(".ResultsDougnut").length > 0){
+ 		$(".daily-header-question").css({"top":"75px"});
+		$(".daily-header-game-title").css({"top":"50px"});
+		var bg = $(".daily-header-image").attr("data-webkit");
+		$(".daily-header-image").css({"background": bg });
+		$(".daily-header-image").css({"background-size": "cover"});
+		DisplayFormResultsGraph();	
+	}
+	$(".daily-header-game-title, .view-game-spoiler").on('click', function(){
+		ShowGame($(this).attr("data-id"), $("#discover"));
+	});
+ 	$(".follow-from-discover").on("click", function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			FollowUser(userid, $(this), username);
+		}
+ 	});
+ 	$(".discover-invite-users").on("click", function(){
+ 		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayInviteUsers" },
+	     type: 'post',
+	     success: function(output) {
+	 			$("#BattleProgess").html(output); 
+				AttachInviteUserEvents();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});	
+ 	});
+ 	$(".discover-collection-game-image-view").on("click", function(){
+ 		DisplayCollectionDetails($(this).attr("data-cid"), 'Discover', $(this).attr("data-ownerid"), false);
+ 	});
+ 	$(".discover-collection-game-image").on("click", function(){
+ 		ShowGame($(this).attr("data-id"), $("#discover"));
+ 	});
+ 	AttachWatchedDiscoverXP();
+ 	$(".edit-ref-pt").on("click", function(){
+		var refptID = $(this).attr("data-id");
+		EditReflectionPopUp(refptID);
+	});
 	//User
  	$(".user-discover-card").on("click", function(e){
+ 	 	e.stopPropagation();
+ 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 	});
+  	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
  		ShowUserPreviewCard($(this).find(".user-preview-card"));
  	});
@@ -423,6 +501,49 @@ function AttachDiscoverHomeEvents(){
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
 	});
+}
+
+function AttachWatchedDiscoverXP(){
+	$(".daily-watch-title-xp").unbind();
+	$(".daily-watch-title-xp").on("click", function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var xpElement = $(this);
+			$(".daily-watch-title").hide();
+			$(".daily-watch-title-active").show();
+			$(".daily-watch-xp-entry").show();
+			ShowLoader($(".daily-watch-xp-entry"), 'big', "<br><br><br>");
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "DisplayWatchedXPEntry", url: $(".daily-watch-title-active").attr("data-url"), gameid: $(".daily-watch-title-active").attr("data-gameid") },
+				type: 'post',
+				success: function(output) {
+					$(".daily-watch-xp-entry").html(output);
+					$(".myxp-video-goto-full").hide();
+					AttachActivityVideoEvents();
+					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
+					xpElement.css({"background-color":"#F44336"});
+					$(".daily-watch-title-xp").unbind();
+					$(".daily-watch-title-xp").on('click', function(){
+						$(".daily-watch-title").show();
+						$(".daily-watch-xp-entry").hide();
+						$(".daily-watch-xp-entry").html("");
+						xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+						xpElement.css({"background-color":"#0e4c7b"});
+						AttachWatchedDiscoverXP();
+					});
+				},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
+		}
+ 	});
 }
 
 function DisplayGraphs(){
@@ -616,6 +737,195 @@ function typeaheadMatches(typed, data, filter) {
 };
 
 function ResizeDiscoverEvents(){
-	FilterCategories();
+	//FilterCategories();
+}
+
+function DisplayQuestionsForDaily(){
+	$(".daily-answers-container").css({"top":"0"});
+	$(".daily-header-question").css({"top":"75px"});
+	$(".daily-header-game-title").css({"top":"50px"});
+	$(".daily-header-image").addClass('daily-header-image-active');
+	var bg = $(".daily-header-image").attr("data-webkit");
+	$(".daily-header-image").css({"background": bg });
+	$(".daily-header-image").css({"background-size": "cover"});
+	$(".daily-answers-results-container").hide();
+	
+	$(".daily-pref-image,.submit-daily-response,.cancel-daily-response, .share-daily-response").unbind();
+ 	$(".daily-pref-image").on("click", function(){
+ 		if($(this).hasClass("daily-pref-image-active")){
+ 			$(this).removeClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"0"});
+ 		}else{
+ 			if($(this).hasClass("singlegrid")){
+ 				var current = $(".daily-pref-image-active");
+ 				current.removeClass("daily-pref-image-active");
+ 				current.find(".daily-checkmark").css({"opacity":"0"});
+ 			}
+ 			$(this).addClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"1"});
+ 		}
+ 	});
+ 	$(".share-daily-response").on("click", function(){
+		ShowShareModal("daily", '');
+	});
+	$(".submit-daily-response").on('click', function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			$(".daily-answers-container").css({"top":"100%"});
+			$(".daily-header-image").removeClass('daily-header-image-active');
+			$(".daily-answers-results-container").show();
+			SaveSubmission();
+		}
+	});
+	$(".cancel-daily-response").on('click', function(){
+		if($(".ResultsDougnut").length == 0){
+			$(".daily-header-question").css({"top":"250px"});
+			$(".daily-header-game-title").css({"top":"225px"});
+			$(".daily-header-image").css({"background": $(".daily-header-image").attr("data-normal")});
+			$(".daily-header-image").css({"background-size": "cover"});
+		}
+		$(".daily-answers-container").css({"top":"100%"});
+		$(".daily-header-image").removeClass('daily-header-image-active');
+		$(".daily-answers-results-container").show();
+	});
+}
+
+function SaveSubmission(){
+	var formType = $(".daily-answers-container").attr("data-type");
+	var formitemid = 0;
+	var formid = 0;
+	var objectid = 0;
+	var objectType = '';
+	var gameid = 0;
+	if(formType == 'grid-single'){
+		formitemid = $(".daily-pref-image-active").parent().parent().attr("data-formitemid");
+		formid = $(".daily-pref-image-active").parent().parent().attr("data-formid");
+		objectid = $(".daily-pref-image-active").parent().parent().attr("data-objid");
+		objectType = $(".daily-pref-image-active").parent().parent().attr("data-objtype");
+		gameid = $(".daily-pref-image-active").parent().parent().attr("data-gameid");
+	}else if(formType == 'radio'){
+		formitemid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formitemid");
+		formid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formid");
+		objectid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objid");
+		objectType = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
+		gameid = $("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
+	}else if(formType == 'dropdown'){
+		formitemid = $("#daily-response-dropdown").val();
+		formid = $("#daily-response-dropdown").parent().parent().attr("data-formid");
+		objectid = $("#daily-response-dropdown").parent().parent().attr("data-objid");
+		objectType = $("#daily-response-dropdown").parent().parent().attr("data-objtype");
+		gameid = $("#daily-response-dropdown").parent().parent().attr("data-gameid");
+	}else if(formType == 'grid-multi'){
+		formitemid = '';
+		$(".daily-pref-image-active").each(function(){
+			formitemid = formitemid + $(this).parent().parent().attr("data-formitemid") + "||";
+			if(formid == 0){
+				formid = $(this).parent().parent().attr("data-formid");
+				objectid = $(this).parent().parent().attr("data-objid");
+				objectType = $(this).parent().parent().attr("data-objtype");
+				gameid = $(this).parent().parent().attr("data-gameid");
+			}
+		});	
+	}else if(formType == 'checkbox'){
+		formitemid = '';
+		$(".response-checkbox").each(function(){
+			if(this.checked){
+				formitemid = formitemid + $(this).parent().attr("data-formitemid") + "||";
+				if(formid == 0){
+					formid = $(this).parent().attr("data-formid");
+					objectid = $(this).parent().attr("data-objid");
+					objectType = $(this).parent().attr("data-objtype");
+					gameid = $(this).parent().attr("data-gameid");
+				}
+			}
+		});		
+	}
+	
+	$.ajax({ url: '../php/webService.php',
+         data: {action: "SubmitDailyChoice", formid: formid, formitemid: formitemid, gameid: gameid, objectid: objectid, objectType: objectType },
+         type: 'post',
+         success: function(output) {
+         	$(".daily-answers-results-container").html(output);
+         	DisplayFormResultsGraph();
+         	Toast("Saved your Reflection Point!");
+     	},
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayFormResultsGraph(){
+	if($(".ResultsDougnut").length > 0){
+		$(".ResultsDougnut").each(function(){
+			var reflectionPointGraph = $(this).get(0).getContext("2d");
+			var total = parseInt($(this).attr("data-total"));
+			var i = 0;
+			var data = [];
+			while(i < total){
+				data.push({
+					value: ($(this).attr("data-e"+i) > 0) ? Math.round((parseInt($(this).attr("data-e"+i)) / total) * 100) : 0,
+			        color:$(this).attr("data-ec"+i),
+			        highlight: $(this).attr("data-ech"+i),
+			        label: $(this).attr("data-ed"+i)
+				});
+				i++;
+			}
+			
+	    if($(window).width() >=600){
+	    	$(this).attr('height', 175);
+	    	$(this).attr('width', 175);
+	    }else{
+	    	$(this).attr('height', 125);
+	    	$(this).attr('width', 125);
+	    }
+      	var tierChart = new Chart(reflectionPointGraph).Doughnut(data, { animation: false, showTooltips: true });
+		});
+	}
+}
+
+function AttachInviteUserEvents(){
+	$(".invite-cancel-btn").on("click", function(){
+  		$("#BattleProgess").closeModal();
+  		HideFocus();
+	});
+	$(".invite-send-btn").on("click", function(){
+		var emails = $("#invite-to").val();
+		var message = $("#invite-body").val();
+		var err = '';
+		if(emails == ''){
+			err = "Please enter at least one email address <br>";	
+		}
+		
+		if(err == ''){
+			$.ajax({ url: '../php/webService.php',
+		         data: {action: "SubmitInviteUsers", emails: emails, message: message  },
+		         type: 'post',
+		         success: function(output) {
+		         	Toast("Invites will be sent shortly!");
+         	  		$("#BattleProgess").closeModal();
+  					HideFocus();
+		     	},
+		        error: function(x, t, m) {
+			        if(t==="timeout") {
+			            ToastError("Server Timeout");
+			        } else {
+			            ToastError(t);
+			        }
+		    	},
+		    	timeout:45000
+			});
+		}else{
+			$(".invite-error-msg").show();
+			$(".invite-error-msg").html(err);
+		}
+		
+	});
 }
  

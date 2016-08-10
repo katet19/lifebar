@@ -1,8 +1,346 @@
-<?php function DisplayDiscoverTab(){ ?>
+<?php function DisplayDiscoverTab(){ 
+	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id) && $_SESSION['logged-in']->_id > 0){
+		AccountDetails();
+	}else{ ?>
 	<div class="discover-top-level">
-		<?php DisplayGameDiscover(); ?>
+		<?php DisplayDynamicDiscover(); ?>
 	</div>
 	<?php
+	}
+}
+
+function DisplayDynamicDiscover(){
+	$zdepth = 25;
+  	$connections = GetConnectedToList($_SESSION['logged-in']->_id);
+  	$discoverItems = BuildDiscoverFlow($_SESSION['logged-in']->_id);
+?>
+	<div class="row discover-row">
+		<?php 
+			foreach($discoverItems as $item){
+				if($item["DTYPE"] == "GAMELIST")
+					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC']);
+				else if($item["DTYPE"] == "USERLIST")
+					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC'], $connections);
+				else if($item['DTYPE'] == 'DAILY')
+					DisplayDailyHeader($zdepth, $item);
+				else if($item['DTYPE'] == 'WATCHLIST')
+					DisplayHorizontalWatchList($zdepth, $item);
+				else if($item['DTYPE'] == 'MEMBERLIST')
+					DisplayHorizontalUserWithDetailsList($zdepth, $item);
+				else if($item['DTYPE'] == 'INVITEFRIENDS')
+					DisplayInviteFriends($_SESSION['logged-in']->_id);
+				else if($item['DTYPE'] == 'COLLECTION')
+					DisplayCollectionHighlighted($_SESSION['logged-in']->_id, $item['COLLECTION']);
+					
+				$zdepth--;
+			}
+		?>
+	</div>	
+<?php
+}
+
+function DisplayCollectionHighlighted($userid, $collection){
+	$games = $collection->_games; shuffle($games);
+	if($collection->_coversmall != ''){
+		$coverimage = $collection->_coversmall;
+	}else{
+		$coverimage = $collection->_games[0]->_imagesmall;
+	}
+	$user = GetUser($collection->_createdby);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){
+		$username = $user->_first." ".$user->_last;
+	}else{
+		$username = $user->_username;
+	}
+	
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	
+	$totalsize = sizeof($games);
+	?>
+	<div class="col s12 discoverCategory discover-category-collection" style='z-index:<?php echo $zdepth--; ?>'>
+		<div class="discover-collection-header" style='margin-top: 50px;'>
+			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<div class="collection-details-total discover-collection-user" style='cursor:pointer;display:inline-block;position:absolute;color:white;font-size: 2.5em;margin: 0;left: 15%;float: none;top: 150px;'>
+					<div class="collection-details-total-num collection-total-counter" data-id="<?php echo $user->_id; ?>">
+						<div class="user-avatar" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+						<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+					</div>
+					<div class='collection-details-total-lbl' style='font-size: 0.6em;font-weight: 500;margin-top:-30px;'>
+						<span style='font-size: 0.7em;display: block;font-weight: 300;'>created by</span>
+						<?php echo $username; ?>
+						
+					</div>
+				</div>
+			</div>
+			<div style='background-color:black;width:40%;z-index:0;float:right;height:500px;'></div>
+	      	<div class="discoverCategoryHeader" style='color: white;margin: 1em 1.5em 1.5em 0.5em;z-index:1;position: absolute;left: 0;right: 0;'>
+	      		<div class="discoverCatName" style='border-bottom-color: white;font-weight: 400;z-index:1;'>
+		      		<?php echo $collection->_name; ?> 
+		      		<div class="discoverCatSubName">
+	      				<?php echo $collection->_desc; ?>
+	      			</div>
+	  			</div>
+	      	</div>
+			<div class="discover-collection-owner-container" style='z-index:1;'>
+				<div class="discover-collection-owner"></div>
+			</div>
+			<div class='discover-collection-game-list' style='z-index:1;'>
+				<?php $count = 0; 
+				while(sizeof($games) > $count && $count < 12){ ?>
+					<a class="discover-collection-game-image z-depth-1" href="/#game/<?php echo $games[$count]->_id; ?>/<?php echo urlencode($games[$count]->_title); ?>/" data-id="<?php echo $games[$count]->_gbid; ?>" style="cursor: pointer;background: url(<?php echo $games[$count]->_imagesmall; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();"></a>
+					<?php
+					$count++;
+				} ?>
+				<div class="discover-collection-game-image-view z-depth-1" data-cid="<?php echo $collection->_id; ?>" data-ownerid="<?php echo $collection->_createdby; ?>">
+					<span>View Collection</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function DisplayInviteFriends($userid){
+	if($userid > 0){
+	?>
+	<div class="col s12 discoverCategory">
+		<div class="row">
+			<div class="discover-gnow-card col s12 m10 offset-m1 l8 offset-l2 z-depth-1">
+				<div class="discover-gnow-title"><i class="mdi-action-question-answer"></i> <span>Social</span></div>
+				<div class="discover-gnow-header" style="height:initial;width:100%;margin-bottom:5px;">Tell your friends & family about Lifebar to really get your activity feed flowing</div>
+				<div class="btn-flat discover-gnow-action waves-effect discover-invite-users">Invite people you know</div>
+			</div>
+		</div>
+	</div>
+	<?php
+	}
+}
+
+function DisplayHorizontalUserWithDetailsList($zdepth, $item){
+	if($item['USERS'][0][3]->_id > 0){
+	?>
+		<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+	      	<div class="discoverCategoryHeader">
+	      		<div class="discoverCatName">
+		      		<?php echo $item['CATEGORY']; ?>
+		      		<div class="discoverCatSubName">
+	      				<?php echo $item['CATEGORYDESC']; ?>
+	      			</div>
+	  			</div>
+	      	</div>
+	      	<div class="row">
+				<div class="col s12">
+					<?php 
+					$count = 0;
+					while($count < 4){
+						if($item['USERS'][0][$count]->_id > 0)
+							DisplayFollowUserCard($item['USERS'][0][$count], false, true, true);
+						$count++;
+					}?>
+				</div>
+			</div>
+		</div>
+	<?php
+	}
+}
+
+function DisplayHorizontalWatchList($zdepth, $item){ 
+	$videos = $item['VIDEOS']; ?>
+	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader">
+      		<div class="discoverCatName">
+	      		<?php echo $item['CATEGORY']; ?>
+	      		<div class="discoverCatSubName">
+      				<?php echo $item['CATEGORYDESC']; ?>
+      			</div>
+  			</div>
+      	</div>
+      	<div class="row">
+      		<div class="col s12 m6">
+				<?php $first = true;
+				foreach($videos as $video){
+					$game = GetGame($video[1]);
+					?>
+					<div class="daily-watch-title <?php if($first){ echo "daily-watch-title-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>' data-url="<?php echo $video[0]; ?>">
+						<?php echo $game->_title; ?>
+						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="mdi-action-visibility"></i></span>
+					</div>
+					<?php
+					if($first)
+						$first = false;
+				} ?>
+				<div class="daily-watch-xp-entry" style='margin-top: -16px;'>
+					
+				</div>
+			</div>
+			<?php $first = true;
+			foreach($videos as $video){
+				$videoxp = GetVideoXPForGame($video[0], $video[1]);
+				?>
+				<div class="col s12 m6 daily-watch-video-box <?php if($first){ echo "daily-watch-video-box-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>'>
+					<?php DisplayEmbeddedVideo($videoxp); ?>
+				</div>
+			<?php if($first)
+					$first = false;
+				} ?>
+		</div>
+	</div>
+<?php
+}
+
+function DisplayDailyHeader($zdepth, $item){ 
+	$game = GetGame($item['OBJECTID']);
+	$showsplrwrng = false;
+	if($item['FINISHED'] == 'Yes'){
+		$xp = HasFinished($_SESSION['logged-in']->_id, $game->_id);
+		if($xp < 1)
+			$showsplrwrng = true;
+	}
+	
+	?>
+	<div class='row' style='z-index:<?php echo $zdepth--; ?>'>
+	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
+			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+				<div class="daily-header-banner">Daily Reflection Point </div>
+				<div class="daily-header-question">
+					<?php echo $item['QUESTION']; ?> 
+					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
+				</div>
+				<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
+					<?php echo $game->_title; ?>
+					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
+					<?php } ?>
+				</div>
+				<div class="daily-answers-results-container">
+					<?php 
+						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
+						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
+							ShowFormResults($item['ID'], $choicesMade);
+					?>
+				</div>
+				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
+					<?php if(!$showsplrwrng){ ?>
+					<div class="row" style='margin-top:175px;'>
+						<div class="col s10 offset-s1" style='text-align:left;'>
+							<div class="daily-header-subquestion-hidden">
+								<?php echo $item['SUBQUESTION']; ?>
+							</div>
+							<?php 
+								$imagehorizontal = false;
+								$horizontal = false;
+								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
+								foreach($item['ITEMS'] as $response){
+									?>
+									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
+										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
+										<?php if($response['Type'] == 'radio'){ ?>
+											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
+										<?php }else if($response['Type'] == 'dropdown'){ ?>
+											<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
+											<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
+										<?php }else if($response['Type'] == 'checkbox'){ ?>
+											<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+										<?php }else if($response['Type'] == 'grid-single'){ ?>
+												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+													<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="daily-checkmark fa fa-check"></i>
+														<div class="daily-pref-image-title">
+															<?php echo $response["Choice"]; ?>
+														</div>
+													</div>
+												</div>
+										<?php }else if($response['Type'] == 'grid-multi'){ ?>
+												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+													<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+														<i class="daily-checkmark fa fa-check"></i>
+														<div class="daily-pref-image-title">
+															<?php echo $response["Choice"]; ?>
+														</div>
+													</div>
+												</div>
+										<?php } ?>
+									</div>
+									<?php
+									$first = false;
+								}
+							?>
+							<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
+						</div>
+						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
+							<div class='btn submit-daily-response'>Save</div>
+							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+							<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+						</div>
+					</div>
+					<?php }else{ ?>
+						<div class="row" style='margin-top:175px;'>
+							<div class="col s10 offset-s1" style='text-align:left;'>
+								<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
+									<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
+									Spoiler Warning!
+								</div>
+								<div style='font-size: 1.25em;font-weight: 400;margin-bottom: 40px;margin-top: -25px;'>You haven't finished this game yet. This reflection point will spoil your playthrough until you finish.</div>
+								<div class="btn view-game-spoiler" data-id="<?php echo $game->_gbid; ?>">Update your experience now</div>
+							</div>
+						</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $subcategorymsg){ ?>
+	    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+	      	<div class="discoverCategoryHeader">
+	      		<i class="mdi-notification-event-note categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
+	      		<div class="discoverCatName" data-category="<?php echo $category; ?>">
+		      		<?php echo $category; ?>
+		      		<div class="discoverCatSubName">
+	      				<?php echo $subcategorymsg; ?>
+	      			</div>
+  	      			<?php if($type != ''){ ?>
+		      			<div class="ViewBtn"><a class="waves-effect waves-light btn-flat" style='padding: 0;font-weight:500;'>View more</a></div>
+		      		<?php } ?>
+      			</div>
+	      	</div>
+	      	<?php $count = 1;
+	  		foreach($games as $game){
+	  			DisplayGameCard($game, $count, $type);
+				$count++; 
+			} ?>
+	    </div>
+	<?php
+}
+
+function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $subcategorymsg, $connections){ ?>
+    <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+      	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
+    		<i class="mdi-social-whatshot categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
+      		<div class="discoverCatName">
+	      		<?php echo $category; ?>
+	      		<div class="discoverCatSubName">
+      				<?php echo $subcategorymsg; ?>
+      			</div>
+  	  			<?php if($type != ''){ ?>
+      				<div class="ViewBtn"><a class="waves-effect waves-light btn-flat" style='padding: 0;font-weight:500;'>View more</a></div>
+      			<?php } ?>
+  			</div>
+      	</div>
+      	<?php 
+      	$count = 1;
+  		foreach($users as $user){
+  			DisplayUserCard($user, $count, "categoryResults", $connections);
+			$count++; 
+		} 
+		?>
+    </div>
+<?php
 }
 
 function DisplayGameDiscover(){ 

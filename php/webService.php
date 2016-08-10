@@ -14,10 +14,73 @@
 		GeneralServices();
 		ImportServices();
 		CollectionServices();
+		OnboardingServices();
+		FormServices();
 	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
 		<?php
+	}
+	
+	function FormServices(){
+		if($_POST['action'] == 'DisplayDailyCreationForm'){
+			DailyForm(GetGameByGBID($_POST['gameid']), $_SESSION['logged-in'], '');
+		}
+		if($_POST['action'] == 'EditDailyCreationForm'){
+			DailyForm('',$_SESSION['logged-in'], $_POST['refptid']);
+		}
+		if($_POST['action'] == 'PreviewRefPt'){
+			$item = GetReflectionPoint($_POST['refptid']);
+			$data['DTYPE'] = 'DAILY';
+			$data['QUESTION'] = $item['Header'];
+			$data['SUBQUESTION'] = $item['SubHeader'];
+			$data['ID'] = $item['ID'];
+			$data['OBJECTID'] = $item['ObjectID'];
+			$data['OBJECTTYPE'] = $item['OBJECTTYPE'];
+			$data['ITEMS'] = $item["Items"];
+			DisplayDailyHeader(0, $data);
+		}
+		if($_POST['action'] == 'SubmitDailyForm'){
+			SubmitDailyForm($_SESSION['logged-in']->_id, $_POST['question'], $_POST['subquestion'], 'Daily', 'Yes', $_POST['gameid'], 'Game', $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
+		}
+		if($_POST['action'] == 'UpdateDailyForm'){
+			UpdateDailyForm($_POST['formid'], $_POST['question'], $_POST['subquestion'], $_POST['defaultResponse'], $_POST['responses'], $_POST['responseurls'], $_POST['type'], $_POST['finished']);
+		}
+		if($_POST['action'] == 'DeleteDaily'){
+			DeleteReflectionPoint($_POST['formid']);
+		}
+		if($_POST['action'] == 'SubmitDailyChoice'){
+			SaveFormChoices($_SESSION['logged-in']->_id, $_POST['formid'], $_POST['formitemid'], $_POST['gameid'], $_POST['objectid'], $_POST['objectType']);
+			$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $_POST['formid']);
+			ShowFormResults($_POST['formid'], $choicesMade);
+		}
+	}
+	
+	function OnboardingServices(){
+		if($_POST['action'] == 'ShowOnboardingAccount'){
+			AccountDetails();
+		}
+		if($_POST['action'] == 'ShowOnboardingSocial'){
+			SocialDetails();
+		}
+		if($_POST['action'] == 'ShowOnboardingGamingPref'){
+			GamingPrefDetails();
+		}
+		if($_POST['action'] == 'OnboardingViewMore'){
+			ViewMoreMembers($_POST['exclude']);
+		}
+		if($_POST['action'] == 'OnboardingUserSearch'){
+			ViewOnboardingUserSearch($_POST['searchstring']);
+		}
+		if($_POST['action'] == 'SaveAccountInfo'){
+			SaveOnboardingAccount($_POST['steam'], $_POST['xbox'], $_POST['psn'], $_POST['age']);
+		}
+		if($_POST['action'] == 'SaveSocialInfo'){
+			SaveOnboardingFollowing($_POST['following'], $_POST['pubs']);
+		}
+		if($_POST['action'] == 'SaveGamingPrefInfo'){
+			SaveOnboardingPrefs($_POST['prefs']);
+		}
 	}
 	
 	function CollectionServices(){
@@ -545,6 +608,15 @@
 		if($_POST['action'] == 'DisplayDiscoverCategory' && isset($_POST['category'])){
 			DisplayDiscoverCategory($_POST['category'], $_POST['catid']);
 		}
+		if($_POST['action'] == 'DisplayWatchedXPEntry'){
+			DisplayWatchedXPEntryAjax($_POST['url'], $_POST['gameid']);
+		}
+		if($_POST['action'] == 'DisplayInviteUsers'){
+			InviteUsers($_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == 'SubmitInviteUsers'){
+			SubmitInviteUsers($_SESSION['logged-in']->_id, $_POST['emails'], $_POST['message']);
+		}
 	}
 	function SignupServices(){
 		if($_POST['action'] == 'VerifyNewUser' && isset($_POST['username']) && isset($_POST['email'])){
@@ -552,7 +624,7 @@
 			VerifyUniqueEmail($_POST['email']);
 		}
 		if($_POST['action'] == "Signup" && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
-			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'], $_POST['birthyear']."-01-01","Public");
+			RegisterUser($_POST['username'], $_POST['password'], $_POST['first'], $_POST['last'], $_POST['email'],"Public");
 		}
 	}
 	function LoginServices(){
