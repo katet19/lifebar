@@ -56,23 +56,33 @@ function DisplayAdmin($userid){
 					Game Management
 				</div>
 			</div>
-  			<div class="col s12 m6 l4">
-	          <div class="card admin-card">
-	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
-	            </div>
-	            <div class="card-action">
-	              <a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
-	            </div>
-	          </div>
-  			</div>
+			<div class="col s12 m6 l4">
+					<div class="card admin-card">
+						<div class="card-content">
+							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
+						</div>
+						<div class="card-action">
+							<a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
+						</div>
+					</div>
+			</div>
+			<div class="col s12 m6 l4">
+					<div class="card admin-card">
+						<div class="card-content">
+							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
+						</div>
+						<div class="card-action">
+							<input id='search-cache-input' style='margin-right:10px;'> <a href="#" class="admin-action clear-search-cache-btn">CLEAR SEARCH</a>
+						</div>
+					</div>
+			</div>
 			<div class="col s12 m6 l4">
 	          <div class="card admin-card">
 	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
+	              <span class="card-title"><i class="mdi-action-question-answer" style='margin: 0 5px;'></i> Daily Reflection Schedule</span>
 	            </div>
 	            <div class="card-action">
-	              <input id='search-cache-input' style='margin-right:10px;'> <a href="#" class="admin-action clear-search-cache-btn">CLEAR SEARCH</a>
+	              <a href="#" class="admin-action admin-ref-pts-sch">MANAGE SCHEDULE</a>
 	            </div>
 	          </div>
   			</div>
@@ -675,5 +685,24 @@ function DisplayMilestoneManagement(){ ?>
 	</div>
 	
 <?php
+}
+
+function DisplayRefPtSchedule(){
+	$refPts = GetUpcomingRefPts();
+	if(sizeof($refPts) > 0){
+			foreach($refPts as $ref){
+			?>
+			<div class='admin-schedule-ref-row'>
+				<div class='admin-schedule-ref-date'>
+					<input type='text' value='<?php echo $ref['Daily']; ?>'>
+				</div>
+				<div class='admin-schedule-ref-question'>
+					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
+				</div>
+				<div class=''
+			</div>
+			<?php
+			}
+	}
 }
 ?>

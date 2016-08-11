@@ -102,6 +102,10 @@ function AttachAdminEvents(){
 	$(".clear-search-cache-btn").on("click", function(){
 		ClearSearchCache();	
 	});
+	$(".admin-ref-pts-sch").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayRefPtSchedule();
+	});
 }
 
 
@@ -420,6 +424,26 @@ function DisplayUnmappedManagerReviewed(){
      success: function(output) {
  		$("#adminInnerContainer").html(output);
 		AttachUnmappedManagerEvents();
+  		Waves.displayEffect();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayRefPtSchedule(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRefPtSchedule" },
+     type: 'post',
+     success: function(output) {
+ 		$("#adminInnerContainer").html(output);
   		Waves.displayEffect();
      },
         error: function(x, t, m) {
