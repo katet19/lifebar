@@ -699,11 +699,11 @@ function DisplayRefPtSchedule(){
 	if(sizeof($refPts) > 0){
 			foreach($refPts as $ref){
 			?>
-			<div class='admin-schedule-ref-row'>
-				<div class='admin-schedule-ref-date'>
+			<div class='row admin-schedule-ref-row'>
+				<div class='col s6 m2 admin-schedule-ref-date'>
 					<input type='text' value='<?php echo $ref['Daily']; ?>'>
 				</div>
-				<div class='admin-schedule-ref-question'>
+				<div class='col s6 m6 admin-schedule-ref-question'>
 					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
 				</div>
 				<div class=''
