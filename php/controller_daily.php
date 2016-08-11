@@ -200,7 +200,7 @@ function DeleteReflectionPoint($id){
 function GetUpcomingRefPts(){
 	$mysqli = Connect();
 	$date = Date("Y-m-d");
-	$refpts = array();	if ($result = $mysqli->query("select f.*, g.`Title` from `Forms` f, `Game` g where f.`FormType` = 'Daily' and f.`Daily` >=  '".$date."' and f.`GameID` = g.`ID` order by `Daily`")) {
+	$refpts = array();	if ($result = $mysqli->query("select f.*, g.`Title` from `Forms` f, `Games` g where f.`FormType` = 'Daily' and f.`Daily` >=  '".$date."' and f.`ObjectID` = g.`ID` order by `Daily`")) {
 		while($row = mysqli_fetch_array($result)){
 			$refpts[] = $row;
 		}

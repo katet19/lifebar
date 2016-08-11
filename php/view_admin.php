@@ -688,6 +688,13 @@ function DisplayMilestoneManagement(){ ?>
 }
 
 function DisplayRefPtSchedule(){
+	?>
+	<div class="row">
+		<div class="col s12 import-results-subheader">
+			Daily Reflection Point Scheduler
+		</div>
+	</div>
+	<?php
 	$refPts = GetUpcomingRefPts();
 	if(sizeof($refPts) > 0){
 			foreach($refPts as $ref){
