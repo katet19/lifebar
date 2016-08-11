@@ -692,21 +692,26 @@ function DisplayRefPtSchedule(){
 	<div class="row">
 		<div class="col s12 import-results-subheader">
 			Daily Reflection Point Scheduler
+			<div class='btn admin-schedule-save-all' style="float:right;">SAVE ALL</div>
 		</div>
 	</div>
 	<?php
 	$refPts = GetUpcomingRefPts();
 	if(sizeof($refPts) > 0){
 			foreach($refPts as $ref){
+				$weekday = Date("l", strtotime($ref['Daily']));
 			?>
 			<div class='row admin-schedule-ref-row'>
-				<div class='col s6 m2 admin-schedule-ref-date'>
-					<input type='text' value='<?php echo $ref['Daily']; ?>'>
+				<div class='admin-schedule-ref-date'>
+					<input type='text' style='width:100px;' value='<?php echo $ref['Daily']; ?>'>
+					<span><?php echo $weekday; ?></span>
 				</div>
-				<div class='col s6 m6 admin-schedule-ref-question'>
+				<div class='admin-schedule-ref-question'>
 					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
 				</div>
-				<div class=''
+				<div class='btn-flat admin-schedule-insert-remove'>remove</div>
+				<div class='btn-flat admin-schedule-insert-before'>before</div>
+				<div class='btn-flat admin-schedule-insert-after'>after</div>
 			</div>
 			<?php
 			}

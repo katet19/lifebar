@@ -444,6 +444,7 @@ function DisplayRefPtSchedule(){
      type: 'post',
      success: function(output) {
  		$("#adminInnerContainer").html(output);
+		AttachRefPtEvents();
   		Waves.displayEffect();
      },
         error: function(x, t, m) {
@@ -454,6 +455,21 @@ function DisplayRefPtSchedule(){
 	        }
     	},
     	timeout:45000
+	});
+}
+
+function AttachRefPtEvents(){
+	$('.admin-schedule-insert-before').on("click", function(){
+
+	});
+	$('.admin-schedule-insert-after').on("click", function(){
+
+	});
+	$('.admin-schedule-insert-remove').on("click", function(){
+
+	});
+	$('.admin-schedule-save-all').on("click", function(){
+
 	});
 }
 
