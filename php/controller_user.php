@@ -976,7 +976,7 @@ function GetShareLink($userid, $type, $otherid){
 			$shareEmail = htmlspecialchars("Check out the game collection: ".str_replace("&","%26",$collection->_name)." @Lifebario! ".$url);	
 		}
 	}else if($type == "daily"){
-		$url = "http://lifebar.io/1/u.php?i=daily";
+		$url = "http://lifebar.io/1/u.php?i=d".Date('dmY');
 		$mysqli = Connect();
 		$daily = GetDaily($mysqli);
 		$game = GetGame($daily['ObjectID']);
