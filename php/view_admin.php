@@ -698,8 +698,17 @@ function DisplayRefPtSchedule(){
 	<?php
 	$refPts = GetUpcomingRefPts();
 	if(sizeof($refPts) > 0){
+			$month = "";
 			foreach($refPts as $ref){
 				$weekday = Date("l", strtotime($ref['Daily']));
+				$tempmonth = explode("-",$ref['Daily']);
+				if($tempmonth[1] != $month){
+					$monthword = Date("F", strtotime($ref['Daily']));
+					?>
+					<div class='import-results-subheader' style='margin: 50px 0 10px;padding-left: 20px;text-transform: uppercase;width: 100%;background-color: gray;color: white;'><?php echo $monthword; ?></div>
+					<?php
+					$month = $tempmonth[1];
+				}
 			?>
 			<div class='row admin-schedule-ref-row'>
 				<div class='admin-schedule-ref-date'>

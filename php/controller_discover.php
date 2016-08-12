@@ -123,6 +123,17 @@ function BuildDiscoverFlow($userid){
 		$dAtts['GAMES'] = $trendingGames;
 		$dAtts['TYPE'] = "";
 		$dItems[] = $dAtts;
+
+	//Get New Members
+	if($_SESSION['logged-in']->_security == "Admin"){
+		$newMembers = GetNewUsersCategory(15);
+			unset($dAtts);
+			$dAtts['DTYPE'] = 'USERLIST';
+			$dAtts['CATEGORY'] = "New Members";
+			$dAtts['CATEGORYDESC'] = "Members that have joined recently";
+			$dAtts['USERS'] = $newMembers;
+			$dItems[] = $dAtts;
+	}
 	
 	Close($mysqli, $result);
 	
