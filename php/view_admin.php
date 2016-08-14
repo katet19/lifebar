@@ -726,4 +726,23 @@ function DisplayRefPtSchedule(){
 			}
 	}
 }
+
+function DisplayRefPtPicker($new, $search){
+	$refpts = GetRefPtSearch($new, $search);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<input type="text" class="ref-pt-search-picker" value='Search'>
+		</div>
+		<div class="row">
+			<?php
+			foreach($refpts as $pt){
+			?>
+			<div class="col s12">
+				<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
+			</div>
+			<?php } ?>
+		</div>
+	<?php
+}
 ?>

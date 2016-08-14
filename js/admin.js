@@ -463,7 +463,7 @@ function AttachRefPtEvents(){
 
 	});
 	$('.admin-schedule-insert-after').on("click", function(){
-
+		DisplayRefPtPicker();
 	});
 	$('.admin-schedule-insert-remove').on("click", function(){
 
@@ -490,6 +490,26 @@ function AttachRefPtEvents(){
 			},
 			timeout:45000
 		});
+	});
+}
+
+function DisplayRefPtPicker(){
+	var isNew = true;
+	var searchstring = '';
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRefPtPicker", searchstring: searchstring, isNew: isNew },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
 	});
 }
 

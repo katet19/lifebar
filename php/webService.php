@@ -312,6 +312,9 @@
 			if($_POST['action'] == 'SaveRefPtSchedule'){
 				SaveRefPtSchedule($_POST['savestring']);
 			}
+			if($_POST['action'] == 'DisplayRefPtPicker'){
+				DisplayRefPtPicker($_POST['isNew'], $_POST['searchstring']);
+			}
 			if($_POST['action'] == 'DisplayAdmin' ){
 				DisplayAdmin($_SESSION['logged-in']->_id);
 			}

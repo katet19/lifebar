@@ -223,3 +223,24 @@ function SaveRefPtSchedule($schedule){
 	}
 	Close($mysqli, $result);
 }
+
+function GetRefPtSearch($new, $search){
+	$mysqli = Connect();
+	$refpts = array();	
+	$query = "select * from `Forms` where `FormType` = 'Daily'";
+	if($new && $search != '')
+		$query = " and `Daily` = '0000-00-00' and `Header` like '%".$search."%'";
+	else if($new == false && $search != '')
+		$query = " and `Daily` != '0000-00-00' and `Header` like '%".$search."%'";
+	else
+		$query = " and `Daily` = '0000-00-00' ";
+
+		echo $query;
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$refpts[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $refpts;
+}
