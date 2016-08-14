@@ -309,6 +309,9 @@
 			if($_POST['action'] == 'DisplayRefPtSchedule'){
 				DisplayRefPtSchedule();
 			}
+			if($_POST['action'] == 'SaveRefPtSchedule'){
+				SaveRefPtSchedule($_POST['savestring']);
+			}
 			if($_POST['action'] == 'DisplayAdmin' ){
 				DisplayAdmin($_SESSION['logged-in']->_id);
 			}

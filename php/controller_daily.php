@@ -209,3 +209,17 @@ function GetUpcomingRefPts(){
 	Close($mysqli, $result);
 	return $refpts;
 }
+
+function SaveRefPtSchedule($schedule){
+	$mysqli = Connect();
+	$refpts = explode("||", $schedule);
+	if(sizeof($refpts) > 0){
+		foreach($refpts as $pt){
+			$pcs = explode(",", $pt);
+			if(sizeof($pcs) > 0 && $pcs[0] > 0){
+				$mysqli->query("Update `Forms` set `Daily` = '".$pcs[1]."' where `ID` = '".$pcs[0]."'");
+			}
+		}
+	}
+	Close($mysqli, $result);
+}

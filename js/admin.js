@@ -469,7 +469,27 @@ function AttachRefPtEvents(){
 
 	});
 	$('.admin-schedule-save-all').on("click", function(){
-
+		var savestring = "";
+		$(".admin-schedule-ref-row").each(function(){
+			var id = $(this).attr("data-id");
+			var date = $(this).find(".admin-schedule-ref-date-input").val();
+			savestring = savestring + id + "," + date + "||";
+		});
+		$.ajax({ url: '../php/webService.php',
+		data: {action: "SaveRefPtSchedule", savestring: savestring },
+		type: 'post',
+		success: function(output) {
+			Toast("Saved changes to DRP Schedule!")
+		},
+			error: function(x, t, m) {
+				if(t==="timeout") {
+					ToastError("Server Timeout");
+				} else {
+					ToastError(t);
+				}
+			},
+			timeout:45000
+		});
 	});
 }
 

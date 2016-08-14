@@ -692,7 +692,7 @@ function DisplayRefPtSchedule(){
 	<div class="row">
 		<div class="col s12 import-results-subheader">
 			Daily Reflection Point Scheduler
-			<div class='btn admin-schedule-save-all' style="float:right;">SAVE ALL</div>
+			<div class='btn admin-schedule-save-all' style="float:right;">UPDATE SCHEDULE</div>
 		</div>
 	</div>
 	<?php
@@ -710,9 +710,9 @@ function DisplayRefPtSchedule(){
 					$month = $tempmonth[1];
 				}
 			?>
-			<div class='row admin-schedule-ref-row'>
+			<div class='row admin-schedule-ref-row' data-id='<?php echo $ref['ID']; ?>'>
 				<div class='admin-schedule-ref-date'>
-					<input type='text' style='width:100px;' value='<?php echo $ref['Daily']; ?>'>
+					<input class='admin-schedule-ref-date-input' type='text' style='width:100px;' value='<?php echo $ref['Daily']; ?>'>
 					<span><?php echo $weekday; ?></span>
 				</div>
 				<div class='admin-schedule-ref-question'>
