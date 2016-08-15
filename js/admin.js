@@ -460,10 +460,10 @@ function DisplayRefPtSchedule(){
 
 function AttachRefPtEvents(){
 	$('.admin-schedule-insert-before').on("click", function(){
-
+		DisplayRefPtPicker("", true, "before", $(this));
 	});
 	$('.admin-schedule-insert-after').on("click", function(){
-		DisplayRefPtPicker();
+		DisplayRefPtPicker("", true, "after", $(this));
 	});
 	$('.admin-schedule-insert-remove').on("click", function(){
 
@@ -493,14 +493,21 @@ function AttachRefPtEvents(){
 	});
 }
 
-function DisplayRefPtPicker(){
-	var isNew = true;
-	var searchstring = '';
+function DisplayRefPtPicker(searchstring, isNew, position, elem){
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayRefPtPicker", searchstring: searchstring, isNew: isNew },
      type: 'post',
      success: function(output) {
  		ShowPopUp(output);
+ 		$(".ref-pt-search-picker").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if(isNew)
+					isNew = $("#ref-pt-search-new").is(':checked');
+					
+				DisplayRefPtPicker($(this).val(), isNew, position, elem);
+			} 
+		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

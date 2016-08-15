@@ -731,15 +731,22 @@ function DisplayRefPtPicker($new, $search){
 	$refpts = GetRefPtSearch($new, $search);
 	?>
 	<div class="row">
-		<div class="col s12">
-			<input type="text" class="ref-pt-search-picker" value='Search'>
+		<div class="col s8">
+			<input type="text" id="ref-pt-search-picker" class="ref-pt-search-picker" value=''>
+			<label for="ref-pt-search-picker">Search</label>
 		</div>
+		<div class="col s4">
+			<input type="checkbox" id="ref-pt-search-new" class="ref-pt-search-new" checked>
+			<label for="ref-pt-search-new">Unscheduled Only</label>
+		</div>
+	</div>
 		<div class="row">
 			<?php
 			foreach($refpts as $pt){
 			?>
-			<div class="col s12">
-				<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
+			<div class="col s12" style='text-align:left;'>
+				<span><?php echo $pt['Header']; ?></span> <span>(<?php echo $pt['Title']; ?>)</span>
+				<div class='btn-flat ref-pt-search-select'>insert</div>
 			</div>
 			<?php } ?>
 		</div>
