@@ -29,11 +29,14 @@
 }
 
 .game-tab{
-	/*margin-top:330px;
-	min-height: 800px;*/
 	position:absolute;
 	top:30vh;
 	padding:0 0.75rem 50px !important;
+	display:none;
+}
+
+.game-tab-active{
+	display:block;
 }
 
 .GameHeaderBackground{
@@ -107,10 +110,6 @@
 	display:inline-block;
 }
 
-.btn-floating{
-	/*opacity:0.85;*/
-}
-
 .btn-floating:hover{
 	opacity: 1;
 }
@@ -147,8 +146,6 @@
 }
 
 .game-tab-shrink{
-	/*margin-top:200px;
-	padding-bottom:130px;*/
 	top:200px;
 }
 
@@ -188,10 +185,6 @@
 
 #game-critic-tab, #game-user-tab{
 	margin-bottom: 5em;
-}
-
-.fab-login{
-	
 }
 
 .card-tier-badge{
@@ -262,10 +255,6 @@
 	text-align: center;
 	margin-bottom: 20px;
 	display:none;
-}
-
-.equip-xp-container{
-	
 }
 
 .equip-xp-header{
@@ -347,14 +336,6 @@
     -o-transition: all 0.2s ease-out;
     -ms-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
-}
-
-.equip-xp-save{
-	
-}
-
-.equip-xp-changed{
-	
 }
 
 .game-tab-subheader-container{
@@ -511,10 +492,6 @@
 	.GameTitle{
 		top:210px;
 	}
-	.game-tab {
-		/*margin-top: 330px;*/
-		top:330px;
-	}
 	.GameMyStatusIcons{
 		right:0.5em;
 	}
@@ -556,10 +533,6 @@
 		top: 10px;
 		position: absolute;
 		font-size: 1.5em;
-	}
-	.game-tab {
-		/*margin-top: 230px;*/
-		top:230px;
 	}
 	.GameCriticQuote{
 		font-size: 1em;

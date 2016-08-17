@@ -29,12 +29,13 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
-		<li><a href="#community">Community</a></li>
-		<li><a href="#analytics">Analytics</a></li>
-		<li><a href="#reflectionpoints">Reflection Points</a></li>
-		<li><a href="#myxp">My XP</a></li>
-		<li><a href="#longform">Long Form</a></li>
-		<li><a href="#info">Information</a></li>
+		<li data-tab="game-community-tab"><a href="#community">Community</a></li>
+		<li data-tab="game-analyze-tab"><a href="#analyze">Analytics</a></li>
+		<li data-tab="game-video-tab"><a href="#watch">Watch</a></li>
+		<li data-tab="game-reflectionpoints-tab"><a href="#reflectionpoints">Reflection Points</a></li>
+		<li data-tab="game-myxp-tab"><a href="#myxp">My XP</a></li>
+		<li data-tab="game-longform-tab"><a href="#longform">Long Form</a></li>
+		<li data-tab="game-info-tab"><a href="#info">Information</a></li>
 	</ul>
 	<?php
 }
@@ -42,7 +43,7 @@ function ShowGameNav(){
 function ShowGameContent($game, $myxp, $otherxp, $videoxp){ 
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-community-tab" class="col s12 game-tab">
+		<div id="game-community-tab" class="col s12 game-tab game-tab-active">
 			<?php ShowCommunity($game, $_SESSION['logged-in']->_id, $myxp); ?>
 			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>

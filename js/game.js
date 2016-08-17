@@ -219,6 +219,8 @@ function AttachGameEvents(currentTab){
 function SwitchGameContent(elem){
 	$("#game-slide-out li.active").removeClass("active");
 	elem.addClass("active");
+	$(".game-tab-active").removeClass("game-tab-active");
+	$("#"+elem.attr("data-tab")).addClass("game-tab-active");
 }
 
 function DisplayUserDetails(userid, username){
