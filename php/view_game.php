@@ -29,7 +29,8 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
-		<li data-tab="game-community-tab"><a href="#community">Community</a></li>
+		<li data-tab="game-community-tab" class="game-community-tab-first"><a href="#community">Following</a></li>
+		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><a href="#community">Unfollowed</a></li>
 		<li data-tab="game-analyze-tab"><a href="#analyze">Analytics</a></li>
 		<li data-tab="game-video-tab"><a href="#watch">Watch</a></li>
 		<li data-tab="game-reflectionpoints-tab"><a href="#reflectionpoints">Reflection Points</a></li>
@@ -41,10 +42,25 @@ function ShowGameNav(){
 }
 
 function ShowGameContent($game, $myxp, $otherxp, $videoxp){ 
+	$id = $_SESSION['logged-in']->_id;
+	if($id != ""){
+		$verified = GetVerifiedXPForGame($game->_id, $id);
+		$curated = GetCuratedXPForGame($game->_id, $id);
+		$myusers = GetMyUsersXPForGame($game->_id, $id);
+	}else{
+		$id = -1;
+	}
+	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
+	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
+	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-community-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowCommunity($game, $_SESSION['logged-in']->_id, $myxp); ?>
+			<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
+			<div class="col s12 m12 l10" id='game-width-box'></div>
+		</div>
+		<div id="game-community-others-tab" class="col s12 game-tab">
+			<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
 			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>
 		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
@@ -66,21 +82,11 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	</div>
 <?php }
 
-function ShowCommunity($game, $id, $myxp){
-	if($id != ""){
-		$verified = GetVerifiedXPForGame($game->_id, $id);
-		$curated = GetCuratedXPForGame($game->_id, $id);
-		$myusers = GetMyUsersXPForGame($game->_id, $id);
-	}else{
-		$id = -1;
-	}
-	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
-	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
-	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
+function ShowCommunityFollowing($game, $id, $myxp, $verified, $curated, $myusers){
 	if($id != ""){
 		?>
 		<?php if(sizeof($verified) > 0){ ?>
-		<div class='game-community-box'>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><div class="game-community-verified mdi-action-done"></div> Verified</div>
 			<div class='row'>
 				<?php DisplayAllCommunityCards($verified, "Critic"); ?>
@@ -88,13 +94,13 @@ function ShowCommunity($game, $id, $myxp){
 		</div>
 		<?php }
 		if(sizeof($myusers) > 0){ ?>
-		<div class='game-community-box'>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><i class="mdi-social-people" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Members</div></div>
 			<?php DisplayAllCommunityCards($myusers, "Users"); ?>
 		</div>
 		<?php }
 		if(sizeof($curated) > 0){ ?>
-		<div class='game-community-box'>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><i class="mdi-file-folder-shared" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Curated</div></div>
 			<?php DisplayAllCommunityCards($curated, "Critic");	?>
 		</div>
@@ -112,32 +118,28 @@ function ShowCommunity($game, $id, $myxp){
 				<?php } ?>
 			<?php } ?>
 		<?php }
-	}?>
-	<?php if(sizeof($otherverified) > 0 || sizeof($othercurated) > 0 || sizeof($otherusers) > 0){ ?>
-		<?php if($_SESSION['logged-in']->_id > 0){ ?>
-			<div class='game-community-bigbreak'>
-				NOT FOLLOWING
-			</div>
-		<?php } ?>
-		<?php if(sizeof($otherverified) > 0){ ?>
-		<div class='game-community-box'>
+	}
+}
+
+function ShowCommunityEveryoneElse($game, $id, $myxp, $otherverified, $othercurated, $otherusers){
+		if(sizeof($otherverified) > 0){ ?>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><div class="game-community-verified mdi-action-done"></div> Verified</div>
 			<?php DisplayAllCommunityCards($otherverified, "Critic");	?>
 		</div>
 			<?php }
 		if(sizeof($othercurated) > 0){ ?>
-		<div class='game-community-box'>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><i class="mdi-file-folder-shared" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Curated</div></div>
 			<?php DisplayAllCommunityCards($othercurated, "Critic");	?>
 		</div>
 		<?php }
 		if(sizeof($otherusers) > 0){ ?>
-		<div class='game-community-box'>
+		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><i class="mdi-social-people" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Members</div></div>
 			<?php DisplayAllCommunityCards($otherusers, "Users"); ?>
 		</div>
 	<?php }
-	}
 }
 
 function ShowGameVideos($videoxp, $myxp){
@@ -318,11 +320,14 @@ function DisplayWatchedXPEntryAjax($url, $gameid){
 }
 
 function DisplayAllCommunityCards($users, $type){
+	$i = sizeof($users);
 	foreach($users as $user){
 		if($type == "Critic")
-			DisplayCriticQuoteCard($user);
+			DisplayCriticQuoteCard($user, $i);
 		else
-			DisplayUserQuoteCard($user);
+			DisplayUserQuoteCard($user, $i);
+			
+		$i--;
 	}
 }
 
@@ -358,19 +363,17 @@ function ShowGameTabs($myxp, $otherxp, $videoxp){
 
 function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	?>
+	<div class="fixed-action-btn" id="game-fab">
+		<?php ShowMyGameFAB($game->_id, $myxp); ?>
+	</div>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		<?php /*DisplayGameBackNav();*/ ?>
 		<div class="GameMyStatusIcons">
 			<i class="mdi-action-bookmark mybookmark" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?>></i>
-			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
 		<?php /*ShowGameTabs($myxp, $otherxp, $videoxp);*/ ?>
-		<div class="fixed-action-btn" id="game-fab">
-			<?php ShowMyGameFAB($game->_id, $myxp); ?>
-		</div>
-
 	</div>
 	<?php
 }

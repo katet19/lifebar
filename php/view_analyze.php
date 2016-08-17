@@ -452,13 +452,13 @@ function BuildSimilarGames($game, $userid, $myxp){
 }
 
 function BuildWarningMsg($user){ ?>
-	<div class="row">
-		<div class="col s12" style='font-size: 1.25em;font-weight:500;'>
-			<i class="mdi-alert-warning" style='color:orangered;font-size: 1.5em;vertical-align: sub;'></i> 
+	<div class="row z-depth-1" style='background-color: white;padding: 5px 10px;text-align: left;'>
+		<div class="col s12" style='font-size: 1.5em;'>
+			<i class="mdi-alert-warning" style='color: white;vertical-align: sub; background-color: orangered; position: absolute;left: 10px;top: 0;padding: 5px 10px;'></i> 
 			<?php if($user->_id > 0){ ?>
-				<span>Analysis of this game is limited without any XP</span>
+				<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Analysis of this game is limited without any XP</span>
 			<?php }else{ ?>
-				<span>Analysis of this game is limited without logging in</span>
+				<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Analysis of this game is limited without logging in</span>
 			<?php } ?>
 		</div>
 	</div>

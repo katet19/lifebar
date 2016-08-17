@@ -151,11 +151,19 @@ function AttachGameEvents(currentTab){
 		$("#gameInnerContainer .backContainer").show();
 		$("#gameInnerContainer .backContainer").css({"top":"7px", "position":"absolute"});
 	}
+
+	if($(window).width() < 992){
+		$(".GameTitle").on("click", function(e){
+			e.stopPropagation();
+			DisplayGameNav();
+		});
+	}
 	
 	//$('.gameNav').tabs();
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
+	$(".game-community-tab-first").click();
 	var iconOnHover="";
 	if($(".fixed-action-btn .game-add-played-btn").length > 0)
 		iconOnHover = "mdi-hardware-gamepad";
@@ -217,10 +225,24 @@ function AttachGameEvents(currentTab){
 }
 
 function SwitchGameContent(elem){
-	$("#game-slide-out li.active").removeClass("active");
-	elem.addClass("active");
-	$(".game-tab-active").removeClass("game-tab-active");
-	$("#"+elem.attr("data-tab")).addClass("game-tab-active");
+	if($("#game-slide-out li.active").attr("data-tab") != elem.attr("data-tab")){
+		$("#game-slide-out li.active").removeClass("active");
+		elem.addClass("active");
+		$(".game-tab-active").removeClass("game-tab-active");
+		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
+		if(elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab")
+			$(".game-community-others-tab").show();
+		else
+			$(".game-community-others-tab").hide();
+	}
+}
+
+function DisplayGameNav(){
+	$("#game-slide-out").show(250);
+	$('html').click(function(){
+		if($("#game-slide-out").is(":visible"))
+			$("#game-slide-out").hide(250);
+	});
 }
 
 function DisplayUserDetails(userid, username){

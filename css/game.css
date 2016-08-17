@@ -352,6 +352,8 @@
 	margin-bottom:50px;
 	display:inline-block;
 	width:100%;
+	background-color:white;
+	padding:20px;
 }
 
 .game-community-box-header{
@@ -475,8 +477,13 @@
 }
 
 @media only screen and (max-width : 992px) {
+	#gameContentContainer{
+		margin-left:0;
+	}
 	#game-slide-out{
 		display:none;
+	    background-color: white;
+    	top: -15px;
 	}
 	.GameHeaderContainer, .GameHeaderBackground{
 		height:22em;
