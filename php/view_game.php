@@ -4,6 +4,7 @@ function DisplayGame($gbid){
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
 	$videoxp = GetGameVideoXP($game->_id);
 	$myxp->_bucketlist = IsGameBookmarkedFromCollection($game->_id);
+	ShowGameNav();
 	ShowGameHeader($game, $myxp, -1, $videoxp);
 	ShowGameContent($game, $myxp, -1, $videoxp);
 }
@@ -15,12 +16,27 @@ function DisplayGameViaID($gameid, $userid){
 	$videoxp = GetGameVideoXP($game->_id);
 	if($userid > 0){
 		$otherxp = GetExperienceForUserByGame($userid, $game->_id);
+		ShowGameNav();
 		ShowGameHeader($game, $myxp, $otherxp, $videoxp);
 		ShowGameContent($game, $myxp, $otherxp, $videoxp);
 	}else{
+		ShowGameNav();
 		ShowGameHeader($game, $myxp, -1, $videoxp);
 		ShowGameContent($game, $myxp, -1, $videoxp);
 	}
+}
+
+function ShowGameNav(){
+	?>
+	<ul id="game-slide-out">
+		<li><a href="#community">Community</a></li>
+		<li><a href="#analytics">Analytics</a></li>
+		<li><a href="#reflectionpoints">Reflection Points</a></li>
+		<li><a href="#myxp">My XP</a></li>
+		<li><a href="#longform">Long Form</a></li>
+		<li><a href="#info">Information</a></li>
+	</ul>
+	<?php
 }
 
 function ShowGameContent($game, $myxp, $otherxp, $videoxp){ 
@@ -47,7 +63,6 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 					}?>
 		</div>
 	</div>
-	<?php DisplayGameInfo($game); ?>
 <?php }
 
 function ShowCommunity($game, $id, $myxp){
@@ -343,14 +358,14 @@ function ShowGameTabs($myxp, $otherxp, $videoxp){
 function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	?>
 	<div class="GameHeaderContainer">
-		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(top, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-		<?php DisplayGameBackNav(); ?>
+		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+		<?php /*DisplayGameBackNav();*/ ?>
 		<div class="GameMyStatusIcons">
 			<i class="mdi-action-bookmark mybookmark" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?>></i>
 			<div class="HideForDesktop ShowInfoBtn" style='padding: 0 0.5em;margin: 0 0 0 0.5em;z-index-101;' data-gameid='<?php echo $game->_gbid; ?>'><i class="mdi-action-info"></i></div>
 		</div>
 		<div class="GameTitle"><?php echo $game->_title; ?></div>
-		<?php ShowGameTabs($myxp, $otherxp, $videoxp); ?>
+		<?php /*ShowGameTabs($myxp, $otherxp, $videoxp);*/ ?>
 		<div class="fixed-action-btn" id="game-fab">
 			<?php ShowMyGameFAB($game->_id, $myxp); ?>
 		</div>
@@ -394,7 +409,7 @@ function ShowMyGameFAB($gameid, $myxp){
 }
 
 function DisplayGameInfo($game){	?>
-<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
+<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;left:0;right: inherit;'>
 	<div class="HideForDesktop">
 		<?php DisplayGameInfoBackNav(); ?>
 	</div>

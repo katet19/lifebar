@@ -30,7 +30,6 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		GLOBAL_HASH_REDIRECT = "NO";
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 	 		AttachGameEvents(currentTab);
-	 		AttachScrollEvents();
  	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 	 		GLOBAL_TAB_REDIRECT = "";
@@ -74,7 +73,6 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
-		 	AttachScrollEvents();
   	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 		 	GLOBAL_TAB_REDIRECT = "";
@@ -127,7 +125,6 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
  		
  		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
  		AttachGameEvents(currentTab);
- 		AttachScrollEvents();
  		if(type == "played"){
  			AddPlayedFabEvent();
  		}else{
@@ -155,7 +152,10 @@ function AttachGameEvents(currentTab){
 		$("#gameInnerContainer .backContainer").css({"top":"7px", "position":"absolute"});
 	}
 	
-	$('.gameNav').tabs();
+	//$('.gameNav').tabs();
+	$("#game-slide-out li").on("click", function(){
+		SwitchGameContent($(this));
+	});
 	var iconOnHover="";
 	if($(".fixed-action-btn .game-add-played-btn").length > 0)
 		iconOnHover = "mdi-hardware-gamepad";
@@ -214,6 +214,11 @@ function AttachGameEvents(currentTab){
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
+}
+
+function SwitchGameContent(elem){
+	$("#game-slide-out li.active").removeClass("active");
+	elem.addClass("active");
 }
 
 function DisplayUserDetails(userid, username){

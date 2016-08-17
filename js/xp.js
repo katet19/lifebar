@@ -20,6 +20,7 @@ function AttachXPEvents(){
 	$(".myxp-save").on('click', function(){
 		SaveXPEntry();
 	});
+	//tinymce.init({ selector:'#myGameJournalPanel' });
 }
 
 function CalculateAndAddTier(element){

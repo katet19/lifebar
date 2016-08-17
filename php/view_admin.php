@@ -718,7 +718,7 @@ function DisplayRefPtSchedule(){
 				<div class='admin-schedule-ref-question'>
 					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
 				</div>
-				<div class='btn-flat admin-schedule-insert-remove'>remove</div>
+				<!--<div class='btn-flat admin-schedule-insert-remove'>remove</div>-->
 				<div class='btn-flat admin-schedule-insert-before'>before</div>
 				<div class='btn-flat admin-schedule-insert-after'>after</div>
 			</div>
