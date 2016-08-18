@@ -150,12 +150,12 @@
 }
 
 .GameMyStatusIcons{
-	position: absolute;
-	z-index: 3;
-	top: 0.5em;
-	font-size: 1.5em;
-	right: 26%;
-	color: white;
+    position: absolute;
+    z-index: 3;
+    top: 15px;
+    font-size: 2em;
+    right: 15px;
+    color: white;
 }
 
 .GameInfoHeader{

@@ -106,17 +106,23 @@ function ShowCommunityFollowing($game, $id, $myxp, $verified, $curated, $myusers
 		</div>
 		<?php }else if(sizeof($othercurated) == 0 && sizeof($otherverified) == 0 && sizeof($verified) == 0){ ?>
 			<?php if($myxp->_bucketlist != "Yes"){ ?>
-				<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
-					<div class="info-label">Bookmark this game to keep track of your favorites</div>
-				<?php }else{ ?>
-					<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
-				<?php } ?>
-				<?php if($_SESSION['logged-in']->_id > 0){ ?>
-					<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-				<?php }else{ ?>
-					<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Bookmark</div>
-				<?php } ?>
-			<?php } ?>
+					<div class="row z-depth-1" style='background-color: white;padding: 5px 10px;text-align: left;'>
+						<div class="col s12" style='font-size: 1.5em;position:relative;'>
+							<i class="mdi-action-bookmark" style='color: white;vertical-align: sub;background-color: #2196F3; position: absolute;left: -10px;top: -5px; padding: 7px 10px;'></i> 
+							<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
+								<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Bookmark this game to keep track of your favorites</span>
+							<?php }else{ ?>
+								<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Bookmark this game to get notified when critics start publishing reviews!</span>
+							<?php } ?>
+							<?php if($_SESSION['logged-in']->_id > 0){ ?>
+								<div class="btn-flat waves-effect waves-light no-critic-bookmark" style='margin: 0;font-size: 0.8em;margin: 0;float: right;'><i class="mdi-action-bookmark left"></i> Bookmark</div>
+							<?php }else{ ?>
+								<div class="btn-flat waves-effect waves-light fab-login" style='margin: 0;font-size: 0.8em;margin: 0;float: right;'><i class="mdi-action-bookmark left"></i> Bookmark</div>
+							<?php } ?>
+						</div>
+					</div>
+				<?php
+			 	} ?>
 		<?php }
 	}
 }
