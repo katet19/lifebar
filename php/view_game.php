@@ -822,7 +822,7 @@ function ShowUserXP($userxp){
 				</div>
 			</div>
 		</div>
-		<div class="col s12" style='position:relative;'>
+		<div class="col s12">
 			<?php ShowMyXP($userxp, $userxp->_userid, $conn, $mutualconn); ?>
 		</div>
 		<div class="col s12">

@@ -9,7 +9,6 @@
 .myxp-vert-line{
     position: absolute;
     z-index: 0;
-    border: 2px solid #ddd;
     top: 35px;
     display: block;
     width: 25px;
@@ -43,7 +42,6 @@
 .myxp-vert-line-details{
     position: absolute;
     z-index: 0;
-    border: 2px solid #ddd;
     top: 85px;
     display: block;
     width: 25px;

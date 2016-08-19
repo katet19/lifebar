@@ -534,19 +534,19 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			</div>
 			<div class="myxp-content-col">
 				<?php if(sizeof($exp->_playedxp) > 0){ ?>
-		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    		<div class="col s12 z-depth-1" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Post</span>
-		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>updates</div>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>updates</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'> with your time playing or add a</span>
-		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>watched</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
 		    		</div>
 		    	<?php }else{ ?>
-		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    		<div class="col s12 z-depth-1" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Add a</span>
-		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>watched</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>or</span>
-		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>played</div>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>played</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
 		    		</div>
 		    	<?php } ?>
