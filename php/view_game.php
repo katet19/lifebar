@@ -29,14 +29,15 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
-		<li data-tab="game-community-tab" class="game-community-tab-first"><a href="#community">Following</a></li>
-		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><a href="#community">Unfollowed</a></li>
-		<li data-tab="game-analyze-tab"><a href="#analyze">Analytics</a></li>
-		<li data-tab="game-video-tab"><a href="#watch">Watch</a></li>
-		<li data-tab="game-reflectionpoints-tab"><a href="#reflectionpoints">Reflection Points</a></li>
-		<li data-tab="game-myxp-tab"><a href="#myxp">My XP</a></li>
-		<li data-tab="game-longform-tab"><a href="#longform">Long Form</a></li>
-		<li data-tab="game-info-tab"><a href="#info">Information</a></li>
+		<li data-tab="game-dashboard-tab"><span>Dashboard</span></li>
+		<li data-tab="game-myxp-tab"><span>My XP</span></li>
+		<li data-tab="game-longform-tab"><span>Long Form</span></li>
+		<li data-tab="game-community-tab" class="game-community-tab-first"><span>Following</span></li>
+		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><span>Unfollowed</span></li>
+		<li data-tab="game-analyze-tab"><span>Analytics</span></li>
+		<li data-tab="game-video-tab"><span>Watch</span></li>
+		<li data-tab="game-reflectionpoints-tab"><span>Reflection Points</span></li>
+		<li data-tab="game-info-tab"><span>Information</span></li>
 	</ul>
 	<?php
 }
@@ -55,7 +56,11 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-community-tab" class="col s12 game-tab game-tab-active">
+		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
+			<div>WELCOME TO THE DASHBOARD RYAN</div>
+			<div class="col s12 m12 l10" id='game-width-box'></div>
+		</div>
+		<div id="game-community-tab" class="col s12 game-tab">
 			<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
 			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>

@@ -727,7 +727,7 @@ function AttachMyXPEvents(){
 		setTimeout(function(){
   			var box = $("#game-myxp-tab").find(".myxp-details-container").last().parent();
 			if(box.innerHeight() > 0)
-				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
+				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 40)+"px"});
 		}
 		,100);
 	});

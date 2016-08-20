@@ -519,12 +519,12 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 	$vertBG = array();
 
 	?>
-	<div class="col s12" style='position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
+	<div class="col s12 z-depth-1" style='background-color:white;z-index:0;position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
 		<?php if($editAccess){ 
 			$vertBG[] =  "#fff ".($chunksize * $pos)."%";
 			$pos++;
 		?>
-		<div class="row" style='margin-bottom: 30px;'>
+		<div class="row" style='margin-bottom: 30px;z-index:1;'>
 			<div class="feed-avatar-col">
 			</div>
 			<div class="feed-activity-icon-col">
@@ -534,7 +534,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			</div>
 			<div class="myxp-content-col">
 				<?php if(sizeof($exp->_playedxp) > 0){ ?>
-		    		<div class="col s12 z-depth-1" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
+		    		<div class="col s12" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Post</span>
 		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>updates</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'> with your time playing or add a</span>
@@ -542,7 +542,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
 		    		</div>
 		    	<?php }else{ ?>
-		    		<div class="col s12 z-depth-1" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
+		    		<div class="col s12" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Add a</span>
 		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>watched</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>or</span>
@@ -553,7 +553,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			</div>
 		</div>
 		<?php }
-		
+		$count = sizeof($events);
 		foreach($events as $eventdata){
 			$event = $eventdata[0];
 			$xp = $eventdata[1];
@@ -583,7 +583,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			
 			if($event["Event"] == 'QUOTECHANGED'){
 			?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -596,7 +596,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						<?php } ?>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 					    			<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div>
@@ -618,7 +618,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					      	</div>
 				    	</div>
 				    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
 						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
 						     	<div class="myxp-details-agree-list">
 						    		<?php
@@ -640,7 +640,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			<?php 
 			}else if($event['Event'] == 'BUCKETLIST'){
 				?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -649,7 +649,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						</div>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 									Bookmarked for later
@@ -666,7 +666,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 				$before = $tierdata[0];
 				$after = $tierdata[1];
 			?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -675,7 +675,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						</div>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 						    		<div class="feed-tier-changed-before tierTextColor<?php echo $before; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $before; ?></div>
@@ -694,7 +694,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					      	</div>
 				    	</div>
   			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
 						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
 						     	<div class="myxp-details-agree-list">
 						    		<?php
@@ -729,7 +729,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 							<?php } ?>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 					    			<?php if($event["Quote"] == '' && $xp != ''){
@@ -756,7 +756,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					      	</div>
 				    	</div>
   			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
+						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
 						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
 						     	<div class="myxp-details-agree-list">
 						    		<?php
@@ -777,10 +777,12 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 				</div>
 				<?php
 			}
+			$count--;
 		}
 		?>
+			<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
 		</div>
-		<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
+		
 <?php
 }
 

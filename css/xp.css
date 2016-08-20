@@ -12,8 +12,8 @@
     top: 35px;
     display: block;
     width: 25px;
-    left: 60px;
-    bottom:125px;
+    left: 50px;
+    bottom:50px;
 }
 
 .myxp-card-icon{
@@ -27,6 +27,7 @@
   border-radius: 50%;
   margin-left: 14px;
   position:relative;
+  z-index: 5;
 }
 
 .myxp-tier-in-progress{
@@ -45,7 +46,7 @@
     top: 85px;
     display: block;
     width: 25px;
-    left: 60px;	
+    left: 50px;	
     bottom:100px;
 }
 
@@ -54,6 +55,8 @@
     height: 50px;
     margin-left: 14px;
     width: 50px;
+	z-index:5;
+	position: relative;
     text-align: center;
     margin-top: 30px;
     color: white;
@@ -86,6 +89,8 @@
 
 .myxp-details-container{
 	background-color:white;
+	border-bottom: 1px solid #ddd;
+    padding: 0 !important;
 }
 
 .myxp-tiercontainer{
@@ -220,7 +225,6 @@
 	text-align:left;
 	font-size: 1.25em;
 	position:relative;
-	margin-top: 0.5em;
 }
 
 .myxp-form-box{
