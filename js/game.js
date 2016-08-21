@@ -262,8 +262,8 @@ function DisplayUserDetails(userid, username){
 			var gameid = $("#gameContentContainer").attr("data-id");
 			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 		});
-		var box = $("#game-userxp-tab").find(".myxp-details-container").last().parent();
-		$(".myxp-vert-line-details").css({"bottom": (box.height() - 20)+"px"});
+		var box = $("#game-userxp-tab").find(".myxp-details-container").last();
+		$(".myxp-vert-line-details").css({"bottom": (box.height() - 40)+"px"});
 	 	$(".myxp-profile-tier-quote").on('click', function(){
 			ShowUserProfile($(this).attr("data-userid"));
 		});

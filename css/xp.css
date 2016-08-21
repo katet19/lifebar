@@ -43,11 +43,11 @@
 .myxp-vert-line-details{
     position: absolute;
     z-index: 0;
-    top: 85px;
+    top: 55px;
     display: block;
     width: 25px;
     left: 50px;	
-    bottom:100px;
+    bottom:50px;
 }
 
 .myxp-vert-icon{

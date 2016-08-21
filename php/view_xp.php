@@ -605,8 +605,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
 		    		      		<?php if($editAccess){ ?>
-		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>' title='Remove this XP'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
 		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
@@ -615,11 +620,6 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 								<?php } ?>
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
-								<?php if($agreedcount > 0){ ?>
-									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
-										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
-									</div>
-								<?php } ?>
 					      	</div>
 				    	</div>
 					</div>
@@ -679,8 +679,8 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 		    		      	<div class="feed-action-container" style='position: relative;float: right;display:none;'>
 								<div class="btn-flat waves-effect" data-userid='<?php echo  $userid; ?>'></div>
 								<?php if($agreedcount > 0){ ?>
-									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
-										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
 									</div>
 								<?php } ?>
 					      	</div>
@@ -717,8 +717,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
   		    		      		<?php if($editAccess){ ?>
-		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>' title='Remove this XP'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
 		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
@@ -727,11 +732,6 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 								<?php } ?>
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
-								<?php if($agreedcount > 0){ ?>
-									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
-										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
-									</div>
-								<?php } ?>
 							  </div>
 				    	</div>
 					</div>
