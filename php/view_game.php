@@ -29,15 +29,16 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
-		<li data-tab="game-dashboard-tab"><span>Dashboard</span></li>
+		<li data-tab="game-dashboard-tab" class="game-tab-first"><span>Dashboard</span></li>
 		<li data-tab="game-myxp-tab"><span>My XP</span></li>
 		<li data-tab="game-longform-tab"><span>Long Form</span></li>
-		<li data-tab="game-community-tab" class="game-community-tab-first"><span>Following</span></li>
+		<li data-tab="game-community-tab"><span>Following</span></li>
 		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><span>Unfollowed</span></li>
 		<li data-tab="game-analyze-tab"><span>Analytics</span></li>
 		<li data-tab="game-video-tab"><span>Watch</span></li>
 		<li data-tab="game-reflectionpoints-tab"><span>Reflection Points</span></li>
-		<li data-tab="game-info-tab"><span>Information</span></li>
+		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
+		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><span>USER NAME</span></li>
 	</ul>
 	<?php
 }
@@ -79,7 +80,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); } ?>
 			</div>
 		<?php } ?>
-		<div id="game-userxp-tab" class="col s12 game-tab" <?php if($otherxp == -1){ ?> style='display:none;' <?php } ?> >
+		<div id="game-userxp-tab" class="col s12 game-tab">
 			<?php if($otherxp != -1){
 					ShowUserXP($otherxp);
 					}?>
@@ -815,7 +816,7 @@ function ShowUserXP($userxp){
 	?>
 	<div class="row">
 		<div class="col s12">
-			<div class="myxp-details-container z-depth-1" style='padding: 15px 0;'>
+			<div class="myxp-details-container z-depth-1" style='padding: 25px 0 15px !important;'>
 				<div class="row" style='margin: 0;'>
 					<div class="col s12 userxp-details-lifebar">
 						<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
@@ -827,11 +828,15 @@ function ShowUserXP($userxp){
 				</div>
 			</div>
 		</div>
-		<div class="col s12">
-			<?php ShowMyXP($userxp, $userxp->_userid, $conn, $mutualconn); ?>
+		<div class="row">
+			<div class="col s12">
+				<?php ShowMyXP($userxp, $userxp->_userid, $conn, $mutualconn); ?>
+			</div>
 		</div>
-		<div class="col s12">
-			<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
+		<div class="row">
+			<div class="col s12">
+				<?php BuildExperienceSpectrum($user, $userxp, $userxp->_game); ?>
+			</div>
 		</div>
 	</div>
 <?php

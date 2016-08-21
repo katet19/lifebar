@@ -615,26 +615,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 								<?php } ?>
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
 					      	</div>
 				    	</div>
-				    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 			<?php 
@@ -691,26 +678,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;display:none;'>
 								<div class="btn-flat waves-effect" data-userid='<?php echo  $userid; ?>'></div>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
 					      	</div>
 				    	</div>
-  			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 			<?php
@@ -753,26 +727,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 								<?php } ?>
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
-					      	</div>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: left;margin-top: 0;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 40px !important;height: 45px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
+							  </div>
 				    	</div>
-  			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 				<?php

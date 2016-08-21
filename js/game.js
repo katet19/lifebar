@@ -163,7 +163,7 @@ function AttachGameEvents(currentTab){
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
-	$(".game-community-tab-first").click();
+	$(".game-tab-first").click();
 	var iconOnHover="";
 	if($(".fixed-action-btn .game-add-played-btn").length > 0)
 		iconOnHover = "mdi-hardware-gamepad";
@@ -231,9 +231,9 @@ function SwitchGameContent(elem){
 		$(".game-tab-active").removeClass("game-tab-active");
 		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
 		if(elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab")
-			$(".game-community-others-tab").show();
+			$(".game-community-others-tab").show(100);
 		else
-			$(".game-community-others-tab").hide();
+			$(".game-community-others-tab").hide(100);
 	}
 }
 
@@ -246,10 +246,9 @@ function DisplayGameNav(){
 }
 
 function DisplayUserDetails(userid, username){
-	$("#userxp-tab-nav").html(username);
- 	$("#userxp-tab-nav").parent().show(250);
- 	$("#game-userxp-tab").css({"display":"block"});
-	$("#userxp-tab-nav").click();
+	$(".game-user-tab span").html(username);
+	$(".game-user-tab").show();
+	SwitchGameContent($(".game-user-tab"));
 	ShowLoader($("#game-userxp-tab"), 'big', "<br><br><br>");
 	var gameid = $("#gameContentContainer").attr("data-id");
 	$.ajax({ url: '../php/webService.php',
