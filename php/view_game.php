@@ -63,11 +63,9 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		</div>
 		<div id="game-community-tab" class="col s12 game-tab">
 			<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
-			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>
 		<div id="game-community-others-tab" class="col s12 game-tab">
 			<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
-			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>
 		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
 		<?php if(sizeof($videoxp) > 0 && $_SESSION['logged-in'] > 0){ ?>
@@ -85,8 +83,23 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 					ShowUserXP($otherxp);
 					}?>
 		</div>
+		<div id="game-reflectionpoints-tab" class='col s12 game-tab'>
+			<?php ShowReflectionPoints($game); ?>
+		</div>
 	</div>
 <?php }
+
+function ShowReflectionPoints($game){ 
+	$refpts = GetReflectionPointsForGame($game->_id);
+	if(sizeof($refpts) > 0){
+		foreach($refpts as $pt){ ?>
+			<div class='game-community-box z-depth-1'>
+				<?php DisplayGamePageReflectionPoint($pt); ?>
+			</div>
+		<?php
+		}
+	}
+}
 
 function ShowCommunityFollowing($game, $id, $myxp, $verified, $curated, $myusers){
 	if($id != ""){
@@ -479,70 +492,7 @@ function DisplayGameInfo($game){	?>
 			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
 		</div>
 	</div>
-	
-	<div class="row">
-		<?php 
-			if($_SESSION['logged-in']->_security == 'Admin'){
-				$refpts = GetReflectionPointsForGame($game->_id);
-				foreach($refpts as $pt){ ?>
-					<div class="col s12" style='text-align:left;margin-bottom:5px;'>
-						<?php echo $pt['Header']; ?><span class='btn-flat edit-ref-pt' data-id='<?php echo $pt['ID']; ?>'>Edit</span> <span class='btn-flat preview-ref-pt' data-id='<?php echo $pt['ID']; ?>'>Preview</span>
-					</div>
-					<?php
-				}
-			}
-		?>
-	</div>
-</div>
-	
-	<div id="infoModal" class="modal dynamicModal" style="background-color:white;">
-		<div class="row">
-			<div class="col s12 m4 GameInfoLabel">Released:</div>
-			<div class="col s12 m8 GameInfoContent">
-				<?php 
-				if($game->_year == 0){
-					echo "Release date not announced";
-				}else{
-					echo ConvertDateToLongRelationalEnglish($game->_released); ?> <?php echo $game->_year; ?>
-				<?php } ?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m4 GameInfoLabel">Platforms:</div>
-			<div class="col s12 m8 GameInfoContent">
-				<?php $platforms = explode("\n", $game->_platforms);
-				echo implode(", ", array_filter(array_map('trim',$platforms)));?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m4 GameInfoLabel">Developed By:</div>
-			<div class="col s12 m8 GameInfoContent">
-				<?php $developers = explode("\n", $game->_developer);
-				echo implode(", ", array_filter(array_map('trim',$developers)));?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m4 GameInfoLabel">Published By:</div>
-			<div class="col s12 m8 GameInfoContent">
-				<?php $publishers = explode("\n", $game->_publisher);
-				echo implode(", ", array_filter(array_map('trim',$publishers)));?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m4 GameInfoLabel">Categorized As:</div>
-			<div class="col s12 m8 GameInfoContent">
-				<?php $genres = explode("\n", $game->_genre);
-				echo implode(", ", array_filter(array_map('trim',$genres)));?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col s12">
-				<div class="btn-flat"><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
-			</div>
-		</div>
-	</div>
-
-	
+</div>	
 <?php }
 
 function DisplayGameBackNav(){ ?>

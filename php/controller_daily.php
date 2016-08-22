@@ -158,11 +158,23 @@ function GetFormResults($formid){
 
 function GetReflectionPointsForGame($gameid){
 	$mysqli = Connect();
-	$refpts = array();	if ($result = $mysqli->query("select * from `Forms` where `ObjectID` = '".$gameid."' and `ObjectType` = 'Game'")) {
+	if ($result = $mysqli->query("select * from `Forms` where `ObjectID` = '".$gameid."' and `ObjectType` = 'Game'")) {
 		while($row = mysqli_fetch_array($result)){
-			$refpts[] = $row;
+			unset($refpt);
+			$refpt = $row;
+			if(sizeof($refpt) > 0 ){
+				$query = "SELECT * FROM `FormItems` where `FormID` = '".$refpt["ID"]."' order by `ID`"; 
+				if ($result2 = $mysqli->query($query)) {
+					while($row2 = mysqli_fetch_array($result2)){
+						$items[] = $row2;
+					}
+				}
+				$refpt['Items'] = $items;
+			}
+			$refpts[] = $refpt;
 		}
 	}
+	
 	Close($mysqli, $result);
 	return $refpts;
 }

@@ -2,6 +2,37 @@
 	display:none;
 }
 
+.refpt-header-image{
+    width: 100%;
+    height: 400px;
+    position:relative;
+    overflow:hidden;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.refpt-header-question{
+	font-size: 3em;
+    color: rgba(0,0,0,0.7);
+    font-weight: 500;
+    position: absolute;
+    line-height: 45px;
+    top: 250px;
+    z-index: 10;
+    left: 75px;
+    right: 75px;
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
 .GameHeaderContainer{
 	height:35vh;
 	width:100%;

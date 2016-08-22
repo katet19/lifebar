@@ -192,3 +192,108 @@ function DailyForm($game, $user, $refptid){
 	</div>
 	<?php
 }
+
+function DisplayGamePageReflectionPoint($item){
+	$game = GetGame($item['ObjectID']);
+	$showsplrwrng = false;
+	if($item['Finished'] == 'Yes'){
+		$xp = HasFinished($_SESSION['logged-in']->_id, $game->_id);
+		if($xp < 1)
+			$showsplrwrng = true;
+	}
+	
+	?>
+	<div class='row'>
+	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
+			<div class="refpt-header-image">
+				<div class="refpt-header-question">
+					<?php echo $item['Header']; ?> 
+					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
+				</div>
+				<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
+					<?php echo $game->_title; ?>
+					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
+					<?php } ?>
+				</div>
+				<div class="daily-answers-results-container">
+					<?php 
+						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
+						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
+							ShowFormResults($item['ID'], $choicesMade);
+					?>
+				</div>
+				<div class="daily-answers-container" data-type="<?php echo $item['Items'][0]['Type']; ?>">
+					<?php if(!$showsplrwrng){ ?>
+						<div class="row" style='margin-top:175px;'>
+							<div class="col s10 offset-s1" style='text-align:left;'>
+								<div class="daily-header-subquestion-hidden">
+									<?php echo $item['SubHeader']; ?>
+								</div>
+								<?php 
+									$imagehorizontal = false;
+									$horizontal = false;
+									if(sizeof($item['Items']) >= 5 && $item['Items'][0]['Type'] != 'grid-single' && $item['Items'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['Items']) >= 7 && ($item['Items'][0]['Type'] == 'grid-single' || $item['Items'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
+									foreach($item['Items'] as $response){
+										?>
+										<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['Items']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
+											<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
+											<?php if($response['Type'] == 'radio'){ ?>
+												<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+												<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
+											<?php }else if($response['Type'] == 'dropdown'){ ?>
+												<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
+												<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
+											<?php }else if($response['Type'] == 'checkbox'){ ?>
+												<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+												<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+											<?php }else if($response['Type'] == 'grid-single'){ ?>
+													<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+														<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['Items']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+															<i class="daily-checkmark fa fa-check"></i>
+															<div class="daily-pref-image-title">
+																<?php echo $response["Choice"]; ?>
+															</div>
+														</div>
+													</div>
+											<?php }else if($response['Type'] == 'grid-multi'){ ?>
+													<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+														<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['Items']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+															<i class="daily-checkmark fa fa-check"></i>
+															<div class="daily-pref-image-title">
+																<?php echo $response["Choice"]; ?>
+															</div>
+														</div>
+													</div>
+											<?php } ?>
+										</div>
+										<?php
+										$first = false;
+									}
+								?>
+								<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
+							</div>
+							<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
+								<div class='btn submit-daily-response'>Save</div>
+								<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+								<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+							</div>
+						</div>
+					<?php }else{ ?>
+						<div class="row" style='margin-top:175px;'>
+							<div class="col s10 offset-s1" style='text-align:left;'>
+								<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
+									<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
+									Spoiler Warning!
+								</div>
+								<div style='font-size: 1.25em;font-weight: 400;margin-bottom: 40px;margin-top: -25px;'>You haven't finished this game yet. This reflection point will spoil your playthrough until you finish.</div>
+								<div class="btn view-game-spoiler" data-id="<?php echo $game->_gbid; ?>">Update your experience now</div>
+							</div>
+						</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}

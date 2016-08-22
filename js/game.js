@@ -268,6 +268,9 @@ function DisplayUserDetails(userid, username){
 			ShowUserProfile($(this).attr("data-userid"));
 		});
 		AttachAgreesFromGame();
+		$(".shareBtn").on('click', function(){
+			ShowShareModal("event", $(this).attr("data-eventid"));
+		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
