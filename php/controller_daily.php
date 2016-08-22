@@ -163,6 +163,7 @@ function GetReflectionPointsForGame($gameid){
 			unset($refpt);
 			$refpt = $row;
 			if(sizeof($refpt) > 0 ){
+				unset($items);
 				$query = "SELECT * FROM `FormItems` where `FormID` = '".$refpt["ID"]."' order by `ID`"; 
 				if ($result2 = $mysqli->query($query)) {
 					while($row2 = mysqli_fetch_array($result2)){

@@ -211,11 +211,8 @@ function AttachGameEvents(currentTab){
 		EditReflectionPopUp(refptID);
 	});
 	
-	$(".preview-ref-pt").on("click", function(){
-		var refptID = $(this).attr("data-id");
-		PreviewReflectionPopUp(refptID);
-	});
- 	
+	$("select").material_select();
+	DisplayFormResultsGraph();
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachMyXPEvents();

@@ -1,6 +1,6 @@
 <?php 
 
-function ShowFormResults($formid, $choices){
+function ShowFormResults($formid, $choices, $gamePage){
 	$results = GetFormResults($formid);
 	?>
 	<canvas class="ResultsDougnut analyze-doughnut-relational" 
@@ -29,7 +29,7 @@ function ShowFormResults($formid, $choices){
 				}else{ ?>
 					<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
 				<?php } ?>
-				<div class="analyze-doughnut-desc" style='color:white;'>
+				<div class="analyze-doughnut-desc" <?php if(!$gamePage){ ?>style='color:white;'<?php } ?>>
 					<?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%
 				</div>
 			</div>
@@ -204,28 +204,24 @@ function DisplayGamePageReflectionPoint($item){
 	
 	?>
 	<div class='row'>
-	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
-			<div class="refpt-header-image">
+	    <div class="col s12" style='margin: 5px 10px;position:relative;'>
+				<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+					<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;padding:0;position: absolute;top: -15px;right: 5px;font-weight:500;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
+				<?php } ?>
 				<div class="refpt-header-question">
 					<?php echo $item['Header']; ?> 
-					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
 				</div>
-				<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
-					<?php echo $game->_title; ?>
-					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
-						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
-					<?php } ?>
-				</div>
-				<div class="daily-answers-results-container">
+				<div class="refpt-answers-results-container">
 					<?php 
 						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
-						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
-							ShowFormResults($item['ID'], $choicesMade);
+						$hasResults = HasFormResults($_SESSION['logged-in']->_id, $item['ID']);
+						if($hasResults)
+							ShowFormResults($item['ID'], $choicesMade, true);
 					?>
 				</div>
-				<div class="daily-answers-container" data-type="<?php echo $item['Items'][0]['Type']; ?>">
+				<div class="refpt-answers-container" data-type="<?php echo $item['Items'][0]['Type']; ?>">
 					<?php if(!$showsplrwrng){ ?>
-						<div class="row" style='margin-top:175px;'>
+						<div class="row">
 							<div class="col s10 offset-s1" style='text-align:left;'>
 								<div class="daily-header-subquestion-hidden">
 									<?php echo $item['SubHeader']; ?>
@@ -240,13 +236,13 @@ function DisplayGamePageReflectionPoint($item){
 											<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
 											<?php if($response['Type'] == 'radio'){ ?>
 												<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
-												<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
+												<label for="response<?php echo $response['ID']; ?>" class="refpt-response-label-radio"><?php echo $response["Choice"]; ?></label>
 											<?php }else if($response['Type'] == 'dropdown'){ ?>
 												<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
 												<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
 											<?php }else if($response['Type'] == 'checkbox'){ ?>
 												<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
-												<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+												<label for="response<?php echo $response['ID']; ?>" class="refpt-response-label"><?php echo $response["Choice"]; ?></label>
 											<?php }else if($response['Type'] == 'grid-single'){ ?>
 													<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
 														<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['Items']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
@@ -271,12 +267,15 @@ function DisplayGamePageReflectionPoint($item){
 										$first = false;
 									}
 								?>
-								<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
-							</div>
+								<?php if($response['Type'] == 'dropdown'){ ?></select><?php }?>
+								</div>
 							<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
-								<div class='btn submit-daily-response'>Save</div>
-								<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
-								<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+								<?php if($hasResults){ ?>
+									<div class='btn submit-daily-response'>Update</div>
+								<?php }else{ ?>
+									<div class='btn submit-daily-response'>Save</div>
+								<?php } ?>
+								<div class="btn-flat share-refpt-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
 							</div>
 						</div>
 					<?php }else{ ?>
@@ -292,7 +291,6 @@ function DisplayGamePageReflectionPoint($item){
 						</div>
 					<?php } ?>
 				</div>
-			</div>
 		</div>
 	</div>
 	<?php

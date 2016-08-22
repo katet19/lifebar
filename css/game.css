@@ -15,15 +15,11 @@
 }
 
 .refpt-header-question{
-	font-size: 3em;
+	font-size: 2em;
     color: rgba(0,0,0,0.7);
     font-weight: 500;
-    position: absolute;
     line-height: 45px;
-    top: 250px;
     z-index: 10;
-    left: 75px;
-    right: 75px;
     text-align: left;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -31,6 +27,52 @@
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
     cursor: pointer;
+}
+
+.refpt-header-game-title{
+    color: rgba(0,0,0,0.7);
+    font-weight: bold;
+    z-index: 10;
+    text-align: left;
+	cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.refpt-answers-results-container{
+    position: relative;
+}
+
+.refpt-answers-container{
+    width: 100%;
+    z-index: 5;
+    color: rgba(0,0,0,0.7);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+    position:relative;
+}
+
+.share-refpt-response{
+    color: rgba(0,0,0,0.7);
+    cursor: pointer;
+    margin-top: 10px;
+    padding-left: 0;
+    text-align: left;
+    font-weight: 500;
+    margin-left: 35px;
+}
+
+.daily-response-label, .daily-response-label-radio{
+    color: rgba(0,0,0,0.7) !important;
+    font-weight: 400;
+    font-size: 1.5em !important;
 }
 
 .GameHeaderContainer{
