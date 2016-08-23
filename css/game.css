@@ -69,12 +69,6 @@
     margin-left: 35px;
 }
 
-.daily-response-label, .daily-response-label-radio{
-    color: rgba(0,0,0,0.7) !important;
-    font-weight: 400;
-    font-size: 1.5em !important;
-}
-
 .GameHeaderContainer{
 	height:35vh;
 	width:100%;
