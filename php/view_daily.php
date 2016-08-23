@@ -2,42 +2,47 @@
 
 function ShowFormResults($formid, $choices, $gamePage){
 	$results = GetFormResults($formid);
-	?>
-	<canvas class="ResultsDougnut analyze-doughnut-relational" 
-	data-total="<?php echo $results['TOTAL']; ?>"
-	<?php $i=0; $colors = GetRandomColors(false);
-	foreach($results['FORMITEMS'] as $item){
-		if($item['TOTAL'] > 0){
-			echo "data-e".$i."='".$item['TOTAL']."' ";
-			echo "data-ed".$i."='".$item['Choice']."' ";
-			echo "data-ec".$i."='".$colors[$i][0]."' ";
-			echo "data-ech".$i."='".$colors[$i][1]."' ";
-			$legend[$i] = [$item['TOTAL'], $item['Choice'], $colors[$i][0], $item['ID'] ];
-			$i++;
-		}
-	}?>
-	></canvas>
-	<div class="analyze-doughnut-key">
-		<?php 
-		$i = 0;
-		foreach($legend as $ref){ 
-			if($i == 0){ echo "<div style='float:left;'>"; }else if($i == 6){ echo "</div><div style='float:left;'>"; } ?>
-			<div class="analyze-doughnut-item">
-				<?php if(sizeof($choices) > 0 && in_array($ref[3], $choices)){ ?>
-					<i class='fa fa-check' style='color:<?php echo $ref[2]; ?>;display:inline-block;background: rgba(255,255,255,0.8); border-radius: 50%;padding: 1px;' ></i>
-				<?php 
-				}else{ ?>
-					<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
-				<?php } ?>
-				<div class="analyze-doughnut-desc" <?php if(!$gamePage){ ?>style='color:white;'<?php } ?>>
-					<?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%
-				</div>
-			</div>
+	if($results['TOTAL'] > 0){
+		?>
+		<canvas class="ResultsDougnut analyze-doughnut-relational" 
+		data-total="<?php echo $results['TOTAL']; ?>"
+		<?php $i=0; $colors = GetRandomColors(false);
+		foreach($results['FORMITEMS'] as $item){
+			if($item['TOTAL'] > 0){
+				echo "data-e".$i."='".$item['TOTAL']."' ";
+				echo "data-ed".$i."='".$item['Choice']."' ";
+				echo "data-ec".$i."='".$colors[$i][0]."' ";
+				echo "data-ech".$i."='".$colors[$i][1]."' ";
+				$legend[$i] = [$item['TOTAL'], $item['Choice'], $colors[$i][0], $item['ID'] ];
+				$i++;
+			}
+		}?>
+		></canvas>
+		<div class="analyze-doughnut-key">
 			<?php 
-			$i++;
-		} echo "</div>"; ?>
-	</div>
-	<?php
+			$i = 0;
+			if(sizeof($legend) > 0){
+				foreach($legend as $ref){ 
+					if($i == 0){ echo "<div style='float:left;'>"; }else if($i == 6){ echo "</div><div style='float:left;'>"; } ?>
+					<div class="analyze-doughnut-item">
+						<?php if(sizeof($choices) > 0 && in_array($ref[3], $choices)){ ?>
+							<i class='fa fa-check' style='color:<?php echo $ref[2]; ?>;display:inline-block;background: rgba(255,255,255,0.8); border-radius: 50%;padding: 1px;' ></i>
+						<?php 
+						}else{ ?>
+							<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
+						<?php } ?>
+						<div class="analyze-doughnut-desc" <?php if(!$gamePage){ ?>style='color:white;'<?php } ?>>
+							<?php echo $ref[1]; ?> - <?php echo round(($ref[0] / $results['TOTAL']) * 100); ?>%
+						</div>
+					</div>
+					<?php 
+					$i++;
+				}
+			}
+			 echo "</div>"; ?>
+		</div>
+		<?php
+	}
 }
 
 function GetRandomColors($random){
@@ -202,28 +207,20 @@ function DisplayGamePageReflectionPoint($item){
 			$showsplrwrng = true;
 	}
 	
+	$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
+	$hasResults = HasFormResults($_SESSION['logged-in']->_id, $item['ID']);
+
 	?>
 	<div class='row'>
 	    <div class="col s12" style='margin: 5px 10px;position:relative;'>
-				<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
-					<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;padding:0;position: absolute;top: -15px;right: 5px;font-weight:500;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
-				<?php } ?>
 				<div class="refpt-header-question">
 					<?php echo $item['Header']; ?> 
-				</div>
-				<div class="refpt-answers-results-container">
-					<?php 
-						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
-						$hasResults = HasFormResults($_SESSION['logged-in']->_id, $item['ID']);
-						if($hasResults)
-							ShowFormResults($item['ID'], $choicesMade, true);
-					?>
 				</div>
 				<div class="refpt-answers-container" data-type="<?php echo $item['Items'][0]['Type']; ?>">
 					<?php if(!$showsplrwrng){ ?>
 						<div class="row">
-							<div class="col s10 offset-s1" style='text-align:left;'>
-								<div class="daily-header-subquestion-hidden">
+							<div class="col s12" style='text-align:left;'>
+								<div class="refpt-header-subquestion-hidden">
 									<?php echo $item['SubHeader']; ?>
 								</div>
 								<?php 
@@ -269,18 +266,21 @@ function DisplayGamePageReflectionPoint($item){
 								?>
 								<?php if($response['Type'] == 'dropdown'){ ?></select><?php }?>
 								</div>
-							<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
+							<div class="col s12" style='margin-top: 40px;text-align:left;' >
 								<?php if($hasResults){ ?>
-									<div class='btn submit-daily-response'>Update</div>
+									<div class='btn submit-refpt-response'>Update</div>
 								<?php }else{ ?>
-									<div class='btn submit-daily-response'>Save</div>
+									<div class='btn submit-refpt-response'>Save</div>
 								<?php } ?>
 								<div class="btn-flat share-refpt-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+								<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+									<span class='btn-flat edit-ref-pt' style='font-weight:500;' data-id='<?php echo $item['ID']; ?>'>Edit Reflection Point</span>
+								<?php } ?>
 							</div>
 						</div>
 					<?php }else{ ?>
 						<div class="row" style='margin-top:175px;'>
-							<div class="col s10 offset-s1" style='text-align:left;'>
+							<div class="col s12" style='text-align:left;'>
 								<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
 									<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
 									Spoiler Warning!
@@ -291,6 +291,7 @@ function DisplayGamePageReflectionPoint($item){
 						</div>
 					<?php } ?>
 				</div>
+				<div class="refpt-answers-results-container" <?php if(!$hasResults){ ?>style='display:none;'<?php } ?>><?php ShowFormResults($item['ID'], $choicesMade, true); ?></div>
 		</div>
 	</div>
 	<?php

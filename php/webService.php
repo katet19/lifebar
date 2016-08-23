@@ -52,7 +52,12 @@
 		if($_POST['action'] == 'SubmitDailyChoice'){
 			SaveFormChoices($_SESSION['logged-in']->_id, $_POST['formid'], $_POST['formitemid'], $_POST['gameid'], $_POST['objectid'], $_POST['objectType']);
 			$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $_POST['formid']);
-			ShowFormResults($_POST['formid'], $choicesMade);
+			if(isset($_POST['gamepage']))
+				$gamepage = true;
+			else
+				$gampage = false;
+
+			ShowFormResults($_POST['formid'], $choicesMade, $gamepage);
 		}
 	}
 	

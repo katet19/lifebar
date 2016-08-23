@@ -59,10 +59,11 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
 			<div>WELCOME TO THE DASHBOARD RYAN</div>
-			<div class="col s12 m12 l10" id='game-width-box'></div>
+			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<div id="game-community-tab" class="col s12 game-tab">
 			<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
+			<div class="col s12 m12 l10" id='game-width-box'></div>
 		</div>
 		<div id="game-community-others-tab" class="col s12 game-tab">
 			<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
@@ -77,6 +78,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 			<div id="game-myxp-tab" class="col s12 game-tab">
 				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); } ?>
 			</div>
+			<div class="col s12 m12 l10" id='myxp-game-width-box'></div>
 		<?php } ?>
 		<div id="game-userxp-tab" class="col s12 game-tab">
 			<?php if($otherxp != -1){

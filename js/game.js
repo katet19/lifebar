@@ -211,6 +211,7 @@ function AttachGameEvents(currentTab){
 		EditReflectionPopUp(refptID);
 	});
 	
+	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
  	AttachFloatingIconEvent(iconOnHover);
@@ -219,6 +220,7 @@ function AttachGameEvents(currentTab){
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
+	AttachWatchFromXP();
 }
 
 function SwitchGameContent(elem){
@@ -268,6 +270,7 @@ function DisplayUserDetails(userid, username){
 		$(".shareBtn").on('click', function(){
 			ShowShareModal("event", $(this).attr("data-eventid"));
 		});
+		AttachWatchFromXP();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -278,6 +281,34 @@ function DisplayUserDetails(userid, username){
     	},
     	timeout:45000
 	});
+}
+
+function AttachWatchFromXP(){
+	$(".watchBtn").on("click", function(e){
+ 		e.stopPropagation();
+		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+  		var gameid = $(this).attr("data-gameid");
+  		var url = $(this).attr("data-url");
+ 		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
+	     type: 'post',
+	     success: function(output) {
+ 			$("#BattleProgess").html(output); 
+ 			$(".myxp-video-goto-full").hide();
+ 			AttachActivityVideoEvents();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+
+	 });
 }
 
 function AttachAgreesFromGame(){
@@ -1096,17 +1127,99 @@ function EditReflectionPopUp(refptid){
 	});
 }
 
-function PreviewReflectionPopUp(refptid){
+function AttachEventsForReflectionPoints(){	
+	$(".daily-pref-image,.submit-daily-response, .share-daily-response").unbind();
+ 	$(".daily-pref-image").on("click", function(){
+		 var parentElem = $(this).parent().parent().parent();
+ 		if($(this).hasClass("daily-pref-image-active")){
+ 			$(this).removeClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"0"});
+ 		}else{
+ 			if($(this).hasClass("singlegrid")){
+ 				var current = parentElem.find(".daily-pref-image-active");
+ 				current.removeClass("daily-pref-image-active");
+ 				current.find(".daily-checkmark").css({"opacity":"0"});
+ 			}
+ 			$(this).addClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"1"});
+ 		}
+ 	});
+ 	$(".share-refpt-response").on("click", function(){
+		//
+		//Need to change this
+		//
+		ShowShareModal("daily", '');
+	});
+	$(".submit-refpt-response").on('click', function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var parentElem = $(this).parent().parent().parent().parent();
+			parentElem.find(".refpt-answers-results-container").show();
+			SaveReflectionPointSubmission(parentElem);
+		}
+	});
+}
+
+function SaveReflectionPointSubmission(elem){
+	var formType = elem.find(".refpt-answers-container").attr("data-type");
+	var formitemid = 0;
+	var formid = 0;
+	var objectid = 0;
+	var objectType = '';
+	var gameid = 0;
+	if(formType == 'grid-single'){
+		formitemid = elem.find(".daily-pref-image-active").parent().parent().attr("data-formitemid");
+		formid = elem.find(".daily-pref-image-active").parent().parent().attr("data-formid");
+		objectid = elem.find(".daily-pref-image-active").parent().parent().attr("data-objid");
+		objectType = elem.find(".daily-pref-image-active").parent().parent().attr("data-objtype");
+		gameid = elem.find(".daily-pref-image-active").parent().parent().attr("data-gameid");
+	}else if(formType == 'radio'){
+		formitemid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formitemid");
+		formid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formid");
+		objectid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objid");
+		objectType = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
+		gameid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
+	}else if(formType == 'dropdown'){
+		formitemid = elem.find("#daily-response-dropdown").val();
+		formid = elem.find("#daily-response-dropdown").parent().parent().attr("data-formid");
+		objectid = elem.find("#daily-response-dropdown").parent().parent().attr("data-objid");
+		objectType = elem.find("#daily-response-dropdown").parent().parent().attr("data-objtype");
+		gameid = elem.find("#daily-response-dropdown").parent().parent().attr("data-gameid");
+	}else if(formType == 'grid-multi'){
+		formitemid = '';
+		elem.find(".daily-pref-image-active").each(function(){
+			formitemid = formitemid + $(this).parent().parent().attr("data-formitemid") + "||";
+			if(formid == 0){
+				formid = $(this).parent().parent().attr("data-formid");
+				objectid = $(this).parent().parent().attr("data-objid");
+				objectType = $(this).parent().parent().attr("data-objtype");
+				gameid = $(this).parent().parent().attr("data-gameid");
+			}
+		});	
+	}else if(formType == 'checkbox'){
+		formitemid = '';
+		elem.find(".response-checkbox").each(function(){
+			if(this.checked){
+				formitemid = formitemid + $(this).parent().attr("data-formitemid") + "||";
+				if(formid == 0){
+					formid = $(this).parent().attr("data-formid");
+					objectid = $(this).parent().attr("data-objid");
+					objectType = $(this).parent().attr("data-objtype");
+					gameid = $(this).parent().attr("data-gameid");
+				}
+			}
+		});		
+	}
+	
 	$.ajax({ url: '../php/webService.php',
-     data: {action: "PreviewRefPt", refptid: refptid },
-     type: 'post',
-     success: function(output) {
- 		ShowBattleProgress(output); 
- 		$("select").material_select();
-	 	$(".daily-header-question").on("click", function(){
-	 		DisplayQuestionsForDaily();	
-	 	});
-     },
+         data: {action: "SubmitDailyChoice", formid: formid, formitemid: formitemid, gameid: gameid, objectid: objectid, objectType: objectType, gamepage: "true" },
+         type: 'post',
+         success: function(output) {
+         	elem.find(".refpt-answers-results-container").html(output);
+         	DisplayFormResultsGraph();
+         	Toast("Saved your Reflection Point!");
+     	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
 	            ToastError("Server Timeout");
@@ -1294,7 +1407,9 @@ function DisplayExpSpectrum(elem){
 		        }
 		    ]
 		};
-		if($("#game-community-tab").is(":visible"))
+		if($("#game-dashboard-tab").is(":visible"))
+			$(this).attr('width', $("#dashboard-game-width-box").width() - 40);
+		else if($("#game-community-tab").is(":visible"))
 			$(this).attr('width', $("#game-width-box").width() - 40);
 		else if($("#game-myxp-tab").is(":visible"))
 			$(this).attr('width', $("#myxp-game-width-box").width() - 40);
@@ -1371,7 +1486,9 @@ function DisplayExpSpectrum(elem){
 		        }
 		    ]
 		};
-		if($("#game-community-tab").is(":visible"))
+		if($("#game-dashboard-tab").is(":visible"))
+			$(this).attr('width', $("#dashboard-game-width-box").width() - 40);
+		else if($("#game-community-tab").is(":visible"))
 			$(this).attr('width', $("#game-width-box").width() - 40);
 		else if($("#game-myxp-tab").is(":visible"))
 			$(this).attr('width', $("#myxp-game-width-box").width() - 40);
