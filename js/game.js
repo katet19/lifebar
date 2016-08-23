@@ -210,7 +210,9 @@ function AttachGameEvents(currentTab){
 		var refptID = $(this).attr("data-id");
 		EditReflectionPopUp(refptID);
 	});
-	
+	$(".myxp-save-journal").on("click",function(){
+		SaveJournalEntry($(this).attr("data-gameid"));
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
@@ -241,6 +243,26 @@ function DisplayGameNav(){
 	$('html').click(function(){
 		if($("#game-slide-out").is(":visible"))
 			$("#game-slide-out").hide(250);
+	});
+}
+
+function SaveJournalEntry(gameid){
+	var journal = tinyMCE.activeEditor.getContent({format : 'html'});
+	var subject = '';
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "SaveJournalEntry", journal: journal, gameid: gameid, subject: subject },
+     type: 'post',
+     success: function(output) {
+
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
 	});
 }
 

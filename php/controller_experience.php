@@ -2608,4 +2608,32 @@ function RemoveEvent($eventid, $userid){
 	return $gameid;
 }
 
+function SaveJournalEntry($subject, $journal, $gameid){
+	$userid = $_SESSION['logged-in']->_id;
+	$update = false;
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `LongForm` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$update = true;
+		}
+	}
+
+	if($update)
+		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".$subject."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
+	else
+		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".$subject."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
+
+	Close($mysqli, $result);
+}
+
+function GetLongFormForUser($gameid, $userid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `LongForm` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$journal = $row;
+		}
+	}
+	return $journal;
+}
+
 ?>

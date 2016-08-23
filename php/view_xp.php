@@ -213,7 +213,6 @@ function ShowEditPlayed($exp){
 		ShowDelete($xp->_id);
 	} ?>
 </div>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <?php
 }
 

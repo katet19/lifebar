@@ -88,8 +88,29 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		<div id="game-reflectionpoints-tab" class='col s12 game-tab'>
 			<?php ShowReflectionPoints($game); ?>
 		</div>
+		<div id="game-longform-tab" class="col s12 game-tab">
+			<?php ShowLongForm($game); ?>
+		</div>
 	</div>
 <?php }
+
+function ShowLongForm($game){
+	//Make a request to get the longform version from the DB
+	$longform = GetLongFormForUser($game->_id, $_SESSION['logged-in']->_id);
+	?>
+	<div class='game-community-box z-depth-1'>
+		<div class='game-community-box-header'>Game Journal</div>
+		<div class='row'>
+			<div id="myGameJournalDisplay"><?php echo $longform['Body']; ?></div>
+			<div id="myGameJournalPanel"></div>
+			<script>
+				tinymce.init({ selector:'#myGameJournalPanel' });
+			</script>
+			<div class="btn myxp-save-journal" data-gameid="<?php echo $game->_id; ?>">Save Journal</div>
+		</div>
+	</div>
+	<?php
+}
 
 function ShowReflectionPoints($game){ 
 	$refpts = GetReflectionPointsForGame($game->_id);

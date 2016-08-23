@@ -544,6 +544,9 @@
 			CalculateWeave($_SESSION['logged-in']->_id);
 			DisplayMyXP($gameid);
 		}
+		if($_POST['action'] == "SaveJournalEntry"){
+			SaveJournalEntry($_POST['subject'], $_POST['journal'], $_POST['gameid']);
+		}
 	}
 	function GameServices(){
 		if($_POST['action'] == 'DisplayGame' && isset($_POST['gbid'])){
