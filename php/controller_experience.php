@@ -2619,9 +2619,9 @@ function SaveJournalEntry($subject, $journal, $gameid){
 	}
 
 	if($update)
-		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".$subject."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
+		$mysqli->query("UPDATE `LongForm` SET `Subject` = '".mysqli_real_escape_string($mysqli, $subject)."', `Body` = '".mysqli_real_escape_string($mysqli, $journal)."' where `UserID` = '".$userid."' and `GameID` = '".$gameid."'");
 	else
-		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".$subject."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
+		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".mysqli_real_escape_string($mysqli, $subject)."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
 
 	Close($mysqli, $result);
 }

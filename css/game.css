@@ -109,6 +109,20 @@ refpt-header-subquestion-hidden{
     right: 0;
 }
 
+.tinymce-default-format{
+	text-align:left;
+}
+
+#myGameJournalDisplay{
+	text-align:left;
+}
+
+.journal-subject-header{
+	font-size:2em;
+	padding-bottom:20px;
+	border-bottom:1px solid gray;
+}
+
 .game-tab{
 	position:absolute;
 	top:30vh;

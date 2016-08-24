@@ -213,6 +213,12 @@ function AttachGameEvents(currentTab){
 	$(".myxp-save-journal").on("click",function(){
 		SaveJournalEntry($(this).attr("data-gameid"));
 	});
+	$(".myxp-journal-edit-btn").on("click", function(){
+		ShowJournalEdit();
+	});
+	$(".myxp-cancel-journal").on("click", function(){
+		HideJournalEdit();
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
@@ -248,12 +254,16 @@ function DisplayGameNav(){
 
 function SaveJournalEntry(gameid){
 	var journal = tinyMCE.activeEditor.getContent({format : 'html'});
-	var subject = '';
+	var subject = $("#myxp-journal-subject").val();
 	$.ajax({ url: '../php/webService.php',
      data: {action: "SaveJournalEntry", journal: journal, gameid: gameid, subject: subject },
      type: 'post',
      success: function(output) {
-
+		 Toast("Saved Journal Entry");
+		 $(".journal-body").html(journal);
+		 if(subject != '')
+		 	$(".journal-subject-header").html(subject);
+		 HideJournalEdit();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -264,6 +274,18 @@ function SaveJournalEntry(gameid){
     	},
     	timeout:45000
 	});
+}
+
+function ShowJournalEdit(){
+	$("#myGameJournalDisplay").hide();
+	$(".myxp-journal-edit-btn").hide();
+	$(".edit-game-journal-container").show();
+}
+
+function HideJournalEdit(){
+	$("#myGameJournalDisplay").show();
+	$(".myxp-journal-edit-btn").show();
+	$(".edit-game-journal-container").hide();
 }
 
 function DisplayUserDetails(userid, username){

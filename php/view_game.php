@@ -99,15 +99,26 @@ function ShowLongForm($game){
 	$longform = GetLongFormForUser($game->_id, $_SESSION['logged-in']->_id);
 	?>
 	<div class='game-community-box z-depth-1'>
-		<div class='game-community-box-header'>Game Journal</div>
 		<div class='row'>
-			<div id="myGameJournalDisplay"><?php echo $longform['Body']; ?></div>
-			<div id="myGameJournalPanel"></div>
-			<script>
-				tinymce.init({ selector:'#myGameJournalPanel' });
-			</script>
-			<div class="btn myxp-save-journal" data-gameid="<?php echo $game->_id; ?>">Save Journal</div>
+			<div id="myGameJournalDisplay">
+				<?php if($longform['Subject'] != ''){ ?><div class="journal-subject-header"><?php echo $longform['Subject']; ?></div><?php } ?>
+				<div class='journal-body'><?php echo $longform['Body']; ?></div>
+			</div>
+			<div class="edit-game-journal-container" <?php if($longform['Body'] != ''){ ?> style='display:none;' <?php } ?>>
+				<div class="input-field" style='margin:20px 0 10px;'>
+					<input type='text' id="myxp-journal-subject" value='<?php echo $longform['Subject']; ?>'>
+					<label for="myxp-journal-subject" <?php if($longform['Subject'] != ''){ ?> class='active' <?php } ?>>Journal Header (optional)</label>
+				</div>
+				<textarea id="myGameJournalPanel"><?php echo $longform['Body']; ?></textarea>
+				<script>
+					tinymce.init({ selector:'#myGameJournalPanel', height: 300, body_class: 'tinymce-default-format' });
+				</script>
+				<br>
+				<div class="btn myxp-save-journal" data-gameid="<?php echo $game->_id; ?>">Save Journal</div>
+				<?php if($longform['Body'] != ''){ ?><div class="btn myxp-cancel-journal red">Cancel</div><?php } ?>
+			</div>
 		</div>
+		<?php if($longform['Body'] != ''){ ?><br><div class='btn myxp-journal-edit-btn'>Edit Journal</div><?php } ?>
 	</div>
 	<?php
 }
