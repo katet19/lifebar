@@ -29,16 +29,19 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
-		<li data-tab="game-dashboard-tab" class="game-tab-first"><span>Dashboard</span></li>
-		<li data-tab="game-myxp-tab"><span>My XP</span></li>
-		<li data-tab="game-longform-tab"><span>Long Form</span></li>
-		<li data-tab="game-community-tab"><span>Following</span></li>
-		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><span>Unfollowed</span></li>
-		<li data-tab="game-analyze-tab"><span>Analytics</span></li>
-		<li data-tab="game-video-tab"><span>Watch</span></li>
-		<li data-tab="game-reflectionpoints-tab"><span>Reflection Points</span></li>
+		<li data-tab="game-dashboard-tab" class="game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
+		<li data-tab="game-myxp-tab"><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
+		<li data-tab="game-longform-tab" class="game-longform-tab" style='display:none;padding-left: 35px;'><i class='game-nav-icons mdi-editor-mode-edit left'></i> <span>Journal</span></li>
+		<li data-tab="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
+		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
+		<li data-tab="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
+		<li data-tab="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
+		<li data-tab="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
+		<li data-tab="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
+		<li data-tab="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
+		<li data-tab="game-info-tab"><i class="game-nav-icons mdi-action-info left"></i> <span>Info</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
-		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><span>USER NAME</span></li>
+		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
 	</ul>
 	<?php
 }
@@ -90,6 +93,15 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		</div>
 		<div id="game-longform-tab" class="col s12 game-tab">
 			<?php ShowLongForm($game); ?>
+		</div>
+		<div id="game-similargames-tab" class='col s12 game-tab'>
+			Similar games
+		</div>
+		<div id="game-collections-tab" class='col s12 game-tab'>
+			collections
+		</div>
+		<div id="game-info-tab" class='col s12 game-tab'>
+			Info!
 		</div>
 	</div>
 <?php }
