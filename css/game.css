@@ -147,11 +147,6 @@ refpt-header-subquestion-hidden{
     transition: all 0.5s ease;
 }
 
-.game-nav-icons{
-	font-size: 1.25em;
-    margin-top: -3px;
-}
-
 .GameTitle{
 	position: absolute;
 	top: 30px;
@@ -548,9 +543,19 @@ refpt-header-subquestion-hidden{
     padding: 45px 2px 10px;
 }
 
+.game-nav-icons{
+	font-size: 1.25em;
+    margin-top: -3px;
+}
+
 #game-slide-out li{
 	width:100%;
 	padding: 5px 12px 5px 15px;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 	cursor: pointer;
 	color:#616161;
 }
@@ -577,9 +582,12 @@ refpt-header-subquestion-hidden{
 		margin-left:0;
 	}
 	#game-slide-out{
-		display:none;
+		padding: 0px 0px 10px;
 	    background-color: white;
-    	top: -15px;
+    	top: 100px;
+	}
+	#game-slide-out li span{
+		display:none;
 	}
 	.GameHeaderContainer, .GameHeaderBackground{
 		height:22em;
@@ -591,9 +599,6 @@ refpt-header-subquestion-hidden{
 		position: fixed !important;
 		right:1em;
 		bottom:1em;
-	}
-	.GameTitle{
-		top:210px;
 	}
 	.GameMyStatusIcons{
 		right:0.5em;
