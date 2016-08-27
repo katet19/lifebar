@@ -238,9 +238,20 @@ function SwitchGameContent(elem){
 		$(".game-tab-active").removeClass("game-tab-active");
 		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
 		if(elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab")
+		{
+			$(".game-longform-tab").hide(100);
 			$(".game-community-others-tab").show(100);
-		else
+		}
+		else if(elem.attr("data-tab") == "game-longform-tab" || elem.attr("data-tab") == "game-myxp-tab")
+		{
 			$(".game-community-others-tab").hide(100);
+			$(".game-longform-tab").show(100);
+		}
+		else
+		{
+			$(".game-longform-tab").hide(100);
+			$(".game-community-others-tab").hide(100);
+		}
 	}
 }
 
