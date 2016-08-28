@@ -110,6 +110,31 @@ function GetCollectionListForUserAndGame($userid, $gameid){
 	return $collections;	
 }
 
+function GetCollectionsForGame($gameid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select c.* from `CollectionGames`g, `Collections` c where `GameID` = '".$gameid."' and g.`CollectionID` = c.`ID` and c.`OwnerID` > 0 and `Visibility` = 'Yes' order by c.`LastUpdated` DESC")) {
+		while($row = mysqli_fetch_array($result)){
+			$collection = new Collection($row['ID'], 
+						$row['OwnerID'], 
+						$row['Name'],
+						$row['Description'],
+						GetTotalSubs($row['ID'], $mysqli), 
+						$row['Created'], 
+						$row['CreatedBy'], 
+						$row['LastUpdated'], 
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli),
+						$row['Visibility'],
+						$row['Cover'],
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
+						$collections[] = $collection;
+		}
+	}
+	Close($mysqli, $result);
+	return $collections;	
+}
+
 function GetSubscribedCollections($userid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select c.*, s.`SubSince` from `Collections` c, `CollectionSubs` s where s.`CollectionID` = c.`ID` and c.`Visibility` = 'Yes' and  s.`UserID` = '".$userid."' order by `ID` DESC")) {

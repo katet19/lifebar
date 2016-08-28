@@ -516,7 +516,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 	$chunksize = 100 / $size;
 	$pos = 0;
 	$vertBG = array();
-
+	
 	?>
 	<div class="col s12 z-depth-1" style='background-color:white;z-index:0;position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
 		<?php if($editAccess){ 
