@@ -219,6 +219,10 @@ function AttachGameEvents(currentTab){
 	$(".myxp-cancel-journal").on("click", function(){
 		HideJournalEdit();
 	});
+	$(".collection-box-container").on("click", function(e){
+		e.stopPropagation();
+		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();

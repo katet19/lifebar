@@ -572,6 +572,10 @@ refpt-header-subquestion-hidden{
 	color:white;
 }
 
+.game-collection-container{
+	margin-top:50px;
+}
+
 @media only screen and (max-width : 992px) {
 	#gameContentContainer{
 		margin-left:0;

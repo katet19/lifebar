@@ -112,7 +112,7 @@ function GetCollectionListForUserAndGame($userid, $gameid){
 
 function GetCollectionsForGame($gameid){
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select c.* from `CollectionGames`g, `Collections` c where `GameID` = '".$gameid."' and g.`CollectionID` = c.`ID` and c.`OwnerID` > 0 and `Visibility` = 'Yes' order by c.`LastUpdated` DESC")) {
+	if ($result = $mysqli->query("select c.* from `CollectionGames`g, `Collections` c where `GameID` = '".$gameid."' and g.`CollectionID` = c.`ID` and c.`CreatedBy` > 0 and `Visibility` = 'Yes' order by c.`LastUpdated` DESC")) {
 		while($row = mysqli_fetch_array($result)){
 			$collection = new Collection($row['ID'], 
 						$row['OwnerID'], 
