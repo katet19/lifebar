@@ -109,7 +109,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 			<?php ShowLongForm($game); ?>
 		</div>
 		<div id="game-similargames-tab" class='col s12 game-tab'>
-			Similar games
+			<?php ShowSimilarGames($game); ?>
 		</div>
 		<div id="game-collections-tab" class='col s12 game-tab'>
 			<?php ShowGameCollections($game); ?>
@@ -120,14 +120,35 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	</div>
 <?php }
 
-function ShowGameCollections($game){
-	$collections = GetCollectionsForGame($game->_id);
-	if(sizeof($collections) > 0){ 
-		foreach($collections as $collection){
-			DisplayCollection($collection);
+function ShowSimilarGames($game){
+	$similar = explode(',', $game->_similar);
+	if(sizeof($similar) > 0){ 
+		foreach($similar as $sim){
+			if($sim > 0){
+				$simgame = GetGameByGBIDFull($sim);
+				DisplayGameCard($simgame, 0, 0);
+			}
 		}
 	}else{ ?>
-		Need to build a collection first!
+		<div class="info-label" style='margin-top: 75px;'>As of right now, we don't have any games that we think are similar.</div>
+	<?php }
+}
+
+function ShowGameCollections($game){
+	$collections = GetCollectionsForGame($game->_id);
+	if(sizeof($collections) > 0){ ?>
+		<div class="game-collection-container">
+			<?php
+			foreach($collections as $collection){
+				DisplayCollection($collection);
+			} ?>
+		</div>
+	<?php }else if($_SESSION['logged-in']->_id > 0){ ?>
+		<div class="info-label" style='margin-top: 75px;'>This game isn't part of a Collection yet. </div>
+		<div class="btn waves-effect waves-light game-collection-btn orange darken-2" data-gameid="<?php echo $game->_id; ?>"><i class="mdi-av-my-library-add left"></i> Add to Collection</div>
+	<?php }else{ ?>
+		<div class="info-label" style='margin-top: 75px;'>This game isn't part of a Collection yet. </div>
+		<div class="btn waves-effect waves-light fab-login orange darken-2"><i class="mdi-av-my-library-add left"></i> Add to Collection</div>
 	<?php
 	}
 }

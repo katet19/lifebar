@@ -119,6 +119,11 @@ function AttachCollectionDetailsEvents(fromid, from){
  			ShowActivityHome();
   	 	else if(from == "Discover")
  			ShowDiscoverHome();
+		else if(from == "GamePage"){
+			var gameid = $("#gameContentContainer").attr("data-id");
+			ShowGame(gameid, $("#discover"), true);
+		}
+
  	});
 	$(".collection-next").on("click", function(){
 		var curroffset = $(this).parent().parent().find(".collection-pagination-offset").attr("data-offset");
