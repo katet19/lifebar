@@ -163,6 +163,7 @@ function AttachGameEvents(currentTab){
 		e.stopPropagation(); 
 		ShowGame($(this).parent().attr("data-gbid"), ''); 
 	});
+	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	
 	//$('.gameNav').tabs();
 	$("#game-slide-out li").on("click", function(){
