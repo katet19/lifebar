@@ -509,7 +509,7 @@ function DisplayCollectionManagement($gameid, $userid, $quickAdd, $gbid){
 						<div class="collection-add-game-from-popup" data-id='<?php echo $listitem['ID']; ?>'>
 							<div class="collection-add-game-from-popup-name"><?php echo $listitem['Name']; ?></div>
 							<?php if($listitem['Exists']){ ?>
-								<div class="btn-flat collection-add-game-from-popup-remove waves-effect"><i class='fa fa-check' ></i></div>
+								<div class="btn-flat collection-add-game-from-popup-remove waves-effect"><i class='fa fa-check' ></i><span style='display:none;'>REMOVE</span></div>
 							<?php }else{ ?>
 								<div class="btn-flat collection-add-game-from-popup-add waves-effect">Add</div>
 							<?php } ?>

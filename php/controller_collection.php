@@ -98,7 +98,7 @@ function GetCollectionListForUserAndGame($userid, $gameid){
 			$collection['ID'] = $row['ID'];
 			$collection['Name'] = $row['Name'];
 			$collection['Exists'] = false;
-			if ($result2 = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$row['ID']."' and `GameID` = '".$gameid."'")) {
+			if ($result2 = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$row['ID']."' and `GameID` = '".$gameid."' and `Hidden` = 'No'")) {
 				while($row2 = mysqli_fetch_array($result2)){
 					$collection['Exists'] = true;
 				}

@@ -407,7 +407,15 @@
     padding: 0 1rem;
     color: rgba(0,0,0,0.54);
     font-weight: bold;
-    cursor:default;
+    cursor:pointer;
+}
+
+.collection-add-game-from-popup-remove:hover i{
+    display:none;
+}
+
+.collection-add-game-from-popup-remove:hover span{
+    display:inline-block !important;
 }
 
 .collection-add-game-from-popup-add{
