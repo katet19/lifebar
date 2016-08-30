@@ -262,7 +262,7 @@ refpt-header-subquestion-hidden{
 .GameInfoLabel{
 	text-align: left;
 	color:rgba(0,0,0,0.7);
-	font-size:1.5em;
+	font-size:1.2em;
 	font-weight:bold;
 	vertical-align: top;
 }
@@ -270,7 +270,7 @@ refpt-header-subquestion-hidden{
 .GameInfoContent{
 	text-align: left;
 	vertical-align: top;
-	font-size:1.5em;
+	font-size:1.2em;
 	margin-left:20px !important;
 }
 
@@ -575,7 +575,8 @@ refpt-header-subquestion-hidden{
 }
 
 .game-collection-container{
-	margin-top:50px;
+	margin-top:-50px;
+	text-align: left;
 }
 
 @media only screen and (max-width : 992px) {

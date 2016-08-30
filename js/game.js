@@ -166,7 +166,6 @@ function AttachGameEvents(currentTab){
 
 	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	
-	//$('.gameNav').tabs();
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
@@ -257,6 +256,9 @@ function SwitchGameContent(elem){
 		{
 			$(".game-community-others-tab").hide(100);
 			$(".game-longform-tab").show(100);
+			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			var test = box.height();
+			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
 		}
 		else
 		{

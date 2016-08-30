@@ -492,7 +492,7 @@ function DisplayTierGameDetails($year, $tier, $userid){
 function DisplayMyXP($gameid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); }
+	ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', '');
 }
 
 function ShowMyXP($exp, $userid, $conn, $mutualconn){ 
