@@ -31,7 +31,7 @@ function ShowGameNav(){
 	?>
 	<ul id="game-slide-out">
 		<li data-tab="game-dashboard-tab" class="game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
-		<li data-tab="game-myxp-tab"><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
+		<li data-tab="game-myxp-tab" class='game-myxp-tab'><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
 		<li data-tab="game-longform-tab" class="game-longform-tab" style='display:none;padding-left: 35px;'><i class='game-nav-icons mdi-editor-mode-edit left'></i> <span>Journal</span></li>
 		<li data-tab="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
 		<?php if($id > 0){ ?>

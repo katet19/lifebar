@@ -51,6 +51,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/activity.css" rel="stylesheet" type="text/css" />
 <link href="../css/admin.css" rel="stylesheet" type="text/css" />
 <link href="../css/analyze.css" rel="stylesheet" type="text/css" />
+<link href="../css/dashboard.css" rel="stylesheet" type="text/css" />
 <link href="../css/discover.css" rel="stylesheet" type="text/css" />
 <link href="../css/user.css" rel="stylesheet" type="text/css" />
 <link href="../css/profile.css" rel="stylesheet" type="text/css" />

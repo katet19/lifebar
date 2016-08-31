@@ -301,6 +301,7 @@ function AddWatchedFabEvent(url, source, length, tier, summary){
 }
 
 function AddPlayedFabEvent(){
+	SwitchGameContent($(".game-myxp-tab"))
 	HideFab();
 	if($(".userGameTab").length == 0){
 		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
