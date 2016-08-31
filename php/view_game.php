@@ -64,7 +64,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<div>WELCOME TO THE DASHBOARD RYAN</div>
+			<?php ShowGameDashboard($game, $myxp); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
