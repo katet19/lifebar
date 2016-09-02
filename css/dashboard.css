@@ -2,6 +2,7 @@
 {
     font-size: 1.5em;
     margin-bottom: 20px;
+    line-height: 26px;
 }
 
 .dashboard-card
@@ -12,6 +13,9 @@
     background-color:white;
     color:rgba(0,0,0,0.7);
     padding:10px;
+    position: relative;
+    min-height:225px;
+    margin-bottom: 20px;
 }
 
 .dashboard-card-calltoaction
@@ -40,4 +44,41 @@
     text-transform: uppercase;
     font-weight:500;
     font-size:1.25em;
+}
+
+.dashboard-card-tiny-header{
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:0.9em;
+    font-weight:400;
+}
+
+.dashboard-card-date-top{
+    font-size: 3em;
+    text-transform: UPPERCASE;
+    margin: 20px 0 0;
+}
+
+.dashboard-card-date-unknown{
+    font-size: 2em;
+    text-transform: UPPERCASE;
+    margin: 40px 0 0;
+
+}
+
+.dashboard-card-date-bottom{
+    font-size: 5em;
+    text-transform: UPPERCASE;
+    margin: -30px 0 0;
+    font-weight: bold;
+}
+
+.dashboard-card-date-info{
+    font-size:1em;
+
+}
+
+.dashboard-platform-container{
+    margin-top: 40px;
 }
