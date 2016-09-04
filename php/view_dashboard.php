@@ -1,9 +1,9 @@
 <?php
-function ShowGameDashboard($game, $myxp){
+function ShowGameDashboard($game, $myxp, $videoxp){
     ?>
     <div class="row">
         <?php
-        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id);
+        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp);
         foreach($dashboarditems as $dashitem){
             if($dashitem['TYPE'] == 'HavePlayed'){
                 DisplayHavePlayedCard($game);
@@ -11,8 +11,21 @@ function ShowGameDashboard($game, $myxp){
                 DisplayReleasedCard($dashitem);
             }else if($dashitem['TYPE'] == 'Platforms'){
                 DisplayPlatforms($dashitem['PLATFORMS']);
+            }else if($dashitem['TYPE'] == 'MissingWatched'){
+                DisplayMissingWatchedCard($dashitem);
             }
         } ?>
+    </div>
+    <?php
+}
+
+function DisplayMissingWatchedCard($dashitem){
+    ?>
+    <div class='col s12 m6 l4'>
+        <div class="dashboard-card dashboard-card-calltoaction game-add-watched-btn-fast">
+            <div class="dashboard-question-header">Video</div>
+            <div class="dashboard-calltoaction-container"><span><i class="mdi-action-visibility"></i> <span><?php echo $dashitem['WATCHED']; ?> Unwatched</span></div> 
+        </div>
     </div>
     <?php
 }
@@ -20,7 +33,7 @@ function ShowGameDashboard($game, $myxp){
 function DisplayPlatforms($platforms){
     if(sizeof($platforms) > 0){
         ?>
-        <div class='col <?php if(sizeof($platforms) > 6){ echo "s12"; }else if(sizeof($platforms) > 2){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>
+        <div class='col <?php if(sizeof($platforms) >= 6){ echo "s12"; }else if(sizeof($platforms) >= 3){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>
             <div class="dashboard-card">
                 <div class="dashboard-card-tiny-header">Platforms</div>
                 <div class="dashboard-platform-container">

@@ -1,11 +1,13 @@
-<?php function BuildGameDashboard($game, $myxp, $userid){
+<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp){
     $dashboarditems = array();
     
     //Add Played? Card
+    $cardhasplayed = false;
     if(sizeof($myxp->_playedxp) == 0 && sizeof($myxp->_watchedxp) == 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'HavePlayed';
         $dashboarditems[] = $dashitem;
+        $cardhasplayed = true;
     }
 
     //Add Release Date Card
@@ -26,6 +28,28 @@
     $dashitem['TYPE'] = 'Platforms';
 	$dashitem['PLATFORMS'] = GetPlatformsForGame($userid, $game->_gbid);
     $dashboarditems[] = $dashitem;
+
+    //Add Watched Card
+    if(sizeof($videoxp) > 0){
+		$tally = 0;
+        foreach($videoxp as $video){
+            $found = false;
+			foreach($myxp->_watchedxp as $watched){
+				if($watched->_url == $video['URL']){
+                    $found = true;
+                    break;
+				}	
+			}
+            if(!$found){
+                $tally++;
+            }
+		}
+        unset($dashitem);
+        if($tally > 0)
+        $dashitem['TYPE'] = 'MissingWatched';
+        $dashitem['WATCHED'] = $tally;
+        $dashboarditems[] = $dashitem;
+    } 	
 
     return $dashboarditems;
 } ?>

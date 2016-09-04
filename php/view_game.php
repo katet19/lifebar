@@ -38,7 +38,7 @@ function ShowGameNav(){
 			<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
 		<?php } ?>
 		<li data-tab="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
-		<li data-tab="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
+		<li data-tab="game-video-tab" class="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
 		<li data-tab="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
 		<li data-tab="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
 		<li data-tab="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
@@ -64,7 +64,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp); ?>
+			<?php ShowGameDashboard($game, $myxp, $videoxp); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
