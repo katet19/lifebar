@@ -61,10 +61,12 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
+
+	$refpts = GetReflectionPointsForGame($game->_id);
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp, $videoxp); ?>
+			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
@@ -103,7 +105,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 					}?>
 		</div>
 		<div id="game-reflectionpoints-tab" class='col s12 game-tab'>
-			<?php ShowReflectionPoints($game); ?>
+			<?php ShowReflectionPoints($refpts); ?>
 		</div>
 		<div id="game-longform-tab" class="col s12 game-tab">
 			<?php ShowLongForm($game); ?>
@@ -189,8 +191,7 @@ function ShowLongForm($game){
 	}
 }
 
-function ShowReflectionPoints($game){ 
-	$refpts = GetReflectionPointsForGame($game->_id);
+function ShowReflectionPoints($refpts){ 
 	if(sizeof($refpts) > 0){
 		foreach($refpts as $pt){ ?>
 			<div class='game-community-box z-depth-1'>

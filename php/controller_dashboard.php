@@ -1,4 +1,4 @@
-<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp){
+<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp, $refpts){
     $dashboarditems = array();
     
     //Add Played? Card
@@ -8,6 +8,30 @@
         $dashitem['TYPE'] = 'HavePlayed';
         $dashboarditems[] = $dashitem;
         $cardhasplayed = true;
+    }
+
+    //Add Reflection Point Card
+    if(!$cardhasplayed && sizeof($refpts) > 0){
+        $tally = 0;
+        foreach($refpts as $pt){
+            $hasResults = HasFormResults($_SESSION['logged-in']->_id, $pt['ID']);
+            if(!$hasResults){
+                $tally++;
+            }
+        }
+        if($tally > 0){
+            unset($dashitem);
+            $dashitem['TYPE'] = 'HaveReflectionPoint';
+            $dashitem['TOTAL'] = $tally;
+            $dashboarditems[] = $dashitem;
+        }
+    }
+
+    //Add Summary Card
+    if(!$cardhasplayed && $myxp->_quote == ''){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'HaveQuote';
+        $dashboarditems[] = $dashitem;
     }
 
     //Add Release Date Card
@@ -49,7 +73,10 @@
         $dashitem['TYPE'] = 'MissingWatched';
         $dashitem['WATCHED'] = $tally;
         $dashboarditems[] = $dashitem;
-    } 	
+    }
+
+    //Add Developer & Publisher Info
+
 
     return $dashboarditems;
 } ?>
