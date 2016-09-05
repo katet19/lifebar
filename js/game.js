@@ -158,8 +158,14 @@ function AttachGameEvents(currentTab){
 			DisplayGameNav();
 		});
 	}
+
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		ShowGame($(this).parent().attr("data-gbid"), ''); 
+	});
+
+	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	
-	//$('.gameNav').tabs();
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
@@ -219,6 +225,10 @@ function AttachGameEvents(currentTab){
 	$(".myxp-cancel-journal").on("click", function(){
 		HideJournalEdit();
 	});
+	$(".collection-box-container").on("click", function(e){
+		e.stopPropagation();
+		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
@@ -237,7 +247,7 @@ function SwitchGameContent(elem){
 		elem.addClass("active");
 		$(".game-tab-active").removeClass("game-tab-active");
 		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
-		if(elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab")
+		if((elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab") && $("#game-community-others-tab .game-community-box").length > 0)
 		{
 			$(".game-longform-tab").hide(100);
 			$(".game-community-others-tab").show(100);
@@ -246,6 +256,9 @@ function SwitchGameContent(elem){
 		{
 			$(".game-community-others-tab").hide(100);
 			$(".game-longform-tab").show(100);
+			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			var test = box.height();
+			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
 		}
 		else
 		{

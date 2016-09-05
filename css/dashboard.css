@@ -1,0 +1,93 @@
+.dashboard-question-header
+{
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    line-height: 26px;
+    margin-top: 20px;
+}
+
+.dashboard-card
+{
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    background-color:white;
+    color:rgba(0,0,0,0.7);
+    padding:10px;
+    position: relative;
+    min-height:245px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card-calltoaction
+{
+    background-color:#2196F3;
+    color:white;
+    cursor: pointer;
+}
+
+.dashboard-card-calltoaction:hover
+{
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color:#1E88E5;
+}
+
+.dashboard-calltoaction-container i
+{
+    font-size: 5em;
+    display: block;
+    margin-top: -20px;
+}
+
+.dashboard-calltoaction-container span
+{
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    font-size: 1.25em;
+    top: -15px;
+}
+
+.dashboard-card-tiny-header{
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:0.9em;
+    font-weight:400;
+}
+
+.dashboard-card-date-top{
+    font-size: 3em;
+    text-transform: UPPERCASE;
+    margin: 20px 0 0;
+}
+
+.dashboard-card-date-unknown{
+    font-size: 2em;
+    text-transform: UPPERCASE;
+    margin: 40px 0 0;
+
+}
+
+.dashboard-card-date-bottom{
+    font-size: 5em;
+    text-transform: UPPERCASE;
+    margin: -30px 0 0;
+    font-weight: bold;
+}
+
+.dashboard-card-date-info{
+    font-size:1em;
+
+}
+
+.dashboard-platform-container{
+    margin-top: 40px;
+}

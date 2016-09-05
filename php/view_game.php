@@ -27,19 +27,22 @@ function DisplayGameViaID($gameid, $userid){
 }
 
 function ShowGameNav(){
+	$id = $_SESSION['logged-in']->_id;
 	?>
 	<ul id="game-slide-out">
 		<li data-tab="game-dashboard-tab" class="game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
-		<li data-tab="game-myxp-tab"><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
+		<li data-tab="game-myxp-tab" class='game-myxp-tab'><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
 		<li data-tab="game-longform-tab" class="game-longform-tab" style='display:none;padding-left: 35px;'><i class='game-nav-icons mdi-editor-mode-edit left'></i> <span>Journal</span></li>
 		<li data-tab="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
-		<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
+		<?php if($id > 0){ ?>
+			<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
+		<?php } ?>
 		<li data-tab="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
-		<li data-tab="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
+		<li data-tab="game-video-tab" class="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
 		<li data-tab="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
 		<li data-tab="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
 		<li data-tab="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
-		<li data-tab="game-info-tab"><i class="game-nav-icons mdi-action-info left"></i> <span>Info</span></li>
+		<li data-tab="game-info-tab"><i class="game-nav-icons mdi-action-info left"></i> <span>General Info</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
 	</ul>
@@ -58,57 +61,104 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
+
+	$refpts = GetReflectionPointsForGame($game->_id);
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<div>WELCOME TO THE DASHBOARD RYAN</div>
+			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
-		<div id="game-community-tab" class="col s12 game-tab">
-			<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
-			<div class="col s12 m12 l10" id='game-width-box'></div>
-		</div>
-		<div id="game-community-others-tab" class="col s12 game-tab">
-			<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
-		</div>
+		<?php if($id > 0){ ?>
+			<div id="game-community-tab" class="col s12 game-tab">
+				<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
+				<div class="col s12 m12 l10" id='game-width-box'></div>
+			</div>
+			<div id="game-community-others-tab" class="col s12 game-tab">
+				<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
+			</div>
+		<?php }else{ ?>
+			<div id="game-community-tab" class="col s12 game-tab">
+				<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
+				<div class="col s12 m12 l10" id='game-width-box'></div>
+			</div>
+		<?php } ?>
 		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
-		<?php if(sizeof($videoxp) > 0 && $_SESSION['logged-in'] > 0){ ?>
-			<div id="game-video-tab" class="col s12 game-tab" style='z-index:2;'>
-				<?php ShowGameVideos($videoxp, $myxp); ?>
-			</div>
-		<?php } ?>
-		<?php if(isset($_SESSION['logged-in']->_id)){ ?>
-			<div id="game-myxp-tab" class="col s12 game-tab">
-				<?php if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); } ?>
-			</div>
+		<div id="game-video-tab" class="col s12 game-tab" style='z-index:2;'>
+			<?php ShowGameVideos($videoxp, $myxp); ?>
+		</div>
+		<div id="game-myxp-tab" class="col s12 game-tab">
+			<?php 
+			if($_SESSION['logged-in']->_id > 0){
+				ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', '');
+			}else{
+			?>
+				<div class="info-label" style='margin-top: 75px;'>Sign Up/Login to enter your experience with this game.</div>
+				<div class="btn waves-effect waves-light fab-login"><i class="mdi-editor-mode-edit left"></i> Login</div>
+			<?php
+			} ?>
 			<div class="col s12 m12 l10" id='myxp-game-width-box'></div>
-		<?php } ?>
+		</div>
 		<div id="game-userxp-tab" class="col s12 game-tab">
 			<?php if($otherxp != -1){
 					ShowUserXP($otherxp);
 					}?>
 		</div>
 		<div id="game-reflectionpoints-tab" class='col s12 game-tab'>
-			<?php ShowReflectionPoints($game); ?>
+			<?php ShowReflectionPoints($refpts); ?>
 		</div>
 		<div id="game-longform-tab" class="col s12 game-tab">
 			<?php ShowLongForm($game); ?>
 		</div>
 		<div id="game-similargames-tab" class='col s12 game-tab'>
-			Similar games
+			<?php ShowSimilarGames($game); ?>
 		</div>
 		<div id="game-collections-tab" class='col s12 game-tab'>
-			collections
+			<?php ShowGameCollections($game); ?>
 		</div>
 		<div id="game-info-tab" class='col s12 game-tab'>
-			Info!
+			<?php ShowGeneralInfo($game); ?>
 		</div>
 	</div>
 <?php }
 
+function ShowSimilarGames($game){
+	$similar = explode(',', $game->_similar);
+	if(sizeof($similar) > 0){ 
+		foreach($similar as $sim){
+			if($sim > 0){
+				$simgame = GetGameByGBIDFull($sim);
+				DisplayGameCard($simgame, 0, 0);
+			}
+		}
+	}else{ ?>
+		<div class="info-label" style='margin-top: 75px;'>As of right now, we don't have any games that we think are similar.</div>
+	<?php }
+}
+
+function ShowGameCollections($game){
+	$collections = GetCollectionsForGame($game->_id);
+	if(sizeof($collections) > 0){ ?>
+		<div class="game-collection-container">
+			<?php
+			foreach($collections as $collection){
+				DisplayCollection($collection);
+			} ?>
+		</div>
+	<?php }else if($_SESSION['logged-in']->_id > 0){ ?>
+		<div class="info-label" style='margin-top: 75px;'>This game isn't part of a Collection yet. </div>
+		<div class="btn waves-effect waves-light game-collection-btn orange darken-2" data-gameid="<?php echo $game->_id; ?>"><i class="mdi-av-my-library-add left"></i> Add to Collection</div>
+	<?php }else{ ?>
+		<div class="info-label" style='margin-top: 75px;'>This game isn't part of a Collection yet. </div>
+		<div class="btn waves-effect waves-light fab-login orange darken-2"><i class="mdi-av-my-library-add left"></i> Add to Collection</div>
+	<?php
+	}
+}
+
 function ShowLongForm($game){
 	//Make a request to get the longform version from the DB
 	$longform = GetLongFormForUser($game->_id, $_SESSION['logged-in']->_id);
+	if($_SESSION['logged-in']->_id > 0){
 	?>
 	<div class='game-community-box z-depth-1'>
 		<div class='row'>
@@ -133,10 +183,15 @@ function ShowLongForm($game){
 		<?php if($longform['Body'] != ''){ ?><br><div class='btn myxp-journal-edit-btn'>Edit Journal</div><?php } ?>
 	</div>
 	<?php
+	}else{
+		?>
+		<div class="info-label" style='margin-top: 75px;'>Sign Up/Login to write your thoughts on your time with this game.</div>
+		<div class="btn waves-effect waves-light fab-login"><i class="mdi-editor-mode-edit left"></i> Login</div>
+		<?php
+	}
 }
 
-function ShowReflectionPoints($game){ 
-	$refpts = GetReflectionPointsForGame($game->_id);
+function ShowReflectionPoints($refpts){ 
 	if(sizeof($refpts) > 0){
 		foreach($refpts as $pt){ ?>
 			<div class='game-community-box z-depth-1'>
@@ -144,6 +199,11 @@ function ShowReflectionPoints($game){
 			</div>
 		<?php
 		}
+	}else{
+		?>
+		<div class="info-label" style='margin-top: 75px;'>There aren't any reflection points yet. Have an idea for one?</div>
+		<div class="btn waves-effect waves-light supportButton"><i class="mdi-action-question-answer left"></i> Suggest a Reflection Point</div>
+		<?php
 	}
 }
 
@@ -171,24 +231,19 @@ function ShowCommunityFollowing($game, $id, $myxp, $verified, $curated, $myusers
 		</div>
 		<?php }else if(sizeof($othercurated) == 0 && sizeof($otherverified) == 0 && sizeof($verified) == 0){ ?>
 			<?php if($myxp->_bucketlist != "Yes"){ ?>
-					<div class="row z-depth-1" style='background-color: white;padding: 5px 10px;text-align: left;'>
-						<div class="col s12" style='font-size: 1.5em;position:relative;'>
-							<i class="mdi-action-bookmark" style='color: white;vertical-align: sub;background-color: #2196F3; position: absolute;left: -10px;top: -5px; padding: 7px 10px;'></i> 
-							<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
-								<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Bookmark this game to keep track of your favorites</span>
-							<?php }else{ ?>
-								<span style='margin-left: 35px;font-size: 0.8em;vertical-align: text-bottom;'>Bookmark this game to get notified when critics start publishing reviews!</span>
-							<?php } ?>
-							<?php if($_SESSION['logged-in']->_id > 0){ ?>
-								<div class="btn-flat waves-effect waves-light no-critic-bookmark" style='margin: 0;font-size: 0.8em;margin: 0;float: right;'><i class="mdi-action-bookmark left"></i> Bookmark</div>
-							<?php }else{ ?>
-								<div class="btn-flat waves-effect waves-light fab-login" style='margin: 0;font-size: 0.8em;margin: 0;float: right;'><i class="mdi-action-bookmark left"></i> Bookmark</div>
-							<?php } ?>
-						</div>
-					</div>
-				<?php
-			 	} ?>
+				<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
+					<div class="info-label" style='margin-top: 75px;'>Bookmark this game to keep track of your favorites</div>
+				<?php }else{ ?>
+					<div class="info-label" style='margin-top: 75px;'>Bookmark this game to get notified when critics start publishing reviews!</div>
+				<?php } ?>
+				<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
+			<?php } ?>
 		<?php }
+	}else{
+		?>
+		<div class="info-label" style='margin-top: 75px;'>Bookmark this game to keep track of your favorites</div>
+		<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Login</div>
+		<?php
 	}
 }
 
@@ -215,6 +270,7 @@ function ShowCommunityEveryoneElse($game, $id, $myxp, $otherverified, $othercura
 
 function ShowGameVideos($videoxp, $myxp){
 	$i = 0;
+	if(sizeof($videoxp) > 0){
 	?>
 	<div class="row">
 		<?php
@@ -228,9 +284,19 @@ function ShowGameVideos($videoxp, $myxp){
 			}
 			DisplayGameVideoCard($video, $i, $summary, $tier);
 			$i++;
-		} ?>	
+		} 
+		?>	
 	</div>
 	<?php
+	}else{
+		?>
+		<div class="info-label" style='margin-top: 75px;'>Members haven't shared their watched experiences yet. Add your own!</div>
+		<?php 	if($_SESSION['logged-in']->_id > 0){ ?>
+			<div class="btn waves-effect waves-light game-add-watched-btn"><i class="mdi-action-visibility left"></i> Add your own Watched XP</div>
+		<?php }else{ ?>
+			<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-visibility left"></i> Login</div>
+		<?php }
+	}
 }
 
 function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
@@ -293,8 +359,12 @@ function DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID){
 		    </script>
 	        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar<?php echo $uniqueID; ?>(this)" maxlength="140"><?php echo $summary; ?></textarea>
 	        <label for="myxp-collection-quote" <?php if($summary != ""){ echo "class='active'"; } ?> ><?php if($tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
-        	<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
-        	<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
+        	<?php if($_SESSION['logged-in']->_id > 0){ ?>
+				<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
+        		<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
+			<?php }else{ ?>
+				<a class="waves-effect waves-light btn fab-login" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>LOGIN TO POST</a>
+			<?php } ?>
 	        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection<?php echo $uniqueID; ?>'><?php echo strlen($summary); ?></span>/140</div>
         </div>
       </div>
@@ -483,14 +553,11 @@ function ShowMyGameFAB($gameid, $myxp){
 	<?php }
 }
 
-function DisplayGameInfo($game){	?>
-<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;left:0;right: inherit;'>
-	<div class="HideForDesktop">
-		<?php DisplayGameInfoBackNav(); ?>
-	</div>
+function ShowGeneralInfo($game){	?>
+<div class="z-depth-1" style='padding: 20px 1.75rem;background-color:white;'>
 	<?php if($game->_id != '33548' && $game->_id != '33541' && $game->_id != '33542' && $game->_id != '33547' && $game->_id != '33543'
 	&& $game->_id != '33546' && $game->_id != '33540' && $game->_id != '33549' && $game->_id != '33544' && $game->_id != '33545') { ?>
-		<div class="row" style='padding-top:3em;'>
+		<div class="row">
 			<div class="col s12 GameInfoLabel">Released:</div>
 			<div class="col s12 GameInfoContent">
 				<?php 
@@ -503,7 +570,7 @@ function DisplayGameInfo($game){	?>
 		</div>
 		<div class="row">
 	<?php }else{ ?>
-		<div class="row" style='padding-top:3em;'>
+		<div class="row">
 	<?php } ?>
 
 		<div class="col s12 GameInfoLabel">Platforms:</div>

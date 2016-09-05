@@ -457,6 +457,36 @@ function GetPlatformGamesForDiscover($platformid, $userid){
 	return $myxp;
 }
 
+function GetPlatformsForGame($userid, $gbid){
+	$mysqli = Connect();
+	$milestones = array();
+	if ($result = $mysqli->query("select * from `Milestones` b, `Milestone_Progression` p where p.`UserID` = '".$userid."' and b.`ID` = p.`MilestoneID` and b.`Category` = 'Platform' and `ObjectID` in (select `PlatformID` from `Game_Platforms` where GBID = '".$gbid."') ORDER BY p.`Level4` DESC,p.`Level5` DESC,p.`Level3` DESC,p.`Level2` DESC,p.`Level1` DESC LIMIT 0,50")) {
+		while($row = mysqli_fetch_array($result)){
+			$milestone = new Milestone($row[0],
+			$row['Name'],
+			$row['Description'],
+			$row['Type'],
+			$row['Image'],
+			$row['Difficulty'],
+			$row['Validation'],
+			$row[9],
+			$row[10],
+			$row[11],
+			$row[12],
+			$row[13],
+			$row['Enabled'],
+			$row['Parent'],
+			$row['Category'],
+			GetMilestoneProgression($row[0], $userid, $mysqli),
+			$row['ObjectID']
+			);
+			$milestones[] = $milestone;
+		}
+	}
+	Close($mysqli, $result);
+	return $milestones;
+}
+
 
 function GetDeveloperMilestones($userid, $limit, $type){
 	$mysqli = Connect();

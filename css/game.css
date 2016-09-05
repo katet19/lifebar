@@ -147,11 +147,6 @@ refpt-header-subquestion-hidden{
     transition: all 0.5s ease;
 }
 
-.game-nav-icons{
-	font-size: 1.25em;
-    margin-top: -3px;
-}
-
 .GameTitle{
 	position: absolute;
 	top: 30px;
@@ -267,7 +262,7 @@ refpt-header-subquestion-hidden{
 .GameInfoLabel{
 	text-align: left;
 	color:rgba(0,0,0,0.7);
-	font-size:1em;
+	font-size:1.2em;
 	font-weight:bold;
 	vertical-align: top;
 }
@@ -275,6 +270,8 @@ refpt-header-subquestion-hidden{
 .GameInfoContent{
 	text-align: left;
 	vertical-align: top;
+	font-size:1.2em;
+	margin-left:20px !important;
 }
 
 .ShowInfoBtn{
@@ -548,6 +545,11 @@ refpt-header-subquestion-hidden{
     padding: 45px 2px 10px;
 }
 
+.game-nav-icons{
+	font-size: 1.25em;
+    margin-top: -3px;
+}
+
 #game-slide-out li{
 	width:100%;
 	padding: 5px 12px 5px 15px;
@@ -572,14 +574,22 @@ refpt-header-subquestion-hidden{
 	color:white;
 }
 
+.game-collection-container{
+	margin-top:-50px;
+	text-align: left;
+}
+
 @media only screen and (max-width : 992px) {
 	#gameContentContainer{
 		margin-left:0;
 	}
 	#game-slide-out{
-		display:none;
+		padding: 0px 0px 10px;
 	    background-color: white;
-    	top: -15px;
+    	top: 100px;
+	}
+	#game-slide-out li span{
+		display:none;
 	}
 	.GameHeaderContainer, .GameHeaderBackground{
 		height:22em;
@@ -591,9 +601,6 @@ refpt-header-subquestion-hidden{
 		position: fixed !important;
 		right:1em;
 		bottom:1em;
-	}
-	.GameTitle{
-		top:210px;
 	}
 	.GameMyStatusIcons{
 		right:0.5em;
