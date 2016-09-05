@@ -3,11 +3,16 @@
     
     //Add Played? Card
     $cardhasplayed = false;
-    if(sizeof($myxp->_playedxp) == 0 && sizeof($myxp->_watchedxp) == 0){
+    if(sizeof($myxp->_playedxp) == 0 && date('Y') >= $game->_year && $game->_year != 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'HavePlayed';
         $dashboarditems[] = $dashitem;
         $cardhasplayed = true;
+    }else if(sizeof($myxp->_playedxp) > 0 && $myxp->_playedxp[0]->_completed < 100){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'HaveProgress';
+        $dashitem['UNFINISHED'] = $myxp->_playedxp[0]->_completed;
+        $dashboarditems[] = $dashitem;
     }
 
     //Add Reflection Point Card
@@ -43,7 +48,7 @@
         $dashitem['MONTHDAY'] = ConvertDateToActivityFormat($game->_released);
         $dashitem['YEAR'] = $game->_year;
 	} 
-    if($game->_year >= $_SESSION['logged-in']->_birthdate && date('Y') != $game->_year)
+    if($game->_year >= $_SESSION['logged-in']->_birthdate && date('Y') > $game->_year)
         $dashitem['AGE'] = $game->_year - $_SESSION['logged-in']->_birthdate;
     $dashboarditems[] = $dashitem;
 

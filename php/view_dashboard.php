@@ -10,20 +10,33 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts){
             }else if($dashitem['TYPE'] == 'Released'){
                 DisplayReleasedCard($dashitem);
             }else if($dashitem['TYPE'] == 'Platforms'){
-                DisplayPlatforms($dashitem['PLATFORMS']);
+                DisplayPlatformsCard($dashitem['PLATFORMS']);
             }else if($dashitem['TYPE'] == 'MissingWatched'){
                 DisplayMissingWatchedCard($dashitem);
             }else if($dashitem['TYPE'] == 'HaveQuote'){
                 DisplayHaveQuoteCard($game);
             }else if($dashitem['TYPE'] == 'HaveReflectionPoint'){
-                DisplayHaveReflectionPoint($dashitem);
+                DisplayHaveReflectionPointCard($dashitem);
+            }else if($dashitem['TYPE'] == 'HaveProgress'){
+                DisplayHaveProgressCard($dashitem);
             }
         } ?>
     </div>
     <?php
 }
 
-function DisplayHaveReflectionPoint($dashitem){
+function DisplayHaveProgressCard($dashitem){
+    ?>
+    <div class='col s12 m6 l4'>
+        <div class="dashboard-card dashboard-card-calltoaction game-add-played-btn-fast">
+            <div class="dashboard-question-header">Any updates or progress?</div>
+            <div class="dashboard-calltoaction-container"><span><i class="mdi-hardware-gamepad"></i> <span><?php echo $dashitem['UNFINISHED']; ?>% COMPLETE</span></div> 
+        </div>
+    </div>
+    <?php  
+}
+
+function DisplayHaveReflectionPointCard($dashitem){
     ?>
     <div class='col s12 m6 l4'>
         <div class="dashboard-card dashboard-card-calltoaction">
@@ -45,7 +58,7 @@ function DisplayMissingWatchedCard($dashitem){
     <?php
 }
 
-function DisplayPlatforms($platforms){
+function DisplayPlatformsCard($platforms){
     if(sizeof($platforms) > 0){
         ?>
         <div class='col <?php if(sizeof($platforms) >= 6){ echo "s12"; }else if(sizeof($platforms) >= 3){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>

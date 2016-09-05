@@ -165,6 +165,30 @@ function GetVideoMyXPForGame($url, $gameid){
 	return $subexp;
 }
 
+function NormalizeVideoURLs($url){
+	if(strpos($url, 'giantbomb.com') !== false){
+		if(strpos($url , 'giantbomb.com/videos/embed/') !== false){
+			$vurl = $url;
+		}else{
+			$vurl = "http://www.giantbomb.com/videos/embed/";
+			$vidArray = explode("-", $url);
+			$vurl = $vurl.end($vidArray);
+		}
+	}else if(strpos($url , 'youtube.com') !== false || strpos($url , 'youtu.be') !== false){
+			$vurl = "https://www.youtube.com/embed/";
+			$vidArray = explode("/", $url);
+			$vurl = $vurl.end(str_replace("watch?v=","",$vidArray));
+	}else if(strpos($video['URL'], 'gamespot.com') !== false){
+			$vurl = "http://www.gamespot.com/videos/embed/";
+			$vidArray = explode("-", $video['URL']);
+			$vurl = $vurl.end($vidArray);
+	}else{
+		$vurl = $url;
+	}
+
+	return $vurl;
+}
+
 function AdvancedFilterWeave($userid, $paramaters, $sort){
 	$mysqli = Connect();
 	
@@ -2447,6 +2471,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 		$date = $year."-00-00";
 	
 	
+	$url = NormalizeVideoURLs($url);
 	$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`URL`,`Date`,`Length`,`Source`) values ('$user','$expid','$gameid','$quote','$tier','Watched','$url','$date', '$length', '$source')";
 	$result = $mysqli->query($insert);
 	if($result == '' || $result == false){
@@ -2493,7 +2518,8 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 		$date = $year."-10-01";
 	else if($quarter == "q0")
 		$date = $year."-00-00";
-		
+	
+	$url = NormalizeVideoURLs($url);
 	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length',`Source`='$source' where `ID` = '$id'");
 	Close($mysqli, $result);
 }
@@ -2501,6 +2527,7 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
 	$sxpid = GetSubXPID($user, $gameid, $mysqli);
+	$url = NormalizeVideoURLs($url);
 	$insert = "insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`,`S_XPID`) values ('$user','$gameid','ADDED','$tier','$quote','$url','$sxpid')";
 	$result = $mysqli->query($insert);
 	if($result == '' || $result == false){

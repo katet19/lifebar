@@ -9,7 +9,6 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
-
 function AssociateLikesToEvents(){
 	$mysqli = Connect();
 	$count = 1;
