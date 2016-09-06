@@ -1,9 +1,9 @@
 <?php
-function ShowGameDashboard($game, $myxp, $videoxp, $refpts){
+function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar){
     ?>
     <div class="row">
         <?php
-        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts);
+        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts, $collections, $similar);
         foreach($dashboarditems as $dashitem){
             if($dashitem['TYPE'] == 'HavePlayed'){
                 DisplayHavePlayedCard($game);
@@ -19,10 +19,64 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts){
                 DisplayHaveReflectionPointCard($dashitem);
             }else if($dashitem['TYPE'] == 'HaveProgress'){
                 DisplayHaveProgressCard($dashitem);
+            }else if($dashitem['TYPE'] == 'Developer'){
+                DisplayDeveloperCard($dashitem['DEVELOPERS']);
+            }else if($dashitem['TYPE'] == 'Collection'){
+                DisplayCollectionCard($dashitem['COLLECTIONS']);
+            }else if($dashitem['TYPE'] == 'Similar'){
+                DisplaySimilarCard($dashitem['SIMILAR']);
             }
         } ?>
     </div>
     <?php
+}
+
+function DisplayCollectionCard($collectionCount){
+    if($collectionCount > 0){
+    ?>
+    <div class='col s12 m6 l4'>
+        <div class="dashboard-card">
+            <div class="dashboard-card-tiny-header">Collections</div>
+            <div class="dashboard-calltonotice-container"><i class="mdi-av-my-library-add"></i> <span><?php echo $collectionCount; ?> Collection<?php if($collectionCount > 1){ echo "s"; } ?></span></div> 
+            <div class="btn dashboard-collection-view">View Collection<?php if($collectionCount > 1){ echo "s"; } ?></div>
+        </div>
+    </div>
+    <?php
+    }
+}
+
+function DisplaySimilarCard($similarCount){
+    if($similarCount > 0){
+    ?>
+    <div class='col s12 m6 l4'>
+        <div class="dashboard-card">
+            <div class="dashboard-card-tiny-header">Similar Games</div>
+            <div class="dashboard-calltonotice-container"><i class="mdi-action-list"></i> <span><?php echo $similarCount; ?> Similar Game<?php if($similarCount > 1){ echo "s"; } ?></span></div> 
+            <?php if(isset($dashitem['TOTALXP'])){ ?>
+                <div class="dashboard-card-date-info">You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b></div>
+            <?php } ?>
+            <div class="btn dashboard-similar-view">View Game<?php if($similarCount > 1){ echo "s"; } ?></div>
+        </div>
+    </div>
+    <?php
+    }
+}
+
+function DisplayDeveloperCard($developers){
+    if(sizeof($developers) > 0){
+    ?>
+        <div class='col <?php if(sizeof($developers) >= 5){ echo "s12"; }else if(sizeof($developers) >= 2){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>
+            <div class="dashboard-card">
+                <div class="dashboard-card-tiny-header">Developed By</div>
+                <div class="dashboard-platform-container">
+                    <?php foreach($developers as $developer){
+                        DisplayKnowledge($developer, "gamedash");
+                    } ?>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
 }
 
 function DisplayHaveProgressCard($dashitem){

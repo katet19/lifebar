@@ -229,6 +229,12 @@ function AttachGameEvents(currentTab){
 		e.stopPropagation();
 		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
 	});
+	$(".dashboard-collection-view").on("click", function(e){
+		SwitchGameContent($(".game-collections-tab"));
+	});
+	$(".dashboard-similar-view").on("click", function(e){
+		SwitchGameContent($(".game-similargames-tab"));
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();

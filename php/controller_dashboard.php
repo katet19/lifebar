@@ -1,4 +1,4 @@
-<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp, $refpts){
+<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp, $refpts, $collections, $similar){
     $dashboarditems = array();
     
     //Add Played? Card
@@ -80,7 +80,34 @@
         $dashboarditems[] = $dashitem;
     }
 
-    //Add Developer & Publisher Info
+    //Add Developer
+    unset($dashitem);
+    $dashitem['TYPE'] = 'Developer';
+	$dashitem['DEVELOPERS'] = GetDevelopersForGame($userid, $game->_gbid);
+    $dashboarditems[] = $dashitem;
+
+    //Add Collection Count
+    if(sizeof($collections) > 0){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'Collection';
+        $dashitem['COLLECTIONS'] = sizeof($collections);
+        $dashboarditems[] = $dashitem;
+    }
+
+    //Add Similar Games
+    if(sizeof($similar) > 0){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'Similar';
+        $dashitem['SIMILAR'] = sizeof($similar);
+        $xpTally = 0;
+        foreach($similar as $sim){
+             $xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $sim->_id);
+             if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0)
+                $xpTally++;
+        }
+        $dashitem['TOTALXP'] = $xpTally;
+        $dashboarditems[] = $dashitem;
+    }
 
 
     return $dashboarditems;

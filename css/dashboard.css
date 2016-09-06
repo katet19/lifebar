@@ -31,6 +31,12 @@
     cursor: pointer;
 }
 
+.dashboard-card-calltonotice{
+    background-color:#607D8B;
+    color:white;
+    cursor: pointer;
+}
+
 .dashboard-card-calltoaction:hover
 {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -39,20 +45,34 @@
     background-color:#1E88E5;
 }
 
-.dashboard-calltoaction-container i
+.dashboard-card-calltonotice:hover{
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color:#546E7A;
+}
+
+.dashboard-calltonotice-container{
+    margin-top: 40px;
+}
+
+.dashboard-calltoaction-container i, .dashboard-calltonotice-container i
 {
     font-size: 5em;
     display: block;
     margin-top: -20px;
 }
 
-.dashboard-calltoaction-container span
+.dashboard-calltoaction-container span, .dashboard-calltonotice-container span
 {
     text-transform: uppercase;
     font-weight: 500;
     position: relative;
     font-size: 1.25em;
     top: -15px;
+}
+.dashboard-platform-container .badge-small{
+    margin-bottom:10px;
 }
 
 .dashboard-card-tiny-header{

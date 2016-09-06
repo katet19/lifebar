@@ -37,12 +37,11 @@ function ShowGameNav(){
 		<?php if($id > 0){ ?>
 			<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
 		<?php } ?>
-		<li data-tab="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
+		<li data-tab="game-analyze-tab" class="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
 		<li data-tab="game-video-tab" class="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
-		<li data-tab="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
-		<li data-tab="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
-		<li data-tab="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
-		<li data-tab="game-info-tab"><i class="game-nav-icons mdi-action-info left"></i> <span>General Info</span></li>
+		<li data-tab="game-reflectionpoints-tab" class="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
+		<li data-tab="game-collections-tab" class="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
+		<li data-tab="game-similargames-tab" class="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
 	</ul>
@@ -63,10 +62,17 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
 
 	$refpts = GetReflectionPointsForGame($game->_id);
+	$collections = GetCollectionsForGame($game->_id);
+	$similarlist = explode(',', $game->_similar);
+	foreach($similarlist as $sim){
+		if($sim > 0){
+			$similar[] = GetGameByGBIDFull($sim);
+		}
+	}
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts); ?>
+			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
@@ -113,33 +119,28 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		</div>
 		*/ ?>
 		<div id="game-similargames-tab" class='col s12 game-tab'>
-			<?php ShowSimilarGames($game); ?>
+			<?php ShowSimilarGames($similar); ?>
 		</div>
 		<div id="game-collections-tab" class='col s12 game-tab'>
-			<?php ShowGameCollections($game); ?>
+			<?php ShowGameCollections($collections, $game); ?>
 		</div>
-		<div id="game-info-tab" class='col s12 game-tab'>
-			<?php ShowGeneralInfo($game); ?>
-		</div>
+		<!--<div id="game-info-tab" class='col s12 game-tab'>
+			<?php /*ShowGeneralInfo($game);*/ ?>
+		</div>-->
 	</div>
 <?php }
 
-function ShowSimilarGames($game){
-	$similar = explode(',', $game->_similar);
+function ShowSimilarGames($similar){
 	if(sizeof($similar) > 0){ 
 		foreach($similar as $sim){
-			if($sim > 0){
-				$simgame = GetGameByGBIDFull($sim);
-				DisplayGameCard($simgame, 0, 0);
-			}
+			DisplayGameCard($sim, 0, 0);
 		}
 	}else{ ?>
 		<div class="info-label" style='margin-top: 75px;'>As of right now, we don't have any games that we think are similar.</div>
 	<?php }
 }
 
-function ShowGameCollections($game){
-	$collections = GetCollectionsForGame($game->_id);
+function ShowGameCollections($collections, $game){
 	if(sizeof($collections) > 0){ ?>
 		<div class="game-collection-container">
 			<?php
@@ -203,8 +204,8 @@ function ShowReflectionPoints($refpts){
 		}
 	}else{
 		?>
-		<div class="info-label" style='margin-top: 75px;'>There aren't any reflection points yet. Have an idea for one?</div>
-		<div class="btn waves-effect waves-light supportButton"><i class="mdi-action-question-answer left"></i> Suggest a Reflection Point</div>
+		<div class="info-label" style='margin-top: 75px;'>There aren't any reflection points yet. <!--Have an idea for one?--></div>
+		<!--<div class="btn waves-effect waves-light supportButton"><i class="mdi-action-question-answer left"></i> Suggest a Reflection Point</div>-->
 		<?php
 	}
 }
@@ -624,7 +625,7 @@ function DisplayGameInfoBackNav(){ ?>
 
 
 function DisplayGameCard($game, $count, $classId){
-	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id) ?>
+	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id); ?>
 	<div class="col s6 m3 l2" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
