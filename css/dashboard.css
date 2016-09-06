@@ -104,8 +104,13 @@
 }
 
 .dashboard-card-date-info{
-    font-size:1em;
-
+    font-size: 1em !important;
+    position: relative !important;
+    top: -15px !important;
+    width: 100%;
+    font-weight: normal !important;
+    display: block;
+    text-transform: none !important;
 }
 
 .dashboard-platform-container{

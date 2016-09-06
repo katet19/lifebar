@@ -53,9 +53,9 @@ function DisplaySimilarCard($dashitem){
         <div class="dashboard-card">
             <div class="dashboard-card-tiny-header">Similar Games</div>
             <div class="dashboard-calltonotice-container">
-            <i class="mdi-action-list"></i> 
+            <i class="mdi-action-list" style='margin-top: -40px;'></i> 
             <?php if(isset($dashitem['TOTALXP'])){ ?>
-                <span class="dashboard-card-date-info">You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b></span>
+                <span class="dashboard-card-date-info">You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b> of</span>
             <?php } ?>
             <span><?php echo $similarCount; ?> Similar Game<?php if($similarCount > 1){ echo "s"; } ?></span></div> 
             <div class="btn dashboard-similar-view">View Game<?php if($similarCount > 1){ echo "s"; } ?></div>

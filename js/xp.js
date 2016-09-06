@@ -236,7 +236,7 @@ function ToggleQuarter(year){
 }
 
 function AddWatchedFabEvent(url, source, length, tier, summary){
-	SwitchGameContent($(".game-video-tab"));
+	SwitchGameContent($(".game-myxp-tab"));
 	HideFab();
 	var gameid = $("#gameContentContainer").attr("data-id");
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");

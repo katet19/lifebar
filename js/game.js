@@ -196,7 +196,7 @@ function AttachGameEvents(currentTab){
   		DisplayUserDetails(userid, username);
   	});
 	
- 	$(".backButton").on('click', function(){
+ 	$(".backButton, .game-back-tab").on('click', function(){
 		BackOutOfGame(currentTab);
  	});
  	
@@ -235,6 +235,14 @@ function AttachGameEvents(currentTab){
 	$(".dashboard-similar-view").on("click", function(e){
 		SwitchGameContent($(".game-similargames-tab"));
 	});
+	$(".knowledge-container").on("click", function(){
+		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
+	 });
+  	$(".badge-small").on("click", function(){
+ 		var id = $(this).attr("data-objectid");
+ 		var progid = $(this).attr("data-progid");
+ 		DisplayGearDetails($(".userContainer").attr("data-id"), id, progid);
+ 	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
@@ -275,10 +283,13 @@ function SwitchGameContent(elem){
 }
 
 function DisplayGameNav(){
-	$("#game-slide-out").show(250);
+	$("#game-slide-out").show();
+	$("#game-slide-out").css({"left":"0"});
 	$('html').click(function(){
-		if($("#game-slide-out").is(":visible"))
-			$("#game-slide-out").hide(250);
+		if($("#game-slide-out").is(":visible")){
+			$("#game-slide-out").css({"left":"-100%"});
+			setTimeout(function(){ $("#game-slide-out").hide() }, 300);
+		}
 	});
 }
 
@@ -821,10 +832,10 @@ function AttachFloatingIconButtonEvents(){
 }
 
 function AttachMyXPEvents(){
- 	$(".game-add-watched-btn-fast").on('click touchend', function(){
+ 	$(".game-add-watched-btn-fast").on('click', function(){
 		AddWatchedFabEvent('','','','','');
 	});
-	$(".game-add-played-btn-fast").on('click touchend', function(){
+	$(".game-add-played-btn-fast").on('click', function(){
 		AddPlayedFabEvent();		
 	});
 	$(".userGameTab").on("click", function(){
