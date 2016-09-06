@@ -24,7 +24,7 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
             }else if($dashitem['TYPE'] == 'Collection'){
                 DisplayCollectionCard($dashitem['COLLECTIONS']);
             }else if($dashitem['TYPE'] == 'Similar'){
-                DisplaySimilarCard($dashitem['SIMILAR']);
+                DisplaySimilarCard($dashitem);
             }
         } ?>
     </div>
@@ -45,7 +45,8 @@ function DisplayCollectionCard($collectionCount){
     }
 }
 
-function DisplaySimilarCard($similarCount){
+function DisplaySimilarCard($dashitem){
+    $similarCount = $dashitem['SIMILAR'];
     if($similarCount > 0){
     ?>
     <div class='col s12 m6 l4'>

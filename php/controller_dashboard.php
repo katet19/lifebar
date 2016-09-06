@@ -102,7 +102,7 @@
         $xpTally = 0;
         foreach($similar as $sim){
              $xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $sim->_id);
-             if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0)
+             if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0)
                 $xpTally++;
         }
         $dashitem['TOTALXP'] = $xpTally;
