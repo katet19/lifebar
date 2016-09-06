@@ -52,10 +52,10 @@ function DisplaySimilarCard($dashitem){
     <div class='col s12 m6 l4'>
         <div class="dashboard-card">
             <div class="dashboard-card-tiny-header">Similar Games</div>
-            <div class="dashboard-calltonotice-container">
+            <div class="dashboard-calltonotice-container" <?php if(isset($dashitem['TOTALXP'])){ ?> style='margin-top: 20px;'<?php } ?>>
             <i class="mdi-action-list"></i> 
             <?php if(isset($dashitem['TOTALXP'])){ ?>
-                <span class="dashboard-card-date-info">You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b></span>
+                <div class="dashboard-card-date-info" style='display:inline-block;width: 100%;position: relative;top: -15px;'>You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b> of</div>
             <?php } ?>
             <span><?php echo $similarCount; ?> Similar Game<?php if($similarCount > 1){ echo "s"; } ?></span></div> 
             <div class="btn dashboard-similar-view">View Game<?php if($similarCount > 1){ echo "s"; } ?></div>
