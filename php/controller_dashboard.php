@@ -83,7 +83,7 @@
     if(sizeof($verified) > 0 || sizeof($curated) > 0 || sizeof($myusers) > 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'CommunityCompare';
-        $tiers = array;
+        $tiers = array();
         if(sizeof($verified) > 0)
             foreach($verified as $xp)
                 $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
