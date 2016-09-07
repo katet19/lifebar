@@ -1,9 +1,9 @@
 <?php
-function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers){
+function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $community){
     ?>
     <div class="row">
         <?php
-        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers);
+        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts, $collections, $similar, $community);
         foreach($dashboarditems as $dashitem){
             if($dashitem['TYPE'] == 'HavePlayed'){
                 DisplayHavePlayedCard($game);
@@ -34,19 +34,22 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
 }
 
 function DisplayCommunityCompareCard($dashitem, $mytier){
-    if(sizeof($dashitem['TIERS']) > 0 && $mytier > 0){
+    if(sizeof($dashitem['TIERS']) > 0){
         arsort($dashitem['TIERS']);
-        $toptier = array_shift($dashitem['TIERS']); 
+        reset($dashitem['TIERS']);
+        $toptier = key($dashitem['TIERS']);
         ?>
         <div class='col s12 m6 l4'>
             <div class="dashboard-card">
-                <div class="dashboard-card-tiny-header">Community Comparison</div>
-                <?php if($toptier == $mytier){ ?>
-                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community agreed with you</span></div> 
-                <?php }else if($toptier > $mytier){ ?>
-                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community disliked the game more than you</span></div> 
+                <div class="dashboard-card-tiny-header">Community <?php if($mytier > 0){ ?>Comparison<?php } ?></div>
+                <?php if($toptier == $mytier && $mytier > 0){ ?>
+                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community agrees with you</span></div> 
+                <?php }else if($toptier > $mytier && $mytier > 0){ ?>
+                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community dislikes the game more than you</span></div> 
+                <?php }else if($mytier > 0){ ?>
+                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community enjoys the game more than you</span></div> 
                 <?php }else{ ?>
-                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community enjoyed the game more than you</span></div> 
+                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The average community tier</span></div>
                 <?php } ?>
                 <div class="btn dashboard-community-view">View Community</div>
             </div>

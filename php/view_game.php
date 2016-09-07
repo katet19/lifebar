@@ -56,12 +56,17 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		$verified = GetVerifiedXPForGame($game->_id, $id);
 		$curated = GetCuratedXPForGame($game->_id, $id);
 		$myusers = GetMyUsersXPForGame($game->_id, $id);
+		$allusers = $verified + $curated + $myusers;
 	}else{
 		$id = -1;
 	}
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
+	if($id != "")
+		$allusers = $allusers + $otherverified + $othercurated + $otherusers;
+	else
+		$allusers = $otherverified + $othercurated + $otherusers;
 
 	$refpts = GetReflectionPointsForGame($game->_id);
 	$collections = GetCollectionsForGame($game->_id);
@@ -74,7 +79,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers); ?>
+			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $allusers); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>

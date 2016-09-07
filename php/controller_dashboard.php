@@ -1,4 +1,4 @@
-<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers){
+<?php function BuildGameDashboard($game, $myxp, $userid, $videoxp, $refpts, $collections, $similar, $community){
     $dashboarditems = array();
     
     //Add Played? Card
@@ -79,22 +79,14 @@
         $dashitem['WATCHED'] = $tally;
         $dashboarditems[] = $dashitem;
     }
+
     //Community
-    if(sizeof($verified) > 0 || sizeof($curated) > 0 || sizeof($myusers) > 0){
+    if(sizeof($community) > 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'CommunityCompare';
         $tiers = array();
-        if(sizeof($verified) > 0)
-            foreach($verified as $xp)
-                $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
-
-        if(sizeof($curated) > 0)
-            foreach($curated as $xp)
-                $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
-
-        if(sizeof($myusers) > 0)
-            foreach($myusers as $xp)
-                $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
+        foreach($community as $xp)
+            $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
 
         $dashitem['TIERS'] = $tiers;
         $dashboarditems[] = $dashitem;
