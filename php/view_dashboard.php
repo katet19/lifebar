@@ -1,9 +1,9 @@
 <?php
-function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar){
+function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers){
     ?>
     <div class="row">
         <?php
-        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts, $collections, $similar);
+        $dashboarditems = BuildGameDashboard($game, $myxp, $_SESSION['logged-in']->_id, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers);
         foreach($dashboarditems as $dashitem){
             if($dashitem['TYPE'] == 'HavePlayed'){
                 DisplayHavePlayedCard($game);
@@ -25,10 +25,34 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
                 DisplayCollectionCard($dashitem['COLLECTIONS']);
             }else if($dashitem['TYPE'] == 'Similar'){
                 DisplaySimilarCard($dashitem);
+            }else if($dashitem['TYPE'] == 'CommunityCompare'){
+                DisplayCommunityCompareCard($dashitem, $myxp->_tier);
             }
         } ?>
     </div>
     <?php
+}
+
+function DisplayCommunityCompareCard($dashitem, $mytier){
+    if(sizeof($dashitem['TIERS']) > 0 && $mytier > 0){
+        arsort($dashitem['TIERS']);
+        $toptier = array_shift($dashitem['TIERS']); 
+        ?>
+        <div class='col s12 m6 l4'>
+            <div class="dashboard-card">
+                <div class="dashboard-card-tiny-header">Community Comparison</div>
+                <?php if($toptier == $mytier){ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community agreed with you</span></div> 
+                <?php }else if($toptier > $mytier){ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community disliked the game more than you</span></div> 
+                <?php }else{ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community enjoyed the game more than you</span></div> 
+                <?php } ?>
+                <div class="btn dashboard-community-view">View Community</div>
+            </div>
+        </div>
+        <?php
+    }
 }
 
 function DisplayCollectionCard($collectionCount){
@@ -52,10 +76,10 @@ function DisplaySimilarCard($dashitem){
     <div class='col s12 m6 l4'>
         <div class="dashboard-card">
             <div class="dashboard-card-tiny-header">Similar Games</div>
-            <div class="dashboard-calltonotice-container" <?php if(isset($dashitem['TOTALXP'])){ ?> style='margin-top: 20px;'<?php } ?>>
-            <i class="mdi-action-list"></i> 
+            <div class="dashboard-calltonotice-container">
+            <i class="mdi-action-list" <?php if(isset($dashitem['TOTALXP'])){ ?>style='margin-top: -40px;'<?php } ?>></i> 
             <?php if(isset($dashitem['TOTALXP'])){ ?>
-                <div class="dashboard-card-date-info" style='display:inline-block;width: 100%;position: relative;top: -15px;'>You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b> of</div>
+                <span class="dashboard-card-date-info">You have XP for <b><?php echo $dashitem['TOTALXP']; ?></b> of</span>
             <?php } ?>
             <span><?php echo $similarCount; ?> Similar Game<?php if($similarCount > 1){ echo "s"; } ?></span></div> 
             <div class="btn dashboard-similar-view">View Game<?php if($similarCount > 1){ echo "s"; } ?></div>
@@ -107,7 +131,7 @@ function DisplayHaveReflectionPointCard($dashitem){
 function DisplayMissingWatchedCard($dashitem){
     ?>
     <div class='col s12 m6 l4'>
-        <div class="dashboard-card dashboard-card-calltoaction game-add-watched-btn-fast">
+        <div class="dashboard-card dashboard-card-calltoaction game-unwatched-btn">
             <div class="dashboard-question-header">Video</div>
             <div class="dashboard-calltoaction-container"><span><i class="mdi-action-visibility"></i> <span><?php echo $dashitem['WATCHED']; ?> Unwatched</span></div> 
         </div>

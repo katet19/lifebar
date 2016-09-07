@@ -543,6 +543,11 @@ refpt-header-subquestion-hidden{
 	bottom:0px;
     text-align: left;
     padding: 45px 2px 10px;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .game-nav-icons{
@@ -584,12 +589,15 @@ refpt-header-subquestion-hidden{
 		margin-left:0;
 	}
 	#game-slide-out{
-		padding: 0px 0px 10px;
-	    background-color: white;
-    	top: 100px;
-	}
-	#game-slide-out li span{
+		padding: 15px 0px 10px;
+		background-color: white;
+		bottom: -15px;
+		top: -15px;
 		display:none;
+		left:-100%;
+	}
+	#game-slide-out li{
+		padding: 15px 12px 15px 15px;
 	}
 	.GameHeaderContainer, .GameHeaderBackground{
 		height:22em;
@@ -643,6 +651,9 @@ refpt-header-subquestion-hidden{
 		top: 10px;
 		position: absolute;
 		font-size: 1.5em;
+	}
+	.game-tab{
+		top:20vh;
 	}
 	.GameCriticQuote{
 		font-size: 1em;

@@ -49,6 +49,7 @@ body{
   font-size: 1.5em;
   font-weight: 300;
   margin-bottom: 1em;
+  margin-top:75px;
 }
 
 .info-details{
@@ -63,6 +64,7 @@ body{
 	.info-label{
 		font-size:1.25em;
 		font-weight:300;
+    margin-top: 0;
 	}
 }
 
