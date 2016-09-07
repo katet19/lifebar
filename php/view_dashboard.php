@@ -26,20 +26,29 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
             }else if($dashitem['TYPE'] == 'Similar'){
                 DisplaySimilarCard($dashitem);
             }else if($dashitem['TYPE'] == 'CommunityCompare'){
-                DisplayCommunityCompareCard($dashitem);
+                DisplayCommunityCompareCard($dashitem, $myxp->_tier);
             }
         } ?>
     </div>
     <?php
 }
 
-function DisplayCommunityCompareCard($dashitem){
-    if(sizeof($dashitem['TIERS']) > 0 ){
+function DisplayCommunityCompareCard($dashitem, $mytier){
+    if(sizeof($dashitem['TIERS']) > 0 && $mytier > 0){
+        arsort($dashitem['TIERS']);
+        $toptier = array_shift(array_values($dashitem['TIERS'])); 
         ?>
         <div class='col s12 m6 l4'>
             <div class="dashboard-card">
-                <div class="dashboard-card-tiny-header">Collections</div>
-                <?php print_r($dashitem['TIERS']); ?>
+                <div class="dashboard-card-tiny-header">Community Comparison</div>
+                <?php if($toptier == $mytier){ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community agreed with you</span></div> 
+                <?php }else if($toptier > $mytier){ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community disliked the game more than you</span></div> 
+                <?php }else{ ?>
+                    <div class="dashboard-calltonotice-container"><i></i> <span>Most of your community enjoyed the game more than you</span></div> 
+                <?php } ?>
+                <div class="btn dashboard-community-view">View Community</div>
             </div>
         </div>
         <?php
