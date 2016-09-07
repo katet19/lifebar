@@ -74,7 +74,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar); ?>
+			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $verified, $curated, $myusers); ?>
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
@@ -280,6 +280,8 @@ function ShowGameVideos($videoxp, $myxp){
 	<div class="row">
 		<?php
 		foreach($videoxp as $video){
+			$summary = '';
+			$tier = '';
 			foreach($myxp->_watchedxp as $watched){
 				if($watched->_url == $video['URL']){
 					$summary = $watched->_archivequote;
@@ -290,7 +292,11 @@ function ShowGameVideos($videoxp, $myxp){
 			DisplayGameVideoCard($video, $i, $summary, $tier);
 			$i++;
 		} 
-		?>	
+		?>
+		<div class="col s12 video-show-watched" style='margin-top:50px;'>
+			<div class="info-label ">Currently hiding your previously watched videos</div>
+			<div class="btn waves-effect waves-light"><i class="mdi-action-visibility left"></i> Show all videos</div>
+		</div>
 	</div>
 	<?php
 	}else{
@@ -318,7 +324,7 @@ function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
 		$quarter = "q0";
 	}
 	?>
-	<div class="col s12 m12 l6" style="margin-top:10px;">
+	<div class="col s12 m12 l6 <?php if($summary == '' && $tier == ''){ echo "video-is-unwatched"; }else{ echo "video-is-watched"; } ?>" style="margin-top:10px;">
 		<div class="row">
 			<div class="col s12 video-card z-depth-1" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 				<div class="row">

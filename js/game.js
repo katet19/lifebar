@@ -243,6 +243,15 @@ function AttachGameEvents(currentTab){
  		var progid = $(this).attr("data-progid");
  		DisplayGearDetails($(".userContainer").attr("data-id"), id, progid);
  	});
+	$(".game-unwatched-btn").on("click", function(){
+		SwitchGameContent($(".game-video-tab"));
+		$(".video-is-watched").hide();
+		$(".video-show-watched").show();
+	});
+	$(".video-show-watched").on('click', function(){
+		$(this).hide();
+		$(".video-is-watched").show(250);
+	});
 	AttachEventsForReflectionPoints();
 	$("select").material_select();
 	DisplayFormResultsGraph();
@@ -261,6 +270,8 @@ function SwitchGameContent(elem){
 		elem.addClass("active");
 		$(".game-tab-active").removeClass("game-tab-active");
 		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
+		$(".video-is-watched").show();
+		$(".video-show-watched").hide();
 		if((elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab") && $("#game-community-others-tab .game-community-box").length > 0)
 		{
 			$(".game-longform-tab").hide(100);
@@ -271,7 +282,6 @@ function SwitchGameContent(elem){
 			$(".game-community-others-tab").hide(100);
 			$(".game-longform-tab").show(100);
 			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
-			var test = box.height();
 			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
 		}
 		else
