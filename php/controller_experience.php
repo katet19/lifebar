@@ -248,8 +248,10 @@ function AdvancedFilterWeave($userid, $paramaters, $sort){
 			
 	
 	//Build my query
-	$and = implode(" and ",$andquery);
-	$or = implode(" or ",$orquery);
+	if(sizeof($andquery) > 0)
+		$and = implode(" and ",$andquery);
+	if(sizeof($orquery) > 0)
+		$or = implode(" or ",$orquery);
 	if(sizeof($orquery) > 0 &&  sizeof($andquery) > 0)
 		$query = $selectquery.$and." ) and ( ".$or." ) group by g.`ID` ".$sort;
 	else if(sizeof($orquery) > 0)

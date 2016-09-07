@@ -52,6 +52,20 @@
         $dashitem['AGE'] = $game->_year - $_SESSION['logged-in']->_birthdate;
     $dashboarditems[] = $dashitem;
 
+    //Add Relative to Year Card
+    if($myxp->_tier > 0 && $game->_year > 0){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'RelativeToYear';
+        $parameters[] = "Tier";
+        $parameters[] = $myxp->_tier;
+        $parameters[] = "and";
+        $parameters[] = "Year";
+        $parameters[] = $game->_year;
+        $parameters[] = "and";
+        $dashitem['RELATIVETOYEAR'] = AdvancedFilterWeave($_SESSION['logged-in']->_id, $parameters, '');
+        $dashboarditems[] = $dashitem;
+    }
+
     //Add Platform Card
     unset($dashitem);
     $dashitem['TYPE'] = 'Platforms';

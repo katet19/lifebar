@@ -27,10 +27,27 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
                 DisplaySimilarCard($dashitem);
             }else if($dashitem['TYPE'] == 'CommunityCompare'){
                 DisplayCommunityCompareCard($dashitem, $myxp->_tier);
+            }else if($dashitem['TYPE'] == 'RelativeToYear'){
+                DisplayRelativeToYearCard($dashitem, $game->_year);
             }
         } ?>
     </div>
     <?php
+}
+
+function DisplayRelativeToYearCard($dashitem, $year){
+    if(sizeof($dashitem['RELATIVETOYEAR']) > 0){
+        ?>
+        <div class='col s12 m6 l4'>
+            <div class="dashboard-card">
+                <div class="dashboard-card-tiny-header">Relative to your XP from <?php echo $year; ?></div>
+                <?php foreach($dashitem['RELATIVETOYEAR'] as $xp){
+                    echo $xp->_game->_title.", ";
+                } ?>
+            </div>
+        </div>
+        <?php
+    }
 }
 
 function DisplayCommunityCompareCard($dashitem, $mytier){
