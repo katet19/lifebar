@@ -36,7 +36,7 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
 function DisplayCommunityCompareCard($dashitem, $mytier){
     if(sizeof($dashitem['TIERS']) > 0 && $mytier > 0){
         arsort($dashitem['TIERS']);
-        $toptier = array_shift(array_values($dashitem['TIERS'])); 
+        $toptier = array_shift($dashitem['TIERS']); 
         ?>
         <div class='col s12 m6 l4'>
             <div class="dashboard-card">
