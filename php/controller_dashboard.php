@@ -101,7 +101,6 @@
     }
 
     //Add Developer
-    if()
     unset($dashitem);
     $dashitem['TYPE'] = 'Developer';
 	$dashitem['DEVELOPERS'] = GetDevelopersForGame($userid, $game->_gbid);
