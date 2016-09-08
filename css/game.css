@@ -105,7 +105,7 @@ refpt-header-subquestion-hidden{
 
 #gameContentContainer{
     position: relative;
-    left: 310px;
+    margin-left: 310px;
     right: 0;
 }
 

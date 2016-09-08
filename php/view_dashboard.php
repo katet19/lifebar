@@ -42,13 +42,12 @@ function DisplayRelativeToYearCard($dashitem, $year, $tier){
         <div class='col s12 m6'>
             <div class="dashboard-card">
                 <div class="dashboard-card-tiny-header">Tier breakdown from <?php echo $year; ?></div>
-                    <div class="dashboard-doughnut-container" style='margin-top: 25px;'>
-                        <div class="dashboard-card-game-small tier<?php echo $tier; ?>BG" >
-                            <div class="dashboard-card-relative-label">TIER</div>
-                            <div class="dashboard-card-relative-tier"><?php echo $tier; ?></div>
-                        </div>
-						<?php BuildRelationalDoughnut($tierbreakdown, $tier, ""); ?>
-					</div>
+                <div class="dashboard-doughnut-container" style='margin-top: 25px;'>
+                    <div class="dashboard-card-game-small tier<?php echo $tier; ?>BG" >
+                        <div class="dashboard-card-relative-label">TIER</div>
+                        <div class="dashboard-card-relative-tier"><?php echo $tier; ?></div>
+                    </div>
+                    <?php BuildRelationalDoughnut($tierbreakdown, $tier, ""); ?>
                 </div>
             </div>
         </div>
