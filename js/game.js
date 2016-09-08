@@ -1401,32 +1401,27 @@ function DisplayRelationalGraphs(){
 					    {
 					        value: parseInt($(this).attr("data-t1")),
 					        color:"#0A67A3",
-					        highlight: "#1398f0",
-					        label: "Tier 1"
+					        highlight: "#0A67A3"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t2")),
 					        color:"#00B25C",
-					        highlight: "#00d771",
-					        label: "Tier 2"
+					        highlight: "#00B25C"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t3")),
 					        color:"#FF8E00",
-					        highlight: "#ffac46",
-					        label: "Tier 3"
+					        highlight: "#FF8E00"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t4")),
 					        color:"#FF4100",
-					        highlight: "#ff632f",
-					        label: "Tier 4"
+					        highlight: "#FF4100"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t5")),
 					        color:"#DB0058",
-					        highlight: "#ff247b",
-					        label: "Tier 5"
+					        highlight: "#DB0058"
 					    }
 		    ];
 	    if($(window).width() >=600){
