@@ -52,25 +52,25 @@
         $dashitem['AGE'] = $game->_year - $_SESSION['logged-in']->_birthdate;
     $dashboarditems[] = $dashitem;
 
-    //Add Relative to Year Card
-    if($myxp->_tier > 0 && $game->_year > 0){
-        unset($dashitem);
-        $dashitem['TYPE'] = 'RelativeToYear';
-        $parameters[] = "Tier";
-        $parameters[] = $myxp->_tier;
-        $parameters[] = "and";
-        $parameters[] = "Year";
-        $parameters[] = $game->_year;
-        $parameters[] = "and";
-        $dashitem['RELATIVETOYEAR'] = AdvancedFilterWeave($_SESSION['logged-in']->_id, $parameters, '');
-        $dashboarditems[] = $dashitem;
-    }
-
     //Add Platform Card
     unset($dashitem);
     $dashitem['TYPE'] = 'Platforms';
 	$dashitem['PLATFORMS'] = GetPlatformsForGame($userid, $game->_gbid);
     $dashboarditems[] = $dashitem;
+
+    //Add Relative to Year Card
+    if($myxp->_tier > 0 && $game->_year > 0){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'RelativeToYear';
+        /*$parameters[] = "Tier";
+        $parameters[] = $myxp->_tier;
+        $parameters[] = "and";
+        $parameters[] = "Year";
+        $parameters[] = $game->_year;
+        $parameters[] = "and";*/
+        $dashitem['RELATIVETOYEAR'] = GetTierBreakdownLight($_SESSION['logged-in']->_id, $game->_year);
+        $dashboarditems[] = $dashitem;
+    }
 
     //Add Watched Card
     if(sizeof($videoxp) > 0){
@@ -94,18 +94,6 @@
         $dashboarditems[] = $dashitem;
     }
 
-    //Community
-    if(sizeof($community) > 0){
-        unset($dashitem);
-        $dashitem['TYPE'] = 'CommunityCompare';
-        $tiers = array();
-        foreach($community as $xp)
-            $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
-
-        $dashitem['TIERS'] = $tiers;
-        $dashboarditems[] = $dashitem;
-    }
-
     //Add Developer
     unset($dashitem);
     $dashitem['TYPE'] = 'Developer';
@@ -117,6 +105,18 @@
         unset($dashitem);
         $dashitem['TYPE'] = 'Collection';
         $dashitem['COLLECTIONS'] = sizeof($collections);
+        $dashboarditems[] = $dashitem;
+    }
+
+    //Community
+    if(sizeof($community) > 0){
+        unset($dashitem);
+        $dashitem['TYPE'] = 'CommunityCompare';
+        $tiers = array();
+        foreach($community as $xp)
+            $tiers[$xp->_tier] = $tiers[$xp->_tier] + 1;
+
+        $dashitem['TIERS'] = $tiers;
         $dashboarditems[] = $dashitem;
     }
 

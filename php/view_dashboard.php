@@ -28,22 +28,28 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
             }else if($dashitem['TYPE'] == 'CommunityCompare'){
                 DisplayCommunityCompareCard($dashitem, $myxp->_tier);
             }else if($dashitem['TYPE'] == 'RelativeToYear'){
-                DisplayRelativeToYearCard($dashitem, $game->_year);
+                DisplayRelativeToYearCard($dashitem, $game->_year, $myxp->_tier);
             }
         } ?>
     </div>
     <?php
 }
 
-function DisplayRelativeToYearCard($dashitem, $year){
-    if(sizeof($dashitem['RELATIVETOYEAR']) > 0){
+function DisplayRelativeToYearCard($dashitem, $year, $tier){
+    $tierbreakdown = $dashitem['RELATIVETOYEAR'];
+    if(sizeof($tierbreakdown) > 0){
         ?>
-        <div class='col s12 m6 l4'>
+        <div class='col s12 m6'>
             <div class="dashboard-card">
-                <div class="dashboard-card-tiny-header">Relative to your XP from <?php echo $year; ?></div>
-                <?php foreach($dashitem['RELATIVETOYEAR'] as $xp){
-                    echo $xp->_game->_title.", ";
-                } ?>
+                <div class="dashboard-card-tiny-header">Tier breakdown from <?php echo $year; ?></div>
+                    <div class="dashboard-doughnut-container" style='margin-top: 25px;'>
+                        <div class="dashboard-card-game-small tier<?php echo $tier; ?>BG" >
+                            <div class="dashboard-card-relative-label">TIER</div>
+                            <div class="dashboard-card-relative-tier"><?php echo $tier; ?></div>
+                        </div>
+						<?php BuildRelationalDoughnut($tierbreakdown, $tier, ""); ?>
+					</div>
+                </div>
             </div>
         </div>
         <?php

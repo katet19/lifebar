@@ -35,7 +35,7 @@ function ShowGameNav(){
 		<li data-tab="game-dashboard-tab" class="game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
 		<li data-tab="game-myxp-tab" class='game-myxp-tab'><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
 		<!--<li data-tab="game-longform-tab" class="game-longform-tab" style='display:none;padding-left: 35px;'><i class='game-nav-icons mdi-editor-mode-edit left'></i> <span>Journal</span></li>-->
-		<li data-tab="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
+		<li data-tab="game-community-tab" class="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
 		<?php if($id > 0){ ?>
 			<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
 		<?php } ?>
@@ -747,12 +747,12 @@ function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
       </div>
 <?php }
 
-function DisplaySmallGameCard($xp){
+function DisplaySmallGameCard($xp, $showXP = true){
 	$game = $xp->_game; ?>
 	<div class="col">
 	      <div class="card card-game-small" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 	        <div class="card-image-small" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        	<div class="card-game-small-title tier<?php echo $xp->_tier; ?>BG"><?php echo $game->_title; ?></div>
+	        	<div class="card-game-small-title tier<?php if($showXP){ echo $xp->_tier; } ?>BG"><?php echo $game->_title; ?></div>
 	        </div>
 	      </div>
       </div>

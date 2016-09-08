@@ -235,6 +235,9 @@ function AttachGameEvents(currentTab){
 	$(".dashboard-similar-view").on("click", function(e){
 		SwitchGameContent($(".game-similargames-tab"));
 	});
+	$(".dashboard-community-view").on("click", function(e){
+		SwitchGameContent($(".game-community-tab"));
+	});
 	$(".knowledge-container").on("click", function(){
 		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
 	 });

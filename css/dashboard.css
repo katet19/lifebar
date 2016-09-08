@@ -95,6 +95,48 @@
     top: -20px;
 }
 
+.dashboard-card-relative-label{
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 20px;
+    display:none;
+}
+
+.dashboard-card-relative-tier{
+    color: white;
+    font-size: 4em;
+    line-height: 100px;
+    font-weight: bold;
+}
+
+.dashboard-card-relative-container{
+    display: inline-block;
+    padding:15px 0;
+}
+
+.dashboard-card-game-small{
+    width: 95px;
+    border-radius: 50%;
+    height: 95px;
+    left: 80px;
+    position: absolute;
+    top: 85px;
+}
+
+.dashboard-doughnut-container .analyze-doughnut-relational{
+    float: left;
+}
+
+.dashboard-doughnut-container .analyze-doughnut-key{
+    display: inline-block;
+    text-align: left;
+    margin-top: 40px;
+}
+
 .dashboard-card-tiny-header{
     position:absolute;
     top:10px;
