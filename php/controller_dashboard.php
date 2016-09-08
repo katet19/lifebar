@@ -59,12 +59,12 @@
     $dashboarditems[] = $dashitem;
 
     //Add Relative to Year Card
-    /*if($myxp->_tier > 0 && $game->_year > 0){
+    if($myxp->_tier > 0 && $game->_year > 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'RelativeToYear';
         $dashitem['RELATIVETOYEAR'] = GetTierBreakdownLight($_SESSION['logged-in']->_id, $game->_year);
         $dashboarditems[] = $dashitem;
-    }*/
+    }
 
     //Add Watched Card
     if(sizeof($videoxp) > 0){
