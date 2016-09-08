@@ -171,3 +171,16 @@
 .dashboard-platform-container{
     margin-top: 40px;
 }
+
+@media only screen and (max-width : 600px) {
+    .dashboard-card-game-small{
+        width: 75px;
+        height: 75px;
+        top: 70px;
+    }
+
+    .dashboard-card-relative-tier{
+        font-size: 3em;
+        line-height: 75px;
+    }
+}
