@@ -75,6 +75,26 @@
     margin-bottom:10px;
 }
 
+.dashboard-tier-label
+{
+    font-size: 0.25em;
+    position: relative;
+    top: 5px;
+    display:none;
+    font-weight:bold;
+}
+
+.dashboard-tier-block{
+    color: white;
+    display: inline-block;
+    font-size: 0.6em;
+    font-weight: bold;
+    width: 70px;
+    border-radius: 50%;
+    position: relative;
+    top: -20px;
+}
+
 .dashboard-card-tiny-header{
     position:absolute;
     top:10px;

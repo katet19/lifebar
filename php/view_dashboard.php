@@ -58,15 +58,15 @@ function DisplayCommunityCompareCard($dashitem, $mytier){
         ?>
         <div class='col s12 m6 l4'>
             <div class="dashboard-card">
-                <div class="dashboard-card-tiny-header">Community <?php if($mytier > 0){ ?>Comparison<?php } ?></div>
+                <div class="dashboard-card-tiny-header">Community <?php if($mytier > 0){ ?>Consensus<?php } ?></div>
                 <?php if($toptier == $mytier && $mytier > 0){ ?>
-                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community agrees with you</span></div> 
+                    <div class="dashboard-calltonotice-container" style='margin-top:20px;'><i style='font-style: normal;margin-top: 0px;'><div class="dashboard-tier-label">TIER</div><div class='tier<?php echo $toptier; ?>BG dashboard-tier-block'><?php echo $toptier; ?></div></i> <span class="dashboard-card-date-info" style='top: -25px !important;'>You agree with other Lifebar members</span></div> 
                 <?php }else if($toptier > $mytier && $mytier > 0){ ?>
-                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community dislikes the game more than you</span></div> 
+                    <div class="dashboard-calltonotice-container" style='margin-top:20px;'><i style='font-style: normal;margin-top: 0px;'><div class="dashboard-tier-label">TIER</div><div class='tier<?php echo $toptier; ?>BG dashboard-tier-block' style='color:white;'><?php echo $toptier; ?></div></i> <span class="dashboard-card-date-info" style='top: -25px !important;'>You enjoyed the game more than other Lifebar members</span></div> 
                 <?php }else if($mytier > 0){ ?>
-                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The community enjoys the game more than you</span></div> 
+                    <div class="dashboard-calltonotice-container" style='margin-top:20px;'><i style='font-style: normal;margin-top: 0px;'><div class="dashboard-tier-label">TIER</div><div class='tier<?php echo $toptier; ?>BG dashboard-tier-block'><?php echo $toptier; ?></div></i> <span class="dashboard-card-date-info" style='top: -25px !important;'>You enjoyed the game less than other Lifebar members</span></div> 
                 <?php }else{ ?>
-                    <div class="dashboard-calltonotice-container"><i class='tierTextColor<?php echo $toptier; ?>' style='font-style: normal;'>T<?php echo $toptier; ?></i> <span class="dashboard-card-date-info">The average community tier</span></div>
+                    <div class="dashboard-calltonotice-container" style='margin-top:20px;'><i style='font-style: normal;margin-top: 0px;'><div class="dashboard-tier-label">TIER</div><div class='tier<?php echo $toptier; ?>BG dashboard-tier-block'><?php echo $toptier; ?></div></i> <span class="dashboard-card-date-info" style='top: -25px !important;'>The average Lifebar community tier</span></div>
                 <?php } ?>
                 <div class="btn dashboard-community-view">View Community</div>
             </div>
