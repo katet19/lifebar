@@ -1,6 +1,6 @@
 function ShowGame(id, currentTab, isID, browserNav, gameTab){
 	if(gameTab == "" || gameTab == undefined)
-		gameTab = "Community";
+		gameTab = "Dashboard";
 	LoadGame(id, currentTab, isID, browserNav, gameTab);
 }
 
@@ -35,11 +35,27 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		GLOBAL_TAB_REDIRECT = "";
 	 		GAPage('Game', '/game/'+title);
 	 		
- 	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
+			if(gameTab == "Community")
+				SwitchGameContent($(".game-community-tab"));
+			else if(gameTab == "Report")
+				SwitchGameContent($(".game-analyze-tab"));
+			else if(gameTab == "Watch")
+				SwitchGameContent($(".game-video-tab"));
+			else if(gameTab == "MyXP")
+				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "ReflectionPoints")
+				SwitchGameContent($(".game-reflectionpoints-tab"));
+			else if(gameTab == "SimilarGames")
+				SwitchGameContent($(".game-similargames-tab"));
+			else if(gameTab == "Collections")
+				SwitchGameContent($(".game-collections-tab"));
+			else if (gameTab.indexOf("User") >= 0){
+				 var userdata = gameTab.split('/');
+				 var userid = userdata[1];
+				 var username = userdata[2];
+	 			DisplayUserDetails(userid, username);
+			 }
+
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -78,14 +94,27 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 		 	GLOBAL_TAB_REDIRECT = "";
 		 	GAPage('Game', '/game/'+title);
 		 	
-  	 		if(gameTab == "Community"){
+			if(gameTab == "Community")
+				SwitchGameContent($(".game-community-tab"));
+			else if(gameTab == "Report")
+				SwitchGameContent($(".game-analyze-tab"));
+			else if(gameTab == "Watch")
+				SwitchGameContent($(".game-video-tab"));
+			else if(gameTab == "MyXP")
+				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "ReflectionPoints")
+				SwitchGameContent($(".game-reflectionpoints-tab"));
+			else if(gameTab == "SimilarGames")
+				SwitchGameContent($(".game-similargames-tab"));
+			else if(gameTab == "Collections")
+				SwitchGameContent($(".game-collections-tab"));
+	 		else if (gameTab.indexOf("User") >= 0){
+				 var userdata = gameTab.split('/');
+				 var userid = userdata[1];
+				 var username = userdata[2];
+	 			DisplayUserDetails(userid, username);
+			 }
 	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}else if (gameTab.indexOf("User") >= 0){
-	 			$("#userxp-tab-nav").click();
-	 			DisplayExpSpectrum($("#game-userxp-tab"));
-	 		}
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -117,11 +146,26 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
  		var title = $("#gameContentContainer").attr("data-title");
  		GLOBAL_HASH_REDIRECT = "NO";
  		
-   		if(gameTab == "Community"){
- 		
- 		}else if(gameTab == "Analyze"){
- 			$("#analyze-tab-nav").click();
- 		}
+   		if(gameTab == "Community")
+			SwitchGameContent($(".game-community-tab"));
+ 		else if(gameTab == "Report")
+ 			SwitchGameContent($(".game-analyze-tab"));
+ 		else if(gameTab == "Watch")
+		 	SwitchGameContent($(".game-video-tab"));
+		else if(gameTab == "MyXP")
+			SwitchGameContent($(".game-myxp-tab"));
+		else if(gameTab == "ReflectionPoints")
+			SwitchGameContent($(".game-reflectionpoints-tab"));
+		else if(gameTab == "SimilarGames")
+			SwitchGameContent($(".game-similargames-tab"));
+		else if(gameTab == "Collections")
+			SwitchGameContent($(".game-collections-tab"));
+		else if (gameTab.indexOf("User") >= 0){
+			var userdata = gameTab.split('/');
+			var userid = userdata[1];
+			var username = userdata[2];
+			DisplayUserDetails(userid, username);
+		}
  		
  		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
  		AttachGameEvents(currentTab);
@@ -238,6 +282,9 @@ function AttachGameEvents(currentTab){
 	$(".dashboard-community-view").on("click", function(e){
 		SwitchGameContent($(".game-community-tab"));
 	});
+	$(".game-ref-pt-btn").on("click", function(e){
+		SwitchGameContent($(".game-reflectionpoints-tab"));
+	});
 	$(".knowledge-container").on("click", function(){
 		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
 	 });
@@ -292,6 +339,10 @@ function SwitchGameContent(elem){
 			$(".game-longform-tab").hide(100);
 			$(".game-community-others-tab").hide(100);
 		}
+
+		var gameid = $("#gameContentContainer").attr("data-id");
+		var title = $("#gameContentContainer").attr("data-title");
+		location.hash = "game/"+gameid+"/"+title+"/"+elem.attr("data-nav");
 	}
 }
 
@@ -345,6 +396,7 @@ function HideJournalEdit(){
 function DisplayUserDetails(userid, username){
 	$(".game-user-tab span").html(username);
 	$(".game-user-tab").show();
+	$(".game-user-tab").attr("data-nav", "User/"+userid+"/"+username);
 	SwitchGameContent($(".game-user-tab"));
 	ShowLoader($("#game-userxp-tab"), 'big', "<br><br><br>");
 	var gameid = $("#gameContentContainer").attr("data-id");
@@ -849,7 +901,10 @@ function AttachMyXPEvents(){
 		AddWatchedFabEvent('','','','','');
 	});
 	$(".game-add-played-btn-fast").on('click', function(){
-		AddPlayedFabEvent();		
+		if($("#loginButton").length > 0)
+			$("#loginButton").click();
+		else
+			AddPlayedFabEvent();		
 	});
 	$(".userGameTab").on("click", function(){
 		setTimeout(function(){
@@ -1431,7 +1486,7 @@ function DisplayRelationalGraphs(){
 	    	$(this).attr('height', 125);
 	    	$(this).attr('width', 125);
 	    }
-      	var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: true });
+      	var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: false });
 		});
 	}
 }

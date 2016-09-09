@@ -145,7 +145,7 @@ function DisplayHaveProgressCard($dashitem){
 function DisplayHaveReflectionPointCard($dashitem){
     ?>
     <div class='col s12 m6 l4'>
-        <div class="dashboard-card dashboard-card-calltoaction">
+        <div class="dashboard-card dashboard-card-calltoaction game-ref-pt-btn">
             <div class="dashboard-question-header">Reflection Point</div>
             <div class="dashboard-calltoaction-container"><span><i class="mdi-action-question-answer"></i> <span><?php echo $dashitem['TOTAL']; ?> Unanswered</span></div> 
         </div>

@@ -32,18 +32,18 @@ function ShowGameNav(){
 	<ul id="game-slide-out">
 		<li data-tab="game-back-tab" class="game-back-tab HideForDesktop" style='padding-top:15px;'><i class='game-nav-icons mdi-navigation-arrow-back left'></i> <span>Go Back</span></li>
 		<li data-tab="game-back-tab" class='game-back-tab HideForDesktop' style='padding:0;margin-bottom:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
-		<li data-tab="game-dashboard-tab" class="game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
-		<li data-tab="game-myxp-tab" class='game-myxp-tab'><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
+		<li data-tab="game-dashboard-tab" data-nav="Dashboard" class="game-dashboard-tab game-tab-first"><i class='game-nav-icons mdi-action-dashboard left'></i> <span>Dashboard</span></li>
+		<li data-tab="game-myxp-tab" data-nav="MyXP" class='game-myxp-tab'><i class='game-nav-icons mdi-action-account-circle left'></i> <span>My XP</span></li>
 		<!--<li data-tab="game-longform-tab" class="game-longform-tab" style='display:none;padding-left: 35px;'><i class='game-nav-icons mdi-editor-mode-edit left'></i> <span>Journal</span></li>-->
-		<li data-tab="game-community-tab" class="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
+		<li data-tab="game-community-tab" data-nav="Community" class="game-community-tab"><i class="game-nav-icons mdi-social-people left"></i> <span>Community</span></li>
 		<?php if($id > 0){ ?>
-			<li data-tab="game-community-others-tab" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
+			<li data-tab="game-community-others-tab" data-nav="DiscoverCommunity" class="game-community-others-tab" style='display:none;padding-left: 35px;'><i class="game-nav-icons mdi-social-public left"></i> <span>Discover More</span></li>
 		<?php } ?>
-		<li data-tab="game-analyze-tab" class="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
-		<li data-tab="game-video-tab" class="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
-		<li data-tab="game-reflectionpoints-tab" class="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
-		<li data-tab="game-collections-tab" class="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
-		<li data-tab="game-similargames-tab" class="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
+		<li data-tab="game-analyze-tab" data-nav="Report" class="game-analyze-tab"><i class="game-nav-icons mdi-action-assessment left"></i> <span>Report</span></li>
+		<li data-tab="game-video-tab" data-nav="Watch" class="game-video-tab"><i class="game-nav-icons mdi-action-visibility left"></i> <span>Watch</span></li>
+		<li data-tab="game-reflectionpoints-tab" data-nav="ReflectionPoints" class="game-reflectionpoints-tab"><i class="game-nav-icons mdi-action-question-answer left"></i> <span>Reflection Points</span></li>
+		<li data-tab="game-collections-tab" data-nav="Collections" class="game-collections-tab"><i class="game-nav-icons mdi-av-my-library-add left"></i> <span>Collections</span></li>
+		<li data-tab="game-similargames-tab" data-nav="SimilarGames" class="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
 	</ul>
@@ -63,7 +63,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
 	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
 	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
-	if($id != "")
+	if($id > 0)
 		$allusers = $allusers + $otherverified + $othercurated + $otherusers;
 	else
 		$allusers = $otherverified + $othercurated + $otherusers;
