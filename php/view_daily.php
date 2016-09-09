@@ -272,7 +272,7 @@ function DisplayGamePageReflectionPoint($item){
 								<?php }else{ ?>
 									<div class='btn submit-refpt-response'>Save</div>
 								<?php } ?>
-								<div class="btn-flat share-refpt-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+								<div class="btn-flat share-refpt-response" data-id='<?php echo $item['ID']; ?>'><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
 								<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
 									<span class='btn-flat edit-ref-pt' style='font-weight:500;' data-id='<?php echo $item['ID']; ?>'>Edit Reflection Point</span>
 								<?php } ?>

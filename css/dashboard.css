@@ -31,6 +31,12 @@
     cursor: pointer;
 }
 
+.dashboard-card-calltonotice{
+    background-color:#607D8B;
+    color:white;
+    cursor: pointer;
+}
+
 .dashboard-card-calltoaction:hover
 {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -39,20 +45,89 @@
     background-color:#1E88E5;
 }
 
-.dashboard-calltoaction-container i
+.dashboard-card-calltonotice:hover{
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color:#546E7A;
+}
+
+.dashboard-calltonotice-container{
+    margin-top: 40px;
+}
+
+.dashboard-calltoaction-container i, .dashboard-calltonotice-container i
 {
     font-size: 5em;
     display: block;
     margin-top: -20px;
 }
 
-.dashboard-calltoaction-container span
+.dashboard-calltoaction-container span, .dashboard-calltonotice-container span
 {
     text-transform: uppercase;
     font-weight: 500;
     position: relative;
     font-size: 1.25em;
     top: -15px;
+}
+.dashboard-platform-container .badge-small{
+    margin-bottom:10px;
+}
+
+.dashboard-tier-label
+{
+    font-size: 0.25em;
+    position: relative;
+    top: 5px;
+    display:none;
+    font-weight:bold;
+}
+
+.dashboard-tier-block{
+    color: white;
+    display: inline-block;
+    font-size: 0.6em;
+    font-weight: bold;
+    width: 70px;
+    border-radius: 50%;
+    position: relative;
+    top: -20px;
+}
+
+.dashboard-card-relative-label{
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 20px;
+    display:none;
+}
+
+.dashboard-card-relative-tier{
+    color: white;
+    font-size: 4em;
+    line-height: 100px;
+    font-weight: bold;
+}
+
+.dashboard-card-relative-container{
+    display: inline-block;
+    padding:15px 0;
+}
+
+.dashboard-card-game-small{
+    width: 95px;
+    border-radius: 50%;
+    height: 95px;
+    position: absolute;
+    top: 80px;
+    left: -110px;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .dashboard-card-tiny-header{
@@ -84,10 +159,28 @@
 }
 
 .dashboard-card-date-info{
-    font-size:1em;
-
+    font-size: 1em !important;
+    position: relative !important;
+    top: -15px !important;
+    width: 100%;
+    font-weight: normal !important;
+    display: block;
+    text-transform: none !important;
 }
 
 .dashboard-platform-container{
     margin-top: 40px;
+}
+
+@media only screen and (max-width : 600px) {
+    .dashboard-card-game-small{
+        width: 75px;
+        height: 75px;
+        top: 70px;
+    }
+
+    .dashboard-card-relative-tier{
+        font-size: 3em;
+        line-height: 75px;
+    }
 }

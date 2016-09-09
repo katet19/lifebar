@@ -1363,7 +1363,7 @@ function DisplayKnowledge($knowledge, $size){
 		
 		$percentage = round(($progress / $max) * 100);
 		?>
-		<div class="col <?php if($size == "relative"){ echo "s4"; }else{ echo "knowledge-fixed"; } ?>">
+		<div class="col <?php if($size == "relative"){ echo "s4"; }else{ echo "knowledge-fixed"; } ?>" <?php if($size == "gamedash"){ echo "style='vertical-align:top;float:none;margin-left:auto;margin-right:auto;display:inline-block;'"; } ?> >
 			<div class="knowledge-container" <?php if($size == "fixed"){ echo "style='margin-bottom: 28px;'"; } ?> data-progid="<?php echo $knowledge->_progress->_id; ?>" data-id="<?php echo $knowledge->_id; ?>" data-objectid="<?php echo $knowledge->_objectid; ?>">
 				<?php if($knowledge->_image == ""){ ?>
 					<div class="knowledge-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
