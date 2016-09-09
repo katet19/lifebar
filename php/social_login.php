@@ -198,7 +198,7 @@
 	}
 	if($_GET['action'] == 'LoginTwitter2'){
 		if(isset($_GET['denied'])){
-			$url = "http://ryu.lifebar.io";
+			$url = "http://lifebar.io";
 			header("Location: $url");
 		}else{
 			TwitterOAuthStep2();
@@ -272,7 +272,7 @@
 			     			}else{
 				     			console.log($.trim(userdata[0]));
 				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
-		 						location.href = "http://ryu.lifebar.io";
+		 						location.href = "http://lifebar.io";
 			     			}
 					      },
 						    error: function(x, t, m) {
@@ -312,7 +312,7 @@
 											     data: {action: "FinishRegister", email: $("#final_email").val(), username: $("#final_username").val()  },
 											     type: 'post',
 											     success: function(output) {
-							 						location.href = "http://ryu.lifebar.io";
+							 						location.href = "http://lifebar.io";
 											     },
 												    error: function(x, t, m) {
 												        if(t==="timeout") {

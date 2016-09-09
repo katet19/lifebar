@@ -6,9 +6,6 @@ function DeployCSS(){
 		$circle = file_get_contents("css/library/circle.css");
 		fwrite($deployed, $circle);
 		
-		$fontawesome = file_get_contents("css/library/font/font-awesome.min.css");
-		fwrite($deployed, $fontawesome);
-		
 		//$materialize = file_get_contents("library/materialize.css");
 		//fwrite($deployed, $materialize);
 		
@@ -33,11 +30,11 @@ function DeployCSS(){
 		$graph = file_get_contents("css/graph.css");
 		fwrite($deployed, $graph);
 		
-		$landing = file_get_contents("css/landing.css");
+		/*$landing = file_get_contents("css/landing.css");
 		fwrite($deployed, $landing);
 		
 		$landingstyle = file_get_contents("css/landing-style.css");
-		fwrite($deployed, $landingstyle);
+		fwrite($deployed, $landingstyle);*/
 		
 		$main = file_get_contents("css/main.css");
 		fwrite($deployed, $main);
@@ -68,6 +65,12 @@ function DeployCSS(){
 
 		$dashboard = file_get_contents("css/dashboard.css");
 		fwrite($deployed, $dashboard);
+<<<<<<< Updated upstream
+=======
+		
+        $landingwebflow = file_get_contents("css/lifebar.webflow.css");
+		fwrite($deployed, $landingwebflow);
+>>>>>>> Stashed changes
 		
 		echo "Finished deploying CSS";
 		fclose($deployed);
