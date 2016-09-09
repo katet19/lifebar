@@ -88,7 +88,7 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 		<div id="notifications" class="col s12 m12 l9 outerContainer" style='padding: 0;display:none;'>
 			<div id="notificationsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236)"></div>
 		</div>
-		<div id="game" class="col s12 m12 l9 outerContainer" style="padding:0;">
+		<div id="game" class="col s12 m12 l11 outerContainer" style="padding:0;">
 			<div id="gameInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);">
 				<?php if(isset($_GET['game'])){ 
 					DisplayGameViaID($_GET['game'], -1);	
