@@ -56,23 +56,33 @@ function DisplayAdmin($userid){
 					Game Management
 				</div>
 			</div>
-  			<div class="col s12 m6 l4">
-	          <div class="card admin-card">
-	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
-	            </div>
-	            <div class="card-action">
-	              <a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
-	            </div>
-	          </div>
-  			</div>
+			<div class="col s12 m6 l4">
+					<div class="card admin-card">
+						<div class="card-content">
+							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
+						</div>
+						<div class="card-action">
+							<a href="#" class="admin-action admin-run-game-updater">MANUAL RUN</a>
+						</div>
+					</div>
+			</div>
+			<div class="col s12 m6 l4">
+					<div class="card admin-card">
+						<div class="card-content">
+							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
+						</div>
+						<div class="card-action">
+							<input id='search-cache-input' style='margin-right:10px;'> <a href="#" class="admin-action clear-search-cache-btn">CLEAR SEARCH</a>
+						</div>
+					</div>
+			</div>
 			<div class="col s12 m6 l4">
 	          <div class="card admin-card">
 	            <div class="card-content">
-	              <span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
+	              <span class="card-title"><i class="mdi-action-question-answer" style='margin: 0 5px;'></i> Daily Reflection Schedule</span>
 	            </div>
 	            <div class="card-action">
-	              <input id='search-cache-input' style='margin-right:10px;'> <a href="#" class="admin-action clear-search-cache-btn">CLEAR SEARCH</a>
+	              <a href="#" class="admin-action admin-ref-pts-sch">MANAGE SCHEDULE</a>
 	            </div>
 	          </div>
   			</div>
@@ -675,5 +685,71 @@ function DisplayMilestoneManagement(){ ?>
 	</div>
 	
 <?php
+}
+
+function DisplayRefPtSchedule(){
+	?>
+	<div class="row">
+		<div class="col s12 import-results-subheader">
+			Daily Reflection Point Scheduler
+			<div class='btn admin-schedule-save-all' style="float:right;">UPDATE SCHEDULE</div>
+		</div>
+	</div>
+	<?php
+	$refPts = GetUpcomingRefPts();
+	if(sizeof($refPts) > 0){
+			$month = "";
+			foreach($refPts as $ref){
+				$weekday = Date("l", strtotime($ref['Daily']));
+				$tempmonth = explode("-",$ref['Daily']);
+				if($tempmonth[1] != $month){
+					$monthword = Date("F", strtotime($ref['Daily']));
+					?>
+					<div class='import-results-subheader' style='margin: 50px 0 10px;padding-left: 20px;text-transform: uppercase;width: 100%;background-color: gray;color: white;'><?php echo $monthword; ?></div>
+					<?php
+					$month = $tempmonth[1];
+				}
+			?>
+			<div class='row admin-schedule-ref-row' data-id='<?php echo $ref['ID']; ?>'>
+				<div class='admin-schedule-ref-date'>
+					<input class='admin-schedule-ref-date-input' type='text' style='width:100px;' value='<?php echo $ref['Daily']; ?>'>
+					<span><?php echo $weekday; ?></span>
+				</div>
+				<div class='admin-schedule-ref-question'>
+					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
+				</div>
+				<!--<div class='btn-flat admin-schedule-insert-remove'>remove</div>-->
+				<div class='btn-flat admin-schedule-insert-before'>before</div>
+				<div class='btn-flat admin-schedule-insert-after'>after</div>
+			</div>
+			<?php
+			}
+	}
+}
+
+function DisplayRefPtPicker($new, $search){
+	$refpts = GetRefPtSearch($new, $search);
+	?>
+	<div class="row">
+		<div class="col s8">
+			<input type="text" id="ref-pt-search-picker" class="ref-pt-search-picker" value=''>
+			<label for="ref-pt-search-picker">Search</label>
+		</div>
+		<div class="col s4">
+			<input type="checkbox" id="ref-pt-search-new" class="ref-pt-search-new" checked>
+			<label for="ref-pt-search-new">Unscheduled Only</label>
+		</div>
+	</div>
+		<div class="row">
+			<?php
+			foreach($refpts as $pt){
+			?>
+			<div class="col s12" style='text-align:left;'>
+				<span><?php echo $pt['Header']; ?></span> <span>(<?php echo $pt['Title']; ?>)</span>
+				<div class='btn-flat ref-pt-search-select'>insert</div>
+			</div>
+			<?php } ?>
+		</div>
+	<?php
 }
 ?>

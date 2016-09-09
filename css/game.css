@@ -2,11 +2,93 @@
 	display:none;
 }
 
+.refpt-header-image{
+    width: 100%;
+    height: 400px;
+    position:relative;
+    overflow:hidden;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.refpt-header-question{
+	font-size: 2em;
+    color: rgba(0,0,0,0.7);
+    font-weight: 500;
+    line-height: 45px;
+    z-index: 10;
+    text-align: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.refpt-header-game-title{
+    color: rgba(0,0,0,0.7);
+    font-weight: bold;
+    z-index: 10;
+    text-align: left;
+	cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.refpt-answers-results-container{
+    position: relative;
+    float: left;
+    margin-top: 50px;
+    border-top: 1px solid gray;
+    width: 100%;
+    text-align: left;
+    padding: 25px 50px 0px;
+}
+
+.refpt-answers-container{
+    width: 100%;
+    z-index: 5;
+    color: rgba(0,0,0,0.7);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+    position:relative;
+}
+
+refpt-header-subquestion-hidden{
+	font-size: 1.25em;
+    color: rgba(0,0,0,0.7);
+    margin-left: 0;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.share-refpt-response{
+    color: rgba(0,0,0,0.7);
+    cursor: pointer;
+    margin-top: 10px;
+    padding-left: 0;
+    text-align: left;
+    font-weight: 500;
+    margin-left: 35px;
+}
+
 .GameHeaderContainer{
-	height:300px; /*525px;*/
+	height:35vh;
 	width:100%;
+	left: 0;
 	position:fixed;
-	z-index:3;
+	z-index:1;
 	background-color: black;
 	-webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -21,20 +103,43 @@
 	bottom:0;
 }
 
+#gameContentContainer{
+    position: relative;
+    margin-left: 310px;
+    right: 0;
+}
+
+.tinymce-default-format{
+	text-align:left;
+}
+
+#myGameJournalDisplay{
+	text-align:left;
+}
+
+.journal-subject-header{
+	font-size:2em;
+	padding-bottom:20px;
+	border-bottom:1px solid gray;
+}
+
 .game-tab{
-	/*margin-top:330px;
-	min-height: 800px;*/
 	position:absolute;
-	top:330px;
+	top:30vh;
 	padding:0 0.75rem 50px !important;
+	display:none;
+}
+
+.game-tab-active{
+	display:block;
 }
 
 .GameHeaderBackground{
 	position:absolute;
 	top:0;
-	width:75%;
+	width:100%;
 	left:0;
-	height: 300px; /*35em;*/
+	height: 35vh; /*35em;*/
 	-webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -44,8 +149,9 @@
 
 .GameTitle{
 	position: absolute;
-	top: 200px;
-	left:1em;
+	top: 30px;
+	left:15px;
+	font-weight:500;
 	color:white;
 	font-size:2em;
 	z-index:3;
@@ -59,7 +165,7 @@
 
 .fixed-action-btn{
 	position: fixed !important;
-	right:27%;
+	right:1%;
 	bottom:1em;
 }
 
@@ -99,10 +205,6 @@
 	display:inline-block;
 }
 
-.btn-floating{
-	/*opacity:0.85;*/
-}
-
 .btn-floating:hover{
 	opacity: 1;
 }
@@ -139,18 +241,16 @@
 }
 
 .game-tab-shrink{
-	/*margin-top:200px;
-	padding-bottom:130px;*/
 	top:200px;
 }
 
 .GameMyStatusIcons{
-	position: absolute;
-	z-index: 3;
-	top: 0.5em;
-	font-size: 1.5em;
-	right: 26%;
-	color: white;
+    position: absolute;
+    z-index: 3;
+    top: 15px;
+    font-size: 2em;
+    right: 15px;
+    color: white;
 }
 
 .GameInfoHeader{
@@ -162,7 +262,7 @@
 .GameInfoLabel{
 	text-align: left;
 	color:rgba(0,0,0,0.7);
-	font-size:1em;
+	font-size:1.2em;
 	font-weight:bold;
 	vertical-align: top;
 }
@@ -170,6 +270,8 @@
 .GameInfoContent{
 	text-align: left;
 	vertical-align: top;
+	font-size:1.2em;
+	margin-left:20px !important;
 }
 
 .ShowInfoBtn{
@@ -180,10 +282,6 @@
 
 #game-critic-tab, #game-user-tab{
 	margin-bottom: 5em;
-}
-
-.fab-login{
-	
 }
 
 .card-tier-badge{
@@ -254,10 +352,6 @@
 	text-align: center;
 	margin-bottom: 20px;
 	display:none;
-}
-
-.equip-xp-container{
-	
 }
 
 .equip-xp-header{
@@ -341,14 +435,6 @@
     transition: all 0.2s ease-out;
 }
 
-.equip-xp-save{
-	
-}
-
-.equip-xp-changed{
-	
-}
-
 .game-tab-subheader-container{
 	padding: 2em 0 0;
 }
@@ -363,6 +449,8 @@
 	margin-bottom:50px;
 	display:inline-block;
 	width:100%;
+	background-color:white;
+	padding:20px;
 }
 
 .game-community-box-header{
@@ -447,7 +535,70 @@
     transition: all 0.5s ease;
 }
 
+#game-slide-out{
+	width: 300px;
+    position: fixed;
+    top: 35vh;
+    z-index: 100;
+	bottom:0px;
+    text-align: left;
+    padding: 45px 2px 10px;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.game-nav-icons{
+	font-size: 1.25em;
+    margin-top: -3px;
+}
+
+#game-slide-out li{
+	width:100%;
+	padding: 5px 12px 5px 15px;
+	cursor: pointer;
+	color:#616161;
+}
+
+#game-slide-out li:hover{
+	background-color:rgba(0,0,0,0.07);
+}
+
+#game-slide-out li span{
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#game-slide-out li.active{
+	background-color:#0a67a3;
+	color:white;
+}
+
+.game-collection-container{
+	margin-top:-50px;
+	text-align: left;
+}
+
 @media only screen and (max-width : 992px) {
+	#gameContentContainer{
+		margin-left:0;
+	}
+	#game-slide-out{
+		padding: 15px 0px 10px;
+		background-color: white;
+		bottom: -15px;
+		top: -15px;
+		display:none;
+		left:-100%;
+	}
+	#game-slide-out li{
+		padding: 15px 12px 15px 15px;
+	}
 	.GameHeaderContainer, .GameHeaderBackground{
 		height:22em;
 	}
@@ -458,13 +609,6 @@
 		position: fixed !important;
 		right:1em;
 		bottom:1em;
-	}
-	.GameTitle{
-		top:210px;
-	}
-	.game-tab {
-		/*margin-top: 330px;*/
-		top:330px;
 	}
 	.GameMyStatusIcons{
 		right:0.5em;
@@ -504,13 +648,12 @@
 		z-index: 99;
 	}
 	.GameTitle{
-		bottom: 50px;
-		top: inherit;
+		top: 10px;
 		position: absolute;
+		font-size: 1.5em;
 	}
-	.game-tab {
-		/*margin-top: 230px;*/
-		top:230px;
+	.game-tab{
+		top:20vh;
 	}
 	.GameCriticQuote{
 		font-size: 1em;

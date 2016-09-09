@@ -98,12 +98,37 @@ function GetCollectionListForUserAndGame($userid, $gameid){
 			$collection['ID'] = $row['ID'];
 			$collection['Name'] = $row['Name'];
 			$collection['Exists'] = false;
-			if ($result2 = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$row['ID']."' and `GameID` = '".$gameid."'")) {
+			if ($result2 = $mysqli->query("select * from `CollectionGames` where `CollectionID` = '".$row['ID']."' and `GameID` = '".$gameid."' and `Hidden` = 'No'")) {
 				while($row2 = mysqli_fetch_array($result2)){
 					$collection['Exists'] = true;
 				}
 			}
 			$collections[] = $collection;
+		}
+	}
+	Close($mysqli, $result);
+	return $collections;	
+}
+
+function GetCollectionsForGame($gameid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select c.* from `CollectionGames`g, `Collections` c where `GameID` = '".$gameid."' and g.`CollectionID` = c.`ID` and c.`CreatedBy` > 0 and `Visibility` = 'Yes' order by c.`LastUpdated` DESC")) {
+		while($row = mysqli_fetch_array($result)){
+			$collection = new Collection($row['ID'], 
+						$row['OwnerID'], 
+						$row['Name'],
+						$row['Description'],
+						GetTotalSubs($row['ID'], $mysqli), 
+						$row['Created'], 
+						$row['CreatedBy'], 
+						$row['LastUpdated'], 
+						GetCollectionGames($row['ID'], $row['Rule'], $row['OwnerID'], $mysqli),
+						$row['Visibility'],
+						$row['Cover'],
+						$row['CoverSmall'],
+						$row['Rule'],
+						$row['RuleDesc']);
+						$collections[] = $collection;
 		}
 	}
 	Close($mysqli, $result);

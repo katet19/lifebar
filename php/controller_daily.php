@@ -158,11 +158,24 @@ function GetFormResults($formid){
 
 function GetReflectionPointsForGame($gameid){
 	$mysqli = Connect();
-	$refpts = array();	if ($result = $mysqli->query("select * from `Forms` where `ObjectID` = '".$gameid."' and `ObjectType` = 'Game'")) {
+	if ($result = $mysqli->query("select * from `Forms` where `ObjectID` = '".$gameid."' and `ObjectType` = 'Game'")) {
 		while($row = mysqli_fetch_array($result)){
-			$refpts[] = $row;
+			unset($refpt);
+			$refpt = $row;
+			if(sizeof($refpt) > 0 ){
+				unset($items);
+				$query = "SELECT * FROM `FormItems` where `FormID` = '".$refpt["ID"]."' order by `ID`"; 
+				if ($result2 = $mysqli->query($query)) {
+					while($row2 = mysqli_fetch_array($result2)){
+						$items[] = $row2;
+					}
+				}
+				$refpt['Items'] = $items;
+			}
+			$refpts[] = $refpt;
 		}
 	}
+	
 	Close($mysqli, $result);
 	return $refpts;
 }
@@ -195,4 +208,51 @@ function DeleteReflectionPoint($id){
 	$mysqli->query("delete from `Forms` where `ID` = '".$id."'");
 	$mysqli->query("delete from `FormItems` where `FormID` = '".$id."'");
 	Close($mysqli, $result);
+}
+
+function GetUpcomingRefPts(){
+	$mysqli = Connect();
+	$currdate = Date("Y-m-d");
+	$date = Date("Y-m-d", strtotime($currdate." +1 day"));
+	$refpts = array();	if ($result = $mysqli->query("select f.*, g.`Title` from `Forms` f, `Games` g where f.`FormType` = 'Daily' and f.`Daily` >=  '".$date."' and f.`ObjectID` = g.`ID` order by `Daily`")) {
+		while($row = mysqli_fetch_array($result)){
+			$refpts[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $refpts;
+}
+
+function SaveRefPtSchedule($schedule){
+	$mysqli = Connect();
+	$refpts = explode("||", $schedule);
+	if(sizeof($refpts) > 0){
+		foreach($refpts as $pt){
+			$pcs = explode(",", $pt);
+			if(sizeof($pcs) > 0 && $pcs[0] > 0){
+				$mysqli->query("Update `Forms` set `Daily` = '".$pcs[1]."' where `ID` = '".$pcs[0]."'");
+			}
+		}
+	}
+	Close($mysqli, $result);
+}
+
+function GetRefPtSearch($new, $search){
+	$mysqli = Connect();
+	$refpts = array();	
+	$query = "select * from `Forms` f, `Games` g where `FormType` = 'Daily' and f.`ObjectID` =g.`ID`";
+	if($new == "true" && $search != '')
+		$query = $query . " and `Daily` = '0000-00-00' and `Header` like '%".$search."%'";
+	else if($new == "false" && $search != '')
+		$query = $query . " and `Daily` != '0000-00-00' and `Header` like '%".$search."%'";
+	else
+		$query = $query . " and `Daily` = '0000-00-00' ";
+	
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$refpts[] = $row;
+		}
+	}
+	Close($mysqli, $result);
+	return $refpts;
 }

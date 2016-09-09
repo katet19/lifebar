@@ -102,6 +102,10 @@ function AttachAdminEvents(){
 	$(".clear-search-cache-btn").on("click", function(){
 		ClearSearchCache();	
 	});
+	$(".admin-ref-pts-sch").on("click", function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayRefPtSchedule();
+	});
 }
 
 
@@ -421,6 +425,89 @@ function DisplayUnmappedManagerReviewed(){
  		$("#adminInnerContainer").html(output);
 		AttachUnmappedManagerEvents();
   		Waves.displayEffect();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayRefPtSchedule(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRefPtSchedule" },
+     type: 'post',
+     success: function(output) {
+ 		$("#adminInnerContainer").html(output);
+		AttachRefPtEvents();
+  		Waves.displayEffect();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function AttachRefPtEvents(){
+	$('.admin-schedule-insert-before').on("click", function(){
+		DisplayRefPtPicker("", true, "before", $(this));
+	});
+	$('.admin-schedule-insert-after').on("click", function(){
+		DisplayRefPtPicker("", true, "after", $(this));
+	});
+	$('.admin-schedule-insert-remove').on("click", function(){
+
+	});
+	$('.admin-schedule-save-all').on("click", function(){
+		var savestring = "";
+		$(".admin-schedule-ref-row").each(function(){
+			var id = $(this).attr("data-id");
+			var date = $(this).find(".admin-schedule-ref-date-input").val();
+			savestring = savestring + id + "," + date + "||";
+		});
+		$.ajax({ url: '../php/webService.php',
+		data: {action: "SaveRefPtSchedule", savestring: savestring },
+		type: 'post',
+		success: function(output) {
+			Toast("Saved changes to DRP Schedule!")
+		},
+			error: function(x, t, m) {
+				if(t==="timeout") {
+					ToastError("Server Timeout");
+				} else {
+					ToastError(t);
+				}
+			},
+			timeout:45000
+		});
+	});
+}
+
+function DisplayRefPtPicker(searchstring, isNew, position, elem){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayRefPtPicker", searchstring: searchstring, isNew: isNew },
+     type: 'post',
+     success: function(output) {
+ 		ShowPopUp(output);
+ 		$(".ref-pt-search-picker").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if(isNew)
+					isNew = $("#ref-pt-search-new").is(':checked');
+					
+				DisplayRefPtPicker($(this).val(), isNew, position, elem);
+			} 
+		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

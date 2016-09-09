@@ -165,6 +165,30 @@ function GetVideoMyXPForGame($url, $gameid){
 	return $subexp;
 }
 
+function NormalizeVideoURLs($url){
+	if(strpos($url, 'giantbomb.com') !== false){
+		if(strpos($url , 'giantbomb.com/videos/embed/') !== false){
+			$vurl = $url;
+		}else{
+			$vurl = "http://www.giantbomb.com/videos/embed/";
+			$vidArray = explode("-", $url);
+			$vurl = $vurl.end($vidArray);
+		}
+	}else if(strpos($url , 'youtube.com') !== false || strpos($url , 'youtu.be') !== false){
+			$vurl = "https://www.youtube.com/embed/";
+			$vidArray = explode("/", $url);
+			$vurl = $vurl.end(str_replace("watch?v=","",$vidArray));
+	}else if(strpos($video['URL'], 'gamespot.com') !== false){
+			$vurl = "http://www.gamespot.com/videos/embed/";
+			$vidArray = explode("-", $video['URL']);
+			$vurl = $vurl.end($vidArray);
+	}else{
+		$vurl = $url;
+	}
+
+	return $vurl;
+}
+
 function AdvancedFilterWeave($userid, $paramaters, $sort){
 	$mysqli = Connect();
 	
@@ -224,8 +248,10 @@ function AdvancedFilterWeave($userid, $paramaters, $sort){
 			
 	
 	//Build my query
-	$and = implode(" and ",$andquery);
-	$or = implode(" or ",$orquery);
+	if(sizeof($andquery) > 0)
+		$and = implode(" and ",$andquery);
+	if(sizeof($orquery) > 0)
+		$or = implode(" or ",$orquery);
 	if(sizeof($orquery) > 0 &&  sizeof($andquery) > 0)
 		$query = $selectquery.$and." ) and ( ".$or." ) group by g.`ID` ".$sort;
 	else if(sizeof($orquery) > 0)
@@ -2447,6 +2473,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 		$date = $year."-00-00";
 	
 	
+	$url = NormalizeVideoURLs($url);
 	$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`URL`,`Date`,`Length`,`Source`) values ('$user','$expid','$gameid','$quote','$tier','Watched','$url','$date', '$length', '$source')";
 	$result = $mysqli->query($insert);
 	if($result == '' || $result == false){
@@ -2493,7 +2520,8 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 		$date = $year."-10-01";
 	else if($quarter == "q0")
 		$date = $year."-00-00";
-		
+	
+	$url = NormalizeVideoURLs($url);
 	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length',`Source`='$source' where `ID` = '$id'");
 	Close($mysqli, $result);
 }
@@ -2501,6 +2529,7 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 function CreateEventForWatchedXP($user, $gameid, $tier, $quote, $url){
 	$mysqli = Connect();
 	$sxpid = GetSubXPID($user, $gameid, $mysqli);
+	$url = NormalizeVideoURLs($url);
 	$insert = "insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`URL`,`S_XPID`) values ('$user','$gameid','ADDED','$tier','$quote','$url','$sxpid')";
 	$result = $mysqli->query($insert);
 	if($result == '' || $result == false){
@@ -2606,6 +2635,34 @@ function RemoveEvent($eventid, $userid){
 	Close($mysqli, $result);
 	
 	return $gameid;
+}
+
+function SaveJournalEntry($subject, $journal, $gameid){
+	$userid = $_SESSION['logged-in']->_id;
+	$update = false;
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `LongForm` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$update = true;
+		}
+	}
+
+	if($update)
+		$mysqli->query("UPDATE `LongForm` SET `Subject` = '".mysqli_real_escape_string($mysqli, $subject)."', `Body` = '".mysqli_real_escape_string($mysqli, $journal)."' where `UserID` = '".$userid."' and `GameID` = '".$gameid."'");
+	else
+		$mysqli->query("INSERT INTO `LongForm` (`UserID`, `GameID`, `Subject`, `Body`) VALUES ('".$userid."', '".$gameid."' ,'".mysqli_real_escape_string($mysqli, $subject)."' ,'".mysqli_real_escape_string($mysqli, $journal)."')");
+
+	Close($mysqli, $result);
+}
+
+function GetLongFormForUser($gameid, $userid){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `LongForm` where `UserID` = '".$userid."' and `GameID` = '".$gameid."'")) {
+		while($row = mysqli_fetch_array($result)){
+			$journal = $row;
+		}
+	}
+	return $journal;
 }
 
 ?>

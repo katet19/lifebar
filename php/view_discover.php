@@ -217,7 +217,7 @@ function DisplayDailyHeader($zdepth, $item){
 					<?php 
 						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
 						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
-							ShowFormResults($item['ID'], $choicesMade);
+							ShowFormResults($item['ID'], $choicesMade, false);
 					?>
 				</div>
 				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">

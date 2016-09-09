@@ -52,7 +52,12 @@
 		if($_POST['action'] == 'SubmitDailyChoice'){
 			SaveFormChoices($_SESSION['logged-in']->_id, $_POST['formid'], $_POST['formitemid'], $_POST['gameid'], $_POST['objectid'], $_POST['objectType']);
 			$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $_POST['formid']);
-			ShowFormResults($_POST['formid'], $choicesMade);
+			if(isset($_POST['gamepage']))
+				$gamepage = true;
+			else
+				$gampage = false;
+
+			ShowFormResults($_POST['formid'], $choicesMade, $gamepage);
 		}
 	}
 	
@@ -306,6 +311,15 @@
 			EquipBadge($_POST['userid'], $_POST['badgeid']);
 		}
 		if($_SESSION['logged-in']->_security == 'Admin'){
+			if($_POST['action'] == 'DisplayRefPtSchedule'){
+				DisplayRefPtSchedule();
+			}
+			if($_POST['action'] == 'SaveRefPtSchedule'){
+				SaveRefPtSchedule($_POST['savestring']);
+			}
+			if($_POST['action'] == 'DisplayRefPtPicker'){
+				DisplayRefPtPicker($_POST['isNew'], $_POST['searchstring']);
+			}
 			if($_POST['action'] == 'DisplayAdmin' ){
 				DisplayAdmin($_SESSION['logged-in']->_id);
 			}
@@ -529,6 +543,9 @@
 			$gameid = RemoveEvent($_POST['eventid'], $_SESSION['logged-in']->_id);
 			CalculateWeave($_SESSION['logged-in']->_id);
 			DisplayMyXP($gameid);
+		}
+		if($_POST['action'] == "SaveJournalEntry"){
+			SaveJournalEntry($_POST['subject'], $_POST['journal'], $_POST['gameid']);
 		}
 	}
 	function GameServices(){

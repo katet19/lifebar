@@ -492,7 +492,7 @@ function DisplayTierGameDetails($year, $tier, $userid){
 function DisplayMyXP($gameid){
 	$game = GetGame($gameid);
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
-	if($myxp->_tier != 0){ ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', ''); }
+	ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', '');
 }
 
 function ShowMyXP($exp, $userid, $conn, $mutualconn){ 
@@ -516,14 +516,14 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 	$chunksize = 100 / $size;
 	$pos = 0;
 	$vertBG = array();
-
+	
 	?>
-	<div class="col s12" style='position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
+	<div class="col s12 z-depth-1" style='background-color:white;z-index:0;position: relative;<?php if(!$editAccess){ ?>margin-top: 50px;<?php } ?>'> 
 		<?php if($editAccess){ 
 			$vertBG[] =  "#fff ".($chunksize * $pos)."%";
 			$pos++;
 		?>
-		<div class="row" style='margin-bottom: 30px;'>
+		<div class="row" style='margin-bottom: 30px;z-index:1;'>
 			<div class="feed-avatar-col">
 			</div>
 			<div class="feed-activity-icon-col">
@@ -533,26 +533,26 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			</div>
 			<div class="myxp-content-col">
 				<?php if(sizeof($exp->_playedxp) > 0){ ?>
-		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    		<div class="col s12" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Post</span>
-		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>updates</div>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>updates</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'> with your time playing or add a</span>
-		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>watched</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
 		    		</div>
 		    	<?php }else{ ?>
-		    		<div class="col s12" style='text-align: left;margin-top: 40px;'>
+		    		<div class="col s12" style='text-align:left;margin-top: 20px;padding: 20px;background-color: white;'>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>Add a</span>
-		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>watched</div>
+		    			<div class='btn-flat game-add-watched-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>watched</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>or</span>
-		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;'>played</div>
+		    			<div class='btn-flat game-add-played-btn-fast' style='padding: 0 0.5rem;font-size: 1.3em;vertical-align: top;color: #1E88E5;font-weight: bold;margin-bottom:0;'>played</div>
 		    			<span style='font-size:1.5em;font-weight: 400;color:rgba(0,0,0,0.7)'>experience</span>
 		    		</div>
 		    	<?php } ?>
 			</div>
 		</div>
 		<?php }
-		
+		$count = sizeof($events);
 		foreach($events as $eventdata){
 			$event = $eventdata[0];
 			$xp = $eventdata[1];
@@ -582,7 +582,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 			
 			if($event["Event"] == 'QUOTECHANGED'){
 			?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -595,7 +595,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						<?php } ?>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 					    			<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div>
@@ -604,8 +604,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
 		    		      		<?php if($editAccess){ ?>
-		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>' title='Remove this XP'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
 		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
@@ -616,30 +621,12 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
 					      	</div>
 				    	</div>
-				    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 			<?php 
 			}else if($event['Event'] == 'BUCKETLIST'){
 				?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -648,7 +635,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						</div>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 									Bookmarked for later
@@ -665,7 +652,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 				$before = $tierdata[0];
 				$after = $tierdata[1];
 			?>
-				<div class="row" style='margin-bottom: 30px;'>
+				<div class="row">
 					<div class="feed-avatar-col">
 					</div>
 					<div class="feed-activity-icon-col">
@@ -674,7 +661,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 						</div>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 						    		<div class="feed-tier-changed-before tierTextColor<?php echo $before; ?>"><div class="feed-tier-changed-label">TIER</div> <?php echo $before; ?></div>
@@ -690,26 +677,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;display:none;'>
 								<div class="btn-flat waves-effect" data-userid='<?php echo  $userid; ?>'></div>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
 					      	</div>
 				    	</div>
-  			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 			<?php
@@ -728,7 +702,7 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 							<?php } ?>
 					</div>
 					<div class="myxp-content-col">
-						<div class="col s12 myxp-details-container z-depth-1">
+						<div class="col s12 myxp-details-container" <?php if($count == 1){ ?>style='border-bottom:none;'<?php } ?>>
 					    	<div class="row" style='padding: 1em 0 0;margin-bottom:0;'>
 					    		<div class="col s12 myxp-details-items">
 					    			<?php if($event["Quote"] == '' && $xp != ''){
@@ -742,8 +716,13 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 					    		</div>
 					    	</div>
 		    		      	<div class="feed-action-container" style='position: relative;float: right;'>
+								<?php if($agreedcount > 0){ ?>
+									<div class="feed-horizontal-card" style='float: right;margin-top: 2px;font-size: 0.9em;' >
+										<span class='feed-agrees-label agreeBtnCount badge-lives' style='padding: 3px 6px !important;line-height: 35px !important;height: 40px !important;'><?php echo $agreedcount; ?></span>
+									</div>
+								<?php } ?>
   		    		      		<?php if($editAccess){ ?>
-		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
+		    		      			<div class="btn-flat waves-effect removeEventBtn" data-eventid='<?php echo  $event['ID']; ?>' title='Remove this XP'><i class="mdi-content-remove-circle-outline left" style="vertical-align: sub;"></i></div>
 		    		      		<?php } ?>
 					      		<?php if($event['URL'] != '' && $_SESSION['logged-in']->_id > 0){ ?>
 									<div data-url='<?php echo $event['URL']; ?>' data-gameid='<?php echo $event['GameID']; ?>' class="btn-flat waves-effect watchBtn">WATCH</div>
@@ -752,34 +731,18 @@ function ShowMyXP($exp, $userid, $conn, $mutualconn){
 									<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event['ID']; ?>" data-agreedwith="<?php echo $userid; ?>" data-gameid="<?php echo $event['GameID']; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 								<?php } ?>
 								<div class="btn-flat waves-effect shareBtn" data-eventid='<?php echo  $event['ID']; ?>'><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
-					      	</div>
+							  </div>
 				    	</div>
-  			    	   <?php if($agreedcount > 0){ ?>
-						 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" style='left: 0;width: 100%;' >
-						 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-						     	<div class="myxp-details-agree-list">
-						    		<?php
-						    			$i = 0;
-						    			while($i < sizeof($agrees) && $i < 15){ ?>
-						    			<div class="myxp-details-agree-listitem">
-						    				<?php $useragree = GetUser($agrees[$i]); ?>
-						    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-						    			</div>
-						    		<?php	
-						    		$i++;
-						    		} ?>
-						    	</div>
-						 	</div>
-						 <?php } ?>
 					</div>
 				</div>
 				<?php
 			}
+			$count--;
 		}
 		?>
+			<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
 		</div>
-		<div class="<?php if($editAccess){ ?>myxp-vert-line<?php }else{ ?>myxp-vert-line-details<?php } ?> tier<?php echo $exp->_tier; ?>BG" style='background: -webkit-linear-gradient(top, <?php echo implode(",",$vertBG); ?>)'></div>
+		
 <?php
 }
 

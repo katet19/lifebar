@@ -81,7 +81,7 @@ function DisplayCollection($collection){
 		$coverimage = $collection->_coversmall;
 	}
 	?>
-	<div class="collection-box-container" data-id='<?php echo $collection->_id; ?>'>
+	<div class="collection-box-container" data-id='<?php echo $collection->_id; ?>' data-userid='<?php echo $collection->_owner; ?>'>
 		<div class="collection-box z-depth-2" style="margin-top: 60px;z-index:4;background: -moz-linear-gradient(top, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.6) 100%, rgba(0,0,0,0.6) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.6)), color-stop(100%,rgba(0,0,0,0.6)), color-stop(101%,rgba(0,0,0,0.6))), url(<?php echo $coverimage; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.6) 40%,rgba(0,0,0,0.6) 100%,rgba(0,0,0,0.6) 101%), url(<?php echo $coverimage; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.6) 40%,rgba(0,0,0,0.6) 100%,rgba(0,0,0,0.6) 101%), url(<?php echo $coverimage; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 			<div class="collection-name">
 				<div class="collection-total">
@@ -509,7 +509,7 @@ function DisplayCollectionManagement($gameid, $userid, $quickAdd, $gbid){
 						<div class="collection-add-game-from-popup" data-id='<?php echo $listitem['ID']; ?>'>
 							<div class="collection-add-game-from-popup-name"><?php echo $listitem['Name']; ?></div>
 							<?php if($listitem['Exists']){ ?>
-								<div class="btn-flat collection-add-game-from-popup-remove waves-effect"><i class='fa fa-check' ></i></div>
+								<div class="btn-flat collection-add-game-from-popup-remove waves-effect"><span>REMOVE</span></div>
 							<?php }else{ ?>
 								<div class="btn-flat collection-add-game-from-popup-add waves-effect">Add</div>
 							<?php } ?>

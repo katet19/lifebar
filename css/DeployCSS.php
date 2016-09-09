@@ -62,6 +62,9 @@ function DeployCSS(){
         
         $import = file_get_contents("css/import.css");
 		fwrite($deployed, $import);
+
+		$dashboard = file_get_contents("css/dashboard.css");
+		fwrite($deployed, $dashboard);
 		
         $landingwebflow = file_get_contents("css/lifebar.webflow.css");
 		fwrite($deployed, $landingwebflow);

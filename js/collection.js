@@ -119,6 +119,11 @@ function AttachCollectionDetailsEvents(fromid, from){
  			ShowActivityHome();
   	 	else if(from == "Discover")
  			ShowDiscoverHome();
+		else if(from == "GamePage"){
+			var gameid = $("#gameContentContainer").attr("data-id");
+			ShowGame(gameid, $("#discover"), true);
+		}
+
  	});
 	$(".collection-next").on("click", function(){
 		var curroffset = $(this).parent().parent().find(".collection-pagination-offset").attr("data-offset");
@@ -855,6 +860,13 @@ function AttachCollectionManagementEvents(gameid, quickAdd){
 		$(this).removeClass("collection-add-game-from-popup-add");
 		$(this).addClass("collection-add-game-from-popup-remove");
 	});
+	$(".collection-add-game-from-popup-remove").on("click", function(){
+		var collectionID = $(this).parent().attr("data-id");
+		RemoveGameFromCollectionManage(collectionID, gameid);
+		$(this).html("Add");
+		$(this).removeClass("collection-add-game-from-popup-remove");
+		$(this).addClass("collection-add-game-from-popup-add");
+	});
 }
 
 function ValidateCollectionName(collectionName, desc, gameid, quickAdd){
@@ -1061,6 +1073,24 @@ function RemoveGameFromCollection(collectionID, gameid, element){
      success: function(output) {
  			var total = parseInt($(".collection-total-counter").html());
  			$(".collection-total-counter").html(total - 1);
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function RemoveGameFromCollectionManage(collectionID, gameid){
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "RemoveGameFromCollection", gameid: gameid, collectionID: collectionID },
+     type: 'post',
+     success: function(output) {
+		 Toast("Removed game from Collection");
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {

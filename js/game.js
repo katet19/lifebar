@@ -1,6 +1,6 @@
 function ShowGame(id, currentTab, isID, browserNav, gameTab){
 	if(gameTab == "" || gameTab == undefined)
-		gameTab = "Community";
+		gameTab = "Dashboard";
 	LoadGame(id, currentTab, isID, browserNav, gameTab);
 }
 
@@ -30,17 +30,32 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		GLOBAL_HASH_REDIRECT = "NO";
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 	 		AttachGameEvents(currentTab);
-	 		AttachScrollEvents();
  	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 	 		GLOBAL_TAB_REDIRECT = "";
 	 		GAPage('Game', '/game/'+title);
 	 		
- 	 		if(gameTab == "Community"){
-	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}
+			if(gameTab == "Community")
+				SwitchGameContent($(".game-community-tab"));
+			else if(gameTab == "Report")
+				SwitchGameContent($(".game-analyze-tab"));
+			else if(gameTab == "Watch")
+				SwitchGameContent($(".game-video-tab"));
+			else if(gameTab == "MyXP")
+				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "ReflectionPoints")
+				SwitchGameContent($(".game-reflectionpoints-tab"));
+			else if(gameTab == "SimilarGames")
+				SwitchGameContent($(".game-similargames-tab"));
+			else if(gameTab == "Collections")
+				SwitchGameContent($(".game-collections-tab"));
+			else if (gameTab.indexOf("User") >= 0){
+				 var userdata = gameTab.split('/');
+				 var userid = userdata[1];
+				 var username = userdata[2];
+	 			DisplayUserDetails(userid, username);
+			 }
+
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -74,20 +89,32 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		
 	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
-		 	AttachScrollEvents();
   	 		if(browserNav)
  	 			GLOBAL_HASH_REDIRECT = "";
 		 	GLOBAL_TAB_REDIRECT = "";
 		 	GAPage('Game', '/game/'+title);
 		 	
-  	 		if(gameTab == "Community"){
+			if(gameTab == "Community")
+				SwitchGameContent($(".game-community-tab"));
+			else if(gameTab == "Report")
+				SwitchGameContent($(".game-analyze-tab"));
+			else if(gameTab == "Watch")
+				SwitchGameContent($(".game-video-tab"));
+			else if(gameTab == "MyXP")
+				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "ReflectionPoints")
+				SwitchGameContent($(".game-reflectionpoints-tab"));
+			else if(gameTab == "SimilarGames")
+				SwitchGameContent($(".game-similargames-tab"));
+			else if(gameTab == "Collections")
+				SwitchGameContent($(".game-collections-tab"));
+	 		else if (gameTab.indexOf("User") >= 0){
+				 var userdata = gameTab.split('/');
+				 var userid = userdata[1];
+				 var username = userdata[2];
+	 			DisplayUserDetails(userid, username);
+			 }
 	 		
-	 		}else if(gameTab == "Analyze"){
-	 			$("#analyze-tab-nav").click();
-	 		}else if (gameTab.indexOf("User") >= 0){
-	 			$("#userxp-tab-nav").click();
-	 			DisplayExpSpectrum($("#game-userxp-tab"));
-	 		}
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -119,15 +146,29 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
  		var title = $("#gameContentContainer").attr("data-title");
  		GLOBAL_HASH_REDIRECT = "NO";
  		
-   		if(gameTab == "Community"){
- 		
- 		}else if(gameTab == "Analyze"){
- 			$("#analyze-tab-nav").click();
- 		}
+   		if(gameTab == "Community")
+			SwitchGameContent($(".game-community-tab"));
+ 		else if(gameTab == "Report")
+ 			SwitchGameContent($(".game-analyze-tab"));
+ 		else if(gameTab == "Watch")
+		 	SwitchGameContent($(".game-video-tab"));
+		else if(gameTab == "MyXP")
+			SwitchGameContent($(".game-myxp-tab"));
+		else if(gameTab == "ReflectionPoints")
+			SwitchGameContent($(".game-reflectionpoints-tab"));
+		else if(gameTab == "SimilarGames")
+			SwitchGameContent($(".game-similargames-tab"));
+		else if(gameTab == "Collections")
+			SwitchGameContent($(".game-collections-tab"));
+		else if (gameTab.indexOf("User") >= 0){
+			var userdata = gameTab.split('/');
+			var userid = userdata[1];
+			var username = userdata[2];
+			DisplayUserDetails(userid, username);
+		}
  		
  		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
  		AttachGameEvents(currentTab);
- 		AttachScrollEvents();
  		if(type == "played"){
  			AddPlayedFabEvent();
  		}else{
@@ -154,8 +195,25 @@ function AttachGameEvents(currentTab){
 		$("#gameInnerContainer .backContainer").show();
 		$("#gameInnerContainer .backContainer").css({"top":"7px", "position":"absolute"});
 	}
+
+	if($(window).width() < 992){
+		$(".GameTitle").on("click", function(e){
+			e.stopPropagation();
+			DisplayGameNav();
+		});
+	}
+
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		ShowGame($(this).parent().attr("data-gbid"), ''); 
+	});
+
+	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
 	
-	$('.gameNav').tabs();
+	$("#game-slide-out li").on("click", function(){
+		SwitchGameContent($(this));
+	});
+	$(".game-tab-first").click();
 	var iconOnHover="";
 	if($(".fixed-action-btn .game-add-played-btn").length > 0)
 		iconOnHover = "mdi-hardware-gamepad";
@@ -182,7 +240,7 @@ function AttachGameEvents(currentTab){
   		DisplayUserDetails(userid, username);
   	});
 	
- 	$(".backButton").on('click', function(){
+ 	$(".backButton, .game-back-tab").on('click', function(){
 		BackOutOfGame(currentTab);
  	});
  	
@@ -202,25 +260,144 @@ function AttachGameEvents(currentTab){
 		var refptID = $(this).attr("data-id");
 		EditReflectionPopUp(refptID);
 	});
-	
-	$(".preview-ref-pt").on("click", function(){
-		var refptID = $(this).attr("data-id");
-		PreviewReflectionPopUp(refptID);
+	$(".myxp-save-journal").on("click",function(){
+		SaveJournalEntry($(this).attr("data-gameid"));
 	});
- 	
+	$(".myxp-journal-edit-btn").on("click", function(){
+		ShowJournalEdit();
+	});
+	$(".myxp-cancel-journal").on("click", function(){
+		HideJournalEdit();
+	});
+	$(".collection-box-container").on("click", function(e){
+		e.stopPropagation();
+		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
+	});
+	$(".dashboard-collection-view").on("click", function(e){
+		SwitchGameContent($(".game-collections-tab"));
+	});
+	$(".dashboard-similar-view").on("click", function(e){
+		SwitchGameContent($(".game-similargames-tab"));
+	});
+	$(".dashboard-community-view").on("click", function(e){
+		SwitchGameContent($(".game-community-tab"));
+	});
+	$(".game-ref-pt-btn").on("click", function(e){
+		SwitchGameContent($(".game-reflectionpoints-tab"));
+	});
+	$(".knowledge-container").on("click", function(){
+		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
+	 });
+  	$(".badge-small").on("click", function(){
+ 		var id = $(this).attr("data-objectid");
+ 		var progid = $(this).attr("data-progid");
+ 		DisplayGearDetails($(".userContainer").attr("data-id"), id, progid);
+ 	});
+	$(".game-unwatched-btn").on("click", function(){
+		SwitchGameContent($(".game-video-tab"));
+		$(".video-is-watched").hide();
+		$(".video-show-watched").show();
+	});
+	$(".video-show-watched").on('click', function(){
+		$(this).hide();
+		$(".video-is-watched").show(250);
+	});
+	AttachEventsForReflectionPoints();
+	$("select").material_select();
+	DisplayFormResultsGraph();
  	AttachFloatingIconEvent(iconOnHover);
 	AttachFloatingIconButtonEvents();
 	AttachMyXPEvents();
 	AttachCriticBookmark();
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
+	AttachWatchFromXP();
+}
+
+function SwitchGameContent(elem){
+	if($("#game-slide-out li.active").attr("data-tab") != elem.attr("data-tab")){
+		$("#game-slide-out li.active").removeClass("active");
+		elem.addClass("active");
+		$(".game-tab-active").removeClass("game-tab-active");
+		$("#"+elem.attr("data-tab")).addClass("game-tab-active");
+		$(".video-is-watched").show();
+		$(".video-show-watched").hide();
+		if((elem.attr("data-tab") == "game-community-tab" || elem.attr("data-tab") == "game-community-others-tab") && $("#game-community-others-tab .game-community-box").length > 0)
+		{
+			$(".game-longform-tab").hide(100);
+			$(".game-community-others-tab").show(100);
+		}
+		else if(elem.attr("data-tab") == "game-longform-tab" || elem.attr("data-tab") == "game-myxp-tab")
+		{
+			$(".game-community-others-tab").hide(100);
+			$(".game-longform-tab").show(100);
+			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
+		}
+		else
+		{
+			$(".game-longform-tab").hide(100);
+			$(".game-community-others-tab").hide(100);
+		}
+
+		var gameid = $("#gameContentContainer").attr("data-id");
+		var title = $("#gameContentContainer").attr("data-title");
+		location.hash = "game/"+gameid+"/"+title+"/"+elem.attr("data-nav");
+	}
+}
+
+function DisplayGameNav(){
+	$("#game-slide-out").show();
+	$("#game-slide-out").css({"left":"0"});
+	$('html').click(function(){
+		if($("#game-slide-out").is(":visible")){
+			$("#game-slide-out").css({"left":"-100%"});
+			setTimeout(function(){ $("#game-slide-out").hide() }, 300);
+		}
+	});
+}
+
+function SaveJournalEntry(gameid){
+	var journal = tinyMCE.activeEditor.getContent({format : 'html'});
+	var subject = $("#myxp-journal-subject").val();
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "SaveJournalEntry", journal: journal, gameid: gameid, subject: subject },
+     type: 'post',
+     success: function(output) {
+		 Toast("Saved Journal Entry");
+		 $(".journal-body").html(journal);
+		 if(subject != '')
+		 	$(".journal-subject-header").html(subject);
+		 HideJournalEdit();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function ShowJournalEdit(){
+	$("#myGameJournalDisplay").hide();
+	$(".myxp-journal-edit-btn").hide();
+	$(".edit-game-journal-container").show();
+}
+
+function HideJournalEdit(){
+	$("#myGameJournalDisplay").show();
+	$(".myxp-journal-edit-btn").show();
+	$(".edit-game-journal-container").hide();
 }
 
 function DisplayUserDetails(userid, username){
-	$("#userxp-tab-nav").html(username);
- 	$("#userxp-tab-nav").parent().show(250);
- 	$("#game-userxp-tab").css({"display":"block"});
-	$("#userxp-tab-nav").click();
+	$(".game-user-tab span").html(username);
+	$(".game-user-tab").show();
+	$(".game-user-tab").attr("data-nav", "User/"+userid+"/"+username);
+	SwitchGameContent($(".game-user-tab"));
 	ShowLoader($("#game-userxp-tab"), 'big', "<br><br><br>");
 	var gameid = $("#gameContentContainer").attr("data-id");
 	$.ajax({ url: '../php/webService.php',
@@ -234,12 +411,16 @@ function DisplayUserDetails(userid, username){
 			var gameid = $("#gameContentContainer").attr("data-id");
 			ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
 		});
-		var box = $("#game-userxp-tab").find(".myxp-details-container").last().parent();
-		$(".myxp-vert-line-details").css({"bottom": (box.height() - 20)+"px"});
+		var box = $("#game-userxp-tab").find(".myxp-details-container").last();
+		$(".myxp-vert-line-details").css({"bottom": (box.height() - 40)+"px"});
 	 	$(".myxp-profile-tier-quote").on('click', function(){
 			ShowUserProfile($(this).attr("data-userid"));
 		});
 		AttachAgreesFromGame();
+		$(".shareBtn").on('click', function(){
+			ShowShareModal("event", $(this).attr("data-eventid"));
+		});
+		AttachWatchFromXP();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -250,6 +431,34 @@ function DisplayUserDetails(userid, username){
     	},
     	timeout:45000
 	});
+}
+
+function AttachWatchFromXP(){
+	$(".watchBtn").on("click", function(e){
+ 		e.stopPropagation();
+		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+  		var gameid = $(this).attr("data-gameid");
+  		var url = $(this).attr("data-url");
+ 		$.ajax({ url: '../php/webService.php',
+	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
+	     type: 'post',
+	     success: function(output) {
+ 			$("#BattleProgess").html(output); 
+ 			$(".myxp-video-goto-full").hide();
+ 			AttachActivityVideoEvents();
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+
+	 });
 }
 
 function AttachAgreesFromGame(){
@@ -688,17 +897,20 @@ function AttachFloatingIconButtonEvents(){
 }
 
 function AttachMyXPEvents(){
- 	$(".game-add-watched-btn-fast").on('click touchend', function(){
+ 	$(".game-add-watched-btn-fast").on('click', function(){
 		AddWatchedFabEvent('','','','','');
 	});
-	$(".game-add-played-btn-fast").on('click touchend', function(){
-		AddPlayedFabEvent();		
+	$(".game-add-played-btn-fast").on('click', function(){
+		if($("#loginButton").length > 0)
+			$("#loginButton").click();
+		else
+			AddPlayedFabEvent();		
 	});
 	$(".userGameTab").on("click", function(){
 		setTimeout(function(){
   			var box = $("#game-myxp-tab").find(".myxp-details-container").last().parent();
 			if(box.innerHeight() > 0)
-				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 10)+"px"});
+				$(".myxp-vert-line").css({"bottom": (box.innerHeight() + 40)+"px"});
 		}
 		,100);
 	});
@@ -1068,17 +1280,96 @@ function EditReflectionPopUp(refptid){
 	});
 }
 
-function PreviewReflectionPopUp(refptid){
+function AttachEventsForReflectionPoints(){	
+	$(".daily-pref-image,.submit-daily-response, .share-daily-response").unbind();
+ 	$(".daily-pref-image").on("click", function(){
+		 var parentElem = $(this).parent().parent().parent();
+ 		if($(this).hasClass("daily-pref-image-active")){
+ 			$(this).removeClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"0"});
+ 		}else{
+ 			if($(this).hasClass("singlegrid")){
+ 				var current = parentElem.find(".daily-pref-image-active");
+ 				current.removeClass("daily-pref-image-active");
+ 				current.find(".daily-checkmark").css({"opacity":"0"});
+ 			}
+ 			$(this).addClass("daily-pref-image-active");
+ 			$(this).find(".daily-checkmark").css({"opacity":"1"});
+ 		}
+ 	});
+ 	$(".share-refpt-response").on("click", function(){
+		ShowShareModal("reflectionpoint", $(this).attr("data-id"));
+	});
+	$(".submit-refpt-response").on('click', function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var parentElem = $(this).parent().parent().parent().parent();
+			parentElem.find(".refpt-answers-results-container").show();
+			SaveReflectionPointSubmission(parentElem);
+		}
+	});
+}
+
+function SaveReflectionPointSubmission(elem){
+	var formType = elem.find(".refpt-answers-container").attr("data-type");
+	var formitemid = 0;
+	var formid = 0;
+	var objectid = 0;
+	var objectType = '';
+	var gameid = 0;
+	if(formType == 'grid-single'){
+		formitemid = elem.find(".daily-pref-image-active").parent().parent().attr("data-formitemid");
+		formid = elem.find(".daily-pref-image-active").parent().parent().attr("data-formid");
+		objectid = elem.find(".daily-pref-image-active").parent().parent().attr("data-objid");
+		objectType = elem.find(".daily-pref-image-active").parent().parent().attr("data-objtype");
+		gameid = elem.find(".daily-pref-image-active").parent().parent().attr("data-gameid");
+	}else if(formType == 'radio'){
+		formitemid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formitemid");
+		formid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-formid");
+		objectid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objid");
+		objectType = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-objtype");
+		gameid = elem.find("input[type=radio][name=dailyresposne]:checked").parent().attr("data-gameid");
+	}else if(formType == 'dropdown'){
+		formitemid = elem.find("#daily-response-dropdown").val();
+		formid = elem.find("#daily-response-dropdown").parent().parent().attr("data-formid");
+		objectid = elem.find("#daily-response-dropdown").parent().parent().attr("data-objid");
+		objectType = elem.find("#daily-response-dropdown").parent().parent().attr("data-objtype");
+		gameid = elem.find("#daily-response-dropdown").parent().parent().attr("data-gameid");
+	}else if(formType == 'grid-multi'){
+		formitemid = '';
+		elem.find(".daily-pref-image-active").each(function(){
+			formitemid = formitemid + $(this).parent().parent().attr("data-formitemid") + "||";
+			if(formid == 0){
+				formid = $(this).parent().parent().attr("data-formid");
+				objectid = $(this).parent().parent().attr("data-objid");
+				objectType = $(this).parent().parent().attr("data-objtype");
+				gameid = $(this).parent().parent().attr("data-gameid");
+			}
+		});	
+	}else if(formType == 'checkbox'){
+		formitemid = '';
+		elem.find(".response-checkbox").each(function(){
+			if(this.checked){
+				formitemid = formitemid + $(this).parent().attr("data-formitemid") + "||";
+				if(formid == 0){
+					formid = $(this).parent().attr("data-formid");
+					objectid = $(this).parent().attr("data-objid");
+					objectType = $(this).parent().attr("data-objtype");
+					gameid = $(this).parent().attr("data-gameid");
+				}
+			}
+		});		
+	}
+	
 	$.ajax({ url: '../php/webService.php',
-     data: {action: "PreviewRefPt", refptid: refptid },
-     type: 'post',
-     success: function(output) {
- 		ShowBattleProgress(output); 
- 		$("select").material_select();
-	 	$(".daily-header-question").on("click", function(){
-	 		DisplayQuestionsForDaily();	
-	 	});
-     },
+         data: {action: "SubmitDailyChoice", formid: formid, formitemid: formitemid, gameid: gameid, objectid: objectid, objectType: objectType, gamepage: "true" },
+         type: 'post',
+         success: function(output) {
+         	elem.find(".refpt-answers-results-container").html(output);
+         	DisplayFormResultsGraph();
+         	Toast("Saved your Reflection Point!");
+     	},
         error: function(x, t, m) {
 	        if(t==="timeout") {
 	            ToastError("Server Timeout");
@@ -1162,32 +1453,27 @@ function DisplayRelationalGraphs(){
 					    {
 					        value: parseInt($(this).attr("data-t1")),
 					        color:"#0A67A3",
-					        highlight: "#1398f0",
-					        label: "Tier 1"
+					        highlight: "#0A67A3"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t2")),
 					        color:"#00B25C",
-					        highlight: "#00d771",
-					        label: "Tier 2"
+					        highlight: "#00B25C"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t3")),
 					        color:"#FF8E00",
-					        highlight: "#ffac46",
-					        label: "Tier 3"
+					        highlight: "#FF8E00"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t4")),
 					        color:"#FF4100",
-					        highlight: "#ff632f",
-					        label: "Tier 4"
+					        highlight: "#FF4100"
 					    },
 					     {
 					        value: parseInt($(this).attr("data-t5")),
 					        color:"#DB0058",
-					        highlight: "#ff247b",
-					        label: "Tier 5"
+					        highlight: "#DB0058"
 					    }
 		    ];
 	    if($(window).width() >=600){
@@ -1197,7 +1483,7 @@ function DisplayRelationalGraphs(){
 	    	$(this).attr('height', 125);
 	    	$(this).attr('width', 125);
 	    }
-      	var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: true });
+      	var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: false });
 		});
 	}
 }
@@ -1266,7 +1552,9 @@ function DisplayExpSpectrum(elem){
 		        }
 		    ]
 		};
-		if($("#game-community-tab").is(":visible"))
+		if($("#game-dashboard-tab").is(":visible"))
+			$(this).attr('width', $("#dashboard-game-width-box").width() - 40);
+		else if($("#game-community-tab").is(":visible"))
 			$(this).attr('width', $("#game-width-box").width() - 40);
 		else if($("#game-myxp-tab").is(":visible"))
 			$(this).attr('width', $("#myxp-game-width-box").width() - 40);
@@ -1343,7 +1631,9 @@ function DisplayExpSpectrum(elem){
 		        }
 		    ]
 		};
-		if($("#game-community-tab").is(":visible"))
+		if($("#game-dashboard-tab").is(":visible"))
+			$(this).attr('width', $("#dashboard-game-width-box").width() - 40);
+		else if($("#game-community-tab").is(":visible"))
 			$(this).attr('width', $("#game-width-box").width() - 40);
 		else if($("#game-myxp-tab").is(":visible"))
 			$(this).attr('width', $("#myxp-game-width-box").width() - 40);

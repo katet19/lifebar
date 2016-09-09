@@ -85,15 +85,32 @@
     color: rgba(0,0,0,0.5);
 }
 
-#admin-review-iframe{
+
+.admin-schedule-ref-date{
+	width:200px;
+	display:inline-block;
 }
 
-@media only screen and (max-width : 992px) {
-	.admin-review-list-pending{
-	}
-	
-	.admin-review-list-frame{
-	}
+.admin-schedule-ref-question{
+	display:inline-block;
+	font-size: 1.25em;
+}
+
+.admin-schedule-ref-row{
+    margin: 0 25px 20px;
+    border-bottom: 1px solid gray;
+    text-align: left;
+}
+
+.admin-schedule-insert-before, .admin-schedule-insert-after, .admin-schedule-insert-remove, .ref-pt-search-select{
+	font-weight:500; 
+	opacity:0.7;
+	padding: 0 1rem;
+	float: right;
+}
+
+.admin-schedule-insert-before:hover, .admin-schedule-insert-after:hover, .admin-schedule-insert-remove:hover, .ref-pt-search-select:hover{
+	opacity:1;
 }
 
 
