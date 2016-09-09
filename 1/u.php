@@ -32,6 +32,8 @@ function makeOpenGraph($type, $id) {
 		$og = ConvertEventtoOG(GetEvent($id));
 	}else if($type == 'd'){
 		$og = ConvertDailytoOG();
+	}else if($type == 'r'){
+		$og = ConvertRefPttoOG($id);
 	}
     ?>
     <!DOCTYPE html>
@@ -177,16 +179,7 @@ function ConvertDailytoOG(){
 			$daily = $row;
 		}
 	}
-	
-	if(sizeof($daily) == 0 ){
-		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' and `Daily` = '0000-00-00' order by Rand() limit 0,1";
-		if ($result = $mysqli->query($query)) {
-			while($row = mysqli_fetch_array($result)){
-				$daily = $row;
-			}
-		}		
-	}
-	
+		
 	Close($mysqli, $result);
 	
 	$game = GetGame($daily['ObjectID']);
@@ -195,6 +188,28 @@ function ConvertDailytoOG(){
 	$og["DESC"] = $daily['Header'];
 	$og["IMAGE"] = $game->_imagesmall; ; 
 	$og["LINK"] = "http://lifebar.io/#discover";
+	
+	return $og;
+}
+
+function ConvertRefPttoOG($refptid){
+	$mysqli = Connect();
+	$date = Date('Y-m-d');
+	$query = "SELECT * FROM  `Forms` WHERE `ID` =  '".$refptid."'";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$refpt = $row;
+		}
+	}
+		
+	Close($mysqli, $result);
+	
+	$game = GetGame($refpt['ObjectID']);
+	
+	$og["TITLE"] = $game->_title." | Reflection Point";
+	$og["DESC"] = $refpt['Header'];
+	$og["IMAGE"] = $game->_imagesmall; ; 
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/ReflectionPoints";
 	
 	return $og;
 }

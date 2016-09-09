@@ -236,6 +236,7 @@ function ToggleQuarter(year){
 }
 
 function AddWatchedFabEvent(url, source, length, tier, summary){
+	SwitchGameContent($(".game-myxp-tab"));
 	HideFab();
 	var gameid = $("#gameContentContainer").attr("data-id");
 	ShowLoader($("#game-myxp-tab"), 'big', "<br><br><br>");
@@ -301,6 +302,7 @@ function AddWatchedFabEvent(url, source, length, tier, summary){
 }
 
 function AddPlayedFabEvent(){
+	SwitchGameContent($(".game-myxp-tab"));
 	HideFab();
 	if($(".userGameTab").length == 0){
 		$(".userAnalyzeTab").after("<li class='tab col s3 userGameTab' style='background-color:transparent;'><a href='#game-myxp-tab' class='waves-effect waves-light'>My XP</a></li>");
@@ -421,6 +423,8 @@ function CancelXPEntry(){
          		$(".criticGameTab a").trigger('click');
          		ShowFab();
          	}
+			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
+			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
          	AttachMyXPEvents();
          	AttachEditEvents();
          	window.scrollTo(0, 0);

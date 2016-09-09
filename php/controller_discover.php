@@ -41,16 +41,7 @@ function BuildDiscoverFlow($userid){
 			$dAtts['GAMES'] = $prefList['Games'];
 			$dItems[] = $dAtts;	
 	}
-	
-	//Get Suggester Personalities 
-	$suggestedPersonalities = GetSuggestedPersonalities($mysqli, $userid); 
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'USERLIST';
-		$dAtts['CATEGORY'] = "Suggested Personalities";
-		$dAtts['CATEGORYDESC'] = "Follow the gaming industries brightest critics & influencers";
-		$dAtts['USERS'] = $suggestedPersonalities;
-		$dItems[] = $dAtts;
-		
+			
 	//Get Watched
 	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
 		unset($dAtts);
@@ -93,8 +84,26 @@ function BuildDiscoverFlow($userid){
 		$dAtts['GAMES'] = $prefList['Games'];
 		$dItems[] = $dAtts;	
 	}
+
+	//Get Suggested Personalities 
+	$suggestedPersonalities = GetSuggestedPersonalities($mysqli, $userid); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'USERLIST';
+		$dAtts['CATEGORY'] = "Suggested Personalities";
+		$dAtts['CATEGORYDESC'] = "Follow the gaming industries brightest critics & influencers";
+		$dAtts['USERS'] = $suggestedPersonalities;
+		$dItems[] = $dAtts;	
 	
-	//Get Users that aren't mutual followers (ALWAYS SHOWS UP)
+	//Get Suggested Collection
+	$suggcoll = GetSuggestedCollection($mysqli, $userid);
+	if($suggcoll != ''){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'COLLECTION';
+		$dAtts['COLLECTION'] = $suggcoll;
+		$dItems[] = $dAtts;
+	}
+
+	//Get Users that aren't mutual followers
 	$notmutual = GetNotMutualFollowers($mysqli, $userid);
 	if(sizeof($notmutual) > 0){
 		unset($dAtts);
@@ -102,15 +111,6 @@ function BuildDiscoverFlow($userid){
 		$dAtts['CATEGORY'] = "Members that like to know what you are up to";
 		$dAtts['CATEGORYDESC'] = "Check out members that are following you";
 		$dAtts['USERS'] = $notmutual;
-		$dItems[] = $dAtts;
-	}
-	
-	
-	$suggcoll = GetSuggestedCollection($mysqli, $userid);
-	if($suggcoll != ''){
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'COLLECTION';
-		$dAtts['COLLECTION'] = $suggcoll;
 		$dItems[] = $dAtts;
 	}
 	
@@ -123,6 +123,17 @@ function BuildDiscoverFlow($userid){
 		$dAtts['GAMES'] = $trendingGames;
 		$dAtts['TYPE'] = "";
 		$dItems[] = $dAtts;
+
+	//Get New Members
+	if($_SESSION['logged-in']->_security == "Admin"){
+		$newMembers = GetNewUsersCategory(15);
+			unset($dAtts);
+			$dAtts['DTYPE'] = 'USERLIST';
+			$dAtts['CATEGORY'] = "New Members";
+			$dAtts['CATEGORYDESC'] = "Members that have joined recently";
+			$dAtts['USERS'] = $newMembers;
+			$dItems[] = $dAtts;
+	}
 	
 	Close($mysqli, $result);
 	

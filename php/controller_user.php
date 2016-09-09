@@ -1005,6 +1005,15 @@ function GetShareLink($userid, $type, $otherid){
 			$share = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario!");
 			$shareEmail = htmlspecialchars("Check out ".$username."%27s experience with ".str_replace("&","%26",$game->_title)." @Lifebario! ".$url);
 		}
+	}else if($type == "reflectionpoint"){
+		$url = "http://lifebar.io/1/u.php?i=r".$otherid;
+		$mysqli = Connect();
+		$refpt = GetReflectionPoint($otherid);
+		$game = GetGame($refpt['ObjectID']);
+		Close($mysqli, $result);
+		$header = "Select how you would like to share this Reflection Point";
+		$share = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!");
+		$shareEmail = htmlspecialchars(str_replace("&","%26",$daily['Header'])." (".$game->_title.") @Lifebario!".$url);	
 	}
 	
 	$shareData[0] = $username;

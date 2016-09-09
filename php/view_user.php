@@ -96,7 +96,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
   </div>
 <?php }
 
-function DisplayCriticQuoteCard($exp){ 
+function DisplayCriticQuoteCard($exp, $pos){ 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
@@ -109,7 +109,7 @@ function DisplayCriticQuoteCard($exp){
 	else
 		$hiddenusername = $user->_username;
 ?>
-   <div class="col s12 critic-container">
+   <div class="col s12 critic-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -215,7 +215,7 @@ function DisplayCriticQuoteCard($exp){
   	</div>
 <?php }
 
-function DisplayUserQuoteCard($exp){
+function DisplayUserQuoteCard($exp, $pos){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = $exp->_username;
@@ -228,7 +228,7 @@ function DisplayUserQuoteCard($exp){
 	else
 		$hiddenusername = $user->_username;
 ?>
-   <div class="col s12 user-container">
+   <div class="col s12 user-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
    			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
