@@ -100,7 +100,7 @@ function ConvertGamePlusUsertoOG($user, $game){
 		
 	$og['TITLE'] = $og["TITLE"]." | ".$game->_title;
 	$og["IMAGE"] = $game->_imagesmall; 
-	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/";
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/".$og["TITLE"];
 	
 	return $og;
 }
