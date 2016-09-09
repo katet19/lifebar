@@ -1298,10 +1298,7 @@ function AttachEventsForReflectionPoints(){
  		}
  	});
  	$(".share-refpt-response").on("click", function(){
-		//
-		//Need to change this
-		//
-		ShowShareModal("daily", '');
+		ShowShareModal("reflectionpoint", $(this).attr("data-id"));
 	});
 	$(".submit-refpt-response").on('click', function(){
 		if($("#loginButton").length > 0){
