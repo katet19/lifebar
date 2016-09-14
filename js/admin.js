@@ -508,6 +508,14 @@ function DisplayRefPtPicker(searchstring, isNew, position, elem){
 				DisplayRefPtPicker($(this).val(), isNew, position, elem);
 			} 
 		});
+		$(".ref-pt-search-select").on("click", function(){
+			var thisid = $(this).attr('data-id');
+			var lastdate = $(".admin-schedule-ref-date-input").last().val();
+			var inserted = "<div class='row admin-schedule-ref-row' data-id='"+thisid+"'>";
+			inserted = inserted + "<div class='admin-schedule-ref-date'><input class='admin-schedule-ref-date-input' type='text' style='width:100px;' value='"+lastdate+"'><span>NEW</span></div>";
+			inserted = inserted + "<div class='admin-schedule-ref-question'><span>"+$(this).parent().find("span").text()+"</span></div></div>";
+			$(".admin-schedule-ref-row").last().after(inserted);
+		});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
