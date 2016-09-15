@@ -201,9 +201,7 @@ function DisplayCriticQuoteCard($exp, $pos){
 			</div>
 		</div>
 		<div class="critic-action-container col s12">
-			<?php if($user->_security == 'Authenticated'){ ?>
-				<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $user->_id; ?>" data-uname="<?php echo $hiddenusername; ?>">DETAILS</div>
-			<?php } ?>
+			<div class="btn-flat waves-effect detailsBtn" data-uid="<?php echo $user->_id; ?>" data-uname="<?php echo $hiddenusername; ?>">DETAILS</div>
 			<?php if($exp->_link != ''){ ?>
 				<a href='<?php echo $exp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 			<?php } ?>

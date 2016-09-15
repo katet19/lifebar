@@ -4,6 +4,7 @@ require_once 'controller_game.php';
 
 function PrepareForNewReleases($today, $next){
 	$request = "http://www.giantbomb.com/api/releases/?api_key=44af5d519adc1c95be92deec4169db0c57116e03&format=json&filter=region:1,release_date:".$today."|".$next."&sort=release_date:asc";
+	echo "REQUESTING URL: ".$request."<BR><BR>";
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -20,10 +21,18 @@ function PrepareForNewReleases($today, $next){
     		die('error occured: ' . $decoded->response->errormessage);
 	}
 	$gameresults = array();
-	foreach($decoded->results as $game){
-		 echo "Updating Game: ".$game->id."<br>";
-		 FullUpdateViaGameID($game->id, '');
-		 sleep(1);
+	$lastGameID = array();
+	foreach($decoded->results as $releaseInfo){
+		if(!in_array($releaseInfo->game->id, $lastGameID)){
+			$lastGameID[] = $releaseInfo->game->id;
+			$testGame = GetGameByGBID($releaseInfo->game->id);
+			if($testGame == '')
+			 	RequestGameFromGiantBombByID($releaseInfo->game->id);
+		 	else
+		 		FullUpdateViaGameID($releaseInfo->game->id, '');
+		 		
+			 sleep(0.5);
+		}
 	}
 }
 
@@ -659,6 +668,7 @@ function RequestGameFromGiantBombByID($gameid){
 	}
 	
 	if($game->id > 0){
+		echo $game->name." was added.<BR>";
 		if($alreadyout){
 			$addedgame = InsertGame($game->id, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release, mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $game->expected_release_year, mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games),$game->image->super_url,$game->image->small_url);
 		}else{
@@ -804,7 +814,6 @@ function FullUpdateViaGameID($gbid, $reviewed){
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
     		$info = curl_getinfo($curl);
-    		echo $info;
     		curl_close($curl);
    		die('error occured during curl exec. Additioanl info: ' . var_export($info));
 	}
@@ -885,6 +894,7 @@ function FullUpdateViaGameID($gbid, $reviewed){
 	}
 	
 	
+
 	$mysqli = Connect();
 	//New system
 	if($game->platforms != ""){
@@ -956,21 +966,20 @@ function FullUpdateViaGameID($gbid, $reviewed){
 			SavePerson($person->name, $person->id, -1, $gbid, $mysqli);
 		}
 	}
+
+	if($alreadyout){
+		UpdateGame($gbid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release, mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $game->expected_release_year,mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
+	}else{
+		UpdateGame($gbid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release[0], mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $dates[0],mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
+	}
+
 	
-	if($game->name != ''){
-		if($alreadyout){
-			UpdateGame($gbid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release, mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $game->expected_release_year,mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
-		}else{
-			UpdateGame($gbid, mysqli_real_escape_string($mysqli, $game->name), $gamerating, $release[0], mysqli_real_escape_string($mysqli, $genres), $gameplatforms, $dates[0],mysqli_real_escape_string($mysqli, $publishers), mysqli_real_escape_string($mysqli, $developers), mysqli_real_escape_string($mysqli, $aliases), mysqli_real_escape_string($mysqli, $themes), mysqli_real_escape_string($mysqli, $franchises), mysqli_real_escape_string($mysqli, $similar_games));
-		}
-	
-		if($reviewed == "Sorta"){
-			AddSmallImage($gbid);
-			//AddImage($gameid);	
-			echo $game->name." was updated and image was collected from GB<br>";
-		}else{
-			echo $game->name." was updated<br>";
-		}
+	if($reviewed == "Sorta"){
+		AddSmallImage($gbid);
+		//AddImage($gameid);	
+		echo $game->name." was updated and image was collected from GB<br>";
+	}else{
+		echo $game->name." was updated<br>";
 	}
 }
 
