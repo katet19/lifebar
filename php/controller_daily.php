@@ -240,7 +240,7 @@ function SaveRefPtSchedule($schedule){
 function GetRefPtSearch($new, $search){
 	$mysqli = Connect();
 	$refpts = array();	
-	$query = "select * from `Forms` f, `Games` g where `FormType` = 'Daily' and f.`ObjectID` =g.`ID`";
+	$query = "select f.*, g.`Title` from `Forms` f, `Games` g where `FormType` = 'Daily' and f.`ObjectID` =g.`ID`";
 	if($new == "true" && $search != '')
 		$query = $query . " and `Daily` = '0000-00-00' and `Header` like '%".$search."%'";
 	else if($new == "false" && $search != '')
