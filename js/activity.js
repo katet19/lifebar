@@ -111,6 +111,9 @@ function AttachActivityEvents(){
 		});
 
 	 });
+	$(".shareBtn").on('click', function(){
+		ShowShareModal("event", $(this).attr("data-eventid"));
+	});
 	 AttachAgreesFromActivity();
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
