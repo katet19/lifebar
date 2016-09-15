@@ -577,6 +577,12 @@
 		margin-right:auto !important;
 		margin-top:15px;
 	}
+	.social-login-header{
+		display:none;
+	}
+	.login-modal-divider{
+		margin-top:175px !important;
+	}
 	.user-follow-card-title{
 	    right: auto !important;
 	    width: calc(100% - 100px)!important;
@@ -584,10 +590,10 @@
 	}
 	.social-login-btn{
 		font-size: 20px;
-	    border-radius: 50%;
-	    height: 30px;
-	    line-height: 30px;
-	    width: 30px;
+		border-radius: 50%;
+		height: 60px;
+		line-height: 60px;
+		width: 60px;
 	}
 	.login-modal-divider{
 		border:none;
