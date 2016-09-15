@@ -424,6 +424,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 				<?php } ?>
 				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+					<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
 				<?php } ?>
 	      </div>
 	    </div>
@@ -747,6 +748,7 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $ag
       <div class="feed-action-container">
 			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+				<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="mdi-social-share left" style="vertical-align: sub;"></i></div>
 			<?php } ?>
        </div>
     </div>
