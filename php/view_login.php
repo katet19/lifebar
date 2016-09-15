@@ -4,8 +4,8 @@ function DisplayLogin(){
     	GoogleOAuth();
     	FacebookOAuth();
 	?>
-  <div id="loginModal" class="modal" style="background-color:white;">
-    <div class="row" style="margin-top:40px">
+  <div id="loginModal" class="modal" style="background-color:white;overflow-x: hidden;">
+    <div class="row loginModalPadding">
 	  <div class="col s12 m6 login-modal-divider">
 	    <div class="row">
 	      <div class="input-field col s11">

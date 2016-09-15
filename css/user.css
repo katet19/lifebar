@@ -560,6 +560,9 @@
 	text-align: left !important; 
 	cursor: default !important;
 }
+.loginModalPadding{
+	margin-top:40px;
+}
 
 @media only screen and (max-width : 992px) {
 	.critic-quote{
@@ -570,6 +573,9 @@
 	}
 }
 @media only screen and (max-width : 600px) {
+	.loginModalPadding{
+		margin-top:0px;
+	}
 	.user-follow-card-image{
 		width:90px;
 		border-radius:50%;
@@ -580,11 +586,10 @@
 	.social-login-header{
 		display:none;
 	}
-	.social-login-container{
-		position:absolute;
-	}
 	.login-modal-divider{
-		margin-top:175px !important;
+		border-right: none;
+    	border-bottom: 1px solid rgba(0,0,0,0.2);
+    	margin-bottom: 20px;
 	}
 	.user-follow-card-title{
 	    right: auto !important;
@@ -598,8 +603,8 @@
 		line-height: 60px;
 		width: 60px;
 	}
-	.login-modal-divider{
-		border:none;
+	.forgotPasswordBtn{
+		margin-top:0px !important;
 	}
 	.srank-badge-activity{
 		left: 38px !important;
