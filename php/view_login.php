@@ -37,7 +37,7 @@ function DisplayLogin(){
 	      </div>
 		</div>
   	   </div>
-  	   <div class="col s12 m6" >
+  	   <div class="col s12 m6 social-login-container" >
   	   	<div class="row">
   	   		<div class="social-login-header">
   	   			Sign in using a third party account
