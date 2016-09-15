@@ -580,6 +580,9 @@
 	.social-login-header{
 		display:none;
 	}
+	.social-login-container{
+		position:absolute;
+	}
 	.login-modal-divider{
 		margin-top:175px !important;
 	}

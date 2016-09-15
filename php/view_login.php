@@ -186,7 +186,7 @@ function DisplaySignup(){
 				    <div class="col s11 validation" style='text-align: center;color:red;display:none;'></div>
 		      	</div>
 		  	</div>
-		   <div class="col s12 m6" >
+		   <div class="col s12 m6 social-login-container" >
 		  	   	<div class="row">
 		  	   		<div class="social-login-header">
 		  	   			Sign up using a third party account
