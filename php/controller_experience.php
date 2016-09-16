@@ -1665,11 +1665,11 @@ function GetBestXPForUserAll($userid, $type){
 	$user = GetUser($userid, $mysqli);
 	$year = date('Y');
 	if($type == "year"){
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` and g.`Year` = '".$year."' order by e.`Tier` ASC, g.`Year` DESC limit 6,56";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` and g.`Year` = '".$year."' order by g.`Year` DESC limit 6,506";
 	}else if($type == "past"){
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` and g.`Year` != '".$year."' order by e.`Tier` ASC, g.`Year` DESC limit 0,50";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` and g.`Year` < '".$year."' and g.`Year` != 0 order by g.`Year` DESC limit 0,500";
 	}else{
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` order by e.`Tier` ASC, g.`Year` DESC limit 0,6";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` order by g.`Year` DESC limit 0,6";
 	}
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){

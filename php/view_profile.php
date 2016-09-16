@@ -1549,9 +1549,9 @@ function DisplayCharismaAbility($userid, $abilities, $mutualconn, $conn){
 
 function DisplayTrackingAbility($userid, $abilities, $mutualconn, $conn){
 	$user = GetUser($userid);
-	$unreleased = GetAnticipatedGamesAbilities($userid, 50);
-	$thisyear = GetAnticipatedGamesThisYear($userid, 50);
-	$pastyears = GetAnticipatedGamesInPast($userid, 50);
+	$unreleased = GetAnticipatedGamesAbilities($userid, 500);
+	$thisyear = GetAnticipatedGamesThisYear($userid, 500);
+	$pastyears = GetAnticipatedGamesInPast($userid, 500);
 	if($abilities == '')
 		$abilities = GetAbilities($userid);
 	if($mutualconn == ''){
