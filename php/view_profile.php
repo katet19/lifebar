@@ -1523,24 +1523,6 @@ function DisplayCharismaAbility($userid, $abilities, $mutualconn, $conn){
 		</div>
 	</div>
 		<div class="row ability-display-details">
-			<?php /*$currgame = "";
-			$users = array();
-			foreach($agrees as $agree){
-				if($currgame == $agree[0]){
-					$users[] = $agree[1];
-				}else if($currgame != ""){
-					DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview);
-					$xp = "";
-					unset($users);
-					$users[] = $agree[1];
-					$xp = GetExperienceForUserComplete($userid, $agree[0]);
-					$currgame = $agree[0];
-				}else{
-					$xp = GetExperienceForUserComplete($userid, $agree[0]);
-					$users[] = $agree[1];
-					$currgame = $agree[0];
-				}
-			}*/ ?>
 			<br>
 			COMING SOON
 		</div>

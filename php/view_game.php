@@ -647,7 +647,7 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
 	        <div class="card-content">
-	          <?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ 
+	          <?php /*if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ 
 	          			DisplayGameCardTierIcon($xp);
 	           	}else if($_SESSION['logged-in']->_id > 0){ ?>
 		          <div class="card-game-tier-container z-depth-1 card-game-collection-add" style='background-color:gray;'>
@@ -677,73 +677,18 @@ function DisplayGameCard($game, $count, $classId){
   					  <div class='btn-large signup-option card-tier-add-options blue'><i class="mdi-action-visibility" style='vertical-align: middle;'></i> Watched</div>
 					</div>
 	          	   </div>
-          	  <?php } ?>
-	          <span class="card-title activator grey-text text-darken-4"><span class="nav-game-title" style="white-space: normal;"><?php echo $game->_title; ?></span> <!--<i class="mdi-navigation-more-vert right" style='position: absolute;font-size: 1.5em;right: 0.25em;top: 15px;z-index:2; text-shadow: 1px 1px 5px black;color:white;'></i>--></span>
-	        </div>
-	        <div class="card-reveal tier<?php echo $tier; ?>BG" style="width:100%;color:white;">
+          	  <?php }*/ ?>
+	          <div class="card-title activator grey-text text-darken-4">
+				<div class="nav-game-actions row">
+					<div class="col s3" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad game-card-quick-played nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s3" style='padding: 10px 0 7px;'><i class="mdi-action-visibility game-card-quick-watched nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s3" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark game-card-quick-bookmark nav-game-action-btn"></i></div>
+					<div class="col s3" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add game-card-quick-collection nav-game-action-btn"></i></div>
+				</div>
+			  	<div class="game-nav-title"><?php echo $game->_title; ?></div>
+			  </div>
 	        </div>
 	      </a>
-      </div>
-<?php }
-
-function DisplayGameCardwithXP($game, $count, $classId, $xp){ ?>
-	<div class="col s6 m4 l3">
-	      <div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        </div>
-	        <div class="card-content">
-	          <?php if(sizeof($xp->_playedxp) > 0 ||  sizeof($xp->_watchedxp) > 0){ ?>
-	          <div class="card-game-tier-container tier<?php echo $xp->_tier; ?>BG z-depth-1">
-	          	<div class="card-game-tier">
-	          		<?php if($xp->_link != ''){ ?>
-       					<i class="mdi-editor-format-quote"></i>
-       				<?php }else if(sizeof($xp->_playedxp) > 0){ ?>
-  	          			<i class="mdi-av-games"></i>
-	          		<?php }else if(sizeof($xp->_watchedxp) > 0){ ?>
-	          			<i class="mdi-action-visibility"></i>
-	          		<?php } ?>
-	          	</div>
-  	            <div class="card-tier-details">
-  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
-		          <p>
-		          	"<?php echo $xp->_quote; ?>"
-		          </p>
-				</div>
-          	  </div>
-          	  <?php }else if($_SESSION['logged-in']->_id > 0){ ?>
-		          <div class="card-game-tier-container z-depth-1 card-game-collection-add" style='background-color:gray;'>
-		          	<div class="card-game-tier">
-	          			<i class="mdi-av-my-library-add"></i>
-		          	</div>
-  	  	            <div class="card-tier-details">
-	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
-					  <?php if($game->_year > 0){ ?>
-					  <div class='btn-large played-option card-tier-add-options red' style='margin-top:20px;'><i class="mdi-av-games" style='vertical-align: middle;'></i> Played</div>
-					  <div class='card-tier-or-label'>or</div>
-  					  <div class='btn-large watched-option card-tier-add-options blue'><i class="mdi-action-visibility" style='vertical-align: middle;'></i> Watched</div>
-					  <?php }else{ ?>
-  					  <div class='btn-large watched-option card-tier-add-options blue' style='margin-top:20px;'><i class="mdi-action-visibility" style='vertical-align: middle;'></i> Watched</div>
-					  <?php } ?>
-					</div>
-	          	   </div>
-          	  <?php }else{ ?>
-		          <div class="card-game-tier-container z-depth-1 card-game-add-btn" style='background-color:gray;'>
-		          	<div class="card-game-tier">
-	          			<i class="mdi-av-my-library-add"></i>
-		          	</div>
-  	  	            <div class="card-tier-details">
-	  		          <span class="card-tier-title" style='font-weight:500;'><?php echo $game->_title; ?><i class="mdi-content-clear right" style='cursor:pointer;position: absolute;right: 0.3em;top: 0.6em;font-size:1.5em;'></i></span>
-					  <div class='btn-large signup-option card-tier-add-options red' style='margin-top:20px;'><i class="mdi-av-games" style='vertical-align: middle;'></i> Played</div>
-					  <div class='card-tier-or-label'>or</div>
-  					  <div class='btn-large signup-option card-tier-add-options blue'><i class="mdi-action-visibility" style='vertical-align: middle;'></i> Watched</div>
-					</div>
-	          	   </div>
-          	  <?php } ?>
-	          <span class="card-title activator grey-text text-darken-4"><span class="nav-game-title" style="white-space: normal;"><?php echo $game->_title; ?></span> <!--<i class="mdi-navigation-more-vert right" style='position: absolute;font-size: 1.5em;right: 0.25em;top: 15px;z-index:2; text-shadow: 1px 1px 5px black;color:white;'></i>--></span>
-	        </div>
-	        <div class="card-reveal tier<?php echo $tier; ?>BG" style="width:100%;color:white;">
-	        </div>
-	      </div>
       </div>
 <?php }
 
@@ -863,28 +808,6 @@ function DisplayGameCardTierIcon($xp){
   	  		}
   	  }
 }
-
-function DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview){
-	$game = $xp->_game;?>
-	<div class="col s6 m4 l3">
-	      <div class="card game-agree-card" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-	        <div class="card-image waves-effect waves-block" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,rgba(0,0,0,0.75)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.75) 50%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.75) 50%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        	<div class="card-agree-quote"><?php echo $xp->_quote; ?></div>
-	        </div>
-	        <div class="card-content">
-	          <span class="card-title activator grey-text text-darken-4"><span class="nav-game-title" style="white-space: normal;"><?php echo $game->_title; ?></span></span>
-	          <div class="card-agree-users">
-	          	<?php foreach($users as $userid){
-	          		$user = GetUser($userid); ?>
-  					<div class="badge-card-ability-avatar" data-id="<?php echo $user->_id; ?>" title="<?php if($user->_security == "Journalist"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>" style="border-radius:50%;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-						<?php if($showpreview){ DisplayUserPreviewCard($user, $conn, $mutualconn); } ?>
-					</div>
-	          	<?php } ?>
-	          </div>
-	        </div>
-	      </div>
-      </div>
-<?php }
 
 function ShowUserXP($userxp){ 
 	$user = $userxp->_username;
