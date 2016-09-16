@@ -15,7 +15,7 @@ function ShowLanding(){
  			$(".indicator").css({"display":"none"});
 			$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
-			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
+			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); if($(window).width() > 599){ $("#username").focus(); } });
 			AttachSignUpEvents();
 			AttachSignUpLandingEvents();
 			$('select').material_select();
