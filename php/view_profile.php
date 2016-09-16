@@ -471,7 +471,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
           		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
           			<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?></span> 
           			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+          				<a href='<?php if (preg_match("#https?://#", $user->_website) === 0) { $user->_website = 'http://'.$user->_website;} echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
@@ -480,7 +480,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
 	          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
 	          		<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> 
         			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+          				<a href='<?php if (preg_match("#https?://#", $user->_website) === 0) { $user->_website = 'http://'.$user->_website;} echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
