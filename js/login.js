@@ -1,5 +1,5 @@
 function InitializeLogin(){
-	$("#loginButton, #loginButtonSideNav").on('click', function(e){ $('#loginModal').openModal(); $("#username").focus(); });
+	$("#loginButton, #loginButtonSideNav").on('click', function(e){ $('#loginModal').openModal(); if($(window).width() > 599){ $("#username").focus(); } });
 	$("#signupButton, #signupButtonSideNav").on('click', function(e){ $('#signupModal').openModal(); });
 	$('.signOutButton').on("click", function(e){ Logout(); });
 	$("select").material_select();
