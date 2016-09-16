@@ -16,7 +16,7 @@
     }
 
     //Add Reflection Point Card
-    if(!$cardhasplayed && sizeof($refpts) > 0){
+    if(!$cardhasplayed && sizeof($refpts) > 0 ){
         $tally = 0;
         foreach($refpts as $pt){
             $hasResults = HasFormResults($_SESSION['logged-in']->_id, $pt['ID']);
@@ -33,7 +33,7 @@
     }
 
     //Add Summary Card
-    if(!$cardhasplayed && $myxp->_quote == ''){
+    if(sizeof($myxp->_playedxp) > 0 && !$cardhasplayed && $myxp->_quote == '' && $myxp->_tier > 0){
         unset($dashitem);
         $dashitem['TYPE'] = 'HaveQuote';
         $dashboarditems[] = $dashitem;
@@ -43,7 +43,7 @@
     unset($dashitem);
     $dashitem['TYPE'] = 'Released';
     if($game->_year == 0){
-		$dashitem['HEADER'] = "Unknown Release Date";
+		$dashitem['HEADER'] = "?";
     }else{
         $dashitem['MONTHDAY'] = ConvertDateToActivityFormat($game->_released);
         $dashitem['YEAR'] = $game->_year;
