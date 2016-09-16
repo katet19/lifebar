@@ -21,7 +21,7 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 			<?php
 		}else{
 			?>
-			<title>Lifebar | The Gamers Network</title>
+			<title>Lifebar | We Heart Games ;)</title>
 			<?php
 		} 
 	?>
@@ -38,7 +38,7 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 		">
 		<?php
 	}else{ ?>
-		<meta name="Description" content="Discover, Save and Share your played & watched experiences with video games">
+		<meta name="Description" content="Lifebar is a platform to celebrate & validate your life with games. From your earliest memories to your latest speed run, Lifebar capture it all.">
 	<?php } ?>
 	<link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
 	<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
