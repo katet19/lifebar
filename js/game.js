@@ -203,11 +203,6 @@ function AttachGameEvents(currentTab){
 		});
 	}
 
-	$(".game-discover-card .card-image").on("click", function(e){ 
-		e.stopPropagation(); 
-		ShowGame($(this).parent().attr("data-gbid"), ''); 
-	});
-
 	AttachGameCardEvents();
 	
 	$("#game-slide-out li").on("click", function(){
@@ -334,6 +329,28 @@ function AttachGameCardEvents(){
 			SubmitBookmark("AddBookmark", $(this).parent().attr("data-id"));
 			$(this).find(".nav-game-action-btn").addClass("nav-game-action-isBookmarked");
 		}
+	});
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".game-nav-title").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().parent().parent().attr("data-gbid"), $("#discover")); 
 	});
 }
 

@@ -67,19 +67,6 @@ function Search(searchstring){
  				ShowUserPreviewCard($(this).find(".user-preview-card"));
  			});
   			Waves.displayEffect();
- 			//FilterResults();
- 			$(".game-discover-card .card-image").on("click", function(e){ 
- 				e.stopPropagation(); 
- 				CloseSearch();
-				//Clear search input
-	 			$(".searchInput input").val('');
-	 			$('html').unbind();
-				$('html').click(function(){
-					if($("#userAccountNav").is(":visible"))
-						$("#userAccountNav").hide(250);
-				});
- 				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
- 			});
  			AttachGameCardEvents();
  			$(".SeeAllBtn").on('click',function(){
  				var context = $(this).attr("data-context");
@@ -148,63 +135,6 @@ function FilterCategories(){
 				});
 			});
 		}
-}
-
-function FilterResults(){
-	$(".GameSeeAllBtn").css({"display":"none"});
-	$(".UserSeeAllBtn").css({"display":"none"});
-	if($(".gameResults").length > 0 && $(".userResults").length > 0){
-		var total = 1;
-		if($(window).width() >= 993){
-			$(".gameResults").each( function(){
-				if(total > 6){
-					$(this).hide();
-					$(".GameSeeAllBtn").show();
-				}
-				total++;
-			});
-			total = 1;
-			$(".userResults").each( function(){
-				if(total > 6){
-					$(this).hide();
-					$(".UserSeeAllBtn").show();
-				}
-				total++;
-			});
-		}else if($(window).width() >=600){
-			$(".gameResults").each( function(){
-				if(total > 4){
-					$(this).hide();
-					$(".GameSeeAllBtn").show();
-				}
-				total++;
-			});
-			total = 1;
-			$(".userResults").each( function(){
-				if(total > 4){
-					$(this).hide();
-					$(".UserSeeAllBtn").show();
-				}
-				total++;
-			});
-		}else{
-			$(".gameResults").each( function(){
-				if(total > 2){
-					$(this).hide();
-					$(".GameSeeAllBtn").show();
-				}
-				total++;
-			});
-			total = 1;
-			$(".userResults").each( function(){
-				if(total > 2){
-					$(this).hide();
-					$(".UserSeeAllBtn").show();
-				}
-				total++;
-			});
-		}
-	}
 }
 
 function OpenSearch(){
@@ -478,8 +408,7 @@ function AttachDiscoverHomeEvents(){
  			 		e.stopPropagation();
  					ShowUserPreviewCard($(this).find(".user-preview-card"));
 	 			});
-	 			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
-	 			$(".card-game-tier-container").on("click", function(e){ GameCardActions($(this)); });
+	 			AttachGameCardEvents();
 	 			$(".CategoryGameImageHighlight, .CategoryGameTitle").on("click", function(){
 	 				ShowGame($(this).attr("data-gbid"), $("#discover"));
 	 			});
@@ -636,7 +565,6 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
  				$(".searchInput input").val("");
  			});
   			Waves.displayEffect();
-  			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
   			AttachGameCardEvents();
      	},
         error: function(x, t, m) {
@@ -673,7 +601,6 @@ function CustomCategory(categoryid){
  				$(".searchInput input").val("");
  			});
   			Waves.displayEffect();
-  			$(".game-discover-card .card-image").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
   			AttachGameCardEvents();
      	},
         error: function(x, t, m) {
