@@ -208,7 +208,7 @@ function AttachGameEvents(currentTab){
 		ShowGame($(this).parent().attr("data-gbid"), ''); 
 	});
 
-	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
+	AttachGameCardEvents();
 	
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
@@ -312,6 +312,29 @@ function AttachGameEvents(currentTab){
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
 	AttachWatchFromXP();
+	AttachGameCardEvents();
+}
+
+function AttachGameCardEvents(){
+	$(".game-card-quick-collection").on("click", function(e){
+		e.stopPropagation();
+		DisplayCollectionQuickForm($(this).parent().parent().parent(), $(this).parent().attr("data-id"), $(this).parent().attr("data-gbid"), true);
+	});
+	$(".game-card-quick-played").on("click", function(e){
+
+	});
+	$(".game-card-quick-watched").on("click", function(e){
+
+	});
+	$(".game-card-quick-bookmark").on("click", function(e){
+		if($(this).find(".nav-game-action-isBookmarked").length > 0){
+			SubmitBookmark("RemoveBookmark", $(this).parent().attr("data-id"));
+			$(this).find(".nav-game-action-btn").removeClass("nav-game-action-isBookmarked");
+		}else{
+			SubmitBookmark("AddBookmark", $(this).parent().attr("data-id"));
+			$(this).find(".nav-game-action-btn").addClass("nav-game-action-isBookmarked");
+		}
+	});
 }
 
 function SwitchGameContent(elem){

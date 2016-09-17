@@ -1191,7 +1191,7 @@ function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						$row["BucketList"],
+						IsGameBookmarkedFromCollection($row["GameID"]),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -1221,7 +1221,7 @@ function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						$row["BucketList"],
+						IsGameBookmarkedFromCollection($row["GameID"]),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -2269,6 +2269,7 @@ function SubmitBookmark($user,$gameid,$bucketlist){
 	$mysqli = Connect();
 	$game = GetGame($gameid);
 	$collectionid = DoesCollectionExist('Bookmarked',$user);
+	echo $collectionid;
 	if($collectionid > 0){
 		if($bucketlist == "Yes"){
 			$added = AddToCollection($collectionid, $game->_gbid, $user, true);
@@ -2277,7 +2278,7 @@ function SubmitBookmark($user,$gameid,$bucketlist){
 				CheckForNotifications("Bucket",$user,$gameid);
 			}
 		}else{
-			RemoveFromCollection($collectionid, $gameid, $user);
+			RemoveFromCollection($collectionid, $gameid, $user, true);
 		}
 	}
 	

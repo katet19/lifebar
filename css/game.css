@@ -564,7 +564,7 @@ refpt-header-subquestion-hidden{
     width: 100%;
     overflow: hidden;
     height: 35px;
-    padding: 0px 8px;
+    padding: 0px 10px;
     font-weight: 500;
     color: #212121;
 }
@@ -577,6 +577,10 @@ refpt-header-subquestion-hidden{
     -ms-transition: all 0.3s eaease-in-outse;
     transition: all 0.3s easease-in-oute;
 	text-align: center;
+}
+
+.nav-game-action-isBookmarked{
+	color:red !important;
 }
 
 .nav-game-actions .col:hover>.nav-game-action-btn{

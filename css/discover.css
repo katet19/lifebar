@@ -1187,9 +1187,6 @@
 	.CategoryGraph, .CategoryGameGraph, .CategoryGameDetails{
 		display:none;
 	}
-	.game-discover-card .card-content{
-		padding: 8px 24px 2px 16px !important;
-	}
 	.discoverCatSubName{
 		top: 30px;
 	}
