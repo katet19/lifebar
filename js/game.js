@@ -323,6 +323,7 @@ function AttachGameEvents(currentTab){
 }
 
 function AttachGameCardEvents(){
+	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title").unbind();
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
 		DisplayCollectionQuickForm($(this).parent().parent().parent(), $(this).parent().attr("data-id"), $(this).parent().attr("data-gbid"), true);

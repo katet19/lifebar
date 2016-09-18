@@ -771,7 +771,11 @@ function DisplayCollectionQuickForm(element, gameid, gbid, fromGameCard){
 		if(isNew){
 			$(".active-collection-game-icon").removeClass("orange darken-2 active-collection-game-icon");
 			container.parent().css({"z-index":"10"});
-			container.css({"top":"250px"});
+			if($(window).width() > 599){
+				container.css({"top":"250px"});
+			}else{
+				container.css({"top":"200px"});
+			}
 			var fabIcon = element.find(".game-card-quick-collection");
 			fabIcon.addClass("orange darken-2 active-collection-game-icon");
 		}

@@ -654,7 +654,7 @@ function DisplayGameCard($game, $count, $classId){
 					<div class="col s3 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
 					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
-			  	<div class="game-nav-title"><?php echo $game->_title; ?></div>
+			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
 	        </div>
 	      </a>
