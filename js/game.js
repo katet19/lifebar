@@ -43,6 +43,10 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 				SwitchGameContent($(".game-video-tab"));
 			else if(gameTab == "MyXP")
 				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "MyXPPlayed")
+				AddPlayedFabEvent();
+			else if(gameTab == "MyXPWatched")
+				AddWatchedFabEvent('','','','','');
 			else if(gameTab == "ReflectionPoints")
 				SwitchGameContent($(".game-reflectionpoints-tab"));
 			else if(gameTab == "SimilarGames")
@@ -102,6 +106,10 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 				SwitchGameContent($(".game-video-tab"));
 			else if(gameTab == "MyXP")
 				SwitchGameContent($(".game-myxp-tab"));
+			else if(gameTab == "MyXPPlayed")
+				AddPlayedFabEvent();
+			else if(gameTab == "MyXPWatched")
+				AddWatchedFabEvent('','','','','');
 			else if(gameTab == "ReflectionPoints")
 				SwitchGameContent($(".game-reflectionpoints-tab"));
 			else if(gameTab == "SimilarGames")
@@ -154,6 +162,10 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
 		 	SwitchGameContent($(".game-video-tab"));
 		else if(gameTab == "MyXP")
 			SwitchGameContent($(".game-myxp-tab"));
+		else if(gameTab == "MyXPPlayed")
+				AddPlayedFabEvent();
+		else if(gameTab == "MyXPWatched")
+				AddWatchedFabEvent('','','','','');
 		else if(gameTab == "ReflectionPoints")
 			SwitchGameContent($(".game-reflectionpoints-tab"));
 		else if(gameTab == "SimilarGames")
@@ -203,12 +215,7 @@ function AttachGameEvents(currentTab){
 		});
 	}
 
-	$(".game-discover-card .card-image").on("click", function(e){ 
-		e.stopPropagation(); 
-		ShowGame($(this).parent().attr("data-gbid"), ''); 
-	});
-
-	$(".card-game-tier-container").on("click", function(e){ e.stopPropagation(); GameCardActions($(this)); });
+	AttachGameCardEvents();
 	
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
@@ -312,6 +319,52 @@ function AttachGameEvents(currentTab){
 	AttachAnalyzeEvents();
 	AttachVideoEvents();
 	AttachWatchFromXP();
+	AttachGameCardEvents();
+}
+
+function AttachGameCardEvents(){
+	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title").unbind();
+	$(".game-card-quick-collection").on("click", function(e){
+		e.stopPropagation();
+		DisplayCollectionQuickForm($(this).parent().parent().parent(), $(this).parent().attr("data-id"), $(this).parent().attr("data-gbid"), true);
+	});
+	$(".game-card-quick-played").on("click", function(e){
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover"), false, false, 'MyXPPlayed');
+	});
+	$(".game-card-quick-watched").on("click", function(e){
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover"), false, false, 'MyXPWatched');
+	});
+	$(".game-card-quick-bookmark").on("click", function(e){
+		if($(this).find(".nav-game-action-isBookmarked").length > 0){
+			SubmitBookmark("RemoveBookmark", $(this).parent().attr("data-id"));
+			$(this).find(".nav-game-action-btn").removeClass("nav-game-action-isBookmarked");
+		}else{
+			SubmitBookmark("AddBookmark", $(this).parent().attr("data-id"));
+			$(this).find(".nav-game-action-btn").addClass("nav-game-action-isBookmarked");
+		}
+	});
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".game-nav-title").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().parent().parent().attr("data-gbid"), $("#discover")); 
+	});
 }
 
 function SwitchGameContent(elem){
@@ -332,7 +385,8 @@ function SwitchGameContent(elem){
 			$(".game-community-others-tab").hide(100);
 			$(".game-longform-tab").show(100);
 			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
-			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
+			if(box.length > 0)
+				$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
 		}
 		else
 		{
