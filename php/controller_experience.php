@@ -1191,7 +1191,7 @@ function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						$row["BucketList"],
+						IsGameBookmarkedFromCollection($row["GameID"]),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -1221,7 +1221,7 @@ function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						$row["BucketList"],
+						IsGameBookmarkedFromCollection($row["GameID"]),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -1665,11 +1665,11 @@ function GetBestXPForUserAll($userid, $type){
 	$user = GetUser($userid, $mysqli);
 	$year = date('Y');
 	if($type == "year"){
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` and g.`Year` = '".$year."' order by e.`Tier` ASC, g.`Year` DESC limit 6,56";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` and g.`Year` = '".$year."' order by g.`Year` DESC limit 6,506";
 	}else if($type == "past"){
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` and g.`Year` != '".$year."' order by e.`Tier` ASC, g.`Year` DESC limit 0,50";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` and g.`Year` < '".$year."' and g.`Year` != 0 order by g.`Year` DESC limit 0,500";
 	}else{
-		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1' or e.`Tier` = '2') and e.`GameID` = g.`ID` order by e.`Tier` ASC, g.`Year` DESC limit 0,6";
+		$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and (e.`Tier` = '1') and e.`GameID` = g.`ID` order by g.`Year` DESC limit 0,6";
 	}
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -2269,6 +2269,7 @@ function SubmitBookmark($user,$gameid,$bucketlist){
 	$mysqli = Connect();
 	$game = GetGame($gameid);
 	$collectionid = DoesCollectionExist('Bookmarked',$user);
+	echo $collectionid;
 	if($collectionid > 0){
 		if($bucketlist == "Yes"){
 			$added = AddToCollection($collectionid, $game->_gbid, $user, true);
@@ -2277,7 +2278,7 @@ function SubmitBookmark($user,$gameid,$bucketlist){
 				CheckForNotifications("Bucket",$user,$gameid);
 			}
 		}else{
-			RemoveFromCollection($collectionid, $gameid, $user);
+			RemoveFromCollection($collectionid, $gameid, $user, true);
 		}
 	}
 	

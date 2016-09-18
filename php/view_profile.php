@@ -471,7 +471,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
           		<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
           			<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?></span> 
           			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+          				<a href='<?php if (preg_match("#https?://#", $user->_website) === 0) { $user->_website = 'http://'.$user->_website;} echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
@@ -480,7 +480,7 @@ function DisplayUserLifeBarRound($user, $conn, $mutualconn, $light){
 	          	<span class="card-title activator" <?php if($light){ echo "style='color: rgba(0,0,0,0.5);'"; } ?>>
 	          		<span style="font-weight:500;"><?php echo $user->_first." ".$user->_last; ?> </span> 
         			<?php if($user->_website != ''){ ?>
-          				<a href='<?php echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
+          				<a href='<?php if (preg_match("#https?://#", $user->_website) === 0) { $user->_website = 'http://'.$user->_website;} echo $user->_website; ?>' <?php if($light){ echo "style='color: rgba(0,0,0,0.5);cursor:pointer;text-transform: inherit;'"; }else{ echo "style='cursor:pointer;color:white;text-transform: inherit;'"; } ?> target="_blank"><?php echo $user->_title; ?></a>
       				<?php }else{ ?>
       					<span><?php echo $user->_title; ?></span>
       				<?php } ?>
@@ -1523,24 +1523,6 @@ function DisplayCharismaAbility($userid, $abilities, $mutualconn, $conn){
 		</div>
 	</div>
 		<div class="row ability-display-details">
-			<?php /*$currgame = "";
-			$users = array();
-			foreach($agrees as $agree){
-				if($currgame == $agree[0]){
-					$users[] = $agree[1];
-				}else if($currgame != ""){
-					DisplayGameCardwithAgrees($users, $xp, $conn, $mutualconn, $showpreview);
-					$xp = "";
-					unset($users);
-					$users[] = $agree[1];
-					$xp = GetExperienceForUserComplete($userid, $agree[0]);
-					$currgame = $agree[0];
-				}else{
-					$xp = GetExperienceForUserComplete($userid, $agree[0]);
-					$users[] = $agree[1];
-					$currgame = $agree[0];
-				}
-			}*/ ?>
 			<br>
 			COMING SOON
 		</div>
@@ -1549,9 +1531,9 @@ function DisplayCharismaAbility($userid, $abilities, $mutualconn, $conn){
 
 function DisplayTrackingAbility($userid, $abilities, $mutualconn, $conn){
 	$user = GetUser($userid);
-	$unreleased = GetAnticipatedGamesAbilities($userid, 50);
-	$thisyear = GetAnticipatedGamesThisYear($userid, 50);
-	$pastyears = GetAnticipatedGamesInPast($userid, 50);
+	$unreleased = GetAnticipatedGamesAbilities($userid, 500);
+	$thisyear = GetAnticipatedGamesThisYear($userid, 500);
+	$pastyears = GetAnticipatedGamesInPast($userid, 500);
 	if($abilities == '')
 		$abilities = GetAbilities($userid);
 	if($mutualconn == ''){

@@ -641,9 +641,9 @@ function AddToCollection($collectionID, $gbid, $userid, $skipEvent = false){
 	return $gameid;
 }
 
-function RemoveFromCollection($collectionID, $gameID, $userid){
+function RemoveFromCollection($collectionID, $gameID, $userid, $forceDelete = false){
 	$collection = GetCollectionByID($collectionID);
-	if($collection->_createdby > 0){
+	if($collection->_createdby > 0 || $forceDelete){
 		$mysqli = Connect();
 		$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionID."' and `GameID` = '".$gameID."'");
 		$updatedDate = date('Y-m-d H:i:s', strtotime("now"));

@@ -145,10 +145,10 @@
 }
 
 .dashboard-card-date-unknown{
-    font-size: 2em;
+    font-size: 5em;
     text-transform: UPPERCASE;
     margin: 40px 0 0;
-
+    font-weight: bold;
 }
 
 .dashboard-card-date-bottom{
