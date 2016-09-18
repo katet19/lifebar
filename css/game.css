@@ -580,7 +580,7 @@ refpt-header-subquestion-hidden{
 }
 
 .nav-game-action-isBookmarked{
-	color:red !important;
+	color:#e64444 !important;
 }
 
 .nav-game-actions .col:hover>.nav-game-action-btn{
