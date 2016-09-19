@@ -127,7 +127,7 @@ function ShowEditPlayed($exp){
 	</div>
 	<div class="row myxp-form-box">
 		<div class="col s12 m12 l8">
-		  <label>Experienced Year</label>
+		  <label>Year Last Played</label>
 		  <select id="myxp-year">
 			<?php 
 				$date = explode('-',$watchedxp->_date);
@@ -284,7 +284,7 @@ function ShowEditWatched($exp, $watchid){
 	</div>
 	<div class="row myxp-form-box">
 		<div class="col s12 m12 l8">
-		  <label>Experienced Year</label>
+		  <label>Year Watched</label>
 		  <select id="myxp-year">
 			<?php 
 				$date = explode('-',$watchedxp->_date);
