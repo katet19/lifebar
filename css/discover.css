@@ -1054,8 +1054,15 @@
 .follow-from-discover{
     padding: 0 1rem;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    right: 10px;
+}
+
+.dismiss-from-discover{
+	padding: 0 1rem;
+    position: absolute;
+    top: 70px;
+    right: 10px;
 }
 
 @media only screen and (max-width : 992px) {

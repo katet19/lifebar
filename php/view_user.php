@@ -37,22 +37,22 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         	<div class="col s12 valign-wrapper">
         		<?php if($showbtn){ ?>
         			<div class='btn follow-from-discover' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>">Follow</div>
+					<div class='btn dismiss-from-discover grey' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>">Ignore</div>
         		<?php }else{ ?>
 	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
 	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
 	        	<?php } ?>
-        		<div class="user-follow-card-image" style="margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
+        		<div class="<?php if($showbtn){ ?>user-follow-card-image-w-game<?php }else{ ?>user-follow-card-image<?php } ?>" style="margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
         			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>
 		      	<?php if($showquote && $user->_security == "Authenticated"){ ?> 
 		      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
 		  		<?php } ?>
 	        	<?php if($showquote && ($user->_security == "Journalist" || $user->_security == "Authenticated")){ ?>
-	          		<span class="card-title user-follow-card-title activator grey-text text-darken-4"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
+	          		<span class="card-title user-follow-card-title activator grey-text text-darken-4" <?php if($showbtn){ echo "style='top: 15px;'"; } ?>><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title ?></span></span>
 	        	<?php }else if($showquote){ ?>
-	        		<span class="card-title user-follow-card-title activator grey-text text-darken-4"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
+	        		<span class="card-title user-follow-card-title activator grey-text text-darken-4" <?php if($showbtn){ echo "style='top: 25px;'"; } ?>><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
 	        	<?php } ?>
-        		<?php /**DisplayUserPreviewCard($user, $conn, $mutualconn);**/ ?>
         	</div>
         </div>
         <div class="card-content" style='position:relative;<?php if($showquote){ ?>height: 185px;<?php } ?>' >

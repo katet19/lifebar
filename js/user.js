@@ -215,6 +215,25 @@ function FollowUser(followid, elem, name){
 	});
 }
 
+function DismissUser(dismiss, elem, name){
+	elem.velocity({"opacity":"0"}, function(){ elem.css({"display":"none"}); });
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DismissUser", dismiss: dismiss },
+     type: 'post',
+     success: function(output) {
+ 		Toast("Ignored " + name + ", they will no longer be suggested"); 
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
 /*
 *
 * Universal User Preview

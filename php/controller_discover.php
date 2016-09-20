@@ -263,7 +263,7 @@ function GetSuggestedMembers($mysqli, $userid){
 	$tracker = array();
 	$count = array();
 	$mysqli = Connect();
-	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` != '".$userid."' and u.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
+	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` != '".$userid."' and u.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and u.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
 
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){

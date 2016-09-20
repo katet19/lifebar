@@ -909,6 +909,12 @@ function RegisterEarlyAccess($email){
 	return $randomKey;
 }
 
+function IgnoreUser($ignoreID){
+	$mysqli = Connect();
+	$mysqli->query("INSERT into `IgnoreUser` (`UserID`, `UserToIgnore`) VALUES ('".$_SESSION['logged-in']->_id."', '".$ignoreID."')");
+	Close($mysqli, $result);
+}
+
 function SaveUserTitle($userid, $title){
 	$mysqli = Connect();
 	$mysqli->query("UPDATE `Users` SET `Title` = '".$title."' WHERE `ID` ='".$userid."'");
