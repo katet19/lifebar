@@ -1056,6 +1056,7 @@
     position: absolute;
     top: 20px;
     right: 10px;
+	width:130px;
 }
 
 .dismiss-from-discover{
@@ -1063,6 +1064,7 @@
     position: absolute;
     top: 70px;
     right: 10px;
+	width:130px;
 }
 
 .follow-from-discover-small{
@@ -1231,13 +1233,23 @@
 	}
 	.follow-from-discover{
 		padding: 0 1rem;
-	    position: absolute;
-	    bottom: 0px;
-	    display: block;
-	    left: 125px;
-	    line-height: 30px;
-	    height: 30px;
-	    top: auto;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 10px;
+		top: auto;
+	}
+	.dismiss-from-discover{
+		padding: 0 1rem;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 145px;
+		top: auto;
 	}
 	.daily-watch-title-xp{
 		padding: 7px 10px;

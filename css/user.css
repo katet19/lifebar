@@ -487,6 +487,11 @@
     border-radius: 50%;
 }
 
+.nav-user-action-btn{
+    font-size: 1.5em;
+    color: rgba(0,0,0,0.2);
+}
+
 .social-login-btn{
 	font-size: 25px;
     display: inline-block;
@@ -607,9 +612,10 @@
     	margin-bottom: 20px;
 	}
 	.user-follow-card-title{
-	    right: auto !important;
-	    width: calc(100% - 100px)!important;
-	    left: auto !important;
+		right: auto !important;
+		width: calc(100% - 200px)!important;
+		left: auto !important;
+		top: 15px !important;
 	}
 	.social-login-btn{
 		font-size: 20px;
