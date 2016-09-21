@@ -424,7 +424,8 @@ function CancelXPEntry(){
          		ShowFab();
          	}
 			var box = $("#game-myxp-tab").find(".myxp-details-container").last();
-			$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
+			if(box.length > 0)
+				$(".myxp-vert-line").css({"bottom": (box.height() - 30)+"px"});
          	AttachMyXPEvents();
          	AttachEditEvents();
          	window.scrollTo(0, 0);

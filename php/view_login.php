@@ -4,8 +4,8 @@ function DisplayLogin(){
     	GoogleOAuth();
     	FacebookOAuth();
 	?>
-  <div id="loginModal" class="modal" style="background-color:white;">
-    <div class="row" style="margin-top:40px">
+  <div id="loginModal" class="modal" style="background-color:white;overflow-x: hidden;">
+    <div class="row loginModalPadding">
 	  <div class="col s12 m6 login-modal-divider">
 	    <div class="row">
 	      <div class="input-field col s11">
@@ -37,7 +37,7 @@ function DisplayLogin(){
 	      </div>
 		</div>
   	   </div>
-  	   <div class="col s12 m6" >
+  	   <div class="col s12 m6 social-login-container" >
   	   	<div class="row">
   	   		<div class="social-login-header">
   	   			Sign in using a third party account
@@ -186,7 +186,7 @@ function DisplaySignup(){
 				    <div class="col s11 validation" style='text-align: center;color:red;display:none;'></div>
 		      	</div>
 		  	</div>
-		   <div class="col s12 m6" >
+		   <div class="col s12 m6 social-login-container" >
 		  	   	<div class="row">
 		  	   		<div class="social-login-header">
 		  	   			Sign up using a third party account

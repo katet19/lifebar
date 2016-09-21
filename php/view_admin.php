@@ -692,7 +692,7 @@ function DisplayRefPtSchedule(){
 	<div class="row">
 		<div class="col s12 import-results-subheader">
 			Daily Reflection Point Scheduler
-			<div class='btn admin-schedule-save-all' style="float:right;">UPDATE SCHEDULE</div>
+			<div class='btn admin-schedule-save-all' style="position: fixed;right: 10px;top: 75px;">UPDATE SCHEDULE</div>
 		</div>
 	</div>
 	<?php
@@ -718,13 +718,13 @@ function DisplayRefPtSchedule(){
 				<div class='admin-schedule-ref-question'>
 					<span><?php echo $ref['Header']; ?></span> <span>(<?php echo $ref['Title']; ?>)</span>
 				</div>
-				<!--<div class='btn-flat admin-schedule-insert-remove'>remove</div>-->
-				<div class='btn-flat admin-schedule-insert-before'>before</div>
-				<div class='btn-flat admin-schedule-insert-after'>after</div>
 			</div>
 			<?php
 			}
 	}
+	?>
+	<div class='btn admin-schedule-insert-after'>Insert New Reflection Point</div>
+	<?php
 }
 
 function DisplayRefPtPicker($new, $search){
@@ -746,7 +746,7 @@ function DisplayRefPtPicker($new, $search){
 			?>
 			<div class="col s12" style='text-align:left;'>
 				<span><?php echo $pt['Header']; ?></span> <span>(<?php echo $pt['Title']; ?>)</span>
-				<div class='btn-flat ref-pt-search-select'>insert</div>
+				<div class='btn-flat ref-pt-search-select' data-id="<?php echo $pt['ID']; ?>">insert</div>
 			</div>
 			<?php } ?>
 		</div>

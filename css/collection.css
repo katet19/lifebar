@@ -825,10 +825,6 @@
         height: 30px;
         line-height: 30px;
     }
-    .collection-quick-add-container{
-        width:95%;
-        top:40px;
-    }
     .collection-xp-details-container{
         z-index: 1 !important;
         padding-right: 25px !important;
