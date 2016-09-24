@@ -196,7 +196,7 @@ function DisplayHaveQuoteCard($game){
     ?>
     <div class='col s12 m6 l4'>
         <div class="dashboard-card dashboard-card-calltoaction game-add-played-btn-fast">
-            <div class="dashboard-question-header">What did you think? In 240 characters or less!</div>
+            <div class="dashboard-question-header">What did you think?</div>
             <div class="dashboard-calltoaction-container"><i class="mdi-editor-format-quote"></i> <span>Add my summary</span></div> 
         </div>
     </div>
