@@ -639,7 +639,7 @@ function DisplayGameInfoBackNav(){ ?>
 
 
 function DisplayGameCard($game, $count, $classId){
-	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id); ?>
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
 	<div class="col s6 m3 l2" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
