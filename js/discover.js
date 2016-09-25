@@ -337,7 +337,7 @@ function AttachDiscoverHomeEvents(){
 			$(this).parent().parent().parent().parent().hide(250);
 			$(this).parent().parent().parent().addClass("hidingSuggestedUser");
 			if($(".hidingSuggestedUser").length >= 4){
-				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members que</div>")
+				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members list</div>")
 			}
 
 		}
@@ -352,7 +352,7 @@ function AttachDiscoverHomeEvents(){
 			$(this).parent().parent().parent().parent().hide(250);
 			$(this).parent().parent().parent().addClass("hidingSuggestedUser");
 			if($(".hidingSuggestedUser").length >= 4){
-				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members que</div>")
+				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members list</div>")
 			}
 		}
  	});
@@ -368,7 +368,23 @@ function AttachDiscoverHomeEvents(){
 			$(this).parent().parent().parent().parent().hide(250);
 			$(this).parent().parent().parent().addClass("hiding"+category);
 			if($(".hiding"+category).length >= 6){
-				$(this).parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your "+ category.replace('_', ' ') +" que</div>")
+				$(this).parent().parent().parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your current list</div>")
+			}
+		}
+ 	});
+	 	$(".follow-from-discover-small").on("click", function(e){
+		e.stopPropagation();
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			var category = $(this).attr("data-category").replace(/\s+/g, '_');
+			//FollowUser(userid, $(this), username);
+			$(this).parent().parent().parent().parent().hide(250);
+			$(this).parent().parent().parent().addClass("hiding"+category);
+			if($(".hiding"+category).length >= 6){
+				$(this).parent().parent().parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your current list</div>")
 			}
 		}
  	});

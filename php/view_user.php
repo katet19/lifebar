@@ -16,8 +16,8 @@ function DisplayUserCard($user, $count, $classId, $myConnections, $showFollow = 
         <div class="card-content" <?php if($showFollow){ ?>style='height:100px;' <?php } ?>>
 			<?php if($showFollow){ ?>
 				<div class="user-follow-btn-container row">
-					<div class="col s6" style='padding:0;' title='Ignore User'>
-						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-block nav-user-action-btn'></i></div>
+					<div class="col s6" style='padding:0;' title='Dismiss Suggested User'>
+						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline nav-user-action-btn'></i></div>
 					</div>
 					<div class="col s6" style='padding:0;' title='Follow User'>
 						<div class='follow-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people nav-user-action-btn'></i></div>
@@ -47,7 +47,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         	<div class="col s12 valign-wrapper">
         		<?php if($showbtn){ ?>
         			<div class='btn follow-from-discover' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people left'></i>Follow</div>
-					<div class='btn dismiss-from-discover grey' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-block left'></i>Ignore</div>
+					<div class='btn dismiss-from-discover grey' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline left'></i>Dismiss</div>
         		<?php }else{ ?>
 	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
 	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>

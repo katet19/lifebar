@@ -221,7 +221,7 @@ function DismissUser(dismiss, elem, name){
      data: {action: "DismissUser", dismiss: dismiss },
      type: 'post',
      success: function(output) {
- 		Toast("Ignored " + name + ", they will no longer be suggested"); 
+ 		Toast("Dismissed " + name + ", they will no longer be suggested"); 
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
