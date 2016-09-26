@@ -364,7 +364,7 @@ function AttachDiscoverHomeEvents(){
 			var userid = $(this).attr("data-id");
 			var username = $(this).attr("data-name");
 			var category = $(this).attr("data-category").replace(/\s+/g, '_');
-			//DismissUser(userid, $(this), username);
+			DismissUser(userid, $(this), username);
 			$(this).parent().parent().parent().parent().hide(250);
 			$(this).parent().parent().parent().addClass("hiding"+category);
 			if($(".hiding"+category).length >= 6){
@@ -380,7 +380,7 @@ function AttachDiscoverHomeEvents(){
 			var userid = $(this).attr("data-id");
 			var username = $(this).attr("data-name");
 			var category = $(this).attr("data-category").replace(/\s+/g, '_');
-			//FollowUser(userid, $(this), username);
+			FollowUser(userid, $(this), username);
 			$(this).parent().parent().parent().parent().hide(250);
 			$(this).parent().parent().parent().addClass("hiding"+category);
 			if($(".hiding"+category).length >= 6){
