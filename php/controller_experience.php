@@ -1191,7 +1191,7 @@ function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						IsGameBookmarkedFromCollection($row["GameID"]),
+						IsGameBookmarkedFromCollection($gameid, $mysqli),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -1221,7 +1221,7 @@ function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null
 						$row["ExperienceDate"],
 						$row["Link"],
 						$row["Owned"],
-						IsGameBookmarkedFromCollection($row["GameID"]),
+						IsGameBookmarkedFromCollection($gameid, $mysqli),
 						$row["AuthenticXP"]);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
@@ -1243,7 +1243,7 @@ function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null
 						'',
 						'',
 						'',
-						'',
+						IsGameBookmarkedFromCollection($gameid, $mysqli),
 						'');
 	}
 	

@@ -97,10 +97,11 @@ function ConvertGamePlusUsertoOG($user, $game){
 		$og["DESC"] = htmlspecialchars($xp->_quote." (Tier ".$xp->_tier.")");
 	else
 		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s experience with ".$game->_title);
-		
+	
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/".$og["TITLE"];
 	$og['TITLE'] = $og["TITLE"]." | ".$game->_title;
 	$og["IMAGE"] = $game->_imagesmall; 
-	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/".$og["TITLE"];
+	
 	
 	return $og;
 }
@@ -162,10 +163,10 @@ function ConvertEventtoOG($event){
 		$og["DESC"] = htmlspecialchars($event->_quote." (Tier ".$event->_tier.")");
 	else
 		$og["DESC"] = htmlspecialchars("Check out ".$og["TITLE"]."'s experience with ".$game->_title);
-		
+	
+	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/".$og["TITLE"];
 	$og['TITLE'] = $og["TITLE"]." | ".$game->_title;
 	$og["IMAGE"] = $game->_imagesmall; 
-	$og["LINK"] = "http://lifebar.io/#game/".$game->_id."/".htmlspecialchars($game->_title)."/User/".$user->_id."/";
 	
 	return $og;
 }

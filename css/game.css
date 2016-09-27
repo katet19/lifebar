@@ -636,6 +636,20 @@ refpt-header-subquestion-hidden{
 	text-align: left;
 }
 
+.game-gb-ref{
+    padding: 5px 12px 0px 15px;
+    position: absolute;
+    bottom: 0px;
+    font-weight: 400;
+    font-size: 0.9em;
+	color: #616161;
+}
+
+.game-gb-ref span{
+	font-weight:bold;
+	color: #1E88E5;
+}
+
 @media only screen and (max-width : 992px) {
 	#gameContentContainer{
 		margin-left:0;

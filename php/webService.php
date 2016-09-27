@@ -602,6 +602,9 @@
 		if($_POST['action'] == "AsyncMyBadges"){
 			DisplayBadgeManagementForUser($_SESSION['logged-in']->_id);
 		}
+		if($_POST['action'] == "DismissUser"){
+			IgnoreUser($_POST['dismiss']);
+		}
 	}
 	function DiscoverServices(){
 		if($_POST['action'] == 'Search' && isset($_POST['search'])){

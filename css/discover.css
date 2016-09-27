@@ -1054,8 +1054,42 @@
 .follow-from-discover{
     padding: 0 1rem;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    right: 10px;
+	width:130px;
+}
+
+.dismiss-from-discover{
+	padding: 0 1rem;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+	width:130px;
+}
+
+.follow-from-discover-small{
+    padding: 5px 0px;
+	cursor: pointer;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.dismiss-from-discover-small{
+    padding: 5px 0px;
+	cursor: pointer;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.follow-from-discover-small:hover, .dismiss-from-discover-small:hover{
+	background-color: #2196F3 !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.follow-from-discover-small:hover i, .dismiss-from-discover-small:hover i{
+	color:white;
 }
 
 @media only screen and (max-width : 992px) {
@@ -1199,13 +1233,25 @@
 	}
 	.follow-from-discover{
 		padding: 0 1rem;
-	    position: absolute;
-	    bottom: 0px;
-	    display: block;
-	    left: 125px;
-	    line-height: 30px;
-	    height: 30px;
-	    top: auto;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 10px;
+		top: auto;
+		width:auto;
+	}
+	.dismiss-from-discover{
+		padding: 0 1rem;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 70px;
+		top: auto;
+		width:auto;
 	}
 	.daily-watch-title-xp{
 		padding: 7px 10px;

@@ -4,7 +4,7 @@ function DisplayGame($gbid){
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
 	$videoxp = GetGameVideoXP($game->_id);
 	$myxp->_bucketlist = IsGameBookmarkedFromCollection($game->_id);
-	ShowGameNav();
+	ShowGameNav($gbid);
 	ShowGameHeader($game, $myxp, -1, $videoxp);
 	ShowGameContent($game, $myxp, -1, $videoxp);
 }
@@ -16,17 +16,17 @@ function DisplayGameViaID($gameid, $userid){
 	$videoxp = GetGameVideoXP($game->_id);
 	if($userid > 0){
 		$otherxp = GetExperienceForUserByGame($userid, $game->_id);
-		ShowGameNav();
+		ShowGameNav($game->_gbid);
 		ShowGameHeader($game, $myxp, $otherxp, $videoxp);
 		ShowGameContent($game, $myxp, $otherxp, $videoxp);
 	}else{
-		ShowGameNav();
+		ShowGameNav($game->_gbid);
 		ShowGameHeader($game, $myxp, -1, $videoxp);
 		ShowGameContent($game, $myxp, -1, $videoxp);
 	}
 }
 
-function ShowGameNav(){
+function ShowGameNav($gbid){
 	$id = $_SESSION['logged-in']->_id;
 	?>
 	<ul id="game-slide-out">
@@ -46,6 +46,7 @@ function ShowGameNav(){
 		<li data-tab="game-similargames-tab" data-nav="SimilarGames" class="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
+		<a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $gbid; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a>
 	</ul>
 	<?php
 }
@@ -638,7 +639,7 @@ function DisplayGameInfoBackNav(){ ?>
 
 
 function DisplayGameCard($game, $count, $classId){
-	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id); ?>
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
 	<div class="col s6 m3 l2" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
