@@ -1240,6 +1240,7 @@
 		height: 30px;
 		right: 10px;
 		top: auto;
+		width:auto;
 	}
 	.dismiss-from-discover{
 		padding: 0 1rem;
@@ -1248,8 +1249,9 @@
 		display: block;
 		line-height: 30px;
 		height: 30px;
-		right: 145px;
+		right: 70px;
 		top: auto;
+		width:auto;
 	}
 	.daily-watch-title-xp{
 		padding: 7px 10px;

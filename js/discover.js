@@ -215,7 +215,6 @@ function ShowDiscoverHome(){
      			if($(".onboarding-big-welcome").length > 0){
      				ShowOnboarding();
      			}else{
-	     			//FilterCategories();
 	 				AttachDiscoverHomeEvents();
 	 				AttachDiscoverSecondaryEvents();
 	      			Waves.displayEffect();
@@ -372,7 +371,7 @@ function AttachDiscoverHomeEvents(){
 			}
 		}
  	});
-	 	$(".follow-from-discover-small").on("click", function(e){
+	$(".follow-from-discover-small").on("click", function(e){
 		e.stopPropagation();
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();
@@ -431,6 +430,10 @@ function AttachDiscoverHomeEvents(){
  	$(".ViewBtnCollection").on("click", function(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
  	});
+	if($(window).width() <= 599){
+		$(".follow-from-discover").html("<i class='mdi-social-people'></i>");
+		$(".dismiss-from-discover").html("<i class='mdi-content-remove-circle-outline'></i>");
+	}
 	//Category
 	$(".ViewBtn").on("click", function(){
 		GLOBAL_TAB_REDIRECT = "CategoryNav";
