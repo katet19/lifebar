@@ -335,7 +335,7 @@ function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $s
       	<?php 
       	$count = 1;
   		foreach($users as $user){
-  			DisplayUserCard($user, $count, "categoryResults", $connections);
+  			DisplayUserCard($user, $count, $category, $connections, true);
 			$count++; 
 		} 
 		?>

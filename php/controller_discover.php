@@ -151,7 +151,7 @@ function GetSuggestedCollection($mysqli, $userid){
 }
 
 function GetNotMutualFollowers($mysqli, $userid){
-	$query = "SELECT * FROM  `Connections` c where c.`Celebrity` = '".$userid."' and c.`Fan` not in (select `Celebrity` from `Connections` cc where cc.`Fan` = '".$userid."' ) limit 0,6";
+	$query = "SELECT * FROM  `Connections` c where c.`Celebrity` = '".$userid."' and c.`Fan` not in (select `Celebrity` from `Connections` cc where cc.`Fan` = '".$userid."' ) and c.`Fan` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') limit 0,6";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$users[] = GetUser($row["Fan"], $mysqli);
@@ -248,7 +248,7 @@ function GetSuggestedPersonalities($mysqli, $userid){
 	$users = array();
 	$count = array();
 	$date = date('Y-m-d', strtotime("now -90 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` and users.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -263,7 +263,7 @@ function GetSuggestedMembers($mysqli, $userid){
 	$tracker = array();
 	$count = array();
 	$mysqli = Connect();
-	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` != '".$userid."' and u.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
+	$query = "select *, Count(`EventID`) as TotalRows from `Liked` liked, `Users` u WHERE `Access` != 'Journalist' and `Access` != 'Authenticated' and u.`ID` = liked.`UserQuoted` and `EventID` > 0 and u.`ID` != '".$userid."' and u.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and u.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `EventID` ORDER BY COUNT(  `EventID` ) DESC LIMIT 0,30";	
 
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
