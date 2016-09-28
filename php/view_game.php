@@ -664,11 +664,11 @@ function DisplayGameCard($game, $count, $classId){
 
 function DisplayGameCardWithDismiss($game, $count, $classId){
 	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
-	<div class="col s6 m3 l2" style='position:relative;height:340px;'>
+	<div class="col s6 m3 l2" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style='height:340px;'>
+	      <a class="card game-discover-dismiss-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 	        </div>
 	        <div class="card-content" style='height:140px;'>
@@ -680,8 +680,8 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
-				<div class="nav-game-actions row" style='position:absolute;left:0;right:0;bottom:0;' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s12" style='padding: 10px 0 7px;font-size:0.9em;font-weight:400'>DISMISS</div>
+				<div class="nav-game-actions row" style='position:absolute;left:0;right:0;bottom:0;margin-bottom:0;background-color:#9e9e9e;color:white;' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="col s12" style='padding: 10px 0 7px;font-size:0.8em;font-weight:500'>DISMISS</div>
 				</div>
 			  </div>
 	        </div>

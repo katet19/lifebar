@@ -615,6 +615,14 @@
 	display:block;
 }
 
+.game-discover-dismiss-card{
+	position: relative;
+	text-align: left;
+    background-color: #0a67a4;
+	height: 340px;
+	display:block;
+}
+
 .game-agree-card .card-content{
 	background-color: white;
 	height: 130px;
@@ -626,7 +634,7 @@
 	line-height: 30px;
 }
 
-.game-discover-card .card-image{
+.game-discover-card .card-image, .game-discover-dismiss-card .card-image{
 	height:200px !important;
 }	
 
@@ -634,25 +642,25 @@
 	height:14em;
 }
 
-.game-discover-card .card-content{
+.game-discover-card .card-content,  .game-discover-dismiss-card  .card-content{
 	background-color: white;
 	height: 80px;
 	padding: 0px !important;
 	height: 100px;
 }
 
-.game-discover-card .card-reveal{
+.game-discover-card .card-reveal, .game-discover-dismiss-card .card-reveal{
 	padding: 16px 24px 8px 16px !important;
 	z-index:2;
 }
 
-.game-discover-card .card-content .card-title{
+.game-discover-card .card-content .card-title, .game-discover-dismiss-card .card-content .card-title{
 	font-size: 1em;
 	line-height: 18px;
 	height:90px;
 }
 
-.game-discover-card .card-reveal .card-title{
+.game-discover-card .card-reveal .card-title, .game-discover-dismiss-card .card-reveal .card-title{
 	font-size:1em;
 	line-height: 22px;
 }
@@ -723,7 +731,7 @@
 	width: 100%;
 }
 
-.game-discover-card .card-image .card-title{
+.game-discover-card .card-image .card-title, .game-discover-dismiss-card .card-image .card-title{
 	position: absolute;
 	top: 140px;
 	left: 0;
@@ -1097,7 +1105,7 @@
 		right:0;
 		top:-2px;
 	}
-	.game-discover-card, .user-discover-card{
+	.game-discover-card, .user-discover-card, .game-discover-dismiss-card, .user-discover-card{
 		display:block;
 	}
 }
@@ -1167,7 +1175,7 @@
 	.game-discover-card .card-image{
 		height:150px !important;
 	}	
-	.game-discover-card .card-image .card-title{
+	.game-discover-card .card-image .card-title, .game-discover-dismiss-card .card-image .card-title{
 		top:100px;
 	}
 	.game-discover-card{
