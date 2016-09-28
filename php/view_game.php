@@ -680,7 +680,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
-				<div class="nav-game-actions row" style='position:absolute;left:0;right:0;bottom:0;margin-bottom:0;background-color:#9e9e9e;color:white;' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+				<div class="nav-game-actions row game-card-quick-dismiss" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>' style='position:absolute;left:0;right:0;bottom:0;margin-bottom:0;background-color:#9e9e9e;color:white;' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 					<div class="col s12" style='padding: 10px 0 7px;font-size:0.8em;font-weight:500'>DISMISS</div>
 				</div>
 			  </div>
