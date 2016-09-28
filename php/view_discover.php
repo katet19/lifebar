@@ -311,7 +311,11 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $s
 	      	</div>
 	      	<?php $count = 1;
 	  		foreach($games as $game){
-	  			DisplayGameCard($game, $count, $type);
+				  if($category == "Lifebar Backlog")
+				  	DisplayGameCardWithDismiss($game, $count, $type);
+				  else
+	  				DisplayGameCard($game, $count, $type);
+
 				$count++; 
 			} ?>
 	    </div>
