@@ -668,10 +668,11 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <a class="card game-discover-dismiss-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	      <a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        </div>
-	        <div class="card-content" style='height:140px;'>
+	        		<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'><i class="mdi-content-remove-circle-outline"></i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -3px;'>Remove from Backlog</span></div>
+			</div>
+	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 					<div class="col s3 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
@@ -680,9 +681,6 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
-				<div class="nav-game-actions row game-card-quick-dismiss" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>' style='position:absolute;left:0;right:0;bottom:0;margin-bottom:0;background-color:#9e9e9e;color:white;' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s12" style='padding: 10px 0 7px;font-size:0.8em;font-weight:500'>DISMISS</div>
-				</div>
 			  </div>
 	        </div>
 	      </a>

@@ -387,7 +387,8 @@ function AttachDiscoverHomeEvents(){
 			}
 		}
  	});
-	$(".game-card-quick-dismiss").on("click", function(){
+	$(".game-card-quick-dismiss").on("click", function(e){
+		e.stopPropagation();
 		$(this).parent().parent().parent().hide(250);
 		RemoveGameFromCollectionManage("BACKLOG", $(this).attr("data-id"));
 		$(this).parent().parent().parent().addClass("hidingLifebarBacklog");
