@@ -1143,6 +1143,9 @@
 		top:0;
 		display: inline-block;
 	}
+	.game-card-quick-dismiss {
+    	padding: 2px 0px 0px 6px;
+	}
 	#discover-header .row .col .tabs{
 		background-color:#D32F2F;
 		height:48px;
