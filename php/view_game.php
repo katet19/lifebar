@@ -662,6 +662,31 @@ function DisplayGameCard($game, $count, $classId){
       </div>
 <?php }
 
+function DisplayGameCardWithDismiss($game, $count, $classId){
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
+	<div class="col s6 m3 l2" style='position:relative;'>
+   		 <div class="collection-quick-add-container z-depth-2">
+ 			Empty Text
+ 		 </div>
+	      <a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+	        		<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'><i class="mdi-content-remove-circle-outline"></i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -3px;'>Remove from Backlog</span></div>
+			</div>
+	        <div class="card-content">
+	          <div class="card-title activator grey-text text-darken-4">
+				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="col s3 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s3 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s3 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
+					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+				</div>
+			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
+			  </div>
+	        </div>
+	      </a>
+      </div>
+<?php }
+
 function DisplaySmallGameCard($xp, $showXP = true){
 	$game = $xp->_game; ?>
 	<div class="col">

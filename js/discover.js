@@ -387,6 +387,15 @@ function AttachDiscoverHomeEvents(){
 			}
 		}
  	});
+	$(".game-card-quick-dismiss").on("click", function(e){
+		e.stopPropagation();
+		$(this).parent().parent().parent().hide(250);
+		RemoveGameFromCollectionManage("BACKLOG", $(this).attr("data-id"));
+		$(this).parent().parent().parent().addClass("hidingLifebarBacklog");
+		if($(".hidingLifebarBacklog").length >= 6){
+			$(this).parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through a slice of your backlog</div>")
+		}
+	});
  	$(".discover-invite-users").on("click", function(){
  		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
 		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
