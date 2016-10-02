@@ -46,7 +46,6 @@ function ShowGameNav($gbid){
 		<li data-tab="game-similargames-tab" data-nav="SimilarGames" class="game-similargames-tab"><i class="game-nav-icons mdi-action-list left"></i> <span>Similar Games</span></li>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;border-bottom:1px solid gray;background:transparent !important;'></div>
 		<li data-tab="game-userxp-tab" class='game-user-tab' style='display:none;margin-top:15px;'><i class="game-nav-icons mdi-social-person left"></i> <span>USER NAME</span></li>
-		<a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $gbid; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a>
 	</ul>
 	<?php
 }

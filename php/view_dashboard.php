@@ -10,7 +10,7 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
             }else if($dashitem['TYPE'] == 'Released'){
                 DisplayReleasedCard($dashitem);
             }else if($dashitem['TYPE'] == 'Platforms'){
-                DisplayPlatformsCard($dashitem['PLATFORMS']);
+                DisplayPlatformsCard($dashitem['PLATFORMS'], $dashitem['GBID']);
             }else if($dashitem['TYPE'] == 'MissingWatched'){
                 DisplayMissingWatchedCard($dashitem);
             }else if($dashitem['TYPE'] == 'HaveQuote'){
@@ -20,7 +20,7 @@ function ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $simil
             }else if($dashitem['TYPE'] == 'HaveProgress'){
                 DisplayHaveProgressCard($dashitem);
             }else if($dashitem['TYPE'] == 'Developer'){
-                DisplayDeveloperCard($dashitem['DEVELOPERS']);
+                DisplayDeveloperCard($dashitem['DEVELOPERS'], $dashitem['GBID']);
             }else if($dashitem['TYPE'] == 'Collection'){
                 DisplayCollectionCard($dashitem['COLLECTIONS']);
             }else if($dashitem['TYPE'] == 'Similar'){
@@ -114,7 +114,7 @@ function DisplaySimilarCard($dashitem){
     }
 }
 
-function DisplayDeveloperCard($developers){
+function DisplayDeveloperCard($developers, $gbid){
     if(sizeof($developers) > 0){
     ?>
         <div class='col <?php if(sizeof($developers) >= 5){ echo "s12"; }else if(sizeof($developers) >= 2){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>
@@ -125,6 +125,7 @@ function DisplayDeveloperCard($developers){
                         DisplayKnowledge($developer, "gamedash");
                     } ?>
                 </div>
+                <a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $gbid; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a> 
             </div>
         </div>
     <?php
@@ -164,7 +165,7 @@ function DisplayMissingWatchedCard($dashitem){
     <?php
 }
 
-function DisplayPlatformsCard($platforms){
+function DisplayPlatformsCard($platforms, $gbid){
     if(sizeof($platforms) > 0){
         ?>
         <div class='col <?php if(sizeof($platforms) >= 6){ echo "s12"; }else if(sizeof($platforms) >= 3){ echo "s12 m6"; }else{ echo "s12 m6 l4"; } ?>'>
@@ -175,6 +176,7 @@ function DisplayPlatformsCard($platforms){
                         DisplayGearMilestone($platform);
                     } ?>
                 </div>
+                <a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $gbid; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a> 
             </div>
         </div>
         <?php
@@ -208,7 +210,8 @@ function DisplayReleasedCard($dashitem){
         <div class='col s12 m6 l4'>
             <div class="dashboard-card">
                 <div class="dashboard-card-tiny-header">US Release</div>
-                <div class="dashboard-card-date-unknown"><?php echo $dashitem['HEADER']; ?></div> 
+                <div class="dashboard-card-date-unknown"><?php echo $dashitem['HEADER']; ?></div>
+                <a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $dashitem['GBID']; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a> 
             </div>
         </div>
     <?php }else{ ?>
@@ -220,6 +223,7 @@ function DisplayReleasedCard($dashitem){
                 <?php if(isset($dashitem['AGE'])){ ?>
                     <div class="dashboard-card-date-info">You were about <b><?php echo $dashitem['AGE']; ?></b> yrs old</div>
                 <?php } ?>
+                <a class="game-gb-ref" href="http://giantbomb.com/game/3030-<?php echo $dashitem['GBID']; ?>" target="_blank">Powered by <span>Giant Bomb</span> API</a>
             </div>
         </div>
     <?php }
