@@ -50,12 +50,15 @@
 	} 
     if($game->_year >= $_SESSION['logged-in']->_birthdate && date('Y') > $game->_year)
         $dashitem['AGE'] = $game->_year - $_SESSION['logged-in']->_birthdate;
+    
+    $dashitem['GBID'] = $game->_gbid;
     $dashboarditems[] = $dashitem;
 
     //Add Platform Card
     unset($dashitem);
     $dashitem['TYPE'] = 'Platforms';
 	$dashitem['PLATFORMS'] = GetPlatformsForGame($userid, $game->_gbid);
+    $dashitem['GBID'] = $game->_gbid;
     $dashboarditems[] = $dashitem;
 
     //Add Relative to Year Card
@@ -92,6 +95,7 @@
     unset($dashitem);
     $dashitem['TYPE'] = 'Developer';
 	$dashitem['DEVELOPERS'] = GetDevelopersForGame($userid, $game->_gbid);
+    $dashitem['GBID'] = $game->_gbid;
     $dashboarditems[] = $dashitem;
 
     //Add Collection Count
