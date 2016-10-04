@@ -645,10 +645,19 @@ refpt-header-subquestion-hidden{
     font-weight: 400;
     font-size: 0.8em;
     color: #dddddd;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .game-gb-ref span{
 	font-weight:bold;
+}
+
+.game-gb-ref:hover{
+    color: #999;
 }
 
 @media only screen and (max-width : 992px) {
