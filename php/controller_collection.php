@@ -642,7 +642,12 @@ function AddToCollection($collectionID, $gbid, $userid, $skipEvent = false){
 }
 
 function RemoveFromCollection($collectionID, $gameID, $userid, $forceDelete = false){
-	$collection = GetCollectionByID($collectionID);
+	if($collectionID == "BACKLOG"){
+		$collection = GetCollectionByNameForUser("Lifebar Backlog",$userid,$userid);
+		$collectionID = $collection->_id;
+	}else
+		$collection = GetCollectionByID($collectionID);
+
 	if($collection->_createdby > 0 || $forceDelete){
 		$mysqli = Connect();
 		$mysqli->query("delete from `CollectionGames` where `CollectionID` = '".$collectionID."' and `GameID` = '".$gameID."'");

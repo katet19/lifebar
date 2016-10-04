@@ -639,15 +639,25 @@ refpt-header-subquestion-hidden{
 .game-gb-ref{
     padding: 5px 12px 0px 15px;
     position: absolute;
-    bottom: 0px;
+    bottom: 5px;
+    right: 0;
+    left: 0;
     font-weight: 400;
-    font-size: 0.9em;
-	color: #616161;
+    font-size: 0.8em;
+    color: #dddddd;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .game-gb-ref span{
 	font-weight:bold;
-	color: #1E88E5;
+}
+
+.game-gb-ref:hover{
+    color: #999;
 }
 
 @media only screen and (max-width : 992px) {
