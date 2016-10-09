@@ -979,7 +979,7 @@ else {
   				ShowLanding();
   				$this.find(".indicator").css({"display":"none"});
   			}else{
-  				ShowActivityHome();
+  				ShowDiscoverHome();
   				$this.find(".indicator").css({"display":"block"});
   			}
       }
