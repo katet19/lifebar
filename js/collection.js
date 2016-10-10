@@ -695,7 +695,7 @@ function AttachEditModeEvents(fromid, from){
 }
 
 function GetNextPageCollection(offset, userid, from){
- 	$(".collection-games-container").html("<div class='progress' style='height: 8px;margin-top: -5px;background-color:#C5CAE9;margin-bottom:75px;'><div class='indeterminate' style='background-color:#3F51B5;'></div></div>");
+ 	$(".collection-games-container").html("<div class='progress' style='height: 8px;margin-top: -5px;background-color:#C5CAE9;margin-bottom:75px;'><div class='indeterminate' style='background-color:#673AB7;'></div></div>");
  	window.scrollTo(0, 0);
 	var collectionid = $(".collection-details-name").attr('data-id');
 	var editMode = false;
@@ -724,7 +724,7 @@ function GetNextPageCollection(offset, userid, from){
 }
 
 function SearchCollection(searchstring, offset, userid, from){
- 	$(".collection-games-container").html("<div class='progress' style='height: 8px;margin-top: -5px;background-color:#C5CAE9;margin-bottom:75px;'><div class='indeterminate' style='background-color:#3F51B5;'></div></div>");
+ 	$(".collection-games-container").html("<div class='progress' style='height: 8px;margin-top: -5px;background-color:#C5CAE9;margin-bottom:75px;'><div class='indeterminate' style='background-color:#673AB7;'></div></div>");
  	window.scrollTo(0, 0);
 	var collectionid = $(".collection-details-name").attr('data-id');
 	var editMode = false;

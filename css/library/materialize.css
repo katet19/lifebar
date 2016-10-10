@@ -2212,7 +2212,7 @@ span.badge {
     font-weight: 300;
     font-size: 0.8rem;
     color: #fff;
-    background-color: #2196F3;
+    background-color: #FF5252;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -5106,7 +5106,7 @@ small {
     .card .card-title.activator {
       cursor: pointer; }
   .card a {
-    color: #2196F3;
+    color: #FF5252;
     margin-right: 16px;
     -webkit-transition: color 0.3s ease;
     -moz-transition: color 0.3s ease;
@@ -5253,7 +5253,7 @@ small {
 ul.tabs {
   position: relative;
   height: 48px;
-  background-color: #3F51B5;
+  background-color: #673AB7;
   margin: 0 auto;
   width: 100%;
   white-space: nowrap; }
@@ -5261,7 +5261,7 @@ ul.tabs {
     display: block;
     float: left;
     text-align: center;
-    background-color: #3F51B5;
+    background-color: #673AB7;
     line-height: 48px;
     height: 48px;
     padding: 0 20px;
@@ -5366,7 +5366,7 @@ ul.tabs li.tab {
 .btn, .btn-large {
   text-decoration: none;
   color: #FFF;
-  background-color: #2196F3;
+  background-color: #FF5252;
   text-align: center;
   letter-spacing: 0.8px;
   -webkit-transition: 0.2s ease-out;
@@ -5386,7 +5386,7 @@ ul.tabs li.tab {
   height: 37px;
   line-height: 37px;
   padding: 0;
-  background-color: #2196F3;
+  background-color: #FF5252;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;

@@ -10,7 +10,7 @@ function AddInviteEmail($user, $email, $custom){
 		$message = $message."<p style='font-size:16px;font-weight:400;'>".$user->_username." says:</p>";
 		$message = $message."<p style='font-size:16px;font-style:italic;text-align:left;'>".$custom."</p><br><br>";
 	}
-	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>Sign Up!</a>";
+	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#FF5252;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>Sign Up!</a>";
 	$message = $message."<p style='font-size:1.5em;text-align:left;'>Lifebar will help you <b>discover</b> new games, <b>share</b> your experiences and <b>visualize</b> a lifetime of gaming.</p>";
 	$message = $message."<div style='text-align:left;'>";
 	$message = $message."<p style='color:#0a67a3;font-size:20px;'>Play Games. Watch Games. <b>Earn XP!</b></p>";
@@ -22,7 +22,7 @@ function AddInviteEmail($user, $email, $custom){
 	$message = $message."<p style='color:#0a67a3;font-size:20px;font-weight:500;'>Try out the <b>beta</b>!</p>";
 	$message = $message."Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. Please join us in building a service that captures what we experience, why we experience it and how we experience video games!<br><br>";
 	$message = $message."</div>";
-	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 15px;margin-bottom:30px;display:inline-block;'>Start building your Lifebar today!</a><br>";
+	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#FF5252;cursor:pointer;text-align:center;padding:5px 15px;margin-bottom:30px;display:inline-block;'>Start building your Lifebar today!</a><br>";
 	$message = $message."Thanks,<br>The Lifebar Team<br><br>";
 	InsertToEmailQue(trim($email), $from, $user->_id, $subject, $message, 'Invite', '');
 	
@@ -39,7 +39,7 @@ function AddAgreedEmail($gameid, $userid, $agreedwith, $eventid){
 		$from = $username." [via Lifebar]";
 		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
 		$body = $body."<div style='font-size:1.5em;padding: 0 50px 20px;'><b>".$username."</b> <MINDTHEGAP> appreciated your thoughts on <i>".$game->_title."</i> and gave you a 1up!</div>";
-		$body = $body."<a href='http://lifebar.io/1/u.php?i=e".$eventid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW</a>";
+		$body = $body."<a href='http://lifebar.io/1/u.php?i=e".$eventid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#FF5252;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW</a>";
 		$body = $body."<div style='color: #212121 !important;padding: 20px 50px 50px;'><b>\"</b>".$event->_quote."<b>\"</b></div>";
 		InsertToEmailQue($emailUser->_email, $from, $agreedwith, $subject, $body, '1up', $eventid);
 	}
@@ -54,7 +54,7 @@ function AddFollowingEmail($userid, $following){
 		$from = $username." [via Lifebar]";
 		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
 		$body = $body."<div style='font-size:1.5em;padding: 0 50px 20px;'><b>".$username."</b> wants to see what you think about games, who you follow and what collections you will build!</div>";
-		$body = $body."<a href='http://lifebar.io/1/u.php?i=u".$userid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#2196F3;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW PROFILE</a>";
+		$body = $body."<a href='http://lifebar.io/1/u.php?i=u".$userid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#FF5252;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW PROFILE</a>";
 		InsertToEmailQue($emailUser->_email, $from, $following, $subject, $body, 'Following', $userid);
 	}
 }
