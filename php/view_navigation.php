@@ -17,7 +17,7 @@ function DisplayHeaderNavigation(){ ?>
 	</div>
 	<div id='onboarding-header'>
 		<div class="onboarding-progress">Step: 1 of 3</div>
-  		<div class="btn onboarding-next" style='color:#D32F2F;background-color:white;font-weight:bold;-webkit-box-shadow:none;box-shadow:none;margin-right: 30px;float:right;'>Next</div>
+  		<div class="btn onboarding-next" style='color:#3F51B5;background-color:white;font-weight:bold;-webkit-box-shadow:none;box-shadow:none;margin-right: 30px;float:right;'>Next</div>
 	</div>
 	<div id="navigation-header">
 		<div class="row" style='margin:0;'>

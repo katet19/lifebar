@@ -8,7 +8,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 		<link href="../css/main.css" rel="stylesheet" type="text/css" />
 	</head>
-	<body style='background-color:#D32F2F;color:white;text-align:center;padding:50px 25px'>
+	<body style='background-color:#3F51B5;color:white;text-align:center;padding:50px 25px'>
 		<div><?php DisplayLifeBarLogo(false); ?></div>
 	</body>
 	</html>
@@ -30,7 +30,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
-<meta name="theme-color" content="#D32F2F">
+<meta name="theme-color" content="#3F51B5">
 	<?php if(isset($_GET['game'])){ ?>
 		<meta name="description" content="<?php echo $game->_title." "; 
 				if($game->_developer != ''){ echo "developed by ".$game->_developer." "; }
