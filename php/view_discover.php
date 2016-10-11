@@ -272,7 +272,7 @@ function DisplayDailyHeader($zdepth, $item){
 						</div>
 						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
 							<div class='btn submit-daily-response'>Save</div>
-							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
+							<div class='btn cancel-daily-response cancel-button'>Cancel</div>
 							<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
 						</div>
 					</div>

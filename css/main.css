@@ -126,6 +126,15 @@ body{
 
 .tierBorderColor5selected{ border-color:#DB0058 !important; background-color:#DB0058 !important; color:white !important; }
 
+.cancel-button{
+  background-color:#757575;
+  color:white;
+}
+
+.cancel-button:hover{
+  background-color:#F44336;
+}
+
 #toast-container > div{
 	text-align: center !important;
 }

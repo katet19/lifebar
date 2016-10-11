@@ -187,7 +187,7 @@ function DailyForm($game, $user, $refptid){
 		<div class="row">
 			<div class="col s10 offset-s1" style='margin-top: 75px;'>
 				<div class='btn <?php if($refpt != ''){ ?>update-daily<?php }else{ ?>submit-daily<?php } ?>'><?php if($refpt != ''){ ?>Update Reflection Point<?php }else{ ?>Submit for review<?php } ?></div>
-				<div class='btn cancel-daily' style='background-color:#F44336'>Cancel</div>
+				<div class='btn cancel-daily cancel-button'>Cancel</div>
 				<?php if($refpt != ''){ ?>
 					<div class='btn save-as-daily'>Save as New Reflection Point</div>
 					<div class='btn-flat delete-daily' style='color:red;'>Delete</div>

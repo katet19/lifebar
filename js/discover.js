@@ -515,7 +515,8 @@ function AttachWatchedDiscoverXP(){
 					$(".myxp-video-goto-full").hide();
 					AttachActivityVideoEvents();
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
-					xpElement.css({"background-color":"#F44336"});
+					xpElement.css({"background-color":"#757575"});
+					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
 					$(".daily-watch-title-xp").unbind();
 					$(".daily-watch-title-xp").on('click', function(){
 						$(".daily-watch-title").show();
