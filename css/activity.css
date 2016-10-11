@@ -294,7 +294,7 @@
 
 .activity-category-selected{
 	font-weight:bold;
-	color: #FF5252 !important;
+	color: #F50057 !important;
 }
 
 .activity-category-selector{
@@ -309,7 +309,7 @@
 }
 
 .activity-category-selector:hover{
-	color: #FF5252 !important;
+	color: #F50057 !important;
 }
 
 .feed-tier-changed-before{

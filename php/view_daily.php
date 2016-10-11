@@ -48,7 +48,7 @@ function ShowFormResults($formid, $choices, $gamePage){
 function GetRandomColors($random){
 	$colors = array();
 	$colors[] = ["#3F51B5","#7E57C2"];
-	$colors[] = ["#FF5252","#42A5F5"];
+	$colors[] = ["#F50057","#42A5F5"];
 	$colors[] = ["#E91E63","#EC407A"];
 	$colors[] = ["#FFEB3B","#FFEE58"];
 	$colors[] = ["#009688","#26A69A"];

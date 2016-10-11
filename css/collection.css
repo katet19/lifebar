@@ -10,7 +10,7 @@
 
 .collection-box-container:hover .collection-box{
     opacity:0.9;
-    background-color: #FF5252;
+    background-color: #F50057;
 }
 
 .collection-box{
@@ -52,11 +52,11 @@
 }
 
 .collection-add:hover{
-	background-color: #FF5252;
+	background-color: #F50057;
 }
 
 .collection-empty{
-    background-color: #FF5252;
+    background-color: #F50057;
     color: white;
     padding: 23px 10px;
     text-align: center;
@@ -641,12 +641,12 @@
 }
 
 .collection-myxp-quarter:hover{
-    background-color:#FF5252;
+    background-color:#F50057;
     color:white;
 }
 
 .collection-myxp-quarter-selected{
-    background-color:#FF5252;
+    background-color:#F50057;
     color:white;
 }
 
@@ -737,7 +737,7 @@
 }
 
 .watched-type-box:hover, .watched-type-box-small:hover{
-    background-color: #FF5252;
+    background-color: #F50057;
     color: white;
 }
 
@@ -757,7 +757,7 @@
     display:none;
 }
 .watched-type-box-selected{
-    background-color: #FF5252;
+    background-color: #F50057;
     color: white;
 }
 
