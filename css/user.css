@@ -356,7 +356,7 @@
 .user-preview-card-container .card-action .btn-flat{
   margin: 5px 0 5px;
   padding: 0 5% 0 0;
-  color: #FF5252;
+  color: #F50057;
   font-size: 14px;
   font-weight: 500;
 }
@@ -495,7 +495,7 @@
 .social-login-btn{
 	font-size: 25px;
     display: inline-block;
-    background-color: #FF5252;
+    background-color: #F50057;
     border-radius: 50%;
     height: 50px;
     line-height: 50px;
@@ -543,7 +543,7 @@
 .settings-promo-msg{
     margin-top: -20px;
     margin-left: 50px;
-    color: #FF5252;
+    color: #F50057;
     font-weight: 500;
 }
 

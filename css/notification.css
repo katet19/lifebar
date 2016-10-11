@@ -31,7 +31,7 @@
 
 .notification-category-selected{
 	font-weight:bold;
-	color: #FF5252 !important;
+	color: #F50057 !important;
 }
 
 .notification-category-selector{
@@ -46,7 +46,7 @@
 }
 
 .notification-category-selector:hover{
-	color: #FF5252 !important;
+	color: #F50057 !important;
 }
 
 .notification-category-total{
