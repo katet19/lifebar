@@ -522,7 +522,7 @@ function AttachWatchedDiscoverXP(){
 						$(".daily-watch-xp-entry").hide();
 						$(".daily-watch-xp-entry").html("");
 						xpElement.html("ADD <i class='mdi-action-visibility'></i>");
-						xpElement.css({"background-color":"#0e4c7b"});
+						xpElement.css({"background-color":"#F50057"});
 						AttachWatchedDiscoverXP();
 					});
 				},
