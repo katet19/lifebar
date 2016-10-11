@@ -5253,7 +5253,7 @@ small {
 ul.tabs {
   position: relative;
   height: 48px;
-  background-color: #673AB7;
+  background-color: #3F51B5;
   margin: 0 auto;
   width: 100%;
   white-space: nowrap; }
@@ -5261,7 +5261,7 @@ ul.tabs {
     display: block;
     float: left;
     text-align: center;
-    background-color: #673AB7;
+    background-color: #3F51B5;
     line-height: 48px;
     height: 48px;
     padding: 0 20px;

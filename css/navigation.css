@@ -175,7 +175,7 @@
 	width:100%;
 	text-align:center;
     padding-top: 9px;
-    background-color:#673AB7;
+    background-color:#3F51B5;
 }
 
 #navigation-header{
@@ -183,7 +183,7 @@
 }
 
 #navigationContainer{
-	background-color:#673AB7;
+	background-color:#3F51B5;
 	color:white;
 	width:100%;
 	position:fixed;
@@ -742,7 +742,7 @@
 	}
 	
 	.backContainer{
-		background-color:#673AB7;
+		background-color:#3F51B5;
 		top: 75px;
 	}
 	

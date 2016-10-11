@@ -1147,7 +1147,7 @@
     	padding: 2px 0px 0px 6px;
 	}
 	#discover-header .row .col .tabs{
-		background-color:#673AB7;
+		background-color:#3F51B5;
 		height:48px;
 	}
 	#discover-header .row .col .tabs .indicator{
@@ -1160,7 +1160,7 @@
 		margin:0;
 	}
 	#discover-header .row .col .tabs .tab a{
-		background-color:#673AB7;
+		background-color:#3F51B5;
 		opacity:1;	
 		-webkit-transition: all 0.25s ease;
 	    -moz-transition: all 0.25s ease;
