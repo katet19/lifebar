@@ -309,21 +309,21 @@ function FeedXPItem($feed, $conn, $mutualconn){
 		</div>
 		<div class="feed-activity-icon-col">
 				<?php if($user->_security == "Journalist"){ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-subject"></i></div>
+					<div class="feed-activity-icon-xp"><i class="mdi-action-subject"></i></div>
 				<?php }else if(sizeof($feed) > 0){ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
 				<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?> 
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-device-access-time"></i></div>
+					<div class="feed-activity-icon-xp"><i class="mdi-device-access-time"></i></div>
 				<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-done"></i></div>
+					<div class="feed-activity-icon-xp"><i class="mdi-action-done"></i></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0 && sizeof($feed[0][3]->_playedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-content-create"></i></div>
+					<div class="feed-activity-icon-xp"><i class="mdi-content-create"></i></div>
 				<?php }else if(sizeof($feed[0][3]->_playedxp) > 0){ ?> 
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
 				<?php }else{ ?>
-					<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-content-create"></i></div>
+					<div class="feed-activity-icon-xp"><i class="mdi-content-create"></i></div>
 				<?php } ?>
 		</div>
 		<div class="feed-content-col">
@@ -465,7 +465,7 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-social-people"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-social-people"></i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -519,7 +519,7 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -568,7 +568,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-bookmark"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-action-bookmark"></i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -618,7 +618,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-swap-vert"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-action-swap-vert"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -692,7 +692,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-description"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-action-description"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -779,7 +779,7 @@ function FeedGameReleasesItem($feed){ ?>
 			<div class="feed-avatar" style='box-shadow:none;'></div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-action-event"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-action-event"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -822,7 +822,7 @@ function FeedCollectionCreationItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -868,7 +868,7 @@ function FeedCollectionFollowItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -919,7 +919,7 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp" style='background-color:#F50057;'><i class="fa fa-steam"></i></div>
+			<div class="feed-activity-icon-xp"><i class="fa fa-steam"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
