@@ -27,7 +27,7 @@ function DisplayHeaderNavigation(){ ?>
 		    <div class="col s5 m6 l5">
 		      <ul class="tabs mainNav">
 		      	<li class="tab col s3"><a href="#discover" class="<?php if($_SESSION['logged-in'] == null){ ?>active<?php } ?> waves-effect waves-light">Discover</a></li>
-		        <li class="tab col s3"><a href="#activity" class="<?php if($_SESSION['logged-in'] != null){ ?>active<?php } ?> waves-effect waves-light">Activity</a></li>
+		        <li class="tab col s3"><a href="#activity" class="waves-effect waves-light">Activity</a></li>
 		        <li class="tab col s3"><a href="#profile" class="waves-effect waves-light">Profile</a></li>
 		        <?php if($_SESSION['logged-in'] != null){ ?><li class="tab col s3"><a href="#notifications" style='display:none;' class="waves-effect waves-light">Notifications</a></li><?php } ?>
 		      </ul>
