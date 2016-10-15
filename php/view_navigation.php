@@ -22,7 +22,7 @@ function DisplayHeaderNavigation(){ ?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
 						<div class="searchContainer">
-							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<i class="SearchBtn material-icons small" style="color:white;vertical-align:middle;padding: 0 0.5em;">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 						</div>
@@ -31,7 +31,7 @@ function DisplayHeaderNavigation(){ ?>
 				<?php }else{ ?>
 				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
 						<div class="searchContainerAnonymous" style='margin-top: 0.5em;'>
-							<i class="SearchBtn mdi-action-search small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i>
+							<i class="SearchBtn material-icons small" style="color:white;vertical-align:middle;padding: 0 0.5em;">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 						</div>
