@@ -1,7 +1,7 @@
 
 function InitializeNavigation(){
 	$('.mainNav').tabs();
-	$("#slide-out li").on('click', function(e){ SideNavigation($(this)); });
+	$(".nav-icon").on('click', function(e){ SideNavigation($("#nav-slide-out"); });
 	UserAccountNav();
 	AttachTabLoadingEvents();
 	CheckForNotifications();

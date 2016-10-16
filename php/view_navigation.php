@@ -9,11 +9,11 @@ function DisplayHeaderNavigation(){ ?>
   		<div class="btn onboarding-next" style='color:#D32F2F;background-color:white;font-weight:bold;-webkit-box-shadow:none;box-shadow:none;margin-right: 30px;float:right;'>Next</div>
 	</div>
 	<div id="navigation-header">
-		<div class="row" style='margin:0;'>
-			<div class="col s2">
-				<i class="mdi-navigation-menu small" style='color:white'></i>
+		<div class="row navigation-row">
+			<div class="col s1 navigation-col">
+				<i class="material-icons nav-icon">menu</i>
 			</div>
-		    <div class="col s10">
+		    <div class="col s11 navigation-col">
 				<?php if($_SESSION['logged-in'] != null){
 				     DisplayLifeBarForUser();
 				 }else{ 
@@ -26,7 +26,7 @@ function DisplayHeaderNavigation(){ ?>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 						</div>
-						<div class="userNotificiations"><i class="mdi-social-notifications-none"></i></div>
+						<div class="userNotificiations"><i class="material-icons">notifications none</i></div>
 					</div>
 				<?php }else{ ?>
 				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
@@ -84,7 +84,7 @@ function DisplayLifebarForUser(){
 }
 
 function DisplaySideDrawer(){ ?>
-  <ul id="slide-out" class="side-nav full">
+  <ul id="nav-slide-out" class="side-nav full">
 	<li class="side-nav-logo" style="display:none">
 		<div class="logoIcon"><img src="http://lifebar.io/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
 		<div class="logoTitle">Save Game</div>
