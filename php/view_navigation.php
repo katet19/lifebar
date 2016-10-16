@@ -84,37 +84,22 @@ function DisplayLifebarForUser(){
 }
 
 function DisplaySideDrawer(){ ?>
-  <ul id="nav-slide-out" class="side-nav full">
-	<li class="side-nav-logo" style="display:none">
-		<div class="logoIcon"><img src="http://lifebar.io/Images/Generic/WeaveLogoDark.svg" style="width:2.5em" ></div>
-		<div class="logoTitle">Save Game</div>
-  	</li>
-  	<li class="side-nav-logo">
-  		<?php if($_SESSION['logged-in'] != null){ ?>
-	  		<a href="#!">
-				<div class="userAvatar" style="background:url(<?php echo $_SESSION['logged-in']->_thumbnail; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="userNameTitle"><?php echo $_SESSION['logged-in']->_username; ?></div>
-			</a>
-		<?php }else{ ?>
-			<a id="loginButtonSideNav" class="waves-effect waves-light btn" href="#loginModal">Login</a>
-			<a id="signupButtonSideNav" class="waves-effect waves-light btn" href="#signupModal">Signup</a>
-		<?php } ?>
-  	</li>
-  	<li class="divider"></li>
-    <li><a href="#activity">Activity</a></li>
-    <li><a href="#profile">Profile</a></li>
-    <li><a href="#discover">Discover</a></li>
+  <ul id="nav-slide-out" class="nav-display-slide-out">
+	<li class="nav-slide-out-selected-page"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
+    <li><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
+    <li><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>
+	<li><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>
     <?php if($_SESSION['logged-in'] != null){ ?>
-    	<li><a href="#notifications">Notifications</a></li>
-	    <li class="divider"></li>
-		<li><a href="#!" class="settingsButton">Settings</a></li>
+    	<li><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
+	    <div class="divider"></div>
+		<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
-			<li><a href="#!" class="adminButton">Admin</a></li>
+			<li><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 		<?php } ?>
-		<li><a href="#!" class="supportForumButton">Support</a></li>
-		<li><a href="#!" class="supportBlogButton">Blog</a></li>
-		<li><a href="#!" class="supportButton">Report Bug</a></li>
-		<li><a href="#!" class="signOutButton">Sign out</a></li>
+		<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
+		<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>
+		<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>
+		<li><a href="#!" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
 	<?php } ?>
   </ul>
 <?php }

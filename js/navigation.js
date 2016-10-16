@@ -1,12 +1,54 @@
 
 function InitializeNavigation(){
-	$('.mainNav').tabs();
-	$(".nav-icon").on('click', function(e){ SideNavigation($("#nav-slide-out")); });
+	AttachSideNav();
+	NavigateToPage("#discover");
+	/*
+		OLD
+	*/
 	UserAccountNav();
 	AttachTabLoadingEvents();
 	CheckForNotifications();
 	CheckForUpdates();
 }
+
+function AttachSideNav(){
+	$(".nav-icon").on("click", function(){
+		if($(".nav-display-slide-out").length == 0)
+			DisplaySideNav();
+		else
+			HideSideNav();
+	});
+	$("#nav-slide-out li").on("click", function(){
+		$(".nav-slide-out-selected-page").removeClass("nav-slide-out-selected-page");
+		$(this).addClass("nav-slide-out-selected-page");
+		NavigateToPage($(this).find("a").attr("href"));
+	});
+}
+
+function DisplaySideNav(){
+	$("#nav-slide-out").addClass("nav-display-slide-out");
+	$(".outerContainer").addClass("outerContainer-slide-out");
+}
+
+function HideSideNav(){
+	$("#nav-slide-out").removeClass("nav-display-slide-out");
+	$(".outerContainer").removeClass("outerContainer-slide-out");
+}
+
+function NavigateToPage(page){
+	if(page == "#discover")
+		ShowDiscoverHome();
+	else if(page == "#activity")
+		ShowActivityHome();
+	else
+		ShowDiscoverHome();
+}
+
+/*
+
+OLD STUFF
+
+*/
 
 function ManuallyNavigateToTab(tab){
 	$("#navigation-header .row .col .tabs .tab a").each(function(){
