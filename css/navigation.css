@@ -61,19 +61,19 @@
 }
 
 #nav-slide-out li:hover a{
-	color:white;
+	color:white !important;
 }
 
 .nav-slide-out-selected-page{
 	background-color:#3F51B5;
 }
 
-.nav-slide-out-selected-page>a{
+#nav-slide-out li.nav-slide-out-selected-page>a{
 	color:white !important;
 }
 
 #nav-slide-out li a{
-	color: #616161;
+	color: #616161 !important;
 }
 
 #nav-slide-out li a i{

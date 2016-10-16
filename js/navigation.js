@@ -1,7 +1,8 @@
 
 function InitializeNavigation(){
 	AttachSideNav();
-	NavigateToPage("#discover");
+	var pagedata = location.hash.split('/');
+	NavigateToPage(pagedata, true);
 	/*
 		OLD
 	*/
@@ -35,13 +36,34 @@ function HideSideNav(){
 	$(".outerContainer").removeClass("outerContainer-slide-out");
 }
 
-function NavigateToPage(page){
-	if(page == "#discover")
-		ShowDiscoverHome();
-	else if(page == "#activity")
-		ShowActivityHome();
-	else
-		ShowDiscoverHome();
+function NavigateToPage(page, multiple = false){
+	if(multiple){
+		if(page[0] == "#collection"){
+			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
+		}else if(page[0] == "#game" && page[1] > 0){
+		  if(page[3] == "User")
+		    page[3] = "User/"+page[4]+"/"+page[5];
+			ShowGame(page[1], '', true, false, page[3]);
+		}else if(page[0] == "#profile" && page[1] > 0){
+			ShowUserProfile(page[1], false);
+		}else if(page[0] == "#search" && page[1] != ''){
+			Search(page[1]);
+		}else
+			ShowDiscoverHome();
+	}else{
+		if(page == "#discover" || page == "#daily")
+			ShowDiscoverHome();
+		else if(page == "#activity")
+			ShowActivityHome();
+		else if(page == "#notifications")
+			ShowNotificationsHome();
+		else if(page == "#admin")
+			ShowAdminHome();
+		else if(page == "#landing")
+			ShowLanding();
+		else
+			ShowDiscoverHome();
+	}
 }
 
 /*
