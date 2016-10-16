@@ -29,11 +29,17 @@ function AttachSideNav(){
 function DisplaySideNav(){
 	$("#nav-slide-out").addClass("nav-display-slide-out");
 	$(".outerContainer").addClass("outerContainer-slide-out");
+	$(".navigation-menu").addClass("navigation-menu-slide-out");
+	$(".navigation-menu-logo").addClass("navigation-menu-logo-slide-out");
+	$(".navigation-lifebar").addClass("navigation-lifebar-slide-out");
 }
 
 function HideSideNav(){
 	$("#nav-slide-out").removeClass("nav-display-slide-out");
 	$(".outerContainer").removeClass("outerContainer-slide-out");
+	$(".navigation-menu").removeClass("navigation-menu-slide-out");
+	$(".navigation-menu-logo").removeClass("navigation-menu-logo-slide-out");
+	$(".navigation-lifebar").removeClass("navigation-lifebar-slide-out");
 }
 
 function NavigateToPage(page, multiple = false){
@@ -61,6 +67,8 @@ function NavigateToPage(page, multiple = false){
 			ShowAdminHome();
 		else if(page == "#landing")
 			ShowLanding();
+		else if(page == "#profile")
+			ShowUserProfile($(".userContainer").attr("data-id"), true);
 		else
 			ShowDiscoverHome();
 	}

@@ -10,10 +10,11 @@ function DisplayHeaderNavigation(){ ?>
 	</div>
 	<div id="navigation-header">
 		<div class="row navigation-row">
-			<div class="col s1 navigation-col">
+			<div class="col navigation-col navigation-menu navigation-menu-slide-out">
 				<i class="material-icons nav-icon">menu</i>
+				<div class="navigation-menu-logo navigation-menu-logo-slide-out"><b>Life</b>bar</div>
 			</div>
-		    <div class="col s11 navigation-col">
+		    <div class="col navigation-col navigation-lifebar navigation-lifebar-slide-out">
 				<?php if($_SESSION['logged-in'] != null){
 				     DisplayLifeBarForUser();
 				 }else{ 
@@ -22,7 +23,7 @@ function DisplayHeaderNavigation(){ ?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
 						<div class="searchContainer">
-							<i class="SearchBtn material-icons small" style="color:white;vertical-align:middle;padding: 0 0.5em;">search</i>
+							<i class="SearchBtn material-icons small">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 						</div>
@@ -30,8 +31,8 @@ function DisplayHeaderNavigation(){ ?>
 					</div>
 				<?php }else{ ?>
 				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
-						<div class="searchContainerAnonymous" style='margin-top: 0.5em;'>
-							<i class="SearchBtn material-icons small" style="color:white;vertical-align:middle;padding: 0 0.5em;">search</i>
+						<div class="searchContainer" style='margin-top: 0.5em;'>
+							<i class="SearchBtn material-icons small">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
 							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
 						</div>
@@ -90,15 +91,17 @@ function DisplaySideDrawer(){ ?>
     <li><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>
 	<li><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>
     <?php if($_SESSION['logged-in'] != null){ ?>
-    	<li><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
 	    <div class="divider"></div>
+		<li><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
 		<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 			<li><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 		<?php } ?>
-		<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
+		<div class="divider"></div>
 		<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>
+		<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
 		<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>
+		<div class="divider"></div>
 		<li><a href="#!" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
 	<?php } ?>
   </ul>
