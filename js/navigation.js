@@ -25,11 +25,11 @@ function AttachBrowserStateHandling(){
 	}
 
 	window.onhashchange = function() {
-		if (!window.innerDocClick) {
-			//history.back();
-        	//window.location = document.referrer;
-			//var pagedata = window.location.split('/');
-			//NavigateToPage(pagedata, true);
+		if (!window.innerDocClick && window.location.hash != '') {
+			history.back();
+        	window.location = document.referrer;
+			var pagedata = window.location.split('/');
+			NavigateToPage(pagedata, true);
 		}
 	}
 }
