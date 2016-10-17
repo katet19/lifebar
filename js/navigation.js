@@ -28,7 +28,7 @@ function AttachBrowserStateHandling(){
 		if (!window.innerDocClick && window.location.hash != '') {
 			history.back();
         	window.location = document.referrer;
-			var pagedata = window.location.split('/');
+			var pagedata = window.location.hash.split('/');
 			NavigateToPage(pagedata, true);
 		}
 	}
