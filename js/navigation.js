@@ -15,10 +15,10 @@ function InitializeNavigation(){
 
 function AttachBrowserStateHandling(){
 	window.addEventListener('popstate', function(event) {
-		history.back();
-        window.location = document.referrer;
-		var pagedata = window.location.split('/');
-		NavigateToPage(pagedata, true);
+		//history.back();
+        //window.location = document.referrer;
+		//var pagedata = window.location.split('/');
+		//NavigateToPage(pagedata, true);
 	}, false);
 }
 
