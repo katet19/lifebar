@@ -7,9 +7,6 @@ function DisplayActivity($userid, $filter){
 				DisplayMainActivity($userid, $filter);
 			?>
 		</div>
-		<?php
-			DisplayActivitySecondaryContent($userid);
-		?>
 	</div>
 <?php	
 }
@@ -938,79 +935,6 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 		</div>
 	</div>
 <?php
-}
-
-function DisplayActivitySecondaryContent($userid){ 
-	if($userid > 0){ ?>
-	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
-		<div class="row activity-secondary-content">
-			<div class="col s12">
-				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Filter Activity Feed</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-			  	    <div id="activity-people-i-follow" class="activity-category-selector activity-category-selected" style='font-size:1.25rem;' data-filter="All"><i class="mdi-social-people left"></i>People I Follow</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-only-users-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Users I Follow"><i class="mdi-social-people-outline left"></i>Only Users I Follow</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-all-users" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Users"><i class="mdi-social-public left"></i>All Users</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-only-critic-i-follow" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Only Critics I Follow"><i class="mdi-action-subject left"></i>Only Personalities I Follow</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-all-critics" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Critics"><i class="mdi-social-location-city left"></i>All Personalities</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-			  	    <div id="activity-mine" class="activity-category-selector" style='font-size:1.25rem;' data-filter="My Activity"><i class="mdi-social-person left"></i> My Activity</div>
-				</div>
-			</div>
-			<!--<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-popular-xp" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Popular XP"><i class="mdi-action-thumb-up left"></i> Popular XP</div>
-				</div>
-			</div>-->
-		</div>
-	</div>
-<?php
-	}else{
-	?>
-	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
-		<div class="row activity-secondary-content">
-			<div class="col s12">
-				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Filter Activity Feed</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-all-critics" class="activity-category-selector activity-category-selected" style='font-size:1.25rem;' data-filter="All"><i class="mdi-social-location-city left"></i>All Critics</div>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-all-users" class="activity-category-selector" style='font-size:1.25rem;' data-filter="All Users"><i class="mdi-social-public left"></i>All Users</div>
-				</div>
-			</div>
-			<!--<div class="col s12">
-				<div class="activity-category-box">
-					<div id="activity-popular-xp" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Popular XP"><i class="mdi-action-thumb-up left"></i> Popular XP</div>
-				</div>
-			</div>-->
-		</div>
-	</div>
-	<?php
-	}
 }
 
 function DisplayFeedTierIcon($xp, $event){ 

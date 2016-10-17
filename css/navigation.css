@@ -145,7 +145,7 @@
 .searchContainer{
     background-color: transparent;
     display: inline-block;
-    width: 150px;
+    width: auto;
 	height: 47px;
     position: relative;
     -webkit-transition: all 0.3s ease;
@@ -163,6 +163,18 @@
     padding: 0px 0.5em;
     float: left;
 }
+
+.userNotificiations{
+  display: inline-block;
+  cursor:pointer;
+  position: relative;
+  top:-10px;
+}
+
+.user-notification-icon{
+	font-size:2em;
+}
+
 
 /*
 OLD STUFF
@@ -519,15 +531,6 @@ OLD STUFF
 	display:inline-block;
 }
 
-.userNotificiations{
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 2em;
-  vertical-align: middle;
-  cursor:pointer;
-  position: relative;
-}
-
 .userBug{
   display: inline-block;
   margin-right: 10px;
@@ -691,8 +694,13 @@ OLD STUFF
 	padding: 10px 0 3px 0;
 }
 
-.closeMobileSearch{
+.closeSearch{
 	display:none;
+	cursor:pointer;
+	position: absolute;
+	right: 0.3em;
+	top: 0.4em;
+	font-size:1.75em;
 }
 
 .share-header-title{

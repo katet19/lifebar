@@ -333,9 +333,9 @@ function CheckForNotifications(){
      type: 'post',
      success: function(output) {
      		if($.trim(output) == "1"){
-     			$(".userNotificiations").html("<i class='mdi-social-notifications'></i><div class='notifications-new-badge'>NEW</div>");
+     			$(".userNotificiations").html("<i class='material-icons user-notification-icon'>notifications</i><div class='notifications-new-badge'>NEW</div>");
      		}else{
-     			$(".userNotificiations").html("<i class='mdi-social-notifications-none'></i>");
+     			$(".userNotificiations").html("<i class='material-icons user-notification-icon'>notifications_none</i>");
      		}
   			setTimeout(CheckForNotifications,300000);
      },

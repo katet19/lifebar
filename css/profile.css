@@ -194,7 +194,8 @@
 
 .lifebar-container{
     position: relative;
-    width: 70%;
+    width: -webkit-calc(100% - 200px);
+    width: calc(100% - 200px);
     text-align: left;
 }
 

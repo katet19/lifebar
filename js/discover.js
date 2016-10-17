@@ -153,8 +153,8 @@ function OpenSearch(){
 		$(".mobileTab, .mobileNav").hide();
 		$(".searchInput").css({"left":"3em"});
 	}
-	$(".closeMobileSearch").show();
-	$(".closeMobileSearch").on('click', function(e){
+	$(".closeSearch").show();
+	$(".closeSearch").on('click', function(e){
 		e.stopPropagation();
 		CloseSearch();
 	});
@@ -168,26 +168,24 @@ function OpenSearch(){
 
 function CloseSearch(){
 	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"150px", "background-color" : ""});
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
 		setTimeout(function(){
 			$(".userNotificiations, .lifebar-container, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
 	}else if($(window).width() >= 600){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100px", "background-color" : ""});
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
 		setTimeout(function(){
 			$(".userAccountNavButton, .lifebar-container, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
 		$(".mobileTab, .mobileNav").show();
 		$(".searchInput").css({"left":"1em"});
 		$(".searchInput input").val("");
 	}
-	$(".closeMobileSearch").hide();
+	$(".closeSearch").hide();
 	$(".searchInput").css({"display":""});
 	$(".userContainer").parent().show();
 }

@@ -4,68 +4,8 @@ function DisplayMyNotifications($userid){
 		<div class="col s12 notification-remove-padding" style='margin-top:1.5em;'>
 			<?php DisplayNotificationList($notifications); ?>
 		</div>
-		<?php DisplayNotificationSecondaryContent();
+		<?php
 }
-
-function DisplayNotificationSecondaryContent(){
-	$notifications = GetUserNotifications($_SESSION['logged-in']->_id);
-	DisplayNotificationCategories($notifications);
-}
-
-function DisplayNotificationCategories($notifications){ 
-	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
-	
-	foreach($notifications as $notification){
-		if($notification->_category == "General"){ $general++; $all++; if($notification->_date > $lastvisit){ $newgeneral++; $newall++; } }
-		if($notification->_category == "Releases"){ $releases++; $all++; if($notification->_date > $lastvisit){ $newreleases++; $newall++; } } 
-		if($notification->_category == "Games"){ $games++; $all++; if($notification->_date > $lastvisit){ $newgames++; $newall++; } } 
-		if($notification->_category == "Critics"){ $critics++; $all++; if($notification->_date > $lastvisit){ $newcritics++; $newall++; } } 
-		if($notification->_category == "Users"){ $users++; $all++; if($notification->_date > $lastvisit){ $newusers++; $newall++; } } 
-		if($notification->_category == "Agree"){ $agree++; $all++; if($notification->_date > $lastvisit){ $newagree++; $newall++; } } 
-	}
-?>
-	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
-		<div class="row notification-secondary-content">
-			<div class="col s12">
-				<div class="notification-filter-label"><i class="mdi-content-filter-list"></i> Filter Notifications</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
-			  	    <div id="notification-all" class="notification-category-selector notification-category-selected" style='font-size:1.25rem;'><i class="mdi-social-notifications left"></i> Show All</div>
-				    <div class="notification-category-total"><?php echo $all; ?></div>
-				</div>
-				<div class="notification-category-box">
-			  	    <div id="notification-general" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-action-settings left"></i> General</div>
-				    <div class="notification-category-total"> <?php echo $general; ?></div><?php if($newgeneral > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
-					<div id="notification-agree" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-action-favorite left"></i> 1up's</div>
-					<div class="notification-category-total"><?php echo $agree; ?></div><?php if($newagree > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
-					<div id="notification-user" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-social-people left"></i> Connections</div>
-					<div class="notification-category-total"><?php echo $users; ?></div><?php if($newusers > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
-					<div id="notification-critic" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-action-subject left"></i> Reviews</div>
-					<div class="notification-category-total"><?php echo $critics; ?></div><?php if($newcritics > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-			<div class="col s12">
-				<div class="notification-category-box">
-					<div id="notification-release" class="notification-category-selector" style='font-size:1.25rem;'><i class="mdi-editor-insert-invitation left"></i> Releases</div>
-					<div class="notification-category-total"><?php echo $releases; ?></div><?php if($newreleases > 0){ ?><div class="notification-category-new">NEW</div><?php } ?>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php }
 
 function DisplayNotificationList($notifications){ 
 	$lastvisit = GetLastTimeVisited($_SESSION['logged-in']->_id);
@@ -75,22 +15,6 @@ function DisplayNotificationList($notifications){
 ?>
 	<div class="row">
 		<div class="col s12 notification-remove-padding">
-			<div class="notification-header-box">
-				<div class="notification-header-icon"><i class="notification-header-icon-picker mdi-social-notifications"></i></div>
-				<div class="notification-header">
-					<div class="notification-header-nav-btn"><span>All</span>
-					  <ul id='notification-header-nav' class='dropdown-content'>
-						<li><a href="#!" class="notification-all notificiation-filter-selected" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-notifications">All</a></li>
-						<li><a href="#!" class="notification-general" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-settings">General</a></li>
-						<li><a href="#!" class="notification-agree" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-favorite">1ups</a></li>
-						<li><a href="#!" class="notification-user" style='color:rgba(0,0,0,0.8);' data-icon="mdi-social-people">Connections</a></li>
-						<li><a href="#!" class="notification-critic" style='color:rgba(0,0,0,0.8);' data-icon="mdi-action-subject">Reviews</a></li>
-						<li><a href="#!" class="notification-release" style='color:rgba(0,0,0,0.8);' data-icon="mdi-editor-insert-invitation">Releases</a></li>
-					  </ul>
-					</div>
-				</div>
-				<div class="notification-header-icon notification-header-nav-btn" style='  margin: 0;  font-size: 1.25em;  line-height: 34px;'><i class="mdi-navigation-expand-more"></i></div>
-			</div>
 			<?php foreach($notifications as $notification){
 					if($notification->_category == "General"){ 
 						DisplayGeneralNotification($notification, $lastvisit);

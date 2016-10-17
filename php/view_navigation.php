@@ -22,19 +22,19 @@ function DisplayHeaderNavigation(){ ?>
 				} ?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
+						<div class="userNotificiations"><i class="material-icons user-notification-icon">notifications_none</i></div>
 						<div class="searchContainer">
 							<i class="SearchBtn material-icons small">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+							<i class="closeSearch material-icons right">close</i>
 						</div>
-						<div class="userNotificiations"><i class="material-icons">notifications none</i></div>
 					</div>
 				<?php }else{ ?>
 				<div class="userContainer" style='display:inline-block;margin-top:0;float:right;width: 100%;'>
 						<div class="searchContainer" style='margin-top: 0.5em;'>
 							<i class="SearchBtn material-icons small">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
-							<i class="closeMobileSearch mdi-content-clear right" style="cursor:pointer;position: absolute;right: 0.3em;top: 0.15em;font-size:1.75em;"></i>
+							<i class="closeSearch material-icons right">close</i>
 						</div>
 						<div class="loginContainer" style='display:inline-block;margin-top: 0.5em;vertical-align: top;'>
 						  <a id="loginButton" class="waves-effect waves-light btn-flat modal-trigger" href="#loginModal" style='color: white;margin-top: 0px;margin-bottom: 0px;vertical-align: sub;'>Login</a>
