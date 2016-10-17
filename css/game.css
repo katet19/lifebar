@@ -1,3 +1,21 @@
+.GameHeaderContainer{
+	height:35vh;
+	width:100%;
+	left: 0;
+	position:absolute;
+	z-index:1;
+	background-color: black;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+/*
+OLD STUFF
+*/
+
 #game{
 	display:none;
 }
@@ -81,20 +99,6 @@ refpt-header-subquestion-hidden{
     text-align: left;
     font-weight: 500;
     margin-left: 35px;
-}
-
-.GameHeaderContainer{
-	height:35vh;
-	width:100%;
-	left: 0;
-	position:fixed;
-	z-index:1;
-	background-color: black;
-	-webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    transition: all 0.5s ease;
 }
 
 #game-navigation-header{

@@ -138,19 +138,14 @@ function FilterCategories(){
 }
 
 function OpenSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userNotificiations, .lifebar-container").hide();
-		$(".searchInput").css({"left":"3.5em"});
-		$(".SearchBtn").css({"float":"left"});
-	}else if($(window).width() >= 600){
+	 if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
 		$(".userNotificiations, .lifebar-container").hide();
 		$(".searchInput").css({"left":"3.5em"});
 		$(".SearchBtn").css({"float":"left"});
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".mobileTab, .mobileNav").hide();
+		$(".lifebar-container").hide();
 		$(".searchInput").css({"left":"3em"});
 	}
 	$(".closeSearch").show();
@@ -167,21 +162,15 @@ function OpenSearch(){
 }
 
 function CloseSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
-		setTimeout(function(){
-			$(".userNotificiations, .lifebar-container, .loginContainer").show(100);
-		}, 100);
-		$(".searchInput").css({"left":"1em"});
-	}else if($(window).width() >= 600){
+ if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
 		setTimeout(function(){
 			$(".userAccountNavButton, .lifebar-container, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
 	}else{
-		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
-		$(".mobileTab, .mobileNav").show();
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
+		$(".lifebar-container").show();
 		$(".searchInput").css({"left":"1em"});
 		$(".searchInput input").val("");
 	}
