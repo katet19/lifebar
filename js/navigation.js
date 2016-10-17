@@ -26,6 +26,7 @@ function AttachBrowserStateHandling(){
 
 	window.onhashchange = function(event) {
 		if (!window.innerDocClick && window.location.hash != '') {
+			alert(location.hash);
 			var splitURL = event.newURL.split("#");
 			var pagedata = splitURL[1].split('/');
 			NavigateToPage("#" + pagedata, true);
