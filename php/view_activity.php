@@ -92,7 +92,7 @@ function DisplayMainActivity($userid, $filter){
 		$groupfeed[] = $group;
 	
 	?>
-		<div class="col s12" style='position: relative;'> 
+		<div class="col s12" style='position: relative;z-index: 1;'> 
 		<?php
 			$curr_date_array = explode(" ", $groupfeed[0][0][0]->_date);
 			$curr_date = $curr_date_array[0];
