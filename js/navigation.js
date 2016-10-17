@@ -26,7 +26,8 @@ function AttachBrowserStateHandling(){
 
 	window.onhashchange = function() {
 		if (!window.innerDocClick && window.location.hash != '') {
-			var pagedata = document.referrer.hash.split('/');
+			history.back();
+			var pagedata = history.state.hash.split('/');
 			NavigateToPage(pagedata, true);
 		}
 	}
