@@ -14,12 +14,24 @@ function InitializeNavigation(){
 }
 
 function AttachBrowserStateHandling(){
-	window.addEventListener('popstate', function(event) {
-		//history.back();
-        //window.location = document.referrer;
-		//var pagedata = window.location.split('/');
-		//NavigateToPage(pagedata, true);
-	}, false);
+	document.onmouseover = function() {
+		//User's mouse is inside the page.
+		window.innerDocClick = true;
+	}
+
+	document.onmouseleave = function() {
+		//User's mouse has left the page.
+		window.innerDocClick = false;
+	}
+
+	window.onhashchange = function() {
+		if (!window.innerDocClick) {
+			history.back();
+        	window.location = document.referrer;
+			var pagedata = window.location.split('/');
+			NavigateToPage(pagedata, true);
+		}
+	}
 }
 
 function AttachSideNav(){
