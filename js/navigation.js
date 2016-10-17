@@ -25,7 +25,7 @@ function AttachBrowserStateHandling(){
 	}
 
 	window.onhashchange = function(event) {
-		if (!window.innerDocClick && window.location.hash != '') {
+		if (!window.innerDocClick && window.location.hash != '' && !GLOBAL_HASH) {
 			alert(location.hash);
 			var splitURL = event.newURL.split("#");
 			var pagedata = splitURL[1].split('/');
@@ -65,6 +65,7 @@ function HideSideNav(){
 }
 
 function NavigateToPage(page, fromURL = false){
+	GLOBAL_HASH = true;
 	if(fromURL){
 		if(page[0] == "#collection"){
 			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
@@ -106,6 +107,7 @@ function NavigateToPage(page, fromURL = false){
 		else
 			ShowDiscoverHome();
 	}
+	GLOBAL_HASH = false;
 }
 
 /*

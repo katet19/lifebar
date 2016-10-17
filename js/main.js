@@ -310,6 +310,10 @@ function GAPage(title, page){
 }
 
 //Globals
+var GLOBAL_HASH = false;
+/*
+OLD STUFF
+*/
 var GLOBAL_VERSION = 100000;
 var GLOBAL_TAB_REDIRECT = "";
 var GLOBAL_HASH_REDIRECT = "";
