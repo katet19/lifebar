@@ -3,6 +3,7 @@ function InitializeNavigation(){
 	AttachSideNav();
 	var pagedata = location.hash.split('/');
 	NavigateToPage(pagedata, true);
+	AttachBrowserStateHandling();
 	/*
 		OLD
 	*/
@@ -10,6 +11,13 @@ function InitializeNavigation(){
 	AttachTabLoadingEvents();
 	CheckForNotifications();
 	CheckForUpdates();
+}
+
+function AttachBrowserStateHandling(){
+	window.addEventListener('popstate', function(event) {
+		var pagedata = event.state.split('/');
+		NavigateToPage(pagedata, true);
+	}, false);
 }
 
 function AttachSideNav(){
