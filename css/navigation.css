@@ -94,16 +94,13 @@
 	overflow:hidden;
 }
 
-#nav-slide-out li:hover{
-	background-color:#F50057;
-}
-
 #nav-slide-out li:hover a{
-	color:white !important;
+	color:#F50057 !important;
 }
 
 #nav-slide-out li.nav-slide-out-selected-page>a{
 	color:#3F51B5 !important;
+	font-weight:bold;
 }
 
 #nav-slide-out li a{
