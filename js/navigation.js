@@ -42,8 +42,8 @@ function HideSideNav(){
 	$(".navigation-lifebar").removeClass("navigation-lifebar-slide-out");
 }
 
-function NavigateToPage(page, multiple = false){
-	if(multiple){
+function NavigateToPage(page, fromURL = false){
+	if(fromURL){
 		if(page[0] == "#collection"){
 			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
 		}else if(page[0] == "#game" && page[1] > 0){
@@ -54,7 +54,19 @@ function NavigateToPage(page, multiple = false){
 			ShowUserProfile(page[1], false);
 		}else if(page[0] == "#search" && page[1] != ''){
 			Search(page[1]);
-		}else
+		}else if(page[0] == "#discover" || page == "#daily")
+			ShowDiscoverHome();
+		else if(page[0] == "#activity")
+			ShowActivityHome();
+		else if(page[0] == "#notifications")
+			ShowNotificationsHome();
+		else if(page[0][0] == "#admin")
+			ShowAdminHome();
+		else if(page[0] == "#landing")
+			ShowLanding();
+		else if(page[0] == "#profile")
+			ShowUserProfile($(".userContainer").attr("data-id"), true);
+		else
 			ShowDiscoverHome();
 	}else{
 		if(page == "#discover" || page == "#daily")
