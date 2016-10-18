@@ -25,6 +25,7 @@
 
 .navigation-menu{
 	width:50px;
+	overflow:hidden;
 }
 
 .navigation-menu-logo{

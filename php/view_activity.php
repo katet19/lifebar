@@ -306,21 +306,21 @@ function FeedXPItem($feed, $conn, $mutualconn){
 		</div>
 		<div class="feed-activity-icon-col">
 				<?php if($user->_security == "Journalist"){ ?>
-					<div class="feed-activity-icon-xp"><i class="mdi-action-subject"></i></div>
+					<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>subject</i></div>
 				<?php }else if(sizeof($feed) > 0){ ?>
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?> 
-					<div class="feed-activity-icon-xp"><i class="mdi-device-access-time"></i></div>
+					<div class="feed-activity-icon-xp"><i class="material-icons">access time</i></div>
 				<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
-					<div class="feed-activity-icon-xp"><i class="mdi-action-done"></i></div>
+					<div class="feed-activity-icon-xp"><i class="material-icons">done</i></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0 && sizeof($feed[0][3]->_playedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp"><i class="mdi-content-create"></i></div>
+					<div class="feed-activity-icon-xp"><i class="material-icons">create</i></div>
 				<?php }else if(sizeof($feed[0][3]->_playedxp) > 0){ ?> 
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;'>XP</span></div>
+					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else{ ?>
-					<div class="feed-activity-icon-xp"><i class="mdi-content-create"></i></div>
+					<div class="feed-activity-icon-xp"><i class="material-icons">create</i></div>
 				<?php } ?>
 		</div>
 		<div class="feed-content-col">
@@ -359,7 +359,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php
@@ -398,7 +398,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    <div class="feed-card-content">
 	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
 	      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
-	      		<i class="mdi-editor-format-quote"></i>
+	      		<i class="material-icons">format quote</i>
 		  </div>
 	  	<?php }else if($event->_quote != ''){ 
 	  			DisplayFeedTierIcon($xp, $event);
@@ -409,7 +409,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	      	<?php } ?>
 	  		"<?php echo $event->_quote; ?>"
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-	  		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
+	  		<i class='material-icons' title="Verified Account">verified user</i>
 	  		<?php } ?>
 	      </div>
 	      <div class="feed-action-container">
@@ -462,20 +462,20 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-social-people"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>group</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
 				<?php if(sizeof($feed) > 1){ ?>
 					<span class='feed-activity-user-link' data-id='<?php echo $user->_id; ?>'><?php echo $username; ?></span> 
 					followed <?php echo sizeof($feed); ?> people 
-					<span class='feed-activity-when-info'><i class='mdi-action-schedule'></i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
+					<span class='feed-activity-when-info'><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
 				<?php }else{ ?>
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					followed
 					<span class="feed-activity-user-link-action" data-userid="<?php echo $followinguser->_id; ?>"><?php echo $followingusername; ?></span>
 					<?php DisplayUserPreviewCard($followinguser, $conn, $mutualconn); ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				<?php } ?>
 			</div>
 			<div class="feed-activity-game-container">
@@ -523,13 +523,13 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 				<?php if(sizeof($feed) > 1){ ?>
 					<span class='feed-activity-user-link' data-id='<?php echo $user->_id; ?>'><?php echo $username; ?></span> 
 					added <?php echo sizeof($feed); ?> games to <span class="feed-activity-collection-link" data-cid="<?php echo $feed[0][2]->_id; ?>"><?php echo $feed[0][2]->_name; ?></span>
-					<span class='feed-activity-when-info'><i class='mdi-action-schedule'></i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
+					<span class='feed-activity-when-info'><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
 				<?php }else{ ?>
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					added
 					<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
 					to <span class="feed-activity-collection-link" data-cid="<?php echo $feed[0][2]->_id; ?>"><?php echo $feed[0][2]->_name; ?></span>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				<?php } ?>
 			</div>
 			<div class="feed-activity-game-container">
@@ -572,12 +572,12 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 				<?php if(sizeof($feed) > 1){ ?>
 					<span class='feed-activity-user-link' data-id='<?php echo $user->_id; ?>'><?php echo $username; ?></span> 
 					bookmarked <?php echo sizeof($feed); ?> games 
-					<span class='feed-activity-when-info'><i class='mdi-action-schedule'></i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
+					<span class='feed-activity-when-info'><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i><?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date); ?></span>
 				<?php }else{ ?>
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 					bookmarked
 					<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				<?php } ?>
 			</div>
 			<div class="feed-activity-game-container">
@@ -628,7 +628,7 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php
@@ -702,7 +702,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php
@@ -776,7 +776,7 @@ function FeedGameReleasesItem($feed){ ?>
 			<div class="feed-avatar" style='box-shadow:none;'></div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-action-event"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>event</i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -785,7 +785,7 @@ function FeedGameReleasesItem($feed){ ?>
 					<?php }else{ ?>
 					<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?> was released today</span>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php foreach($feed as $card){ 
@@ -832,7 +832,7 @@ function FeedCollectionCreationItem($feed, $conn, $mutualconn){
 					<?php if(sizeof($feed) == 1){ ?>
 						<span class="feed-activity-game-link" data-gbid="<?php echo $feed[0][1]->_gbid; ?>"><?php echo $feed[0][1]->_title; ?></span>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php
@@ -883,7 +883,7 @@ function FeedCollectionFollowItem($feed, $conn, $mutualconn){
 						<span class="feed-activity-user-link-action" data-userid="<?php echo $followinguser->_id; ?>"><?php echo $followingusername; ?></span>
 						<?php DisplayUserPreviewCard($followinguser, $conn, $mutualconn); ?>
 					<?php } ?>
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php
@@ -922,7 +922,7 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 				<div class="feed-activity-title">
 					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
 						imported <?php echo number_format($feed[0][3]); ?> games from their Steam Library
-					<span class="feed-activity-when-info"><i class="mdi-action-schedule"></i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
 				</div>
 			<div class="feed-activity-game-container">
 				<?php

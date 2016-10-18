@@ -23,6 +23,10 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+.feed-avatar:hover{
+  border: 3px solid #FF4081;
+}
+
 .feed-activity-icon-col{
   float: left;
   margin-left: 10px;
@@ -109,9 +113,8 @@
   -moz-border-radius: 2px;
   border-radius: 2px;
   background-clip: padding-box;
-  /*width: 300px;*/
-  background-color: white;
   text-align:left;
+  background-color:#F50057;
 }
 
 .feed-bookmark-card{
@@ -153,6 +156,10 @@
   height: 115px;
 }
 
+.feed-card-image:hover{
+  opacity:0.9;
+}
+
 .feed-bookmark-image{
 	display:inline-block;
 	width: 300px;
@@ -172,6 +179,7 @@
   top: 0;
   right: 0;
   bottom: 0;
+  background-color:white;
   left: 150px;
 }
 
@@ -199,7 +207,7 @@
 }
 
 .feed-activity-game-link:hover, .feed-activity-user-link-action:hover{
-  color:black; 
+  color:#FF4081; 
 }
 
 .feed-activity-collection-link{
