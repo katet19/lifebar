@@ -86,16 +86,16 @@ function DisplayLifebarForUser(){
 
 function DisplaySideDrawer(){ ?>
   <ul id="nav-slide-out" class="nav-display-slide-out">
-	<li class="nav-slide-out-selected-page"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
-    <li><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
-    <li><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>
-	<li><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>
+	<li class="nav-slide-out-selected-page" id="nav-discover"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
+    <li id="nav-activity"><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
+    <li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>
+	<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>
     <?php if($_SESSION['logged-in'] != null){ ?>
 	    <div class="divider"></div>
-		<li><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
+		<li id="nav-notifications"><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
 		<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
 		<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
-			<li><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
+			<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 		<?php } ?>
 		<div class="divider"></div>
 		<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>

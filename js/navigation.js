@@ -25,11 +25,11 @@ function AttachBrowserStateHandling(){
 	}
 
 	window.onhashchange = function(event) {
-		if (!window.innerDocClick && window.location.hash != '' && !GLOBAL_HASH) {
-			alert(location.hash);
-			var splitURL = event.newURL.split("#");
-			var pagedata = splitURL[1].split('/');
-			NavigateToPage("#" + pagedata, true);
+		if (!window.innerDocClick && window.location.hash != '') {
+			//alert(location.hash);
+			//var splitURL = event.newURL.split("#");
+			//var pagedata = splitURL[1].split('/');
+			//NavigateToPage("#" + pagedata, true);
 		}
 	}
 }
@@ -65,31 +65,41 @@ function HideSideNav(){
 }
 
 function NavigateToPage(page, fromURL = false){
-	GLOBAL_HASH = true;
 	if(fromURL){
+		$(".nav-slide-out-selected-page").removeClass("nav-slide-out-selected-page");
 		if(page[0] == "#collection"){
 			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
+		}else if(page[0] == "#collections"){
+			$("#nav-collections").addClass("nav-slide-out-selected-page");
+			DisplayUserCollection($(".userContainer").attr("data-id"));
 		}else if(page[0] == "#game" && page[1] > 0){
 		  if(page[3] == "User")
 		    page[3] = "User/"+page[4]+"/"+page[5];
 			ShowGame(page[1], '', true, false, page[3]);
 		}else if(page[0] == "#profile" && page[1] > 0){
+			if(page[1] == $(".userContainer").attr("data-id"))
+				$("#nav-profile").addClass("nav-slide-out-selected-page");
+
 			ShowUserProfile(page[1], false);
 		}else if(page[0] == "#search" && page[1] != ''){
 			Search(page[1]);
-		}else if(page[0] == "#discover" || page == "#daily")
+		}else if(page[0] == "#discover" || page == "#daily"){
+			$("#nav-discover").addClass("nav-slide-out-selected-page");
 			ShowDiscoverHome();
-		else if(page[0] == "#activity")
+		}else if(page[0] == "#activity"){
+			$("#nav-activity").addClass("nav-slide-out-selected-page");
 			ShowActivityHome();
-		else if(page[0] == "#notifications")
+		}else if(page[0] == "#notifications")
 			ShowNotificationsHome();
-		else if(page[0][0] == "#admin")
+		else if(page[0] == "#admin"){
+			$("#nav-admin").addClass("nav-slide-out-selected-page");
 			ShowAdminHome();
-		else if(page[0] == "#landing")
+		}else if(page[0] == "#landing")
 			ShowLanding();
-		else if(page[0] == "#profile")
+		else if(page[0] == "#profile"){
+			$("#nav-profile").addClass("nav-slide-out-selected-page");
 			ShowUserProfile($(".userContainer").attr("data-id"), true);
-		else
+		}else
 			ShowDiscoverHome();
 	}else{
 		if(page == "#discover" || page == "#daily")
@@ -104,10 +114,11 @@ function NavigateToPage(page, fromURL = false){
 			ShowLanding();
 		else if(page == "#profile")
 			ShowUserProfile($(".userContainer").attr("data-id"), true);
+		else if(page == "#collections")
+			DisplayUserCollection($(".userContainer").attr("data-id"));
 		else
 			ShowDiscoverHome();
 	}
-	GLOBAL_HASH = false;
 }
 
 /*
