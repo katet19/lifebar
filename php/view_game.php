@@ -649,10 +649,15 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s3 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
-					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+					<!--<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s2 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s2 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>-->
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>A</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>B</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>C</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>D</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>F</div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
@@ -674,10 +679,15 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s3 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
-					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+					<!--<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s2 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
+					<div class="col s2 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>-->
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>A</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>B</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>C</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>D</div>
+					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>F</div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
