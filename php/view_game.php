@@ -653,11 +653,12 @@ function DisplayGameCard($game, $count, $classId){
 					<div class="col s2 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
 					<div class="col s2 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
 					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>-->
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>A</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>B</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>C</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>D</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>F</div>
+					<div class="col s2 game-card-grade-pick">A</div>
+					<div class="col s2 game-card-grade-pick">B</div>
+					<div class="col s2 game-card-grade-pick">C</div>
+					<div class="col s2 game-card-grade-pick">D</div>
+					<div class="col s2 game-card-grade-pick">F</div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
@@ -683,11 +684,12 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="col s2 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
 					<div class="col s2 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
 					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>-->
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>A</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>B</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>C</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>D</div>
-					<div class="col s2 game-card-quick-played" style='padding: 10px 0 7px;'>F</div>
+					<div class="col s2 game-card-grade-pick">A</div>
+					<div class="col s2 game-card-grade-pick">B</div>
+					<div class="col s2 game-card-grade-pick">C</div>
+					<div class="col s2 game-card-grade-pick">D</div>
+					<div class="col s2 game-card-grade-pick">F</div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>

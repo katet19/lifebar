@@ -12,6 +12,15 @@
     transition: all 0.5s ease;
 }
 
+.game-card-grade-pick{
+	padding: 10px 0 7px;
+	font-weight:500;
+}
+
+.game-card-grade-pick:hover{
+	color:white;
+}
+
 /*
 OLD STUFF
 */
