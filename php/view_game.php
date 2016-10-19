@@ -658,7 +658,7 @@ function DisplayGameCard($game, $count, $classId){
 					<div class="col s2 game-card-grade-pick">C</div>
 					<div class="col s2 game-card-grade-pick">D</div>
 					<div class="col s2 game-card-grade-pick">F</div>
-					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="material-icons nav-game-action-btn">library_add</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
@@ -689,7 +689,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="col s2 game-card-grade-pick">C</div>
 					<div class="col s2 game-card-grade-pick">D</div>
 					<div class="col s2 game-card-grade-pick">F</div>
-					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+					<div class="col s2 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="material-icons nav-game-action-btn">library_add</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>

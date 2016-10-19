@@ -13,7 +13,7 @@
 }
 
 .game-card-grade-pick{
-	padding: 10px 0 7px;
+	padding: 10px 0 7px !important;
 	font-weight:500;
 }
 
