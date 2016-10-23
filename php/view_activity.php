@@ -536,7 +536,7 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 				<?php foreach($feed as $card){ 
 					$event = $card[0];
 					$game = $card[1];
-					FeedGameCollectionCard($game, $user, $event); 
+					DisplayGameCard($game, '', '');
 				}?>
 			</div>
 		</div>
@@ -790,7 +790,7 @@ function FeedGameReleasesItem($feed){ ?>
 			<div class="feed-activity-game-container">
 				<?php foreach($feed as $card){ 
 					$game = $card[1];
-					FeedGameReleaseDetailsCard($game);
+					DisplayGameCard($game, '', '');
 				}?>
 			</div>
 		</div>
@@ -946,13 +946,15 @@ function DisplayFeedTierIcon($xp, $event){
 			
 		if($percent == 100){ ?>
 			<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG"  title="<?php echo "Tier ".$event->_tier." - Completed"; ?>">
-			  	<i class="mdi-hardware-gamepad"></i>
+				<i class='material-icons' style='font-size:2em;color:white;'>
+					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+				</i>
 			</div>
 	  	<?php }else{ ?>
 			<div class="feed-card-icon">
 			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'>
-					<i class='material-icons'>
+					<i class='material-icons' style='font-size:2em;'>
 						<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
 					</i>
 				  </span>
@@ -984,12 +986,18 @@ function DisplayFeedTierIcon($xp, $event){
 		
 		if($percent == 101){ ?>
 	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>">
-	      		<i class="mdi-action-visibility"></i>
+					<i class='material-icons' style='font-size:2em;color:white;'>
+						<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+					</i>
 		  	</div>
 		<?php }else{ ?>
 			<div class="feed-card-icon">
 			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>" style='background-color:white;'>
-			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'>
+					<i class='material-icons' style='font-size:2em;'>
+						<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+					</i>
+					</span>
 				  <div class="slice">
 				    <div class="bar minibar"></div>
 				    <div class="fill"></div>

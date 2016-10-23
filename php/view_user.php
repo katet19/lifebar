@@ -17,10 +17,10 @@ function DisplayUserCard($user, $count, $classId, $myConnections, $showFollow = 
 			<?php if($showFollow){ ?>
 				<div class="user-follow-btn-container row">
 					<div class="col s6" style='padding:0;' title='Dismiss Suggested User'>
-						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline nav-user-action-btn'></i></div>
+						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons nav-user-action-btn'>remove_circle_outline</i></div>
 					</div>
 					<div class="col s6" style='padding:0;' title='Follow User'>
-						<div class='follow-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people nav-user-action-btn'></i></div>
+						<div class='follow-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons nav-user-action-btn'>person_add</i></div>
 					</div>
 				</div>
 			<?php } ?>
