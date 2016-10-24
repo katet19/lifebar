@@ -190,7 +190,6 @@
 }
 
 .readBtn, .agreeBtn, .disagreeBtn, .detailsBtn, .watchBtn, .shareBtn, .removeEventBtn{
-	margin-bottom:5px;
 	color: rgba(0,0,0,0.54);
 	font-weight: bold;
 	padding: 0 0.75rem;

@@ -396,22 +396,19 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content">
-	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){ ?>
-	      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
-	      		<i class="material-icons">format quote</i>
-		  </div>
-	  	<?php }else if($event->_quote != ''){ 
-	  			DisplayFeedTierIcon($xp, $event);
+	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){
+				DisplayFeedXPIcon($xp, $event);
+	  	}else if($event->_quote != ''){ 
+	  			DisplayFeedXPIcon($xp, $event);
 	   		} ?>
-	      <div class="feed-card-title grey-text text-darken-4">
-	      	<?php if($multiple && $event->_quote != ''){ ?>
-	      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-	      	<?php } ?>
+	      <div class="feed-card-title">
+			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	  		"<?php echo $event->_quote; ?>"
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
 	  		<i class='material-icons' title="Verified Account">verified user</i>
 	  		<?php } ?>
 	      </div>
+		  <div class='divider'></div>
 	      <div class="feed-action-container">
 	      		<?php if($xp->_link != ''){ ?>
 					<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
@@ -660,7 +657,7 @@ function FeedTierChangedCard($game, $user, $event, $xp, $multiple){
     <div class="feed-card-image waves-effect waves-block" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     </div>
     <div class="feed-card-content">
-      <div class="feed-card-title grey-text text-darken-4">
+      <div class="feed-card-title">
       	<?php /*if($multiple){*/ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php /*} */ ?>
@@ -733,7 +730,7 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $ag
     <div class="feed-card-image waves-effect waves-block" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     </div>
     <div class="feed-card-content">
-      <div class="feed-card-title grey-text text-darken-4">
+      <div class="feed-card-title">
       	<?php if($multiple){ ?>
       		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
       	<?php } ?>
@@ -742,6 +739,7 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $ag
       		<div class='authenticated-mark mdi-action-done' title="Verified Account"></div>
   		<?php } ?>
       </div>
+	  <div class='divider'></div>
       <div class="feed-action-container">
 			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
@@ -935,6 +933,26 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 		</div>
 	</div>
 <?php
+}
+
+function DisplayFeedXPIcon($xp, $event){
+	if(sizeof($xp->_playedxp) > 0){
+		?>
+			<div class="feed-card-icon-container tier<?php echo $event->_tier; ?>BG"  title="<?php echo "XP ".$event->_tier; ?>">
+				<i class='material-icons feed-card-icon'>
+					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+				</i>
+			</div>
+		<?php
+	}else if(sizeof($xp->_watchedxp) > 0){
+		?>
+			<div class="feed-card-icon-container tier<?php echo $event->_tier; ?>BG"  title="<?php echo "XP ".$event->_tier; ?>">
+				<i class='material-icons feed-card-icon'>
+					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+				</i>
+			</div>
+		<?php
+	}
 }
 
 function DisplayFeedTierIcon($xp, $event){ 

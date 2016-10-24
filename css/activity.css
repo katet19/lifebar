@@ -183,17 +183,26 @@
     width: -webkit-calc(100% - 150px);
 }
 
-.feed-card-icon{
+.feed-card-icon-container{
   font-size: 1.75em;
   height: 40px;
   width: 40px;
   text-align: center;
   color: white;
-  top: 30px;
+  top: 20px;
   left: -20px;
   padding-top: 1.25px;
   position: absolute;
   border-radius: 50%;
+}
+
+.feed-card-icon{
+    font-size: 2.25em;
+    position: absolute;
+    color: #FFF;
+    left: -9px;
+    top: -9px;
+    border-radius: 50%;
 }
 
 .feed-activity-game-link, .feed-activity-user-link-action{
@@ -240,6 +249,7 @@
 
 .feed-card-level-game_title{
 	font-weight:500;
+  font-size: 0.7em;
 }
 
 .feed-activity-when-info{
@@ -358,6 +368,7 @@
 
 .feed-card-title{
 	font-size:1.3em;
+  padding-bottom: 20px;
 }
 
 .feed-card-metadata{
@@ -456,7 +467,7 @@ background-color: transparent !important;
 	.feed-card-title{
 		font-size:0.8em;
 	}
-	.feed-card-icon{
+	.feed-card-icon-container{
 		top:50px;
 	}
 	.feed-bookmark-image{
