@@ -386,12 +386,18 @@ function FeedXPItem($feed, $conn, $mutualconn){
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 		if($event->_quote == ''){ ?>
-		  <a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
-		    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		    	<div class="feed-card-tier-badge-container"><i class="material-icons tierTextColor<?php echo $xp->_tier; ?> feed-card-tier-badge"><?php DisplayTierBadge($xp->_tier); ?><div class="feed-card-tier-badge-color z-depth-1"></div></i></div>
-				<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-		    </div>
-		  </a>
+		<div class="col s6 m3 l2" style='position:relative;'>
+			<a class="card game-discover-card feed-game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+				<div class="card-image waves-effect waves-block" style="height:100px !important;width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				</div>
+				<div class="card-content" style='height:65px;'>
+					<div class="feed-card-tier-badge-container"><i class="material-icons tierTextColor<?php echo $xp->_tier; ?> feed-card-tier-badge"><?php DisplayTierBadge($xp->_tier); ?><div class="feed-card-tier-badge-color"></div></i></div>
+					<div class="card-title activator grey-text text-darken-4" style='height:60px;'>
+						<div class="game-nav-title game-nav-title-with-space" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
+					</div>
+				</div>
+			</a>
+		</div>
 	<?php }else{ ?>
 	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">

@@ -615,6 +615,11 @@ refpt-header-subquestion-hidden{
     color: #212121;
 }
 
+.game-nav-title-with-space{
+	padding: 18px 10px 0px !important;
+    height: 55px;
+}
+
 #game-slide-out li{
 	width:100%;
 	padding: 5px 12px 5px 15px;

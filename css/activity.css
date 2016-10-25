@@ -115,7 +115,7 @@
     background-clip: padding-box;
     text-align: left;
     display: inline-block;
-    background-color: #F50057;
+    background-color: #C5CAE9;
     width: 100%;
 }
 
@@ -134,6 +134,10 @@
   background-color: white;
   text-align: left;
   display: inline-block;
+}
+
+.feed-game-discover-card{
+    height: 165px !important;
 }
 
 .feed-release-card{
@@ -281,14 +285,15 @@
 }
 
 .feed-card-tier-badge-container{
-  position:absolute;
-  top:5px;
-  right:5px;
+    position: absolute;
+    bottom: 40px;
+    right: 5px;
 }
 
 .feed-card-tier-badge{
   font-size: 3em;
   position:relative;
+  z-index: 1;
 }
 
 .feed-card-tier-badge-color{
