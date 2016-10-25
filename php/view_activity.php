@@ -388,7 +388,8 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 		if($event->_quote == ''){ ?>
 		  <a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 		    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title tier<?php echo $xp->_tier; ?>BG"" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+		    	<div class="feed-card-tier-badge-container"><i class="material-icons tierTextColor<?php echo $xp->_tier; ?> feed-card-tier-badge"><?php DisplayTierBadge($xp->_tier); ?><div class="feed-card-tier-badge-color z-depth-1"></div></i></div>
+				<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 		    </div>
 		  </a>
 	<?php }else{ ?>
@@ -562,7 +563,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-action-bookmark"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style="font-size: 1em;margin-top: 5px;">bookmark</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -593,7 +594,7 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 function FeedGameBookmarkCard($game, $user, $event, $xp){ ?>
 	<a class="feed-bookmark-card z-depth-1" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    <div class="feed-bookmark-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	    	<i class="mdi-action-bookmark" style='  position: absolute;top: -19px;right: 20px;font-size: 3em;color: red;'></i>
+	    	<i class="material-icons" style='  position: absolute;top: -10px;right: 20px;font-size: 3em;color: red;'>bookmark</i>
 	    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	    </div>
 	  </a>
@@ -1005,7 +1006,7 @@ function DisplayFeedTierIcon($xp, $event){
 		if($percent == 101){ ?>
 	      	<div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>">
 					<i class='material-icons' style='font-size:2em;color:white;'>
-						<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+						<?php DisplayXPFace($event->_tier);  ?>		
 					</i>
 		  	</div>
 		<?php }else{ ?>
@@ -1013,7 +1014,7 @@ function DisplayFeedTierIcon($xp, $event){
 			  <div class="c100 mini <?php if($event->_tier == 1){ echo "tierone"; }else if($event->_tier == 2){ echo "tiertwo"; }else if($event->_tier == 3){ echo "tierthree"; }else if($event->_tier == 4){ echo "tierfour"; }else if($event->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo "Tier ".$event->_tier." - ".$length; ?>" style='background-color:white;'>
 			  	  <span class='tierTextColor<?php echo $event->_tier; ?> tierInProgress' style='background-color:white;'>
 					<i class='material-icons' style='font-size:2em;'>
-						<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+						<?php DisplayXPFace($event->_tier);  ?>	
 					</i>
 					</span>
 				  <div class="slice">
@@ -1023,6 +1024,34 @@ function DisplayFeedTierIcon($xp, $event){
 				</div>
 			</div>
 		<?php }
+	}
+}
+
+function DisplayXPFace($tier){
+	if($tier == 1){ 
+		echo "sentiment_very_satisfied"; 
+	}else if($tier == 2){ 
+		echo "sentiment_satisfied"; 
+	}else if($tier == 3){ 
+		echo "sentiment_neutral";
+	}else if($tier == 4){ 
+		echo "sentiment_dissatisfied"; 
+	}else if($tier == 5){ 
+		echo "sentiment_very_dissatisfied";
+	}
+}
+
+function DisplayTierBadge($tier){
+	if($tier == 1){ 
+		echo "looks_one"; 
+	}else if($tier == 2){ 
+		echo "looks_two"; 
+	}else if($tier == 3){ 
+		echo "looks_3"; 
+	}else if($tier == 4){ 
+		echo "looks_4"; 
+	}else if($tier == 5){ 
+		echo "looks_5"; 
 	}
 }
 ?>

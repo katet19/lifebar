@@ -257,7 +257,7 @@
   display: block;
 }
 
-.feed-bookmark-title, .feed-release-title{
+.feed-bookmark-title{
   text-align: left;
   padding: 5px 0px 5px;
   color: white;
@@ -266,6 +266,40 @@
   background-color: rgba(0,0,0,0.5);
   bottom: 0;
   position: absolute;
+  font-size:1em;
+}
+
+.feed-release-title{
+  text-align: left;
+  padding: 5px 0px 5px;
+  color: white;
+  width: 100%;
+  padding-left: 1em;
+  background-color: rgba(0,0,0,0.5);
+  bottom: 0;
+  position: absolute;
+}
+
+.feed-card-tier-badge-container{
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
+.feed-card-tier-badge{
+  font-size: 3em;
+  position:relative;
+}
+
+.feed-card-tier-badge-color{
+    position: absolute;
+    background-color: white;
+    height: 70%;
+    width: 70%;
+    top: 15%;
+    z-index: -1;
+    left: 15%;
+    border-radius: 50%;
 }
 
 .feed-agree-box{

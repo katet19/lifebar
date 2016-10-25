@@ -651,14 +651,14 @@ function DisplayGameCard($game, $count, $classId){
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 					<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 						<?php if($xp->_tier > 0){ 
-							if($xp->_tier == 1){ echo "looks_one"; }else if($xp->_tier == 2){ echo "looks_two"; }else if($xp->_tier == 3){ echo "looks_3"; }else if($xp->_tier == 4){ echo "looks_4"; }else if($xp->_tier == 5){ echo "looks_5"; }
+							DisplayTierBadge($xp->_tier);
 						}else{
 							echo "add_box";
 						} ?>
 					</i></div>
 					<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
-							if($xp->_tier == 1){ echo "sentiment_very_satisfied"; }else if($xp->_tier == 2){ echo "sentiment_satisfied"; }else if($xp->_tier == 3){ echo "sentiment_neutral"; }else if($xp->_tier == 4){ echo "sentiment_dissatisfied"; }else if($xp->_tier == 5){ echo "sentiment_very_dissatisfied"; }
+							DisplayXPFace($xp->_tier);	
 						}else{
 							echo "face";
 						} ?>
