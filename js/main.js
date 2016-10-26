@@ -96,47 +96,21 @@ function ShowSideLoader(){
 }
 
 function Toast(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 function ToastProgress(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 
 function ToastError(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 function ToastUpdate(){
 	var msg = "New updates available! <span onclick='location.reload(true);' style='cursor:pointer;color:#FF8E00;font-weight: bold;padding: 0 10px 0 20px;'>REFRESH</span>";
-	toast(msg, 3540000);
-}
-
-function ToastRight(msg){
-		toastr.options = {
-		  "debug": false,
-		  "positionClass": "toast-bottom-right",
-		  "onclick": null,
-		  "fadeIn": 300,
-		  "fadeOut": 1000,
-		  "timeOut": 5000,
-		  "extendedTimeOut": 1000
-		};
-		toastr.success(msg);
-}
-
-function ToastRightError(msg){
-		toastr.options = {
-		  "debug": false,
-		  "positionClass": "toast-bottom-right",
-		  "onclick": null,
-		  "fadeIn": 300,
-		  "fadeOut": 1000,
-		  "timeOut": 120000,
-		  "extendedTimeOut": 10000
-		};
-		toastr.success(msg);
+	Materialize.toast(msg, 3540000);
 }
 
 function SideContentPush(content){

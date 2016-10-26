@@ -70,7 +70,7 @@ function AttachActivityEvents(){
 	  	e.stopPropagation();
 	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
 	 });
-	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
+	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
 	 	e.stopPropagation(); 
 	 	ShowGame($(this).attr("data-gbid"), $("#activity"));
 	 })

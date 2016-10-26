@@ -164,7 +164,7 @@ function DisplayHorizontalWatchList($zdepth, $item){
 					?>
 					<div class="daily-watch-title <?php if($first){ echo "daily-watch-title-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>' data-url="<?php echo $video[0]; ?>">
 						<?php echo $game->_title; ?>
-						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="mdi-action-visibility"></i></span>
+						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="material-icons">visibility</i></span>
 					</div>
 					<?php
 					if($first)
