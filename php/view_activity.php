@@ -412,8 +412,9 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	  		"<?php echo $event->_quote; ?>"
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
-	  		<i class='material-icons' title="Verified Account">verified user</i>
+	  		<i class='authenticated-mark material-icons' title="Verified Account">verified_user</i>
 	  		<?php } ?>
+			<div class='feed-agrees-label agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
 	      </div>
 		  <div class='divider'></div>
 	      <div class="feed-action-container">
@@ -430,24 +431,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	      </div>
 	    </div>
 	  </div>
-   <?php if($agreedcount > 0){ ?>
- 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" >
- 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-     	<div class="myxp-details-agree-list">
-    		<?php
-    			$i = 0;
-    			while($i < sizeof($agrees) && $i < 15){ ?>
-    			<div class="myxp-details-agree-listitem">
-    				<?php $useragree = GetUser($agrees[$i]); ?>
-    				<div class="user-avatar" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-    				<?php DisplayUserPreviewCard($useragree, $conn, $mutualconn); ?>
-    			</div>
-    		<?php	
-    		$i++;
-    		} ?>
-    	</div>
- 	</div>
- <?php }
+ <?php
 	}
 }
 
@@ -520,7 +504,7 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -824,7 +808,7 @@ function FeedCollectionCreationItem($feed, $conn, $mutualconn){
 			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">

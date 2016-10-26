@@ -285,21 +285,22 @@
 }
 
 .badge-lives{
-  font-size: 0.7em;
-  color: #fff;
-  /* background-color: #8B8E90; */
-  background-color: #43a047;
-  border-radius: 2px;
-  background-clip: padding-box;
-  min-width: 3rem;
-  padding: 3px 6px;
-  margin: 6px 1em 0;
-  float: right;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  display: none;
+    font-size: 0.6em;
+    color: #fff;
+    background-color: #43a047;
+    border-radius: 2px;
+    background-clip: padding-box;
+    min-width: 3rem;
+    padding: 3px;
+    margin: 6px 1em 0;
+    font-weight: bold;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: none;
+    top: 5px;
+    right: 1em;
 }
 
 .badge-lives:after{
@@ -449,14 +450,13 @@
     height: 18px;
     width: 18px;
     line-height: 18px;
-    font-size: 0.9em;
     display: inline-block;
-    background-color: #7B1FA2;
-    color: white;
+    color: #7B1FA2 !important;
     margin-left: 5px;
     text-align: center;
     border-radius: 50%;
-
+    vertical-align: text-top;
+    font-size: 1em;
 }
 
 .authenticated-mark-lifebar{
