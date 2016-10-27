@@ -164,7 +164,7 @@
 .notification-card{
 	background-color:white;
 	position:relative;
-	padding:0.5em 0.5em 1em;
+	padding:1em 0.5em;
 	border-bottom: 1px solid #ddd;
 	-webkit-transition: all 0.75s ease;
     -moz-transition: all 0.75s ease;

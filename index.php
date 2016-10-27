@@ -117,6 +117,14 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php DisplayNavigation(); ?>
 	</div>
 <div id="contentContainer" class="row">
+	<div id="game" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
+		<div id="gameInnerContainer" class="modalInnerContainer z-depth-3">
+			<?php if(isset($_GET['game'])){ 
+				DisplayGameViaID($_GET['game'], -1);	
+			}
+			?>
+		</div>
+	</div>
 	<div id="activity" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0'>
 		<div id="activityInnerContainer" class="innerContainer"></div>
 	</div>
@@ -131,14 +139,6 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	</div>
 	<div id="notifications" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0;display:none;'>
 		<div id="notificationsInnerContainer" class="innerContainer"></div>
-	</div>
-	<div id="game" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
-		<div id="gameInnerContainer" class="innerContainer">
-			<?php if(isset($_GET['game'])){ 
-				DisplayGameViaID($_GET['game'], -1);	
-			}
-			?>
-		</div>
 	</div>
 	<div id="settings" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
 		<div id="settingsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>

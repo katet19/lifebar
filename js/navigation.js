@@ -70,6 +70,7 @@ function NavigateToPage(page, fromURL = false){
 		if(page[0] == "#collection"){
 			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
 		}else if(page[0] == "#collections"){
+			$('body').css({'overflow-y':'scroll'});
 			$("#nav-collections").addClass("nav-slide-out-selected-page");
 			DisplayUserCollection($(".userContainer").attr("data-id"));
 		}else if(page[0] == "#game" && page[1] > 0){
@@ -77,31 +78,41 @@ function NavigateToPage(page, fromURL = false){
 		    page[3] = "User/"+page[4]+"/"+page[5];
 			ShowGame(page[1], '', true, false, page[3]);
 		}else if(page[0] == "#profile" && page[1] > 0){
+			$('body').css({'overflow-y':'scroll'});
 			if(page[1] == $(".userContainer").attr("data-id"))
 				$("#nav-profile").addClass("nav-slide-out-selected-page");
 
 			ShowUserProfile(page[1], false);
 		}else if(page[0] == "#search" && page[1] != ''){
+			$('body').css({'overflow-y':'scroll'});
 			Search(page[1]);
 		}else if(page[0] == "#discover" || page == "#daily"){
+			$('body').css({'overflow-y':'scroll'});
 			$("#nav-discover").addClass("nav-slide-out-selected-page");
 			ShowDiscoverHome();
 		}else if(page[0] == "#activity"){
+			$('body').css({'overflow-y':'scroll'});
 			$("#nav-activity").addClass("nav-slide-out-selected-page");
 			ShowActivityHome();
-		}else if(page[0] == "#notifications")
+		}else if(page[0] == "#notifications"){
+			$('body').css({'overflow-y':'scroll'});
 			ShowNotificationsHome();
-		else if(page[0] == "#admin"){
+		}else if(page[0] == "#admin"){
+			$('body').css({'overflow-y':'scroll'});
 			$("#nav-admin").addClass("nav-slide-out-selected-page");
 			ShowAdminHome();
-		}else if(page[0] == "#landing")
+		}else if(page[0] == "#landing"){
+			$('body').css({'overflow-y':'scroll'});
 			ShowLanding();
-		else if(page[0] == "#profile"){
+		}else if(page[0] == "#profile"){
 			$("#nav-profile").addClass("nav-slide-out-selected-page");
 			ShowUserProfile($(".userContainer").attr("data-id"), true);
-		}else
+		}else{
+			$('body').css({'overflow-y':'scroll'});
 			ShowDiscoverHome();
+		}
 	}else{
+		$('body').css({'overflow-y':'scroll'});
 		if(page == "#discover" || page == "#daily")
 			ShowDiscoverHome();
 		else if(page == "#activity")

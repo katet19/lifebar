@@ -52,6 +52,21 @@
     transition: all 0.3s ease-in-out;
 }
 
+.fixed-close-game-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 2em;
+    z-index: 2;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #F50057;
+    width: 60px;
+	cursor: pointer;
+}
+
 /*
 OLD STUFF
 */

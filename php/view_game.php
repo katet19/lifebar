@@ -523,6 +523,7 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	<div class="fixed-action-btn" id="game-fab">
 		<?php ShowMyGameFAB($game->_id, $myxp); ?>
 	</div>
+	<div class="fixed-close-game-btn">X</div>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		<?php /*DisplayGameBackNav();*/ ?>
@@ -649,21 +650,22 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 						<?php if($xp->_tier > 0){ 
 							DisplayTierBadge($xp->_tier);
 						}else{
 							echo "add_box";
 						} ?>
 					</i></div>
-					<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
 							echo "face";
 						} ?>
 					</i></div>
-					<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
@@ -686,21 +688,22 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 				<div class="card-content">
 				<div class="card-title activator grey-text text-darken-4">
 					<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-						<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+						<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 							<?php if($xp->_tier > 0){ 
 								if($xp->_tier == 1){ echo "looks_one"; }else if($xp->_tier == 2){ echo "looks_two"; }else if($xp->_tier == 3){ echo "looks_3"; }else if($xp->_tier == 4){ echo "looks_4"; }else if($xp->_tier == 5){ echo "looks_5"; }
 							}else{
 								echo "add_box";
 							} ?>
 						</i></div>
-						<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+						<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
 							<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 								if($xp->_tier == 1){ echo "sentiment_very_satisfied"; }else if($xp->_tier == 2){ echo "sentiment_satisfied"; }else if($xp->_tier == 3){ echo "sentiment_neutral"; }else if($xp->_tier == 4){ echo "sentiment_dissatisfied"; }else if($xp->_tier == 5){ echo "sentiment_very_dissatisfied"; }
 							}else{
 								echo "face";
 							} ?>
 						</i></div>
-						<div class="col s4 game-card-action-pick"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+						<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+						<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 					</div>
 					<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 				</div>

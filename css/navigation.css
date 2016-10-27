@@ -127,6 +127,7 @@
 	width: -webkit-calc(100% - 55px) !important;
 	width: calc(100% - 55px) !important;
     margin-left: 55px !important;
+	padding: 1em 5% !important;
 }
 
 .outerContainer-slide-out{
@@ -141,6 +142,28 @@
 	min-height:90%;
 	text-align: center;
 	background-color:rgb(237, 236, 236);
+}
+
+.modalInnerContainer{
+	position:relative;
+	top:0em;
+	min-height:90%;
+	text-align: center;
+	height: 90vh;
+    overflow: auto;
+    background-color: white;
+}
+
+#game.outerContainer{
+	display: inline-block;
+    position: fixed;
+    z-index: 100;
+	padding:2em 5% 1em !important;
+}
+
+#game.outerContainer-slide-out{
+    left: 225px !important;
+	margin-left: 0 !important;
 }
 
 .searchContainer{
