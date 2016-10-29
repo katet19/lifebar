@@ -386,7 +386,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 		if($event->_quote == ''){ ?>
-		<div class="col s6 m3 l2" style='position:relative;'>
+		<div class="col s6 m3" style='position:relative;'>
 			<a class="card game-discover-card feed-game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				<div class="card-image waves-effect waves-block" style="height:100px !important;width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				</div>

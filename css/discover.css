@@ -658,6 +658,7 @@
 	font-size: 1em;
 	line-height: 18px;
 	height:90px;
+	position: relative;
 }
 
 .game-discover-card .card-reveal .card-title, .game-discover-dismiss-card .card-reveal .card-title{

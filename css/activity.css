@@ -281,14 +281,18 @@
 
 .feed-card-tier-badge-container{
     position: absolute;
-    bottom: 40px;
-    right: 5px;
+    bottom: 43px;
+    background-color: white;
+    right: 15px;
+    border-radius: 5px;
+    z-index: 0;
 }
 
 .feed-card-tier-badge{
-  font-size: 3em;
-  position:relative;
-  z-index: 1;
+    font-size: 2em;
+    position: relative;
+    z-index: 1;
+    top: -1px;
 }
 
 .feed-card-tier-badge-color{
