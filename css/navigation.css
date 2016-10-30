@@ -154,14 +154,15 @@
     background-color: white;
 }
 
-#game.outerContainer{
+#game.outerContainer, #profile.outerContainer{
 	display: inline-block;
     position: fixed;
     z-index: 100;
-	padding: 10px 30px 0 0 !important;
+	top: 60px;
+	padding: 0 !important;
 }
 
-#game.outerContainer-slide-out{
+#game.outerContainer-slide-out, #profile.outerContainer-slide-out{
     left: 225px;
 	margin-left: 0 !important;
 }

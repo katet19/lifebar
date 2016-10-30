@@ -8,10 +8,13 @@ function ShowUserContent(userid, mine, browserNav){
 		$(".indicator").css({"display":"none"});
 		$(".active").removeClass("active");
 	}
-    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#profile").css({"display":"inline-block", "left": windowWidth});
+	$('body').css({'overflow-y':'hidden'});
+	if($("#profile").hasClass("outerContainer-slide-out"))
+		$("#profile.outerContainer-slide-out").css({ "left": "225px" });
+	else
+    	$("#profile.outerContainer").css({ "left": 0 });
+
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
@@ -54,6 +57,11 @@ function ShowUserContent(userid, mine, browserNav){
 }
 
 function AttachProfileEvents(userid){
+	$(".fixed-close-modal-btn").on('click', function(){
+		var windowWidth = $(window).width();
+		$("#profile").css({ "left": windowWidth }); 
+		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+	});
  	$(".userprofile-card-avatar").on("click", function(e){
   		e.stopPropagation();
  		ShowUserPreviewCard($(this).find(".user-preview-card"));

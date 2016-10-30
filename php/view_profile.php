@@ -13,6 +13,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 	$hiddenusername = $user->_first." ".$user->_last;
 	?>
 	<div id="profileContentContainer" class="row" data-name="<?php echo urlencode($user->_username); ?>">
+		<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 		<!-- Lifebar -->
 		<div class="col s12 lifebar-top-level">
 			<?php 	
@@ -159,7 +160,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 function DisplayUserWeave($userid, $user, $conn, $mutualconn){	
 	if($_SESSION['logged-in']->_realnames == "True" && in_array($userid, $mutualconn)){ $hiddenusername = $user->_first." ".$user->_last; }else{ $hiddenusername = $user->_username; } ?>
 	<div id="profileContentContainer" class="row" data-name="<?php echo urlencode($user->_username); ?>">
-		
+		<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 		<!-- Lifebar -->
 		<div class="col s12 lifebar-top-level">
 			<?php 	

@@ -54,6 +54,8 @@ function DisplaySideNav(){
 	$(".navigation-menu").addClass("navigation-menu-slide-out");
 	$(".navigation-menu-logo").addClass("navigation-menu-logo-slide-out");
 	$(".navigation-lifebar").addClass("navigation-lifebar-slide-out");
+	$("#game.outerContainer").css({"left":"225px"});
+	$("#profile.outerContainer").css({"left":"225px"});
 }
 
 function HideSideNav(){
@@ -62,6 +64,8 @@ function HideSideNav(){
 	$(".navigation-menu").removeClass("navigation-menu-slide-out");
 	$(".navigation-menu-logo").removeClass("navigation-menu-logo-slide-out");
 	$(".navigation-lifebar").removeClass("navigation-lifebar-slide-out");
+	$("#game.outerContainer").css({"left":"inherit"});
+	$("#profile.outerContainer").css({"left":"inherit"});
 }
 
 function NavigateToPage(page, fromURL = false){

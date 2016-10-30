@@ -10,14 +10,13 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	ManuallyNavigateToTab("#games");
 	$(".active").removeClass("active");
 	$("#game").css({"display":"inline-block", "left": windowWidth});
-
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
 	$('body').css({'overflow-y':'hidden'});
 	if($("#game").hasClass("outerContainer-slide-out"))
-		$("#game.outerContainer-slide-out").css({ "left": "255px" });
+		$("#game.outerContainer-slide-out").css({ "left": "225px" });
 	else
     	$("#game.outerContainer").css({ "left": 0 });
 
@@ -146,7 +145,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").css({"display":"none"});
 	$("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($("#game").hasClass("outerContainer-slide-out"))
-		$("#game.outerContainer-slide-out").css({ "left": "255px" });
+		$("#game.outerContainer-slide-out").css({ "left": "225px" });
 	else
     	$("#game.outerContainer").css({ "left": 0 });
 	$('body').css({'overflow-y':'hidden'});
@@ -206,7 +205,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
 }
 
 function AttachGameEvents(currentTab){
-	$(".fixed-close-game-btn").on('click', function(){
+	$(".fixed-close-modal-btn").on('click', function(){
 		var windowWidth = $(window).width();
 		$("#game").css({ "left": windowWidth }); 
 		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
