@@ -9,13 +9,18 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	GLOBAL_TAB_REDIRECT = "Game";
 	ManuallyNavigateToTab("#games");
 	$(".active").removeClass("active");
-    $("#game").show(250);
+	$("#game").css({"display":"inline-block", "left": windowWidth});
+
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
 	$('body').css({'overflow-y':'hidden'});
-	$("#game").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	if($("#game").hasClass("outerContainer-slide-out"))
+		$("#game.outerContainer-slide-out").css({ "left": "255px" });
+	else
+    	$("#game.outerContainer").css({ "left": 0 });
+
 	if(!isID){
 		ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
@@ -137,10 +142,13 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 
 function LoadGameDirect(gbid, currentTab, type, gameTab){
 	var windowWidth = $(window).width();
-    $("#game").css({"display":"inline-block", "left": -windowWidth});
+    $("#game").css({"display":"inline-block", "left": windowWidth});
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").css({"display":"none"});
 	$("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#game").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	if($("#game").hasClass("outerContainer-slide-out"))
+		$("#game.outerContainer-slide-out").css({ "left": "255px" });
+	else
+    	$("#game.outerContainer").css({ "left": 0 });
 	$('body').css({'overflow-y':'hidden'});
 	ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
@@ -199,8 +207,9 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
 
 function AttachGameEvents(currentTab){
 	$(".fixed-close-game-btn").on('click', function(){
-		$('body').css({'overflow-y':'scroll'});
-		$("#game").hide(250);
+		var windowWidth = $(window).width();
+		$("#game").css({ "left": windowWidth }); 
+		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
 	});
 	
 	if($(window).width() < 600){

@@ -53,18 +53,19 @@
 }
 
 .fixed-close-game-btn{
-    position: absolute;
-    right: 0;
-    top: 0;
+	position: absolute;
+    right: 10px;
+    top: 15px;
     font-size: 2em;
     z-index: 2;
+    border-radius: 50%;
     height: 50px;
     line-height: 50px;
     font-weight: bold;
     color: white;
     background-color: #F50057;
-    width: 60px;
-	cursor: pointer;
+    width: 50px;
+    cursor: pointer;
 }
 
 /*
