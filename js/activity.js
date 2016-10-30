@@ -60,15 +60,15 @@ function RefreshActivity(filter){
 function AttachActivityEvents(){
 	 $(".user-discover-card").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		ShowUserProfile($(this).attr("data-id"));
 	 });
  	 $(".feed-avatar, .user-avatar").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
   	 $(".feed-activity-user-link-action").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
 	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
 	 	e.stopPropagation(); 

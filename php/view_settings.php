@@ -93,7 +93,7 @@ function DisplayUserSettings(){
 			  	    <input name="avatargroup" class="with-gap" type="radio" id="gravatar" data-image="<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
 				    <label for="gravatar">Use your Profile image from <a href="http://gravatar.com" target="_blank">Gravatar</a></label>
 			  	  </div >
-	    		  <div class="user-avatar" style="width:60px;margin-right: auto;margin-left:50px;margin-top: 0px;float:left;height:60px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	    		  <div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:60px;margin-right: auto;margin-left:50px;margin-top: 0px;float:left;height:60px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 	      	  </div>
 	  			<div class="col s12 m4">
 	  	    		  <div class="avatar-item">

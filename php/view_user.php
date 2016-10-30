@@ -7,10 +7,9 @@ function DisplayUserCard($user, $count, $classId, $myConnections, $showFollow = 
       <div class="card user-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-id="<?php echo $user->_id; ?>" <?php if($showFollow){ ?>style='height:220px;' <?php } ?> >
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
-        		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+        		<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
         			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>
-        		<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
         	</div>
         </div>
         <div class="card-content" <?php if($showFollow){ ?>style='height:100px;' <?php } ?>>
@@ -121,8 +120,7 @@ function DisplayCriticQuoteCard($exp, $pos){
 ?>
    <div class="col s12 critic-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
-   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 	        <?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
 	        <div class="user-name">
 	        	<?php if($user->_security == "Journalist" || $user->_security == 'Authenticated'){ ?>
@@ -238,8 +236,7 @@ function DisplayUserQuoteCard($exp, $pos){
 ?>
    <div class="col s12 user-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
-   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
 			</div>
 	        <div class="user-name">
@@ -344,8 +341,7 @@ function DisplayGlobalLatestXP(){
 		?>
 		<div class="col s12 latest-xp-list-item latest-xp-count-<?php echo $count; ?>" >
 	   		<div class="latest-xp-name-container col s12" data-id="<?php echo $user->_id; ?>">
-	   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-				<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="user-avatar" data-id="<?php echo $user->_id; ?>"  style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		        <div class="user-name">
 		        	<?php if($user->_security == "Journalist"){ ?>
 		          	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_first." ".$user->_last; ?> <span class="subNameInfo" style="display:inline-block"><?php echo $user->_title; ?></span><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
@@ -397,37 +393,13 @@ function DisplayGlobalLatestXP(){
 	} 
 }	 
 
-function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
-	<div class="user-preview-card">
-		<div class="card user-preview-card-container" data-id="<?php echo $user->_id; ?>"> 
-	        <div class="card-content">
-				<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
-	        </div>
-	        <div class="card-action">
-	        	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
-	        		<div style='float: left;color: rgba(0,0,0,0.4);margin: 5px 1em 5px;padding: 0 5% 0 0;line-height: 36px;'><?php echo $user->_email; ?></div>
-	        	<?php } ?>
-	        	<?php if(in_array($user->_id, $conn) || $user->_id == $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id < 1){ ?>
-	        		
-	        	<?php }else{ ?>
-	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
-	        		
-	        	<?php } ?>
-	        	<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">ACTIVITY</div>
-	        	<div class="btn-flat user-preview-card-view-profile" data-userid="<?php echo $user->_id; ?>">PROFILE</div>
-	        </div>
-	      </div>
-      </div>
-<?php
-}
-
 function BuildDetailsPopUp($exp, $details, $conn){
 	$user = $exp->_username;
 	?>
 	<div id="<?php echo $exp->_game->_id."-".$user->_id; ?>" class="modal detailsBtnModal dynamicModal" style="background-color:white;">
 		<div class="row">
 	   		<div class="latest-xp-name-container col s10">
-				<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		        <div class="user-name">
 		        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php if($user->_security == 'Authenticated'){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?> <span class="subNameInfo" style="display:inline-block"><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
 		        </div>

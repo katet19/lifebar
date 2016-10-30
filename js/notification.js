@@ -58,7 +58,7 @@ function AttachNotificationEvents(){
 	$(".user-avatar").unbind();
   	$(".user-avatar").on("click", function(e){
     	e.stopPropagation();
- 		ShowUserPreviewCard($(this).parent().find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
 	$("#notification-header-nav li a").on('click', function(e){
 		e.stopPropagation();

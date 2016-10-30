@@ -63,8 +63,7 @@ function DisplayCollectionHighlighted($userid, $collection){
 			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<div class="collection-details-total discover-collection-user" style='cursor:pointer;display:inline-block;position:absolute;color:white;font-size: 2.5em;margin: 0;left: 15%;float: none;top: 150px;'>
 					<div class="collection-details-total-num collection-total-counter" data-id="<?php echo $user->_id; ?>">
-						<div class="user-avatar" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+						<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 					</div>
 					<div class='collection-details-total-lbl' style='font-size: 0.6em;font-weight: 500;margin-top:-30px;'>
 						<span style='font-size: 0.7em;display: block;font-weight: 300;'>created by</span>

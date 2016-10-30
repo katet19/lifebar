@@ -21,7 +21,7 @@ function ShowAnalyticsMainContent(){
       			DisplayLifeTimeChart();
   	 			$(".analytics-overall-leaders").on("click", function(e){
  			 		e.stopPropagation();
- 					ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 					ShowUserProfile($(this).attr("data-id"));
 	 			});
      },
         error: function(x, t, m) {

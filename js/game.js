@@ -7,8 +7,6 @@ function ShowGame(id, currentTab, isID, browserNav, gameTab){
 function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	var windowWidth = $(window).width();
 	GLOBAL_TAB_REDIRECT = "Game";
-	ManuallyNavigateToTab("#games");
-	$(".active").removeClass("active");
 	$("#game").css({"display":"inline-block", "left": windowWidth});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -245,7 +243,7 @@ function AttachGameEvents(currentTab){
 	AttachEditEvents();
  	$(".critic-name-container, .myxp-details-agree-listitem").on("click", function(e){
   		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
  	AttachAgrees();
   	Waves.displayEffect();

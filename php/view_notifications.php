@@ -188,8 +188,7 @@ function DisplayCriticNotification($details, $lastvisit){ ?>
 		<div class="notification-card notification-critic">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-					<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+					<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -251,8 +250,7 @@ function DisplayUserNotification($details, $lastvisit){ ?>
 		<div class="notification-card notification-user">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-                    <?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+					<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>
@@ -273,8 +271,7 @@ function DisplayUserNotification($details, $lastvisit){ ?>
 		<div class="notification-card notification-user">
 			<div class="row" style="margin: 10px 0 0;">
 				<div class="col s3 m2">
-					<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-					<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+					<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				</div>
 				<div class="col s9 m10">
 					<div class="notification-card-game-sentence"><?php echo $details->_title; ?></div>

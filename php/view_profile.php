@@ -1457,7 +1457,6 @@ function DisplaySpyAbility($userid, $abilities, $mutualconn, $conn){
 			foreach($spying as $spy){
 				?>
 				<div class="badge-card-ability-avatar " data-id="<?php echo $spy->_id; ?>" title="<?php if($spy->_security == "Journalist"){ echo $spy->_first." ".$spy->_last; }else{ echo $spy->_username; } ?>" style="border-radius:50%;background:url(<?php echo $spy->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-					<?php if($showpreview){ DisplayUserPreviewCard($spy, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -1494,7 +1493,6 @@ function DisplayLeadershipAbility($userid, $abilities, $mutualconn, $conn){
 			foreach($leader as $lead){
 				?>
 				<div class="badge-card-ability-avatar" data-id="<?php echo $lead->_id; ?>" title="<?php if($lead->_security == "Journalist"){ echo $lead->_first." ".$lead->_last; }else{ echo $lead->_username; } ?>" style="border-radius:50%;background:url(<?php echo $lead->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-					<?php if($showpreview){ DisplayUserPreviewCard($lead, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
 		</div>

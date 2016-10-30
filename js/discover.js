@@ -64,7 +64,7 @@ function Search(searchstring){
 					if($("#userAccountNav").is(":visible"))
 						$("#userAccountNav").hide(250);
 				});
- 				ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 				ShowUserProfile($(this).attr("data-id"));
  			});
   			Waves.displayEffect();
  			AttachGameCardEvents();
@@ -250,7 +250,7 @@ function AttachDiscoverSecondaryEvents(){
   	});
    	$(".latest-xp-name-container").on('click', function(e){
    		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));		
+ 		ShowUserProfile($(this).attr("data-id"));		
  	});
   	ShowExtraSideContent();
   	AttachAgrees();
@@ -416,11 +416,11 @@ function AttachDiscoverHomeEvents(){
 	//User
  	$(".user-discover-card").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
   	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
  	$(".ViewBtnCollection").on("click", function(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
@@ -456,7 +456,7 @@ function AttachDiscoverHomeEvents(){
 	 			});
 	 			$(".user-discover-card").on("click", function(e){
  			 		e.stopPropagation();
- 					ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 					ShowUserProfile($(this).attr("data-id"));
 	 			});
 	 			AttachGameCardEvents();
 	 			$(".CategoryGameImageHighlight, .CategoryGameTitle").on("click", function(){
