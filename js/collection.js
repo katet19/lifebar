@@ -56,7 +56,7 @@ function DisplayCollectionDetails(collectionid, from, fromid, isNew){
 	 			EnableEditMode(from, fromid, 0);
 	 		
 	 		var collectionName = $.trim($(".collection-details-name").text().replace(" ","_"));
-	 		location.hash = "collection/"+collectionid+"/"+fromid+"/"+collectionName;
+	 		UpdateBrowserHash("collection/"+collectionid+"/"+fromid+"/"+collectionName);
 	 		AttachCollectionDetailsEvents(fromid, from);
 	 		
 	 		//Handle mobile

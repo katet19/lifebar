@@ -23,19 +23,18 @@ function ShowUserContent(userid, mine, browserNav){
      			$("#profileInnerContainer").html(output);
       			Waves.displayEffect();
   	 			var name = $("#profileContentContainer").attr("data-name");
-  	 			GLOBAL_HASH_REDIRECT = "NO";
-	 			location.hash = "profile/"+userid+"/"+name;
       			DisplayCriticGraph();
       			DisplayLifeTimeChart();
       			DisplaySkillsChart();
       			AttachProfileEvents(userid);
   				AttachFabHoverEvent();
 				AttachFloatingIconWeaveButtonEvents();
-	 	 		if(browserNav)
- 	 				GLOBAL_HASH_REDIRECT = "";
+				if(browserNav)
+					UpdateBrowserHash("profile/"+userid+"/"+name);
+					
   				if(!mine)
   					GAPage('Profile', '/profile/'+name);
-  				else
+				else
   					GAPage('Profile', '/profile/personal/'+name);
      },
         error: function(x, t, m) {

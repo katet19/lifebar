@@ -11,7 +11,7 @@ function ShowLanding(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
-	 		location.hash = "landing";
+	 		UpdateBrowserHash("landing");
  			$(".indicator").css({"display":"none"});
 			$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });

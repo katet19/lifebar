@@ -24,12 +24,10 @@ function AttachBrowserStateHandling(){
 		window.innerDocClick = false;
 	}
 
-	window.onhashchange = function(event) {
-		if (!window.innerDocClick && window.location.hash != '') {
-			//alert(location.hash);
-			//var splitURL = event.newURL.split("#");
-			//var pagedata = splitURL[1].split('/');
-			//NavigateToPage("#" + pagedata, true);
+	window.onpopstate = function(event) {
+		if (!window.innerDocClick && window.location.hash != '' && GLOBAL_HASH_REDIRECT == "") {
+			var pagedata = window.location.hash.split('/');
+			NavigateToPage(pagedata, true);
 		}
 	}
 }
@@ -71,8 +69,17 @@ function HideSideNav(){
 	$("#profile.outerContainer").css({"left":"inherit"});
 }
 
+function UpdateBrowserHash(hash){
+	if(GLOBAL_HASH_REDIRECT != "URL"){
+		GLOBAL_HASH_REDIRECT = "NO";
+		location.hash = hash;
+	}
+	GLOBAL_HASH_REDIRECT = "";
+}
+
 function NavigateToPage(page, fromURL = false){
 	if(fromURL){
+		GLOBAL_HASH_REDIRECT = "URL";
 		$(".nav-slide-out-selected-page").removeClass("nav-slide-out-selected-page");
 		if(page[0] == "#collection"){
 			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
@@ -118,7 +125,9 @@ function NavigateToPage(page, fromURL = false){
 			$('body').css({'overflow-y':'scroll'});
 			ShowDiscoverHome();
 		}
+		GLOBAL_HASH_REDIRECT = "";
 	}else{
+		GLOBAL_HASH_REDIRECT = "NO";
 		$('body').css({'overflow-y':'scroll'});
 		if(page == "#discover" || page == "#daily")
 			ShowDiscoverHome();
@@ -136,7 +145,9 @@ function NavigateToPage(page, fromURL = false){
 			DisplayUserCollection($(".userContainer").attr("data-id"));
 		else
 			ShowDiscoverHome();
+		GLOBAL_HASH_REDIRECT = "";
 	}
+	
 }
 
 /*

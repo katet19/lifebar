@@ -181,7 +181,7 @@ function CloseSearch(){
 
 function ShowDiscoverHome(){
 	if(location.hash != "#discover")
-		location.hash = "#discover";
+		UpdateBrowserHash("#discover");
   	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});

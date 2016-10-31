@@ -6,7 +6,6 @@ function ShowGame(id, currentTab, isID, browserNav, gameTab){
 
 function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	var windowWidth = $(window).width();
-	GLOBAL_TAB_REDIRECT = "Game";
 	$("#game").css({"display":"inline-block", "left": windowWidth});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -27,12 +26,7 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	 		$("#gameInnerContainer").html(output);
 	 		var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
-	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 	 		AttachGameEvents(currentTab);
- 	 		if(browserNav)
- 	 			GLOBAL_HASH_REDIRECT = "";
-	 		GLOBAL_TAB_REDIRECT = "";
 	 		GAPage('Game', '/game/'+title);
 	 		
 			if(gameTab == "Community")
@@ -89,13 +83,7 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 		 	$("#gameInnerContainer").html(output);
  		 	var gameid = $("#gameContentContainer").attr("data-id");
 	 		var title = $("#gameContentContainer").attr("data-title");
-	 		GLOBAL_HASH_REDIRECT = "NO";
-	 		
-	 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
 		 	AttachGameEvents(currentTab);
-  	 		if(browserNav)
- 	 			GLOBAL_HASH_REDIRECT = "";
-		 	GLOBAL_TAB_REDIRECT = "";
 		 	GAPage('Game', '/game/'+title);
 		 	
 			if(gameTab == "Community")
@@ -122,7 +110,6 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 				 var username = userdata[2];
 	 			DisplayUserDetails(userid, username);
 			 }
-	 		
 		 },
 		    error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -182,7 +169,6 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
 			DisplayUserDetails(userid, username);
 		}
  		
- 		location.hash = "game/"+gameid+"/"+title+"/"+gameTab;
  		AttachGameEvents(currentTab);
  		if(type == "played"){
  			AddPlayedFabEvent();
@@ -253,11 +239,7 @@ function AttachGameEvents(currentTab){
   		var username = $(this).attr("data-uname");
   		DisplayUserDetails(userid, username);
   	});
-	
- 	$(".backButton, .game-back-tab").on('click', function(){
-		BackOutOfGame(currentTab);
- 	});
- 	
+	 	
  	$(".ptalk-link-games").on("click", function(){
  		window.open("http://tidbits.io/c/games");
  	});
@@ -426,7 +408,8 @@ function SwitchGameContent(elem){
 
 		var gameid = $("#gameContentContainer").attr("data-id");
 		var title = $("#gameContentContainer").attr("data-title");
-		location.hash = "game/"+gameid+"/"+title+"/"+elem.attr("data-nav");
+		GLOBAL_HASH_REDIRECT = "URL";
+		UpdateBrowserHash("game/"+gameid+"/"+title+"/"+elem.attr("data-nav"));
 	}
 }
 
@@ -1237,48 +1220,6 @@ function MoveDownPostAgree(xp, count){
 			}
 		});
 	}
-}
-
-function BackOutOfGame(currentTab){
- 	if($(window).width() < 600){
- 		$(".backButtonLabel").css({"padding":"0 2em"});
- 	}else{
- 		$("#gameInnerContainer .backContainer").delay(200).velocity({"opacity":"0"});
- 	}
- 	$("#gameInnerContainer").html("");
- 	$(document).unbind("scroll");
-   	$(".backButtonLabel").removeClass("GameBackButtonDisappear");
-   	var windowWidth = $(window).width();
-   	if(currentTab == "" || currentTab == undefined){
-   		ShowDiscoverHome();
-		currentTab = $("#discover");
-   	}
-    currentTab.css({"display":"inline-block", "left": -windowWidth});
-    $("#game").css({"display":"none"});
-	$("#game").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	currentTab.velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	
-	var tabname = currentTab.attr("id");
-	if(tabname == "discover"){
-		GLOBAL_TAB_REDIRECT = "GameNav";
-		ManuallyNavigateToTab("#discover");
-		GLOBAL_TAB_REDIRECT = "";
-	}
-	
-	if(tabname == "activity"){
-		GLOBAL_TAB_REDIRECT = "GameNav";
-		ManuallyNavigateToTab("#activity");
-		GLOBAL_TAB_REDIRECT = "";
-	}
-	
-	
-	//window.scrollTo(0, 0);
-	$("#sideContainer").html(SideContentPop());
-	var method = SideContentEventPop();
-	if(method != undefined)
-		method();
-	GLOBAL_HASH_REDIRECT = "NO";
-	//location.hash = "";
 }
 
 function HideGameContainer(){
