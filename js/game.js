@@ -140,8 +140,8 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 function LoadGameDirect(gbid, currentTab, type, gameTab){
 	var windowWidth = $(window).width();
     $("#game").css({"display":"inline-block", "left": windowWidth});
-    $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").css({"display":"none"});
-	$("#activity, #discover, #analytics, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").css({"display":"none"});
+	$("#activity, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($("#game").hasClass("outerContainer-slide-out"))
 		$("#game.outerContainer-slide-out").css({ "left": "225px" });
 	else

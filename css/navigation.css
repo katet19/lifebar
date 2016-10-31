@@ -155,7 +155,7 @@
 }
 
 #game.outerContainer, #profile.outerContainer{
-	display: inline-block;
+	display: none;
     position: fixed;
     z-index: 100;
 	top: 60px;
