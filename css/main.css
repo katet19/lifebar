@@ -235,3 +235,13 @@ a{
 :-ms-input-placeholder {  
    color: white;  
 }
+
+@media only screen and (min-width: 993px) {
+  #toast-container {
+    bottom: 1% !important;
+    top: inherit !important;
+    right: inherit !important;
+    left: 1% !important;
+    max-width: 86%;
+  }
+}
