@@ -433,12 +433,6 @@ function BuildDetailsPopUp($exp, $details, $conn){
 	<?php
 }
 
-
-function DisplayUniversalUserPreview(){ ?>
-	<div id="universalUserPreview" class="modal"></div>
-<?php }
-
-
 function BuildPlayedSentence($exp){
 	$sentence = "I played "; 
 	$date = explode('-',$exp->_date);

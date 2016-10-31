@@ -331,6 +331,9 @@ function AttachGameEvents(currentTab){
 
 function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title").unbind();
+	$(".game-card-action-pick").on("click", function(){
+		GameCardAction($(this).attr("data-action"));
+	});
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
 		DisplayCollectionQuickForm($(this).parent().parent().parent(), $(this).parent().attr("data-id"), $(this).parent().attr("data-gbid"), true);
@@ -372,6 +375,26 @@ function AttachGameCardEvents(){
 		});
 		ShowGame($(this).parent().parent().parent().attr("data-gbid"), $("#discover")); 
 	});
+}
+
+function GameCardAction(action){
+	if(action == "tier"){
+		$.ajax({ url: '../php/webService.php',
+			data: {action: "ShowTierModal" },
+			type: 'post',
+			success: function(output) {
+				
+			},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
+	}
 }
 
 function SwitchGameContent(elem){

@@ -307,14 +307,6 @@
 	content: "up";
 }
 
-#universalUserPreview{
-	text-align: center;
-	display:none;
-	top:0px;
-	background-color:white;
-	padding:0;
-}
-
 .user-preview-card{
 	display:none;
 	background-color:white;

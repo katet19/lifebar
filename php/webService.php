@@ -429,6 +429,9 @@
 		}
 	}
 	function XPServices(){
+		if($_POST['action'] == 'ShowTierModal' && $_SESSION['logged-in']->_id > 0){
+			ShowTierModal();
+		}
 		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['eventid']) && $_SESSION['logged-in']->_id > 0){
 			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['eventid']);
 		}

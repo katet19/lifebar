@@ -650,22 +650,22 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+					<div class="col s3 game-card-action-pick" data-action="tier"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 						<?php if($xp->_tier > 0){ 
 							DisplayTierBadge($xp->_tier);
 						}else{
 							echo "add_box";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
 							echo "face";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
-					<div class="col s3 game-card-action-pick"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
+					<div class="col s3 game-card-action-pick" data-action="rank"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+					<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>

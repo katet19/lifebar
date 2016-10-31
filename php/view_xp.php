@@ -1,4 +1,26 @@
 <?php
+function ShowTierModal(){
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class=""><i class="material-icons tierTextColor1"><?php DisplayTierBadge(1); ?></i></div>
+			<div class=""><i class="material-icons tierTextColor2"><?php DisplayTierBadge(2); ?></i></div>
+			<div class=""><i class="material-icons tierTextColor3"><?php DisplayTierBadge(3); ?></i></div>
+			<div class=""><i class="material-icons tierTextColor4"><?php DisplayTierBadge(4); ?></i></div>
+			<div class=""><i class="material-icons tierTextColor5"><?php DisplayTierBadge(5); ?></i></div>
+		</div>
+	</div>
+	<?php
+}
+
+
+/*
+*
+* OLD STUFF
+*
+*/
+
+
 function ShowMyNewXP($gameid, $playedorwatched, $editid){
 	$exp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
 	ShowTierQuote($exp, $gameid, false);
