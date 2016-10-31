@@ -1169,10 +1169,6 @@
 	    transition: all 0.25s ease;
 	}
 	
-	.discoverCategory{
-	    padding: 1em 5% 3em !important;
-	}
-	
 	.discoverCategoryHeader{
 		font-size:1.25em;
 	}

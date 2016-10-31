@@ -35,6 +35,9 @@ function AttachBrowserStateHandling(){
 }
 
 function AttachSideNav(){
+	if($(window).width() < 992){
+		$("#nav-slide-out").removeClass("nav-display-slide-out");
+	}
 	$(".nav-icon").on("click", function(){
 		if($(".nav-display-slide-out").length == 0)
 			DisplaySideNav();

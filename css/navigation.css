@@ -218,13 +218,24 @@
 	}
 
 	.nav-display-slide-out{
-		left:0px !important;
+		left: 0px !important;
+		background-color: white !important;
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		border-right: 1px solid lightgray;
 	}
 
 	.outerContainer-slide-out{
 		float: right !important;
 		width: 100% !important;
 	}
+
+	.outerContainer{
+		margin-left: 0px !important;
+		padding: 0 !important;
+		width: 100% !important;
+		float: right !important;
+	}
+
 
 	.navigation-menu-slide-out{
 		width:50px !important;
