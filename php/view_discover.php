@@ -322,7 +322,6 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $s
 function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $subcategorymsg, $connections){ ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
-    		<i class="mdi-social-whatshot categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
       		<div class="discoverCatName">
 	      		<?php echo $category; ?>
 	      		<div class="discoverCatSubName">

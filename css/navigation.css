@@ -154,7 +154,7 @@
     background-color: white;
 }
 
-#game.outerContainer, #profile.outerContainer{
+#game.outerContainer, #profile.outerContainer, #gamemini.outerContainer{
 	display: none;
     position: fixed;
     z-index: 100;
@@ -165,6 +165,13 @@
 #game.outerContainer-slide-out, #profile.outerContainer-slide-out{
     left: 225px;
 	margin-left: 0 !important;
+}
+
+#gamemini.outerContainer{
+    right: 0;
+    width: 40% !important;
+	margin-left: 0 !important;
+	z-index:1003 !important;
 }
 
 .searchContainer{
@@ -455,7 +462,7 @@ OLD STUFF
 	margin-top:50px;
 }
 
-#game, #profile{
+#game, #profile, #gamemini{
 	display:none;
 }
 

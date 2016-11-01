@@ -189,6 +189,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
 }
 
 function AttachGameEvents(currentTab){
+	$(".fixed-close-modal-btn").unbind();
 	$(".fixed-close-modal-btn").on('click', function(){
 		var windowWidth = $(window).width();
 		$("#game").css({ "left": windowWidth }); 
@@ -312,9 +313,9 @@ function AttachGameEvents(currentTab){
 }
 
 function AttachGameCardEvents(){
-	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title").unbind();
+	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(){
-		GameCardAction($(this).attr("data-action"));
+		GameCardAction($(this).attr("data-action"), $(this).parent().attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
@@ -359,23 +360,92 @@ function AttachGameCardEvents(){
 	});
 }
 
-function GameCardAction(action){
-	if(action == "tier"){
-		$.ajax({ url: '../php/webService.php',
-			data: {action: "ShowTierModal" },
-			type: 'post',
-			success: function(output) {
-				
-			},
-				error: function(x, t, m) {
-					if(t==="timeout") {
-						ToastError("Server Timeout");
-					} else {
-						ToastError(t);
-					}
+function GameCardAction(action, gameid){
+	if(action == "more"){
+
+	}else{
+		var windowWidth = $(window).width();
+		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
+		$('body').css({'overflow-y':'hidden'});
+		$("#gamemini.outerContainer").css({ "right": "0" });
+		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
+		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+
+		if(action == "tier"){
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "ShowTierModal", gameid: gameid },
+				type: 'post',
+				success: function(output) {
+					$("#gameminiInnerContainer").html(output);
+					var height = $(".tier-modal-container").height() / 5;
+					$(".tier-modal-icon").css({'font-size': (height) + 'px'});
+					$(".fixed-close-modal-btn, .lean-overlay").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+						var windowWidth = $(window).width();
+						HideFocus();
+						$("#gamemini").css({ "right": "-40%" }); 
+						$(".lean-overlay").each(function(){ $(this).remove(); } );
+						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+					});
 				},
-				timeout:45000
-			});
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+		}else if(action == "xp"){
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "ShowXPModal", gameid: gameid },
+				type: 'post',
+				success: function(output) {
+					$("#gameminiInnerContainer").html(output);
+					$(".fixed-close-modal-btn, .lean-overlay").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+						var windowWidth = $(window).width();
+						HideFocus();
+						$("#gamemini").css({ "right": "-40%" }); 
+						$(".lean-overlay").each(function(){ $(this).remove(); } );
+						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+					});
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+		}else if(action == "rank"){
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "ShowRankModal", gameid: gameid },
+				type: 'post',
+				success: function(output) {
+					$("#gameminiInnerContainer").html(output);
+					$(".fixed-close-modal-btn, .lean-overlay").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+						var windowWidth = $(window).width();
+						HideFocus();
+						$("#gamemini").css({ "right": "-40%" }); 
+						$(".lean-overlay").each(function(){ $(this).remove(); } );
+						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+					});
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+		}
 	}
 }
 

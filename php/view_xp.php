@@ -1,18 +1,76 @@
 <?php
-function ShowTierModal(){
+function ShowTierModal($gameid){
+	$game = GetGame($gameid);
 	?>
 	<div class="row">
 		<div class="col s12">
-			<div class=""><i class="material-icons tierTextColor1"><?php DisplayTierBadge(1); ?></i></div>
-			<div class=""><i class="material-icons tierTextColor2"><?php DisplayTierBadge(2); ?></i></div>
-			<div class=""><i class="material-icons tierTextColor3"><?php DisplayTierBadge(3); ?></i></div>
-			<div class=""><i class="material-icons tierTextColor4"><?php DisplayTierBadge(4); ?></i></div>
-			<div class=""><i class="material-icons tierTextColor5"><?php DisplayTierBadge(5); ?></i></div>
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:20vh;'>
+				<div class="GameHeaderBackground" style="height:20vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
+					<div class="discoverCatName" style='border-color:white;'>
+						Pick an overall Tier for <i><?php echo $game->_title;?></i>
+						<div class="discoverCatSubName">
+							Group games into one of five tiers based on what you feel is the quality of the game. Tier 1 being the best and 5 the worst.
+						</div>
+					</div>
+				</div>
+			</div>			
+			<div class="tier-modal-container">
+				<div class="tier-modal-row"><i class="material-icons tierTextColor1 tier-modal-icon"><?php DisplayTierBadge(1); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor2 tier-modal-icon"><?php DisplayTierBadge(2); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor3 tier-modal-icon"><?php DisplayTierBadge(3); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor4 tier-modal-icon"><?php DisplayTierBadge(4); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor5 tier-modal-icon"><?php DisplayTierBadge(5); ?></i></div>
+			</div>
 		</div>
 	</div>
 	<?php
 }
 
+function ShowXPModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:20vh;'>
+				<div class="GameHeaderBackground" style="height:20vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
+					<div class="discoverCatName" style='border-color:white;'>
+						Add an experience you had with <i><?php echo $game->_title;?></i>
+						<div class="discoverCatSubName">
+							Enter your thoughts about your time with a game using emoji and words.
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<?php
+}
+
+function ShowRankModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:20vh;'>
+				<div class="GameHeaderBackground" style="height:20vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
+					<div class="discoverCatName" style='border-color:white;'>
+						Rank <i><?php echo $game->_title;?></i> in your all-time list
+						<div class="discoverCatSubName">
+							Where does this game stand in your all-time ranking list?
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<?php
+}
 
 /*
 *

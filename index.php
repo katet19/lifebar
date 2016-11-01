@@ -125,6 +125,9 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 			?>
 		</div>
 	</div>
+	<div id="gamemini" class="col s12 outerContainer" style="padding:0;">
+		<div id="gameminiInnerContainer" class="modalInnerContainer z-depth-5"></div>
+	</div>
 	<div id="profile" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
 		<div id="profileInnerContainer" class="modalInnerContainer z-depth-3"></div>
 	</div>
