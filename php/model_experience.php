@@ -18,8 +18,9 @@ class Experience
 	public $_playedxp;
 	public $_watchedxp;
 	public $_earlyxp;
+	public $_rank;
 	
-	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp) {
+	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp, $rank) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -37,6 +38,7 @@ class Experience
 		$this->_playedxp = array();
 		$this->_watchedxp = array();
 		$this->_early = array();
+		$this->_rank = $rank;
 	}
 		
 }

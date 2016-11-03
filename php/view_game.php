@@ -131,9 +131,6 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		<div id="game-collections-tab" class='col s12 game-tab'>
 			<?php ShowGameCollections($collections, $game); ?>
 		</div>
-		<!--<div id="game-info-tab" class='col s12 game-tab'>
-			<?php /*ShowGeneralInfo($game);*/ ?>
-		</div>-->
 	</div>
 <?php }
 
@@ -534,74 +531,6 @@ function ShowMyGameFAB($gameid, $myxp){
 		<div class="fab-login waves-effect waves-light btn">Add your XP</div>
 	<?php }
 }
-
-function ShowGeneralInfo($game){	?>
-<div class="z-depth-1" style='padding: 20px 1.75rem;background-color:white;'>
-	<?php if($game->_id != '33548' && $game->_id != '33541' && $game->_id != '33542' && $game->_id != '33547' && $game->_id != '33543'
-	&& $game->_id != '33546' && $game->_id != '33540' && $game->_id != '33549' && $game->_id != '33544' && $game->_id != '33545') { ?>
-		<div class="row">
-			<div class="col s12 GameInfoLabel">Released:</div>
-			<div class="col s12 GameInfoContent">
-				<?php 
-				if($game->_year == 0){
-					echo "Release date not announced";
-				}else{
-					echo ConvertDateToLongRelationalEnglish($game->_released); ?> <?php echo $game->_year; ?>
-				<?php } ?>
-			</div>
-		</div>
-		<div class="row">
-	<?php }else{ ?>
-		<div class="row">
-	<?php } ?>
-
-		<div class="col s12 GameInfoLabel">Platforms:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $platforms = explode("\n", $game->_platforms);
-			echo implode(", ", array_filter(array_map('trim',$platforms)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Developed By:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $developers = explode("\n", $game->_developer);
-			echo implode(", ", array_filter(array_map('trim',$developers)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Published By:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $publishers = explode("\n", $game->_publisher);
-			echo implode(", ", array_filter(array_map('trim',$publishers)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Categorized As:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $genres = explode("\n", $game->_genre);
-			echo implode(", ", array_filter(array_map('trim',$genres)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12" style='text-align:left;'>
-			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
-		</div>
-	</div>
-</div>	
-<?php }
-
-function DisplayGameBackNav(){ ?>
-	<div class="backContainer" style='background:transparent;text-shadow: 1px 1px 5px rgba(0,0,0,0.3);/*position:absolute;top:0;*/'>
-		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0;" >Back</a></div>
-	</div>
-<?php }
-
-function DisplayGameInfoBackNav(){ ?>
-	<div class="backContainerSideContent">
-		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:#474747;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:#474747;margin: 0;padding: 0 2em;" >Back</a></div>
-	</div>
-<?php }
-
 
 function DisplayGameCard($game, $count, $classId){
 	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>

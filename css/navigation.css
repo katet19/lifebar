@@ -163,8 +163,10 @@
 }
 
 #game.outerContainer-slide-out, #profile.outerContainer-slide-out{
-    left: 225px;
+    right: 0;
+    width: 75% !important;
 	margin-left: 0 !important;
+	z-index:1003 !important;
 }
 
 #gamemini.outerContainer{
