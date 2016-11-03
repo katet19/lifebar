@@ -49,8 +49,8 @@ function ImportSteamGames(userid, forceImport, fullreset){
 	$(".indicator").css({"display":"none"});
 	$(".active").removeClass("active");
     $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});

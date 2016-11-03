@@ -1,9 +1,9 @@
 function ShowLanding(){
 	var windowWidth = $(window).width();
     $("#landing").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #analytics, #admin, #notifications, #user, #game, #navigation-header").css({"display":"none"});
+    $("#activity, #discover, #analytics, #admin, #notifications, #user, #navigation-header").css({"display":"none"});
     $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
-	$("#activity, #discover, #analytics, #admin, #notifications, #user, #game").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#activity, #discover, #analytics, #admin, #notifications, #user").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#landing").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 		ShowLoader($("#landingInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
