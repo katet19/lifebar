@@ -75,8 +75,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		if($sim > 0){
 			$similar[] = GetGameByGBIDFull($sim);
 		}
-	}
-?>
+	} ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
 			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $allusers); ?>
@@ -558,7 +557,15 @@ function DisplayGameCard($game, $count, $classId){
 							echo "face";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick" data-action="rank"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+					<div class="col s3 game-card-action-pick" data-action="rank">
+						<?php if($xp->_rank > 0){ 
+							echo "#".$xp->_rank;	
+						}else{
+							?>
+							<i class="material-icons nav-game-action-btn">swap_vert</i>
+							<?php
+						} ?>
+					</div>
 					<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
@@ -596,7 +603,15 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 								echo "face";
 							} ?>
 						</i></div>
-						<div class="col s3 game-card-action-pick" data-action="rank"><i class="material-icons nav-game-action-btn">swap_vert</i></div>
+						<div class="col s3 game-card-action-pick" data-action="rank">
+							<?php if($xp->_rank > 0){ 
+								echo "#".$xp->_rank;	
+							}else{
+								?>
+								<i class="material-icons nav-game-action-btn">swap_vert</i>
+								<?php
+							} ?>
+						</div>
 						<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 					</div>
 					<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>

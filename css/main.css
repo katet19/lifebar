@@ -3,6 +3,7 @@ body{
   background-color:rgb(237, 236, 236);
 	 -webkit-font-smoothing: subpixel-antialiased;
 	 overflow-y: scroll;
+   position: static;
 }
 
 .feedback-wrapper{
@@ -235,6 +236,8 @@ a{
 :-ms-input-placeholder {  
    color: white;  
 }
+
+.bodynoscroll { position: fixed; }
 
 @media only screen and (min-width: 993px) {
   #toast-container {

@@ -8,6 +8,18 @@ require_once "includes.php";
 //foreach($list as $old){
 	//UpdateUser($old,8146);
 //}
+//RankUp(7);
+
+function RankUp($userid){
+	$mysqli = Connect();
+	$rank = 1;
+	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` > 0 order by `Tier`,`ID`")) {
+		while($row = mysqli_fetch_array($result)){
+			$mysqli->query("update `Experiences` set `Rank` = '".$rank."' where `ID` = '".$row['ID']."'");
+			$rank++;
+		}
+	}
+}
 
 function AssociateLikesToEvents(){
 	$mysqli = Connect();
