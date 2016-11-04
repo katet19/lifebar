@@ -70,21 +70,7 @@ function ShowRankModal($gameid){
 				</div>
 			</div>
 			<div class="modal-content-container">
-					<?php $ranklist = GetRankList($gameid, $_SESSION['logged-in']->_id); 
-					if(sizeof($ranklist) > 0){
-						foreach($ranklist as $rankitem){
-							$game = $rankitem[0];
-							$rank = $rankitem[1];
-							$tier = $rankitem[2];
-							?>
-							<div class="modal-rank-item">
-								<div class="modal-rank-item-rank">#<?php echo $rank; ?></div>
-								<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
-							</div>
-							<?php
-						}
-					}
-					?>
+				<?php $ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); ?>
 			</div>
 			<div class="modal-save-container">
 					<div class="save-btn modal-btn-pos">Save Rank</div>
@@ -93,6 +79,26 @@ function ShowRankModal($gameid){
 		</div>
 	</div>
 	<?php
+}
+
+function ShowRankList($ranklist){
+	if(sizeof($ranklist) > 0){
+		$filter = $ranklist[0][3];
+		?>
+		<div class="modal-rank-filter"><?php echo $filter; ?></div>
+		<?php
+		foreach($ranklist as $rankitem){
+			$game = $rankitem[0];
+			$rank = $rankitem[1];
+			$tier = $rankitem[2];
+			?>
+			<div class="modal-rank-item">
+				<div class="modal-rank-item-rank">#<?php echo $rank; ?></div>
+				<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+			</div>
+			<?php
+		}
+	}
 }
 
 /*

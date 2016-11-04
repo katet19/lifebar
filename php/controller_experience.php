@@ -1,7 +1,7 @@
 <?php
 require_once "includes.php";
 
-function GetRankList($gameid, $userid){
+function GetSmartRankList($gameid, $userid){
 	$mysqli = Connect();
 	$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $mysqli);
 	$ranklist = array();
@@ -10,9 +10,10 @@ function GetRankList($gameid, $userid){
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
 				unset($ranklistitem);
-				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = GameObject($row);
 				$ranklistitem[] = $row['Rank'];
 				$ranklistitem[] = $row['Tier'];
+				$ranklistitem[] = "Tier ".$xp->_tier.", ".$xp->_game->_genre.", Released near ".$xp->_game->_year;
 				$ranklist[] = $ranklistitem;
 			}
 		}
@@ -22,9 +23,10 @@ function GetRankList($gameid, $userid){
 			if ($result = $mysqli->query($myquery)) {
 				while($row = mysqli_fetch_array($result)){
 					unset($ranklistitem);
-					$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+					$ranklistitem[] = GameObject($row);
 					$ranklistitem[] = $row['Rank'];
 					$ranklistitem[] = $row['Tier'];
+					$ranklistitem[] = "Tier ".$xp->_tier.", ".$xp->_game->_genre;
 					$ranklist[] = $ranklistitem;
 				}
 			}
@@ -37,9 +39,10 @@ function GetRankList($gameid, $userid){
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
 				unset($ranklistitem);
-				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = GameObject($row);
 				$ranklistitem[] = $row['Rank'];
 				$ranklistitem[] = $row['Tier'];
+				$ranklistitem[] = $xp->_game->_genre.", Released near ".$xp->_game->_year;
 				$ranklist[] = $ranklistitem;
 			}
 		}
@@ -51,9 +54,10 @@ function GetRankList($gameid, $userid){
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
 				unset($ranklistitem);
-				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = GameObject($row);
 				$ranklistitem[] = $row['Rank'];
 				$ranklistitem[] = $row['Tier'];
+				$ranklistitem[] = $xp->_game->_genre;
 				$ranklist[] = $ranklistitem;
 			}
 		}
