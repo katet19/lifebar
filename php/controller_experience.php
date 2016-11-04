@@ -1,6 +1,67 @@
 <?php
 require_once "includes.php";
 
+function GetRankList($gameid, $userid){
+	$mysqli = Connect();
+	$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $mysqli);
+	$ranklist = array();
+	if($xp->_tier > 0){
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Tier` > 0 and e.`Tier` = '".$xp->_tier."' and g.`Genre` = '".$xp->_game->_genre."' and g.`Year` >= '".($xp->_game->_year - 2)."' and g.`Year` <= '".($xp->_game->_year + 1)."' and e.`Rank` > 0 order by `Rank`";
+		if ($result = $mysqli->query($myquery)) {
+			while($row = mysqli_fetch_array($result)){
+				unset($ranklistitem);
+				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = $row['Rank'];
+				$ranklistitem[] = $row['Tier'];
+				$ranklist[] = $ranklistitem;
+			}
+		}
+		if(sizeof($ranklist) < 5){
+			unset($ranklist);
+			$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Tier` > 0 and e.`Tier` = '".$xp->_tier."' and g.`Genre` = '".$xp->_game->_genre."' and e.`Rank` > 0 order by `Rank`";
+			if ($result = $mysqli->query($myquery)) {
+				while($row = mysqli_fetch_array($result)){
+					unset($ranklistitem);
+					$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+					$ranklistitem[] = $row['Rank'];
+					$ranklistitem[] = $row['Tier'];
+					$ranklist[] = $ranklistitem;
+				}
+			}
+		}
+	}
+
+	if(sizeof($ranklist) < 5){
+		unset($ranklist);
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and g.`Year` >= '".($xp->_game->_year - 2)."' and g.`Year` <= '".($xp->_game->_year + 1)."' and e.`Rank` > 0 order by `Rank` LIMIT 0,15";
+		if ($result = $mysqli->query($myquery)) {
+			while($row = mysqli_fetch_array($result)){
+				unset($ranklistitem);
+				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = $row['Rank'];
+				$ranklistitem[] = $row['Tier'];
+				$ranklist[] = $ranklistitem;
+			}
+		}
+	}
+
+	if(sizeof($ranklist) < 5){
+		unset($ranklist);
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and e.`Rank` > 0 order by `Rank` LIMIT 0,15";
+		if ($result = $mysqli->query($myquery)) {
+			while($row = mysqli_fetch_array($result)){
+				unset($ranklistitem);
+				$ranklistitem[] = new Game($row["ID"], $row["GBID"], $row["Title"],$row["Rated"],$row["Released"],$row["Genre"],$row["Platforms"],$row["Year"],$row["ImageLarge"],$row["ImageSmall"],$row["Highlight"],$row["Publisher"],$row["Developer"],$row["Alias"],$row["Theme"],$row["Franchise"],$row["Similar"],$row["Tier1"],$row["Tier2"],$row["Tier3"],$row["Tier4"],$row["Tier5"]);
+				$ranklistitem[] = $row['Rank'];
+				$ranklistitem[] = $row['Tier'];
+				$ranklist[] = $ranklistitem;
+			}
+		}
+	}
+
+	return $ranklist;
+}
+
 function GetEventsForGame($userid, $gameid){
 	$mysqli = Connect();
 	$events = array();

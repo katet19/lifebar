@@ -3,14 +3,44 @@
 	height:20%;
 	line-height:20%;
 }
-.tier-modal-container{
+.modal-content-container{
     position: absolute;
-    top: 20vh;
-    bottom: 0;
+    top: 15vh;
+    bottom: 10vh;
+    overflow: auto;
+    right: 0;
+    left: 0;
 }
 .tier-modal-icon{
 	font-size:6em;
 }
+
+.modal-save-container{
+	height:10vh;
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.modal-btn-pos{
+	margin: 2em 0 0;
+}
+
+.modal-rank-item{
+    display: block;
+    text-align: left;
+    padding: 5px 15px;
+}
+
+.modal-rank-item-rank{
+	display:inline-block;
+}
+
+.modal-rank-item-title{
+	display:inline-block;
+}
+
 /*
 OLD STUFF
 */
