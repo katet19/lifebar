@@ -559,7 +559,9 @@ function DisplayGameCard($game, $count, $classId){
 					</i></div>
 					<div class="col s3 game-card-action-pick" data-action="rank">
 						<?php if($xp->_rank > 0){ 
-							echo "#".$xp->_rank;	
+							?>
+							<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
+							<?php	
 						}else{
 							?>
 							<i class="material-icons nav-game-action-btn">swap_vert</i>
@@ -605,7 +607,9 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 						</i></div>
 						<div class="col s3 game-card-action-pick" data-action="rank">
 							<?php if($xp->_rank > 0){ 
-								echo "#".$xp->_rank;	
+								?>
+								<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
+								<?php		
 							}else{
 								?>
 								<i class="material-icons nav-game-action-btn">swap_vert</i>

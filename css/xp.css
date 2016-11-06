@@ -5,7 +5,7 @@
 }
 .modal-content-container{
     position: absolute;
-    top: 15vh;
+    top: 10vh;
     bottom: 10vh;
     overflow: auto;
     right: 0;
@@ -30,15 +30,62 @@
 .modal-rank-item{
     display: block;
     text-align: left;
+    padding: 5px 15px 0px;
+    cursor: pointer;
+}
+
+.modal-rank-active-game{
+	display:none;
+    text-align: left;
+    background-color: #C5CAE9;
     padding: 5px 15px;
 }
 
 .modal-rank-item-rank{
 	display:inline-block;
+    width: 45px;
+	font-weight: bold;
 }
 
 .modal-rank-item-title{
-	display:inline-block;
+	display: inline-block;
+    font-weight: 300;
+}
+
+.modal-rank-item-subtitle{
+    font-weight: 300;
+    font-size: 0.7em;
+    padding-left: 50px;
+}
+
+.modal-header{
+    font-size: 1.75em;
+    text-align: left;
+    color: white;
+    position: absolute;
+    right: 75px;
+    line-height: 30px;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
+    margin: 0;
+    overflow: hidden;
+    top: 20px;
+}
+
+.modal-rank-filter{
+	padding: 5px 15px 15px;
+    text-align: left;
+}
+
+.modal-rank-filter-item{
+    padding: 2px 8px;
+    color: white;
+    display: inline-block;
+    text-transform: uppercase;
+    background-color: #3F51B5;
+    font-size: 0.8em;
+    font-weight: 500;
 }
 
 /*

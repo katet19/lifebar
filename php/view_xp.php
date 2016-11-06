@@ -5,12 +5,10 @@ function ShowTierModal($gameid){
 	<div class="row">
 		<div class="col s12">
 			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:15vh;'>
-				<div class="GameHeaderBackground" style="height:15vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
-					<div class="discoverCatName" style='border:none;'>
-						Pick an overall Tier for <i><?php echo $game->_title;?></i>
-					</div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Tier Placement<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>			
 			<div class="modal-content-container">
@@ -35,12 +33,10 @@ function ShowXPModal($gameid){
 	<div class="row">
 		<div class="col s12">
 			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:15vh;'>
-				<div class="GameHeaderBackground" style="height:15vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
-					<div class="discoverCatName" style='border:none;'>
-						Add an experience you had with <i><?php echo $game->_title;?></i>
-					</div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Add Experience<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>	
 			<div class="modal-content-container">
@@ -61,16 +57,17 @@ function ShowRankModal($gameid){
 	<div class="row">
 		<div class="col s12">
 			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:15vh;'>
-				<div class="GameHeaderBackground" style="height:15vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="discoverCategoryHeader" style='color:white;position: absolute; right: 5px;bottom: 10px;left: 5px;'>
-					<div class="discoverCatName" style='border:none;'>
-						Rank <i><?php echo $game->_title;?></i>
-					</div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Quick Rank<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>
 			<div class="modal-content-container">
-				<?php $ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); ?>
+				<?php 
+					$ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); 
+					ShowRankList($ranklist, $game);
+				?>
 			</div>
 			<div class="modal-save-container">
 					<div class="save-btn modal-btn-pos">Save Rank</div>
@@ -81,22 +78,42 @@ function ShowRankModal($gameid){
 	<?php
 }
 
-function ShowRankList($ranklist){
+function ShowRankList($ranklist, $currgame){
 	if(sizeof($ranklist) > 0){
-		$filter = $ranklist[0][3];
+		$filter = explode(",", $ranklist[0][3]);
+		$count = 1;
 		?>
-		<div class="modal-rank-filter"><?php echo $filter; ?></div>
+		<div class="modal-rank-filter">
+			<?php if(sizeof($filter) > 0){
+				 foreach($filter as $filteritem){
+				?>
+				<div class="modal-rank-filter-item"><?php echo $filteritem; ?></div>
+				<?php
+				} 
+			} ?>
+		</div>
 		<?php
 		foreach($ranklist as $rankitem){
 			$game = $rankitem[0];
 			$rank = $rankitem[1];
 			$tier = $rankitem[2];
 			?>
-			<div class="modal-rank-item">
-				<div class="modal-rank-item-rank">#<?php echo $rank; ?></div>
-				<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+			<div class="modal-rank-group">
+				<div class=" modal-rank-active-game" data-internalrank="<?php echo $count; ?>">
+					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
+					<div class="modal-rank-item-subtitle"><?php echo $currgame->_developer; ?> - <?php echo $currgame->_publisher; ?></div>
+				</div>
+				<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
+					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+					<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+					<div class="modal-rank-item-subtitle"><?php echo $game->_developer; ?> - <?php echo $game->_publisher; ?></div>
+					<div class="divider" style='margin-top: 5px;'></div>
+				</div>
 			</div>
+			
 			<?php
+			$count++;
 		}
 	}
 }

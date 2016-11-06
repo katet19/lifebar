@@ -376,8 +376,8 @@ function GameCardAction(action, gameid){
 					$("#gameminiInnerContainer").html(output);
 					var height = $(".tier-modal-container").height() / 5;
 					$(".tier-modal-icon").css({'font-size': (height) + 'px'});
-					$(".fixed-close-modal-btn, .lean-overlay").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						HideFocus();
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
@@ -399,8 +399,8 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
-					$(".fixed-close-modal-btn, .lean-overlay").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						var windowWidth = $(window).width();
 						HideFocus();
 						$("#gamemini").css({ "right": "-40%" }); 
@@ -423,13 +423,26 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
-					$(".fixed-close-modal-btn, .lean-overlay").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						var windowWidth = $(window).width();
 						HideFocus();
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+					});
+					$(".modal-rank-item").on("click",function(){
+						var rank = $(this).attr("data-internalrank");
+						$(".modal-rank-item").each(function(){
+							var thisrank = parseInt($(this).attr("data-internalrank"));
+							$(this).find(".modal-rank-item-rank").text(thisrank);
+							if(thisrank >= rank){
+								thisrank = thisrank + 1;	
+								$(this).find(".modal-rank-item-rank").text(thisrank);
+							}
+						});
+						$(".modal-rank-active-game").hide(100);
+						$(this).parent().find(".modal-rank-active-game").show(300); 
 					});
 				},
 					error: function(x, t, m) {
