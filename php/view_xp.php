@@ -99,17 +99,57 @@ function ShowRankList($ranklist, $currgame){
 			$tier = $rankitem[2];
 			?>
 			<div class="modal-rank-group">
-				<div class=" modal-rank-active-game" data-internalrank="<?php echo $count; ?>">
+				<div class="modal-rank-active-game" <?php if($currgame->_id == $game->_id){ echo "style='display:block;'"; } ?> data-internalrank="<?php echo $count; ?>">
 					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
 					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
-					<div class="modal-rank-item-subtitle"><?php echo $currgame->_developer; ?> - <?php echo $currgame->_publisher; ?></div>
+					<div class="modal-rank-item-subtitle">
+					<?php 
+						  if($game->_year > 0)
+							  echo $game->_year;
+						  else
+							  echo "????";
+							  
+						  $developers = array_filter(explode("\n", $game->_developer));
+						  if(sizeof($developers) > 0){
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							echo implode("- ", $developers);
+						  }
+						  $publishers = array_filter(explode("\n", $game->_publisher));
+						  if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+						  if(sizeof($publishers) > 0){
+						  	echo implode("- ", $publishers);
+						  } 
+					?>
+					</div>
 				</div>
-				<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
-					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
-					<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
-					<div class="modal-rank-item-subtitle"><?php echo $game->_developer; ?> - <?php echo $game->_publisher; ?></div>
-					<div class="divider" style='margin-top: 5px;'></div>
-				</div>
+				<?php if($currgame->_id != $game->_id){ ?>
+					<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
+						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+						<div class="modal-rank-item-subtitle">
+						<?php 
+							if($game->_year > 0)
+								echo $game->_year;
+							else
+								echo "????";
+								
+							$developers = array_filter(explode("\n", $game->_developer));
+							if(sizeof($developers) > 0){
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+								echo implode("- ", $developers);
+							}
+							$publishers = array_filter(explode("\n", $game->_publisher));
+							if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							if(sizeof($publishers) > 0){
+								echo implode("- ", $publishers);
+							} 
+						?>
+						</div>
+						<div class="divider" style='margin-top: 5px;'></div>
+					</div>
+				<?php } ?>
 			</div>
 			
 			<?php

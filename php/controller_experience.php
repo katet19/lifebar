@@ -5,7 +5,7 @@ function GetSmartRankList($gameid, $userid){
 	$mysqli = Connect();
 	$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $mysqli);
 	$ranklist = array();
-	if($xp->_tier > 0){
+	if($xp->_tier > 0 && $xp->_game->_genre != ''){
 		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Tier` > 0 and e.`Tier` = '".$xp->_tier."' and g.`Genre` = '".$xp->_game->_genre."' and g.`Year` >= '".($xp->_game->_year - 2)."' and g.`Year` <= '".($xp->_game->_year + 1)."' and e.`Rank` > 0 order by `Rank`";
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
@@ -33,9 +33,9 @@ function GetSmartRankList($gameid, $userid){
 		}
 	}
 
-	if(sizeof($ranklist) < 5){
+	if(sizeof($ranklist) < 5 && $xp->_game->_genre != ''){
 		unset($ranklist);
-		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and g.`Year` >= '".($xp->_game->_year - 2)."' and g.`Year` <= '".($xp->_game->_year + 1)."' and e.`Rank` > 0 order by `Rank` LIMIT 0,15";
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and g.`Year` >= '".($xp->_game->_year - 2)."' and g.`Year` <= '".($xp->_game->_year + 1)."' and e.`Rank` > 0 order by `Rank`";
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
 				unset($ranklistitem);
@@ -48,9 +48,9 @@ function GetSmartRankList($gameid, $userid){
 		}
 	}
 
-	if(sizeof($ranklist) < 5){
+	if(sizeof($ranklist) < 5 && $xp->_game->_genre != ''){
 		unset($ranklist);
-		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and e.`Rank` > 0 order by `Rank` LIMIT 0,15";
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Genre` = '".$xp->_game->_genre."' and e.`Rank` > 0 order by `Rank`";
 		if ($result = $mysqli->query($myquery)) {
 			while($row = mysqli_fetch_array($result)){
 				unset($ranklistitem);
@@ -58,6 +58,21 @@ function GetSmartRankList($gameid, $userid){
 				$ranklistitem[] = $row['Rank'];
 				$ranklistitem[] = $row['Tier'];
 				$ranklistitem[] = $xp->_game->_genre;
+				$ranklist[] = $ranklistitem;
+			}
+		}
+	}
+
+	if(sizeof($ranklist) < 5){
+		unset($ranklist);
+		$myquery = "select g.*, e.`Rank`, e.`Tier` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and g.`Year` >= '".($xp->_game->_year - 4)."' and g.`Year` <= '".($xp->_game->_year + 2)."' and e.`Rank` > 0 order by `Rank`";
+		if ($result = $mysqli->query($myquery)) {
+			while($row = mysqli_fetch_array($result)){
+				unset($ranklistitem);
+				$ranklistitem[] = GameObject($row);
+				$ranklistitem[] = $row['Rank'];
+				$ranklistitem[] = $row['Tier'];
+				$ranklistitem[] = "Released between ".($xp->_game->_year - 4)." and ".($xp->_game->_year + 2);
 				$ranklist[] = $ranklistitem;
 			}
 		}
