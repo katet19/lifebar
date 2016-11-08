@@ -47,7 +47,10 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
 <meta name="theme-color" content="#3F51B5">
+<<<<<<< HEAD
 >>>>>>> origin/Akuma
+=======
+>>>>>>> Akuma
 	<?php if(isset($_GET['game'])){ ?>
 		<meta name="description" content="<?php echo $game->_title." "; 
 				if($game->_developer != ''){ echo "developed by ".$game->_developer." "; }
@@ -240,6 +243,7 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 	<div id="profile" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
 		<div id="profileInnerContainer" class="modalInnerContainer z-depth-3"></div>
 	</div>
+<<<<<<< HEAD
 	<div id="activity" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0'>
 		<div id="activityInnerContainer" class="innerContainer"></div>
 	</div>
@@ -258,6 +262,32 @@ if($GLOBALS["DownForMaintenance"]  && $_SESSION['logged-in']->_security != 'Admi
 	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 110px;position: absolute;  width: 100%;  z-index: 3;">
 		<div id="adminInnerContainer" class="innerContainer" style="min-height:100%;"></div>
 	</div>
+=======
+	<div id="gamemini" class="col s12 outerContainer" style="padding:0;">
+		<div id="gameminiInnerContainer" class="modalInnerContainer z-depth-5"></div>
+	</div>
+	<div id="profile" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
+		<div id="profileInnerContainer" class="modalInnerContainer z-depth-3"></div>
+	</div>
+	<div id="activity" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0'>
+		<div id="activityInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="profiledetails" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;">
+		<div id="profiledetailsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>
+	</div>
+	<div id="discover" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0;'>
+		<div id="discoverInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="notifications" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0;display:none;'>
+		<div id="notificationsInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="settings" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
+		<div id="settingsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>
+	</div>
+	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 110px;position: absolute;  width: 100%;  z-index: 3;">
+		<div id="adminInnerContainer" class="innerContainer" style="min-height:100%;"></div>
+	</div>
+>>>>>>> Akuma
 	<div id="landing" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 0px;position: absolute;  width: 100%;  z-index: 99;">
 		<div id="landingInnerContainer" class="innerContainer" style="min-height:100%;"></div>
 	</div>
