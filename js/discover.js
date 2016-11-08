@@ -30,8 +30,8 @@ function Search(searchstring){
 	GLOBAL_TAB_REDIRECT = "Search";
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	ManuallyNavigateToTab("#discover");
@@ -64,7 +64,7 @@ function Search(searchstring){
 					if($("#userAccountNav").is(":visible"))
 						$("#userAccountNav").hide(250);
 				});
- 				ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 				ShowUserProfile($(this).attr("data-id"));
  			});
   			Waves.displayEffect();
  			AttachGameCardEvents();
@@ -138,23 +138,18 @@ function FilterCategories(){
 }
 
 function OpenSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar").hide();
-		$(".searchInput").css({"left":"3.5em"});
-		$(".SearchBtn").css({"float":"left"});
-	}else if($(window).width() >= 600){
+	 if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar").hide();
+		$(".userNotificiations, .lifebar-container").hide();
 		$(".searchInput").css({"left":"3.5em"});
 		$(".SearchBtn").css({"float":"left"});
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".mobileTab, .mobileNav").hide();
+		$(".lifebar-container").hide();
 		$(".searchInput").css({"left":"3em"});
 	}
-	$(".closeMobileSearch").show();
-	$(".closeMobileSearch").on('click', function(e){
+	$(".closeSearch").show();
+	$(".closeSearch").on('click', function(e){
 		e.stopPropagation();
 		CloseSearch();
 	});
@@ -167,40 +162,31 @@ function OpenSearch(){
 }
 
 function CloseSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"150px", "background-color" : ""});
+ if($(window).width() >= 600){
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
 		setTimeout(function(){
-			$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar, .loginContainer").show(100);
+			$(".userAccountNavButton, .lifebar-container, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
-	}else if($(window).width() >= 600){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100px", "background-color" : ""});
-		setTimeout(function(){
-			$(".userAccountNavButton, .userBug, .userAvatar, .loginContainer").show(100);
-		}, 100);
-		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
 	}else{
-		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
-		$(".mobileTab, .mobileNav").show();
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
+		$(".lifebar-container").show();
 		$(".searchInput").css({"left":"1em"});
 		$(".searchInput input").val("");
 	}
-	$(".closeMobileSearch").hide();
+	$(".closeSearch").hide();
 	$(".searchInput").css({"display":""});
-	$(".mainNav").parent().show();
 	$(".userContainer").parent().show();
 }
 
 function ShowDiscoverHome(){
 	if(location.hash != "#discover")
-		location.hash = "#discover";
+		UpdateBrowserHash("#discover");
   	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
@@ -215,7 +201,6 @@ function ShowDiscoverHome(){
      			if($(".onboarding-big-welcome").length > 0){
      				ShowOnboarding();
      			}else{
-	     			//FilterCategories();
 	 				AttachDiscoverHomeEvents();
 	 				AttachDiscoverSecondaryEvents();
 	      			Waves.displayEffect();
@@ -265,7 +250,7 @@ function AttachDiscoverSecondaryEvents(){
   	});
    	$(".latest-xp-name-container").on('click', function(e){
    		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));		
+ 		ShowUserProfile($(this).attr("data-id"));		
  	});
   	ShowExtraSideContent();
   	AttachAgrees();
@@ -334,8 +319,69 @@ function AttachDiscoverHomeEvents(){
 			var userid = $(this).attr("data-id");
 			var username = $(this).attr("data-name");
 			FollowUser(userid, $(this), username);
+			$(this).parent().parent().parent().parent().hide(250);
+			$(this).parent().parent().parent().addClass("hidingSuggestedUser");
+			if($(".hidingSuggestedUser").length >= 4){
+				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members list</div>")
+			}
+
 		}
  	});
+	$(".dismiss-from-discover").on("click", function(){
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			DismissUser(userid, $(this), username);
+			$(this).parent().parent().parent().parent().hide(250);
+			$(this).parent().parent().parent().addClass("hidingSuggestedUser");
+			if($(".hidingSuggestedUser").length >= 4){
+				$(this).parent().parent().parent().parent().parent().parent().prepend("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your suggested members list</div>")
+			}
+		}
+ 	});
+	$(".dismiss-from-discover-small").on("click", function(e){
+		e.stopPropagation();
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			var category = $(this).attr("data-category").replace(/\s+/g, '_');
+			DismissUser(userid, $(this), username);
+			$(this).parent().parent().parent().parent().hide(250);
+			$(this).parent().parent().parent().addClass("hiding"+category);
+			if($(".hiding"+category).length >= 6){
+				$(this).parent().parent().parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your current list</div>")
+			}
+		}
+ 	});
+	$(".follow-from-discover-small").on("click", function(e){
+		e.stopPropagation();
+		if($("#loginButton").length > 0){
+			$('#signupModal').openModal(); $("#username").focus();
+		}else{
+			var userid = $(this).attr("data-id");
+			var username = $(this).attr("data-name");
+			var category = $(this).attr("data-category").replace(/\s+/g, '_');
+			FollowUser(userid, $(this), username);
+			$(this).parent().parent().parent().parent().hide(250);
+			$(this).parent().parent().parent().addClass("hiding"+category);
+			if($(".hiding"+category).length >= 6){
+				$(this).parent().parent().parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through your current list</div>")
+			}
+		}
+ 	});
+	$(".game-card-quick-dismiss").on("click", function(e){
+		e.stopPropagation();
+		$(this).parent().parent().parent().hide(250);
+		RemoveGameFromCollectionManage("BACKLOG", $(this).attr("data-id"));
+		$(this).parent().parent().parent().addClass("hidingLifebarBacklog");
+		if($(".hidingLifebarBacklog").length >= 6){
+			$(this).parent().parent().parent().parent().append("<div style='font-size:1.25em;font-weight:400;margin: 75px 0 50px;'>Congrats! You finished going through a slice of your backlog</div>")
+		}
+	});
  	$(".discover-invite-users").on("click", function(){
  		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
 		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
@@ -370,15 +416,19 @@ function AttachDiscoverHomeEvents(){
 	//User
  	$(".user-discover-card").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
   	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
  	$(".ViewBtnCollection").on("click", function(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
  	});
+	if($(window).width() <= 599){
+		$(".follow-from-discover").html("<i class='mdi-social-people'></i>");
+		$(".dismiss-from-discover").html("<i class='mdi-content-remove-circle-outline'></i>");
+	}
 	//Category
 	$(".ViewBtn").on("click", function(){
 		GLOBAL_TAB_REDIRECT = "CategoryNav";
@@ -406,7 +456,7 @@ function AttachDiscoverHomeEvents(){
 	 			});
 	 			$(".user-discover-card").on("click", function(e){
  			 		e.stopPropagation();
- 					ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 					ShowUserProfile($(this).attr("data-id"));
 	 			});
 	 			AttachGameCardEvents();
 	 			$(".CategoryGameImageHighlight, .CategoryGameTitle").on("click", function(){
@@ -451,14 +501,15 @@ function AttachWatchedDiscoverXP(){
 					$(".myxp-video-goto-full").hide();
 					AttachActivityVideoEvents();
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
-					xpElement.css({"background-color":"#F44336"});
+					xpElement.css({"background-color":"#757575"});
+					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
 					$(".daily-watch-title-xp").unbind();
 					$(".daily-watch-title-xp").on('click', function(){
 						$(".daily-watch-title").show();
 						$(".daily-watch-xp-entry").hide();
 						$(".daily-watch-xp-entry").html("");
 						xpElement.html("ADD <i class='mdi-action-visibility'></i>");
-						xpElement.css({"background-color":"#0e4c7b"});
+						xpElement.css({"background-color":"#F50057"});
 						AttachWatchedDiscoverXP();
 					});
 				},
@@ -542,8 +593,8 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
 	GLOBAL_TAB_REDIRECT = "Search";
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	ManuallyNavigateToTab("#discover");
 	if($(window).width() > 599){

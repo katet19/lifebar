@@ -53,8 +53,33 @@ class Game
 		$this->_t3 = $t3;
 		$this->_t4 = $t4;
 		$this->_t5 = $t5;
-	}
-		
+	}	
+}
+
+function GameObject($row){
+	return new Game($row["ID"], 
+				$row["GBID"],
+				$row["Title"],
+				$row["Rated"],
+				$row["Released"],
+				$row["Genre"],
+				$row["Platforms"],
+				$row["Year"],
+				$row["ImageLarge"],
+				$row["ImageSmall"],
+				$row["Highlight"],
+				$row["Publisher"],
+				$row["Developer"],
+				$row["Alias"],
+				$row["Theme"],
+				$row["Franchise"],
+				$row["Similar"],
+				$row["Tier1"],
+				$row["Tier2"],
+				$row["Tier3"],
+				$row["Tier4"],
+				$row["Tier5"]
+				);
 }
 
 class GameMeta

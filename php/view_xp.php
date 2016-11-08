@@ -1,4 +1,173 @@
 <?php
+function ShowTierModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Tier Placement<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>			
+			<div class="modal-content-container">
+				<div class="tier-modal-row"><i class="material-icons tierTextColor1 tier-modal-icon"><?php DisplayTierBadge(1); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor2 tier-modal-icon"><?php DisplayTierBadge(2); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor3 tier-modal-icon"><?php DisplayTierBadge(3); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor4 tier-modal-icon"><?php DisplayTierBadge(4); ?></i></div>
+				<div class="tier-modal-row"><i class="material-icons tierTextColor5 tier-modal-icon"><?php DisplayTierBadge(5); ?></i></div>
+			</div>
+			<div class="modal-save-container">
+					<div class="save-btn modal-btn-pos">Save Tier</div>
+					<div class="cancel-btn modal-btn-pos">Cancel</div>
+			</div>	
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Add Experience<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>	
+			<div class="modal-content-container">
+
+			</div>
+			<div class="modal-save-container">
+					<div class="save-btn modal-btn-pos">Save XP</div>
+					<div class="cancel-btn modal-btn-pos">Cancel</div>
+			</div>		
+		</div>
+	</div>
+	<?php
+}
+
+function ShowRankModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						Quick Rank<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>
+			<div class="modal-content-container">
+				<?php 
+					$ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); 
+					ShowRankList($ranklist, $game);
+				?>
+			</div>
+			<div class="modal-save-container">
+					<div class="save-btn modal-btn-pos">Save Rank</div>
+					<div class="cancel-btn modal-btn-pos">Cancel</div>
+			</div>			
+		</div>
+	</div>
+	<?php
+}
+
+function ShowRankList($ranklist, $currgame){
+	if(sizeof($ranklist) > 0){
+		$filter = explode(",", $ranklist[0][3]);
+		$count = 1;
+		?>
+		<div class="modal-rank-filter">
+			<?php if(sizeof($filter) > 0){
+				 foreach($filter as $filteritem){
+				?>
+				<div class="modal-rank-filter-item"><?php echo $filteritem; ?></div>
+				<?php
+				} 
+			} ?>
+		</div>
+		<?php
+		foreach($ranklist as $rankitem){
+			$game = $rankitem[0];
+			$rank = $rankitem[1];
+			$tier = $rankitem[2];
+			?>
+			<div class="modal-rank-group">
+				<div class="modal-rank-active-game" <?php if($currgame->_id == $game->_id){ echo "style='display:block;'"; } ?> data-internalrank="<?php echo $count; ?>">
+					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
+					<div class="modal-rank-item-subtitle">
+					<?php 
+						  if($game->_year > 0)
+							  echo $game->_year;
+						  else
+							  echo "????";
+							  
+						  $developers = array_filter(explode("\n", $game->_developer));
+						  if(sizeof($developers) > 0){
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							echo implode("- ", $developers);
+						  }
+						  $publishers = array_filter(explode("\n", $game->_publisher));
+						  if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+						  if(sizeof($publishers) > 0){
+						  	echo implode("- ", $publishers);
+						  } 
+					?>
+					</div>
+				</div>
+				<?php if($currgame->_id != $game->_id){ ?>
+					<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
+						<div class="modal-rank-item-insert-btn">
+							<div class="row modal-rank-item-hover-col-title">INSERT</div>
+						</div>
+						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+						<div class="modal-rank-item-subtitle">
+						<?php 
+							if($game->_year > 0)
+								echo $game->_year;
+							else
+								echo "????";
+								
+							$developers = array_filter(explode("\n", $game->_developer));
+							if(sizeof($developers) > 0){
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+								echo implode("- ", $developers);
+							}
+							$publishers = array_filter(explode("\n", $game->_publisher));
+							if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							if(sizeof($publishers) > 0){
+								echo implode("- ", $publishers);
+							} 
+						?>
+						</div>
+						<div class="divider" style='margin-top: 5px;'></div>
+					</div>
+				<?php } ?>
+			</div>
+			
+			<?php
+			$count++;
+		}
+	}
+}
+
+/*
+*
+* OLD STUFF
+*
+*/
+
+
 function ShowMyNewXP($gameid, $playedorwatched, $editid){
 	$exp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $gameid);
 	ShowTierQuote($exp, $gameid, false);
@@ -127,7 +296,7 @@ function ShowEditPlayed($exp){
 	</div>
 	<div class="row myxp-form-box">
 		<div class="col s12 m12 l8">
-		  <label>Experienced Year</label>
+		  <label>Year Last Played</label>
 		  <select id="myxp-year">
 			<?php 
 				$date = explode('-',$watchedxp->_date);
@@ -284,7 +453,7 @@ function ShowEditWatched($exp, $watchid){
 	</div>
 	<div class="row myxp-form-box">
 		<div class="col s12 m12 l8">
-		  <label>Experienced Year</label>
+		  <label>Year Watched</label>
 		  <select id="myxp-year">
 			<?php 
 				$date = explode('-',$watchedxp->_date);
@@ -846,297 +1015,6 @@ function BuildMyXPSentence($exp, $userid, $tier, $type){
 	<?php } ?>
 	<div class="myxp-visual-sentence-label">during</div>
 	<div class="myxp-visual-sentence-label"><?php echo $date[0]; ?></div>
-	
-	<?php
-}
-
-function BuildPlayedVisualSentence($exp, $userid, $tier, $gamename, $gbid){
-	$date = explode('-',$exp->_date);
-	if($exp->_completed > 0){
-		if($exp->_completed < 100){
-			$completedSentence = $exp->_completed."% Completed";
-		}else if($exp->_completed == 100){
-			$completedSentence = "Finished";
-		}else if($exp->_completed == 101){
-			$exp->_completed = 100;
-			$completedSentence = "Multiple playthroughs";
-		}
-	}
-	
-	if($exp->_date > 0){
-		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
-		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
-		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
-		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
-		else if($date[1] == 0){ $quarter = ""; }
-		if($quarter != "")
-			$sentence = $sentence." during ".$quarter." of ".$date[0];
-		else
-			$sentence = $sentence." in ".$date[0];
-	}
-	if($exp->_platform != ""){
-		$myplatforms = str_replace("\n", " ", $exp->_platform);
-		$sentence = $sentence." on ". $myplatforms;
-	}
-	
-	
-	
-	?>
-	<div class="visual-sentence-perct">
-	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo $completedSentence; ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
-	  	  <span style='<?php if($exp->_completed != 100){ ?>background-color:transparent;<?php } ?>' class='visualsentence-tier-display <?php if($exp->_completed == 100){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-hardware-gamepad <?php if($exp->_completed != 100){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 100){ ?>style='color:white;<?php } ?>"></i></span>
-		  <div class="slice">
-		    <div class="bar minibar"></div>
-		    <div class="fill"></div>
-		  </div>
-		</div>
-		<div class="badge-small-name" style='width:auto;'><? echo $completedSentence; ?></div>
-	</div>
-	<? if($gamename != '' && $gbid != ''){ ?>
-		<div class="visual-sentence-label" style='padding: 0 0px 0 20px;'>
-			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
-		</div>
-	<?php } ?>
-	<div class="visual-sentence-label">on</div>
-	<?php $platforms = explode(",",$exp->_platformids);
-		if(sizeof($platforms) == 1){ ?>
-	<div class="visual-sentence-perct">
-		<?php 
-			$milestone = GetPlatformMilestone($userid, $exp->_platformids);
-			DisplayPlatformMilestone($milestone, false);
-		?>
-	</div>
-	<?php }else{ ?>
-		<div class="visual-sentence-label" style='text-align:center; text-align: center;vertical-align: middle;font-weight: 500;padding:0px;'>
-			<?php echo sizeof($platforms); ?>
-			<div class="visual-sentence-sublabel">platforms</div>
-		</div>
-	<?php } ?>
-	<div class="visual-sentence-label">during</div>
-	<div class="visual-sentence-year"><?php echo $date[0]; ?></div>
-	
-	<?php
-}
-
-function BuildPlayedVisualActivitySentence($exp, $userid, $tier, $gamename, $gbid){
-	$date = explode('-',$exp->_date);
-	if($exp->_completed > 0){
-		if($exp->_completed < 100){
-			$completedSentence = $exp->_completed."% Completed";
-		}else if($exp->_completed == 100){
-			$completedSentence = "Finished";
-		}else if($exp->_completed == 101){
-			$exp->_completed = 100;
-			$completedSentence = "Multiple playthroughs";
-		}
-	}
-	
-	if($exp->_date > 0){
-		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
-		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
-		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
-		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
-		else if($date[1] == 0){ $quarter = ""; }
-		if($quarter != "")
-			$sentence = $sentence." during ".$quarter." of ".$date[0];
-		else
-			$sentence = $sentence." in ".$date[0];
-	}
-	if($exp->_platform != ""){
-		$myplatforms = str_replace("\n", " ", $exp->_platform);
-		$sentence = $sentence." on ". $myplatforms;
-	}
-	
-	
-	
-	?>
-	<div class="feed-visual-sentence-perct" style="float:left;margin-right:15px;">
-	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo $completedSentence; ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
-	  	  <span style='<?php if($exp->_completed != 100){ ?>background-color:transparent;<?php } ?>' class='visualsentence-tier-display <?php if($exp->_completed == 100){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-hardware-gamepad <?php if($exp->_completed != 100){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 100){ ?>style='color:white;<?php } ?>"></i></span>
-		  <div class="slice">
-		    <div class="bar minibar"></div>
-		    <div class="fill"></div>
-		  </div>
-		</div>
-		<div class="badge-small-name" style='width:auto;margin-left:0;'><? echo $completedSentence; ?></div>
-	</div>
-	<? if($gamename != '' && $gbid != ''){ ?>
-		<div class="feed-visual-sentence-label">
-			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
-		</div>
-	<?php } ?>
-	<div class="feed-visual-sentence-label">on</div>
-	<?php $platforms = explode(",",$exp->_platformids);
-	if(sizeof($platforms) == 1){ ?>
-	<div class="feed-visual-sentence-perct" style='padding: 0 5px;'>
-		<?php 
-			$milestone = GetPlatformMilestone($userid, $exp->_platformids);
-			DisplayPlatformMilestone($milestone, true);
-		?>
-	</div>
-	<?php }else{ ?>
-		<div class="feed-visual-sentence-label" style='text-align: center;vertical-align: middle;font-weight: 500;padding: 0px;height: 50px;padding-top: 7px;'>
-			<?php echo sizeof($platforms); ?>
-			<div class="visual-sentence-sublabel" style="font-size:0.6em">platforms</div>
-		</div>
-	<?php } ?>
-	<div class="feed-visual-sentence-label">during</div>
-	<div class="feed-visual-sentence-year"><?php echo $date[0]; ?></div>
-	
-	<?php
-}
-
-function DisplayPlatformMilestone($milestone, $smallNames){ 
-	//Calculate current level
-	if($milestone->_progress->_percentlevel4 == 100 && $milestone->_level5 > 0){
-		$progress = $milestone->_progress->_progresslevel5;
-		$currentlevel = 5;
-		$percent = $milestone->_progress->_percentlevel5;
-		$threshold = $milestone->_level5;
-	}else if($milestone->_progress->_percentlevel3 == 100  && $milestone->_level4 > 0){
-		$progress = $milestone->_progress->_progresslevel4;
-		$currentlevel = 4;
-		$percent = $milestone->_progress->_percentlevel4;
-		$threshold = $milestone->_level4;
-	}else if($milestone->_progress->_percentlevel2 == 100  && $milestone->_level3 > 0){
-		$progress = $milestone->_progress->_progresslevel3;
-		$currentlevel = 3;
-		$percent = $milestone->_progress->_percentlevel3;
-		$threshold = $milestone->_level3;
-	}else if($milestone->_progress->_percentlevel1 == 100  && $milestone->_level2 > 0){
-		$progress = $milestone->_progress->_progresslevel2;
-		$currentlevel = 2;
-		$percent = $milestone->_progress->_percentlevel2;
-		$threshold = $milestone->_level2;
-	}else{
-		$progress = $milestone->_progress->_progresslevel1;
-		$currentlevel = 1;
-		$percent = $milestone->_progress->_percentlevel1;
-		$threshold = $milestone->_level1;
-	}
-?>
-	<div style='text-align:center;display:block;'>
-	  <div class="c100 mini <?php if($currentlevel == 1){ echo "one"; }else if($currentlevel == 2){ echo "two"; }else if($currentlevel == 3){ echo "three"; }else if($currentlevel == 4){ echo "four"; }else if($currentlevel == 5){ echo "five"; }  ?> p<?php echo $percent; ?> z-depth-1" title="<?php echo $progress; ?> / <?php  echo $threshold; ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
-	  	  <span style="width: 35px;height:35px;top: 3px;left: 3px;background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%, rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.75)), color-stop(101%,rgba(0,0,0,0.75))), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%,rgba(0,0,0,0.75) 101%), url(<?php echo $milestone->_image; ?>) 50% 25%;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"><span style='opacity:0'><?php  $progress; ?>/<?php  $threshold; ?></span></span>
-		  <div class="slice">
-		    <div class="bar minibar"></div>
-		    <div class="fill"></div>
-		  </div>
-		</div>
-	</div>
-	<div class="badge-small-name visual-sentence-game" style='width:auto;'><?php if($smallNames){ echo ConvertPlatformToShortHand($milestone->_name); }else{ echo $milestone->_name;  } ?></div>
-<?php
-}
-function BuildWatchedVisualSentence($exp, $userid, $tier, $gamename, $gbid){
-	if($exp->_length == "Watched a speed run" || $exp->_length == "Watched a complete single player playthrough" || $exp->_length == "Watched a complete playthrough"){
-		$exp->_completed = 101;
-	}else if($exp->_completed < 100 && ($exp->_length == "Watched multiple hours" || $exp->_length == "Watched gameplay" || $exp->_length == "Watched an hour or less")){
-		$exp->_completed = 100;
-	}else if($exp->_completed < 50 && ($exp->_length == "Watched promotional gameplay" || $exp->_length == "Watched a developer diary")){
-		$exp->_completed = 50;
-	}else{
-		$exp->_completed = 20;
-	}
-
-	if($exp->_source != ""){
-		$sentence = $sentence." on ".$exp->_source;
-	}
-	if($exp->_url != ""){
-		$link = $exp->_url;
-	}
-	
-	
-	$date = explode('-',$exp->_date);
-	
-	if($exp->_date > 0){
-		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
-		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
-		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
-		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
-		else if($date[1] == 0){ $quarter = ""; }
-		if($quarter != "")
-			$sentence = $sentence." during ".$quarter." of ".$date[0];
-		else
-			$sentence = $sentence." in ".$date[0];
-	}
-	
-	?>
-	<div class="visual-sentence-perct">
-	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo strtolower($exp->_length); ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
-	  	  <span style='<?php if($exp->_completed != 101){ ?>background-color:transparent;<?php } ?>left: 0px !important;' class='visualsentence-tier-display <?php if($exp->_completed == 101){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-action-visibility <?php if($exp->_completed != 101){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 101){ ?>style='color:white;<?php } ?>"></i></span>
-		  <div class="slice">
-		    <div class="bar minibar"></div>
-		    <div class="fill"></div>
-		  </div>
-		</div>
-		<div class="badge-small-name" style='width:auto;margin-left:0;'>Watched</div>
-	</div>
-	<? if($gamename != '' && $gbid != ''){ ?>
-		<div class="visual-sentence-label" style='padding: 0 0px 0 20px;'>
-			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
-		</div>
-	<?php } ?>
-	<div class="visual-sentence-label">on</div>
-	<div class="visual-sentence-label" style='font-weight:400;padding:0px;'><?php echo $exp->_source; if($link != ''){ echo "<a href='$link' style='margin-left:10px;' target='_blank'><i class='fa fa-film'></i></a>"; }?></div>
-	<div class="visual-sentence-label">during</div>
-	<div class="visual-sentence-year"><?php echo $date[0]; ?></div>
-	
-	<?php
-}
-
-function BuildWatchedVisualActivitySentence($exp, $userid, $tier, $gamename, $gbid){
-	if($exp->_length == "Watched a speed run" || $exp->_length == "Watched a complete single player playthrough" || $exp->_length == "Watched a complete playthrough"){
-		$exp->_completed = 101;
-	}else if($exp->_completed < 100 && ($exp->_length == "Watched multiple hours" || $exp->_length == "Watched gameplay" || $exp->_length == "Watched an hour or less")){
-		$exp->_completed = 100;
-	}else if($exp->_completed < 50 && ($exp->_length == "Watched promotional gameplay" || $exp->_length == "Watched a developer diary")){
-		$exp->_completed = 50;
-	}else{
-		$exp->_completed = 20;
-	}
-
-	if($exp->_source != ""){
-		$sentence = $sentence." on ".$exp->_source;
-	}
-	if($exp->_url != ""){
-		$link = $exp->_url;
-	}
-	
-	
-	$date = explode('-',$exp->_date);
-	
-	if($exp->_date > 0){
-		if($date[1] > '0' && $date[1] <= '3'){ $quarter = "Q1"; }
-		else if($date[1] > '3' && $date[1] <= '6'){ $quarter = "Q2"; }
-		else if($date[1] > '6' && $date[1] <= '9'){ $quarter = "Q3"; }
-		else if($date[1] > '9' && $date[1] <= '12'){ $quarter = "Q4"; }
-		else if($date[1] == 0){ $quarter = ""; }
-		if($quarter != "")
-			$sentence = $sentence." during ".$quarter." of ".$date[0];
-		else
-			$sentence = $sentence." in ".$date[0];
-	}
-	
-	?>
-	<div class="feed-visual-sentence-perct" style="float:left;margin-right:15px;">
-	  	<div class="c100 mini p<?php echo $exp->_completed; ?> <?php if($tier == 1){ echo "tierone"; }else if($tier == 2){ echo "tiertwo"; }else if($tier == 3){ echo "tierthree"; }else if($tier == 4){ echo "tierfour"; }else if($tier == 5){ echo "tierfive"; }  ?> z-depth-1" title="<?php echo strtolower($exp->_length); ?>" style='float: none;margin-left: auto;margin-right: auto;background-color: white;'>
-	  	  <span style='<?php if($exp->_completed != 101){ ?>background-color:transparent;<?php } ?>left: 0px !important;' class='visualsentence-tier-display <?php if($exp->_completed == 101){ ?>tier<?php echo $tier; ?>BG<?php } ?>'><i class="mdi-action-visibility <?php if($exp->_completed != 101){ ?>tierTextColor<?php echo $tier; } ?> <?php if($exp->_completed == 101){ ?>style='color:white;<?php } ?>"></i></span>
-		  <div class="slice">
-		    <div class="bar minibar"></div>
-		    <div class="fill"></div>
-		  </div>
-		</div>
-		<div class="badge-small-name" style='width:auto;margin-left:0;'>Watched</div>
-	</div>
-	<? if($gamename != '' && $gbid != ''){ ?>
-		<div class="feed-visual-sentence-label" style='margin-top: 10px;'>
-			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $gbid; ?>"><?php echo $gamename; ?></div>
-		</div>
-	<?php } ?>
-	<div class="feed-visual-sentence-label">on</div>
-	<div class="feed-visual-sentence-label" style='font-weight:400;padding:0px;'><?php echo $exp->_source; if($link != ''){ echo "<a href='$link' style='margin-left:10px;' target='_blank'><i class='fa fa-film'></i></a>"; }?></div>
-	<div class="feed-visual-sentence-label">during</div>
-	<div class="feed-visual-sentence-year"><?php echo $date[0]; ?></div>
 	
 	<?php
 }

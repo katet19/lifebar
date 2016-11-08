@@ -175,27 +175,6 @@ function SaveUserSettings(userid, username, password, email, first, last, birthy
 	});
 }
 
-function ShowUserPreviewCard(usercard, element){
-	ShowPopUpUserPreview(usercard.html());
-	$(".user-preview-card-follow-action, .user-preview-card-view-profile").unbind();
-	$(".user-preview-card-follow-action").on('click', function(e){
-		FollowUser($(this).attr("data-userid"), $(this), $(this).attr("data-name"));
-		$("#universalUserPreview").closeModal();
-	});
-	$(".user-preview-card-view-profile").on('click', function(e){
-		if(element == undefined)
-			element = $("#discover");
-		ShowUserProfile($(this).attr("data-userid"));
-		$("#universalUserPreview").closeModal();
-	});
-	$(".user-preview-card-view-activity").on('click', function(e){
-		if(element == undefined)
-			element = $("#discover");
-		ShowUserActivity($(this).attr("data-userid"));
-		$("#universalUserPreview").closeModal();
-	});
-}
-
 function FollowUser(followid, elem, name){
 	elem.velocity({"opacity":"0"}, function(){ elem.css({"display":"none"}); });
 	$.ajax({ url: '../php/webService.php',
@@ -215,17 +194,21 @@ function FollowUser(followid, elem, name){
 	});
 }
 
-/*
-*
-* Universal User Preview
-*
-*/
-function ShowPopUpUserPreview(content){
-	$("#universalUserPreview").html(content);
-	$("#universalUserPreview").openModal();
-  	$(".closeDetailsModal").unbind();
-  	$(".closeDetailsModal").on('click', function(){
-  		$("#universalUserPreview").closeModal();
-  		HideFocus();
-  	});
+function DismissUser(dismiss, elem, name){
+	elem.velocity({"opacity":"0"}, function(){ elem.css({"display":"none"}); });
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DismissUser", dismiss: dismiss },
+     type: 'post',
+     success: function(output) {
+ 		Toast("Dismissed " + name + ", they will no longer be suggested"); 
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
 }

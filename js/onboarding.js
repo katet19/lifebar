@@ -45,7 +45,7 @@ function ShowSocial(){
      success: function(output) {
      	$(".onboarding-progress").html("Step: 2 of 3");
  		$("#discoverInnerContainer").html(output);
- 		location.hash = "onboarding";
+ 		UpdateBrowserHash("onboarding");
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
  			SaveOnboardingSocial();
@@ -167,7 +167,7 @@ function ShowGamingPref(){
      	$(".onboarding-progress").html("Step: 3 of 3");
      	$(".onboarding-next").html("FINISH");
  		$("#discoverInnerContainer").html(output);
- 		location.hash = "onboarding";
+ 		UpdateBrowserHash("onboarding");
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
  			SaveOnboardingGamingPref();

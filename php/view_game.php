@@ -4,7 +4,7 @@ function DisplayGame($gbid){
 	$myxp = GetExperienceForUserByGame($_SESSION['logged-in']->_id, $game->_id);
 	$videoxp = GetGameVideoXP($game->_id);
 	$myxp->_bucketlist = IsGameBookmarkedFromCollection($game->_id);
-	ShowGameNav();
+	ShowGameNav($gbid);
 	ShowGameHeader($game, $myxp, -1, $videoxp);
 	ShowGameContent($game, $myxp, -1, $videoxp);
 }
@@ -16,17 +16,17 @@ function DisplayGameViaID($gameid, $userid){
 	$videoxp = GetGameVideoXP($game->_id);
 	if($userid > 0){
 		$otherxp = GetExperienceForUserByGame($userid, $game->_id);
-		ShowGameNav();
+		ShowGameNav($game->_gbid);
 		ShowGameHeader($game, $myxp, $otherxp, $videoxp);
 		ShowGameContent($game, $myxp, $otherxp, $videoxp);
 	}else{
-		ShowGameNav();
+		ShowGameNav($game->_gbid);
 		ShowGameHeader($game, $myxp, -1, $videoxp);
 		ShowGameContent($game, $myxp, -1, $videoxp);
 	}
 }
 
-function ShowGameNav(){
+function ShowGameNav($gbid){
 	$id = $_SESSION['logged-in']->_id;
 	?>
 	<ul id="game-slide-out">
@@ -75,8 +75,7 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		if($sim > 0){
 			$similar[] = GetGameByGBIDFull($sim);
 		}
-	}
-?>
+	} ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
 			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $allusers); ?>
@@ -131,9 +130,6 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		<div id="game-collections-tab" class='col s12 game-tab'>
 			<?php ShowGameCollections($collections, $game); ?>
 		</div>
-		<!--<div id="game-info-tab" class='col s12 game-tab'>
-			<?php /*ShowGeneralInfo($game);*/ ?>
-		</div>-->
 	</div>
 <?php }
 
@@ -488,49 +484,15 @@ function DisplayAllCommunityCards($users, $type){
 	}
 }
 
-function ShowGameTabs($myxp, $otherxp, $videoxp){
-	?>
-	<div id="game-navigation-header">
-		<div class="row" style='margin:0;'>
-		    <div class="col s12 m8" style="padding:0;">
-		      <ul class="tabs gameNav" style="background-color:transparent">
-		      	<li class="tab col s3 criticGameTab" style='background-color:transparent'><a href="#game-community-tab" class="active waves-effect waves-light">Community</a></li>
-		        <li class="tab col s3 userAnalyzeTab" style='background-color:transparent'><a href="#game-analyze-tab" id='analyze-tab-nav' class="waves-effect waves-light">Analyze</a></li>
-		        <?php if(sizeof($videoxp) > 0  && $_SESSION['logged-in'] > 0){ ?>
-		        	<li class="tab col s3 userVideoTab" style='background-color:transparent'><a href="#game-video-tab" id='video-tab-nav' class="waves-effect waves-light">Watch</a></li>
-		        <?php } ?>
-		        <?php if(isset($_SESSION['logged-in']->_id) && $myxp->_tier != 0){ ?> 
-		        	<li class="tab col s3 userGameTab preExistingGameTab" style='background-color:transparent;<?php if(!isset($_SESSION['logged-in']->_id) || $myxp->_tier == 0){ echo "display:none;"; } ?>'><a href="#game-myxp-tab" class="waves-effect waves-light">My XP</a></li>
-		        <?php } ?>
-		        <li class="tab col s3" style='background-color:transparent;<?php if($otherxp == -1){ echo "display:none;"; } ?>'>
-		        	<a href="#game-userxp-tab" id='userxp-tab-nav' class="waves-effect waves-light">
-		        		<?php if($otherxp->_username->_security == "Journalist" || $otherxp->_username->_security == "Authenticated"){
-		        			echo $otherxp->_username->_first." ".$otherxp->_username->_last; 
-		        		}else{
-		        			echo $otherxp->_username->_username; 
-		        		}?>
-		        	</a>
-	        	</li>
-		      </ul>
-			</div>
-		</div>
-	</div>
-	<?php
-}
-
 function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	?>
 	<div class="fixed-action-btn" id="game-fab">
 		<?php ShowMyGameFAB($game->_id, $myxp); ?>
 	</div>
+	<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-		<?php /*DisplayGameBackNav();*/ ?>
-		<div class="GameMyStatusIcons">
-			<i class="mdi-action-bookmark mybookmark" <?php if($myxp->_bucketlist != "Yes"){ echo "style='display:none;'"; } ?>></i>
-		</div>
 		<div class="GameTitle"><i class="mdi-navigation-menu HideForDesktop" style='color: white;margin-right: 10px;font-size: 1.25em;vertical-align: bottom;'></i> <?php echo $game->_title; ?></div>
-		<?php /*ShowGameTabs($myxp, $otherxp, $videoxp);*/ ?>
 	</div>
 	<?php
 }
@@ -569,76 +531,8 @@ function ShowMyGameFAB($gameid, $myxp){
 	<?php }
 }
 
-function ShowGeneralInfo($game){	?>
-<div class="z-depth-1" style='padding: 20px 1.75rem;background-color:white;'>
-	<?php if($game->_id != '33548' && $game->_id != '33541' && $game->_id != '33542' && $game->_id != '33547' && $game->_id != '33543'
-	&& $game->_id != '33546' && $game->_id != '33540' && $game->_id != '33549' && $game->_id != '33544' && $game->_id != '33545') { ?>
-		<div class="row">
-			<div class="col s12 GameInfoLabel">Released:</div>
-			<div class="col s12 GameInfoContent">
-				<?php 
-				if($game->_year == 0){
-					echo "Release date not announced";
-				}else{
-					echo ConvertDateToLongRelationalEnglish($game->_released); ?> <?php echo $game->_year; ?>
-				<?php } ?>
-			</div>
-		</div>
-		<div class="row">
-	<?php }else{ ?>
-		<div class="row">
-	<?php } ?>
-
-		<div class="col s12 GameInfoLabel">Platforms:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $platforms = explode("\n", $game->_platforms);
-			echo implode(", ", array_filter(array_map('trim',$platforms)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Developed By:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $developers = explode("\n", $game->_developer);
-			echo implode(", ", array_filter(array_map('trim',$developers)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Published By:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $publishers = explode("\n", $game->_publisher);
-			echo implode(", ", array_filter(array_map('trim',$publishers)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 GameInfoLabel">Categorized As:</div>
-		<div class="col s12 GameInfoContent">
-			<?php $genres = explode("\n", $game->_genre);
-			echo implode(", ", array_filter(array_map('trim',$genres)));?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12" style='text-align:left;'>
-			<div class="btn-flat" style='padding:0;'><a href="<?php echo "http://www.giantbomb.com/game/3030-".$game->_gbid; ?>" style='font-weight:bold;' target="_blank">VIEW MORE INFO @ GIANT BOMB</a></div>
-		</div>
-	</div>
-</div>	
-<?php }
-
-function DisplayGameBackNav(){ ?>
-	<div class="backContainer" style='background:transparent;text-shadow: 1px 1px 5px rgba(0,0,0,0.3);/*position:absolute;top:0;*/'>
-		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:white;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:white;margin: 0;padding: 0;" >Back</a></div>
-	</div>
-<?php }
-
-function DisplayGameInfoBackNav(){ ?>
-	<div class="backContainerSideContent">
-		<div class="backButton waves-effect waves-light"><i class="mdi-navigation-arrow-back small" style="color:#474747;vertical-align:middle;padding: 0 0.5em;"></i> <a class="btn-flat backButtonLabel" style="color:#474747;margin: 0;padding: 0 2em;" >Back</a></div>
-	</div>
-<?php }
-
-
 function DisplayGameCard($game, $count, $classId){
-	$xp = GetExperienceForUserComplete($_SESSION['logged-in']->_id, $game->_id); ?>
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
 	<div class="col s6 m3 l2" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
@@ -649,10 +543,32 @@ function DisplayGameCard($game, $count, $classId){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s3 game-card-quick-played" style='padding: 10px 0 7px;'><i class="mdi-hardware-gamepad nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-watched" style='padding: 10px 0 7px;'><i class="mdi-action-visibility nav-game-action-btn <?php if(sizeof($xp->_watchedxp) > 0){ echo "tierTextColor".$xp->_tier; } ?>"></i></div>
-					<div class="col s3 game-card-quick-bookmark" style='padding: 10px 0 7px;'><i class="mdi-action-bookmark nav-game-action-btn <?php if($xp->_bucketlist == "Yes"){ echo "nav-game-action-isBookmarked"; } ?>" ></i></div>
-					<div class="col s3 game-card-quick-collection" style='padding: 10px 0 7px;'><i class="mdi-av-my-library-add nav-game-action-btn"></i></div>
+					<div class="col s3 game-card-action-pick" data-action="tier"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+						<?php if($xp->_tier > 0){ 
+							DisplayTierBadge($xp->_tier);
+						}else{
+							echo "add_box";
+						} ?>
+					</i></div>
+					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
+							DisplayXPFace($xp->_tier);	
+						}else{
+							echo "face";
+						} ?>
+					</i></div>
+					<div class="col s3 game-card-action-pick" data-action="rank">
+						<?php if($xp->_rank > 0){ 
+							?>
+							<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
+							<?php	
+						}else{
+							?>
+							<i class="material-icons nav-game-action-btn">swap_vert</i>
+							<?php
+						} ?>
+					</div>
+					<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 				</div>
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
@@ -660,6 +576,55 @@ function DisplayGameCard($game, $count, $classId){
 	      </a>
       </div>
 <?php }
+
+function DisplayGameCardWithDismiss($game, $count, $classId){
+	if($game->_id > 0){
+		$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
+		<div class="col s6 m3 l2" style='position:relative;'>
+			<div class="collection-quick-add-container z-depth-2">
+				Empty Text
+			</div>
+			<a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+				<div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+						<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>remove_circle_outline</i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -5px;'>Remove from Backlog</span></div>
+				</div>
+				<div class="card-content">
+				<div class="card-title activator grey-text text-darken-4">
+					<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<div class="col s3 game-card-action-pick" data-action="tier"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+							<?php if($xp->_tier > 0){ 
+								if($xp->_tier == 1){ echo "looks_one"; }else if($xp->_tier == 2){ echo "looks_two"; }else if($xp->_tier == 3){ echo "looks_3"; }else if($xp->_tier == 4){ echo "looks_4"; }else if($xp->_tier == 5){ echo "looks_5"; }
+							}else{
+								echo "add_box";
+							} ?>
+						</i></div>
+						<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+							<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
+								if($xp->_tier == 1){ echo "sentiment_very_satisfied"; }else if($xp->_tier == 2){ echo "sentiment_satisfied"; }else if($xp->_tier == 3){ echo "sentiment_neutral"; }else if($xp->_tier == 4){ echo "sentiment_dissatisfied"; }else if($xp->_tier == 5){ echo "sentiment_very_dissatisfied"; }
+							}else{
+								echo "face";
+							} ?>
+						</i></div>
+						<div class="col s3 game-card-action-pick" data-action="rank">
+							<?php if($xp->_rank > 0){ 
+								?>
+								<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
+								<?php		
+							}else{
+								?>
+								<i class="material-icons nav-game-action-btn">swap_vert</i>
+								<?php
+							} ?>
+						</div>
+						<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
+					</div>
+					<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
+				</div>
+				</div>
+			</a>
+		</div>
+<?php }
+}
 
 function DisplaySmallGameCard($xp, $showXP = true){
 	$game = $xp->_game; ?>

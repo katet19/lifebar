@@ -178,7 +178,7 @@
 
 .lifebar-fill-min-circle{
     background-color: #66BB6A;
-    height: 20px;
+    height: 10px;
     top: 0;
     z-index: 2;
     left: -1px;
@@ -193,10 +193,10 @@
 }
 
 .lifebar-container{
-	position:absolute;
-	width:90%;
-	margin:0 5% 0 2.5%;
-	text-align:left;
+    position: relative;
+    width: -webkit-calc(100% - 200px);
+    width: calc(100% - 200px);
+    text-align: left;
 }
 
 .lifebar-card{
@@ -226,7 +226,7 @@
 .lifebar-bar-container-min{
     top: 32px;
     position: absolute;
-    height: 20px;
+    height: 10px;
     background-color: #ddd; /*#ddd;*/
     margin-left: 100px;
     padding: 1px;
@@ -251,11 +251,12 @@
 }
 
 .lifebar-avatar-min{
-    width: 75px;
+    width: 45px;
     border-radius: 50%;
     display: inline-block;
     margin-left: 0.5em;
-    height: 75px;
+    top: 7px;
+    height: 45px;
     position: absolute;
 	-webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
@@ -269,9 +270,9 @@
     text-align: left;
     font-size: 1.3em;
     position: absolute;
-    left: 100px;
     color: white;
-    top: 4px;
+    top: 8px;
+    left: 65px;
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     -o-transition: all 0.5s ease-out;
@@ -626,7 +627,7 @@
 }
 
 .badge-card-container .ability-container:hover .ability-title, .badge-card-container .ability-container:hover .ability-sub-count, .badge-card-container .ability-container:hover .ability-level, .badge-card-container .ability-container:hover .ability-sub-title{
-	color:#2196F3;
+	color:#F50057;
 }
 
 .ability-sub-title{
@@ -1473,7 +1474,7 @@
 }
 
 .user-avatar:hover{
-	border-radius:0;
+	border: 2px solid #F50057;
 }
 
 .userprofile-discover-card .card-content .card-title{
@@ -1721,10 +1722,6 @@
 	.lifebar-card{
 		height:100px;
 		padding: 1em 0em !important;
-	}
-	.lifebar-container{
-		width:90%;
-		margin:0 1% 0 1%;
 	}
 	.lifebar-bar-container{
 		height: 25px;

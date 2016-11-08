@@ -6,8 +6,8 @@ function ShowActivityContent(filter){
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
@@ -60,17 +60,17 @@ function RefreshActivity(filter){
 function AttachActivityEvents(){
 	 $(".user-discover-card").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		ShowUserProfile($(this).attr("data-id"));
 	 });
  	 $(".feed-avatar, .user-avatar").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
   	 $(".feed-activity-user-link-action").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
-	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
+	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
 	 	e.stopPropagation(); 
 	 	ShowGame($(this).attr("data-gbid"), $("#activity"));
 	 })

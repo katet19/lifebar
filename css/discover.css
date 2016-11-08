@@ -37,7 +37,7 @@
     margin-bottom: 0;
     font-weight: bold;
     margin-top: 25px;
-    color: #2196F3
+    color: #F50057
 }
 
 .daily-watch-title{
@@ -60,12 +60,12 @@
 }
 
 .daily-watch-title:hover{
-	background-color: #167ac6;
+	background-color: #F50057;
 	color:#fff;
 }
 
 .daily-watch-title-active{
-	background-color: #167ac6;
+	background-color: #3F51B5;
 	color:#fff;
 	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -86,15 +86,16 @@
     right: 0;
     color: white;
     top: 0;
+    bottom: 0;
     cursor: pointer;
     font-weight: 500;
-    background-color: #0e4c7b;
-    padding: 5px 10px;
+    background-color: #F50057;
+    padding: 11px 10px;
 }
 
 .daily-watch-title-xp i{
     font-size: 1.5em;
-    vertical-align: middle;
+    vertical-align: bottom;
     margin-left:5px;
 }
 
@@ -191,7 +192,7 @@
 }
 
 .daily-reply-button{
-	background-color: #2196F3 !important;
+	background-color: #F50057 !important;
     padding: 6px 8px;
     border-radius: 5px;
     font-size: 0.5em;
@@ -308,7 +309,7 @@
   left: 0;
   right: 100%;
   top: 0;
-  background: #2196F3;
+  background: #F50057;
   height: 6px;
   -webkit-transition-property: right;
   transition-property: right;
@@ -322,7 +323,7 @@
 }
 
 .daily-pref-image-active .daily-pref-image-title {
-	background-color: #2196F3;
+	background-color: #F50057;
     padding: 20px 5px;
 }
 
@@ -335,7 +336,7 @@
     font-size: 1em;
     opacity: 0;
     text-align: center;
-    background-color: #2196F3;
+    background-color: #F50057;
     border-radius: 50%;
     width: 25px;
     height: 25px;
@@ -473,7 +474,7 @@
     padding-top: 40px;
     cursor: pointer;
     right: 5px;
-    background-color: #2196F3;
+    background-color: #F50057;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -489,7 +490,7 @@
 }
 
 .discover-collection-game-image-view:hover{
-	background-color: #0D47A1;
+	background-color: #FF4081;
 }
 
 .discover-collection-game-image:hover{
@@ -610,8 +611,16 @@
 .game-discover-card{
 	position: relative;
 	text-align: left;
-    background-color: #0a67a4;
+    background-color: #C5CAE9;
 	height: 300px;
+	display:block;
+}
+
+.game-discover-dismiss-card{
+	position: relative;
+	text-align: left;
+    background-color: #C5CAE9;
+	height: 340px;
 	display:block;
 }
 
@@ -626,7 +635,7 @@
 	line-height: 30px;
 }
 
-.game-discover-card .card-image{
+.game-discover-card .card-image, .game-discover-dismiss-card .card-image{
 	height:200px !important;
 }	
 
@@ -634,25 +643,25 @@
 	height:14em;
 }
 
-.game-discover-card .card-content{
+.game-discover-card .card-content,  .game-discover-dismiss-card  .card-content{
 	background-color: white;
-	height: 80px;
 	padding: 0px !important;
 	height: 100px;
 }
 
-.game-discover-card .card-reveal{
+.game-discover-card .card-reveal, .game-discover-dismiss-card .card-reveal{
 	padding: 16px 24px 8px 16px !important;
 	z-index:2;
 }
 
-.game-discover-card .card-content .card-title{
+.game-discover-card .card-content .card-title, .game-discover-dismiss-card .card-content .card-title{
 	font-size: 1em;
 	line-height: 18px;
 	height:90px;
+	position: relative;
 }
 
-.game-discover-card .card-reveal .card-title{
+.game-discover-card .card-reveal .card-title, .game-discover-dismiss-card .card-reveal .card-title{
 	font-size:1em;
 	line-height: 22px;
 }
@@ -723,7 +732,7 @@
 	width: 100%;
 }
 
-.game-discover-card .card-image .card-title{
+.game-discover-card .card-image .card-title, .game-discover-dismiss-card .card-image .card-title{
 	position: absolute;
 	top: 140px;
 	left: 0;
@@ -747,7 +756,7 @@
 }
 
 #discover-header .row .col .tabs .tab a{
-	background-color: #39a1f4;
+	background-color: #F50057;
 	opacity:0.4;	
 	-webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
@@ -784,7 +793,6 @@
 
 .discoverCategory{
   margin: 0 2%;
-  padding: 1em 5% !important;
   display: inline-block;
   position: relative;
 }
@@ -859,7 +867,7 @@
 
 .suggested-game-link{
 	cursor:pointer;
-	color: #2196F3; 
+	color: #F50057; 
 	margin-right: 16px;  
 	-webkit-transition: color 0.3s ease; 
 	-moz-transition: color 0.3s ease; 
@@ -998,7 +1006,7 @@
 
 .typeaheadAdvancedSearch .collection .collection-item:hover{
 	background-color:#EEE;
-	color: #2196F3;
+	color: #F50057;
 }
 
 .xp-latest-header{
@@ -1021,7 +1029,7 @@
 }
 
 .custom-discover-category-label:hover{
-	color: #2196F3;
+	color: #F50057;
 }
 
 .custom-discover-category-header{
@@ -1054,8 +1062,67 @@
 .follow-from-discover{
     padding: 0 1rem;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    right: 10px;
+	width:130px;
+}
+
+.dismiss-from-discover{
+	padding: 0 1rem;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+	width:130px;
+}
+
+.follow-from-discover-small{
+    padding: 5px 0px;
+	cursor: pointer;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.dismiss-from-discover-small{
+    padding: 5px 0px;
+	cursor: pointer;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.follow-from-discover-small:hover, .dismiss-from-discover-small:hover{
+	background-color: #F50057 !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.follow-from-discover-small:hover i, .dismiss-from-discover-small:hover i{
+	color:white;
+}
+
+.game-card-quick-dismiss{
+	position: absolute;
+    top: 5px;
+    right: 10px;
+    padding: 0px 5px;
+    background-color: gray;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	width:30px;
+	height:27px;
+	font-size:1.25em;
+	overflow:hidden;
+}
+
+.game-card-quick-dismiss:hover{
+	width: 170px;
+	background-color: #F50057 !important;
 }
 
 @media only screen and (max-width : 992px) {
@@ -1063,7 +1130,7 @@
 		right:0;
 		top:-2px;
 	}
-	.game-discover-card, .user-discover-card{
+	.game-discover-card, .user-discover-card, .game-discover-dismiss-card, .user-discover-card{
 		display:block;
 	}
 }
@@ -1076,8 +1143,11 @@
 		top:0;
 		display: inline-block;
 	}
+	.game-card-quick-dismiss {
+    	padding: 2px 0px 0px 6px;
+	}
 	#discover-header .row .col .tabs{
-		background-color:#D32F2F;
+		background-color:#3F51B5;
 		height:48px;
 	}
 	#discover-header .row .col .tabs .indicator{
@@ -1090,17 +1160,13 @@
 		margin:0;
 	}
 	#discover-header .row .col .tabs .tab a{
-		background-color:#D32F2F;
+		background-color:#3F51B5;
 		opacity:1;	
 		-webkit-transition: all 0.25s ease;
 	    -moz-transition: all 0.25s ease;
 	    -o-transition: all 0.25s ease;
 	    -ms-transition: all 0.25s ease;
 	    transition: all 0.25s ease;
-	}
-	
-	.discoverCategory{
-	    padding: 1em 5% 3em !important;
 	}
 	
 	.discoverCategoryHeader{
@@ -1133,7 +1199,7 @@
 	.game-discover-card .card-image{
 		height:150px !important;
 	}	
-	.game-discover-card .card-image .card-title{
+	.game-discover-card .card-image .card-title, .game-discover-dismiss-card .card-image .card-title{
 		top:100px;
 	}
 	.game-discover-card{
@@ -1199,13 +1265,25 @@
 	}
 	.follow-from-discover{
 		padding: 0 1rem;
-	    position: absolute;
-	    bottom: 0px;
-	    display: block;
-	    left: 125px;
-	    line-height: 30px;
-	    height: 30px;
-	    top: auto;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 10px;
+		top: auto;
+		width:auto;
+	}
+	.dismiss-from-discover{
+		padding: 0 1rem;
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		line-height: 30px;
+		height: 30px;
+		right: 70px;
+		top: auto;
+		width:auto;
 	}
 	.daily-watch-title-xp{
 		padding: 7px 10px;

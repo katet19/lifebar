@@ -166,7 +166,7 @@ function Login(user, pw){
 	         			}else{
 	         				GAEvent('Login', user);
 	         				setCookie("RememberMe", $.trim(output), 14);
-	         				location.hash = "#activity";
+	         				location.hash = "#discover";
 	         				location.reload();
 	         			}
             },

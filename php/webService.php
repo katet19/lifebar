@@ -429,6 +429,15 @@
 		}
 	}
 	function XPServices(){
+		if($_POST['action'] == 'ShowTierModal' && $_SESSION['logged-in']->_id > 0){
+			ShowTierModal($_POST['gameid']);
+		}
+		if($_POST['action'] == 'ShowXPModal' && $_SESSION['logged-in']->_id > 0){
+			ShowXPModal($_POST['gameid']);
+		}
+		if($_POST['action'] == 'ShowRankModal' && $_SESSION['logged-in']->_id > 0){
+			ShowRankModal($_POST['gameid']);
+		}
 		if($_POST['action'] == 'SaveAgreed' && isset($_POST['gameid']) && isset($_POST['eventid']) && $_SESSION['logged-in']->_id > 0){
 			SaveAgreed($_POST['gameid'], $_SESSION['logged-in']->_id, $_POST['agreedwith'], $_POST['eventid']);
 		}
@@ -601,6 +610,9 @@
 		}
 		if($_POST['action'] == "AsyncMyBadges"){
 			DisplayBadgeManagementForUser($_SESSION['logged-in']->_id);
+		}
+		if($_POST['action'] == "DismissUser"){
+			IgnoreUser($_POST['dismiss']);
 		}
 	}
 	function DiscoverServices(){

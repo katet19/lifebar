@@ -7,8 +7,8 @@ function ShowNotificationMainContent(){
   	ShowLoader($("#notificationsInnerContainer"), 'big', "<br><br><br>");
     var windowWidth = $(window).width();
     $("#notifications").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").css({"display":"none"});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #activity, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #admin, #profiledetails, #settings, #activity, #user, #landing").css({"display":"none"});
+    $("#discover, #admin, #profiledetails, #settings, #activity, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#notifications").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
   	$("#gameInnerContainer").html("");
   	
@@ -58,7 +58,7 @@ function AttachNotificationEvents(){
 	$(".user-avatar").unbind();
   	$(".user-avatar").on("click", function(e){
     	e.stopPropagation();
- 		ShowUserPreviewCard($(this).parent().find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
 	$("#notification-header-nav li a").on('click', function(e){
 		e.stopPropagation();

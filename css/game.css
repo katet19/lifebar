@@ -1,3 +1,78 @@
+.GameHeaderContainer{
+	height:35vh;
+	width:100%;
+	left: 0;
+	position:absolute;
+	z-index:1;
+	background-color: black;
+	-webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.game-card-action-pick{
+	padding: 8px 0 4px !important;
+	font-weight:500;
+}
+
+.nav-game-actions .col{
+	cursor: pointer;
+	-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s eaease-in-outse;
+    transition: all 0.3s easease-in-oute;
+	text-align: center;
+}
+
+.nav-game-action-isBookmarked{
+	color:#e64444 !important;
+}
+
+.nav-game-actions .col:hover>.nav-game-action-btn{
+	color:white !important;
+}
+
+.nav-game-actions .col:hover{
+	background-color: #F50057 !important;
+	color:white !important;
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.nav-game-action-btn{
+	font-size:1.75em;
+	color:rgba(0,0,0,0.2);
+	-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.fixed-close-modal-btn{
+	position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 2em;
+    z-index: 10000;
+    border-radius: 50%;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #F50057;
+    width: 50px;
+    cursor: pointer;
+}
+
+/*
+OLD STUFF
+*/
+
 #game{
 	display:none;
 }
@@ -83,20 +158,6 @@ refpt-header-subquestion-hidden{
     margin-left: 35px;
 }
 
-.GameHeaderContainer{
-	height:35vh;
-	width:100%;
-	left: 0;
-	position:fixed;
-	z-index:1;
-	background-color: black;
-	-webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
 #game-navigation-header{
 	position:absolute;
 	width:100%;
@@ -105,7 +166,7 @@ refpt-header-subquestion-hidden{
 
 #gameContentContainer{
     position: relative;
-    margin-left: 310px;
+    margin-left: 0;
     right: 0;
 	z-index:101;
 }
@@ -219,7 +280,7 @@ refpt-header-subquestion-hidden{
 }
 
 .gameNav .indicator{
-	background-color: #D32F2F !important;
+	background-color: #3F51B5 !important;
 }
 
 /* HeaderShrink CSS */
@@ -549,6 +610,7 @@ refpt-header-subquestion-hidden{
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
+	display:none;
 }
 
 .game-nav-icons{
@@ -570,41 +632,9 @@ refpt-header-subquestion-hidden{
     color: #212121;
 }
 
-.nav-game-actions .col{
-	cursor: pointer;
-	-webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s eaease-in-outse;
-    transition: all 0.3s easease-in-oute;
-	text-align: center;
-}
-
-.nav-game-action-isBookmarked{
-	color:#e64444 !important;
-}
-
-.nav-game-actions .col:hover>.nav-game-action-btn{
-	/*color:rgba(0,0,0,0.8);*/
-	color:white !important;
-}
-
-.nav-game-actions .col:hover{
-	/*background-color:lightgray;*/
-	background-color: #2196F3 !important;
-	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-}
-
-.nav-game-action-btn{
-	font-size:1.5em;
-	color:rgba(0,0,0,0.2);
-	-webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+.game-nav-title-with-space{
+	padding: 18px 10px 0px !important;
+    height: 55px;
 }
 
 #game-slide-out li{
@@ -627,13 +657,37 @@ refpt-header-subquestion-hidden{
 }
 
 #game-slide-out li.active{
-	background-color:#0a67a3;
+	background-color:#3F51B5;
 	color:white;
 }
 
 .game-collection-container{
 	margin-top:-50px;
 	text-align: left;
+}
+
+.game-gb-ref{
+    padding: 5px 12px 0px 15px;
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    left: 0;
+    font-weight: 400;
+    font-size: 0.8em;
+    color: #dddddd;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.game-gb-ref span{
+	font-weight:bold;
+}
+
+.game-gb-ref:hover{
+    color: #999;
 }
 
 @media only screen and (max-width : 992px) {

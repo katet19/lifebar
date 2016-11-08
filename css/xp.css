@@ -1,3 +1,139 @@
+
+.tier-modal-row{
+	height:20%;
+	line-height:20%;
+}
+.modal-content-container{
+    position: absolute;
+    top: 10vh;
+    bottom: 10vh;
+    overflow: auto;
+    right: 0;
+    left: 0;
+}
+.tier-modal-icon{
+	font-size:6em;
+}
+
+.modal-save-container{
+	height:10vh;
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.modal-btn-pos{
+	margin: 2em 0 0;
+}
+
+.modal-rank-item{
+    display: block;
+    text-align: left;
+    padding: 5px 15px 0px;
+    cursor: pointer;
+	position: relative;
+}
+
+.modal-rank-active-game{
+	display:none;
+    text-align: left;
+    color: white;
+    background-color: #3F51B5;
+    padding: 5px 15px;
+}
+
+.modal-rank-item-rank{
+	display:inline-block;
+    width: 45px;
+	font-weight: bold;
+}
+
+.modal-rank-item-title{
+	display: inline-block;
+    font-weight: 300;
+}
+
+.modal-rank-item-subtitle{
+    font-weight: 300;
+    font-size: 0.7em;
+    padding-left: 50px;
+}
+
+.modal-header{
+    font-size: 1.75em;
+    text-align: left;
+    color: white;
+    position: absolute;
+    right: 75px;
+    line-height: 30px;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
+    margin: 0;
+    overflow: hidden;
+    top: 20px;
+}
+
+.modal-rank-filter{
+	padding: 5px 15px 15px;
+    text-align: left;
+}
+
+.modal-rank-filter-item{
+    padding: 2px 8px;
+    color: white;
+    display: inline-block;
+    text-transform: uppercase;
+    background-color: #3F51B5;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.modal-rank-item-insert-btn{
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    background-color: #F50057;
+    color: white;
+    top: -5px;
+    right: 0;
+    height: 10px;
+    left: 0;
+}
+
+.modal-rank-item-insert-btn:hover{
+	opacity:1.0;
+}
+
+.modal-rank-item-hover-col{
+	text-align:center;
+	line-height:16px;
+	height:100%;
+	display:table;
+}
+
+.modal-rank-item-hover-col-title{
+	display: inline-block;
+    font-weight: 300;
+    height: 100%;
+}
+
+.modal-rank-item-hover-col-cell{
+	height: 100%;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+/*
+OLD STUFF
+*/
+
 .myxp-content-col{
     position: relative;
     padding: 0 2rem 0 0.75rem !important;
@@ -293,11 +429,11 @@
 
 .myxp-cancel{
 	padding:0 1em;
-	background-color:#BE3D3D;
+	background-color:#757575;
 }
 
 .myxp-cancel:hover{
-	background-color:#BE3D3D;
+	background-color:#F44336;
 }
 
 .myxp-save{

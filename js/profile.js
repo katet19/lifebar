@@ -4,18 +4,16 @@ function ShowUserProfile(id, mine, browserNav){
 
 function ShowUserContent(userid, mine, browserNav){
 	var windowWidth = $(window).width();
-	if(!mine){
-		$(".indicator").css({"display":"none"});
-		$(".active").removeClass("active");
-	}
-    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#profile").css({"display":"inline-block", "left": windowWidth});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
+	$('body').css({'overflow-y':'hidden'});
+	if($("#profile").hasClass("outerContainer-slide-out"))
+		$("#profile.outerContainer-slide-out").css({ "left": "225px" });
+	else
+    	$("#profile.outerContainer").css({ "left": 0 });
 
   	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
@@ -23,23 +21,20 @@ function ShowUserContent(userid, mine, browserNav){
      type: 'post',
      success: function(output) {
      			$("#profileInnerContainer").html(output);
-     			window.scrollTo(0, 0);
       			Waves.displayEffect();
   	 			var name = $("#profileContentContainer").attr("data-name");
-  	 			GLOBAL_HASH_REDIRECT = "NO";
-	 			location.hash = "profile/"+userid+"/"+name;
       			DisplayCriticGraph();
-      			//DisplayTierPieChart();
       			DisplayLifeTimeChart();
       			DisplaySkillsChart();
       			AttachProfileEvents(userid);
   				AttachFabHoverEvent();
 				AttachFloatingIconWeaveButtonEvents();
-	 	 		if(browserNav)
- 	 				GLOBAL_HASH_REDIRECT = "";
+				if(browserNav)
+					UpdateBrowserHash("profile/"+userid+"/"+name);
+					
   				if(!mine)
   					GAPage('Profile', '/profile/'+name);
-  				else
+				else
   					GAPage('Profile', '/profile/personal/'+name);
      },
         error: function(x, t, m) {
@@ -54,9 +49,14 @@ function ShowUserContent(userid, mine, browserNav){
 }
 
 function AttachProfileEvents(userid){
+	$(".fixed-close-modal-btn").on('click', function(){
+		var windowWidth = $(window).width();
+		$("#profile").css({ "left": windowWidth }); 
+		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+	});
  	$(".userprofile-card-avatar").on("click", function(e){
   		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-userid"));
  	});
  	$(".userprofile-game-card-image").on('click', function(e){
  		e.stopPropagation();
@@ -293,7 +293,7 @@ function DisplayAbilitiesViewMore(userid){
  			ShowUserProfile(userid);
  		});
 		$(".badge-card-ability-avatar").on("click", function(){
-			ShowUserPreviewCard($(this).find(".user-preview-card"));	
+			ShowUserProfile($(this).attr("data-userid"));	
 		});
  		$(".card-game-small").on("click", function(e){
  			e.stopPropagation();
@@ -1144,8 +1144,8 @@ function ShowUserActivity(userid){
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -1174,11 +1174,11 @@ function ShowUserActivity(userid){
 function AttachShowUserActivityEvents(){
 		 $(".user-discover-card").on("click", function(e){
 		  	e.stopPropagation();
-		 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		 	ShowUserProfile($(this).attr("data-id"));
 		 });
 	 	 $(".feed-avatar, .user-avatar").on("click", function(e){
 		  	e.stopPropagation();
-		 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+		 	ShowUserProfile($(this).attr("data-id"));
 		 });
 		 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
 		 	e.stopPropagation(); 

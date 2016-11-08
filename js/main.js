@@ -7,10 +7,6 @@ $(function() {
 	$(window).resize(function() {
 		ResizeEvents();
 	});
-
-	//$(window).bind('hashchange', function(){
-	//	ManageHashEvents();
-	//});
 });
 
 
@@ -23,37 +19,6 @@ $(function() {
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
-
-function ManageHashEvents(){
-	if(GLOBAL_HASH_REDIRECT == ""){
-		var data = location.hash.split('/');
-		if(location.hash == "#discover"){
-			ShowDiscoverHome();
-		}else if(location.hash == "#notifications"){
-			ShowNotificationsHome();
-		}else if(location.hash == "#admin"){
-			ShowAdminHome();
-		}else if(location.hash == "#activity"){
-			ShowActivityHome();
-		}else if(data[0] == "#game" && data[1] > 0){
-			ShowGame(data[1], '', true, true);
-		}else if(data[0] == "#profile" && data[1] > 0){
-			ShowUserProfile(data[1], false, true);
-		}else if(data[0] == "#landing"){
-			ShowLanding();
-		}else if(location.hash == "#!"){
-			//do nothing
-		}else{
-			if($("#loginButton").length > 0){
-				ShowLanding();
-			}else{
-				ShowActivityHome();
-			}
-		}
-	}else{
-		GLOBAL_HASH_REDIRECT = "";
-	}
-}
 
 function NiceScroll(element, offset){
 	if($(window).width() > 599){
@@ -81,8 +46,6 @@ function ResizeEvents(){
 			$("#sideContainer").css({"display":"inline-block"});
 			$("#sideContainer").velocity({"right":"0"}, {duration: 300, queue: false, easing: 'easeOutQuad', delay: 80});
 		}
-			
-		//window.scrollTo(0, 0);
 }
 
 function ShowLoader(element,size,vertical){
@@ -96,47 +59,21 @@ function ShowSideLoader(){
 }
 
 function Toast(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 function ToastProgress(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 
 function ToastError(msg){
-	toast(msg, 5000);
+	Materialize.toast(msg, 5000);
 }
 
 function ToastUpdate(){
 	var msg = "New updates available! <span onclick='location.reload(true);' style='cursor:pointer;color:#FF8E00;font-weight: bold;padding: 0 10px 0 20px;'>REFRESH</span>";
-	toast(msg, 3540000);
-}
-
-function ToastRight(msg){
-		toastr.options = {
-		  "debug": false,
-		  "positionClass": "toast-bottom-right",
-		  "onclick": null,
-		  "fadeIn": 300,
-		  "fadeOut": 1000,
-		  "timeOut": 5000,
-		  "extendedTimeOut": 1000
-		};
-		toastr.success(msg);
-}
-
-function ToastRightError(msg){
-		toastr.options = {
-		  "debug": false,
-		  "positionClass": "toast-bottom-right",
-		  "onclick": null,
-		  "fadeIn": 300,
-		  "fadeOut": 1000,
-		  "timeOut": 120000,
-		  "extendedTimeOut": 10000
-		};
-		toastr.success(msg);
+	Materialize.toast(msg, 3540000);
 }
 
 function SideContentPush(content){
@@ -205,43 +142,6 @@ function AttachFloatingIconEvent(icon) {
         }
       );
     });
-    /*
-    $('.fixed-action-btn').each(function (i) {
-      var $this = $(this);
-     
-      $this.find('ul a.btn-floating').velocity(
-        { scaleY: ".4", scaleX: ".4", translateY: "40px"},
-        { duration: 0 });
-	 
-      var timer;
-      $this.on('click', function(e) {
-      	  $this.addClass("activeFAB");
-      	  $this.find("ul").css({"display":"block"});
-          $this.find("a .large").velocity({ rotateZ: "360deg"}, 80, function(){ $this.find("a .large").removeClass("mdi-content-add"); $this.find("a .large").addClass(icon); });
-          e.stopPropagation();
-          var time = 0;
-          $this.find('ul a.btn-floating').reverse().each(function () {
-            $(this).velocity(
-              { opacity: "1", scaleX: "1", scaleY: "1", translateY: "0"},
-              { duration: 80, delay: time });
-            time += 40;
-          });
-          
-          $("html").on('click', function() {
-	          var time = 0;
-	          $this.find('ul a.btn-floating').velocity("stop", true);
-	          $this.find('ul a.btn-floating').velocity(
-	            { opacity: "0", scaleX: ".4", scaleY: ".4", translateY: "40px"},
-	            { duration: 80 });
-	        	$this.find("a .large").velocity({ rotateZ: "-360deg"}, 80, function(){ $this.find("a .large").removeClass(icon); $this.find("a .large").addClass("mdi-content-add"); });
-	          $this.find("ul").css({"display":"none"});
-	          $this.removeClass("activeFAB");
-          	}
-	      );
-          
-        });
-    });
-    */
 }
 
 function isScrolledIntoView(elem)
@@ -310,6 +210,10 @@ function GAPage(title, page){
 }
 
 //Globals
+var GLOBAL_HASH = false;
+/*
+OLD STUFF
+*/
 var GLOBAL_VERSION = 100000;
 var GLOBAL_TAB_REDIRECT = "";
 var GLOBAL_HASH_REDIRECT = "";

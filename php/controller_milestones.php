@@ -317,7 +317,8 @@ function GetKnowledgeGames($knowledgeid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
@@ -348,7 +349,8 @@ function GetKnowledgeGamesForDiscover($knowledgeid, $userid){
 				'',
 				$row["Owned"],
 				$row["BucketList"],
-				$row["AuthenticXP"]);
+				$row["AuthenticXP"],
+				$row['Rank']);
 				$myxp[] = $experience; 
 		}
 	}
@@ -449,7 +451,8 @@ function GetPlatformGamesForDiscover($platformid, $userid){
 				'',
 				$row["Owned"],
 				$row["BucketList"],
-				$row["AuthenticXP"]);
+				$row["AuthenticXP"],
+				$row['Rank']);
 				$myxp[] = $experience; 
 		}
 	}
@@ -609,7 +612,8 @@ function GetDeveloperGames($devid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
@@ -641,7 +645,8 @@ function GetDeveloperGamesForDiscover($devid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}
 		}

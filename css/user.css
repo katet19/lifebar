@@ -91,7 +91,7 @@
 }
 
 .user-discover-card .card-image, .user-follow-card .card-image{
-	background-color:#F1F5F8;
+	background-color:#c4c4c4;
 }
 
 .user-follow-action{
@@ -190,7 +190,6 @@
 }
 
 .readBtn, .agreeBtn, .disagreeBtn, .detailsBtn, .watchBtn, .shareBtn, .removeEventBtn{
-	margin-bottom:5px;
 	color: rgba(0,0,0,0.54);
 	font-weight: bold;
 	padding: 0 0.75rem;
@@ -218,7 +217,7 @@
 }
 
 .readBtn:hover, .agreeBtn:hover, .detailsBtn:hover, .disagreeBtn:hover, .watchBtn:hover, .shareBtn:hover, .removeEventBtn:hover{
-	color: rgba(0,0,0,0.9);
+	color: #FF4081;
 }
 
 .latest-xp-list-item{
@@ -286,33 +285,26 @@
 }
 
 .badge-lives{
-  font-size: 0.7em;
-  color: #fff;
-  /* background-color: #8B8E90; */
-  background-color: #43a047;
-  border-radius: 2px;
-  background-clip: padding-box;
-  min-width: 3rem;
-  padding: 3px 6px;
-  margin: 6px 1em 0;
-  float: right;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  display: none;
+    font-size: 0.6em;
+    color: #fff;
+    background-color: #43a047;
+    border-radius: 2px;
+    background-clip: padding-box;
+    min-width: 3rem;
+    padding: 3px;
+    margin: 6px 1em 0;
+    font-weight: bold;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: none;
+    top: 5px;
+    right: 1em;
 }
 
 .badge-lives:after{
 	content: "up";
-}
-
-#universalUserPreview{
-	text-align: center;
-	display:none;
-	top:0px;
-	background-color:white;
-	padding:0;
 }
 
 .user-preview-card{
@@ -354,9 +346,8 @@
 }
 
 .user-preview-card-container .card-action .btn-flat{
-  margin: 5px 0 5px;
-  padding: 0 5% 0 0;
-  color: #2196F3;
+  margin: 5px 10px 0px 0px;
+  color: #F50057;
   font-size: 14px;
   font-weight: 500;
 }
@@ -451,14 +442,13 @@
     height: 18px;
     width: 18px;
     line-height: 18px;
-    font-size: 0.9em;
     display: inline-block;
-    background-color: #7B1FA2;
-    color: white;
+    color: #7B1FA2 !important;
     margin-left: 5px;
     text-align: center;
     border-radius: 50%;
-
+    vertical-align: text-top;
+    font-size: 1em;
 }
 
 .authenticated-mark-lifebar{
@@ -487,10 +477,15 @@
     border-radius: 50%;
 }
 
+.nav-user-action-btn{
+    font-size: 1.5em;
+    color: rgba(0,0,0,0.2);
+}
+
 .social-login-btn{
 	font-size: 25px;
     display: inline-block;
-    background-color: #2196F3;
+    background-color: #F50057;
     border-radius: 50%;
     height: 50px;
     line-height: 50px;
@@ -538,7 +533,7 @@
 .settings-promo-msg{
     margin-top: -20px;
     margin-left: 50px;
-    color: #2196F3;
+    color: #F50057;
     font-weight: 500;
 }
 
@@ -548,6 +543,21 @@
 	margin-left: auto;
 	margin-top:15px;
 	height:90px;
+}
+
+.user-follow-card-image-w-game{
+    width: 90px;
+    border-radius: 50%;
+    margin-left: 0;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    height: 90px;
+}
+
+.user-follow-btn-container{
+	margin: -10px -24px 10px -16px !important;
+    background-color: #f5f5f5;
 }
 
 .user-follow-card-title{
@@ -592,9 +602,10 @@
     	margin-bottom: 20px;
 	}
 	.user-follow-card-title{
-	    right: auto !important;
-	    width: calc(100% - 100px)!important;
-	    left: auto !important;
+		right: auto !important;
+		width: calc(100% - 200px)!important;
+		left: auto !important;
+		top: 15px !important;
 	}
 	.social-login-btn{
 		font-size: 20px;
