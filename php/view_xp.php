@@ -12,11 +12,10 @@ function ShowTierModal($gameid){
 				</div>
 			</div>			
 			<div class="modal-content-container">
-				<div class="tier-modal-row"><i class="material-icons tierTextColor1 tier-modal-icon"><?php DisplayTierBadge(1); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor2 tier-modal-icon"><?php DisplayTierBadge(2); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor3 tier-modal-icon"><?php DisplayTierBadge(3); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor4 tier-modal-icon"><?php DisplayTierBadge(4); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor5 tier-modal-icon"><?php DisplayTierBadge(5); ?></i></div>
+				<?php 
+					$ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); 
+					ShowTierList($ranklist, $game);
+				?>
 			</div>
 			<div class="modal-save-container">
 					<div class="save-btn modal-btn-pos">Save Tier</div>
@@ -76,6 +75,94 @@ function ShowRankModal($gameid){
 		</div>
 	</div>
 	<?php
+}
+
+function ShowTierList($tierlist, $currgame){
+	if(sizeof($tierlist) > 0){
+		$filter = explode(",", $tierlist[0][3]);
+		$count = 1;
+		?>
+		<div class="modal-rank-filter">
+			<?php if(sizeof($filter) > 0){
+				 foreach($filter as $filteritem){
+				?>
+				<div class="modal-rank-filter-item"><?php echo $filteritem; ?></div>
+				<?php
+				} 
+			} ?>
+		</div>
+		<?php /*<div class="tier-modal-row"><i class="material-icons tierTextColor1 tier-modal-icon"><?php DisplayTierBadge(1); ?></i></div>
+		<div class="tier-modal-row"><i class="material-icons tierTextColor2 tier-modal-icon"><?php DisplayTierBadge(2); ?></i></div>
+		<div class="tier-modal-row"><i class="material-icons tierTextColor3 tier-modal-icon"><?php DisplayTierBadge(3); ?></i></div>
+		<div class="tier-modal-row"><i class="material-icons tierTextColor4 tier-modal-icon"><?php DisplayTierBadge(4); ?></i></div>
+		<div class="tier-modal-row"><i class="material-icons tierTextColor5 tier-modal-icon"><?php DisplayTierBadge(5); ?></i></div> */ ?>
+		<?php
+		foreach($tierlist as $rankitem){
+			$game = $rankitem[0];
+			$rank = $rankitem[1];
+			$tier = $rankitem[2];
+			?>
+			<div class="modal-rank-group">
+				<div class="modal-rank-active-game" <?php if($currgame->_id == $game->_id){ echo "style='display:block;'"; } ?> data-internalrank="<?php echo $count; ?>">
+					<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
+					<div class="modal-rank-item-subtitle">
+					<?php 
+						  if($game->_year > 0)
+							  echo $game->_year;
+						  else
+							  echo "????";
+							  
+						  $developers = array_filter(explode("\n", $game->_developer));
+						  if(sizeof($developers) > 0){
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							echo implode("- ", $developers);
+						  }
+						  $publishers = array_filter(explode("\n", $game->_publisher));
+						  if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+						  if(sizeof($publishers) > 0){
+						  	echo implode("- ", $publishers);
+						  } 
+					?>
+					</div>
+				</div>
+				<?php if($currgame->_id != $game->_id){ ?>
+					<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
+						<div class="modal-rank-item-insert-btn">
+							<div class="row modal-rank-item-hover-col-title"><i class="material-icons modal-rank-item-arrow">play_arrow</i>INSERT</div>
+						</div>
+						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+						<div class="modal-rank-item-subtitle">
+						<?php 
+							if($game->_year > 0)
+								echo $game->_year;
+							else
+								echo "????";
+								
+							$developers = array_filter(explode("\n", $game->_developer));
+							if(sizeof($developers) > 0){
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+								echo implode("- ", $developers);
+							}
+							$publishers = array_filter(explode("\n", $game->_publisher));
+							if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+								echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+							if(sizeof($publishers) > 0){
+								echo implode("- ", $publishers);
+							} 
+						?>
+						</div>
+						<div class="divider" style='margin-top: 5px;'></div>
+					</div>
+				<?php } ?>
+			</div>
+			
+			<?php
+			$count++;
+		}
+	}
 }
 
 function ShowRankList($ranklist, $currgame){
