@@ -126,7 +126,7 @@ function ShowRankList($ranklist, $currgame){
 				<?php if($currgame->_id != $game->_id){ ?>
 					<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
 						<div class="modal-rank-item-insert-btn">
-							<div class="row modal-rank-item-hover-col-title">INSERT</div>
+							<div class="row modal-rank-item-hover-col-title"><i class="material-icons modal-rank-item-arrow">play_arrow</i>INSERT</div>
 						</div>
 						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
 						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>

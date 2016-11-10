@@ -101,13 +101,13 @@
     cursor: pointer;
     background-color: #F50057;
     color: white;
-    top: -5px;
+    top: -2px;
     right: 0;
-    height: 10px;
-    left: 0;
+    height: 3px;
+    left: 0px;
 }
 
-.modal-rank-item-insert-btn:hover{
+.modal-rank-item:hover .modal-rank-item-insert-btn{
 	opacity:1.0;
 }
 
@@ -118,10 +118,26 @@
 	display:table;
 }
 
+.modal-rank-item-arrow{
+    transform: rotateY(180deg);
+    color: #F50057;
+    left: -26px;
+    position: absolute;
+    top: -9px;
+    font-size: 41px;
+}
+
 .modal-rank-item-hover-col-title{
-	display: inline-block;
-    font-weight: 300;
-    height: 100%;
+    display: inline-block;
+    font-weight: 500;
+    position: absolute;
+    top: -9px;
+    padding: 3px 5px;
+    font-size: 0.8em;
+    right: 0;
+    margin-bottom: 0;
+    background-color: #F50057;
+    margin: 0;
 }
 
 .modal-rank-item-hover-col-cell{
