@@ -17,11 +17,16 @@
 
 .collapsible-header{
     text-align: left;
+    color:white;
 }
 
 .tier-modal-body{
-    height: -webkit-calc(90vh - 360px);
+    height: -webkit-calc(80vh - 360px);
     overflow-y: auto;
+}
+
+.tier-modal-add-btn{
+    margin: 10px 0px 20px;
 }
 
 .tier-modal-collapsible-container{
