@@ -374,8 +374,7 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
-					var height = $(".tier-modal-container").height() / 5;
-					$(".tier-modal-icon").css({'font-size': (height) + 'px'});
+					$('.collapsible').collapsible();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						HideFocus();
