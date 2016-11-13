@@ -382,6 +382,16 @@ function GameCardAction(action, gameid){
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 					});
+					$(".tier-modal-add-btn").on("click", function(){
+						$(".tier-modal-current-game").each(function(){
+							$(this).hide();
+						});
+						$(".tier-modal-add-btn").each(function(){
+							$(this).show();
+						});
+						$(this).hide();
+						$(this).parent().find(".tier-modal-current-game").show(250);
+					});
 				},
 					error: function(x, t, m) {
 						if(t==="timeout") {

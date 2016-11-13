@@ -16,8 +16,14 @@
 }
 
 .collapsible-header{
-    text-align: left;
-    color:white;
+    color:#ddd;
+    text-align:left;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.collapsible-header i{
+    font-size:1.5em;
 }
 
 .tier-modal-body{
@@ -25,14 +31,20 @@
     overflow-y: auto;
 }
 
+.active>.tier1BGHover>i, .active>.tier2BGHover>i, .active>.tier3BGHover>i, .active>.tier4BGHover>i, .active>.tier5BGHover>i,
+.active>.tier1BGHover:hover i, .active>.tier2BGHover:hover i, .active>.tier3BGHover:hover i, .active>.tier4BGHover:hover i, .active>.tier5BGHover:hover i{
+    color:white !important;
+}
+
 .tier-modal-add-btn{
-    margin: 10px 0px 20px;
+    margin: 10px 10px 20px;
 }
 
 .tier-modal-collapsible-container{
     border-right:none !important;
     border-left:none !important;
     box-shadow:none !important;
+    margin:0 0 1rem 0 !important;
 }
 
 .modal-save-container{
@@ -96,7 +108,7 @@
 }
 
 .modal-rank-filter{
-	padding: 5px 15px 15px;
+	padding: 8px 15px;
     text-align: left;
 }
 
@@ -139,19 +151,21 @@
 }
 
 .modal-rank-item-arrow{
-    transform: rotateY(180deg);
-    color: #F50057;
-    left: -26px;
+    width: 0;
     position: absolute;
-    top: -9px;
-    font-size: 41px;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid #F50057;
+    left: -12px;
+    top: 0px;
 }
 
 .modal-rank-item-hover-col-title{
     display: inline-block;
     font-weight: 500;
     position: absolute;
-    top: -9px;
+    top: -10px;
     padding: 3px 5px;
     font-size: 0.8em;
     right: 0;

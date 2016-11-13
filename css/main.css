@@ -153,6 +153,35 @@ a{
 
 .tier5BG{ background-color:#DB0058 !important;  }
 
+.tier1BGHover, .tier2BGHover, .tier3BGHover, .tier4BGHover, .tier5BGHover{
+  background-color:white;
+}
+
+.tier1BGHover:hover, .active>.tier1BGHover{ 
+  background-color:#0A67A3 !important;
+  color:white;   
+}
+
+.tier2BGHover:hover, .active>.tier2BGHover{ 
+  background-color:#00B25C !important;  
+  color:white; 
+}
+
+.tier3BGHover:hover, .active>.tier3BGHover{ 
+  background-color:#FF8E00 !important;
+  color:white;  
+}
+
+.tier4BGHover:hover, .active>.tier4BGHover{ 
+  background-color:#FF4100 !important; 
+  color:white;  
+}
+
+.tier5BGHover:hover, .active>.tier5BGHover{ 
+  background-color:#DB0058 !important;
+  color:white;   
+}
+
 .tierTextColor0{ color:rgba(0,0,0,0.7) !important;   }
 
 .tierTextColor1{ color:#0A67A3 !important;  }
