@@ -27,57 +27,6 @@ function ShowTierModal($gameid){
 	<?php
 }
 
-function ShowXPModal($gameid){
-	$game = GetGame($gameid);
-	?>
-	<div class="row">
-		<div class="col s12">
-			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:10vh;'>
-				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="modal-header">
-						<div style='font-size:0.7em;'>Add Experience</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
-				</div>
-			</div>	
-			<div class="modal-content-container">
-
-			</div>
-			<div class="modal-save-container">
-					<div class="save-btn modal-btn-pos">Save XP</div>
-					<div class="cancel-btn modal-btn-pos">Cancel</div>
-			</div>		
-		</div>
-	</div>
-	<?php
-}
-
-function ShowRankModal($gameid){
-	$game = GetGame($gameid);
-	?>
-	<div class="row">
-		<div class="col s12">
-			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:10vh;'>
-				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-				<div class="modal-header">
-						<div style='font-size:0.7em;'>Quick Rank</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
-				</div>
-			</div>
-			<div class="modal-content-container">
-				<?php 
-					$ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); 
-					ShowRankList($ranklist, $game);
-				?>
-			</div>
-			<div class="modal-save-container">
-					<div class="save-btn modal-btn-pos">Save Rank</div>
-					<div class="cancel-btn modal-btn-pos">Cancel</div>
-			</div>			
-		</div>
-	</div>
-	<?php
-}
-
 function ShowTierList($tierlist, $currgame, $tier){
 	if(sizeof($tierlist) > 0){
 		$filter = explode(",", $tierlist[0][3]);
@@ -205,6 +154,182 @@ function ShowTierListItem($game, $isActive){
 			?>
 			</div>
 			<div class="divider" style='margin-top: 5px;'></div>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPModal($gameid){
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $gameid);
+	$game = $xp->_game;
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						<div style='font-size:0.7em;'>Add Experience</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>	
+			<div class="modal-content-container">
+				<?php
+					ShowXPSelector($xp);
+				?>
+			</div>		
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPSelector($xp){
+	?>
+	<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
+		<li>
+			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">gamepad</i>Add a <b>played</b> experience</div>
+			<div class="collapsible-body">
+				<?php ShowXPPlayedSelector($xp); ?>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">visibility</i>Add a <b>watched</b> experience</div>
+			<div class="collapsible-body tier-modal-body">
+				<?php ShowXPWatchedSelector($xp); ?>
+			</div>
+		</li>
+	</ul>
+	<?php
+}
+
+function ShowXPPlayedSelector($xp){
+	ShowEmojiSelector();
+	ShowXPQuote();
+	ShowPercentagePlayed();
+	ShowXPPlatformSelector($xp);
+	?>
+	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save XP</div>
+	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	<?php
+	
+}
+
+function ShowXPWatchedSelector($xp){
+	ShowEmojiSelector();
+	ShowXPQuote();
+	?>
+	<div class="save-btn modal-btn-pos">Save XP</div>
+	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<?php
+}
+
+function ShowXPPlatformSelector($xp){ 
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">Which platform did you play on?</div>
+		</div>
+		<div class="col s10 offset-s1" style='text-align: left;'>
+			<?php
+			$platforms = GetPlatformsForGame($userid, $xp->_game->_gbid); 
+			$myplatforms = explode("\n", $xp->_platform);
+			foreach($platforms as $platform){ ?>
+				<?php 
+				if(sizeof($myplatforms) > 0){
+					foreach($myplatforms as $myplatform){
+						if(trim($myplatform) != ""){
+							if(stristr(trim($platform->_name), trim($myplatform)) || sizeof($platforms) == 1){  }
+						}
+					} 
+				} ?>
+				<div class="daily-item-row input-field daily-resp-grid daily-response-item-small">
+					<div class="knowledge-container" style="background-color:#FFF;" >
+						<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-15" style="background:url(<?php echo $platform->_image; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+							<i class="daily-checkmark fa fa-check"></i>
+							<div class="daily-pref-image-title">
+								<?php echo $platform->_name; ?>															
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowPercentagePlayed(){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">About how much of the game you have played?</div>
+		</div>
+		<div class="input-field col s10 offset-s1">
+			<p class="range-field" style='margin: 1rem 0 0;padding: 0.5rem 0 0;'>
+				<input type="range" id="xp-percentage-played-range" min="0" max="100" />
+			</p>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPQuote(){
+	?>
+	<div class="row">
+		<div class="input-field col s10 offset-s1">
+		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
+		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience</label>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowEmojiSelector(){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">How was the overall experience?</div>
+		</div>
+		<div class="col s2 offset-s1 modal-xp-emoji-icon">
+			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon">
+			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon">
+			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon">
+			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon">
+			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowRankModal($gameid){
+	$game = GetGame($gameid);
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						<div style='font-size:0.7em;'>Quick Rank</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>
+			<div class="modal-content-container">
+				<?php 
+					$ranklist = GetSmartRankList($gameid, $_SESSION['logged-in']->_id); 
+					ShowRankList($ranklist, $game);
+				?>
+			</div>
+			<div class="modal-save-container">
+					<div class="save-btn modal-btn-pos">Save Rank</div>
+					<div class="cancel-btn modal-btn-pos">Cancel</div>
+			</div>			
 		</div>
 	</div>
 	<?php

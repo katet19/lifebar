@@ -490,7 +490,6 @@ function GetPlatformsForGame($userid, $gbid){
 	return $milestones;
 }
 
-
 function GetDeveloperMilestones($userid, $limit, $type){
 	$mysqli = Connect();
 	$milestones = array();

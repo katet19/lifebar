@@ -2986,10 +2986,11 @@ $(document).ready(function(){
 
         var thumb = $(this).children('.thumb');
 
-        if (thumb.hasClass('active')) {
+        /*if (thumb.hasClass('active')) {
           thumb.velocity({ height: '0', width: '0', top: '10px', marginLeft: '-6px'}, { duration: 100 });
         }
         thumb.removeClass('active');
+        */
       }
     });
 

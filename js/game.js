@@ -408,6 +408,8 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
+					$('.collapsible').collapsible();
+					$('textarea#myxp-quote').characterCounter();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						var windowWidth = $(window).width();
@@ -415,6 +417,10 @@ function GameCardAction(action, gameid){
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+					});
+					$(".modal-xp-emoji-icon").on('click', function(){
+						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+						$(this).addClass("modal-xp-emoji-icon-active");
 					});
 				},
 					error: function(x, t, m) {
