@@ -550,7 +550,7 @@ function DisplayGameCard($game, $count, $classId){
 							echo "add_box";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:#3F51B5;'"; } ?>>
+					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
@@ -598,7 +598,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 								echo "add_box";
 							} ?>
 						</i></div>
-						<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:#3F51B5;'"; } ?>>
+						<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 							<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 								if($xp->_tier == 1){ echo "sentiment_very_satisfied"; }else if($xp->_tier == 2){ echo "sentiment_satisfied"; }else if($xp->_tier == 3){ echo "sentiment_neutral"; }else if($xp->_tier == 4){ echo "sentiment_dissatisfied"; }else if($xp->_tier == 5){ echo "sentiment_very_dissatisfied"; }
 							}else{

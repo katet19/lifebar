@@ -289,19 +289,19 @@ function ShowEmojiSelector(){
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header">How was the overall experience?</div>
 		</div>
-		<div class="col s2 offset-s1 modal-xp-emoji-icon">
+		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor4">
 			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor3">
 			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor2">
 			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor1">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
 		</div>
 	</div>
