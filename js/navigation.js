@@ -74,76 +74,82 @@ function UpdateBrowserHash(hash){
 }
 
 function NavigateToPage(page, fromURL = false){
-	if(fromURL){
+	if($("#loginButton").length > 0){
 		GLOBAL_HASH_REDIRECT = "URL";
-		$(".nav-slide-out-selected-page").removeClass("nav-slide-out-selected-page");
-		if(page[0] == "#collection"){
-			DisplayCollectionDetails(page[1], "UserCollection", page[2]);
-		}else if(page[0] == "#collections"){
-			$('body').css({'overflow-y':'scroll'});
-			$("#nav-collections").addClass("nav-slide-out-selected-page");
-			DisplayUserCollection($(".userContainer").attr("data-id"));
-		}else if(page[0] == "#game" && page[1] > 0){
-		  if(page[3] == "User")
-		    page[3] = "User/"+page[4]+"/"+page[5];
-			ShowGame(page[1], '', true, false, page[3]);
-		}else if(page[0] == "#profile" && page[1] > 0){
-			$('body').css({'overflow-y':'scroll'});
-			if(page[1] == $(".userContainer").attr("data-id"))
-				$("#nav-profile").addClass("nav-slide-out-selected-page");
-
-			ShowUserProfile(page[1], false);
-		}else if(page[0] == "#search" && page[1] != ''){
-			$('body').css({'overflow-y':'scroll'});
-			Search(page[1]);
-		}else if(page[0] == "#discover" || page == "#daily"){
-			$('body').css({'overflow-y':'scroll'});
-			$("#nav-discover").addClass("nav-slide-out-selected-page");
-			ShowDiscoverHome();
-		}else if(page[0] == "#activity"){
-			$('body').css({'overflow-y':'scroll'});
-			$("#nav-activity").addClass("nav-slide-out-selected-page");
-			ShowActivityHome();
-		}else if(page[0] == "#notifications"){
-			$('body').css({'overflow-y':'scroll'});
-			ShowNotificationsHome();
-		}else if(page[0] == "#admin"){
-			$('body').css({'overflow-y':'scroll'});
-			$("#nav-admin").addClass("nav-slide-out-selected-page");
-			ShowAdminHome();
-		}else if(page[0] == "#landing"){
-			$('body').css({'overflow-y':'scroll'});
-			ShowLanding();
-		}else if(page[0] == "#profile"){
-			$("#nav-profile").addClass("nav-slide-out-selected-page");
-			ShowUserProfile($(".userContainer").attr("data-id"), true);
-		}else{
-			$('body').css({'overflow-y':'scroll'});
-			ShowDiscoverHome();
-		}
+		$('body').css({'overflow-y':'scroll'});
+		ShowLanding();
 		GLOBAL_HASH_REDIRECT = "";
 	}else{
-		GLOBAL_HASH_REDIRECT = "NO";
-		$('body').css({'overflow-y':'scroll'});
-		if(page == "#discover" || page == "#daily")
-			ShowDiscoverHome();
-		else if(page == "#activity")
-			ShowActivityHome();
-		else if(page == "#notifications")
-			ShowNotificationsHome();
-		else if(page == "#admin")
-			ShowAdminHome();
-		else if(page == "#landing")
-			ShowLanding();
-		else if(page == "#profile")
-			ShowUserProfile($(".userContainer").attr("data-id"), true);
-		else if(page == "#collections")
-			DisplayUserCollection($(".userContainer").attr("data-id"));
-		else
-			ShowDiscoverHome();
-		GLOBAL_HASH_REDIRECT = "";
+		if(fromURL){
+			GLOBAL_HASH_REDIRECT = "URL";
+			$(".nav-slide-out-selected-page").removeClass("nav-slide-out-selected-page");
+			if(page[0] == "#collection"){
+				DisplayCollectionDetails(page[1], "UserCollection", page[2]);
+			}else if(page[0] == "#collections"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-collections").addClass("nav-slide-out-selected-page");
+				DisplayUserCollection($(".userContainer").attr("data-id"));
+			}else if(page[0] == "#game" && page[1] > 0){
+			if(page[3] == "User")
+				page[3] = "User/"+page[4]+"/"+page[5];
+				ShowGame(page[1], '', true, false, page[3]);
+			}else if(page[0] == "#profile" && page[1] > 0){
+				$('body').css({'overflow-y':'scroll'});
+				if(page[1] == $(".userContainer").attr("data-id"))
+					$("#nav-profile").addClass("nav-slide-out-selected-page");
+
+				ShowUserProfile(page[1], false);
+			}else if(page[0] == "#search" && page[1] != ''){
+				$('body').css({'overflow-y':'scroll'});
+				Search(page[1]);
+			}else if(page[0] == "#discover" || page == "#daily"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-discover").addClass("nav-slide-out-selected-page");
+				ShowDiscoverHome();
+			}else if(page[0] == "#activity"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-activity").addClass("nav-slide-out-selected-page");
+				ShowActivityHome();
+			}else if(page[0] == "#notifications"){
+				$('body').css({'overflow-y':'scroll'});
+				ShowNotificationsHome();
+			}else if(page[0] == "#admin"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-admin").addClass("nav-slide-out-selected-page");
+				ShowAdminHome();
+			}else if(page[0] == "#landing"){
+				$('body').css({'overflow-y':'scroll'});
+				ShowLanding();
+			}else if(page[0] == "#profile"){
+				$("#nav-profile").addClass("nav-slide-out-selected-page");
+				ShowUserProfile($(".userContainer").attr("data-id"), true);
+			}else{
+				$('body').css({'overflow-y':'scroll'});
+				ShowDiscoverHome();
+			}
+			GLOBAL_HASH_REDIRECT = "";
+		}else{
+			GLOBAL_HASH_REDIRECT = "NO";
+			$('body').css({'overflow-y':'scroll'});
+			if(page == "#discover" || page == "#daily")
+				ShowDiscoverHome();
+			else if(page == "#activity")
+				ShowActivityHome();
+			else if(page == "#notifications")
+				ShowNotificationsHome();
+			else if(page == "#admin")
+				ShowAdminHome();
+			else if(page == "#landing")
+				ShowLanding();
+			else if(page == "#profile")
+				ShowUserProfile($(".userContainer").attr("data-id"), true);
+			else if(page == "#collections")
+				DisplayUserCollection($(".userContainer").attr("data-id"));
+			else
+				ShowDiscoverHome();
+			GLOBAL_HASH_REDIRECT = "";
+		}
 	}
-	
 }
 
 /*
