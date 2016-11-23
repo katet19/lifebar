@@ -88,8 +88,8 @@ function DisplaySideDrawer(){ ?>
   <ul id="nav-slide-out" class="nav-display-slide-out">
 	<li class="nav-slide-out-selected-page" id="nav-discover"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
     <li id="nav-activity"><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
-    <li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>
-	<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>
+    <!--<li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>-->
+	<!--<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>-->
     <?php if($_SESSION['logged-in'] != null){ ?>
 	    <div class="divider"></div>
 		<li id="nav-notifications"><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
@@ -98,7 +98,7 @@ function DisplaySideDrawer(){ ?>
 			<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 		<?php } ?>
 		<div class="divider"></div>
-		<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>
+		<!--<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>-->
 		<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
 		<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>
 		<div class="divider"></div>
