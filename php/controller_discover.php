@@ -29,7 +29,19 @@ function BuildDiscoverFlow($userid){
 		$dAtts['GAMES'] = $recentGames;
 		$dAtts['TYPE'] = "categoryResults";
 		$dItems[] = $dAtts;
-			
+
+	//Get Recently Played
+	$played = GetCollectionByName("Recently Played", $userid);
+	if($played->_games > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recently Played";
+		$dAtts['CATEGORYDESC'] = "Quickly update the games you have played last";
+		$dAtts['GAMES'] = $played->_games;
+		$dItems[] = $dAtts;
+	}
+
+	
 	//Get Watched
 	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
 		unset($dAtts);
