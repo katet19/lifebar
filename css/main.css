@@ -263,6 +263,17 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
   background-color:#F50057;
 }
 
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after{
+  background-color:#F50057;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after{
+  background-color:#F50057;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after{
+  border: 2px solid #F50057;
+}
 
 ::-webkit-input-placeholder {
    color: white;

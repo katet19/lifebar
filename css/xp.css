@@ -229,6 +229,10 @@
     opacity:1.0;
 }
 
+.modal-xp-advanced-options-container{
+    display:none;
+}
+
 /*
 OLD STUFF
 */

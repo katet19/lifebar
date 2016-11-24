@@ -206,6 +206,7 @@ function ShowXPPlayedSelector($xp){
 	ShowXPQuote();
 	ShowPercentagePlayed();
 	ShowXPPlatformSelector($xp);
+	ShowAdvancedOptions($xp);
 	?>
 	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save XP</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
@@ -222,6 +223,44 @@ function ShowXPWatchedSelector($xp){
 	<?php
 }
 
+function ShowAdvancedOptions($xp){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header" style='font-size:1.25em;font-weight:400;'><i class="material-icons left" >add</i> Advanced Options</div>
+			<div class="modal-xp-advanced-options-container">
+				<?php ShowDateSelector($xp); ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowDateSelector($xp){
+	?>
+		<label>Year Watched</label>
+		<select id="myxp-year">
+		<?php 
+			$date = explode('-',$xp->_date);
+			$year = date("Y");  
+			$releaseyear = $xp->_game->_year;
+			$releaseyear = $releaseyear - 5;
+			if($xp->_game->_year == 0){
+				$officialrelease = "";
+				$releaseyear = $year - 5;
+			}else{
+				$officialrelease =  ConvertDateToLongRelationalEnglish($xp->_game->_released);
+			} 
+			while($year >= $releaseyear && ($year - $birthyear) > 2){?>
+				<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $xp->_game->_year  && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
+			<?php
+				$year = $year - 1;
+			}
+			?>
+		</select>
+	<?php
+}
+
 function ShowXPPlatformSelector($xp){ 
 	?>
 	<div class="row">
@@ -229,29 +268,29 @@ function ShowXPPlatformSelector($xp){
 			<div class="modal-xp-header">Which platform did you play on?</div>
 		</div>
 		<div class="col s10 offset-s1" style='text-align: left;'>
-			<?php
-			$platforms = GetPlatformsForGame($userid, $xp->_game->_gbid); 
-			$myplatforms = explode("\n", $xp->_platform);
-			foreach($platforms as $platform){ ?>
-				<?php 
-				if(sizeof($myplatforms) > 0){
-					foreach($myplatforms as $myplatform){
-						if(trim($myplatform) != ""){
-							if(stristr(trim($platform->_name), trim($myplatform)) || sizeof($platforms) == 1){  }
-						}
-					} 
-				} ?>
-				<div class="daily-item-row input-field daily-resp-grid daily-response-item-small">
-					<div class="knowledge-container" style="background-color:#FFF;" >
-						<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-15" style="background:url(<?php echo $platform->_image; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-							<i class="daily-checkmark fa fa-check"></i>
-							<div class="daily-pref-image-title">
-								<?php echo $platform->_name; ?>															
-							</div>
+			<div class="row>">
+				<?php $platforms = explode("\n", $xp->_game->_platforms); 
+				$myplatforms = explode("\n", $xp->_platform);
+				$platforms = array_filter($platforms);
+				$myplatforms = array_filter($myplatforms);
+				foreach($platforms as $platform){ 
+					if($platform != ""){ ?>
+						<div class="col s6" style="margin-bottom:5px;">
+							<input type="radio" id="<?php echo $platform;?>" name="platform-radio" class="myxp-platforms" data-text="<?php echo $platform;?>" 
+								<?php 
+								if(sizeof($myplatforms) > 0){
+									foreach($myplatforms as $myplatform){
+										if(trim($myplatform) != ""){
+											if(stristr(trim($platform), trim($myplatform))){ echo 'checked'; }
+										}
+									} 
+								}else if(sizeof($platforms) == 1){ echo 'checked'; } ?>
+							/>
+							<label for="<?php echo $platform;?>" style='line-height: 15px;'><?php echo $platform;?></label>
 						</div>
-					</div>
-				</div>
-			<?php } ?>
+				<?php 	} 
+				} ?>
+			</div>
 		</div>
 	</div>
 	<?php
