@@ -238,7 +238,8 @@ function ShowAdvancedOptions($xp){
 
 function ShowDateSelector($xp){
 	?>
-		<label>Year Watched</label>
+	<div class="col s12">
+		<div class="modal-xp-header">Which year was this experience?</div>
 		<select id="myxp-year">
 		<?php 
 			$date = explode('-',$xp->_date);
@@ -258,6 +259,7 @@ function ShowDateSelector($xp){
 			}
 			?>
 		</select>
+	</div>
 	<?php
 }
 

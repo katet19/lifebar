@@ -223,6 +223,20 @@
     color:#F50057;
 }
 
+.modal-xp-advanced-options-container{
+    -webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+    width: 100%;
+    display:none;
+}
+
+.modal-xp-advanced-options-container-active{
+    display:inline-block !important;
+}
+
 .modal-xp-emoji-icon{
     padding: 5px 0;
     font-size: 3.5em;
@@ -241,10 +255,6 @@
 
 .modal-xp-emoji-icon-active{
     opacity:1.0;
-}
-
-.modal-xp-advanced-options-container{
-    display:none;
 }
 
 /*

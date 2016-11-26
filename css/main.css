@@ -275,6 +275,14 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
   border: 2px solid #F50057;
 }
 
+.dropdown-content li > a, .dropdown-content li > span{
+  color:rgba(0, 0, 0, 0.87);
+}
+
+[type="radio"] + label:before, [type="radio"] + label:after{
+  margin-top:0;
+}
+
 ::-webkit-input-placeholder {
    color: white;
 }

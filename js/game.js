@@ -419,6 +419,15 @@ function GameCardAction(action, gameid){
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 					});
 					$('select').material_select();
+					$(".modal-xp-header-advanced").on("click", function(){
+						if($(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
+							$(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
+							$(this).find(".material-icons").text("add");
+						}else{
+							$(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
+							$(this).find(".material-icons").text("remove");
+						}
+					});
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
