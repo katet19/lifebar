@@ -227,7 +227,7 @@ function ShowAdvancedOptions($xp){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
-			<div class="modal-xp-header" style='font-size:1.25em;font-weight:400;'><i class="material-icons left" >add</i> Advanced Options</div>
+			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Optional Details</div>
 			<div class="modal-xp-advanced-options-container">
 				<?php ShowDateSelector($xp); ?>
 			</div>
