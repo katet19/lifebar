@@ -537,9 +537,9 @@ function DisplayGameCard($game, $count, $classId){
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
-	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        </div>
+	      <div class="card game-discover-card <?php echo $classId; ?>"  data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	        <a class="card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+	        </a>
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
@@ -573,7 +573,7 @@ function DisplayGameCard($game, $count, $classId){
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
 	        </div>
-	      </a>
+	      </div>
       </div>
 <?php }
 
@@ -584,10 +584,11 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 			<div class="collection-quick-add-container z-depth-2">
 				Empty Text
 			</div>
-			<a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
-				<div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-						<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>remove_circle_outline</i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -5px;'>Remove from Backlog</span></div>
-				</div>
+			<div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				<a class="card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+						<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<i class="material-icons" style='font-size: 1em;margin-top: 4px;'>remove_circle_outline</i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -5px;'>Remove from Backlog</span></div>
+				</a>
 				<div class="card-content">
 				<div class="card-title activator grey-text text-darken-4">
 					<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
@@ -621,7 +622,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 				</div>
 				</div>
-			</a>
+			</div>
 		</div>
 <?php }
 }
