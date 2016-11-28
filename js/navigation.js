@@ -185,9 +185,6 @@ function AttachTabLoadingEvents(){
 			}
 		  }
 	  });
-	  $(".userNotificiations").on("click", function(){
-	  	ManuallyNavigateToTab("#notifications");
-	  });
 	  $(".userPTalk").on("click", function(){
 	  	window.open("http://tidbits.io/");
 	  });
@@ -411,9 +408,9 @@ function CheckForNotifications(){
      type: 'post',
      success: function(output) {
      		if($.trim(output) == "1"){
-     			$(".userNotificiations").html("<i class='material-icons user-notification-icon'>notifications</i><div class='notifications-new-badge'>NEW</div>");
+     			$("#nav-notifications").html("<a href='#notifications'><i class='material-icons'>notifications</i> Notifications</a><div class='notifications-new-badge'>NEW</div>");
      		}else{
-     			$(".userNotificiations").html("<i class='material-icons user-notification-icon'>notifications_none</i>");
+     			$("#nav-notifications").html("<a href='#notifications'><i class='material-icons'>notifications_none</i> Notifications</a>");
      		}
   			setTimeout(CheckForNotifications,300000);
      },

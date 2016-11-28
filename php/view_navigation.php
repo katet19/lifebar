@@ -24,7 +24,6 @@ function DisplayHeaderNavigation(){ ?>
 				 }?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
-						<div class="userNotificiations"><i class="material-icons user-notification-icon">notifications_none</i></div>
 						<div class="searchContainer">
 							<i class="SearchBtn material-icons small">search</i>
 							<div class="searchInput"><input type="text" placeholder="Search" style='border: none !important;color:white;margin: 0;font-size: 1.2em;'></div>
@@ -90,7 +89,7 @@ function DisplaySideDrawer(){ ?>
 		<!--<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>-->
 		
 			<div class="divider"></div>
-			<li id="nav-notifications"><a href="#notifications"><i class="material-icons">notifications</i> Notifications</a></li>
+			<li id="nav-notifications" style='position:relative;'><a href="#notifications"><i class="material-icons">notifications_none</i> Notifications</a></li>
 			<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
 			<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
 				<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>

@@ -198,13 +198,6 @@
     float: left;
 }
 
-.userNotificiations{
-  display: inline-block;
-  cursor:pointer;
-  position: relative;
-  top:-10px;
-}
-
 .user-notification-icon{
 	font-size:2em;
 }
@@ -877,7 +870,7 @@ OLD STUFF
 		top:45px;
 		width:100%;
 	}
-	.userPTalk, .userPTalkHelp, .userNotificiations{
+	.userPTalk, .userPTalkHelp{
 		display:none;
 	}
 }

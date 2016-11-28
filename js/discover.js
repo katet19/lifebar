@@ -140,7 +140,7 @@ function FilterCategories(){
 function OpenSearch(){
 	 if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userNotificiations, .lifebar-container").hide();
+		$(".lifebar-container").hide();
 		$(".searchInput").css({"left":"3.5em"});
 		$(".SearchBtn").css({"float":"left"});
 	}else{
