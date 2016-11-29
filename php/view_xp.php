@@ -402,17 +402,17 @@ function ShowRankList($ranklist, $currgame){
 					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
 					<div class="modal-rank-item-subtitle">
 					<?php 
-						  if($game->_year > 0)
-							  echo $game->_year;
+						  if($currgame->_year > 0)
+							  echo $currgame->_year;
 						  else
 							  echo "????";
 							  
-						  $developers = array_filter(explode("\n", $game->_developer));
+						  $developers = array_filter(explode("\n", $currgame->_developer));
 						  if(sizeof($developers) > 0){
 						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
 							echo implode("- ", $developers);
 						  }
-						  $publishers = array_filter(explode("\n", $game->_publisher));
+						  $publishers = array_filter(explode("\n", $currgame->_publisher));
 						  if(sizeof($developers) > 0  && sizeof($publishers) > 0)
 						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
 						  if(sizeof($publishers) > 0){
@@ -427,6 +427,7 @@ function ShowRankList($ranklist, $currgame){
 							<div class="row modal-rank-item-hover-col-title"><div class="modal-rank-item-arrow"></div>INSERT</div>
 						</div>
 						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+						<div class="modal-rank-item-truerank">#<?php echo $rank; ?></div>
 						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
 						<div class="modal-rank-item-subtitle">
 						<?php 

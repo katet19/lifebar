@@ -81,6 +81,15 @@
 	font-weight: bold;
 }
 
+.modal-rank-item-truerank{
+    opacity: 0.3;
+    font-size: 0.8em;
+    position: absolute;
+    display: inline-block;
+    top: 25px;
+    left: 15px;
+}
+
 .modal-rank-item-title{
 	display: inline-block;
     font-weight: 300;
