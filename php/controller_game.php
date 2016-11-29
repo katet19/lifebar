@@ -323,7 +323,7 @@ function RecentlyReleasedCategory(){
 	$mysqli = Connect();
 	$games = array();
 	$past = date('Y-m-d', strtotime('-45 days'));
-	if ($result = $mysqli->query("select * from `Games` where `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Released` DESC LIMIT 0,6")) {
+	if ($result = $mysqli->query("select * from `Games` where `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Released` DESC LIMIT 0,8")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
 				$game = GameObject($row);

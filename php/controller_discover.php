@@ -178,7 +178,7 @@ function GetGamesFromBacklog($userid){
 	if(sizeof($games) > 0){
 		$count=0;
 		shuffle($games);
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$list[] = $games[$count];
 			$count++;
 		}
@@ -207,7 +207,7 @@ function GetAGamingPreferenceList($mysqli, $userid, $prefs){
 		
 		shuffle($games);
 		$count = 0;
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$gprefs['Games'][] = $games[$count]->_game;
 			$count++;
 		}

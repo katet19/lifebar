@@ -733,7 +733,7 @@ function GetTrendingGamesCategory(){
 	$games= array();
 	$mysqli = Connect();
 	$thisquarter = date('Y-m-d', strtotime("now -30 days") );
-	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 6")) {
+	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 8")) {
 		while($row = mysqli_fetch_array($result)){
 			$games[] = GetGame($row["GameID"], $mysqli);
 		}
