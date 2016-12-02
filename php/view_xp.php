@@ -1,6 +1,7 @@
 <?php
 function ShowTierModal($gameid){
-	$game = GetGame($gameid);
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $gameid);
+	$game = $xp->_game;
 	?>
 	<div class="row">
 		<div class="col s12">
@@ -8,27 +9,159 @@ function ShowTierModal($gameid){
 			<div class="GameHeaderContainer" style='height:10vh;'>
 				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header">
-						Tier Placement<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+						<div style='font-size:0.7em;'>Tier Placement</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>			
 			<div class="modal-content-container">
-				<div class="tier-modal-row"><i class="material-icons tierTextColor1 tier-modal-icon"><?php DisplayTierBadge(1); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor2 tier-modal-icon"><?php DisplayTierBadge(2); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor3 tier-modal-icon"><?php DisplayTierBadge(3); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor4 tier-modal-icon"><?php DisplayTierBadge(4); ?></i></div>
-				<div class="tier-modal-row"><i class="material-icons tierTextColor5 tier-modal-icon"><?php DisplayTierBadge(5); ?></i></div>
-			</div>
+				<?php 
+					$ranklist = GetSmartTierList($gameid, $_SESSION['logged-in']->_id); 
+					ShowTierList($ranklist, $game, $xp->_tier);
+				?>
+			</div>	
 			<div class="modal-save-container">
 					<div class="save-btn modal-btn-pos">Save Tier</div>
 					<div class="cancel-btn modal-btn-pos">Cancel</div>
-			</div>	
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowTierList($tierlist, $currgame, $tier){
+	if(sizeof($tierlist) > 0){
+		$filter = explode(",", $tierlist[0][3]);
+		$count = 1;
+		?>
+		<div class="modal-rank-filter">
+			<?php if(sizeof($filter) > 0){
+				 foreach($filter as $filteritem){
+				?>
+				<div class="modal-rank-filter-item"><?php echo $filteritem; ?></div>
+				<?php
+				} 
+			} ?>
+		</div>
+		<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header <?php if($tier == 1){ echo 'active'; } ?> tier1BGHover"><i class="material-icons tier-modal-icon tierTextColor1"><?php DisplayTierBadge(1); ?></i>FANTASTIC</div>
+				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #0A67A3;'>
+					<?php DisplayTierAddButton($tier, 1, $currgame);
+					  foreach($tierlist as $tieritem){
+							if($tieritem[2] == 1 && $tieritem[0]->_id != $currgame->_id)
+								ShowTierListItem($tieritem[0], false);
+						} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header <?php if($tier == 2){ echo 'active'; } ?> tier2BGHover"><i class="material-icons tier-modal-icon tierTextColor2"><?php DisplayTierBadge(2); ?></i>GOOD</div>
+				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #00B25C;'>
+					<?php DisplayTierAddButton($tier, 2, $currgame);
+					foreach($tierlist as $tieritem){
+						if($tieritem[2] == 2 && $tieritem[0]->_id != $currgame->_id)
+							ShowTierListItem($tieritem[0], false);
+					} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header <?php if($tier == 3){ echo 'active'; } ?> tier3BGHover"><i class="material-icons tier-modal-icon tierTextColor3"><?php DisplayTierBadge(3); ?></i>AVERAGE</div>
+				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #FF8E00;'>
+					<?php DisplayTierAddButton($tier, 3, $currgame);
+					foreach($tierlist as $tieritem){
+						if($tieritem[2] == 3 && $tieritem[0]->_id != $currgame->_id)
+							ShowTierListItem($tieritem[0], false);
+					} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header <?php if($tier == 4){ echo 'active'; } ?> tier4BGHover"><i class="material-icons tier-modal-icon tierTextColor4"><?php DisplayTierBadge(4); ?></i>POOR</div>
+				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid rgb(255, 65, 0);'>
+					<?php DisplayTierAddButton($tier, 4, $currgame);
+					foreach($tierlist as $tieritem){
+						if($tieritem[2] == 4 && $tieritem[0]->_id != $currgame->_id)
+							ShowTierListItem($tieritem[0], false);
+					} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header <?php if($tier == 5){ echo 'active'; } ?> tier5BGHover"><i class="material-icons tier-modal-icon tierTextColor5"><?php DisplayTierBadge(5); ?></i>TERRIBLE</div>
+				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #DB0058;'>
+					<?php DisplayTierAddButton($tier, 5, $currgame);
+					foreach($tierlist as $tieritem){
+						if($tieritem[2] == 5 && $tieritem[0]->_id != $currgame->_id)
+							ShowTierListItem($tieritem[0], false);
+					} ?>
+				</div>
+			</li>
+		</ul>
+		<?php
+	}
+}
+
+function DisplayTierAddButton($tier, $currtier, $game){
+	?>
+	<div class="modal-rank-item" style='padding: 0;'>
+		<?php
+		if($tier == $currtier){
+		?>
+			<div class="btn tier-modal-add-btn" style='display:none;'><i class="material-icons left" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="tier-modal-current-game">
+				<?php ShowTierListItem($game, true); ?>
+			</div>
+		<?php
+		}else if($tier > 0){
+		?>
+			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="tier-modal-current-game" style='display:none;'>
+				<?php ShowTierListItem($game, true); ?>
+			</div>
+		<?php
+		}else{
+		?>
+			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="tier-modal-current-game" style='display:none;'>
+				<?php ShowTierListItem($game, true); ?>
+			</div>
+		<?php
+		}
+		?>
+	</div>
+	<?php
+}
+
+function ShowTierListItem($game, $isActive){
+	?>
+	<div class="modal-rank-group">
+		<div class="modal-rank-item" style='display:block;cursor:initial;'>
+			<div class="modal-rank-item-title" <?php if($isActive){?>style='font-weight:bold;'<?php } ?>><?php echo $game->_title; ?></div>
+			<div class="modal-rank-item-subtitle" style='padding-left:0;<?php if($isActive){?>font-weight:bold;<?php } ?>'>
+			<?php 
+				if($game->_year > 0)
+					echo $game->_year;
+				else
+					echo "????";
+					
+				$developers = array_filter(explode("\n", $game->_developer));
+				if(sizeof($developers) > 0){
+					echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+					echo implode("- ", $developers);
+				}
+				$publishers = array_filter(explode("\n", $game->_publisher));
+				if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+					echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+				if(sizeof($publishers) > 0){
+					echo implode("- ", $publishers);
+				} 
+			?>
+			</div>
+			<div class="divider" style='margin-top: 5px;'></div>
 		</div>
 	</div>
 	<?php
 }
 
 function ShowXPModal($gameid){
-	$game = GetGame($gameid);
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $gameid);
+	$game = $xp->_game;
 	?>
 	<div class="row">
 		<div class="col s12">
@@ -36,16 +169,181 @@ function ShowXPModal($gameid){
 			<div class="GameHeaderContainer" style='height:10vh;'>
 				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header">
-						Add Experience<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+						<div style='font-size:0.7em;'>Add Experience</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>	
 			<div class="modal-content-container">
-
-			</div>
-			<div class="modal-save-container">
-					<div class="save-btn modal-btn-pos">Save XP</div>
-					<div class="cancel-btn modal-btn-pos">Cancel</div>
+				<?php
+					ShowXPSelector($xp);
+				?>
 			</div>		
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPSelector($xp){
+	?>
+	<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
+		<li>
+			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">gamepad</i>Add a <b>played</b> experience</div>
+			<div class="collapsible-body">
+				<?php ShowXPPlayedSelector($xp); ?>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">visibility</i>Add a <b>watched</b> experience</div>
+			<div class="collapsible-body tier-modal-body">
+				<?php ShowXPWatchedSelector($xp); ?>
+			</div>
+		</li>
+	</ul>
+	<?php
+}
+
+function ShowXPPlayedSelector($xp){
+	ShowEmojiSelector();
+	ShowXPQuote();
+	ShowPercentagePlayed();
+	ShowXPPlatformSelector($xp);
+	ShowAdvancedOptions($xp);
+	?>
+	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save XP</div>
+	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	<?php
+	
+}
+
+function ShowXPWatchedSelector($xp){
+	ShowEmojiSelector();
+	ShowXPQuote();
+	?>
+	<div class="save-btn modal-btn-pos">Save XP</div>
+	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<?php
+}
+
+function ShowAdvancedOptions($xp){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Optional Details</div>
+			<div class="modal-xp-advanced-options-container">
+				<?php ShowDateSelector($xp); ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowDateSelector($xp){
+	?>
+	<div class="col s12">
+		<div class="modal-xp-header">Which year was this experience?</div>
+		<select id="myxp-year">
+		<?php 
+			$date = explode('-',$xp->_date);
+			$year = date("Y");  
+			$releaseyear = $xp->_game->_year;
+			$releaseyear = $releaseyear - 5;
+			if($xp->_game->_year == 0){
+				$officialrelease = "";
+				$releaseyear = $year - 5;
+			}else{
+				$officialrelease =  ConvertDateToLongRelationalEnglish($xp->_game->_released);
+			} 
+			while($year >= $releaseyear && ($year - $birthyear) > 2){?>
+				<option value="<?php echo $year; ?>"  <?php if($date[0] == $year){ echo "selected"; } ?>><?php echo $year; ?> <?php if($year == $xp->_game->_year  && $officialrelease != ''){ echo " - US Release (".$officialrelease.")"; } ?> </option>
+			<?php
+				$year = $year - 1;
+			}
+			?>
+		</select>
+	</div>
+	<?php
+}
+
+function ShowXPPlatformSelector($xp){ 
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">Which platform did you play on?</div>
+		</div>
+		<div class="col s10 offset-s1" style='text-align: left;'>
+			<div class="row>">
+				<?php $platforms = explode("\n", $xp->_game->_platforms); 
+				$myplatforms = explode("\n", $xp->_platform);
+				$platforms = array_filter($platforms);
+				$myplatforms = array_filter($myplatforms);
+				foreach($platforms as $platform){ 
+					if($platform != ""){ ?>
+						<div class="col s6" style="margin-bottom:5px;">
+							<input type="radio" id="<?php echo $platform;?>" name="platform-radio" class="myxp-platforms" data-text="<?php echo $platform;?>" 
+								<?php 
+								if(sizeof($myplatforms) > 0){
+									foreach($myplatforms as $myplatform){
+										if(trim($myplatform) != ""){
+											if(stristr(trim($platform), trim($myplatform))){ echo 'checked'; }
+										}
+									} 
+								}else if(sizeof($platforms) == 1){ echo 'checked'; } ?>
+							/>
+							<label for="<?php echo $platform;?>" style='line-height: 15px;'><?php echo $platform;?></label>
+						</div>
+				<?php 	} 
+				} ?>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowPercentagePlayed(){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">About how much of the game you have played?</div>
+		</div>
+		<div class="input-field col s10 offset-s1">
+			<p class="range-field" style='margin: 1rem 0 0;padding: 0.5rem 0 0;'>
+				<input type="range" id="xp-percentage-played-range" min="0" max="100" />
+			</p>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPQuote(){
+	?>
+	<div class="row">
+		<div class="input-field col s10 offset-s1">
+		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
+		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience</label>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowEmojiSelector(){
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">How was the overall experience?</div>
+		</div>
+		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5">
+			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon tierTextColor4">
+			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon tierTextColor3">
+			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon tierTextColor2">
+			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
+		</div>
+		<div class="col s2 modal-xp-emoji-icon tierTextColor1">
+			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
 		</div>
 	</div>
 	<?php
@@ -60,7 +358,7 @@ function ShowRankModal($gameid){
 			<div class="GameHeaderContainer" style='height:10vh;'>
 				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header">
-						Quick Rank<div style='font-size:0.7em;font-weight:300;'><?php echo $game->_title;?></div>
+						<div style='font-size:0.7em;'>Quick Rank</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>
 			<div class="modal-content-container">
@@ -104,17 +402,17 @@ function ShowRankList($ranklist, $currgame){
 					<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
 					<div class="modal-rank-item-subtitle">
 					<?php 
-						  if($game->_year > 0)
-							  echo $game->_year;
+						  if($currgame->_year > 0)
+							  echo $currgame->_year;
 						  else
 							  echo "????";
 							  
-						  $developers = array_filter(explode("\n", $game->_developer));
+						  $developers = array_filter(explode("\n", $currgame->_developer));
 						  if(sizeof($developers) > 0){
 						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
 							echo implode("- ", $developers);
 						  }
-						  $publishers = array_filter(explode("\n", $game->_publisher));
+						  $publishers = array_filter(explode("\n", $currgame->_publisher));
 						  if(sizeof($developers) > 0  && sizeof($publishers) > 0)
 						  	echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
 						  if(sizeof($publishers) > 0){
@@ -126,9 +424,10 @@ function ShowRankList($ranklist, $currgame){
 				<?php if($currgame->_id != $game->_id){ ?>
 					<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
 						<div class="modal-rank-item-insert-btn">
-							<div class="row modal-rank-item-hover-col-title">INSERT</div>
+							<div class="row modal-rank-item-hover-col-title"><div class="modal-rank-item-arrow"></div>INSERT</div>
 						</div>
 						<div class="modal-rank-item-rank"><?php echo $count; ?></div>
+						<div class="modal-rank-item-truerank">#<?php echo $rank; ?></div>
 						<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
 						<div class="modal-rank-item-subtitle">
 						<?php 

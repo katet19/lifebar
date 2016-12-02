@@ -374,14 +374,23 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
-					var height = $(".tier-modal-container").height() / 5;
-					$(".tier-modal-icon").css({'font-size': (height) + 'px'});
+					$('.collapsible').collapsible();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						HideFocus();
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+					});
+					$(".tier-modal-add-btn").on("click", function(){
+						$(".tier-modal-current-game").each(function(){
+							$(this).hide();
+						});
+						$(".tier-modal-add-btn").each(function(){
+							$(this).show();
+						});
+						$(this).hide();
+						$(this).parent().find(".tier-modal-current-game").show(250);
 					});
 				},
 					error: function(x, t, m) {
@@ -399,6 +408,8 @@ function GameCardAction(action, gameid){
 				type: 'post',
 				success: function(output) {
 					$("#gameminiInnerContainer").html(output);
+					$('.collapsible').collapsible();
+					$('textarea#myxp-quote').characterCounter();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						var windowWidth = $(window).width();
@@ -406,6 +417,20 @@ function GameCardAction(action, gameid){
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+					});
+					$('select').material_select();
+					$(".modal-xp-header-advanced").on("click", function(){
+						if($(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
+							$(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
+							$(this).find(".material-icons").text("add");
+						}else{
+							$(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
+							$(this).find(".material-icons").text("remove");
+						}
+					});
+					$(".modal-xp-emoji-icon").on('click', function(){
+						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+						$(this).addClass("modal-xp-emoji-icon-active");
 					});
 				},
 					error: function(x, t, m) {

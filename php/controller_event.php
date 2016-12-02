@@ -51,6 +51,7 @@ function GetMyFeed($userid, $page, $filter){
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
+			$addedquery[] = $userid;
 			$collectionQuery = array();
 			if(sizeof($collectionList) > 0){
 				foreach($collectionList as $collection){

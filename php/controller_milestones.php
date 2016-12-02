@@ -434,7 +434,7 @@ function GetPlatformGames($platformid, $userid){
 function GetPlatformGamesForDiscover($platformid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 6";
+	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 8";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($userid);
@@ -489,7 +489,6 @@ function GetPlatformsForGame($userid, $gbid){
 	Close($mysqli, $result);
 	return $milestones;
 }
-
 
 function GetDeveloperMilestones($userid, $limit, $type){
 	$mysqli = Connect();

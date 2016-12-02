@@ -1,8 +1,9 @@
 .notifications-new-badge{
     font-size: 0.6em;
     position: absolute;
-    bottom: -5px;
-    text-align: center;
+    bottom: -25px;
+    left: 17px;
+    text-align: left;
     font-weight: bold;
     width: 100%;
 }

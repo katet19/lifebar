@@ -533,13 +533,13 @@ function ShowMyGameFAB($gameid, $myxp){
 
 function DisplayGameCard($game, $count, $classId){
 	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
-	<div class="col s6 m3 l2" style='position:relative;'>
+	<div class="col s6 m4 l3" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
  			Empty Text
  		 </div>
-	      <a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
-	        <div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-	        </div>
+	      <div class="card game-discover-card <?php echo $classId; ?>"  data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	        <a class="card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+	        </a>
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
@@ -550,7 +550,7 @@ function DisplayGameCard($game, $count, $classId){
 							echo "add_box";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+					<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
@@ -573,21 +573,22 @@ function DisplayGameCard($game, $count, $classId){
 			  	<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 			  </div>
 	        </div>
-	      </a>
+	      </div>
       </div>
 <?php }
 
 function DisplayGameCardWithDismiss($game, $count, $classId){
 	if($game->_id > 0){
 		$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
-		<div class="col s6 m3 l2" style='position:relative;'>
+		<div class="col s6 m4 l3" style='position:relative;'>
 			<div class="collection-quick-add-container z-depth-2">
 				Empty Text
 			</div>
-			<a class="card game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
-				<div class="card-image waves-effect waves-block" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-						<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>remove_circle_outline</i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -5px;'>Remove from Backlog</span></div>
-				</div>
+			<div class="card game-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				<a class="card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+						<div class="game-card-quick-dismiss z-depth-1" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<i class="material-icons" style='font-size: 1em;margin-top: 4px;'>remove_circle_outline</i> <span style='font-size: 0.7em; font-weight: 400; position: relative; top: -5px;'>Remove from Backlog</span></div>
+				</a>
 				<div class="card-content">
 				<div class="card-title activator grey-text text-darken-4">
 					<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
@@ -598,7 +599,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 								echo "add_box";
 							} ?>
 						</i></div>
-						<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn" <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo "style='color:rgba(0,0,0,0.6)'"; } ?>>
+						<div class="col s3 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 							<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 								if($xp->_tier == 1){ echo "sentiment_very_satisfied"; }else if($xp->_tier == 2){ echo "sentiment_satisfied"; }else if($xp->_tier == 3){ echo "sentiment_neutral"; }else if($xp->_tier == 4){ echo "sentiment_dissatisfied"; }else if($xp->_tier == 5){ echo "sentiment_very_dissatisfied"; }
 							}else{
@@ -621,7 +622,7 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 					<div class="game-nav-title" title="<?php echo $game->_title; ?>"><?php echo $game->_title; ?></div>
 				</div>
 				</div>
-			</a>
+			</div>
 		</div>
 <?php }
 }

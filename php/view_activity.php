@@ -917,16 +917,16 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 function DisplayFeedXPIcon($xp, $event){
 	if(sizeof($xp->_playedxp) > 0){
 		?>
-			<div class="feed-card-icon-container tier<?php echo $event->_tier; ?>BG"  title="<?php echo "XP ".$event->_tier; ?>">
-				<i class='material-icons feed-card-icon'>
+			<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">
+				<i class='material-icons feed-card-icon tierTextColor<?php echo $event->_tier; ?>'>
 					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
 				</i>
 			</div>
 		<?php
 	}else if(sizeof($xp->_watchedxp) > 0){
 		?>
-			<div class="feed-card-icon-container tier<?php echo $event->_tier; ?>BG"  title="<?php echo "XP ".$event->_tier; ?>">
-				<i class='material-icons feed-card-icon'>
+			<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">
+				<i class='material-icons feed-card-icon tierTextColor<?php echo $event->_tier; ?>'>
 					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
 				</i>
 			</div>

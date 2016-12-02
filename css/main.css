@@ -153,6 +153,35 @@ a{
 
 .tier5BG{ background-color:#DB0058 !important;  }
 
+.tier1BGHover, .tier2BGHover, .tier3BGHover, .tier4BGHover, .tier5BGHover{
+  background-color:white;
+}
+
+.tier1BGHover:hover, .active>.tier1BGHover{ 
+  background-color:#0A67A3 !important;
+  color:white;   
+}
+
+.tier2BGHover:hover, .active>.tier2BGHover{ 
+  background-color:#00B25C !important;  
+  color:white; 
+}
+
+.tier3BGHover:hover, .active>.tier3BGHover{ 
+  background-color:#FF8E00 !important;
+  color:white;  
+}
+
+.tier4BGHover:hover, .active>.tier4BGHover{ 
+  background-color:#FF4100 !important; 
+  color:white;  
+}
+
+.tier5BGHover:hover, .active>.tier5BGHover{ 
+  background-color:#DB0058 !important;
+  color:white;   
+}
+
 .tierTextColor0{ color:rgba(0,0,0,0.7) !important;   }
 
 .tierTextColor1{ color:#0A67A3 !important;  }
@@ -219,6 +248,39 @@ a{
   border-radius: 2px;
   margin: 0.5rem -1.75rem 1rem;
   overflow: hidden;
+}
+
+input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label{
+  color:#F50057;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom: 1px solid #F50057;
+    box-shadow: 0 1px 0 0 #F50057;
+}
+
+input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-range-thumb, input[type=range]::-ms-thumb{
+  background-color:#F50057;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after{
+  background-color:#F50057;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after{
+  background-color:#F50057;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after{
+  border: 2px solid #F50057;
+}
+
+.dropdown-content li > a, .dropdown-content li > span{
+  color:rgba(0, 0, 0, 0.87);
+}
+
+[type="radio"] + label:before, [type="radio"] + label:after{
+  margin-top:0;
 }
 
 ::-webkit-input-placeholder {

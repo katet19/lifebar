@@ -4,7 +4,7 @@ function BuildDiscoverFlow($userid){
 	$mysqli = Connect();
 	
 	//Get the Daily (always the header)
-	$daily = GetDaily($mysqli);
+	/*$daily = GetDaily($mysqli);
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'DAILY';
 		$dAtts['QUESTION'] = $daily['Header'];
@@ -15,10 +15,42 @@ function BuildDiscoverFlow($userid){
 		$dAtts['FINISHED'] = $daily['Finished'];
 		$dAtts['ITEMS'] = $daily["Items"];
 		$dItems[] = $dAtts;
+	*/
 	
 	/*
 	* Determine the order & content
 	*/
+	
+	//Recent Releases (ALWAYS SHOWS UP)
+	$recentGames = RecentlyReleasedCategory(); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recent Releases";
+		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
+		$dAtts['GAMES'] = $recentGames;
+		$dAtts['TYPE'] = "categoryResults";
+		$dItems[] = $dAtts;
+
+	//Get Recently Played
+	$played = GetCollectionByName("Recently Played", $userid);
+	if($played->_games > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recently Played";
+		$dAtts['CATEGORYDESC'] = "Quickly update the games you have played last";
+		$dAtts['GAMES'] = $played->_games;
+		$dItems[] = $dAtts;
+	}
+
+	
+	//Get Watched
+	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'WATCHLIST';
+		$dAtts['CATEGORY'] = 'Playing Now';
+		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
+		$dAtts['VIDEOS'] = $suggestedWatch;
+		$dItems[] = $dAtts;
 	
 	//Games pref list
 	$prefs = GetUserPrefs($userid, $mysqli);
@@ -41,25 +73,6 @@ function BuildDiscoverFlow($userid){
 			$dAtts['GAMES'] = $prefList['Games'];
 			$dItems[] = $dAtts;	
 	}
-			
-	//Get Watched
-	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'WATCHLIST';
-		$dAtts['CATEGORY'] = 'Playing Now';
-		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
-		$dAtts['VIDEOS'] = $suggestedWatch;
-		$dItems[] = $dAtts;
-		
-	//Recent Releases (ALWAYS SHOWS UP)
-	$recentGames = RecentlyReleasedCategory(); 
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = "Recent Releases";
-		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
-		$dAtts['GAMES'] = $recentGames;
-		$dAtts['TYPE'] = "categoryResults";
-		$dItems[] = $dAtts;
 		
 	//Get Suggested Users that have 1ups that arent' being followed
 	$suggestedMembers = GetSuggestedMembers($mysqli, $userid); 
@@ -95,13 +108,13 @@ function BuildDiscoverFlow($userid){
 		$dItems[] = $dAtts;	
 	
 	//Get Suggested Collection
-	$suggcoll = GetSuggestedCollection($mysqli, $userid);
+	/*$suggcoll = GetSuggestedCollection($mysqli, $userid);
 	if($suggcoll != ''){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'COLLECTION';
 		$dAtts['COLLECTION'] = $suggcoll;
 		$dItems[] = $dAtts;
-	}
+	}*/
 
 	//Get Users that aren't mutual followers
 	$notmutual = GetNotMutualFollowers($mysqli, $userid);
@@ -166,7 +179,7 @@ function GetGamesFromBacklog($userid){
 	if(sizeof($games) > 0){
 		$count=0;
 		shuffle($games);
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$list[] = $games[$count];
 			$count++;
 		}
@@ -195,7 +208,7 @@ function GetAGamingPreferenceList($mysqli, $userid, $prefs){
 		
 		shuffle($games);
 		$count = 0;
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$gprefs['Games'][] = $games[$count]->_game;
 			$count++;
 		}
@@ -224,7 +237,7 @@ function GetDaily($mysqli){
 	}
 	
 	if(sizeof($daily) == 0 ){
-		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' and `Daily` = '0000-00-00' order by Rand() limit 0,1";
+		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' order by Rand() limit 0,1";
 		if ($result = $mysqli->query($query)) {
 			while($row = mysqli_fetch_array($result)){
 				$daily = $row;
