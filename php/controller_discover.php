@@ -4,7 +4,7 @@ function BuildDiscoverFlow($userid){
 	$mysqli = Connect();
 	
 	//Get the Daily (always the header)
-	$daily = GetDaily($mysqli);
+	/*$daily = GetDaily($mysqli);
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'DAILY';
 		$dAtts['QUESTION'] = $daily['Header'];
@@ -15,6 +15,7 @@ function BuildDiscoverFlow($userid){
 		$dAtts['FINISHED'] = $daily['Finished'];
 		$dAtts['ITEMS'] = $daily["Items"];
 		$dItems[] = $dAtts;
+	*/
 	
 	/*
 	* Determine the order & content
