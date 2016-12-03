@@ -557,7 +557,7 @@ function DisplayGameCard($game, $count, $classId){
 							echo "face";
 						} ?>
 					</i></div>
-					<div class="col s3 game-card-action-pick" data-action="rank">
+					<!--<div class="col s3 game-card-action-pick" data-action="rank">
 						<?php if($xp->_rank > 0){ 
 							?>
 							<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
@@ -567,6 +567,13 @@ function DisplayGameCard($game, $count, $classId){
 							<i class="material-icons nav-game-action-btn">swap_vert</i>
 							<?php
 						} ?>
+					</div>-->
+					<div class="col s3 game-card-action-pick" data-action="bookmark">
+							<?php if($xp->_bucketlist == "Yes"){ ?>
+								<i class="material-icons nav-game-action-btn materialize-red-text">bookmark</i>
+							<?php }else{ ?>
+								<i class="material-icons nav-game-action-btn">bookmark</i>
+							<?php } ?>
 					</div>
 					<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 				</div>
@@ -606,16 +613,23 @@ function DisplayGameCardWithDismiss($game, $count, $classId){
 								echo "face";
 							} ?>
 						</i></div>
-						<div class="col s3 game-card-action-pick" data-action="rank">
+						<!--<div class="col s3 game-card-action-pick" data-action="rank">
 							<?php if($xp->_rank > 0){ 
 								?>
 								<div style='padding:4px 0 7px;'><?php echo $xp->_rank; ?></div>
-								<?php		
+								<?php	
 							}else{
 								?>
 								<i class="material-icons nav-game-action-btn">swap_vert</i>
 								<?php
 							} ?>
+						</div>-->
+						<div class="col s3 game-card-action-pick" data-action="bookmark">
+							<?php if($xp->_bucketlist == "Yes"){ ?>
+								<i class="material-icons nav-game-action-btn materialize-red-text">bookmark</i>
+							<?php }else{ ?>
+								<i class="material-icons nav-game-action-btn">bookmark</i>
+							<?php } ?>
 						</div>
 						<div class="col s3 game-card-action-pick" data-action="more"><i class="material-icons nav-game-action-btn">more_horiz</i></div>
 					</div>

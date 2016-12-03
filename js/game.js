@@ -358,7 +358,7 @@ function AttachGameCardEvents(){
 }
 
 function GameCardAction(action, gameid){
-	if(action == "more"){
+	if(action == "more" || action == "bookmark"){
 
 	}else{
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
@@ -391,6 +391,19 @@ function GameCardAction(action, gameid){
 						});
 						$(this).hide();
 						$(this).parent().find(".tier-modal-current-game").show(250);
+					});
+					$(".modal-rank-item").on("click",function(){
+						var rank = $(this).attr("data-internalrank");
+						$(".modal-rank-item").each(function(){
+							var thisrank = parseInt($(this).attr("data-internalrank"));
+							$(this).find(".modal-rank-item-rank").text(thisrank);
+							if(thisrank >= rank){
+								thisrank = thisrank + 1;	
+								$(this).find(".modal-rank-item-rank").text(thisrank);
+							}
+						});
+						$(".modal-rank-active-game").hide(100);
+						$(this).parent().find(".modal-rank-active-game").show(300); 
 					});
 				},
 					error: function(x, t, m) {

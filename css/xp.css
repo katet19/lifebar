@@ -59,7 +59,7 @@
 	margin: 2em 0 0;
 }
 
-.modal-rank-item{
+.modal-rank-item, .modal-rank-button-item{
     display: block;
     text-align: left;
     padding: 5px 15px 0px;
