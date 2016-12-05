@@ -69,6 +69,47 @@
     cursor: pointer;
 }
 
+.card-game-secondary-actions{
+	opacity: 0;
+	background-color:rgba(0,0,0,0.7);
+	-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+	top: 0;
+    height: 200px;
+    left: 0;
+    right: 0;
+	position:absolute;
+}
+
+.card-game-secondary-actions:hover  {
+	opacity:1;
+}
+
+.game-card-secondary-action-container{
+	position:absolute;
+	top:5px;
+	left:5px;
+	right:5px;
+	bottom:5px;
+	text-align:right;
+}
+
+.game-card-secondary-action-i{
+	display:inline-block;
+	padding: 5px 5px 0px;
+	color:white;
+	cursor:pointer;
+	border-radius:2px;
+}
+
+.game-card-secondary-action-i:hover{
+	background-color: #F50057;
+	box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 /*
 OLD STUFF
 */

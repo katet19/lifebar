@@ -1100,7 +1100,7 @@
 	color:white;
 }
 
-.game-card-quick-dismiss{
+/*.game-card-quick-dismiss{
 	position: absolute;
     top: 5px;
     right: 10px;
@@ -1123,7 +1123,7 @@
 .game-card-quick-dismiss:hover{
 	width: 170px;
 	background-color: #F50057 !important;
-}
+}*/
 
 @media only screen and (max-width : 992px) {
 	#discover-header{
