@@ -13,6 +13,7 @@
 }
 .tier-modal-icon{
 	font-size:6em;
+    color: gray;
 }
 
 .collapsible-header{
@@ -20,6 +21,10 @@
     text-align:left;
     font-weight: bold;
     font-size: 1.5em;
+}
+
+.collapsible-header:hover .tier-modal-icon{
+    color:white;
 }
 
 .collapsible-header i{

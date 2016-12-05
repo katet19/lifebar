@@ -566,7 +566,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 					<div class="col s6 game-card-action-pick" data-action="tier"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 						<?php if($xp->_tier > 0){ 
-							DisplayTierBadge($xp->_tier);
+							DisplayStarBadge($xp->_tier);
 						}else{
 							echo "add_box";
 						} ?>
