@@ -1032,4 +1032,49 @@ function DisplayTierBadge($tier){
 		echo "looks_5"; 
 	}
 }
+
+function DisplayStarSequence($stars){
+	if($stars == 1){ 
+	?>
+	<i class="material-icons tier-modal-icon tierTextColor1">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor1">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor1">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor1">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor1">star</i>
+	<?php
+	}else if($stars == 2){ 
+	?>
+	<i class="material-icons tier-modal-icon tierTextColor2">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor2">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor2">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor2">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor2">star_border</i>
+	<?php
+	}else if($stars == 3){ 
+	?>
+	<i class="material-icons tier-modal-icon tierTextColor3">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor3">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor3">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor3">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor3">star_border</i>
+	<?php
+	}else if($stars == 4){ 
+	?>
+	<i class="material-icons tier-modal-icon tierTextColor4">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor4">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor4">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor4">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor4">star_border</i>
+	<?php
+	}else if($stars == 5){ 
+	?>
+	<i class="material-icons tier-modal-icon tierTextColor5">star</i>
+	<i class="material-icons tier-modal-icon tierTextColor5">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor5">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor5">star_border</i>
+	<i class="material-icons tier-modal-icon tierTextColor5">star_border</i>
+	<?php
+	}
+	
+}
 ?>
