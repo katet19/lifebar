@@ -13,7 +13,7 @@
 }
 
 .game-card-action-pick{
-	padding: 8px 0 4px !important;
+	padding: 4px 0 !important;
 	font-weight:500;
 }
 
@@ -31,7 +31,7 @@
 	color:#e64444 !important;
 }
 
-.nav-game-actions .col:hover>.nav-game-action-btn{
+.nav-game-actions .col:hover>.nav-game-action-btn, .nav-game-actions .col:hover i {
 	color:white !important;
 }
 

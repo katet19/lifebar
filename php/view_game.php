@@ -564,14 +564,22 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s6 game-card-action-pick" data-action="tier"><i class="material-icons nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
-						<?php if($xp->_tier > 0){ 
-							DisplayStarBadge($xp->_tier);
-						}else{
-							echo "add_box";
-						} ?>
-					</i></div>
-					<div class="col s6 game-card-action-pick" data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
+					<div class="col s12 game-card-action-pick" data-action="tier">
+						<?php if($xp->_tier > 0){ ?>
+							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+								<?php DisplayStarSequence($xp->_tier, true); ?>
+							</div>
+						<?php }else{ ?>
+							<div class="nav-game-action-btn">
+								<i class="material-icons">star_border</i>
+								<i class="material-icons">star_border</i>
+								<i class="material-icons">star_border</i>
+								<i class="material-icons">star_border</i>
+								<i class="material-icons">star_border</i>
+							</div>
+						<?php } ?>
+					</div>
+					<div class="col s12 game-card-action-pick" style='display:none;' data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
