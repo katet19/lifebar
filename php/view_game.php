@@ -571,15 +571,15 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 							</div>
 						<?php }else{ ?>
 							<div class="nav-game-action-btn">
-								<i class="material-icons">star_border</i>
-								<i class="material-icons">star_border</i>
-								<i class="material-icons">star_border</i>
-								<i class="material-icons">star_border</i>
-								<i class="material-icons">star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
 							</div>
 						<?php } ?>
 					</div>
-					<div class="col s12 game-card-action-pick" style='display:none;' data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
+					<div class="col s12 game-card-action-pick" style='display:none' data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
