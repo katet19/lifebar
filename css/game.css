@@ -12,6 +12,17 @@
     transition: all 0.5s ease;
 }
 
+.game-card-image-title{
+	position: absolute;
+    bottom: 0;
+    color: white;
+    left: 0;
+    right: 0;
+    padding: 3px 5px;
+    background-color: rgba(0,0,0,0.5);
+    text-align: center;
+}
+
 .game-card-action-pick{
 	padding: 4px 0 !important;
 	font-weight:500;

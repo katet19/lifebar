@@ -531,7 +531,85 @@ function ShowMyGameFAB($gameid, $myxp){
 	<?php }
 }
 
+
 function DisplayGameCard($game, $count, $classId, $type = ""){
+	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
+	<div class="col s6 m4 l3" style='position:relative;'>
+   		 <div class="collection-quick-add-container z-depth-2">
+ 			Empty Text
+ 		 </div>
+	      <div class="card game-discover-card <?php echo $classId; ?>"  data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	        <a class="card-image waves-effect waves-block card-game-image" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" onclick="var event = arguments[0] || window.event; event.stopPropagation();" style="width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+			<div class="game-card-image-title">
+				<?php echo $game->_title; ?>
+			</div>
+			</a>
+			<div class="card-game-secondary-actions">
+				<div class="game-card-secondary-action-container">
+					<div class="game-card-secondary-action-i game-card-quick-bookmark" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<?php if($xp->_bucketlist == "Yes"){ ?>
+							<i class="material-icons">bookmark</i>
+						<?php }else{ ?>
+							<i class="material-icons">bookmark_border</i>
+						<?php } ?>
+					</div>
+					<div class="game-card-secondary-action-i game-card-quick-collection-add" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<i class="material-icons">library_add</i>
+					</div>
+					<div class="game-card-secondary-action-i game-card-quick-share" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+						<i class="material-icons">share</i>
+					</div>
+					<?php if($type == "Lifebar Backlog"){ ?>
+						<div class="game-card-secondary-action-i game-card-quick-dismiss" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+							<i class="material-icons">remove_circle_outline</i></span>
+						</div>
+					<?php } ?>
+				</div>
+				<div class="game-card-image-title">
+					<?php echo $game->_title; ?>
+				</div>
+			</div>
+	        <div class="card-content">
+	          <div class="card-title activator grey-text text-darken-4">
+				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="col s12 game-card-action-pick" data-action="tier">
+						<?php if($xp->_tier > 0){ ?>
+							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
+								<?php DisplayStarSequence($xp->_tier, true); ?>
+							</div>
+						<?php }else{ ?>
+							<div class="nav-game-action-btn">
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+			  	<div class="game-nav-title">
+					<div class="col s12 game-card-action-pick" data-action="xp">
+						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ ?>
+							<i class="material-icons nav-game-action-btn <?php echo "tierTextColor".$xp->_tier; ?>">
+								<?php DisplayXPFace($xp->_tier); ?>	
+							</i>
+							18 hours / 40% Complete
+						<?php } else { ?>
+							<i class="material-icons nav-game-action-btn">
+								face
+							</i>
+							Add your XP
+						<?php } ?>
+					</div>  
+				</div>
+			  </div>
+	        </div>
+	      </div>
+      </div>
+<?php }
+
+function DisplayGameCardOLD($game, $count, $classId, $type = ""){
 	$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $game->_id); ?>
 	<div class="col s6 m4 l3" style='position:relative;'>
    		 <div class="collection-quick-add-container z-depth-2">
