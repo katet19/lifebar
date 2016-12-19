@@ -78,21 +78,21 @@ function DisplayLandingSignup(){
     	</div>
 		  <div class="col s12 m6 login-modal-divider">
 		    <div class="row">
-		      <div class="input-field col s11">
+		      <div class="input-field col s11" style='text-align:left;'>
 		        <i class="mdi-action-account-circle prefix"></i>
 		        <input id="signup_username" type="text">
 		        <label for="signup_username">Username</label>
 		      </div>
 	      	</div>
 	    	<div class="row">
-	  	      <div class="input-field col s11">
+	  	      <div class="input-field col s11" style='text-align:left;'>
 		        <i class="mdi-action-lock prefix"></i>
 		        <input id="signup_password" type="password">
 		        <label for="signup_password">Password</label>
 		      </div>
 	      	</div>
 	  	    <div class="row">
-		      <div class="input-field col s11">
+		      <div class="input-field col s11" style='text-align:left;'>
 		        <i class="mdi-communication-email prefix"></i>
 		        <input id="signup_email" type="text">
 		        <label for="signup_email">Email</label>
@@ -121,9 +121,6 @@ function DisplayLandingSignup(){
 	   	   		<div class="social-login-btn facebook-login">
 	  	   			<i class="fa fa-facebook"></i>
 	  	   		</div>
-		   		<!--<div class="social-login-btn steam-login">
-	  	   			<i class="fa fa-steam"></i>
-	  	   		</div>-->
 	  	   	</div>
 	  	   	<div class="row">
 	  	   		<div class="col 12">

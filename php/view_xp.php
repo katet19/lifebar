@@ -9,7 +9,7 @@ function ShowTierModal($gameid){
 			<div class="GameHeaderContainer" style='height:10vh;'>
 				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header">
-						<div style='font-size:0.7em;'>Tier Placement</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+						<div style='font-size:0.7em;'>Star & Ranking</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>			
 			<div class="modal-content-container">
@@ -19,7 +19,7 @@ function ShowTierModal($gameid){
 				?>
 			</div>	
 			<div class="modal-save-container">
-					<div class="save-btn modal-btn-pos">Save Tier</div>
+					<div class="save-btn modal-btn-pos">Save</div>
 					<div class="cancel-btn modal-btn-pos">Cancel</div>
 			</div>
 		</div>
@@ -43,52 +43,62 @@ function ShowTierList($tierlist, $currgame, $tier){
 		</div>
 		<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
 			<li>
-				<div class="collapsible-header <?php if($tier == 1){ echo 'active'; } ?> tier1BGHover"><i class="material-icons tier-modal-icon tierTextColor1"><?php DisplayTierBadge(1); ?></i>FANTASTIC</div>
+				<div class="collapsible-header <?php if($tier == 1){ echo 'active'; } ?> tier1BGHover"><div class="tier-modal-text">FANTASTIC</div> <?php DisplayStarSequence(1); ?></div>
 				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #0A67A3;'>
 					<?php DisplayTierAddButton($tier, 1, $currgame);
 					  foreach($tierlist as $tieritem){
-							if($tieritem[2] == 1 && $tieritem[0]->_id != $currgame->_id)
-								ShowTierListItem($tieritem[0], false);
+							if($tieritem[2] == 1 && $tieritem[0]->_id != $currgame->_id){
+								ShowTierListItem($tieritem, $currgame, false, $count);
+								$count++;
+							}
 						} ?>
 				</div>
 			</li>
 			<li>
-				<div class="collapsible-header <?php if($tier == 2){ echo 'active'; } ?> tier2BGHover"><i class="material-icons tier-modal-icon tierTextColor2"><?php DisplayTierBadge(2); ?></i>GOOD</div>
+				<div class="collapsible-header <?php if($tier == 2){ echo 'active'; } ?> tier2BGHover"><div class="tier-modal-text">GOOD</div> <?php DisplayStarSequence(2); ?></div>
 				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #00B25C;'>
 					<?php DisplayTierAddButton($tier, 2, $currgame);
 					foreach($tierlist as $tieritem){
-						if($tieritem[2] == 2 && $tieritem[0]->_id != $currgame->_id)
-							ShowTierListItem($tieritem[0], false);
+						if($tieritem[2] == 2 && $tieritem[0]->_id != $currgame->_id){
+							ShowTierListItem($tieritem, $currgame, false, $count);
+							$count++;
+						}
 					} ?>
 				</div>
 			</li>
 			<li>
-				<div class="collapsible-header <?php if($tier == 3){ echo 'active'; } ?> tier3BGHover"><i class="material-icons tier-modal-icon tierTextColor3"><?php DisplayTierBadge(3); ?></i>AVERAGE</div>
+				<div class="collapsible-header <?php if($tier == 3){ echo 'active'; } ?> tier3BGHover"><div class="tier-modal-text">AVERAGE</div> <?php DisplayStarSequence(3); ?></div>
 				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #FF8E00;'>
 					<?php DisplayTierAddButton($tier, 3, $currgame);
 					foreach($tierlist as $tieritem){
-						if($tieritem[2] == 3 && $tieritem[0]->_id != $currgame->_id)
-							ShowTierListItem($tieritem[0], false);
+						if($tieritem[2] == 3 && $tieritem[0]->_id != $currgame->_id){
+							ShowTierListItem($tieritem, $currgame, false, $count);
+							$count++;
+						}
 					} ?>
 				</div>
 			</li>
 			<li>
-				<div class="collapsible-header <?php if($tier == 4){ echo 'active'; } ?> tier4BGHover"><i class="material-icons tier-modal-icon tierTextColor4"><?php DisplayTierBadge(4); ?></i>POOR</div>
+				<div class="collapsible-header <?php if($tier == 4){ echo 'active'; } ?> tier4BGHover"><div class="tier-modal-text">POOR</div> <?php DisplayStarSequence(4); ?></div>
 				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid rgb(255, 65, 0);'>
 					<?php DisplayTierAddButton($tier, 4, $currgame);
 					foreach($tierlist as $tieritem){
-						if($tieritem[2] == 4 && $tieritem[0]->_id != $currgame->_id)
-							ShowTierListItem($tieritem[0], false);
+						if($tieritem[2] == 4 && $tieritem[0]->_id != $currgame->_id){
+							ShowTierListItem($tieritem, $currgame, false, $count);
+							$count++;
+						}
 					} ?>
 				</div>
 			</li>
 			<li>
-				<div class="collapsible-header <?php if($tier == 5){ echo 'active'; } ?> tier5BGHover"><i class="material-icons tier-modal-icon tierTextColor5"><?php DisplayTierBadge(5); ?></i>TERRIBLE</div>
+				<div class="collapsible-header <?php if($tier == 5){ echo 'active'; } ?> tier5BGHover"><div class="tier-modal-text">TERRIBLE</div> <?php DisplayStarSequence(5); ?></div>
 				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #DB0058;'>
 					<?php DisplayTierAddButton($tier, 5, $currgame);
 					foreach($tierlist as $tieritem){
-						if($tieritem[2] == 5 && $tieritem[0]->_id != $currgame->_id)
-							ShowTierListItem($tieritem[0], false);
+						if($tieritem[2] == 5 && $tieritem[0]->_id != $currgame->_id){
+							ShowTierListItem($tieritem, $currgame, false, $count);
+							$count++;
+						}
 					} ?>
 				</div>
 			</li>
@@ -97,29 +107,32 @@ function ShowTierList($tierlist, $currgame, $tier){
 	}
 }
 
-function DisplayTierAddButton($tier, $currtier, $game){
+function DisplayTierAddButton($tier, $currtier, $currgame){
+	$game[] = $currgame;
+	$game[] = 0;
+	$game[] = $tier;
 	?>
-	<div class="modal-rank-item" style='padding: 0;'>
+	<div class="modal-rank-button-item" style='padding: 0;'>
 		<?php
 		if($tier == $currtier){
 		?>
-			<div class="btn tier-modal-add-btn" style='display:none;'><i class="material-icons left" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="btn tier-modal-add-btn" style='display:none;'><i class="material-icons left" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'>Add without ranking</span></div>
 			<div class="tier-modal-current-game">
-				<?php ShowTierListItem($game, true); ?>
+				<?php ShowTierListItem($game, null, true, -1); ?>
 			</div>
 		<?php
 		}else if($tier > 0){
 		?>
-			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'>Add without ranking</span></div>
 			<div class="tier-modal-current-game" style='display:none;'>
-				<?php ShowTierListItem($game, true); ?>
+				<?php ShowTierListItem($game, null, true, -1); ?>
 			</div>
 		<?php
 		}else{
 		?>
-			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'><?php echo $game->_title; ?></span></div>
+			<div class="btn tier-modal-add-btn"><i class="material-icons" style='vertical-align: bottom;'>add_box</i> <span style='text-transform:none;'>Add without ranking</span></div>
 			<div class="tier-modal-current-game" style='display:none;'>
-				<?php ShowTierListItem($game, true); ?>
+				<?php ShowTierListItem($game, null, true, -1); ?>
 			</div>
 		<?php
 		}
@@ -128,33 +141,67 @@ function DisplayTierAddButton($tier, $currtier, $game){
 	<?php
 }
 
-function ShowTierListItem($game, $isActive){
+function ShowTierListItem($gameitem, $currgame, $isActive, $count){
+	$game = $gameitem[0];
+	$rank = $gameitem[1];
+	$tier = $gameitem[2];
 	?>
 	<div class="modal-rank-group">
-		<div class="modal-rank-item" style='display:block;cursor:initial;'>
-			<div class="modal-rank-item-title" <?php if($isActive){?>style='font-weight:bold;'<?php } ?>><?php echo $game->_title; ?></div>
-			<div class="modal-rank-item-subtitle" style='padding-left:0;<?php if($isActive){?>font-weight:bold;<?php } ?>'>
+		<div class="modal-rank-active-game" <?php if($currgame->_id == $game->_id){ echo "style='display:block;'"; } ?> data-internalrank="<?php echo $count; ?>">
+			<div class="modal-rank-item-rank" <?php if($count < 0){ echo "style='opacity:0;'"; } ?> ><?php echo $count; ?></div>
+			<div class="modal-rank-item-title"><?php echo $currgame->_title; ?></div>
+			<div class="modal-rank-item-subtitle">
 			<?php 
-				if($game->_year > 0)
-					echo $game->_year;
-				else
-					echo "????";
-					
-				$developers = array_filter(explode("\n", $game->_developer));
-				if(sizeof($developers) > 0){
+					if($currgame->_year > 0)
+						echo $currgame->_year;
+					else
+						echo "????";
+						
+					$developers = array_filter(explode("\n", $currgame->_developer));
+					if(sizeof($developers) > 0){
 					echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
 					echo implode("- ", $developers);
-				}
-				$publishers = array_filter(explode("\n", $game->_publisher));
-				if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+					}
+					$publishers = array_filter(explode("\n", $currgame->_publisher));
+					if(sizeof($developers) > 0  && sizeof($publishers) > 0)
 					echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
-				if(sizeof($publishers) > 0){
+					if(sizeof($publishers) > 0){
 					echo implode("- ", $publishers);
-				} 
+					} 
 			?>
 			</div>
-			<div class="divider" style='margin-top: 5px;'></div>
 		</div>
+		<?php if($currgame->_id != $game->_id){ ?>
+			<div class="modal-rank-item" data-internalrank="<?php echo $count; ?>" data-truerank="<?php echo $rank; ?>">
+				<div class="modal-rank-item-insert-btn">
+					<div class="row modal-rank-item-hover-col-title"><div class="modal-rank-item-arrow"></div>INSERT</div>
+				</div>
+				<div class="modal-rank-item-rank" <?php if($count < 0){ echo "style='opacity:0;'"; } ?> ><?php echo $count; ?></div>
+				<div class="modal-rank-item-truerank"><?php if($count > 0){ echo "#".$rank; } ?></div>
+				<div class="modal-rank-item-title"><?php echo $game->_title; ?></div>
+				<div class="modal-rank-item-subtitle">
+				<?php 
+					if($game->_year > 0)
+						echo $game->_year;
+					else
+						echo "????";
+						
+					$developers = array_filter(explode("\n", $game->_developer));
+					if(sizeof($developers) > 0){
+						echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+						echo implode("- ", $developers);
+					}
+					$publishers = array_filter(explode("\n", $game->_publisher));
+					if(sizeof($developers) > 0  && sizeof($publishers) > 0)
+						echo " <span style='font-weight:500;font-size:1.1em;'>|</span> ";
+					if(sizeof($publishers) > 0){
+						echo implode("- ", $publishers);
+					} 
+				?>
+				</div>
+				<div class="divider" style='margin-top: 5px;'></div>
+			</div>
+		<?php } ?>
 	</div>
 	<?php
 }

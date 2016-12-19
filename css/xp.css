@@ -12,7 +12,7 @@
     left: 0;
 }
 .tier-modal-icon{
-	font-size:6em;
+    color: gray;
 }
 
 .collapsible-header{
@@ -20,6 +20,10 @@
     text-align:left;
     font-weight: bold;
     font-size: 1.5em;
+}
+
+.collapsible-header:hover .tier-modal-icon{
+    color:white;
 }
 
 .collapsible-header i{
@@ -59,7 +63,7 @@
 	margin: 2em 0 0;
 }
 
-.modal-rank-item{
+.modal-rank-item, .modal-rank-button-item{
     display: block;
     text-align: left;
     padding: 5px 15px 0px;
@@ -264,6 +268,10 @@
 
 .modal-xp-emoji-icon-active{
     opacity:1.0;
+}
+
+.tier-modal-text{
+    float:right;
 }
 
 /*

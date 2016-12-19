@@ -1032,4 +1032,63 @@ function DisplayTierBadge($tier){
 		echo "looks_5"; 
 	}
 }
+
+function DisplayStarBadge($tier){
+	if($tier == 1){ 
+		echo "star"; 
+	}else if($tier == 2){ 
+		echo "star"; 
+	}else if($tier == 3){ 
+		echo "star"; 
+	}else if($tier == 4){ 
+		echo "star"; 
+	}else if($tier == 5){ 
+		echo "star"; 
+	}
+}
+
+function DisplayStarSequence($stars, $colors = false){
+	if($stars == 1){ 
+	?>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?> >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<?php
+	}else if($stars == 2){ 
+	?>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<?php
+	}else if($stars == 3){ 
+	?>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<?php
+	}else if($stars == 4){ 
+	?>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<?php
+	}else if($stars == 5){ 
+	?>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor5"; } ?>" <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<i class="material-icons tier-modal-icon " <?php if($colors){ ?> style='font-size:0.8em;' <?php } ?>>star_border</i>
+	<?php
+	}
+	
+}
 ?>
