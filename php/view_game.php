@@ -579,29 +579,17 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 							</div>
 						<?php }else{ ?>
 							<div class="nav-game-action-btn">
-								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
-								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
-								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
-								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
-								<i class="material-icons" style='font-size:0.8em;'>star_border</i>
+								<i class="material-icons star-icon">star_border</i>
+								<i class="material-icons star-icon">star_border</i>
+								<i class="material-icons star-icon">star_border</i>
+								<i class="material-icons star-icon">star_border</i>
+								<i class="material-icons star-icon">star_border</i>
 							</div>
 						<?php } ?>
 					</div>
 				</div>
-			  	<div class="game-nav-title">
-					<div class="col s12 game-card-action-pick" data-action="xp">
-						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ ?>
-							<i class="material-icons nav-game-action-btn <?php echo "tierTextColor".$xp->_tier; ?>">
-								<?php DisplayXPFace($xp->_tier); ?>	
-							</i>
-							18 hours / 40% Complete
-						<?php } else { ?>
-							<i class="material-icons nav-game-action-btn">
-								face
-							</i>
-							Add your XP
-						<?php } ?>
-					</div>  
+			  	<div class="game-nav-title game-card-action-pick" data-action="xp">
+					<?php DisplayGameCardXPDetailSummary($xp); ?> 
 				</div>
 			  </div>
 	        </div>
@@ -695,6 +683,61 @@ function DisplayGameInList($libraryxp){ ?>
 	      </div>
       </div>
 <?php }
+
+function DisplayGameCardXPDetailSummary($xp){ 
+ 		if(sizeof($xp->_playedxp) > 0){ 
+		  	  	if($xp->_playedxp[0]->_completed == "101")
+					$percent = 100;
+				else
+					$percent = $xp->_playedxp[0]->_completed; ?>
+				<div class="game-card-summary-prog-title">
+					<?php if($percent < 100){ echo $percent."%"; }else{ ?>
+						<i class="material-icons" style='font-size: 1.5em;vertical-align: middle;margin-top: -2px;'>check</i>
+						<span>Completed</span>
+					<?php } ?>
+				</div>
+				<div class="game-card-summary-prog-bar-container">
+					<div class="game-card-summary-prog-bar tier<?php echo $xp->_tier; ?>BG" style='width:<?php echo $percent; ?>%'></div>
+				</div>
+  	  <?php }else if(sizeof($xp->_watchedxp) > 0){ 
+  	  		$length = "";
+    		foreach($xp->_watchedxp as $watched){
+				$length = $watched->_length;
+    			if($watched->_length == "Watched a speed run"){
+    				$icon = "directions_walk";
+				}else if($watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+    				$icon = "beenhere";
+				}else if($watched->_length == "Watched competitive play"){
+					$icon = "headset_mic";
+    			}else if($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less"){
+    				$icon = "videogame_asset";
+    			}else if($watched->_length == "Watched promotional gameplay"){
+					$icon = "movie_creation";
+				}else if($watched->_length == "Watched a developer diary"){
+    				$icon = "class";
+    			}else{
+					$icon = "theaters";
+    			}
+    		}
+    		?>
+			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp">
+				<div class="game-card-summary-watch">
+					<i class="material-icons tierTextColor<?php echo $xp->_tier; ?>" style='font-size:1.75em;vertical-align: middle;'><?php echo $icon; ?></i>
+					<span class="game-card-summary-watch-length"><?php echo $length; ?></span>
+				</div>
+			</div>
+		<?php
+		}else{ ?>
+			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp">
+				<div class="game-card-summary-add-xp">
+					<i class="material-icons game-card-summary-add-xp-icon">add_circle</i>
+					<span class="game-card-summary-add-xp-text">ADD DETAILS</span>
+				</div>
+			</div>
+		<?php
+		}
+}
+
 
 function DisplayGameCardTierIcon($xp){ 
 	if($xp->_link != '' && $xp->_authenticxp == "No"){ ?>

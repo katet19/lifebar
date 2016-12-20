@@ -344,7 +344,7 @@ function AttachGameCardEvents(){
 		});
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
-	$(".game-nav-title").on("click", function(e){ 
+	$(".card-game-secondary-actions").on("click", function(e){ 
 		e.stopPropagation(); 
 		CloseSearch();
 		$(".searchInput input").val('');
@@ -353,7 +353,7 @@ function AttachGameCardEvents(){
 			if($("#userAccountNav").is(":visible"))
 				$("#userAccountNav").hide(250);
 		});
-		ShowGame($(this).parent().parent().parent().attr("data-gbid"), $("#discover")); 
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
 }
 

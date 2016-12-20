@@ -876,6 +876,9 @@ OLD STUFF
 }
 
 @media only screen and (max-width : 600px) {
+	#gamemini.outerContainer{
+		width:100% !important;
+	}
 	#navigationContainer{
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
