@@ -413,7 +413,21 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
 	  		<i class='authenticated-mark material-icons' title="Verified Account">verified_user</i>
 	  		<?php } ?>
-			<div class='feed-agrees-label agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
+			<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
+				<div class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
+				<div class="myxp-details-agree-list">
+				<?php
+					$i = 0;
+					while($i < sizeof($agrees) && $i < 15){ ?>
+					<div class="myxp-details-agree-listitem">
+						<?php $useragree = GetUser($agrees[$i]); ?>
+						<div class="user-avatar" style="margin-top:3px;width:30px;border-radius:50%;display: inline-block;float:left;height:30px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" title='<?php echo $useragree->_username; ?>'></div>
+					</div>
+				<?php	
+				$i++;
+				} ?>
+			</div>
+    	</div>
 	      </div>
 		  <div class='divider'></div>
 	      <div class="feed-action-container">

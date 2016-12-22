@@ -285,22 +285,20 @@
 }
 
 .badge-lives{
-    font-size: 0.6em;
+    font-size: 0.7em;
     color: #fff;
     background-color: #43a047;
     border-radius: 2px;
     background-clip: padding-box;
     min-width: 3rem;
-    padding: 3px;
-    margin: 6px 1em 0;
+    padding: 8px 3px;
     font-weight: bold;
     text-align: center;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: none;
-    top: 5px;
-    right: 1em;
+	vertical-align: top;
 }
 
 .badge-lives:after{
