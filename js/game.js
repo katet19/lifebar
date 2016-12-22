@@ -434,10 +434,10 @@ function AttachStarEvents(){
 		}
 
 		$.ajax({ url: '../php/webService.php',
-				data: {action: "SaveStarScore", gameid: gameid, tier: tier },
+				data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: -1 },
 				type: 'post',
 				success: function(output) {
-					GameCardAction("tier", gameid);
+					//GameCardAction("tier", gameid);
 					element.find(".star-icon").each(function(){
 						$(this).removeClass("tierTextColor1");
 						$(this).removeClass("tierTextColor2");
@@ -541,6 +541,24 @@ function GameCardAction(action, gameid){
 						});
 						$(".modal-rank-active-game").hide(100);
 						$(this).parent().find(".modal-rank-active-game").show(300); 
+					});
+					$(".save-btn").on("click", function(){
+						
+						$.ajax({ url: '../php/webService.php',
+							data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: rank },
+							type: 'post',
+							success: function(output) {
+								$(".cancel-btn").click();
+							},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
 					});
 				},
 					error: function(x, t, m) {
