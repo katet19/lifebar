@@ -30,6 +30,15 @@
     font-size:1.5em;
 }
 
+.collapsible-history-divider{
+    text-align: left;
+    margin-top: 30px;
+    padding: 5px 15px;
+    background-color: #ddd;
+    font-weight: 400;
+    font-size: 1.25em;
+}
+
 .tier-modal-body{
     height: -webkit-calc(80vh - 360px);
     overflow-y: auto;

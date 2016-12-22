@@ -216,7 +216,7 @@ function ShowXPModal($gameid){
 			<div class="GameHeaderContainer" style='height:10vh;'>
 				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header">
-						<div style='font-size:0.7em;'>Add Experience Details</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+						<div style='font-size:0.7em;'>Experience Details</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
 				</div>
 			</div>	
 			<div class="modal-content-container">
@@ -244,6 +244,59 @@ function ShowXPSelector($xp){
 				<?php ShowXPWatchedSelector($xp); ?>
 			</div>
 		</li>
+		<li>
+			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">format_quote</i>Post your latest <b>thoughts</b></div>
+			<div class="collapsible-body tier-modal-body">
+				<?php ShowXPPostSelector($xp); ?>
+			</div>
+		</li>
+		<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){
+			?>
+				<div class="collapsible-history-divider">History</div>
+			<?php
+		}
+		
+		if(sizeof($xp->_playedxp) > 0){
+			foreach($xp->_playedxp as $played){
+			?>
+				<li>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">gamepad</i>Played <?php echo $played->_completed;?>%</div>
+					<div class="collapsible-body">
+						<?php ShowXPPlayedSelector($xp); ?>
+					</div>
+				</li>
+			<?php
+			}
+		}
+
+		if(sizeof($xp->_watchedxp) > 0){
+			foreach($xp->_watchedxp as $watched){
+				$length = $watched->_length;
+    			if($watched->_length == "Watched a speed run"){
+    				$icon = "directions_walk";
+				}else if($watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+    				$icon = "beenhere";
+				}else if($watched->_length == "Watched competitive play"){
+					$icon = "headset_mic";
+    			}else if($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less"){
+    				$icon = "videogame_asset";
+    			}else if($watched->_length == "Watched promotional gameplay"){
+					$icon = "movie_creation";
+				}else if($watched->_length == "Watched a developer diary"){
+    				$icon = "class";
+    			}else{
+					$icon = "theaters";
+    			}
+			?>
+				<li>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon"><?php echo $icon; ?></i> <?php echo $length; ?></div>
+					<div class="collapsible-body tier-modal-body">
+						<?php ShowXPWatchedSelector($xp); ?>
+					</div>
+				</li>
+			<?php
+			}
+		} ?>
 	</ul>
 	<?php
 }
@@ -266,6 +319,14 @@ function ShowXPWatchedSelector($xp){
 	ShowXPQuote();
 	?>
 	<div class="save-btn modal-btn-pos">Save XP</div>
+	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<?php
+}
+
+function ShowXPPostSelector($xp){
+	ShowXPPost();
+	?>
+	<div class="save-btn modal-btn-pos">Post</div>
 	<div class="cancel-btn modal-btn-pos">Cancel</div>
 	<?php
 }
@@ -366,6 +427,17 @@ function ShowXPQuote(){
 		<div class="input-field col s10 offset-s1">
 		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
 		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience</label>
+		</div>
+	</div>
+	<?php
+}
+
+function ShowXPPost(){
+	?>
+	<div class="row">
+		<div class="input-field col s10 offset-s1">
+		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
+		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
 		</div>
 	</div>
 	<?php

@@ -588,7 +588,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 						<?php } ?>
 					</div>
 				</div>
-			  	<div class="game-nav-title game-card-action-pick" data-action="xp">
+			  	<div class="game-nav-title game-card-action-pick" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<?php DisplayGameCardXPDetailSummary($xp); ?> 
 				</div>
 			  </div>
@@ -645,7 +645,7 @@ function DisplayGameCardOLD($game, $count, $classId, $type = ""){
 							</div>
 						<?php } ?>
 					</div>
-					<div class="col s12 game-card-action-pick" style='display:none' data-action="xp"><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
+					<div class="col s12 game-card-action-pick" style='display:none' data-action="xp"  data-id='<?php echo $game->_id; ?>'><i class="material-icons nav-game-action-btn <?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ echo " tierTextColor".$xp->_tier; } ?>">
 						<?php if(sizeof($xp->_playedxp) > 0 || sizeof($xp->_watchedxp) > 0){ 
 							DisplayXPFace($xp->_tier);	
 						}else{
@@ -720,7 +720,7 @@ function DisplayGameCardXPDetailSummary($xp){
     			}
     		}
     		?>
-			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp">
+			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 				<div class="game-card-summary-watch">
 					<i class="material-icons tierTextColor<?php echo $xp->_tier; ?>" style='font-size:1.75em;vertical-align: middle;'><?php echo $icon; ?></i>
 					<span class="game-card-summary-watch-length"><?php echo $length; ?></span>
@@ -728,7 +728,7 @@ function DisplayGameCardXPDetailSummary($xp){
 			</div>
 		<?php
 		}else{ ?>
-			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp">
+			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 				<div class="game-card-summary-add-xp">
 					<i class="material-icons game-card-summary-add-xp-icon">add_circle</i>
 					<span class="game-card-summary-add-xp-text">ADD DETAILS</span>

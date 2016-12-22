@@ -313,7 +313,7 @@ function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(){
 		if($(this).attr("data-action") == "xp")
-			GameCardAction($(this).attr("data-action"), $(this).parent().attr("data-id"));
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
