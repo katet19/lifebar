@@ -114,6 +114,33 @@ function AttachActivityEvents(){
 	$(".shareBtn").on('click', function(){
 		ShowShareModal("event", $(this).attr("data-eventid"));
 	});
+	$(".game-card-action-pick").on("click", function(){
+		if($(this).attr("data-action") == "xp")
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+	});
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".card-game-secondary-actions").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	AttachStarEvents();
 	 AttachAgreesFromActivity();
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
