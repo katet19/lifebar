@@ -355,6 +355,62 @@ function AttachGameCardEvents(){
 		});
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
+	AttachStarEvents();
+}
+
+function AttachStarEvents(){
+	$(".star-icon").hover(function(){
+		$(this).text("star");
+		var element = $(this).parent();
+		if($(this).hasClass("star-icon-5")){
+			element.find(".star-icon-4").text("star");
+			element.find(".star-icon-3").text("star");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-4")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-3").text("star");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-3")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-2")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-1")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+		}
+	},
+	function(){
+		$(this).text("star_border");
+		var element = $(this).parent();
+		if($(this).hasClass("star-icon-5")){
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-4")){
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-3")){
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-2")){
+			element.find(".star-icon-1").text("star_border");
+		}else{
+
+		}
+		element.find(".star-icon-pre").text("star");
+	});
 }
 
 function GameCardAction(action, gameid){

@@ -579,11 +579,11 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 							</div>
 						<?php }else{ ?>
 							<div class="nav-game-action-btn">
-								<i class="material-icons star-icon">star_border</i>
-								<i class="material-icons star-icon">star_border</i>
-								<i class="material-icons star-icon">star_border</i>
-								<i class="material-icons star-icon">star_border</i>
-								<i class="material-icons star-icon">star_border</i>
+								<i class="material-icons star-icon star-icon-1">star_border</i>
+								<i class="material-icons star-icon star-icon-2">star_border</i>
+								<i class="material-icons star-icon star-icon-3">star_border</i>
+								<i class="material-icons star-icon star-icon-4">star_border</i>
+								<i class="material-icons star-icon star-icon-5">star_border</i>
 							</div>
 						<?php } ?>
 					</div>

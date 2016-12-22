@@ -1050,43 +1050,43 @@ function DisplayStarBadge($tier){
 function DisplayStarSequence($stars, $colors = false){
 	if($stars == 1){ 
 	?>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon star-icon-1 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon star-icon-2 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon star-icon-3 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon star-icon-4 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor1 star-icon star-icon-5 star-icon-pre"; } ?>" >star</i>
 	<?php
 	}else if($stars == 2){ 
 	?>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon"; } ?>">star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon"; } ?>">star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon"; } ?>">star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon"; } ?>">star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>">star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon star-icon-1 star-icon-pre"; } ?>">star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon star-icon-2 star-icon-pre"; } ?>">star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon star-icon-3 star-icon-pre"; } ?>">star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor2 star-icon star-icon-4 star-icon-pre"; } ?>">star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-5"; } ?>">star_border</i>
 	<?php
 	}else if($stars == 3){ 
 	?>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon star-icon-1 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon star-icon-2 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor3 star-icon star-icon-3 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-4"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-5"; } ?>" >star_border</i>
 	<?php
 	}else if($stars == 4){ 
 	?>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4 star-icon star-icon-1 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor4 star-icon star-icon-2 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-3"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-4"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-5"; } ?>" >star_border</i>
 	<?php
 	}else if($stars == 5){ 
 	?>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor5 star-icon"; } ?>" >star</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
-	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "tierTextColor5 star-icon star-icon-1 star-icon-pre"; } ?>" >star</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-2"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-3"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-4"; } ?>" >star_border</i>
+	<i class="material-icons tier-modal-icon <?php if($colors){ echo "star-icon star-icon-5"; } ?>" >star_border</i>
 	<?php
 	}
 	
