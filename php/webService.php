@@ -459,6 +459,11 @@
 		if($_POST['action'] == 'DisplayTierQuote' && isset($_POST['gameid'])){
 			ShowTierQuote(null, $_POST['gameid'], true);
 		}
+		if($_POST['action'] =='SaveStarScore' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],'',$_POST['tier'],'','','');
+			}
+		}
 		if($_POST['action'] =='SavePlayedFull' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['quarter'],$_POST['year'],$_POST['single'],$_POST['multi'],$_POST['platforms'],$_POST['dlc'],$_POST['alpha'],$_POST['beta'],$_POST['early'],$_POST['demo'],$_POST['stream']);

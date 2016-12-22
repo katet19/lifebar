@@ -312,7 +312,8 @@ function AttachGameEvents(currentTab){
 function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(){
-		GameCardAction($(this).attr("data-action"), $(this).parent().attr("data-id"));
+		if($(this).attr("data-action") == "xp")
+			GameCardAction($(this).attr("data-action"), $(this).parent().attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
@@ -411,6 +412,86 @@ function AttachStarEvents(){
 		}
 		element.find(".star-icon-pre").text("star");
 	});
+	$(".star-icon").on("click", function(){
+		var gameid = $(this).parent().parent().parent().attr("data-id");
+		var tier = 0;
+		var element = $(this).parent();
+		var star = $(this);
+		if($(this).hasClass("star-icon-5")){
+			tier = 1;
+		}
+		else if($(this).hasClass("star-icon-4")){
+			tier = 2;
+		}
+		else if($(this).hasClass("star-icon-3")){
+			tier = 3;
+		}
+		else if($(this).hasClass("star-icon-2")){
+			tier = 4;
+		}
+		else if($(this).hasClass("star-icon-1")){
+			tier = 5;
+		}
+
+		$.ajax({ url: '../php/webService.php',
+				data: {action: "SaveStarScore", gameid: gameid, tier: tier },
+				type: 'post',
+				success: function(output) {
+					GameCardAction("tier", gameid);
+					element.find(".star-icon").each(function(){
+						$(this).removeClass("tierTextColor1");
+						$(this).removeClass("tierTextColor2");
+						$(this).removeClass("tierTextColor3");
+						$(this).removeClass("tierTextColor4");
+						$(this).removeClass("tierTextColor5");
+						$(this).removeClass("star-icon-pre");
+					});
+					if(star.hasClass("star-icon-5")){
+						element.find(".star-icon-5").text("star"); element.find(".star-icon-5").addClass("tierTextColor1 star-icon-pre");
+						element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor1 star-icon-pre");
+						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor1 star-icon-pre");
+						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor1 star-icon-pre");
+						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor1 star-icon-pre");
+					}
+					else if(star.hasClass("star-icon-4")){
+						element.find(".star-icon-5").text("star_border");
+						element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor2 star-icon-pre");
+						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor2 star-icon-pre");
+						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor2 star-icon-pre");
+						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor2 star-icon-pre");
+					}
+					else if(star.hasClass("star-icon-3")){
+						element.find(".star-icon-5").text("star_border");
+						element.find(".star-icon-4").text("star_border"); 
+						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor3 star-icon-pre");
+						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor3 star-icon-pre");
+						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor3 star-icon-pre");
+					}
+					else if(star.hasClass("star-icon-2")){
+						element.find(".star-icon-5").text("star_border"); 
+						element.find(".star-icon-4").text("star_border");
+						element.find(".star-icon-3").text("star_border");
+						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor4 star-icon-pre");
+						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor4 star-icon-pre");
+					}
+					else if(star.hasClass("star-icon-1")){
+						element.find(".star-icon-5").text("star_border");
+						element.find(".star-icon-4").text("star_border");
+						element.find(".star-icon-3").text("star_border");
+						element.find(".star-icon-2").text("star_border");
+						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor5 star-icon-pre");
+					}
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+	});
 }
 
 function GameCardAction(action, gameid){
@@ -500,43 +581,6 @@ function GameCardAction(action, gameid){
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
-				});
-		}else if(action == "rank"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowRankModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
-						var windowWidth = $(window).width();
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$(".modal-rank-item").on("click",function(){
-						var rank = $(this).attr("data-internalrank");
-						$(".modal-rank-item").each(function(){
-							var thisrank = parseInt($(this).attr("data-internalrank"));
-							$(this).find(".modal-rank-item-rank").text(thisrank);
-							if(thisrank >= rank){
-								thisrank = thisrank + 1;	
-								$(this).find(".modal-rank-item-rank").text(thisrank);
-							}
-						});
-						$(".modal-rank-active-game").hide(100);
-						$(this).parent().find(".modal-rank-active-game").show(300); 
 					});
 				},
 					error: function(x, t, m) {

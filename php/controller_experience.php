@@ -2392,7 +2392,6 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	}
 	
 	Close($mysqli, $result);
-	//CalculateGameTierData($gameid);
 }
 
 function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
