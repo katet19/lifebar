@@ -739,30 +739,29 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $ag
       </div>
 	  <div class='divider'></div>
       <div class="feed-action-container">
+			<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
+				<div class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
+				<div class="myxp-details-agree-list">
+				<?php
+					$i = 0;
+					while($i < sizeof($agrees) && $i < 15){ ?>
+					<div class="myxp-details-agree-listitem">
+						<?php $useragree = GetUser($agrees[$i]); ?>
+						<div class="user-avatar" style="margin-top:3px;width:30px;border-radius:50%;display: inline-block;float:left;height:30px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" title='<?php echo $useragree->_username; ?>'></div>
+					</div>
+				<?php	
+				$i++;
+				} ?>
+				</div>
+			</div>
 			<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-				<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>
 			<?php } ?>
+			<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>
        </div>
     </div>
   </div>
-   <?php if($agreedcount > 0){ ?>
- 	<div class="feed-horizontal-card z-depth-1 feed-agree-box" >
- 		<span class='feed-agrees-label agreeBtnCount badge-lives'><?php echo $agreedcount; ?></span>
-     	<div class="myxp-details-agree-list">
-    		<?php
-    			$i = 0;
-    			while($i < sizeof($agrees) && $i < 15){ ?>
-    			<div class="myxp-details-agree-listitem">
-    				<?php $useragree = GetUser($agrees[$i]); ?>
-    				<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="margin-top:3px;width:40px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;height:40px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-    			</div>
-    		<?php	
-    		$i++;
-    		} ?>
-    	</div>
- 	</div>
- <?php }
+ <?php 
 }
 
 function FeedGameReleasesItem($feed){ ?>

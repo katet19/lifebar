@@ -311,7 +311,7 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
 @media only screen and (min-width: 993px) {
   #toast-container {
     bottom: 1% !important;
-    top: inherit !important;
+    top: initial !important;
     right: inherit !important;
     left: 1% !important;
     max-width: 86%;

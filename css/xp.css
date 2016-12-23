@@ -674,9 +674,12 @@ OLD STUFF
 
 .bp-progress-item-name{
     font-size: 1.25em;
-    font-weight:500;
+    overflow: hidden;
+    height: 27px;
+    width: 100%;
+    font-weight: 500;
     color: white;
-    text-align:left;
+    text-align: left;
 }
 .bp-progress-item-desc{
     margin-top: -5px;
@@ -753,10 +756,14 @@ OLD STUFF
 }
 
 .bp-progress-item-details{
-	display:inline-block;
-	margin-left:20px;
+    display: inline-block;
     height: 60px;
+    position: absolute;
     vertical-align: top;
+    overflow: hidden;
+    top: 10px;
+    right: 25px;
+    left: 190px;
 }
 
 .bp-btn{
