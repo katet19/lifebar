@@ -158,6 +158,42 @@ function DisplayGearMilestone($milestone){
 <?php
 }
 
+function DisplayBattleProgressToasts($user, $myprogress, $gameid){
+	if(isset($myprogress)){
+		foreach($myprogress as $progress){ ?>
+		<div class='bp-progress-item'>
+			<?php if($progress->_image == ""){ ?>
+				<div class='bp-item-image z-depth-1' style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class='bp-item-image-icon mdi-content-flag'></i></div>
+			<?php }else{ ?>
+				<div class='bp-item-image z-depth-1' style='background:url(<?php echo $progress->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;'></div>
+			<?php } ?>
+			<div class='bp-progress-item-details'>
+				<div class='bp-progress-item-name'><?php  echo $progress->_name;?></div>
+				<div class='bp-progress-item-desc'><?php if(stristr($progress->_desc, "develop")){ echo "Developer"; }else if(stristr($progress->_desc, "franchise")){ echo "Franchise"; }else if(stristr($progress->_desc, "platform")){ echo "Platform"; } ?></div>
+			</div>
+			<div class='bp-progress-item-bar'>
+				<?php $before = round(($progress->_oldvalue/$progress->_threshold) * 100); ?>
+				<div class='bp-progress-item-bar-before' style='right:<?php echo 100 - $before; ?>%'></div>
+				<div class='bp-progress-item-bar-after' style='left:<?php echo $before;?>%;' data-width='<?php echo round(($progress->_newvalue/$progress->_threshold) * 100) - $before; ?>%'></div>
+			</div>
+			<?php if($progress->_oldlevel != $progress->_newlevel){ ?>
+					<div class='bp-progress-item-levelup' data-newlevel='<?php echo $progress->_newlevel; ?>' data-levelup='Yes'>Level <?php echo $progress->_oldlevel; ?> </div>
+			<?php }else{ ?>
+					<div class='bp-progress-item-levelup'>Level <?php echo $progress->_oldlevel; ?> <span style='font-weight:300;'>(<?php echo $progress->_newvalue." / ".$progress->_threshold; ?>)</span></div>
+			<?php } ?>
+		</div>
+		|**|
+	<?php  } 
+	} 
+
+	$games = AddSimilarGames($_SESSION['logged-in']->_id, $gameid); 
+	if(isset($games)){ ?>
+		<div class='bp-progress-item'>
+			<span style='font-weight: bold;margin-right: 10px;font-size: 2em;vertical-align: middle;'><?php echo sizeof($games); ?></span> game(s) added to your Lifebar Backlog!
+		</div>
+	<?php }
+}
+
 function DisplayBattleProgress($user, $myprogress, $gameid){ 
 	$shareData = GetShareLink($user->_id, "userxp", $gameid."-".$user->_id); ?>
 	<div class='bp-container' data-gameid="<?php echo $gameid; ?>">

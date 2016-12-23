@@ -433,54 +433,83 @@ function AttachStarEvents(){
 			tier = 5;
 		}
 
+		element.find(".star-icon").each(function(){
+			$(this).removeClass("tierTextColor1");
+			$(this).removeClass("tierTextColor2");
+			$(this).removeClass("tierTextColor3");
+			$(this).removeClass("tierTextColor4");
+			$(this).removeClass("tierTextColor5");
+			$(this).removeClass("star-icon-pre");
+		});
+		if(star.hasClass("star-icon-5")){
+			element.find(".star-icon-5").text("star"); element.find(".star-icon-5").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor1 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-4")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor2 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-3")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border"); 
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor3 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor3 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor3 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-2")){
+			element.find(".star-icon-5").text("star_border"); 
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor4 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor4 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-1")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor5 star-icon-pre");
+		}
+
 		$.ajax({ url: '../php/webService.php',
 				data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: -1 },
 				type: 'post',
 				success: function(output) {
 					//GameCardAction("tier", gameid);
-					element.find(".star-icon").each(function(){
-						$(this).removeClass("tierTextColor1");
-						$(this).removeClass("tierTextColor2");
-						$(this).removeClass("tierTextColor3");
-						$(this).removeClass("tierTextColor4");
-						$(this).removeClass("tierTextColor5");
-						$(this).removeClass("star-icon-pre");
+					var contentsplit = $.trim(output).split("|**|");
+					for (var i in contentsplit) {
+						ToastProgress(contentsplit[i]);
+					}
+					var timeoutcounter = 1000;
+					$(".bp-progress-item-bar").each(function(){
+						var after = $(this).find(".bp-progress-item-bar-after");
+						var before = $(this).find(".bp-progress-item-bar-before");
+						var lvlup = $(this).parent().find(".bp-progress-item-levelup");
+						//var left = after.attr("data-left");
+						//after.css({"left":left});
+						setTimeout(function(e){
+							var width = after.attr("data-width");
+							after.css({"width":width});
+							if(lvlup.attr("data-levelup") == "Yes"){
+								lvlup.html("LEVEL UP!");
+								setTimeout(function(e){
+									before.css({"background-color":"#66BB6A"});
+									after.css({"background-color":"#66BB6A"});
+									lvlup.html("Level " + lvlup.attr("data-newlevel"));
+								}, 1000);
+							}
+						}, timeoutcounter);
+						if(lvlup.attr("data-levelup") == "Yes")
+							timeoutcounter = timeoutcounter + 1750;
+						else
+							timeoutcounter = timeoutcounter + 1000;
 					});
-					if(star.hasClass("star-icon-5")){
-						element.find(".star-icon-5").text("star"); element.find(".star-icon-5").addClass("tierTextColor1 star-icon-pre");
-						element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor1 star-icon-pre");
-						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor1 star-icon-pre");
-						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor1 star-icon-pre");
-						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor1 star-icon-pre");
-					}
-					else if(star.hasClass("star-icon-4")){
-						element.find(".star-icon-5").text("star_border");
-						element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor2 star-icon-pre");
-						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor2 star-icon-pre");
-						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor2 star-icon-pre");
-						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor2 star-icon-pre");
-					}
-					else if(star.hasClass("star-icon-3")){
-						element.find(".star-icon-5").text("star_border");
-						element.find(".star-icon-4").text("star_border"); 
-						element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor3 star-icon-pre");
-						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor3 star-icon-pre");
-						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor3 star-icon-pre");
-					}
-					else if(star.hasClass("star-icon-2")){
-						element.find(".star-icon-5").text("star_border"); 
-						element.find(".star-icon-4").text("star_border");
-						element.find(".star-icon-3").text("star_border");
-						element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor4 star-icon-pre");
-						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor4 star-icon-pre");
-					}
-					else if(star.hasClass("star-icon-1")){
-						element.find(".star-icon-5").text("star_border");
-						element.find(".star-icon-4").text("star_border");
-						element.find(".star-icon-3").text("star_border");
-						element.find(".star-icon-2").text("star_border");
-						element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor5 star-icon-pre");
-					}
 				},
 					error: function(x, t, m) {
 						if(t==="timeout") {

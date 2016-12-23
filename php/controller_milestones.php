@@ -738,7 +738,7 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 	Close($mysqli, $result);
 	
 	if(!$critic)
-		DisplayBattleProgress(GetUser($userid), $progress, $gameid);
+		DisplayBattleProgressToasts(GetUser($userid), $progress, $gameid);
 }
 
 function CalculateAllMilestones($userid){
