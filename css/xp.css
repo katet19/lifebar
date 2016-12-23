@@ -476,13 +476,13 @@ OLD STUFF
 }
 
 .myxp-details-agree-container{
-    background-color: rgba(67, 160, 71, 0.11);
-    position: relative;
+    position: absolute;
+    bottom: 10px;
     height: 35px;
-    border-radius: 5px;
-    margin-top: 15px;
+    right: 130px;
+    left: 35px;
+    text-align: left;
     overflow: hidden;
-    display:none;
 }
 
 .myxp-details-agree-count{

@@ -413,24 +413,24 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
 	  		<i class='authenticated-mark material-icons' title="Verified Account">verified_user</i>
 	  		<?php } ?>
-			<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
-				<div class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
-				<div class="myxp-details-agree-list">
-				<?php
-					$i = 0;
-					while($i < sizeof($agrees) && $i < 15){ ?>
-					<div class="myxp-details-agree-listitem">
-						<?php $useragree = GetUser($agrees[$i]); ?>
-						<div class="user-avatar" style="margin-top:3px;width:30px;border-radius:50%;display: inline-block;float:left;height:30px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" title='<?php echo $useragree->_username; ?>'></div>
-					</div>
-				<?php	
-				$i++;
-				} ?>
-			</div>
-    	</div>
 	      </div>
 		  <div class='divider'></div>
 	      <div class="feed-action-container">
+				<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
+					<div class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
+					<div class="myxp-details-agree-list">
+					<?php
+						$i = 0;
+						while($i < sizeof($agrees) && $i < 15){ ?>
+						<div class="myxp-details-agree-listitem">
+							<?php $useragree = GetUser($agrees[$i]); ?>
+							<div class="user-avatar" style="margin-top:3px;width:30px;border-radius:50%;display: inline-block;float:left;height:30px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" title='<?php echo $useragree->_username; ?>'></div>
+						</div>
+					<?php	
+					$i++;
+					} ?>
+					</div>
+				</div>
 	      		<?php if($xp->_link != ''){ ?>
 					<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn">READ</div></a>
 				<?php } ?>
@@ -439,8 +439,8 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 				<?php } ?>
 				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
-					<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>
 				<?php } ?>
+				<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>
 	      </div>
 	    </div>
 	  </div>
