@@ -317,9 +317,55 @@ function ShowXPPlayedSelector($xp){
 function ShowXPWatchedSelector($xp){
 	ShowEmojiSelector();
 	ShowXPQuote();
+	ShowWatchType();
 	?>
 	<div class="save-btn modal-btn-pos">Save XP</div>
 	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<?php
+}
+
+function ShowWatchType(){
+	$length = $watched->_length;
+	if($watched->_length == "Watched a speed run"){
+		$icon = "directions_walk";
+	}else if($watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+		$icon = "beenhere";
+	}else if($watched->_length == "Watched competitive play"){
+		$icon = "headset_mic";
+	}else if($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less"){
+		$icon = "videogame_asset";
+	}else if($watched->_length == "Watched promotional gameplay"){
+		$icon = "movie_creation";
+	}else if($watched->_length == "Watched a developer diary"){
+		$icon = "class";
+	}else{
+		$icon = "theaters";
+	}
+	?>
+	<div class="row">
+		<div class="col s10 offset-s1">
+			<div class="modal-xp-header">What kind of video?</div>
+		</div>
+		<div class="col s10 offset-s1" style='text-align: left;'>
+			<div class="row>">
+				<?php $icons[] = "directions_walk"; $types[] = "Watched a speed run";
+				$icons[] = "beenhere"; $types[] = "Watched a complete playthrough";
+				$icons[] = "headset_mic"; $types[] = "Watched competitive play";
+				$icons[] = "videogame_asset"; $types[] = "Watched gameplay";
+				$icons[] = "movie_creation"; $types[] = "Watched promotional gameplay";
+				$icons[] = "class"; $types[] = "Watched a developer diary";
+				$icons[] = "theaters"; $types[] = "Watched a trailer";
+				$i = 0;
+				while($i < 7){ ?>
+					<div class="col s12" style="margin-bottom:5px;">
+						<input type="radio" id="<?php echo $icons[$i];?>" name="watched-radio" class="myxp-platforms" data-text="<?php echo $types[$i];?>" />
+						<label for="<?php echo $icons[$i];?>" style='line-height: 15px;'><i class='material-icons'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
+					</div>
+				<?php $i++;
+				} ?>
+			</div>
+		</div>
+	</div>
 	<?php
 }
 
