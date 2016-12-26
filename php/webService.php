@@ -464,6 +464,8 @@
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],'',$_POST['tier'],'','','',$_POST['rank']);
 				CalculateWeave($_SESSION['logged-in']->_id);
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
+				echo "|****|";
+				echo CalculateXPGain("star");
 			}
 		}
 		if($_POST['action'] =='SavePlayedFull' && $_SESSION['logged-in']->_id > 0){

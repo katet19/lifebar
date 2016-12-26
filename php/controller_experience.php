@@ -2434,6 +2434,16 @@ function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
 	Close($mysqli, $result);
 }
 
+function CalculateXPGain($type){
+	if($type == "star"){
+		return "1";
+	}else if($type == "played"){
+		return "3";
+	}else if($type == "watched"){
+		return "1";
+	}
+}
+
 function ResequenceRanks($rank, $gameid, $userid, $mysqli){
 	$query = "select * from `Experiences` where  `UserID` = '".$userid."' and `Rank` > 0 order by `Rank` ASC";
 	if ($result = $mysqli->query($query)) {

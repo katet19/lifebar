@@ -482,9 +482,12 @@ function AttachStarEvents(){
 				type: 'post',
 				success: function(output) {
 					//GameCardAction("tier", gameid);
-					var contentsplit = $.trim(output).split("|**|");
+					var datasplit = $.trim(output).split("|****|");
+					var contentsplit = datasplit[0].split("|**|");
+					var lifebar = parseInt(datasplit[1]);
 					for (var i in contentsplit) {
-						ToastProgress(contentsplit[i]);
+						if($.trim(contentsplit[i]) != "")
+							ToastProgress(contentsplit[i]);
 					}
 					var timeoutcounter = 1000;
 					$(".bp-progress-item-bar").each(function(){
@@ -510,6 +513,7 @@ function AttachStarEvents(){
 						else
 							timeoutcounter = timeoutcounter + 1000;
 					});
+					//$(".lifebar-fill-min-circle").css({"width": lifebar+"%"});
 				},
 					error: function(x, t, m) {
 						if(t==="timeout") {
