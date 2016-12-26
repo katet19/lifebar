@@ -163,7 +163,7 @@ function DisplayBattleProgressToasts($user, $myprogress, $gameid){
 		foreach($myprogress as $progress){ ?>
 		<div class='bp-progress-item'>
 			<?php if($progress->_image == ""){ ?>
-				<div class='bp-item-image z-depth-1' style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class='bp-item-image-icon mdi-content-flag'></i></div>
+				<div class='bp-item-image z-depth-1' style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class='bp-item-image-icon material-icons'>flag</i></div>
 			<?php }else{ ?>
 				<div class='bp-item-image z-depth-1' style='background:url(<?php echo $progress->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;'></div>
 			<?php } ?>
@@ -228,7 +228,7 @@ function DisplayBattleProgress($user, $myprogress, $gameid){
 					foreach($myprogress as $progress){ ?>
 					<div class="bp-progress-item">
 						<?php if($progress->_image == ""){ ?>
-							<div class="bp-item-image z-depth-1" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i></div>
+							<div class="bp-item-image z-depth-1" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon material-icons">flag</i></div>
 						<?php }else{ ?>
 							<div class="bp-item-image z-depth-1" style="background:url(<?php echo $progress->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;"></div>
 						<?php } ?>
