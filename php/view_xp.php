@@ -240,13 +240,13 @@ function ShowXPSelector($xp){
 		</li>
 		<li>
 			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">visibility</i>Add a <b>watched</b> experience</div>
-			<div class="collapsible-body tier-modal-body">
+			<div class="collapsible-body">
 				<?php ShowXPWatchedSelector($xp); ?>
 			</div>
 		</li>
 		<li>
 			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">format_quote</i>Post your latest <b>thoughts</b></div>
-			<div class="collapsible-body tier-modal-body">
+			<div class="collapsible-body">
 				<?php ShowXPPostSelector($xp); ?>
 			</div>
 		</li>
@@ -290,7 +290,7 @@ function ShowXPSelector($xp){
 			?>
 				<li>
 					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon"><?php echo $icon; ?></i> <?php echo $length; ?></div>
-					<div class="collapsible-body tier-modal-body">
+					<div class="collapsible-body">
 						<?php ShowXPWatchedSelector($xp); ?>
 					</div>
 				</li>
@@ -308,7 +308,7 @@ function ShowXPPlayedSelector($xp){
 	ShowXPPlatformSelector($xp);
 	ShowAdvancedOptions($xp);
 	?>
-	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save XP</div>
+	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 	
@@ -319,8 +319,8 @@ function ShowXPWatchedSelector($xp){
 	ShowXPQuote();
 	ShowWatchType();
 	?>
-	<div class="save-btn modal-btn-pos">Save XP</div>
-	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save Details</div>
+	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 }
 
@@ -344,7 +344,7 @@ function ShowWatchType(){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
-			<div class="modal-xp-header">What kind of video?</div>
+			<div class="modal-xp-header" style='margin-bottom:20px;'>What type of video did you watch?</div>
 		</div>
 		<div class="col s10 offset-s1" style='text-align: left;'>
 			<div class="row>">
@@ -359,7 +359,7 @@ function ShowWatchType(){
 				while($i < 7){ ?>
 					<div class="col s12" style="margin-bottom:5px;">
 						<input type="radio" id="<?php echo $icons[$i];?>" name="watched-radio" class="myxp-platforms" data-text="<?php echo $types[$i];?>" />
-						<label for="<?php echo $icons[$i];?>" style='line-height: 15px;'><i class='material-icons'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
+						<label for="<?php echo $icons[$i];?>" style='line-height: 15px;height:35px;'><i class='material-icons' style='padding-right: 5px;position: relative;top: -5px;vertical-align: text-top;'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
 					</div>
 				<?php $i++;
 				} ?>
@@ -372,8 +372,8 @@ function ShowWatchType(){
 function ShowXPPostSelector($xp){
 	ShowXPPost();
 	?>
-	<div class="save-btn modal-btn-pos">Post</div>
-	<div class="cancel-btn modal-btn-pos">Cancel</div>
+	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Post</div>
+	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 }
 

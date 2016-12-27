@@ -6,7 +6,7 @@
 .modal-content-container{
     position: absolute;
     top: 10vh;
-    bottom: 10vh;
+    bottom: 0vh;
     overflow: auto;
     right: 0;
     left: 0;
