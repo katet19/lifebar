@@ -71,6 +71,10 @@ function ToastError(msg){
 	Materialize.toast(msg, 5000);
 }
 
+function ToastLong(msg){
+	Materialize.toast(msg, 3540000);
+}
+
 function ToastUpdate(){
 	var msg = "New updates available! <span onclick='location.reload(true);' style='cursor:pointer;color:#FF8E00;font-weight: bold;padding: 0 10px 0 20px;'>REFRESH</span>";
 	Materialize.toast(msg, 3540000);

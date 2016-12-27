@@ -123,6 +123,8 @@ function CalculateWeave($userid){
 				);
 				
 	 UpdateWeaveTimeStamp($userid);
+	 $_SESSION['logged-in']->_weave = GetWeave($userid, $mysqli);
+
 	 Close($mysqli, $result);
 }
 

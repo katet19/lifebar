@@ -52,11 +52,12 @@ function DisplayLifebarForUser(){
 	$currWidth =  round((($total - $minmax[0]) / ($minmax[1] - $minmax[0])) * 100);
 	?>
 	<div class="lifebar-container" data-level="<?php echo $currLevel; ?>" data-min="<?php echo $minmax[0]; ?>" data-max="<?php echo $minmax[1]; ?>" data-xp="<?php echo $total; ?>">
-        <div class="lifebar-bar-container-min" style='width:100%;color: white;top: 35px;margin-left: 65px;'>
+        <div class="lifebar-bar-container-min" style='width:100%;color: white;top: 38px;margin-left: 115px;'>
+			<div class="lifebar-bar-level-header">Level <span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
         	<div class="lifebar-fill-min-circle" data-position="bottom" style='width:<?php echo $currWidth; ?>%;'></div>
         </div>
         <div class="lifebar-username-min">
-			<span class="card-title activator"><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span style='margin-left:25px;'>lvl <?php echo $currLevel; ?></span></span>
+			<span class="card-title activator"><span style="font-weight:500;"><?php echo $user->_username; ?></span></span>
         </div>
 		<div class='lifebar-image'>
 			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">

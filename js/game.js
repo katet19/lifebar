@@ -484,18 +484,17 @@ function AttachStarEvents(){
 					//GameCardAction("tier", gameid);
 					var datasplit = $.trim(output).split("|****|");
 					var contentsplit = datasplit[0].split("|**|");
-					var lifebar = parseInt(datasplit[1]);
+					var xpGain = parseInt(datasplit[1]);
 					for (var i in contentsplit) {
-						if($.trim(contentsplit[i]) != "")
+						if($.trim(contentsplit[i]) != ""){
 							ToastProgress(contentsplit[i]);
+						}
 					}
 					var timeoutcounter = 1000;
 					$(".bp-progress-item-bar").each(function(){
 						var after = $(this).find(".bp-progress-item-bar-after");
 						var before = $(this).find(".bp-progress-item-bar-before");
 						var lvlup = $(this).parent().find(".bp-progress-item-levelup");
-						//var left = after.attr("data-left");
-						//after.css({"left":left});
 						setTimeout(function(e){
 							var width = after.attr("data-width");
 							after.css({"width":width});
@@ -513,7 +512,23 @@ function AttachStarEvents(){
 						else
 							timeoutcounter = timeoutcounter + 1000;
 					});
-					//$(".lifebar-fill-min-circle").css({"width": lifebar+"%"});
+					
+					var lifebar = $("#navigation-header").find(".lifebar-container");
+					var min = lifebar.attr('data-min');
+					var max = lifebar.attr('data-max');
+					var newXp = parseInt(lifebar.attr('data-xp')) + xpGain;
+					if(newXp > max){
+						var newLevel = parseInt(lifebar.find(".lifebar-bar-level-header span").text()) + 1;
+						lifebar.find(".lifebar-bar-level-header span").text(newLevel);
+						ToastProgress("<div style='min-width:400px;text-align:left;'><div class='levelupToastText' style='padding:10px 0;font-size:2em;font-weight:bold;'>LEVEL UP</div> <div>You have reached Level <span style='font-weight:bold'>" + newLevel + "</span></div></div>");
+						min = Math.ceil(Math.pow((newLevel-1) / 0.45, 2));
+						max = Math.ceil(Math.pow(newLevel / 0.45, 2)) - 1;
+						lifebar.attr('data-min', min);
+						lifebar.attr('data-max', max);
+					}
+					lifebar.attr('data-xp', newXp);
+					var newLength = Math.round(((newXp - min) / (max - min)) * 100);
+					$(".lifebar-fill-min-circle").css({"width": newLength+"%"});
 				},
 					error: function(x, t, m) {
 						if(t==="timeout") {

@@ -861,6 +861,13 @@ OLD STUFF
 	top: -7px !important;
 }
 
+.lifebar-bar-level-header{
+    position: absolute;
+    left: -50px;
+    font-size: 0.8em;
+    top: -3px;
+}
+
 .visual-sentence-label{
     display: inline-block;
     font-size: 1.5em;
@@ -893,6 +900,36 @@ OLD STUFF
 	padding-top: 20px !important;
 	position: relative;
 }
+
+.levelupToastText{
+	-webkit-animation: color_change 1s infinite alternate;
+	-moz-animation: color_change 1s infinite alternate;
+	-ms-animation: color_change 1s infinite alternate;
+	-o-animation: color_change 1s infinite alternate;
+	animation: color_change 1s infinite alternate;
+}
+
+@-webkit-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-moz-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-ms-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-o-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+
 @media only screen and (max-width : 600px) {
 	.myxp-GraphContainer{
 		width:100%;
