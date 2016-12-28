@@ -862,10 +862,17 @@ OLD STUFF
 }
 
 .lifebar-bar-level-header{
-    position: absolute;
-    left: -50px;
+    position: relative;
+    display: inline-block;
     font-size: 0.8em;
-    top: -3px;
+    margin-left: 10px;
+    top: -1px;
+    border-radius: 2px;
+    padding: 0px 5px;
+    min-width: 30px;
+    background-color: white;
+    line-height: 19px;
+    color: #3F51B5;
 }
 
 .visual-sentence-label{
