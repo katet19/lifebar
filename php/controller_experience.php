@@ -2351,7 +2351,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	$mysqli = Connect();
 	if($quote != '')
 		$quote = mysqli_real_escape_string($mysqli, $quote);
-	$newXP = "true";
+	$newXP = true;
 	
 	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
 	if($quickxp != ''){
@@ -2359,7 +2359,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 			$quote = mysqli_real_escape_string($mysqli, $quickxp->_quote);
 		if($tier <= 0)
 			$tier = $quickxp->_tier;
-		$newXP = "false";
+		$newXP = false;
 	}
 	
 	
@@ -2379,7 +2379,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	else
 		$authentic = "No";
 		
-	if($newXP == "false"){
+	if($newXP == false){
 		if($rank > 0)
 			ResequenceRanks($rank, $gameid, $user, $mysqli);
 		
@@ -2395,6 +2395,8 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	}
 	
 	Close($mysqli, $result);
+
+	return $newXP;
 }
 
 function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
@@ -2434,13 +2436,15 @@ function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
 	Close($mysqli, $result);
 }
 
-function CalculateXPGain($type){
-	if($type == "star"){
+function CalculateXPGain($type, $isNew = true){
+	if($type == "star" && $isNew){
 		return "1";
 	}else if($type == "played"){
 		return "3";
 	}else if($type == "watched"){
 		return "1";
+	}else{
+		return "0";
 	}
 }
 
