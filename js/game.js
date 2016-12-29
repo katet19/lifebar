@@ -492,25 +492,28 @@ function AttachStarEvents(){
 					}
 					var timeoutcounter = 1000;
 					$(".bp-progress-item-bar").each(function(){
-						var after = $(this).find(".bp-progress-item-bar-after");
-						var before = $(this).find(".bp-progress-item-bar-before");
-						var lvlup = $(this).parent().find(".bp-progress-item-levelup");
-						setTimeout(function(e){
-							var width = after.attr("data-width");
-							after.css({"width":width});
-							if(lvlup.attr("data-levelup") == "Yes"){
-								lvlup.html("LEVEL UP!");
-								setTimeout(function(e){
-									before.css({"background-color":"#66BB6A"});
-									after.css({"background-color":"#66BB6A"});
-									lvlup.html("Level " + lvlup.attr("data-newlevel"));
-								}, 1000);
-							}
-						}, timeoutcounter);
-						if(lvlup.attr("data-levelup") == "Yes")
-							timeoutcounter = timeoutcounter + 1750;
-						else
-							timeoutcounter = timeoutcounter + 1000;
+						if(!$(this).hasClass("eventSet")){
+							$(this).addClass("eventSet");
+							var after = $(this).find(".bp-progress-item-bar-after");
+							var before = $(this).find(".bp-progress-item-bar-before");
+							var lvlup = $(this).parent().find(".bp-progress-item-levelup");
+							setTimeout(function(e){
+								var width = after.attr("data-width");
+								after.css({"width":width});
+								if(lvlup.attr("data-levelup") == "Yes"){
+									lvlup.html("LEVEL UP!");
+									setTimeout(function(e){
+										before.css({"background-color":"#66BB6A"});
+										after.css({"background-color":"#66BB6A"});
+										lvlup.html("Level " + lvlup.attr("data-newlevel"));
+									}, 1000);
+								}
+							}, timeoutcounter);
+							if(lvlup.attr("data-levelup") == "Yes")
+								timeoutcounter = timeoutcounter + 1750;
+							else
+								timeoutcounter = timeoutcounter + 1000;
+						}
 					});
 					
 					var lifebar = $("#navigation-header").find(".lifebar-container");

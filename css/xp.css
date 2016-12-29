@@ -682,7 +682,7 @@ OLD STUFF
     text-align: left;
 }
 .bp-progress-item-desc{
-    margin-top: -5px;
+    margin-top: -8px;
     margin-bottom: 5px;
     font-size: 0.8em;
     text-align: left;
@@ -750,20 +750,20 @@ OLD STUFF
 }
 
 .bp-item-image{
-    width: 150px;
-    height: 60px;
+    width: 100px;
+    height: 40px;
     display: inline-block;
 }
 
 .bp-progress-item-details{
     display: inline-block;
-    height: 60px;
+    height: 40px;
     position: absolute;
     vertical-align: top;
     overflow: hidden;
     top: 10px;
     right: 25px;
-    left: 190px;
+    left: 140px;
 }
 
 .bp-btn{
@@ -833,7 +833,7 @@ OLD STUFF
 }
 
 .bp-item-image-icon{
-	font-size: 3em;
+	font-size: 1.75em;
     color: rgba(0,0,0,0.5);
 }
 
@@ -868,11 +868,11 @@ OLD STUFF
     margin-left: 10px;
     top: -1px;
     border-radius: 2px;
-    padding: 0px 5px;
-    min-width: 30px;
+    width: 30px;
     background-color: white;
     line-height: 19px;
     color: #3F51B5;
+    text-align: center;
 }
 
 .visual-sentence-label{
