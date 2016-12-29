@@ -2439,10 +2439,14 @@ function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
 function CalculateXPGain($type, $isNew = true){
 	if($type == "star" && $isNew){
 		return "1";
-	}else if($type == "played"){
+	}else if($type == "played" && $isNew){
 		return "3";
-	}else if($type == "watched"){
+	}else if($type == "playedwithquote" && $isNew){
+		return "5";
+	}else if($type == "watched" && $isNew){
 		return "1";
+	}else if($type == "post" && $isNew){
+		return "2";
 	}else{
 		return "0";
 	}
@@ -2498,7 +2502,7 @@ function SubmitOwned($user,$gameid,$owned){
 	}
 }
 
-function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year, $single, $multi, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed){
+function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platform){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);
 	$newXP = "true";
@@ -2511,24 +2515,8 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 			$tier = $quickxp->_tier;
 		if($completed == '')
 			$completed = $quickxp->_playedxp[0]->_completed;
-		if($quarter == '')
-			$quarter = $quickxp->_playedxp[0]->_quarter;
 		if($year == '')
 			$year = $quickxp->_playedxp[0]->_year;
-		if($single == '' && $multi == '')
-			$modesplayed = $quickxp->_playedxp[0]->_mode;
-		if($dlc == '')
-			$dlc = $quickxp->_dlc;
-		if($alpha == '')
-			$alpha = $quickxp->_alpha;
-		if($beta == '')
-			$beta = $quickxp->_beta;
-		if($earlyaccess == '')
-			$earlyaccess = $quickxp->_earlyaccess;
-		if($demo == '')
-			$demo = $quickxp->_demo;
-		if($streamed == '')
-			$streamed = $quickxp->_streamed;
 		$newXP = "false";
 	}
 	
@@ -2538,28 +2526,10 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 	if($completed == "Multiple Playthroughs"){
 		$completed = "101";
 	}
-	
-	if($single && $multi)
-		$modesplayed = "Single and Multiplayer";
-	else if($single)
-		$modesplayed = "Single Player";
-	else if($mulit)
-		$modesplayed = "Multiplayer";
-		
+			
 	$platformids = GetPlatformIDs($platform);
-	if(sizeof($platform) > 0)
-		$platform = implode("\n", $platform);
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year;
 		
 	if (sizeof($quickxp->_playedxp) == 0){
 		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
@@ -2598,10 +2568,8 @@ function GetSubXPID($userid, $gameid, $mysqli){
 	return $subxpid;
 }
 
-function GetPlatformIDs($platforms){
+function GetPlatformIDs($platform){
 	$mysqli = Connect();
-	foreach($platforms as $platform){ 
-		$platform = trim($platform);
 		if($platform != ""){
 			$platformquery = "select * from `Link_Platforms` where `Name` = '".$platform."'";
 			if ($platformresult = $mysqli->query($platformquery)){
@@ -2610,7 +2578,6 @@ function GetPlatformIDs($platforms){
 				}
 			}
 		}
-	}
 	Close($mysqli, $platformresult);
 	
 	if(sizeof($platformID) > 0)

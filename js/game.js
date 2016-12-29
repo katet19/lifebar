@@ -481,64 +481,7 @@ function AttachStarEvents(){
 				data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: -1 },
 				type: 'post',
 				success: function(output) {
-					//GameCardAction("tier", gameid);
-					var datasplit = $.trim(output).split("|****|");
-					var contentsplit = datasplit[0].split("|**|");
-					var xpGain = parseInt(datasplit[1]);
-					for (var i in contentsplit) {
-						if($.trim(contentsplit[i]) != ""){
-							ToastProgress(contentsplit[i]);
-						}
-					}
-					var timeoutcounter = 1000;
-					$(".bp-progress-item-bar").each(function(){
-						if(!$(this).hasClass("eventSet")){
-							$(this).addClass("eventSet");
-							var after = $(this).find(".bp-progress-item-bar-after");
-							var before = $(this).find(".bp-progress-item-bar-before");
-							var lvlup = $(this).parent().find(".bp-progress-item-levelup");
-							setTimeout(function(e){
-								var width = after.attr("data-width");
-								after.css({"width":width});
-								if(lvlup.attr("data-levelup") == "Yes"){
-									lvlup.html("LEVEL UP!");
-									setTimeout(function(e){
-										before.css({"background-color":"#66BB6A"});
-										after.css({"background-color":"#66BB6A"});
-										lvlup.html("Level " + lvlup.attr("data-newlevel"));
-									}, 1000);
-								}
-							}, timeoutcounter);
-							if(lvlup.attr("data-levelup") == "Yes")
-								timeoutcounter = timeoutcounter + 1750;
-							else
-								timeoutcounter = timeoutcounter + 1000;
-						}
-					});
-					
-					var lifebar = $("#navigation-header").find(".lifebar-container");
-					var min = lifebar.attr('data-min');
-					var max = lifebar.attr('data-max');
-					var newXp = parseInt(lifebar.attr('data-xp')) + xpGain;
-					if(xpGain > 0){
-						$(".lifebar-bar-xp-popup").text("+ "+xpGain+"xp");
-						$(".lifebar-bar-xp-popup").css({"opacity":"1"});
-						setTimeout(function(){
-							$(".lifebar-bar-xp-popup").css({"opacity":"0"});
-						}, 1500);
-					}
-					if(newXp >= max){
-						var newLevel = parseInt(lifebar.find(".lifebar-bar-level-header span").text()) + 1;
-						lifebar.find(".lifebar-bar-level-header span").text(newLevel);
-						ToastProgress("<div style='min-width:400px;text-align:left;'><div class='levelupToastText' style='padding:10px 0;font-size:2em;font-weight:bold;'>LEVEL " + newLevel + "</div> <div>Level Up! You have reached the next level.</div></div>");
-						min = Math.ceil(Math.pow((newLevel-1) / 0.45, 2));
-						max = Math.ceil(Math.pow(newLevel / 0.45, 2)) - 1;
-						lifebar.attr('data-min', min);
-						lifebar.attr('data-max', max);
-					}
-					lifebar.attr('data-xp', newXp);
-					var newLength = Math.round(((newXp - min) / (max - min)) * 100);
-					$(".lifebar-fill-min-circle").css({"width": newLength+"%"});
+					ManageXPRewards(output);
 				},
 					error: function(x, t, m) {
 						if(t==="timeout") {
@@ -550,6 +493,66 @@ function AttachStarEvents(){
 					timeout:45000
 				});
 	});
+}
+
+function ManageXPRewards(output){
+	var datasplit = $.trim(output).split("|****|");
+	var contentsplit = datasplit[0].split("|**|");
+	var xpGain = parseInt(datasplit[1]);
+	for (var i in contentsplit) {
+		if($.trim(contentsplit[i]) != ""){
+			ToastProgress(contentsplit[i]);
+		}
+	}
+	var timeoutcounter = 1000;
+	$(".bp-progress-item-bar").each(function(){
+		if(!$(this).hasClass("eventSet")){
+			$(this).addClass("eventSet");
+			var after = $(this).find(".bp-progress-item-bar-after");
+			var before = $(this).find(".bp-progress-item-bar-before");
+			var lvlup = $(this).parent().find(".bp-progress-item-levelup");
+			setTimeout(function(e){
+				var width = after.attr("data-width");
+				after.css({"width":width});
+				if(lvlup.attr("data-levelup") == "Yes"){
+					lvlup.html("LEVEL UP!");
+					setTimeout(function(e){
+						before.css({"background-color":"#66BB6A"});
+						after.css({"background-color":"#66BB6A"});
+						lvlup.html("Level " + lvlup.attr("data-newlevel"));
+					}, 1000);
+				}
+			}, timeoutcounter);
+			if(lvlup.attr("data-levelup") == "Yes")
+				timeoutcounter = timeoutcounter + 1750;
+			else
+				timeoutcounter = timeoutcounter + 1000;
+		}
+	});
+	
+	var lifebar = $("#navigation-header").find(".lifebar-container");
+	var min = lifebar.attr('data-min');
+	var max = lifebar.attr('data-max');
+	var newXp = parseInt(lifebar.attr('data-xp')) + xpGain;
+	if(xpGain > 0){
+		$(".lifebar-bar-xp-popup").text("+ "+xpGain+"xp");
+		$(".lifebar-bar-xp-popup").css({"opacity":"1"});
+		setTimeout(function(){
+			$(".lifebar-bar-xp-popup").css({"opacity":"0"});
+		}, 1500);
+	}
+	if(newXp >= max){
+		var newLevel = parseInt(lifebar.find(".lifebar-bar-level-header span").text()) + 1;
+		lifebar.find(".lifebar-bar-level-header span").text(newLevel);
+		ToastProgress("<div style='min-width:400px;text-align:left;'><div class='levelupToastText' style='padding:10px 0;font-size:2em;font-weight:bold;'>LEVEL " + newLevel + "</div> <div>Level Up! You have reached the next level.</div></div>");
+		min = Math.ceil(Math.pow((newLevel-1) / 0.45, 2));
+		max = Math.ceil(Math.pow(newLevel / 0.45, 2)) - 1;
+		lifebar.attr('data-min', min);
+		lifebar.attr('data-max', max);
+	}
+	lifebar.attr('data-xp', newXp);
+	var newLength = Math.round(((newXp - min) / (max - min)) * 100);
+	$(".lifebar-fill-min-circle").css({"width": newLength+"%"});
 }
 
 function GameCardAction(action, gameid){
@@ -684,6 +687,21 @@ function GameCardAction(action, gameid){
 							var completion = form.find("#xp-percentage-played-range").val();
 							var platform = form.find("input[type=radio][name=platform-radio]:checked").attr("data-text");
 							var year = form.find("#myxp-year").val();
+							$.ajax({ url: '../php/webService.php',
+								data: {action: "SavePlayedExperience", gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
 							$(".cancel-btn").click();
 						}
 					});
