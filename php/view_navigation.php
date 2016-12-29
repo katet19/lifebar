@@ -59,6 +59,7 @@ function DisplayLifebarForUser(){
 			<span class="card-title activator">
 				<span style="font-weight:500;"><?php echo $user->_username; ?></span> 
 				<div class="lifebar-bar-level-header"><span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
+				<div class="lifebar-bar-xp-popup">XP</div>
 			</span>
         </div>
 		<div class='lifebar-image'>

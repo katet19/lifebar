@@ -875,6 +875,21 @@ OLD STUFF
     text-align: center;
 }
 
+.lifebar-bar-xp-popup{
+    opacity:0;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 0.8em;
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
 .visual-sentence-label{
     display: inline-block;
     font-size: 1.5em;

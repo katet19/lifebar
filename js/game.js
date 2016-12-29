@@ -520,6 +520,13 @@ function AttachStarEvents(){
 					var min = lifebar.attr('data-min');
 					var max = lifebar.attr('data-max');
 					var newXp = parseInt(lifebar.attr('data-xp')) + xpGain;
+					if(xpGain > 0){
+						$(".lifebar-bar-xp-popup").text("+ "+xpGain+"xp");
+						$(".lifebar-bar-xp-popup").css({"opacity":"1"});
+						setTimeout(function(){
+							$(".lifebar-bar-xp-popup").css({"opacity":"0"});
+						}, 1500);
+					}
 					if(newXp >= max){
 						var newLevel = parseInt(lifebar.find(".lifebar-bar-level-header span").text()) + 1;
 						lifebar.find(".lifebar-bar-level-header span").text(newLevel);
