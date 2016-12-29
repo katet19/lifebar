@@ -318,9 +318,21 @@ function ShowXPWatchedSelector($xp){
 	ShowEmojiSelector();
 	ShowXPQuote();
 	ShowWatchType();
+	ShowWatchedURL();
+	ShowAdvancedOptions($xp);
 	?>
 	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	<?php
+}
+
+function ShowWatchedURL(){ ?>
+	<div class="row">
+		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
+			<input id="watchedurl" type="text">
+			<label for="watchedurl">Watched URL address (http)</label>
+		</div>	
+	</div>
 	<?php
 }
 

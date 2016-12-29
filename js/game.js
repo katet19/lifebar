@@ -556,6 +556,7 @@ function GameCardAction(action, gameid){
 	if(action == "more" || action == "bookmark"){
 
 	}else{
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
