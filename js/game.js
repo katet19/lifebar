@@ -525,7 +525,7 @@ function AttachStarEvents(){
 						lifebar.find(".lifebar-bar-level-header span").text(newLevel);
 						ToastProgress("<div style='min-width:400px;text-align:left;'><div class='levelupToastText' style='padding:10px 0;font-size:2em;font-weight:bold;'>LEVEL UP</div> <div>You have reached Level <span style='font-weight:bold'>" + newLevel + "</span></div></div>");
 						min = Math.ceil(Math.pow((newLevel-1) / 0.45, 2));
-						max = Math.ceil(Math.pow(newLevel / 0.45, 2));
+						max = Math.ceil(Math.pow(newLevel / 0.45, 2)) - 1;
 						lifebar.attr('data-min', min);
 						lifebar.attr('data-max', max);
 					}
