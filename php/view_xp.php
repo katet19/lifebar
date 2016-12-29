@@ -308,7 +308,7 @@ function ShowXPPlayedSelector($xp){
 	ShowXPPlatformSelector($xp);
 	ShowAdvancedOptions($xp);
 	?>
-	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save Details</div>
+	<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 	
@@ -321,7 +321,7 @@ function ShowXPWatchedSelector($xp){
 	ShowWatchedURL();
 	ShowAdvancedOptions($xp);
 	?>
-	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Save Details</div>
+	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 }
@@ -382,9 +382,9 @@ function ShowWatchType(){
 }
 
 function ShowXPPostSelector($xp){
-	ShowXPPost();
+	ShowXPPost(true);
 	?>
-	<div class="save-btn modal-btn-pos" style='margin: 2em 0;'>Post</div>
+	<div class="save-btn disabled modal-btn-pos save-post-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Post</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 }
@@ -472,7 +472,7 @@ function ShowPercentagePlayed(){
 		</div>
 		<div class="input-field col s10 offset-s1">
 			<p class="range-field" style='margin: 1rem 0 0;padding: 0.5rem 0 0;'>
-				<input type="range" id="xp-percentage-played-range" min="0" max="100" />
+				<input type="range" id="xp-percentage-played-range" min="0" max="100" value="0"/>
 			</p>
 		</div>
 	</div>
@@ -484,18 +484,18 @@ function ShowXPQuote(){
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
 		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
-		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience</label>
+		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience (not required)</label>
 		</div>
 	</div>
 	<?php
 }
 
-function ShowXPPost(){
+function ShowXPPost($withSpace = false){
 	?>
-	<div class="row">
+	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
-		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea" length="140" maxlength="140"></textarea>
+		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
 		</div>
 	</div>
 	<?php
@@ -507,19 +507,19 @@ function ShowEmojiSelector(){
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header">How was the overall experience?</div>
 		</div>
-		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5">
+		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5" data-tier="5">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor4">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor4" data-tier="4">
 			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor3">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor3" data-tier="3">
 			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor2">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor2" data-tier="2">
 			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor1">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor1" data-tier="1">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
 		</div>
 	</div>

@@ -602,7 +602,6 @@ function GameCardAction(action, gameid){
 						$(this).parent().find(".modal-rank-active-game").show(300); 
 					});
 					$(".save-btn").on("click", function(){
-						
 						$.ajax({ url: '../php/webService.php',
 							data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: rank },
 							type: 'post',
@@ -658,6 +657,53 @@ function GameCardAction(action, gameid){
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
+						ToggleSaveButtonPlayed($(this).parent().parent());
+						ToggleSaveButtonWatched($(this).parent().parent());
+					});
+					$("#xp-percentage-played-range").change(function(){
+						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent());
+					});
+					$("input[type=radio][name=platform-radio]").change(function(){
+						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
+					});
+					$("input[type=radio][name=watched-radio]").change(function(){
+						ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
+					});
+					$("#watchedurl").change(function(){
+						ToggleSaveButtonWatched($(this).parent().parent().parent());
+					});
+					$("#myxp-post").change(function(){
+						ToggleSaveButtonPost($(this).parent().parent().parent());
+					});
+					$(".save-played-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var gameid = $(this).attr("data-gameid");
+							var form = $(this).parent();
+							var quote = form.find("#myxp-quote").val();
+							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+							var completion = form.find("#xp-percentage-played-range").val();
+							var platform = form.find("input[type=radio][name=platform-radio]:checked").attr("data-text");
+							var year = form.find("#myxp-year").val();
+							$(".cancel-btn").click();
+						}
+					});
+					$(".save-watched-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var gameid = $(this).attr("data-gameid");
+							var form = $(this).parent();
+							var quote = form.find("#myxp-quote").val();
+							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+							var watchedType = form.find("input[type=radio][name=watched-radio]:checked").attr("data-text");
+							var url = form.find("#watchedurl").val();
+							$(".cancel-btn").click();
+						}
+					});
+					$(".save-post-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var form = $(this).parent();
+							var quote = form.find("#myxp-quote").val();
+							$(".cancel-btn").click();
+						}
 					});
 				},
 					error: function(x, t, m) {
@@ -670,6 +716,37 @@ function GameCardAction(action, gameid){
 					timeout:45000
 				});
 		}
+	}
+}
+
+function ToggleSaveButtonPlayed(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var completion = form.find("#xp-percentage-played-range").val();
+	var platform = form.find("input[type=radio][name=platform-radio]:checked").attr("data-text");
+	if(emoji != undefined && completion != 0 && platform != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
+}
+
+function ToggleSaveButtonPost(form){
+	var post = form.find("#myxp-post").val();
+	if(post != ""){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
+}
+
+function ToggleSaveButtonWatched(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var url = form.find("#watchedurl").val();
+	var watchedType = form.find("input[type=radio][name=watched-radio]:checked").attr("data-text");
+	if(emoji != undefined && url != "" && url != undefined && watchedType != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
 	}
 }
 
