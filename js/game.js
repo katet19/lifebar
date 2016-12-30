@@ -713,6 +713,22 @@ function GameCardAction(action, gameid){
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var watchedType = form.find("input[type=radio][name=watched-radio]:checked").attr("data-text");
 							var url = form.find("#watchedurl").val();
+							var year = form.find("#myxp-year").val();
+							$.ajax({ url: '../php/webService.php',
+								data: {action: "SaveWatchedExperience", gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
 							$(".cancel-btn").click();
 						}
 					});

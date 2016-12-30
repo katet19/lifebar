@@ -634,7 +634,7 @@ function DisplayGameCardXPDetailSummary($xp){
 					<?php } ?>
 				</div>
 				<div class="game-card-summary-prog-bar-container">
-					<div class="game-card-summary-prog-bar tier<?php echo $xp->_tier; ?>BG" style='width:<?php echo $percent; ?>%'></div>
+					<div class="game-card-summary-prog-bar tier<?php echo $xp->_playedxp[0]->_archivetier; ?>BG" style='width:<?php echo $percent; ?>%'></div>
 				</div>
   	  <?php }else if(sizeof($xp->_watchedxp) > 0){ 
   	  		$length = "";
@@ -659,7 +659,7 @@ function DisplayGameCardXPDetailSummary($xp){
     		?>
 			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 				<div class="game-card-summary-watch">
-					<i class="material-icons tierTextColor<?php echo $xp->_tier; ?>" style='font-size:1.75em;vertical-align: middle;'><?php echo $icon; ?></i>
+					<i class="material-icons tierTextColor<?php echo $watched->_archivetier; ?>" style='font-size:1.75em;vertical-align: middle;'><?php echo $icon; ?></i>
 					<span class="game-card-summary-watch-length"><?php echo $length; ?></span>
 				</div>
 			</div>

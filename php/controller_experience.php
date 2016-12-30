@@ -2529,10 +2529,10 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 			
 	$platformids = GetPlatformIDs($platform);
 	
-	$date = $year;
+	$date = $year."-".date("m")."-".date("d");
 		
 	if (sizeof($quickxp->_playedxp) == 0){
-		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids')";
 		$result = $mysqli->query($insert);
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
@@ -2545,7 +2545,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$update.')');
 		}else{
-			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids')";
 			$result = $mysqli->query($insert);
 			if($result == '' || $result == false){
 				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
@@ -2600,7 +2600,7 @@ function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid,
 	Close($mysqli, $result);
 }
 
-function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $quarter, $year){
+function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $length, $year){
 	$mysqli = Connect();
 	$newXP = "true";
 	
@@ -2632,16 +2632,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	else if($length == "watchedpromotional")
 		$length = "Watched promotional gameplay";
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year."-".date("m")."-".date("d");
 	
 	
 	$url = NormalizeVideoURLs($url);
@@ -2657,7 +2648,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	return $newXP;
 }
 
-function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, $year){
+function UpdateWatchedXP($id, $user, $gameid, $url, $length, $year){
 	$mysqli = Connect();
 
 	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
@@ -2681,19 +2672,10 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 	else if($length == "watchedpromotional")
 		$length = "Watched promotional gameplay";
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year."-".date("m")."-".date("d");
 	
 	$url = NormalizeVideoURLs($url);
-	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length',`Source`='$source' where `ID` = '$id'");
+	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length' where `ID` = '$id'");
 	Close($mysqli, $result);
 }
 

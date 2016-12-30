@@ -235,7 +235,14 @@ function ShowXPSelector($xp){
 		<li>
 			<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">gamepad</i>Add a <b>played</b> experience</div>
 			<div class="collapsible-body">
-				<?php ShowXPPlayedSelector($xp); ?>
+				<?php 
+				if(sizeof($xp->_playedxp) > 0){
+					$temp = $xp->_playedxp[0];
+					$subexp = new SubExperience('','','',$xp->_game->_id,'','','','','','','','',$temp->_date,$temp->_completed,'',$temp->_platform,$temp->_platformids,'','','','','','','','');
+					ShowXPPlayedSelector($xp, $subexp); 
+				}else{
+					ShowXPPlayedSelector($xp); 
+				}?>
 			</div>
 		</li>
 		<li>
@@ -260,9 +267,9 @@ function ShowXPSelector($xp){
 			foreach($xp->_playedxp as $played){
 			?>
 				<li>
-					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">gamepad</i>Played <?php echo $played->_completed;?>%</div>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $played->_archivetier; ?>">gamepad</i>Played <?php echo $played->_completed;?>%</div>
 					<div class="collapsible-body">
-						<?php ShowXPPlayedSelector($xp); ?>
+						<?php ShowXPPlayedSelector($xp, $played); ?>
 					</div>
 				</li>
 			<?php
@@ -289,9 +296,9 @@ function ShowXPSelector($xp){
     			}
 			?>
 				<li>
-					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon"><?php echo $icon; ?></i> <?php echo $length; ?></div>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $watched->_archivetier; ?>"><?php echo $icon; ?></i> <?php echo $length; ?></div>
 					<div class="collapsible-body">
-						<?php ShowXPWatchedSelector($xp); ?>
+						<?php ShowXPWatchedSelector($xp, $watched); ?>
 					</div>
 				</li>
 			<?php
@@ -301,12 +308,12 @@ function ShowXPSelector($xp){
 	<?php
 }
 
-function ShowXPPlayedSelector($xp){
-	ShowEmojiSelector();
-	ShowXPQuote();
-	ShowPercentagePlayed();
-	ShowXPPlatformSelector($xp);
-	ShowAdvancedOptions($xp);
+function ShowXPPlayedSelector($xp, $specificPlayed = null){
+	ShowEmojiSelector($specificPlayed);
+	ShowXPQuote($specificPlayed);
+	ShowPercentagePlayed($specificPlayed);
+	ShowXPPlatformSelector($xp, $specificPlayed);
+	ShowAdvancedOptions($xp, $specificPlayed);
 	?>
 	<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
@@ -314,19 +321,19 @@ function ShowXPPlayedSelector($xp){
 	
 }
 
-function ShowXPWatchedSelector($xp){
-	ShowEmojiSelector();
-	ShowXPQuote();
-	ShowWatchType();
-	ShowWatchedURL();
-	ShowAdvancedOptions($xp);
+function ShowXPWatchedSelector($xp, $specificPlayed = null){
+	ShowEmojiSelector(specificPlayed);
+	ShowXPQuote(specificPlayed);
+	ShowWatchType($specificPlayed);
+	ShowWatchedURL($specificPlayed);
+	ShowAdvancedOptions($xp, $specificPlayed);
 	?>
 	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 }
 
-function ShowWatchedURL(){ ?>
+function ShowWatchedURL($specificPlayed = null){ ?>
 	<div class="row">
 		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
 			<input id="watchedurl" type="text">
@@ -336,22 +343,24 @@ function ShowWatchedURL(){ ?>
 	<?php
 }
 
-function ShowWatchType(){
-	$length = $watched->_length;
-	if($watched->_length == "Watched a speed run"){
-		$icon = "directions_walk";
-	}else if($watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
-		$icon = "beenhere";
-	}else if($watched->_length == "Watched competitive play"){
-		$icon = "headset_mic";
-	}else if($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less"){
-		$icon = "videogame_asset";
-	}else if($watched->_length == "Watched promotional gameplay"){
-		$icon = "movie_creation";
-	}else if($watched->_length == "Watched a developer diary"){
-		$icon = "class";
-	}else{
-		$icon = "theaters";
+function ShowWatchType($specificPlayed = null){
+	if($specificPlayed != null && $specificPlayed->_length != ''){
+		$length = $specificPlayed->_length;
+		if($watched->_length == "Watched a speed run"){
+			$icon = "directions_walk";
+		}else if($watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+			$icon = "beenhere";
+		}else if($watched->_length == "Watched competitive play"){
+			$icon = "headset_mic";
+		}else if($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less"){
+			$icon = "videogame_asset";
+		}else if($watched->_length == "Watched promotional gameplay"){
+			$icon = "movie_creation";
+		}else if($watched->_length == "Watched a developer diary"){
+			$icon = "class";
+		}else{
+			$icon = "theaters";
+		}
 	}
 	?>
 	<div class="row">
@@ -370,7 +379,7 @@ function ShowWatchType(){
 				$i = 0;
 				while($i < 7){ ?>
 					<div class="col s12" style="margin-bottom:5px;">
-						<input type="radio" id="<?php echo $icons[$i];?>" name="watched-radio" class="myxp-platforms" data-text="<?php echo $types[$i];?>" />
+						<input type="radio" id="<?php echo $icons[$i];?>" name="watched-radio" class="myxp-platforms" data-text="<?php echo $types[$i];?>" <?php if($types[$i] == $length){ echo 'checked'; } ?> />
 						<label for="<?php echo $icons[$i];?>" style='line-height: 15px;height:35px;'><i class='material-icons' style='padding-right: 5px;position: relative;top: -5px;vertical-align: text-top;'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
 					</div>
 				<?php $i++;
@@ -389,20 +398,20 @@ function ShowXPPostSelector($xp){
 	<?php
 }
 
-function ShowAdvancedOptions($xp){
+function ShowAdvancedOptions($xp, $subxp = null){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Optional Details</div>
 			<div class="modal-xp-advanced-options-container">
-				<?php ShowDateSelector($xp); ?>
+				<?php ShowDateSelector($xp, $subxp); ?>
 			</div>
 		</div>
 	</div>
 	<?php
 }
 
-function ShowDateSelector($xp){
+function ShowDateSelector($xp, $subxp = null){
 	?>
 	<div class="col s12">
 		<div class="modal-xp-header">Which year was this experience?</div>
@@ -429,7 +438,7 @@ function ShowDateSelector($xp){
 	<?php
 }
 
-function ShowXPPlatformSelector($xp){ 
+function ShowXPPlatformSelector($xp, $subxp = null){ 
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
@@ -438,18 +447,23 @@ function ShowXPPlatformSelector($xp){
 		<div class="col s10 offset-s1" style='text-align: left;'>
 			<div class="row>">
 				<?php $platforms = explode("\n", $xp->_game->_platforms); 
-				$myplatforms = explode("\n", $xp->_platform);
+				if($subxp != null && $subxp->_platform != ''){
+					$myplatforms = explode("\n", $subxp->_platform);
+					$myplatforms = array_filter($myplatforms);
+				}else{
+					$myplatforms = [];
+				}
 				$platforms = array_filter($platforms);
-				$myplatforms = array_filter($myplatforms);
+				
 				foreach($platforms as $platform){ 
-					if($platform != ""){ ?>
+					if($platform != ""){ $platform = str_replace(array("\n", "\t", "\r"), '', $platform); ?>
 						<div class="col s6" style="margin-bottom:5px;">
 							<input type="radio" id="<?php echo $platform;?>" name="platform-radio" class="myxp-platforms" data-text="<?php echo $platform;?>" 
 								<?php 
 								if(sizeof($myplatforms) > 0){
 									foreach($myplatforms as $myplatform){
 										if(trim($myplatform) != ""){
-											if(stristr(trim($platform), trim($myplatform))){ echo 'checked'; }
+											if(stristr($platform, str_replace(array("\n", "\t", "\r"), '', $myplatform))){ echo 'checked'; }
 										}
 									} 
 								}else if(sizeof($platforms) == 1){ echo 'checked'; } ?>
@@ -464,7 +478,7 @@ function ShowXPPlatformSelector($xp){
 	<?php
 }
 
-function ShowPercentagePlayed(){
+function ShowPercentagePlayed($subxp = null){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
@@ -472,19 +486,19 @@ function ShowPercentagePlayed(){
 		</div>
 		<div class="input-field col s10 offset-s1">
 			<p class="range-field" style='margin: 1rem 0 0;padding: 0.5rem 0 0;'>
-				<input type="range" id="xp-percentage-played-range" min="0" max="100" value="0"/>
+				<input type="range" id="xp-percentage-played-range" min="0" max="100" <?php if($subxp != null && $subxp->_completed > 0){ echo "value='".$subxp->_completed."'"; }else{ ?> value="0" <?php } ?>/>
 			</p>
 		</div>
 	</div>
 	<?php
 }
 
-function ShowXPQuote(){
+function ShowXPQuote($subxp = null){
 	?>
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
-		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"></textarea>
-		<label for="myxp-quote" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Summarize your experience (not required)</label>
+		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"><?php if($subxp != null && $subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
+		<label for="myxp-quote" <?php if($subxp != null && $subxp->_archivequote != ""){ echo "class='active'"; } ?> >Summarize your experience (not required)</label>
 		</div>
 	</div>
 	<?php
@@ -501,25 +515,25 @@ function ShowXPPost($withSpace = false){
 	<?php
 }
 
-function ShowEmojiSelector(){
+function ShowEmojiSelector($subxp = null){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header">How was the overall experience?</div>
 		</div>
-		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5" data-tier="5">
+		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5 <?php if($subxp != null & $subxp->_archivetier == 5){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="5">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor4" data-tier="4">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor4 <?php if($subxp != null & $subxp->_archivetier == 4){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="4">
 			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor3" data-tier="3">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor3 <?php if($subxp != null & $subxp->_archivetier == 3){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="3">
 			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor2" data-tier="2">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor2 <?php if($subxp != null & $subxp->_archivetier == 2){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="2">
 			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor1" data-tier="1">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor1 <?php if($subxp != null & $subxp->_archivetier == 1){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="1">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
 		</div>
 	</div>
