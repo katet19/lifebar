@@ -672,10 +672,10 @@ function GameCardAction(action, gameid){
 					$("input[type=radio][name=watched-radio]").change(function(){
 						ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
 					});
-					$("#watchedurl").change(function(){
+					$("#watchedurl").on('keyup', function(){
 						ToggleSaveButtonWatched($(this).parent().parent().parent());
 					});
-					$("#myxp-post").change(function(){
+					$("#myxp-post").on('keyup', function(){
 						ToggleSaveButtonPost($(this).parent().parent().parent());
 					});
 					$(".save-played-xp").on('click', function(){
