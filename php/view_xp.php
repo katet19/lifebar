@@ -379,8 +379,8 @@ function ShowWatchType($specificPlayed = null){
 				$i = 0;
 				while($i < 7){ ?>
 					<div class="col s12" style="margin-bottom:5px;">
-						<input type="radio" id="<?php echo $icons[$i];?>" name="watched-radio" class="myxp-platforms" data-text="<?php echo $types[$i];?>" <?php if($types[$i] == $length){ echo 'checked'; } ?> />
-						<label for="<?php echo $icons[$i];?>" style='line-height: 15px;height:35px;'><i class='material-icons' style='padding-right: 5px;position: relative;top: -5px;vertical-align: text-top;'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
+						<input type="radio" id="<?php echo $icons[$i].$specificPlayed->_id;?>" name="watched-radio-<?php echo $specificPlayed->_id; ?>" class="myxp-platforms  <?php if($types[$i] == $length){ echo 'myxp-platform-checked'; } ?>" data-text="<?php echo $types[$i];?>" />
+						<label for="<?php echo $icons[$i].$specificPlayed->_id;?>" style='line-height: 15px;height:35px;'><i class='material-icons' style='padding-right: 5px;position: relative;top: -5px;vertical-align: text-top;'><?php echo $icons[$i];?></i> <?php echo $types[$i];?></label>
 					</div>
 				<?php $i++;
 				} ?>

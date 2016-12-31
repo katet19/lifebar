@@ -712,7 +712,7 @@ function GameCardAction(action, gameid){
 							var form = $(this).parent();
 							var quote = form.find("#myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
-							var watchedType = form.find("input[type=radio][name=watched-radio]:checked").attr("data-text");
+							var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
 							var url = form.find("#watchedurl").val();
 							var year = form.find("#myxp-year").val();
 							$.ajax({ url: '../php/webService.php',
@@ -777,7 +777,7 @@ function ToggleSaveButtonPost(form){
 function ToggleSaveButtonWatched(form){
 	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 	var url = form.find("#watchedurl").val();
-	var watchedType = form.find("input[type=radio][name=watched-radio]:checked").attr("data-text");
+	var watchedType = form.find(".myxp-platforms:checked").attr("data-text");
 	if(emoji != undefined && url != "" && url != undefined && watchedType != undefined){
 		form.find(".save-btn").removeClass("disabled");
 	}else{
