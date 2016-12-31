@@ -2509,8 +2509,8 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 	
 	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
 	if(sizeof($quickxp->_playedxp) > 0){
-		if($quote == '')
-			$quote = $quickxp->_quote;
+		//if($quote == '')
+		//	$quote = $quickxp->_quote;
 		if($tier <= 0)
 			$tier = $quickxp->_tier;
 		if($completed == '')

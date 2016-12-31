@@ -639,6 +639,7 @@ function GameCardAction(action, gameid){
 					$("#gameminiInnerContainer").html(output);
 					$('.collapsible').collapsible();
 					$('textarea#myxp-quote').characterCounter();
+					$(".myxp-platform-checked").each(function(){ $(this).click(); });
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
 					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
 						var windowWidth = $(window).width();
@@ -685,7 +686,7 @@ function GameCardAction(action, gameid){
 							var quote = form.find("#myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var completion = form.find("#xp-percentage-played-range").val();
-							var platform = form.find("input[type=radio][name=platform-radio]:checked").attr("data-text");
+							var platform = form.find(".myxp-platforms:checked").attr("data-text");
 							var year = form.find("#myxp-year").val();
 							$.ajax({ url: '../php/webService.php',
 								data: {action: "SavePlayedExperience", gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year  },
@@ -756,7 +757,7 @@ function GameCardAction(action, gameid){
 function ToggleSaveButtonPlayed(form){
 	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 	var completion = form.find("#xp-percentage-played-range").val();
-	var platform = form.find("input[type=radio][name=platform-radio]:checked").attr("data-text");
+	var platform = form.find(".myxp-platforms:checked").attr("data-text");
 	if(emoji != undefined && completion != 0 && platform != undefined){
 		form.find(".save-btn").removeClass("disabled");
 	}else{

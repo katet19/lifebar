@@ -238,7 +238,7 @@ function ShowXPSelector($xp){
 				<?php 
 				if(sizeof($xp->_playedxp) > 0){
 					$temp = $xp->_playedxp[0];
-					$subexp = new SubExperience('','','',$xp->_game->_id,'','','','','','','','',$temp->_date,$temp->_completed,'',$temp->_platform,$temp->_platformids,'','','','','','','','');
+					$subexp = new SubExperience($temp->_id."a",'','',$xp->_game->_id,'','','','','','','','',$temp->_date,$temp->_completed,'',$temp->_platform,$temp->_platformids,'','','','','','','','');
 					ShowXPPlayedSelector($xp, $subexp); 
 				}else{
 					ShowXPPlayedSelector($xp); 
@@ -456,19 +456,18 @@ function ShowXPPlatformSelector($xp, $subxp = null){
 				$platforms = array_filter($platforms);
 				
 				foreach($platforms as $platform){ 
-					if($platform != ""){ $platform = str_replace(array("\n", "\t", "\r"), '', $platform); ?>
+					if($platform != ""){ $platform = str_replace(array("\n", "\t", "\r"), '', $platform);
+						$checked = "";
+						if(sizeof($myplatforms) > 0){
+							foreach($myplatforms as $myplatform){
+								if(trim($myplatform) != ""){
+									if(stristr($platform, str_replace(array("\n", "\t", "\r"), '', $myplatform))){ $checked= 'myxp-platform-checked'; }
+								}
+							} 
+						}else if(sizeof($platforms) == 1){ $checked = 'myxp-platform-checked'; } ?>
 						<div class="col s6" style="margin-bottom:5px;">
-							<input type="radio" id="<?php echo $platform;?>" name="platform-radio" class="myxp-platforms" data-text="<?php echo $platform;?>" 
-								<?php 
-								if(sizeof($myplatforms) > 0){
-									foreach($myplatforms as $myplatform){
-										if(trim($myplatform) != ""){
-											if(stristr($platform, str_replace(array("\n", "\t", "\r"), '', $myplatform))){ echo 'checked'; }
-										}
-									} 
-								}else if(sizeof($platforms) == 1){ echo 'checked'; } ?>
-							/>
-							<label for="<?php echo $platform;?>" style='line-height: 15px;'><?php echo $platform;?></label>
+							<input type="radio" id="<?php echo trim($platform.$subxp->_id);?>" name="platform-radio-<?php echo $subxp->_id; ?>" data-text="<?php echo $platform;?>" class="myxp-platforms  <?php echo $checked; ?>"/>
+							<label for="<?php echo trim($platform.$subxp->_id);?>" style='line-height: 15px;'><?php echo $platform;?></label>
 						</div>
 				<?php 	} 
 				} ?>
