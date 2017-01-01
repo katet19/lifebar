@@ -661,19 +661,21 @@ function GameCardAction(action, gameid){
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
-						ToggleSaveButtonPlayed($(this).parent().parent());
-						ToggleSaveButtonWatched($(this).parent().parent());
+						if($(this).parent().parent().find(".xp-percentage-played-range").length > 0)
+							ToggleSaveButtonPlayed($(this).parent().parent());
+						else
+							ToggleSaveButtonWatched($(this).parent().parent());
 					});
-					$("#xp-percentage-played-range").change(function(){
+					$(".xp-percentage-played-range").change(function(){
 						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent());
 					});
-					$("input[type=radio][name=platform-radio]").change(function(){
-						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
+					$(".myxp-platforms").change(function(){
+						if($(this).parent().parent().parent().parent().parent().find(".xp-percentage-played-range").length > 0)
+							ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
+						else
+							ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
 					});
-					$("input[type=radio][name=watched-radio]").change(function(){
-						ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
-					});
-					$("#watchedurl").on('keyup', function(){
+					$(".watchedurl").on('keyup', function(){
 						ToggleSaveButtonWatched($(this).parent().parent().parent());
 					});
 					$("#myxp-post").on('keyup', function(){
@@ -756,7 +758,7 @@ function GameCardAction(action, gameid){
 
 function ToggleSaveButtonPlayed(form){
 	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
-	var completion = form.find("#xp-percentage-played-range").val();
+	var completion = form.find(".xp-percentage-played-range").val();
 	var platform = form.find(".myxp-platforms:checked").attr("data-text");
 	if(emoji != undefined && completion != 0 && platform != undefined){
 		form.find(".save-btn").removeClass("disabled");
@@ -776,7 +778,7 @@ function ToggleSaveButtonPost(form){
 
 function ToggleSaveButtonWatched(form){
 	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
-	var url = form.find("#watchedurl").val();
+	var url = form.find(".watchedurl").val();
 	var watchedType = form.find(".myxp-platforms:checked").attr("data-text");
 	if(emoji != undefined && url != "" && url != undefined && watchedType != undefined){
 		form.find(".save-btn").removeClass("disabled");

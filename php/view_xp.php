@@ -322,8 +322,8 @@ function ShowXPPlayedSelector($xp, $specificPlayed = null){
 }
 
 function ShowXPWatchedSelector($xp, $specificPlayed = null){
-	ShowEmojiSelector(specificPlayed);
-	ShowXPQuote(specificPlayed);
+	ShowEmojiSelector($specificPlayed);
+	ShowXPQuote($specificPlayed);
 	ShowWatchType($specificPlayed);
 	ShowWatchedURL($specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
@@ -336,7 +336,7 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 function ShowWatchedURL($specificPlayed = null){ ?>
 	<div class="row">
 		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
-			<input id="watchedurl" type="text">
+			<input id="watchedurl" class='watchedurl' type="text">
 			<label for="watchedurl">Watched URL address (http)</label>
 		</div>	
 	</div>
@@ -375,7 +375,7 @@ function ShowWatchType($specificPlayed = null){
 				$icons[] = "videogame_asset"; $types[] = "Watched gameplay";
 				$icons[] = "movie_creation"; $types[] = "Watched promotional gameplay";
 				$icons[] = "class"; $types[] = "Watched a developer diary";
-				$icons[] = "theaters"; $types[] = "Watched a trailer";
+				$icons[] = "theaters"; $types[] = "Watched trailer(s)";
 				$i = 0;
 				while($i < 7){ ?>
 					<div class="col s12" style="margin-bottom:5px;">
@@ -485,7 +485,7 @@ function ShowPercentagePlayed($subxp = null){
 		</div>
 		<div class="input-field col s10 offset-s1">
 			<p class="range-field" style='margin: 1rem 0 0;padding: 0.5rem 0 0;'>
-				<input type="range" id="xp-percentage-played-range" min="0" max="100" <?php if($subxp != null && $subxp->_completed > 0){ echo "value='".$subxp->_completed."'"; }else{ ?> value="0" <?php } ?>/>
+				<input type="range" id="xp-percentage-played-range" class="xp-percentage-played-range" min="0" max="100" <?php if($subxp != null && $subxp->_completed > 0){ echo "value='".$subxp->_completed."'"; }else{ ?> value="0" <?php } ?>/>
 			</p>
 		</div>
 	</div>
