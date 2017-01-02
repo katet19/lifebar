@@ -572,7 +572,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 	        <div class="card-content">
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s12 game-card-action-pick" data-action="tier">
+					<div class="col s12 game-card-action-pick">
 						<?php if($xp->_tier > 0){ ?>
 							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 								<?php DisplayStarSequence($xp->_tier, true); ?>

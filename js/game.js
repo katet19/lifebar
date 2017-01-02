@@ -206,8 +206,6 @@ function AttachGameEvents(currentTab){
 		});
 	}
 
-	AttachGameCardEvents();
-	
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
@@ -311,7 +309,8 @@ function AttachGameEvents(currentTab){
 
 function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
-	$(".game-card-action-pick").on("click", function(){
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
 		if($(this).attr("data-action") == "xp")
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
@@ -690,11 +689,13 @@ function GameCardAction(action, gameid){
 							var completion = form.find("#xp-percentage-played-range").val();
 							var platform = form.find(".myxp-platforms:checked").attr("data-text");
 							var year = form.find("#myxp-year").val();
+							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
 								data: {action: "SavePlayedExperience", gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
+									FinishGameCardUpdate(gameid);
 								},
 								error: function(x, t, m) {
 									if(t==="timeout") {
@@ -717,11 +718,13 @@ function GameCardAction(action, gameid){
 							var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
 							var url = form.find("#watchedurl").val();
 							var year = form.find("#myxp-year").val();
+							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
 								data: {action: "SaveWatchedExperience", gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
+									FinishGameCardUpdate(gameid);
 								},
 								error: function(x, t, m) {
 									if(t==="timeout") {
@@ -740,11 +743,13 @@ function GameCardAction(action, gameid){
 							var gameid = $(this).attr("data-gameid");
 							var form = $(this).parent();
 							var quote = form.find("#myxp-post").val();
+							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
 								data: {action: "SavePostXP", gameid: gameid, quote: quote },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
+									FinishGameCardUpdate(gameid);
 								},
 								error: function(x, t, m) {
 									if(t==="timeout") {
@@ -801,6 +806,38 @@ function ToggleSaveButtonWatched(form){
 	}else{
 		form.find(".save-btn").addClass("disabled");
 	}
+}
+
+function InitializeGameCardUpdate(gameid){
+	$(".game-discover-card").each(function(){
+		if($(this).attr("data-gameid") == gameid){
+			var container = $(this).find(".game-nav-title");
+			container.html("<div class='game-card-action-pick' style='text-align:center;'><div class='game-card-summary-add-xp'><i class='material-icons game-card-summary-add-xp-icon'>save</i><span class='game-card-summary-add-xp-text'>Saving</span></div></div>");
+		}
+	});
+}
+
+function FinishGameCardUpdate(gameid){
+	$(".game-discover-card").each(function(){
+		if($(this).attr("data-gameid") == gameid){
+			var container = $(this).find(".game-nav-title");
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "UpdateGameCard", gameid: gameid },
+				type: 'post',
+				success: function(output) {
+					container.html(output);
+				},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
+		}
+	});
 }
 
 function SwitchGameContent(elem){

@@ -346,12 +346,12 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 	ShowWatchedURL($specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
-		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
+		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
 		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Close</div>
 	<?php
 	}else{
 	?>
-		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
+		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
 	<?php
 	}

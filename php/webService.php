@@ -504,6 +504,10 @@
 				echo CalculateXPGain("post", $isNewXP);
 			}
 		}
+		if($_POST['action'] =='UpdateGameCard' && $_SESSION['logged-in']->_id > 0){
+			$xp = GetExperienceForUserCompleteOrEmptyGame($_SESSION['logged-in']->_id, $_POST['gameid']);
+			DisplayGameCardXPDetailSummary($xp);
+		}
 		if($_POST['action'] =='SaveWatchedVideo' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
