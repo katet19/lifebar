@@ -2559,6 +2559,30 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 	return $newXP;
 }
 
+function SavePostXP($user, $gameid, $quote){
+	$mysqli = Connect();
+	$newXP = "true";
+	
+	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
+	if(sizeof($quickxp->_playedxp) > 0){
+		$newXP = "false";
+	}
+
+	$quote = mysqli_real_escape_string($mysqli, $quote);		
+		
+	$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`Type`) values ('$user','$expid','$gameid','$quote','Post')";
+	$result = $mysqli->query($insert);
+	if($result == '' || $result == false){
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePostXP - ('.$insert.')');
+	}else{
+		CreateEventForPostedXP($user, $gameid, $quote);
+	}
+
+	Close($mysqli, $result);
+	
+	return $newXP;
+}
+
 function GetSubXPID($userid, $gameid, $mysqli){
 	if($result = $mysqli->query("select `ID` from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = '".$gameid."' order by `ID` desc limit 0,1")){
 		while($row = mysqli_fetch_array($result)){
@@ -2596,6 +2620,14 @@ function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid,
 		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`S_XPID`) values ('$user','$gameid','ADDED','$tier','$quote','$sxpid')");
 	else
 		$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`,`S_XPID`) values ('$user','$gameid','UPDATE','$tier','$quote','$sxpid')");
+		
+	Close($mysqli, $result);
+}
+
+function CreateEventForPostedXP($user, $gameid,$quote){
+	$mysqli = Connect();
+	$sxpid = GetSubXPID($user, $gameid, $mysqli);
+	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`,`S_XPID`) values ('$user','$gameid','QUOTECHANGED','$quote','$sxpid')");
 		
 	Close($mysqli, $result);
 }

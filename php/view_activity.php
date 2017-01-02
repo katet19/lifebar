@@ -684,7 +684,7 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-action-description"></i></div>
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>description</i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">

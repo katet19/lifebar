@@ -737,8 +737,24 @@ function GameCardAction(action, gameid){
 					});
 					$(".save-post-xp").on('click', function(){
 						if(!$(this).hasClass("disabled")){
+							var gameid = $(this).attr("data-gameid");
 							var form = $(this).parent();
-							var quote = form.find("#myxp-quote").val();
+							var quote = form.find("#myxp-post").val();
+							$.ajax({ url: '../php/webService.php',
+								data: {action: "SavePostXP", gameid: gameid, quote: quote },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
 							$(".cancel-btn").click();
 						}
 					});

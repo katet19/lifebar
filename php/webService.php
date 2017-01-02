@@ -494,6 +494,16 @@
 					echo CalculateXPGain("watched", $isNewXP);
 			}
 		}
+		if($_POST['action'] =='SavePostXP' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],'',0,'','','',$_POST['rank']);
+				$isNewXP = SavePostXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote']);
+				CalculateWeave($_SESSION['logged-in']->_id);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'XP', false);
+				echo "|****|";
+				echo CalculateXPGain("post", $isNewXP);
+			}
+		}
 		if($_POST['action'] =='SaveWatchedVideo' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				$new = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['viewsrc'], $_POST['viewing'],$_POST['quarter'],$_POST['year']);
