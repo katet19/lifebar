@@ -17,7 +17,7 @@ class Experience
 	public $_authenticxp;
 	public $_playedxp;
 	public $_watchedxp;
-	public $_earlyxp;
+	public $_postedxp;
 	public $_rank;
 	
 	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp, $rank) {

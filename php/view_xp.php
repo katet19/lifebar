@@ -303,6 +303,19 @@ function ShowXPSelector($xp){
 				</li>
 			<?php
 			}
+		}
+
+		if(sizeof($xp->_postedxp) > 0){
+			foreach($xp->_postedxp as $posted){
+			?>
+				<li>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">format_quote</i>Posted an update</div>
+					<div class="collapsible-body">
+						<?php ShowXPPostSelector($xp, $posted); ?>
+					</div>
+				</li>
+			<?php
+			}
 		} ?>
 	</ul>
 	<?php
@@ -401,8 +414,8 @@ function ShowWatchType($specificPlayed = null){
 	<?php
 }
 
-function ShowXPPostSelector($xp){
-	ShowXPPost(true);
+function ShowXPPostSelector($xp, $subxp = null){
+	ShowXPPost(true, $subxp);
 	?>
 	<div class="save-btn disabled modal-btn-pos save-post-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Post</div>
 	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
@@ -516,12 +529,12 @@ function ShowXPQuote($subxp = null){
 	<?php
 }
 
-function ShowXPPost($withSpace = false){
+function ShowXPPost($withSpace = false, $subxp = null){
 	?>
 	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea" length="140" maxlength="140"></textarea>
-		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($xp->_quote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea" length="140" maxlength="140"><?php if($subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
+		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($subxp->_archivequote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
 		</div>
 	</div>
 	<?php
