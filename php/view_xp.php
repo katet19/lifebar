@@ -314,11 +314,16 @@ function ShowXPPlayedSelector($xp, $specificPlayed = null){
 	ShowPercentagePlayed($specificPlayed);
 	ShowXPPlatformSelector($xp, $specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
-	?>
-	<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
-	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Close</div>
 	<?php
-	
+	}else{
+	?>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
+		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	<?php
+	}
 }
 
 function ShowXPWatchedSelector($xp, $specificPlayed = null){
@@ -327,10 +332,16 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 	ShowWatchType($specificPlayed);
 	ShowWatchedURL($specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
-	?>
-	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
-	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Close</div>
 	<?php
+	}else{
+	?>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
+		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	<?php
+	}
 }
 
 function ShowWatchedURL($specificPlayed = null){ ?>
@@ -493,11 +504,13 @@ function ShowPercentagePlayed($subxp = null){
 }
 
 function ShowXPQuote($subxp = null){
+	$existing = false;
+	if($subxp != null && $subxp->_archivequote != ""){ $existing = true; }
 	?>
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
-		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140"><?php if($subxp != null && $subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
-		<label for="myxp-quote" <?php if($subxp != null && $subxp->_archivequote != ""){ echo "class='active'"; } ?> >Summarize your experience (not required)</label>
+		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<label for="myxp-quote" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Summary (disabled)"; }else{ echo "Summarize your experience (not required)"; } ?></label>
 		</div>
 	</div>
 	<?php
@@ -520,19 +533,19 @@ function ShowEmojiSelector($subxp = null){
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header">How was the overall experience?</div>
 		</div>
-		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5 <?php if($subxp != null & $subxp->_archivetier == 5){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="5">
+		<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5 <?php if($subxp != null && $subxp->_archivetier == 5){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="5">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor4 <?php if($subxp != null & $subxp->_archivetier == 4){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="4">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor4 <?php if($subxp != null && $subxp->_archivetier == 4){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="4">
 			<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor3 <?php if($subxp != null & $subxp->_archivetier == 3){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="3">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor3 <?php if($subxp != null && $subxp->_archivetier == 3){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="3">
 			<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor2 <?php if($subxp != null & $subxp->_archivetier == 2){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="2">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor2 <?php if($subxp != null && $subxp->_archivetier == 2){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="2">
 			<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
 		</div>
-		<div class="col s2 modal-xp-emoji-icon tierTextColor1 <?php if($subxp != null & $subxp->_archivetier == 1){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="1">
+		<div class="col s2 modal-xp-emoji-icon tierTextColor1 <?php if($subxp != null && $subxp->_archivetier == 1){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="1">
 			<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
 		</div>
 	</div>
