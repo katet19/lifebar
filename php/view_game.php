@@ -664,6 +664,14 @@ function DisplayGameCardXPDetailSummary($xp){
 				</div>
 			</div>
 		<?php
+		}else if(sizeof($xp->_postedxp) > 0){ ?>
+			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
+				<div class="game-card-summary-watch">
+					<i class="material-icons" style='font-size:1.75em;vertical-align: middle;'>format_quote</i>
+					<span class="game-card-summary-watch-length">Posted <?php echo ConvertTimeStampToRelativeTime($xp->_postedxp[0]->_entereddate);?></span>
+				</div>
+			</div>
+		<?php
 		}else{ ?>
 			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 				<div class="game-card-summary-add-xp">
