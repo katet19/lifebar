@@ -267,7 +267,7 @@ function ShowXPSelector($xp){
 			foreach($xp->_playedxp as $played){
 			?>
 				<li>
-					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $played->_archivetier; ?>">gamepad</i>Played <?php echo $played->_completed;?>%</div>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $played->_archivetier; ?>">gamepad</i>Played <?php echo $played->_completed;?>% <div class="collapsible-header-time"><?php echo ConvertTimeStampToRelativeTime($played->_entereddate);?></div></div>
 					<div class="collapsible-body">
 						<?php ShowXPPlayedSelector($xp, $played); ?>
 					</div>
@@ -296,7 +296,7 @@ function ShowXPSelector($xp){
     			}
 			?>
 				<li>
-					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $watched->_archivetier; ?>"><?php echo $icon; ?></i> <?php echo $length; ?></div>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon tierTextColor<?php echo $watched->_archivetier; ?>"><?php echo $icon; ?></i> <?php echo $length; ?> <div class="collapsible-header-time"><?php echo ConvertTimeStampToRelativeTime($watched->_entereddate);?></div></div>
 					<div class="collapsible-body">
 						<?php ShowXPWatchedSelector($xp, $watched); ?>
 					</div>
@@ -309,7 +309,7 @@ function ShowXPSelector($xp){
 			foreach($xp->_postedxp as $posted){
 			?>
 				<li>
-					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">format_quote</i>Posted an update</div>
+					<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">format_quote</i>Posted <div class="collapsible-header-time"><?php echo ConvertTimeStampToRelativeTime($posted->_entereddate);?></div></div>
 					<div class="collapsible-body">
 						<?php ShowXPPostSelector($xp, $posted); ?>
 					</div>
