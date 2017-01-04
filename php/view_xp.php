@@ -360,8 +360,8 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 function ShowWatchedURL($specificPlayed = null){ ?>
 	<div class="row">
 		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
-			<input id="watchedurl" class='watchedurl' type="text">
-			<label for="watchedurl">Watched URL address (http)</label>
+			<input id="watchedurl" class='watchedurl' type="text" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "value='".$specificPlayed->_url."' disabled"; } ?> >
+			<label for="watchedurl" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "class='active'"; } ?>>Watched URL address (http)</label>
 		</div>	
 	</div>
 	<?php

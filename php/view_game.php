@@ -629,12 +629,13 @@ function DisplayGameCardXPDetailSummary($xp){
 					$percent = $xp->_playedxp[0]->_completed; ?>
 				<div class="game-card-summary-prog-title">
 					<?php if($percent < 100){ echo $percent."%"; }else{ ?>
-						<i class="material-icons" style='font-size: 1.5em;vertical-align: middle;margin-top: -2px;'>check</i>
-						<span>Completed</span>
+						<i class="material-icons" style='font-size: 1.5em;vertical-align: middle;margin-top: -2px;margin-left: 3px;'>check</i>
 					<?php } ?>
 				</div>
 				<div class="game-card-summary-prog-bar-container">
-					<div class="game-card-summary-prog-bar tier<?php echo $xp->_playedxp[0]->_archivetier; ?>BG" style='width:<?php echo $percent; ?>%'></div>
+					<div class="game-card-summary-prog-bar tier<?php echo $xp->_playedxp[0]->_archivetier; ?>BG" style='width:<?php echo $percent; ?>%'>
+						<?php if($percent >= 100){ ?><div style='color:white;font-size:0.7em;display:none;'>Completed</div><?php } ?>
+					</div>
 				</div>
   	  <?php }else if(sizeof($xp->_watchedxp) > 0){ 
   	  		$length = "";
