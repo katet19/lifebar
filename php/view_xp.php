@@ -522,7 +522,7 @@ function ShowXPQuote($subxp = null){
 	?>
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
-		<textarea id="myxp-quote" class="materialize-textarea" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<textarea id="myxp-quote" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="myxp-quote" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Summary (disabled)"; }else{ echo "Summarize your experience (not required)"; } ?></label>
 		</div>
 	</div>
@@ -533,7 +533,7 @@ function ShowXPPost($withSpace = false, $subxp = null){
 	?>
 	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea" length="140" maxlength="140"><?php if($subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-post" length="140" maxlength="140"><?php if($subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($subxp->_archivequote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
 		</div>
 	</div>

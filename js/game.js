@@ -684,7 +684,7 @@ function GameCardAction(action, gameid){
 						if(!$(this).hasClass("disabled")){
 							var gameid = $(this).attr("data-gameid");
 							var form = $(this).parent();
-							var quote = form.find("#myxp-quote").val();
+							var quote = form.find(".myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var completion = form.find("#xp-percentage-played-range").val();
 							var platform = form.find(".myxp-platforms:checked").attr("data-text");
@@ -713,7 +713,7 @@ function GameCardAction(action, gameid){
 						if(!$(this).hasClass("disabled")){
 							var gameid = $(this).attr("data-gameid");
 							var form = $(this).parent();
-							var quote = form.find("#myxp-quote").val();
+							var quote = form.find(".myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
 							var url = form.find("#watchedurl").val();
@@ -742,7 +742,7 @@ function GameCardAction(action, gameid){
 						if(!$(this).hasClass("disabled")){
 							var gameid = $(this).attr("data-gameid");
 							var form = $(this).parent();
-							var quote = form.find("#myxp-post").val();
+							var quote = form.find(".myxp-post").val();
 							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
 								data: {action: "SavePostXP", gameid: gameid, quote: quote },
@@ -789,7 +789,7 @@ function ToggleSaveButtonPlayed(form){
 }
 
 function ToggleSaveButtonPost(form){
-	var post = form.find("#myxp-post").val();
+	var post = form.find(".myxp-post").val();
 	if(post != ""){
 		form.find(".save-btn").removeClass("disabled");
 	}else{
