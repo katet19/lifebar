@@ -2440,13 +2440,15 @@ function CalculateXPGain($type, $isNew = true){
 	if($type == "star" && $isNew){
 		return "1";
 	}else if($type == "played" && $isNew){
-		return "3";
+		return "2";
 	}else if($type == "playedwithquote" && $isNew){
 		return "5";
 	}else if($type == "watched" && $isNew){
-		return "1";
-	}else if($type == "post" && $isNew){
 		return "2";
+	}else if($type == "watchedwithquote" && $isNew){
+		return "5";
+	}else if($type == "post" && $isNew){
+		return "3";
 	}else{
 		return "0";
 	}

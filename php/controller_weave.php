@@ -25,6 +25,7 @@ function CalculateWeave($userid){
 	$both = 0;
 	$totalAgrees = 0;
 	$totalFollowers = 0;
+	$lifebarXP = 0;
 
 	
 	//Get Tiers
@@ -61,6 +62,23 @@ function CalculateWeave($userid){
 	//Get Total XP
 	$total = $t1 + $t2 + $t3 + $t4 + $t5;
 	
+	//Get Lifebar XP
+	if ($result = $mysqli->query("select count(*) from `Experiences` exp where exp.`UserID` = '".$userid."' and exp.`Tier` > 0")) {
+		while($row = mysqli_fetch_array($result)){
+			$lifebarXP = $row['count(*)']; //1xp for each game that has a score given to it
+		}
+	}
+	if ($result = $mysqli->query("select `GameID` from `Sub-Experiences` exp where exp.`UserID` = '".$userid."' and (exp.`Type` = 'Played' or exp.`Type` = 'Watched') group by `GameID`")) {
+		while($row = mysqli_fetch_array($result)){
+		}
+		$lifebarXP = $lifebarXP + $result->num_rows * 2; //2xp for each game that has at least one detail
+	}
+	if ($result = $mysqli->query("select count(*) from `Experiences` exp where exp.`UserID` = '".$userid."' and exp.`Quote` != ''")) {
+		while($row = mysqli_fetch_array($result)){
+			$lifebarXP = $lifebarXP + $row['count(*)'] * 3; //3xp for each game that has a summary given to it
+		}
+	}
+
 	//Get Played
 	if ($result = $mysqli->query("select count(*) from `Sub-Experiences` exp where exp.`UserID` = '".$userid."' and exp.`Type` = 'Played' and exp.`Archived` = 'No'")) {
 		while($row = mysqli_fetch_array($result)){
@@ -119,7 +137,8 @@ function CalculateWeave($userid){
 				$watched,
 				$totalAgrees,
 				$totalFollowers,
-				$both
+				$both,
+				$lifebarXP
 				);
 				
 	 UpdateWeaveTimeStamp($userid);
@@ -147,7 +166,8 @@ function GetWeave($userid, $pconn = null){
 				$row["PercentageBoth"],
 				$row["PreferredXP"],
 				$row["SubPreferredXP1"],
-				$row["SubPreferredXP2"]
+				$row["SubPreferredXP2"],
+				$row['LifebarXP']
 				);
 		}
 	}
@@ -163,7 +183,7 @@ function UpdateWeaveTimeStamp($userid){
 	Close($mysqli, $result);
 }
 
-function UpdateWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth){
+function UpdateWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth, $lifebarXP){
 
 	$mysqli = Connect();
 	$doinsert = true;
@@ -173,18 +193,18 @@ function UpdateWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal,
 		}
 	}
 	if($doinsert){
-		InsertWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth);
+		InsertWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth, $lifebarXP);
 	}else{
-		$result = $mysqli->query("update `Weave` SET `TotalXP`='$totalXP',`RecentPW`='$recentPW',`RecentXP`='$recentXP',`OverallTierTotal`='$overallTierTotal',`PercentagePlayed`='$percentagePlayed',`PercentageWatched`='$percentageWatched',`TotalAgrees`='$totalAgrees',`TotalFollowers`='$totalFollowers', `PercentageBoth`='$percentageBoth' where `UserID` = '$userid'") or die;
+		$result = $mysqli->query("update `Weave` SET `TotalXP`='$totalXP',`RecentPW`='$recentPW',`RecentXP`='$recentXP',`OverallTierTotal`='$overallTierTotal',`PercentagePlayed`='$percentagePlayed',`PercentageWatched`='$percentageWatched',`TotalAgrees`='$totalAgrees',`TotalFollowers`='$totalFollowers', `PercentageBoth`='$percentageBoth', `LifebarXP`='$lifebarXP' where `UserID` = '$userid'") or die;
 		//print_r( mysqli_error($mysqli));
 	}
 	Close($mysqli, $result);
 }
 
-function InsertWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth){
+function InsertWeave($userid, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth, $lifebarXP){
 
 	$mysqli = Connect();
-	$mysqli->query("insert into `Weave` (`UserID`,`TotalXP`,`RecentPW`,`RecentXP`,`OverallTierTotal`,`PercentagePlayed`,`PercentageWatched`,`TotalAgrees`,`TotalFollowers`,`PercentageBoth`) VALUES ('$userid','$totalXP','$recentPW','$recentXP','$overallTierTotal','$percentagePlayed','$percentageWatched','$totalAgrees','$totalFollowers','$percentageBoth')");
+	$mysqli->query("insert into `Weave` (`UserID`,`TotalXP`,`RecentPW`,`RecentXP`,`OverallTierTotal`,`PercentagePlayed`,`PercentageWatched`,`TotalAgrees`,`TotalFollowers`,`PercentageBoth`,`LifebarXP`) VALUES ('$userid','$totalXP','$recentPW','$recentXP','$overallTierTotal','$percentagePlayed','$percentageWatched','$totalAgrees','$totalFollowers','$percentageBoth','$lifebarXP')");
 	//print_r( mysqli_error($mysqli));
 	Close($mysqli, $result);
 }

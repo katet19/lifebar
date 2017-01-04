@@ -46,7 +46,7 @@ function DisplayHeaderNavigation(){ ?>
 
 function DisplayLifebarForUser(){
 	$user = $_SESSION['logged-in'];
-	$total = $user->_weave->_totalXP;
+	$total = $user->_weave->_lifebarXP;
 	$currLevel = GetCurrentLevel($total);
 	$minmax = GetMinMaxLevel($currLevel);
 	$currWidth =  round((($total - $minmax[0]) / ($minmax[1] - $minmax[0])) * 100);
