@@ -328,13 +328,13 @@ function ShowXPPlayedSelector($xp, $specificPlayed = null){
 	ShowXPPlatformSelector($xp, $specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
-		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
-		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Close</div>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
 	}else{
 	?>
 		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
-		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+		<div class="cancel-btn modal-btn-pos cancel-xp" style='margin: 2em 0;'>Cancel</div>
 	<?php
 	}
 }
@@ -346,13 +346,13 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 	ShowWatchedURL($specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
-		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
-		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Close</div>
+		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
 	}else{
 	?>
 		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
-		<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+		<div class="cancel-btn modal-btn-pos cancel-xp" style='margin: 2em 0;'>Cancel</div>
 	<?php
 	}
 }
@@ -416,10 +416,15 @@ function ShowWatchType($specificPlayed = null){
 
 function ShowXPPostSelector($xp, $subxp = null){
 	ShowXPPost(true, $subxp);
-	?>
-	<div class="save-btn disabled modal-btn-pos save-post-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Post</div>
-	<div class="cancel-btn modal-btn-pos" style='margin: 2em 0;'>Cancel</div>
+	if($subxp != null && $subxp->_archivequote != ''){ ?>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $subxp->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
+	}else{
+	?>
+		<div class="save-btn disabled modal-btn-pos save-post-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Post</div>
+		<div class="cancel-btn modal-btn-pos cancel-xp" style='margin: 2em 0;'>Cancel</div>
+	<?php
+	}
 }
 
 function ShowAdvancedOptions($xp, $subxp = null){
@@ -530,11 +535,13 @@ function ShowXPQuote($subxp = null){
 }
 
 function ShowXPPost($withSpace = false, $subxp = null){
+	$existing = false;
+	if($subxp != null && $subxp->_archivequote != ""){ $existing = true; }
 	?>
 	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-post" length="140" maxlength="140"><?php if($subxp->_archivequote != ""){ echo $subxp->_archivequote; } ?></textarea>
-		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($subxp->_archivequote != ""){ echo "class='active'"; } ?> >Enter your post here</label>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Post (disabled)"; }else{ echo "Enter your post here"; } ?></label>
 		</div>
 	</div>
 	<?php
