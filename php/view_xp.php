@@ -328,8 +328,8 @@ function ShowXPPlayedSelector($xp, $specificPlayed = null){
 	ShowXPPlatformSelector($xp, $specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
-		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>'>Update Details</div>
-		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
+		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
 	}else{
 	?>
@@ -346,8 +346,8 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 	ShowWatchedURL($specificPlayed);
 	ShowAdvancedOptions($xp, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
-		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>'>Update Details</div>
-		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
+		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
 	}else{
 	?>

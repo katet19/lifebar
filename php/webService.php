@@ -481,6 +481,12 @@
 					echo CalculateXPGain("played", $isNewXP);
 			}
 		}
+		if($_POST['action'] =='UpdatePlayedExperience' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['xpid'] > 0){
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
+				UpdatePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'], $_POST['xpid'], $_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['year'],$_POST['platform']);
+			}
+		}
 		if($_POST['action'] =='SaveWatchedExperience' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
@@ -492,6 +498,12 @@
 					echo CalculateXPGain("watchedwithquote", $isNewXP);
 				else
 					echo CalculateXPGain("watched", $isNewXP);
+			}
+		}
+		if($_POST['action'] =='UpdateWatchedExperience' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['xpid'] > 0){
+				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
+				UpdateWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['xpid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['watchedType'],$_POST['year']);
 			}
 		}
 		if($_POST['action'] =='SavePostXP' && $_SESSION['logged-in']->_id > 0){
@@ -539,7 +551,8 @@
 		if($_POST['action'] == 'RemoveSubExperience'){
 			RemoveSubExperience($_POST['subxpid'], $_POST['gameid']);
 			CalculateWeave($_SESSION['logged-in']->_id);
-			DisplayMyXP($_POST['gameid']);
+			echo "|****|";
+			echo CalculateXPGain("remove", true);
 		}
 		if($_POST['action'] == 'RemoveEvent'){
 			$gameid = RemoveEvent($_POST['eventid'], $_SESSION['logged-in']->_id);

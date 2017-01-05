@@ -639,13 +639,36 @@ function GameCardAction(action, gameid){
 					$('.collapsible').collapsible();
 					$('textarea#myxp-quote').characterCounter();
 					$(".myxp-platform-checked").each(function(){ $(this).click(); });
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
+					$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
+					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
 						var windowWidth = $(window).width();
 						HideFocus();
 						$("#gamemini").css({ "right": "-40%" }); 
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+					});
+					$(".delete-xp").on(function(){
+							var gameid = $(this).attr("data-gameid");
+							var xpid = $(this).attr("data-xpid");
+							var form = $(this).parent();
+							InitializeGameCardUpdate(gameid);
+							$.ajax({ url: '../php/webService.php',
+								data: {action: "RemoveSubExperience", gameid: gameid, subxpid: xpid  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+									FinishGameCardUpdate(gameid);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
+							$(".fixed-close-modal-btn").click();
 					});
 					$('select').material_select();
 					$(".modal-xp-header-advanced").on("click", function(){
@@ -683,15 +706,20 @@ function GameCardAction(action, gameid){
 					$(".save-played-xp").on('click', function(){
 						if(!$(this).hasClass("disabled")){
 							var gameid = $(this).attr("data-gameid");
+							var xpid = $(this).attr("data-xpid");
 							var form = $(this).parent();
 							var quote = form.find(".myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var completion = form.find("#xp-percentage-played-range").val();
 							var platform = form.find(".myxp-platforms:checked").attr("data-text");
 							var year = form.find("#myxp-year").val();
+							var action = "SavePlayedExperience";
+							if(xpid != undefined && xpid > 0)
+								action = "UpdatePlayedExperience";
+
 							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
-								data: {action: "SavePlayedExperience", gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year  },
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
@@ -706,21 +734,26 @@ function GameCardAction(action, gameid){
 								},
 								timeout:45000
 							});
-							$(".cancel-btn").click();
+							$(".fixed-close-modal-btn").click();
 						}
 					});
 					$(".save-watched-xp").on('click', function(){
 						if(!$(this).hasClass("disabled")){
 							var gameid = $(this).attr("data-gameid");
+							var xpid = $(this).attr("data-xpid");
 							var form = $(this).parent();
 							var quote = form.find(".myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
 							var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
 							var url = form.find("#watchedurl").val();
 							var year = form.find("#myxp-year").val();
+							var action = "SaveWatchedExperience";
+							if(xpid != undefined && xpid > 0)
+								action = "UpdateWatchedExperience";
+
 							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
-								data: {action: "SaveWatchedExperience", gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year, xpid: xpid  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
@@ -735,7 +768,7 @@ function GameCardAction(action, gameid){
 								},
 								timeout:45000
 							});
-							$(".cancel-btn").click();
+							$(".fixed-close-modal-btn").click();
 						}
 					});
 					$(".save-post-xp").on('click', function(){
@@ -760,7 +793,7 @@ function GameCardAction(action, gameid){
 								},
 								timeout:45000
 							});
-							$(".cancel-btn").click();
+							$(".fixed-close-modal-btn").click();
 						}
 					});
 				},

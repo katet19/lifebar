@@ -2399,38 +2399,30 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	return $newXP;
 }
 
-function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
+function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year, $platform){
 	$mysqli = Connect();
-	$data = HasUserGivenXP($user, $gameid);
-	$quote = mysqli_real_escape_string($mysqli, $quote);
-	$quotechanged = false;
-	similar_text($data["Quote"], $quote, $percent); 
-	if(number_format($percent, 0) <= 85){ $quotechanged = true; }
+	$completed = str_replace("%","",$completed);	
 	
-	if($quotechanged && $data['Tier'] != $tier){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','UPDATE','$tier','$quote')");
-	}else if($quotechanged){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','QUOTECHANGED','$tier','$quote')");
-	}else if($data['Tier'] != $tier){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','TIERCHANGED','$tier','".$data["Tier"].",".$tier."')");
+	$quote = mysqli_real_escape_string($mysqli, $quote);
+	
+	if($completed == "Multiple Playthroughs"){
+		$completed = "101";
 	}
+			
+	$platformids = GetPlatformIDs($platform);
+	
+	$date = $year."-".date("m")."-".date("d");
 	
 	if($_SESSION['logged-in']->_security == "Authenticated")
 		$authentic = "Yes";
 	else
 		$authentic = "No";
 
-	$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
-	$result = $mysqli->query($update);
-	if($result == '' || $result == false){
-		customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$update.')');
-	}else{
-		if($completed > 0 && $completed != ''){
-			$subupdate = "update `Sub-Experiences` set `Completed` = '".$completed."' where `UserID` = '".$user."' and `GameID` = '".$gameid."' and `Type` = 'Played' and `Archived` = 'No'";
-			$result = $mysqli->query($subupdate);
-			if($result == '' || $result == false){
-				customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
-			}
+	if($xpid > 0){
+		$subupdate = "update `Sub-Experiences` set `ArchiveTier` = '".$tier."', `Completed` = '".$completed."', `Date` = '".$date."', `Platform` = '".$platform."', `PlatformIDs` = '".$platformids."'  where `ID` = '".$xpid."' and `GameID` = '".$gameid."' and `Type` = 'Played'";
+		$result = $mysqli->query($subupdate);
+		if($result == '' || $result == false){
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
 		}
 	}
 	Close($mysqli, $result);
@@ -2449,6 +2441,8 @@ function CalculateXPGain($type, $isNew = true){
 		return "5";
 	}else if($type == "post" && $isNew){
 		return "3";
+	}else if($type == "remove"){
+		return "-2";
 	}else{
 		return "0";
 	}
@@ -2682,12 +2676,8 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $length, $year){
 	return $newXP;
 }
 
-function UpdateWatchedXP($id, $user, $gameid, $url, $length, $year){
+function UpdateWatchedXP($user, $gameid, $xpid, $quote, $tier, $url, $length, $year){
 	$mysqli = Connect();
-
-	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
-	$tier = $quickxp->_tier;
-	$quote = $quickxp->_quote;
 	
 	if($length == "watchedanhourorless")
 		$length = "Watched gameplay";
@@ -2708,8 +2698,7 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $length, $year){
 	
 	$date = $year."-".date("m")."-".date("d");
 	
-	$url = NormalizeVideoURLs($url);
-	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length' where `ID` = '$id'");
+	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveTier`='$tier',`Date`='$date',`Length`='$length' where `ID` = '$xpid' and `GameID` = '".$gameid."'");
 	Close($mysqli, $result);
 }
 
