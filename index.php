@@ -22,7 +22,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<title>Lifebar | We Heart Games</title>
+		<title>Lifebar | We Heart Games ;)</title>
 		<?php
 	} 
 ?>
@@ -37,6 +37,10 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 				if($game->_platforms != ''){ echo "released for ".trim($game->_platforms)." "; }
 				?> 
 		">
+		<?php
+	}else{
+		?>
+		<meta name="description" content="Lifebar is a platform to celebrate & capture your life with games. From your earliest memories to your latest speed run, Lifebar captures it all.">
 		<?php
 	}
 	?>

@@ -2779,7 +2779,7 @@ function RemoveSubExperience($subexpid, $gameid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Sub-Experiences` where `ID` = '".$subexpid."' and `GameID` = '".$gameid."'")) {
 		while($row = mysqli_fetch_array($result)){
-			$mysqli->query("Delete from `Events` where `UserID` = '$user' and `GameID` = '$gameid' and `Date` = '".$row['DateEntered']."'");
+			$mysqli->query("Delete from `Events` where `UserID` = '".$_SESSION['logged-in']->_id."' and `GameID` = '".$gameid."' and `Date` = '".$row['DateEntered']."'");
 		}
 	}
 	$mysqli->query("Delete from `Sub-Experiences` where `ID` = '$subexpid' and `GameID` = '$gameid'");
