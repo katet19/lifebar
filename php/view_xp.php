@@ -360,7 +360,7 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 function ShowWatchedURL($specificPlayed = null){ ?>
 	<div class="row">
 		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
-			<input id="watchedurl" class='watchedurl' type="text" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "value='".$specificPlayed->_url."' disabled"; } ?> >
+			<input id="watchedurl" class='watchedurl' type="text" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "value='".$specificPlayed->_url."' disabled style='background-color:#ddd;padding: 0 5px;color: gray;'"; } ?> >
 			<label for="watchedurl" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "class='active'"; } ?>>Watched URL address (http)</label>
 		</div>	
 	</div>
@@ -532,7 +532,7 @@ function ShowXPQuote($subxp = null){
 	?>
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
-		<textarea id="myxp-quote" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<textarea id="myxp-quote" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="myxp-quote" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Summary (disabled)"; }else{ echo "Summarize your experience (not required)"; } ?></label>
 		</div>
 	</div>
@@ -545,7 +545,7 @@ function ShowXPPost($withSpace = false, $subxp = null){
 	?>
 	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Post (disabled)"; }else{ echo "Enter your post here"; } ?></label>
 		</div>
 	</div>

@@ -647,6 +647,9 @@ function GameCardAction(action, gameid){
 						$(".lean-overlay").each(function(){ $(this).remove(); } );
 						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 					});
+					$(".cancel-xp").on("click", function(){
+						$(this).parent().parent().find(".collapsible-header").click();
+					});
 					$(".delete-xp").on("click",function(){
 							var gameid = $(this).attr("data-gameid");
 							var xpid = $(this).attr("data-xpid");

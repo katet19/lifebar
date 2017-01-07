@@ -492,7 +492,7 @@
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
 				$isNewXP = SaveWatchedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'], $_POST['url'], $_POST['watchedType'],$_POST['year']);
 				CalculateWeave($_SESSION['logged-in']->_id);
-				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Watched XP', false);
+				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
 				echo "|****|";
 				if($_POST['quote'] != '')
 					echo CalculateXPGain("watchedwithquote", $isNewXP);
