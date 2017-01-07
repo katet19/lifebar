@@ -86,9 +86,9 @@ function DisplaySideDrawer(){ ?>
 				<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 			<?php } ?>
 			<div class="divider"></div>
-			<!--<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>-->
-			<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
-			<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>
+			<li><a href="#!" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>
+			<!--<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>-->
+			<!--<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>-->
 			<div class="divider"></div>
 			<li><a href="#!" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
 	</ul>
