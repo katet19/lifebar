@@ -446,8 +446,13 @@ function ShowDateSelector($xp, $subxp = null){
 		<div class="modal-xp-header">Which year was this experience?</div>
 		<select id="myxp-year">
 		<?php 
-			$date = explode('-',$xp->_date);
-			$year = date("Y");  
+			
+			$year = date("Y");
+			if($subxp != null){
+				$date = explode("-",$subxp->_date);
+			}else{
+				$date = explode('-',$xp->_date);
+			} 
 			$releaseyear = $xp->_game->_year;
 			$releaseyear = $releaseyear - 5;
 			if($xp->_game->_year == 0){
