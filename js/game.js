@@ -311,7 +311,7 @@ function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp")
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
@@ -847,6 +847,12 @@ function InitializeGameCardUpdate(gameid){
 			var container = $(this).find(".game-nav-title");
 			container.html("<div class='game-card-action-pick' style='text-align:center;'><div class='game-card-summary-add-xp'><i class='material-icons game-card-summary-add-xp-icon'>save</i><span class='game-card-summary-add-xp-text'>Saving</span></div></div>");
 		}
+	});
+	$(".game-card-action-pick").unbind();
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp")
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
 

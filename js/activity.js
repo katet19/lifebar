@@ -114,8 +114,10 @@ function AttachActivityEvents(){
 	$(".shareBtn").on('click', function(){
 		ShowShareModal("event", $(this).attr("data-eventid"));
 	});
-	$(".game-card-action-pick").on("click", function(){
-		if($(this).attr("data-action") == "xp")
+	$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-discover-card .card-image").on("click", function(e){ 
