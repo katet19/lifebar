@@ -677,11 +677,11 @@ function GameCardAction(action, gameid){
 					});
 					$('select').material_select();
 					$(".modal-xp-header-advanced").on("click", function(){
-						if($(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
-							$(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
+						if($(this).parent().find(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
+							$(this).parent().find(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
 							$(this).find(".material-icons").text("add");
 						}else{
-							$(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
+							$(this).parent().find(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
 							$(this).find(".material-icons").text("remove");
 						}
 					});

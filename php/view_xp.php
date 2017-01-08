@@ -431,7 +431,7 @@ function ShowAdvancedOptions($xp, $isPlayed, $subxp = null){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
-			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Optional Details</div>
+			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Additional Details</div>
 			<div class="modal-xp-advanced-options-container">
 				<?php ShowDateSelector($xp, $subxp); ?>
 				<?php if($isPlayed){ ShowHoursPicker($subxp); } ?>
