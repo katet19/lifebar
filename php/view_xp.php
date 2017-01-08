@@ -361,7 +361,7 @@ function ShowWatchedURL($specificPlayed = null){ ?>
 	<div class="row">
 		<div class="input-field  col s10 offset-s1" style='text-align: left;'>
 			<input id="watchedurl" class='watchedurl' type="text" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "value='".$specificPlayed->_url."' disabled style='background-color:#ddd;padding: 0 5px;color: gray;'"; } ?> >
-			<label for="watchedurl" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "class='active'"; } ?>>Watched URL address (http)</label>
+			<label for="watchedurl" <?php if($specificPlayed != null && $specificPlayed->_url != ""){ echo "class='active' style='top: 0.5em;'"; } ?>>Watched URL address (http)</label>
 		</div>	
 	</div>
 	<?php
