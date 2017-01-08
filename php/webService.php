@@ -471,7 +471,7 @@
 		if($_POST['action'] =='SavePlayedExperience' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
-				$isNewXP = SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['year'],$_POST['platform']);
+				$isNewXP = SavePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['year'],$_POST['platform'],$_POST['hours']);
 				CalculateWeave($_SESSION['logged-in']->_id);
 				CalculateMilestones($_SESSION['logged-in']->_id, $_POST['gameid'], '', 'Played XP', false);
 				echo "|****|";
@@ -484,7 +484,7 @@
 		if($_POST['action'] =='UpdatePlayedExperience' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['xpid'] > 0){
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
-				UpdatePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'], $_POST['xpid'], $_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['year'],$_POST['platform']);
+				UpdatePlayedXP($_SESSION['logged-in']->_id,$_POST['gameid'], $_POST['xpid'], $_POST['quote'],$_POST['tier'],$_POST['completion'],$_POST['year'],$_POST['platform'],$_POST['hours']);
 			}
 		}
 		if($_POST['action'] =='SaveWatchedExperience' && $_SESSION['logged-in']->_id > 0){

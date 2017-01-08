@@ -718,13 +718,14 @@ function GameCardAction(action, gameid){
 							var completion = form.find("#xp-percentage-played-range").val();
 							var platform = form.find(".myxp-platforms:checked").attr("data-text");
 							var year = form.find("#myxp-year").val();
+							var hours = form.find(".playedhours").val();
 							var action = "SavePlayedExperience";
 							if(xpid != undefined && xpid > 0)
 								action = "UpdatePlayedExperience";
 
 							InitializeGameCardUpdate(gameid);
 							$.ajax({ url: '../php/webService.php',
-								data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid  },
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid, hours: hours  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);

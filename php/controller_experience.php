@@ -282,15 +282,9 @@ function GetVideoMyXPForGame($url, $gameid){
 				$row['ArchiveTier'], 
 				$row['DateEntered'], 
 				$row['Completed'], 
-				$row['Mode'], 
+				$row['Hours'], 
 				$row['Platform'],
 				$row['PlatformIDs'],
-				$row['DLC'],
-				$row['Alpha'],
-				$row['Beta'],
-				$row['Early Access'],
-				$row['Demo'],
-				$row['Streamed'],
 				$row['Archived'],
 				$row['AuthenticXP']);
 		}
@@ -2303,16 +2297,10 @@ function GetSubExperiences($userid, $gameid, $type, $pconn = null){
 				$row['ArchiveQuote'], 
 				$row['ArchiveTier'], 
 				$row['DateEntered'], 
-				$row['Completed'], 
-				$row['Mode'], 
+				$row['Completed'],
+				$row['Hours'],  
 				$row['Platform'],
 				$row['PlatformIDs'],
-				$row['DLC'],
-				$row['Alpha'],
-				$row['Beta'],
-				$row['Early Access'],
-				$row['Demo'],
-				$row['Streamed'],
 				$row['Archived'],
 				$row['AuthenticXP']);
 				
@@ -2399,7 +2387,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	return $newXP;
 }
 
-function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year, $platform){
+function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year, $platform,$hours){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);	
 	
@@ -2408,6 +2396,9 @@ function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year,
 	if($completed == "Multiple Playthroughs"){
 		$completed = "101";
 	}
+
+	if($hours < 0)
+		$hours = 0;
 			
 	$platformids = GetPlatformIDs($platform);
 	
@@ -2419,7 +2410,7 @@ function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year,
 		$authentic = "No";
 
 	if($xpid > 0){
-		$subupdate = "update `Sub-Experiences` set `ArchiveTier` = '".$tier."', `Completed` = '".$completed."', `Date` = '".$date."', `Platform` = '".$platform."', `PlatformIDs` = '".$platformids."'  where `ID` = '".$xpid."' and `GameID` = '".$gameid."' and `Type` = 'Played'";
+		$subupdate = "update `Sub-Experiences` set `ArchiveTier` = '".$tier."', `Completed` = '".$completed."', `Date` = '".$date."', `Platform` = '".$platform."', `PlatformIDs` = '".$platformids."', `Hours` = '".$hours."'  where `ID` = '".$xpid."' and `GameID` = '".$gameid."' and `Type` = 'Played'";
 		$result = $mysqli->query($subupdate);
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
@@ -2498,10 +2489,12 @@ function SubmitOwned($user,$gameid,$owned){
 	}
 }
 
-function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platform){
+function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platform, $hours){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);
 	$newXP = "true";
+	if($hours < 0)
+		$hours = 0;
 	
 	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
 	if(sizeof($quickxp->_playedxp) > 0){
@@ -2528,7 +2521,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 	$date = $year."-".date("m")."-".date("d");
 		
 	if (sizeof($quickxp->_playedxp) == 0){
-		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids')";
+		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`Hours`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids','$hours')";
 		$result = $mysqli->query($insert);
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
@@ -2541,7 +2534,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platfor
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$update.')');
 		}else{
-			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids')";
+			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`Hours`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$hours')";
 			$result = $mysqli->query($insert);
 			if($result == '' || $result == false){
 				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');

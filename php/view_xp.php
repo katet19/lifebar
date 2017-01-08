@@ -238,7 +238,7 @@ function ShowXPSelector($xp){
 				<?php 
 				if(sizeof($xp->_playedxp) > 0){
 					$temp = $xp->_playedxp[0];
-					$subexp = new SubExperience($temp->_id."a",'','',$xp->_game->_id,'','','','','','','','',$temp->_date,$temp->_completed,'',$temp->_platform,$temp->_platformids,'','','','','','','','');
+					$subexp = new SubExperience($temp->_id."a",'','',$xp->_game->_id,'','','','','','','','',$temp->_date,$temp->_completed,'',$temp->_platform,$temp->_platformids,'','');
 					ShowXPPlayedSelector($xp, $subexp); 
 				}else{
 					ShowXPPlayedSelector($xp); 
@@ -326,7 +326,7 @@ function ShowXPPlayedSelector($xp, $specificPlayed = null){
 	ShowXPQuote($specificPlayed);
 	ShowPercentagePlayed($specificPlayed);
 	ShowXPPlatformSelector($xp, $specificPlayed);
-	ShowAdvancedOptions($xp, $specificPlayed);
+	ShowAdvancedOptions($xp, true, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
 		<div class="save-btn disabled modal-btn-pos save-played-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
 		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
@@ -344,7 +344,7 @@ function ShowXPWatchedSelector($xp, $specificPlayed = null){
 	ShowXPQuote($specificPlayed);
 	ShowWatchType($specificPlayed);
 	ShowWatchedURL($specificPlayed);
-	ShowAdvancedOptions($xp, $specificPlayed);
+	ShowAdvancedOptions($xp, false, $specificPlayed);
 	if($specificPlayed != null && $specificPlayed->_archivetier > 0){ ?>
 		<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>'>Update Details</div>
 		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $specificPlayed->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
@@ -427,15 +427,24 @@ function ShowXPPostSelector($xp, $subxp = null){
 	}
 }
 
-function ShowAdvancedOptions($xp, $subxp = null){
+function ShowAdvancedOptions($xp, $isPlayed, $subxp = null){
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1">
 			<div class="modal-xp-header-advanced"><i class="material-icons left" style='margin-top: -1px;'>add</i> Optional Details</div>
 			<div class="modal-xp-advanced-options-container">
 				<?php ShowDateSelector($xp, $subxp); ?>
+				<?php if($isPlayed){ ShowHoursPicker($subxp); } ?>
 			</div>
 		</div>
+	</div>
+	<?php
+}
+
+function ShowHoursPicker($subxp){ ?>
+	<div class="input-field col s12">
+		<input id="playedhours" class='playedhours' type="number" <?php if($subxp != null && $subxp->_hours > 0){ echo "value='".$subxp->_hours."'"; } ?> >
+		<label for="playedhours" <?php if($subxp != null && $subxp->_hours > 0){ echo "class='active'"; } ?>>Hours Played</label>	
 	</div>
 	<?php
 }

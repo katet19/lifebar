@@ -60,21 +60,15 @@ class SubExperience
 	public $_archivetier;
 	public $_entereddate;
 	public $_completed;
-	public $_mode;
+	public $_hours;
 	public $_platform;
 	public $_platformids;
-	public $_alpha;
-	public $_dlc;
-	public $_beta;
-	public $_earlyaccess;
-	public $_demo;
-	public $_streamed;
 	public $_archived;
 	public $_authenticxp;
 	
 	
 	
-	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $platformids, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived, $authenticxp) {
+	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $hours, $platform, $platformids, $archived, $authenticxp) {
 		$this->_id = $id;
 		$this->_expid = $expid;
 		$this->_userid= $userid;
@@ -89,15 +83,9 @@ class SubExperience
 		$this->_archivetier = $archivetier;
 		$this->_entereddate = $entereddate;
 		$this->_completed = $completed;
-		$this->_mode = $mode;
+		$this->_hours = $hours;
 		$this->_platform = $platform;
 		$this->_platformids = $platformids;
-		$this->_dlc = $dlc;
-		$this->_alpha = $alpha;
-		$this->_beta = $beta;
-		$this->_earlyaccess = $earlyaccess;
-		$this->_demo = $demo;
-		$this->_streamed = $streamed;
 		$this->_archived = $archived;
 		$this->_authenticxp = $authenticxp;
 	}
