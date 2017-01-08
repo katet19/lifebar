@@ -2623,7 +2623,7 @@ function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid,
 function CreateEventForPostedXP($user, $gameid,$quote){
 	$mysqli = Connect();
 	$sxpid = GetSubXPID($user, $gameid, $mysqli);
-	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`,`S_XPID`) values ('$user','$gameid','QUOTECHANGED','$quote','$sxpid')");
+	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`,`S_XPID`) values ('$user','$gameid','QUOTECHANGED','".$quote."','$sxpid')");
 		
 	Close($mysqli, $result);
 }

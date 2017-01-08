@@ -417,7 +417,7 @@ function ShowWatchType($specificPlayed = null){
 function ShowXPPostSelector($xp, $subxp = null){
 	ShowXPPost(true, $subxp);
 	if($subxp != null && $subxp->_archivequote != ''){ ?>
-		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $subxp->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
+		<div class="cancel-btn modal-btn-pos delete-xp" style='margin: 2em 0;' data-xpid='<?php echo $subxp->_id; ?>' data-gameid='<?php echo $xp->_game->_id; ?>' title='Delete Details'><i class='material-icons' style='margin-top: 5px;'>delete_forever</i></div>
 	<?php
 	}else{
 	?>
@@ -545,7 +545,7 @@ function ShowXPPost($withSpace = false, $subxp = null){
 	?>
 	<div class="row" <?php if($withSpace){ ?> style='margin-top:10px;'<?php } ?>>
 		<div class="input-field col s10 offset-s1">
-		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<textarea id="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" class="materialize-textarea myxp-post" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="<?php if($withSpace){ ?>myxp-post<?php }else{ ?>myxp-quote<?php } ?>" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Post (disabled)"; }else{ echo "Enter your post here"; } ?></label>
 		</div>
 	</div>
