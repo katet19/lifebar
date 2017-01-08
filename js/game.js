@@ -1,7 +1,9 @@
 function ShowGame(id, currentTab, isID, browserNav, gameTab){
 	if(gameTab == "" || gameTab == undefined)
 		gameTab = "Dashboard";
-	LoadGame(id, currentTab, isID, browserNav, gameTab);
+	if($(".lean-overlay").length == 0){
+		LoadGame(id, currentTab, isID, browserNav, gameTab);
+	}
 }
 
 function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
@@ -854,7 +856,7 @@ function InitializeGameCardUpdate(gameid){
 	$(".game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp")
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
