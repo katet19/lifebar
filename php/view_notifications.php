@@ -1,10 +1,15 @@
 <?php
 function DisplayMyNotifications($userid){ 
 	$notifications = GetUserNotifications($userid);?>
-		<div class="col s12 notification-remove-padding" style='margin-top:1.5em;'>
-			<?php DisplayNotificationList($notifications); ?>
+	<div class="ReleaseDateHeader col s12">
+		<div class="card-panel" style="margin:0 0 0.25em;">
+			<span style=""><i class="material-icons" style="font-size:1em;position: relative;margin-right: 0.5em;top: 3px;">notifications</i> Notifications</span>
 		</div>
-		<?php
+	</div>
+	<div class="col s12 notification-remove-padding" style='margin-top:1.5em;'>
+		<?php DisplayNotificationList($notifications); ?>
+	</div>
+	<?php
 }
 
 function DisplayNotificationList($notifications){ 
