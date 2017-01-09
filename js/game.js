@@ -559,7 +559,7 @@ function ManageXPRewards(output){
 function GameCardAction(action, gameid){
 	if(action == "more" || action == "bookmark"){
 
-	}else{
+	}else if(action == "xp"){
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
@@ -568,251 +568,186 @@ function GameCardAction(action, gameid){
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
 		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
 
-		if(action == "tier"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowTierModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$('.collapsible').collapsible();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$(".tier-modal-add-btn").on("click", function(){
-						$(".tier-modal-current-game").each(function(){
-							$(this).hide();
-						});
-						$(".tier-modal-add-btn").each(function(){
-							$(this).show();
-						});
-						$(this).hide();
-						$(this).parent().find(".tier-modal-current-game").show(250);
-					});
-					$(".modal-rank-item").on("click",function(){
-						var rank = $(this).attr("data-internalrank");
-						$(".modal-rank-item").each(function(){
-							var thisrank = parseInt($(this).attr("data-internalrank"));
-							$(this).find(".modal-rank-item-rank").text(thisrank);
-							if(thisrank >= rank){
-								thisrank = thisrank + 1;	
-								$(this).find(".modal-rank-item-rank").text(thisrank);
-							}
-						});
-						$(".modal-rank-active-game").hide(100);
-						$(this).parent().find(".modal-rank-active-game").show(300); 
-					});
-					$(".save-btn").on("click", function(){
+		
+		$.ajax({ url: '../php/webService.php',
+			data: {action: "ShowXPModal", gameid: gameid },
+			type: 'post',
+			success: function(output) {
+				$("#gameminiInnerContainer").html(output);
+				$('.collapsible').collapsible();
+				$('textarea#myxp-quote').characterCounter();
+				$(".myxp-platform-checked").each(function(){ $(this).click(); });
+				$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
+				$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+					var windowWidth = $(window).width();
+					HideFocus();
+					$("#gamemini").css({ "right": "-40%" }); 
+					$(".lean-overlay").each(function(){ $(this).remove(); } );
+					setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+				});
+				$(".cancel-xp").on("click", function(){
+					$(this).parent().parent().find(".collapsible-header").click();
+				});
+				$(".delete-xp").on("click",function(){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						InitializeGameCardUpdate(gameid);
 						$.ajax({ url: '../php/webService.php',
-							data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: rank },
+							data: {action: "RemoveSubExperience", gameid: gameid, subxpid: xpid  },
 							type: 'post',
 							success: function(output) {
-								$(".cancel-btn").click();
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
 							},
-								error: function(x, t, m) {
-									if(t==="timeout") {
-										ToastError("Server Timeout");
-									} else {
-										ToastError(t);
-									}
-								},
-								timeout:45000
-							});
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
 				});
-		}else if(action == "xp"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowXPModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$('.collapsible').collapsible();
-					$('textarea#myxp-quote').characterCounter();
-					$(".myxp-platform-checked").each(function(){ $(this).click(); });
-					$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
-						var windowWidth = $(window).width();
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$(".cancel-xp").on("click", function(){
-						$(this).parent().parent().find(".collapsible-header").click();
-					});
-					$(".delete-xp").on("click",function(){
-							var gameid = $(this).attr("data-gameid");
-							var xpid = $(this).attr("data-xpid");
-							var form = $(this).parent();
-							InitializeGameCardUpdate(gameid);
-							$.ajax({ url: '../php/webService.php',
-								data: {action: "RemoveSubExperience", gameid: gameid, subxpid: xpid  },
-								type: 'post',
-								success: function(output) {
-									ManageXPRewards(output);
-									FinishGameCardUpdate(gameid);
-								},
-								error: function(x, t, m) {
-									if(t==="timeout") {
-										ToastError("Server Timeout");
-									} else {
-										ToastError(t);
-									}
-								},
-								timeout:45000
-							});
-							$(".fixed-close-modal-btn").click();
-					});
-					$('select').material_select();
-					$(".modal-xp-header-advanced").on("click", function(){
-						if($(this).parent().find(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
-							$(this).parent().find(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
-							$(this).find(".material-icons").text("add");
-						}else{
-							$(this).parent().find(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
-							$(this).find(".material-icons").text("remove");
-						}
-					});
-					$(".modal-xp-emoji-icon").on('click', function(){
-						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
-						$(this).addClass("modal-xp-emoji-icon-active");
-						if($(this).parent().parent().find(".xp-percentage-played-range").length > 0)
-							ToggleSaveButtonPlayed($(this).parent().parent());
-						else
-							ToggleSaveButtonWatched($(this).parent().parent());
-					});
-					$(".xp-percentage-played-range").change(function(){
-						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent());
-					});
-					$(".myxp-platforms").change(function(){
-						if($(this).parent().parent().parent().parent().parent().find(".xp-percentage-played-range").length > 0)
-							ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
-						else
-							ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
-					});
-					$(".watchedurl").on('keyup', function(){
-						ToggleSaveButtonWatched($(this).parent().parent().parent());
-					});
-					$("#myxp-post").on('keyup', function(){
-						ToggleSaveButtonPost($(this).parent().parent().parent());
-					});
-					$(".save-played-xp").on('click', function(){
-						if(!$(this).hasClass("disabled")){
-							var gameid = $(this).attr("data-gameid");
-							var xpid = $(this).attr("data-xpid");
-							var form = $(this).parent();
-							var quote = form.find(".myxp-quote").val();
-							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
-							var completion = form.find("#xp-percentage-played-range").val();
-							var platform = form.find(".myxp-platforms:checked").attr("data-text");
-							var year = form.find("#myxp-year").val();
-							var hours = form.find(".playedhours").val();
-							var action = "SavePlayedExperience";
-							if(xpid != undefined && xpid > 0)
-								action = "UpdatePlayedExperience";
-
-							InitializeGameCardUpdate(gameid);
-							$.ajax({ url: '../php/webService.php',
-								data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid, hours: hours  },
-								type: 'post',
-								success: function(output) {
-									ManageXPRewards(output);
-									FinishGameCardUpdate(gameid);
-								},
-								error: function(x, t, m) {
-									if(t==="timeout") {
-										ToastError("Server Timeout");
-									} else {
-										ToastError(t);
-									}
-								},
-								timeout:45000
-							});
-							$(".fixed-close-modal-btn").click();
-						}
-					});
-					$(".save-watched-xp").on('click', function(){
-						if(!$(this).hasClass("disabled")){
-							var gameid = $(this).attr("data-gameid");
-							var xpid = $(this).attr("data-xpid");
-							var form = $(this).parent();
-							var quote = form.find(".myxp-quote").val();
-							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
-							var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
-							var url = form.find("#watchedurl").val();
-							var year = form.find("#myxp-year").val();
-							var action = "SaveWatchedExperience";
-							if(xpid != undefined && xpid > 0)
-								action = "UpdateWatchedExperience";
-
-							InitializeGameCardUpdate(gameid);
-							$.ajax({ url: '../php/webService.php',
-								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year, xpid: xpid  },
-								type: 'post',
-								success: function(output) {
-									ManageXPRewards(output);
-									FinishGameCardUpdate(gameid);
-								},
-								error: function(x, t, m) {
-									if(t==="timeout") {
-										ToastError("Server Timeout");
-									} else {
-										ToastError(t);
-									}
-								},
-								timeout:45000
-							});
-							$(".fixed-close-modal-btn").click();
-						}
-					});
-					$(".save-post-xp").on('click', function(){
-						if(!$(this).hasClass("disabled")){
-							var gameid = $(this).attr("data-gameid");
-							var form = $(this).parent();
-							var quote = form.find(".myxp-post").val();
-							InitializeGameCardUpdate(gameid);
-							$.ajax({ url: '../php/webService.php',
-								data: {action: "SavePostXP", gameid: gameid, quote: quote },
-								type: 'post',
-								success: function(output) {
-									ManageXPRewards(output);
-									FinishGameCardUpdate(gameid);
-								},
-								error: function(x, t, m) {
-									if(t==="timeout") {
-										ToastError("Server Timeout");
-									} else {
-										ToastError(t);
-									}
-								},
-								timeout:45000
-							});
-							$(".fixed-close-modal-btn").click();
-						}
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
+				$('select').material_select();
+				$(".modal-xp-header-advanced").on("click", function(){
+					if($(this).parent().find(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
+						$(this).parent().find(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
+						$(this).find(".material-icons").text("add");
+					}else{
+						$(this).parent().find(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
+						$(this).find(".material-icons").text("remove");
+					}
 				});
-		}
+				$(".modal-xp-emoji-icon").on('click', function(){
+					$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+					$(this).addClass("modal-xp-emoji-icon-active");
+					if($(this).parent().parent().find(".xp-percentage-played-range").length > 0)
+						ToggleSaveButtonPlayed($(this).parent().parent());
+					else
+						ToggleSaveButtonWatched($(this).parent().parent());
+				});
+				$(".xp-percentage-played-range").change(function(){
+					ToggleSaveButtonPlayed($(this).parent().parent().parent().parent());
+				});
+				$(".myxp-platforms").change(function(){
+					if($(this).parent().parent().parent().parent().parent().find(".xp-percentage-played-range").length > 0)
+						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
+					else
+						ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
+				});
+				$(".watchedurl").on('keyup', function(){
+					ToggleSaveButtonWatched($(this).parent().parent().parent());
+				});
+				$("#myxp-post").on('keyup', function(){
+					ToggleSaveButtonPost($(this).parent().parent().parent());
+				});
+				$(".save-played-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-quote").val();
+						var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+						var completion = form.find("#xp-percentage-played-range").val();
+						var platform = form.find(".myxp-platforms:checked").attr("data-text");
+						var year = form.find("#myxp-year").val();
+						var hours = form.find(".playedhours").val();
+						var action = "SavePlayedExperience";
+						if(xpid != undefined && xpid > 0)
+							action = "UpdatePlayedExperience";
+
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid, hours: hours  },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+				$(".save-watched-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-quote").val();
+						var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+						var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
+						var url = form.find("#watchedurl").val();
+						var year = form.find("#myxp-year").val();
+						var action = "SaveWatchedExperience";
+						if(xpid != undefined && xpid > 0)
+							action = "UpdateWatchedExperience";
+
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year, xpid: xpid  },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+				$(".save-post-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-post").val();
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: "SavePostXP", gameid: gameid, quote: quote },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+			},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
 	}
 }
 
