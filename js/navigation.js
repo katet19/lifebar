@@ -145,7 +145,7 @@ function NavigateToPage(page, fromURL = false){
 				ShowUserProfile($(".userContainer").attr("data-id"), true);
 			else if(page == "#collections")
 				DisplayUserCollection($(".userContainer").attr("data-id"));
-			else
+			else if(page != "#logout")
 				ShowDiscoverHome();
 			GLOBAL_HASH_REDIRECT = "";
 		}

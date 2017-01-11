@@ -153,8 +153,8 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 110px;position: absolute;  width: 100%;  z-index: 3;">
 		<div id="adminInnerContainer" class="innerContainer" style="min-height:100%;"></div>
 	</div>
-	<div id="landing" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 0px;position: absolute;  width: 100%;  z-index: 99;">
-		<div id="landingInnerContainer" class="innerContainer" style="min-height:100%;"></div>
+	<div id="landing" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;bottom: 0px;right: 0px;top: 0px;position: absolute;margin-left: 0px !important;width: 100%;z-index: 99;width: 100% !important;">
+		<div id="landingInnerContainer" class="innerContainer" style="min-height:100%;background-color: transparent;"></div>
 	</div>
 </div>
 <div id='fb-root'></div>

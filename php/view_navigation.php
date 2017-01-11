@@ -90,7 +90,7 @@ function DisplaySideDrawer(){ ?>
 			<!--<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>-->
 			<!--<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>-->
 			<div class="divider"></div>
-			<li><a href="#!" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
+			<li><a href="#logout" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
 	</ul>
 	<?php } ?>
 <?php }
