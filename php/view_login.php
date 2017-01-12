@@ -72,27 +72,27 @@ function DisplayLogin(){
 
 function DisplayLandingSignup(){
 	?>
-    <div class="row" style="margin-top:60px;margin-bottom:60px;">
+    <div class="row" style="margin-bottom:60px;">
     	<div class="col s12">
-    		<div style='font-size: 2em;margin-bottom: 100px;font-weight: 400;color:white;'>Sign up for the beta to start building your lifebar today!</div>
+    		<div style='font-size: 1.5em;margin-bottom: 30px;font-weight: 300;color:white;'>Sign up for the beta to start building your lifebar today!</div>
     	</div>
-		  <div class="col s12 m6 login-modal-divider">
+		  <div class="col s12 m6">
 		    <div class="row">
-		      <div class="input-field col s11" style='text-align:left;'>
+		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-account-circle prefix"></i>
 		        <input id="signup_username" type="text">
 		        <label for="signup_username">Username</label>
 		      </div>
 	      	</div>
 	    	<div class="row">
-	  	      <div class="input-field col s11" style='text-align:left;'>
+	  	      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-lock prefix"></i>
 		        <input id="signup_password" type="password">
 		        <label for="signup_password">Password</label>
 		      </div>
 	      	</div>
 	  	    <div class="row">
-		      <div class="input-field col s11" style='text-align:left;'>
+		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-communication-email prefix"></i>
 		        <input id="signup_email" type="text">
 		        <label for="signup_email">Email</label>
@@ -107,8 +107,8 @@ function DisplayLandingSignup(){
 	  	</div>
 	   <div class="col s12 m6" >
 	  	   	<div class="row">
-	  	   		<div class="social-login-header">
-	  	   			Sign up using a third party account
+	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;'>
+	  	   			Login using a third party account
 	  	   		</div>
 	  	   	</div>
 	  	   	<div class="row" style='text-align: center;'>
@@ -129,6 +129,7 @@ function DisplayLandingSignup(){
 	  	   			</div>
 	  	   		</div>
 	  	   	</div>
+					 <div class="btn-large waves-effect waves-light landing-login-mobile" style='z-index:100;background-color: rgba(0,0,0,0.3);'>Login</div>
   	   </div>
   </div>
 	<?php
