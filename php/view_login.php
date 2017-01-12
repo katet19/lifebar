@@ -74,7 +74,7 @@ function DisplayLandingSignup(){
 	?>
     <div class="row" style="margin-top:60px;margin-bottom:60px;">
     	<div class="col s12">
-    		<div style='font-size: 2em;margin-bottom: 100px;font-weight: 400;'>Sign up for the beta to start building your lifebar today!</div>
+    		<div style='font-size: 2em;margin-bottom: 100px;font-weight: 400;color:white;'>Sign up for the beta to start building your lifebar today!</div>
     	</div>
 		  <div class="col s12 m6 login-modal-divider">
 		    <div class="row">
