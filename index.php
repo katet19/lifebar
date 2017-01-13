@@ -51,7 +51,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/activity.css" rel="stylesheet" type="text/css" />
 <link href="../css/admin.css" rel="stylesheet" type="text/css" />
 <link href="../css/analyze.css" rel="stylesheet" type="text/css" />
-<link href="../css/dashboard.css" rel="stylesheet" type="text/css" />
+<!--<link href="../css/dashboard.css" rel="stylesheet" type="text/css" />-->
 <link href="../css/discover.css" rel="stylesheet" type="text/css" />
 <link href="../css/user.css" rel="stylesheet" type="text/css" />
 <link href="../css/profile.css" rel="stylesheet" type="text/css" />
@@ -64,6 +64,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/collection.css" rel="stylesheet" type="text/css" />
 <link href="../css/import.css" rel="stylesheet" type="text/css" />
 <link href="../css/lifebar.webflow.css" rel="stylesheet" type="text/css" />
+<link href="../css/site.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script type="text/javascript" src="../js/library/chart.js"></script>

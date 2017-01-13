@@ -78,7 +78,9 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 	} ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
+					<?php ShowCommunityFollowingChips($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
 			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $allusers); ?>
+
 			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
 		</div>
 		<?php if($id > 0){ ?>
@@ -234,6 +236,43 @@ function ShowCommunityFollowing($game, $id, $myxp, $verified, $curated, $myusers
 		<div class='game-community-box z-depth-1'>
 			<div class='game-community-box-header'><i class="mdi-file-folder-shared" style='display:inline-block;font-size:1.4em;'></i> <div style='display: inline-block;vertical-align: text-bottom;'>Curated</div></div>
 			<?php DisplayAllCommunityCards($curated, "Critic");	?>
+		</div>
+		<?php }else if(sizeof($othercurated) == 0 && sizeof($otherverified) == 0 && sizeof($verified) == 0){ ?>
+			<?php if($myxp->_bucketlist != "Yes"){ ?>
+				<?php if($game->_released < date('Y-m-d', strtotime('-8 day'))){ ?>
+					<div class="info-label">Bookmark this game to keep track of your favorites</div>
+				<?php }else{ ?>
+					<div class="info-label">Bookmark this game to get notified when critics start publishing reviews!</div>
+				<?php } ?>
+				<div class="btn waves-effect waves-light no-critic-bookmark"><i class="mdi-action-bookmark left"></i> Bookmark</div>
+			<?php } ?>
+		<?php }
+	}else{
+		?>
+		<div class="info-label">Bookmark this game to keep track of your favorites</div>
+		<div class="btn waves-effect waves-light fab-login"><i class="mdi-action-bookmark left"></i> Login</div>
+		<?php
+	}
+}
+
+function ShowCommunityFollowingChips($game, $id, $myxp, $verified, $curated, $myusers){
+	if($id != ""){
+		?>
+		<?php if(sizeof($verified) > 0){ ?>
+		<div class='game-community-box z-depth-1' style="width: 30%; float: right; clear: right">
+			<div class='row'>
+				<?php DisplayAllCommunityChips($verified, "Critic"); ?>
+			</div>
+		</div>
+		<?php }
+		if(sizeof($myusers) > 0){ ?>
+		<div class='game-community-box z-depth-1' style="width: 30%; float: right; clear: right">
+			<?php DisplayAllCommunityChips($myusers, "Users"); ?>
+		</div>
+		<?php }
+		if(sizeof($curated) > 0){ ?>
+		<div class='game-community-box z-depth-1' style="width: 30%; float: right; clear: right">
+			<?php DisplayAllCommunityChips($curated, "Critic");	?>
 		</div>
 		<?php }else if(sizeof($othercurated) == 0 && sizeof($otherverified) == 0 && sizeof($verified) == 0){ ?>
 			<?php if($myxp->_bucketlist != "Yes"){ ?>
@@ -479,6 +518,18 @@ function DisplayAllCommunityCards($users, $type){
 			DisplayCriticQuoteCard($user, $i);
 		else
 			DisplayUserQuoteCard($user, $i);
+			
+		$i--;
+	}
+}
+
+function DisplayAllCommunityChips($users, $type){
+	$i = sizeof($users);
+	foreach($users as $user){
+		if($type == "Critic")
+			DisplayCriticChip($user, $i);
+		else
+			DisplayUserChip($user, $i);
 			
 		$i--;
 	}

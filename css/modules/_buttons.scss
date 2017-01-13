@@ -1,0 +1,22 @@
+@import '../base/mixins';
+.nav-game-action-btn {
+    font-size: 1.75em;
+    color: rgba(0, 0, 0, 0.2);
+    @include transition(all 0.3s ease-in-out);
+}
+
+.fixed-close-modal-btn {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 2em;
+    z-index: 10000;
+    border-radius: 50%;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #F50057;
+    width: 50px;
+    cursor: pointer;
+}

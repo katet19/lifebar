@@ -1,6 +1,569 @@
 body {
-  color: #212121;
-  background-color: #edecec;
-  -webkit-font-smoothing: subpixel-antialiased;
-  overflow-y: scroll;
-  position: static; }
+    color: #212121;
+    background-color: #edecec;
+    -webkit-font-smoothing: subpixel-antialiased;
+    overflow-y: scroll;
+    position: static;
+}
+
+.feed-avatar-col {
+    width: 125px !important;
+    z-index: 2;
+    position: relative;
+    float: left;
+}
+
+.feed-activity-icon-col {
+    float: left;
+    margin-left: 10px;
+}
+
+.feed-content-col {
+    position: relative;
+    padding: 0 2rem 0 0.75rem !important;
+    top: 0;
+    z-index: 1;
+}
+
+.nav-game-actions .col {
+    cursor: pointer;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.nav-game-actions .col:hover {
+    background-color: #F50057 !important;
+    color: white !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.nav-game-actions .col:hover>.nav-game-action-btn,
+.nav-game-actions .col:hover i {
+    color: white !important;
+}
+
+#gameContentContainer {
+    position: relative;
+    margin-left: 0;
+    right: 0;
+    z-index: 101;
+}
+
+.feed-activity-game-container {
+    margin-left: 190px;
+    text-align: left;
+}
+
+.large-avatar {
+    cursor: pointer;
+    width: 60px;
+    border-radius: 50%;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.large-avatar:hover {
+    border: 3px solid #FF4081;
+}
+
+.nav-game-action-btn {
+    font-size: 1.75em;
+    color: rgba(0, 0, 0, 0.2);
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.fixed-close-modal-btn {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 2em;
+    z-index: 10000;
+    border-radius: 50%;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    color: white;
+    background-color: #F50057;
+    width: 50px;
+    cursor: pointer;
+}
+
+.feed-horizontal-card {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-clip: padding-box;
+    text-align: left;
+    display: inline-block;
+    background-color: #C5CAE9;
+    width: 100%;
+}
+
+.feed-bookmark-card {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-clip: padding-box;
+    width: 300px;
+    background-color: white;
+    text-align: left;
+    display: inline-block;
+}
+
+.feed-bookmark-card .feed-bookmark-image {
+    display: inline-block;
+    width: 300px;
+    height: 115px;
+}
+
+.feed-release-card {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-clip: padding-box;
+    width: 100%;
+    background-color: white;
+    text-align: left;
+}
+
+.feed-release-card .feed-release-image {
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+}
+
+.feed-game-discover-card {
+    height: 165px !important;
+}
+
+.feed-card-image {
+    display: inline-block;
+    width: 150px;
+    position: absolute;
+    height: 100%;
+}
+
+.feed-card-image:hover {
+    opacity: 0.9;
+}
+
+.feed-card-content {
+    padding: 10px 20px 10px 35px;
+    position: relative;
+    background-color: white;
+    float: right;
+    width: -webkit-calc(100% - 150px);
+}
+
+.feed-card-icon-container {
+    font-size: 1.75em;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    color: white;
+    top: 20px;
+    left: -20px;
+    padding-top: 1.25px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.feed-card-icon {
+    font-size: 2.25em;
+    position: absolute;
+    color: #3F51B5;
+    left: -9px;
+    top: -9px;
+    border-radius: 50%;
+}
+
+.game-card-action-pick {
+    padding: 4px 0 !important;
+    font-weight: 500;
+}
+
+.card-game-secondary-actions {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    top: 0;
+    height: 200px;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+.card-game-secondary-actions:hover {
+    opacity: 1;
+}
+
+.game-card-secondary-action-container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    text-align: right;
+}
+
+.game-card-secondary-action-i {
+    display: inline-block;
+    padding: 5px 5px 0px;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.game-card-secondary-action-i:hover {
+    background-color: #F50057;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dashboard-card {
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    position: relative;
+    min-height: 245px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card-calltoaction {
+    background-color: #F50057;
+    color: white;
+    cursor: pointer;
+}
+
+.dashboard-card-calltoaction:hover {
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #1E88E5;
+}
+
+.dashboard-card-calltonotice {
+    background-color: #607D8B;
+    color: white;
+    cursor: pointer;
+}
+
+.dashboard-card-calltonotice:hover {
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #546E7A;
+}
+
+.dashboard-calltonotice-container {
+    margin-top: 40px;
+}
+
+.dashboard-calltoaction-container i,
+.dashboard-calltonotice-container i {
+    font-size: 5em;
+    display: block;
+    margin-top: -20px;
+}
+
+.dashboard-calltoaction-container span,
+.dashboard-calltonotice-container span {
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    font-size: 1.25em;
+    top: -15px;
+}
+
+.dashboard-platform-container .badge-small {
+    margin-bottom: 10px;
+}
+
+.dashboard-tier-label {
+    font-size: 0.25em;
+    position: relative;
+    top: 5px;
+    display: none;
+    font-weight: bold;
+}
+
+.dashboard-tier-block {
+    color: white;
+    display: inline-block;
+    font-size: 0.6em;
+    font-weight: bold;
+    width: 70px;
+    border-radius: 50%;
+    position: relative;
+    top: -20px;
+}
+
+.dashboard-card-relative-label {
+    color: white;
+    font-weight: 400;
+    font-size: 1em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 20px;
+    display: none;
+}
+
+.dashboard-card-relative-tier {
+    color: white;
+    font-size: 4em;
+    line-height: 100px;
+    font-weight: bold;
+}
+
+.dashboard-card-relative-container {
+    display: inline-block;
+    padding: 15px 0;
+}
+
+.dashboard-card-game-small {
+    width: 95px;
+    border-radius: 50%;
+    height: 95px;
+    position: absolute;
+    top: 80px;
+    left: -110px;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dashboard-card-tiny-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+.dashboard-card-date-top {
+    font-size: 3em;
+    text-transform: UPPERCASE;
+    margin: 20px 0 0;
+}
+
+.dashboard-card-date-unknown {
+    font-size: 5em;
+    text-transform: UPPERCASE;
+    margin: 40px 0 0;
+    font-weight: bold;
+}
+
+.dashboard-card-date-bottom {
+    font-size: 5em;
+    text-transform: UPPERCASE;
+    margin: -30px 0 0;
+    font-weight: bold;
+}
+
+.dashboard-card-date-info {
+    font-size: 1em !important;
+    position: relative !important;
+    top: -15px !important;
+    width: 100%;
+    font-weight: normal !important;
+    display: block;
+    text-transform: none !important;
+}
+
+.dashboard-platform-container {
+    margin-top: 40px;
+}
+
+@media only screen and (max-width: 600px) {
+    .dashboard-card-game-small {
+        width: 75px;
+        height: 75px;
+        top: 70px;
+    }
+    .dashboard-card-relative-tier {
+        font-size: 3em;
+        line-height: 75px;
+    }
+}
+
+.feed-activity-icon {
+    font-size: 1.25em;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    color: white;
+    margin-top: 15px;
+    padding-top: 1.25px;
+    border-radius: 50%;
+    background-color: #303F9F;
+}
+
+.game-tab {
+    position: absolute;
+    top: 30vh;
+    padding: 0 0.75rem 50px !important;
+    display: none;
+}
+
+.game-tab-active {
+    display: block;
+}
+
+.feed-date-divider-month {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: right;
+    width: 125px;
+    float: left;
+    margin: 10px 0;
+}
+
+.feed-date-divider-day {
+    font-size: 2em;
+    font-weight: 500;
+    float: left;
+    margin: 10px 35px;
+}
+
+.feed-date-divider-bullet {
+    border-radius: 50%;
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    background-color: #ddd;
+    left: 157px;
+    margin-top: 30px;
+}
+
+.feed-vert-line {
+    position: absolute;
+    z-index: 0;
+    border-left: 2px solid #ddd;
+    top: 30px;
+    display: block;
+    height: 100%;
+    left: 160p;
+}
+
+.feed-activity-title {
+    text-align: left;
+    padding-top: 17px;
+    font-size: 1.25em;
+    margin-left: 190px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.GameHeaderContainer {
+    height: 35vh;
+    width: 100%;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.GameHeaderBackground {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 35vh;
+    /*35em;*/
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.GameTitle {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    font-weight: 500;
+    color: white;
+    font-size: 2em;
+    z-index: 3;
+    line-height: 25px;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.game-card-image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    padding: 3px 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.dashboard-question-header {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    line-height: 26px;
+    margin-top: 20px;
+}

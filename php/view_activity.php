@@ -299,27 +299,27 @@ function FeedXPItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
 				<?php if($user->_security == "Journalist"){ ?>
-					<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>subject</i></div>
+					<div class="feed-activity-icon"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>subject</i></div>
 				<?php }else if(sizeof($feed) > 0){ ?>
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
+					<div class="feed-activity-icon"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?> 
-					<div class="feed-activity-icon-xp"><i class="material-icons">access time</i></div>
+					<div class="feed-activity-icon"><i class="material-icons">access time</i></div>
 				<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
-					<div class="feed-activity-icon-xp"><i class="material-icons">done</i></div>
+					<div class="feed-activity-icon"><i class="material-icons">done</i></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0 && sizeof($feed[0][3]->_playedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp"><i class="material-icons">create</i></div>
+					<div class="feed-activity-icon"><i class="material-icons">create</i></div>
 				<?php }else if(sizeof($feed[0][3]->_playedxp) > 0){ ?> 
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
+					<div class="feed-activity-icon"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else if(sizeof($feed[0][3]->_watchedxp) > 0){ ?>
-					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
+					<div class="feed-activity-icon"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
 				<?php }else{ ?>
-					<div class="feed-activity-icon-xp"><i class="material-icons">create</i></div>
+					<div class="feed-activity-icon"><i class="material-icons">create</i></div>
 				<?php } ?>
 		</div>
 		<div class="feed-content-col">
@@ -443,12 +443,12 @@ function FeedConnectionItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>group</i></div>
+			<div class="feed-activity-icon"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>group</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -495,12 +495,12 @@ function FeedCollectionUpdate($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
+			<div class="feed-activity-icon"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -543,12 +543,12 @@ function FeedBookmarkItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="material-icons" style="font-size: 1em;margin-top: 5px;">bookmark</i></div>
+			<div class="feed-activity-icon"><i class="material-icons" style="font-size: 1em;margin-top: 5px;">bookmark</i></div>
 		</div>
 		<div class="feed-content-col">
 			<div class="feed-activity-title">
@@ -592,12 +592,12 @@ function FeedTierChangedItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-action-swap-vert"></i></div>
+			<div class="feed-activity-icon"><i class="mdi-action-swap-vert"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -665,12 +665,12 @@ function FeedQuoteChangedItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-action-description"></i></div>
+			<div class="feed-activity-icon"><i class="mdi-action-description"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -754,10 +754,10 @@ function FeedQuoteChangedCard($game, $user, $event, $xp, $multiple, $agrees, $ag
 function FeedGameReleasesItem($feed){ ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-			<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style='box-shadow:none;'></div>
+			<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style='box-shadow:none;'></div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>event</i></div>
+			<div class="feed-activity-icon"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>event</i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -794,12 +794,12 @@ function FeedCollectionCreationItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
+			<div class="feed-activity-icon"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>collections</i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -839,12 +839,12 @@ function FeedCollectionFollowItem($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="mdi-image-collections"></i></div>
+			<div class="feed-activity-icon"><i class="mdi-image-collections"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">
@@ -888,12 +888,12 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 ?>
 	<div class="row" style='margin-bottom: 30px;'>
 		<div class="feed-avatar-col">
-    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    		<div class="large-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
     			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
     		</div>
 		</div>
 		<div class="feed-activity-icon-col">
-			<div class="feed-activity-icon-xp"><i class="fa fa-steam"></i></div>
+			<div class="feed-activity-icon"><i class="fa fa-steam"></i></div>
 		</div>
 		<div class="feed-content-col">
 				<div class="feed-activity-title">

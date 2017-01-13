@@ -221,6 +221,106 @@ function DisplayCriticQuoteCard($exp, $pos){
   	</div>
 <?php }
 
+function DisplayCriticChip($exp, $pos){ 
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$user = $exp->_username;
+	//$agrees = GetAgreesForXP($exp->_id);
+	//$agreedcount = array_shift($agrees);
+	
+	$hiddenusername = '';
+	if($user->_security == "Journalist" || $user->_security == "Authenticated")
+		 $hiddenusername = $user->_first." ".$user->_last;
+	else
+		$hiddenusername = $user->_username;
+?>
+   <div class="col s12 critic-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
+   		<div class="critic-name-container col s12" data-id="<?php echo $user->_id; ?>">
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+	        <?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+	        <div class="user-name">
+	        	<?php if($user->_security == "Journalist" || $user->_security == 'Authenticated'){ ?>
+	          	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title; ?></span></span>
+	        	<?php }else{ ?>
+	        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
+	        	<?php } ?>
+	        </div>
+        
+        	<?php if($user->_security == "Journalist"){ 
+        			$percent = 100; ?>
+	          		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+	      			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }else{ echo "gray"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-editor-format-quote"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+					</div>
+			<?php }else if(sizeof($exp->_playedxp) > 0){ 
+		  	  	if($exp->_playedxp[0]->_completed == "101")
+					$percent = 100;
+				else
+					$percent = $exp->_playedxp[0]->_completed;
+					
+				if($percent == 100){ ?>
+  	  	       		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
+		    				<i class="mdi-hardware-gamepad"></i>
+			          	</div>
+		          	</div>
+	          	<?php }else{ ?>
+	          		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+	      			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+					</div>
+	          	<?php } ?>
+          	<?php }else if(sizeof($exp->_watchedxp) > 0){
+	  			$percent = 20;
+	  	  		$length = "";
+	    		foreach($exp->_watchedxp as $watched){
+	    			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+	    				$percent = 101;
+	    				$length = $watched->_length;
+	    			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+	    				$percent = 100;
+	    				$length = $watched->_length;
+	    			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+	    				$percent = 50;
+	    				$length = $watched->_length;
+	    			}else{
+	    				$length = $watched->_length;
+	    			}
+	    		}
+	    		
+	    		if($percent == 101){
+	    		?>
+		          <div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+		          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
+		          			<i class="mdi-action-visibility"></i>
+		          	</div>
+				   </div>
+  	  			<?php }else{ ?>
+		      		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+		  			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+		   			</div>
+	          	<?php } 
+          	}?>
+		</div>
+  	</div>
+<?php }
+
 function DisplayUserQuoteCard($exp, $pos){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
@@ -319,6 +419,95 @@ function DisplayUserQuoteCard($exp, $pos){
 			<?php /*if($_SESSION['logged-in']->_id != $user->_id){ ?>
 				<div class="btn-flat waves-effect <?php if(in_array($user->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-expid="<?php echo $exp->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $exp->_gameid; ?>" data-username="<?php echo $hiddenusername ?>"><?php if(in_array($user->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 			<?php } */?>
+		</div>
+  	</div>
+<?php }
+
+function DisplayUserChip($exp, $pos){
+	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
+	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
+	$user = $exp->_username;
+	//$agrees = GetAgreesForXP($exp->_id);
+	//$agreedcount = array_shift($agrees);
+	
+	$hiddenusername = '';
+	if($user->_security == "Journalist")
+		 $hiddenusername = $user->_first." ".$user->_last;
+	else
+		$hiddenusername = $user->_username;
+?>
+   <div class="col s12 user-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
+   		<div class="critic-name-container col s12" data-id="<?php echo $user->_id; ?>">
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+			</div>
+	        <div class="user-name">
+	        	<?php if($user->_security == "Journalist"){ ?>
+	          	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_first." ".$user->_last; ?><span class="subNameInfo"><?php echo $user->_title; ?></span></span>
+	        	<?php }else{ ?>
+	        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_username; ?><span class="subNameInfo"><?php if($_SESSION['logged-in']->_realnames == "True" && in_array($user->_id, $mutualconn)){ echo $user->_first." ".$user->_last; } ?></span></span>
+	        	<?php } ?>
+	        </div>
+        	<?php if(sizeof($exp->_playedxp) > 0){ 
+		  	  	if($exp->_playedxp[0]->_completed == "101")
+					$percent = 100;
+				else
+					$percent = $exp->_playedxp[0]->_completed;
+					
+				if($percent == 100){ ?>
+  	  	       		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+			          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - Completed"; ?>">
+		    				<i class="mdi-hardware-gamepad"></i>
+			          	</div>
+		          	</div>
+	          	<?php }else{ ?>
+	          		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+	      			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$percent."% finished"; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-hardware-gamepad"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+					</div>
+	          	<?php } ?>
+          	<?php }else if(sizeof($exp->_watchedxp) > 0){
+	  			$percent = 20;
+	  	  		$length = "";
+	    		foreach($exp->_watchedxp as $watched){
+	    			if($watched->_length == "Watched a speed run" || $watched->_length == "Watched a complete single player playthrough" || $watched->_length == "Watched a complete playthrough"){
+	    				$percent = 101;
+	    				$length = $watched->_length;
+	    			}else if($percent < 100 && ($watched->_length == "Watched multiple hours" || $watched->_length == "Watched gameplay" || $watched->_length == "Watched an hour or less")){
+	    				$percent = 100;
+	    				$length = $watched->_length;
+	    			}else if($percent < 50 && ($watched->_length == "Watched promotional gameplay" || $watched->_length == "Watched a developer diary")){
+	    				$percent = 50;
+	    				$length = $watched->_length;
+	    			}else{
+	    				$length = $watched->_length;
+	    			}
+	    		}
+	    		
+	    		if($percent == 101){
+	    		?>
+		          <div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+		          	<div class="card-game-tier" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>">
+		          			<i class="mdi-action-visibility"></i>
+		          	</div>
+				   </div>
+  	  			<?php }else{ ?>
+		      		<div class="game-community-tier-position tier<?php echo $exp->_tier; ?>BG z-depth-1">
+		  			  	<div class="c100 mini <?php if($exp->_tier == 1){ echo "tierone"; }else if($exp->_tier == 2){ echo "tiertwo"; }else if($exp->_tier == 3){ echo "tierthree"; }else if($exp->_tier == 4){ echo "tierfour"; }else if($exp->_tier == 5){ echo "tierfive"; }  ?> p<?php echo $percent; ?>" title="<?php echo "Tier ".$exp->_tier." - ".$length; ?>" style='background-color:white;'>
+					  	  <span class='tierTextColor<?php echo $exp->_tier; ?> tierInProgress' style='background-color:white;'><i class="mdi-action-visibility"></i></span>
+						  <div class="slice">
+						    <div class="bar minibar"></div>
+						    <div class="fill"></div>
+						  </div>
+						</div>
+		   			</div>
+	          	<?php } 
+          	}?>
 		</div>
   	</div>
 <?php }

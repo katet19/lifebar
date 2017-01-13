@@ -1,0 +1,16 @@
+@import '../base/mixins';
+.large-avatar {
+    //formerly .feed-avatar
+    cursor: pointer;
+    width: 60px;
+    border-radius: 50%;
+    height: 60px;
+    @include center;
+    @include border-radius(50%);
+    @include transition(all 0.3s ease);
+    @include box-shadow(0, 2px, 5px, 0, rgba(0, 0, 0, 0.16)); //not working
+    @include box-shadow(0, 2px, 10px, 0, rgba(0, 0, 0, 0.12));
+    &:hover {
+        border: 3px solid #FF4081;
+    }
+}

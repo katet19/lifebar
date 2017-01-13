@@ -1,0 +1,11 @@
+@import '../base/mixins';
+.game-tab {
+    position: absolute;
+    top: 30vh;
+    padding: 0 0.75rem 50px !important;
+    display: none;
+}
+
+.game-tab-active {
+    display: block;
+}

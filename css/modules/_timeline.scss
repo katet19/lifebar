@@ -1,0 +1,36 @@
+@import '../base/mixins';
+.feed-date-divider-month {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: right;
+    width: 125px;
+    float: left;
+    margin: 10px 0;
+}
+
+.feed-date-divider-day {
+    font-size: 2em;
+    font-weight: 500;
+    float: left;
+    margin: 10px 35px;
+}
+
+.feed-date-divider-bullet {
+    border-radius: 50%;
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    background-color: #ddd;
+    left: 157px;
+    margin-top: 30px;
+}
+
+.feed-vert-line {
+    position: absolute;
+    z-index: 0;
+    border-left: 2px solid #ddd;
+    top: 30px;
+    display: block;
+    height: 100%;
+    left: 160p;
+}
