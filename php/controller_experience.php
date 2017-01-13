@@ -222,7 +222,7 @@ function GetGlobalLatestXP(){
 								
 						$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 						$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-						$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+						$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 										
 						$experiences[] = $experience;
 					}
@@ -282,15 +282,9 @@ function GetVideoMyXPForGame($url, $gameid){
 				$row['ArchiveTier'], 
 				$row['DateEntered'], 
 				$row['Completed'], 
-				$row['Mode'], 
+				$row['Hours'], 
 				$row['Platform'],
 				$row['PlatformIDs'],
-				$row['DLC'],
-				$row['Alpha'],
-				$row['Beta'],
-				$row['Early Access'],
-				$row['Demo'],
-				$row['Streamed'],
 				$row['Archived'],
 				$row['AuthenticXP']);
 		}
@@ -439,7 +433,7 @@ function AdvancedFilterWeave($userid, $paramaters, $sort){
 						
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 							
 			$experiences[] = $experience;
 		}
@@ -497,7 +491,7 @@ function SearchForGamesInWeave($searchstring, $userid){
 						
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);	
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);	
 						
 			$experiences[] = $experience;
 		}
@@ -590,7 +584,7 @@ function GetTierBreakdownYearTier($userid, $year, $tier){
 						
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			
 			$exp[] = $experience;
 					
@@ -654,7 +648,7 @@ function GetTierBreakdown($userid, $year){
 						
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			if($row["Tier"] == 1)
 				$tier1[] = $experience;
 			else if($row["Tier"] == 2)
@@ -918,7 +912,7 @@ function GetAnticipatedGames($userid, $limit){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -952,7 +946,7 @@ function GetAnticipatedGamesAbilities($userid, $limit){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -987,7 +981,7 @@ function GetAnticipatedGamesThisYear($userid, $limit){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -1022,7 +1016,7 @@ function GetAnticipatedGamesInPast($userid, $limit){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -1056,7 +1050,7 @@ function Get3LatestXPForUser($userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$xps[] = $experience;
 		}
 	}
@@ -1126,7 +1120,7 @@ function GetMyWeaveFilterBy($userid, $filter, $sort){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 						
 			$myweave[] = $experience;
@@ -1216,7 +1210,7 @@ function GetExperienceForGame($gameid, $pconn = null){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1251,7 +1245,7 @@ function GetExperienceForUser($userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1312,7 +1306,7 @@ function GetExperienceForUserSubset($userid, $subset, $pconn = null){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1345,7 +1339,7 @@ function GetExperienceForUserComplete($userid, $gameid, $pconn = null){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 		}
 	}
     if($pconn == null)
@@ -1376,7 +1370,7 @@ function GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $pconn = null
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			$missing = false;
 		}
 	}
@@ -1428,7 +1422,7 @@ function GetExperienceForFeed($gameid, $filter, $pconn = null){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -1463,7 +1457,7 @@ function GetMyUsersXPForGame($gameid, $userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			if(sizeof($experience->_playedxp) > 0 || sizeof($experience->_watchedxp) > 0)
 				$exp[$row["THEEXPID"]] = $experience;
 
@@ -1737,7 +1731,7 @@ function GetOutsideUsersXPForGame($gameid, $userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 			if(sizeof($experience->_playedxp) > 0 || sizeof($experience->_watchedxp) > 0)
 				$exp[$row["THEEXPID"]] = $experience;
 
@@ -1778,7 +1772,7 @@ function GetBestXPForUser($userid, $latestxp){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1806,7 +1800,7 @@ function GetBestXPForUser($userid, $latestxp){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1847,7 +1841,7 @@ function GetBestXPForUserAll($userid, $type){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1886,7 +1880,7 @@ function GetWorstXPForUser($userid, $latestxp){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1914,7 +1908,7 @@ function GetWorstXPForUser($userid, $latestxp){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 		}
@@ -1947,7 +1941,7 @@ function GetRecentlyBookmarked($userid){
 						$row['Rank']);
 			$experience->_playedxp = '';
 			$experience->_watchedxp = '';
-			$experience->_earlyxp = '';
+			$experience->_postedxp = '';
 				
 			$exp[] = $experience;
 		}
@@ -1980,7 +1974,7 @@ function GetExperienceForGamePopUsers($gameid, $userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -2014,7 +2008,7 @@ function GetExperienceForGameByEvents($gameid, $userid){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);
 				
 			$exp[] = $experience;
 
@@ -2185,7 +2179,7 @@ function GetExperienceForUserByGame($userid, $gameid, $pconn = null){
 						$row['Rank']);
 			$experience->_playedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Played', $mysqli);
 			$experience->_watchedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Watched', $mysqli);
-			$experience->_earlyxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Early', $mysqli);	
+			$experience->_postedxp = GetSubExperiences($row["UserID"], $row["GameID"], 'Post', $mysqli);	
 
 		}
 	}
@@ -2303,16 +2297,10 @@ function GetSubExperiences($userid, $gameid, $type, $pconn = null){
 				$row['ArchiveQuote'], 
 				$row['ArchiveTier'], 
 				$row['DateEntered'], 
-				$row['Completed'], 
-				$row['Mode'], 
+				$row['Completed'],
+				$row['Hours'],  
 				$row['Platform'],
 				$row['PlatformIDs'],
-				$row['DLC'],
-				$row['Alpha'],
-				$row['Beta'],
-				$row['Early Access'],
-				$row['Demo'],
-				$row['Streamed'],
 				$row['Archived'],
 				$row['AuthenticXP']);
 				
@@ -2347,11 +2335,11 @@ function SubmitCriticExperience($user,$gameid,$quote,$tier,$links){
 	Close($mysqli, $result);
 }
 
-function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
+function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	$mysqli = Connect();
 	if($quote != '')
 		$quote = mysqli_real_escape_string($mysqli, $quote);
-	$newXP = "true";
+	$newXP = true;
 	
 	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
 	if($quickxp != ''){
@@ -2359,7 +2347,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 			$quote = mysqli_real_escape_string($mysqli, $quickxp->_quote);
 		if($tier <= 0)
 			$tier = $quickxp->_tier;
-		$newXP = "false";
+		$newXP = false;
 	}
 	
 	
@@ -2379,7 +2367,10 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	else
 		$authentic = "No";
 		
-	if($newXP == "false"){
+	if($newXP == false){
+		if($rank > 0)
+			ResequenceRanks($rank, $gameid, $user, $mysqli);
+		
 		$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
 		$result = $mysqli->query($update);
 		if($result == '' || $result == false)
@@ -2392,47 +2383,81 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link){
 	}
 	
 	Close($mysqli, $result);
-	//CalculateGameTierData($gameid);
+
+	return $newXP;
 }
 
-function UpdateXP($user,$gameid,$quote,$tier,$link,$completed){
+function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year, $platform,$hours){
 	$mysqli = Connect();
-	$data = HasUserGivenXP($user, $gameid);
-	$quote = mysqli_real_escape_string($mysqli, $quote);
-	$quotechanged = false;
-	similar_text($data["Quote"], $quote, $percent); 
-	if(number_format($percent, 0) <= 85){ $quotechanged = true; }
+	$completed = str_replace("%","",$completed);	
 	
-	if($quotechanged && $data['Tier'] != $tier){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','UPDATE','$tier','$quote')");
-	}else if($quotechanged){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','QUOTECHANGED','$tier','$quote')");
-	}else if($data['Tier'] != $tier){
-		$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Tier`,`Quote`) values ('$user','$gameid','TIERCHANGED','$tier','".$data["Tier"].",".$tier."')");
+	$quote = mysqli_real_escape_string($mysqli, $quote);
+	
+	if($completed == "Multiple Playthroughs"){
+		$completed = "101";
 	}
+
+	if($hours < 0)
+		$hours = 0;
+			
+	$platformids = GetPlatformIDs($platform);
+	
+	$date = $year."-".date("m")."-".date("d");
 	
 	if($_SESSION['logged-in']->_security == "Authenticated")
 		$authentic = "Yes";
 	else
 		$authentic = "No";
 
-	$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
-	$result = $mysqli->query($update);
-	if($result == '' || $result == false){
-		customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$update.')');
-	}else{
-		if($completed > 0 && $completed != ''){
-			$subupdate = "update `Sub-Experiences` set `Completed` = '".$completed."' where `UserID` = '".$user."' and `GameID` = '".$gameid."' and `Type` = 'Played' and `Archived` = 'No'";
-			$result = $mysqli->query($subupdate);
-			if($result == '' || $result == false){
-				customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
-			}
+	if($xpid > 0){
+		$subupdate = "update `Sub-Experiences` set `ArchiveTier` = '".$tier."', `Completed` = '".$completed."', `Date` = '".$date."', `Platform` = '".$platform."', `PlatformIDs` = '".$platformids."', `Hours` = '".$hours."'  where `ID` = '".$xpid."' and `GameID` = '".$gameid."' and `Type` = 'Played'";
+		$result = $mysqli->query($subupdate);
+		if($result == '' || $result == false){
+			customError('MySQL', mysqli_error($mysqli),'controller_experience','UpdateXP - ('.$subupdate.')');
 		}
 	}
 	Close($mysqli, $result);
-	//CalculateGameTierData($gameid);
 }
 
+function CalculateXPGain($type, $isNew = true){
+	if($type == "star" && $isNew){
+		return "1";
+	}else if($type == "played" && $isNew){
+		return "2";
+	}else if($type == "playedwithquote" && $isNew){
+		return "5";
+	}else if($type == "watched" && $isNew){
+		return "2";
+	}else if($type == "watchedwithquote" && $isNew){
+		return "5";
+	}else if($type == "post" && $isNew){
+		return "3";
+	}else if($type == "remove"){
+		return "-2";
+	}else{
+		return "0";
+	}
+}
+
+function ResequenceRanks($rank, $gameid, $userid, $mysqli){
+	$query = "select * from `Experiences` where  `UserID` = '".$userid."' and `Rank` > 0 order by `Rank` ASC";
+	if ($result = $mysqli->query($query)) {
+		$count = 1;
+		while($row = mysqli_fetch_array($result)){
+			if($row['Rank'] < $rank && $row['GameID'] != $gameid){
+				$count++;
+			}else if($row['Rank'] != $rank && $row['GameID'] == $gameid ){
+				//omit game from counter
+				$rankupdate = "update `Experiences` set `Rank` = '".$rank."' where `ID` = '".$row['ID']."'";
+				$mysqli->query($rankupdate);
+			}else{
+				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `ID` = '".$row['ID']."'";
+				$mysqli->query($rankupdate);
+				$count++;
+			}
+		}
+	}
+}
 
 function SubmitBookmark($user,$gameid,$bucketlist){
 	$mysqli = Connect();
@@ -2464,37 +2489,23 @@ function SubmitOwned($user,$gameid,$owned){
 	}
 }
 
-function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year, $single, $multi, $platform, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed){
+function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $year, $platform, $hours){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);
 	$newXP = "true";
+	if($hours < 0)
+		$hours = 0;
 	
 	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
 	if(sizeof($quickxp->_playedxp) > 0){
-		if($quote == '')
-			$quote = $quickxp->_quote;
+		//if($quote == '')
+		//	$quote = $quickxp->_quote;
 		if($tier <= 0)
 			$tier = $quickxp->_tier;
 		if($completed == '')
 			$completed = $quickxp->_playedxp[0]->_completed;
-		if($quarter == '')
-			$quarter = $quickxp->_playedxp[0]->_quarter;
 		if($year == '')
 			$year = $quickxp->_playedxp[0]->_year;
-		if($single == '' && $multi == '')
-			$modesplayed = $quickxp->_playedxp[0]->_mode;
-		if($dlc == '')
-			$dlc = $quickxp->_dlc;
-		if($alpha == '')
-			$alpha = $quickxp->_alpha;
-		if($beta == '')
-			$beta = $quickxp->_beta;
-		if($earlyaccess == '')
-			$earlyaccess = $quickxp->_earlyaccess;
-		if($demo == '')
-			$demo = $quickxp->_demo;
-		if($streamed == '')
-			$streamed = $quickxp->_streamed;
 		$newXP = "false";
 	}
 	
@@ -2504,31 +2515,13 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 	if($completed == "Multiple Playthroughs"){
 		$completed = "101";
 	}
-	
-	if($single && $multi)
-		$modesplayed = "Single and Multiplayer";
-	else if($single)
-		$modesplayed = "Single Player";
-	else if($mulit)
-		$modesplayed = "Multiplayer";
-		
+			
 	$platformids = GetPlatformIDs($platform);
-	if(sizeof($platform) > 0)
-		$platform = implode("\n", $platform);
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year."-".date("m")."-".date("d");
 		
 	if (sizeof($quickxp->_playedxp) == 0){
-		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+		$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`Hours`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids','$hours')";
 		$result = $mysqli->query($insert);
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
@@ -2541,7 +2534,7 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 		if($result == '' || $result == false){
 			customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$update.')');
 		}else{
-			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`DLC`,`Alpha`,`Beta`,`Early Access`,`Demo`,`Streamed`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$dlc', '$alpha', '$beta', '$earlyaccess', '$demo', '$streamed')";
+			$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`ArchiveTier`,`Type`,`Completed`,`Date`,`Mode`,`Platform`,`PlatformIDs`,`Hours`) values ('$user','$expid','$gameid','$quote','$tier','Played','$completed','$date', '$modesplayed', '$platform', '$platformids', '$hours')";
 			$result = $mysqli->query($insert);
 			if($result == '' || $result == false){
 				customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePlayedXP - ('.$insert.')');
@@ -2550,6 +2543,30 @@ function SavePlayedXP($user, $gameid, $quote, $tier, $completed, $quarter, $year
 			}
 		}
 	}
+	Close($mysqli, $result);
+	
+	return $newXP;
+}
+
+function SavePostXP($user, $gameid, $quote){
+	$mysqli = Connect();
+	$newXP = "true";
+	
+	$quickxp = GetExperienceForUserComplete($user, $gameid, $mysqli);
+	if(sizeof($quickxp->_playedxp) > 0){
+		$newXP = "false";
+	}
+
+	$quote = mysqli_real_escape_string($mysqli, $quote);		
+		
+	$insert = "insert into `Sub-Experiences` (`UserID`,`ExpID`,`GameID`,`ArchiveQuote`,`Type`) values ('$user','$expid','$gameid','$quote','Post')";
+	$result = $mysqli->query($insert);
+	if($result == '' || $result == false){
+		customError('MySQL', mysqli_error($mysqli),'controller_experience','SavePostXP - ('.$insert.')');
+	}else{
+		CreateEventForPostedXP($user, $gameid, $quote);
+	}
+
 	Close($mysqli, $result);
 	
 	return $newXP;
@@ -2564,10 +2581,8 @@ function GetSubXPID($userid, $gameid, $mysqli){
 	return $subxpid;
 }
 
-function GetPlatformIDs($platforms){
+function GetPlatformIDs($platform){
 	$mysqli = Connect();
-	foreach($platforms as $platform){ 
-		$platform = trim($platform);
 		if($platform != ""){
 			$platformquery = "select * from `Link_Platforms` where `Name` = '".$platform."'";
 			if ($platformresult = $mysqli->query($platformquery)){
@@ -2576,7 +2591,6 @@ function GetPlatformIDs($platforms){
 				}
 			}
 		}
-	}
 	Close($mysqli, $platformresult);
 	
 	if(sizeof($platformID) > 0)
@@ -2599,7 +2613,15 @@ function CreateEventForPlayedXP($hasPlayedXP, $data, $completed, $user, $gameid,
 	Close($mysqli, $result);
 }
 
-function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $quarter, $year){
+function CreateEventForPostedXP($user, $gameid,$quote){
+	$mysqli = Connect();
+	$sxpid = GetSubXPID($user, $gameid, $mysqli);
+	$mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`,`S_XPID`) values ('$user','$gameid','QUOTECHANGED','".$quote."','$sxpid')");
+		
+	Close($mysqli, $result);
+}
+
+function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $length, $year){
 	$mysqli = Connect();
 	$newXP = "true";
 	
@@ -2631,16 +2653,7 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	else if($length == "watchedpromotional")
 		$length = "Watched promotional gameplay";
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year."-".date("m")."-".date("d");
 	
 	
 	$url = NormalizeVideoURLs($url);
@@ -2656,12 +2669,8 @@ function SaveWatchedXP($user, $gameid, $quote, $tier, $url, $source, $length, $q
 	return $newXP;
 }
 
-function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, $year){
+function UpdateWatchedXP($user, $gameid, $xpid, $quote, $tier, $url, $length, $year){
 	$mysqli = Connect();
-
-	$quickxp = GetExperienceForUserSurfaceLevel($user, $gameid, $mysqli);
-	$tier = $quickxp->_tier;
-	$quote = $quickxp->_quote;
 	
 	if($length == "watchedanhourorless")
 		$length = "Watched gameplay";
@@ -2680,19 +2689,9 @@ function UpdateWatchedXP($id, $user, $gameid, $url, $source, $length, $quarter, 
 	else if($length == "watchedpromotional")
 		$length = "Watched promotional gameplay";
 	
-	if($quarter == 'q1')
-		$date = $year."-01-01";
-	else if($quarter == "q2")
-		$date = $year."-04-01";
-	else if($quarter == "q3")
-		$date = $year."-07-01";
-	else if($quarter == "q4")
-		$date = $year."-10-01";
-	else if($quarter == "q0")
-		$date = $year."-00-00";
+	$date = $year."-".date("m")."-".date("d");
 	
-	$url = NormalizeVideoURLs($url);
-	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveQuote`='$quote',`ArchiveTier`='$tier',`URL`='$url',`Date`='$date',`Length`='$length',`Source`='$source' where `ID` = '$id'");
+	$result = $mysqli->query("update `Sub-Experiences` set `ArchiveTier`='$tier',`Date`='$date',`Length`='$length' where `ID` = '$xpid' and `GameID` = '".$gameid."'");
 	Close($mysqli, $result);
 }
 
@@ -2773,7 +2772,7 @@ function RemoveSubExperience($subexpid, $gameid){
 	$mysqli = Connect();
 	if ($result = $mysqli->query("select * from `Sub-Experiences` where `ID` = '".$subexpid."' and `GameID` = '".$gameid."'")) {
 		while($row = mysqli_fetch_array($result)){
-			$mysqli->query("Delete from `Events` where `UserID` = '$user' and `GameID` = '$gameid' and `Date` = '".$row['DateEntered']."'");
+			$mysqli->query("Delete from `Events` where `UserID` = '".$_SESSION['logged-in']->_id."' and `GameID` = '".$gameid."' and `Date` = '".$row['DateEntered']."'");
 		}
 	}
 	$mysqli->query("Delete from `Sub-Experiences` where `ID` = '$subexpid' and `GameID` = '$gameid'");

@@ -1,7 +1,9 @@
 function ShowGame(id, currentTab, isID, browserNav, gameTab){
 	if(gameTab == "" || gameTab == undefined)
 		gameTab = "Dashboard";
-	LoadGame(id, currentTab, isID, browserNav, gameTab);
+	if($(".lean-overlay").length == 0){
+		LoadGame(id, currentTab, isID, browserNav, gameTab);
+	}
 }
 
 function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
@@ -206,8 +208,6 @@ function AttachGameEvents(currentTab){
 		});
 	}
 
-	AttachGameCardEvents();
-	
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
@@ -311,8 +311,10 @@ function AttachGameEvents(currentTab){
 
 function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
-	$(".game-card-action-pick").on("click", function(){
-		GameCardAction($(this).attr("data-action"), $(this).parent().attr("data-id"));
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
 		e.stopPropagation();
@@ -344,7 +346,7 @@ function AttachGameCardEvents(){
 		});
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
-	$(".game-nav-title").on("click", function(e){ 
+	$(".card-game-secondary-actions").on("click", function(e){ 
 		e.stopPropagation(); 
 		CloseSearch();
 		$(".searchInput input").val('');
@@ -353,14 +355,212 @@ function AttachGameCardEvents(){
 			if($("#userAccountNav").is(":visible"))
 				$("#userAccountNav").hide(250);
 		});
-		ShowGame($(this).parent().parent().parent().attr("data-gbid"), $("#discover")); 
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
+	AttachStarEvents();
+}
+
+function AttachStarEvents(){
+	$(".star-icon").hover(function(){
+		$(this).text("star");
+		var element = $(this).parent();
+		if($(this).hasClass("star-icon-5")){
+			element.find(".star-icon-4").text("star");
+			element.find(".star-icon-3").text("star");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-4")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-3").text("star");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-3")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-2").text("star");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-2")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-1").text("star");
+		}else if($(this).hasClass("star-icon-1")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+		}
+	},
+	function(){
+		$(this).text("star_border");
+		var element = $(this).parent();
+		if($(this).hasClass("star-icon-5")){
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-4")){
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-3")){
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star_border");
+		}else if($(this).hasClass("star-icon-2")){
+			element.find(".star-icon-1").text("star_border");
+		}else{
+
+		}
+		element.find(".star-icon-pre").text("star");
+	});
+	$(".star-icon").on("click", function(){
+		var gameid = $(this).parent().parent().parent().attr("data-id");
+		var tier = 0;
+		var element = $(this).parent();
+		var star = $(this);
+		if($(this).hasClass("star-icon-5")){
+			tier = 1;
+		}
+		else if($(this).hasClass("star-icon-4")){
+			tier = 2;
+		}
+		else if($(this).hasClass("star-icon-3")){
+			tier = 3;
+		}
+		else if($(this).hasClass("star-icon-2")){
+			tier = 4;
+		}
+		else if($(this).hasClass("star-icon-1")){
+			tier = 5;
+		}
+
+		element.find(".star-icon").each(function(){
+			$(this).removeClass("tierTextColor1");
+			$(this).removeClass("tierTextColor2");
+			$(this).removeClass("tierTextColor3");
+			$(this).removeClass("tierTextColor4");
+			$(this).removeClass("tierTextColor5");
+			$(this).removeClass("star-icon-pre");
+		});
+		if(star.hasClass("star-icon-5")){
+			element.find(".star-icon-5").text("star"); element.find(".star-icon-5").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor1 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor1 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-4")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star"); element.find(".star-icon-4").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor2 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor2 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-3")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border"); 
+			element.find(".star-icon-3").text("star"); element.find(".star-icon-3").addClass("tierTextColor3 star-icon-pre");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor3 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor3 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-2")){
+			element.find(".star-icon-5").text("star_border"); 
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star"); element.find(".star-icon-2").addClass("tierTextColor4 star-icon-pre");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor4 star-icon-pre");
+		}
+		else if(star.hasClass("star-icon-1")){
+			element.find(".star-icon-5").text("star_border");
+			element.find(".star-icon-4").text("star_border");
+			element.find(".star-icon-3").text("star_border");
+			element.find(".star-icon-2").text("star_border");
+			element.find(".star-icon-1").text("star"); element.find(".star-icon-1").addClass("tierTextColor5 star-icon-pre");
+		}
+
+		$.ajax({ url: '../php/webService.php',
+				data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: -1 },
+				type: 'post',
+				success: function(output) {
+					ManageXPRewards(output);
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+	});
+}
+
+function ManageXPRewards(output){
+	var datasplit = $.trim(output).split("|****|");
+	var contentsplit = datasplit[0].split("|**|");
+	var xpGain = parseInt(datasplit[1]);
+	for (var i in contentsplit) {
+		if($.trim(contentsplit[i]) != ""){
+			ToastProgress(contentsplit[i]);
+		}
+	}
+	var timeoutcounter = 1000;
+	$(".bp-progress-item-bar").each(function(){
+		if(!$(this).hasClass("eventSet")){
+			$(this).addClass("eventSet");
+			var after = $(this).find(".bp-progress-item-bar-after");
+			var before = $(this).find(".bp-progress-item-bar-before");
+			var lvlup = $(this).parent().find(".bp-progress-item-levelup");
+			setTimeout(function(e){
+				var width = after.attr("data-width");
+				after.css({"width":width});
+				if(lvlup.attr("data-levelup") == "Yes"){
+					lvlup.html("LEVEL UP!");
+					setTimeout(function(e){
+						before.css({"background-color":"#66BB6A"});
+						after.css({"background-color":"#66BB6A"});
+						lvlup.html("Level " + lvlup.attr("data-newlevel"));
+					}, 1000);
+				}
+			}, timeoutcounter);
+			if(lvlup.attr("data-levelup") == "Yes")
+				timeoutcounter = timeoutcounter + 1750;
+			else
+				timeoutcounter = timeoutcounter + 1000;
+		}
+	});
+	
+	var lifebar = $("#navigation-header").find(".lifebar-container");
+	var min = lifebar.attr('data-min');
+	var max = lifebar.attr('data-max');
+	var newXp = parseInt(lifebar.attr('data-xp')) + xpGain;
+	if(xpGain > 0){
+		$(".lifebar-bar-xp-popup").text("+ "+xpGain+"xp");
+		$(".lifebar-bar-xp-popup").css({"opacity":"1"});
+		setTimeout(function(){
+			$(".lifebar-bar-xp-popup").css({"opacity":"0"});
+		}, 1500);
+	}
+	if(newXp >= max){
+		var newLevel = parseInt(lifebar.find(".lifebar-bar-level-header span").text()) + 1;
+		lifebar.find(".lifebar-bar-level-header span").text(newLevel);
+		ToastProgress("<div style='min-width:400px;text-align:left;'><div class='levelupToastText' style='padding:10px 0;font-size:2em;font-weight:bold;'>LEVEL " + newLevel + "</div> <div>Level Up! You have reached the next level.</div></div>");
+		min = Math.ceil(Math.pow((newLevel-1) / 0.3, 2));
+		max = Math.ceil(Math.pow(newLevel / 0.3, 2)) - 1;
+		lifebar.attr('data-min', min);
+		lifebar.attr('data-max', max);
+	}
+	lifebar.attr('data-xp', newXp);
+	var newLength = Math.round(((newXp - min) / (max - min)) * 100);
+	$(".lifebar-fill-min-circle").css({"width": newLength+"%"});
 }
 
 function GameCardAction(action, gameid){
 	if(action == "more" || action == "bookmark"){
 
-	}else{
+	}else if(action == "xp"){
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
@@ -368,132 +568,256 @@ function GameCardAction(action, gameid){
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
 		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
 
-		if(action == "tier"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowTierModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$('.collapsible').collapsible();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$(".tier-modal-add-btn").on("click", function(){
-						$(".tier-modal-current-game").each(function(){
-							$(this).hide();
-						});
-						$(".tier-modal-add-btn").each(function(){
-							$(this).show();
-						});
-						$(this).hide();
-						$(this).parent().find(".tier-modal-current-game").show(250);
-					});
-					$(".modal-rank-item").on("click",function(){
-						var rank = $(this).attr("data-internalrank");
-						$(".modal-rank-item").each(function(){
-							var thisrank = parseInt($(this).attr("data-internalrank"));
-							$(this).find(".modal-rank-item-rank").text(thisrank);
-							if(thisrank >= rank){
-								thisrank = thisrank + 1;	
-								$(this).find(".modal-rank-item-rank").text(thisrank);
-							}
-						});
-						$(".modal-rank-active-game").hide(100);
-						$(this).parent().find(".modal-rank-active-game").show(300); 
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
+		
+		$.ajax({ url: '../php/webService.php',
+			data: {action: "ShowXPModal", gameid: gameid },
+			type: 'post',
+			success: function(output) {
+				$("#gameminiInnerContainer").html(output);
+				$('.collapsible').collapsible();
+				$('textarea#myxp-quote').characterCounter();
+				$(".myxp-platform-checked").each(function(){ $(this).click(); });
+				$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
+				$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+					var windowWidth = $(window).width();
+					HideFocus();
+					$("#gamemini").css({ "right": "-40%" }); 
+					$(".lean-overlay").each(function(){ $(this).remove(); } );
+					setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 				});
-		}else if(action == "xp"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowXPModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$('.collapsible').collapsible();
-					$('textarea#myxp-quote').characterCounter();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
-						var windowWidth = $(window).width();
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$('select').material_select();
-					$(".modal-xp-header-advanced").on("click", function(){
-						if($(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
-							$(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
-							$(this).find(".material-icons").text("add");
-						}else{
-							$(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
-							$(this).find(".material-icons").text("remove");
-						}
-					});
-					$(".modal-xp-emoji-icon").on('click', function(){
-						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
-						$(this).addClass("modal-xp-emoji-icon-active");
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
+				$(".cancel-xp").on("click", function(){
+					$(this).parent().parent().find(".collapsible-header").click();
 				});
-		}else if(action == "rank"){
-			$.ajax({ url: '../php/webService.php',
-				data: {action: "ShowRankModal", gameid: gameid },
-				type: 'post',
-				success: function(output) {
-					$("#gameminiInnerContainer").html(output);
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").unbind();
-					$(".fixed-close-modal-btn, .lean-overlay, .cancel-btn").on('click', function(){
-						var windowWidth = $(window).width();
-						HideFocus();
-						$("#gamemini").css({ "right": "-40%" }); 
-						$(".lean-overlay").each(function(){ $(this).remove(); } );
-						setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-					});
-					$(".modal-rank-item").on("click",function(){
-						var rank = $(this).attr("data-internalrank");
-						$(".modal-rank-item").each(function(){
-							var thisrank = parseInt($(this).attr("data-internalrank"));
-							$(this).find(".modal-rank-item-rank").text(thisrank);
-							if(thisrank >= rank){
-								thisrank = thisrank + 1;	
-								$(this).find(".modal-rank-item-rank").text(thisrank);
-							}
+				$(".delete-xp").on("click",function(){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: "RemoveSubExperience", gameid: gameid, subxpid: xpid  },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
 						});
-						$(".modal-rank-active-game").hide(100);
-						$(this).parent().find(".modal-rank-active-game").show(300); 
-					});
-				},
-					error: function(x, t, m) {
-						if(t==="timeout") {
-							ToastError("Server Timeout");
-						} else {
-							ToastError(t);
-						}
-					},
-					timeout:45000
+						$(".fixed-close-modal-btn").click();
 				});
-		}
+				$('select').material_select();
+				$(".modal-xp-header-advanced").on("click", function(){
+					if($(this).parent().find(".modal-xp-advanced-options-container").hasClass("modal-xp-advanced-options-container-active")){
+						$(this).parent().find(".modal-xp-advanced-options-container").removeClass("modal-xp-advanced-options-container-active");
+						$(this).find(".material-icons").text("add");
+					}else{
+						$(this).parent().find(".modal-xp-advanced-options-container").addClass("modal-xp-advanced-options-container-active");
+						$(this).find(".material-icons").text("remove");
+					}
+				});
+				$(".modal-xp-emoji-icon").on('click', function(){
+					$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+					$(this).addClass("modal-xp-emoji-icon-active");
+					if($(this).parent().parent().find(".xp-percentage-played-range").length > 0)
+						ToggleSaveButtonPlayed($(this).parent().parent());
+					else
+						ToggleSaveButtonWatched($(this).parent().parent());
+				});
+				$(".xp-percentage-played-range").change(function(){
+					ToggleSaveButtonPlayed($(this).parent().parent().parent().parent());
+				});
+				$(".myxp-platforms").change(function(){
+					if($(this).parent().parent().parent().parent().parent().find(".xp-percentage-played-range").length > 0)
+						ToggleSaveButtonPlayed($(this).parent().parent().parent().parent().parent());
+					else
+						ToggleSaveButtonWatched($(this).parent().parent().parent().parent().parent());
+				});
+				$(".watchedurl").on('keyup', function(){
+					ToggleSaveButtonWatched($(this).parent().parent().parent());
+				});
+				$("#myxp-post").on('keyup', function(){
+					ToggleSaveButtonPost($(this).parent().parent().parent());
+				});
+				$(".save-played-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-quote").val();
+						var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+						var completion = form.find("#xp-percentage-played-range").val();
+						var platform = form.find(".myxp-platforms:checked").attr("data-text");
+						var year = form.find("#myxp-year").val();
+						var hours = form.find(".playedhours").val();
+						var action = "SavePlayedExperience";
+						if(xpid != undefined && xpid > 0)
+							action = "UpdatePlayedExperience";
+
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: action, gameid: gameid, quote: quote, tier: emoji, platform: platform, completion: completion, year: year, xpid: xpid, hours: hours  },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+				$(".save-watched-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var xpid = $(this).attr("data-xpid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-quote").val();
+						var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+						var watchedType = form.find(".myxp-platforms:checked:checked").attr("data-text");
+						var url = form.find("#watchedurl").val();
+						var year = form.find("#myxp-year").val();
+						var action = "SaveWatchedExperience";
+						if(xpid != undefined && xpid > 0)
+							action = "UpdateWatchedExperience";
+
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year, xpid: xpid  },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+				$(".save-post-xp").on('click', function(){
+					if(!$(this).hasClass("disabled")){
+						var gameid = $(this).attr("data-gameid");
+						var form = $(this).parent();
+						var quote = form.find(".myxp-post").val();
+						InitializeGameCardUpdate(gameid);
+						$.ajax({ url: '../php/webService.php',
+							data: {action: "SavePostXP", gameid: gameid, quote: quote },
+							type: 'post',
+							success: function(output) {
+								ManageXPRewards(output);
+								FinishGameCardUpdate(gameid);
+							},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+						$(".fixed-close-modal-btn").click();
+					}
+				});
+			},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
 	}
+}
+
+function ToggleSaveButtonPlayed(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var completion = form.find(".xp-percentage-played-range").val();
+	var platform = form.find(".myxp-platforms:checked").attr("data-text");
+	if(emoji != undefined && completion != 0 && platform != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
+}
+
+function ToggleSaveButtonPost(form){
+	var post = form.find(".myxp-post").val();
+	if(post != ""){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
+}
+
+function ToggleSaveButtonWatched(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var url = form.find(".watchedurl").val();
+	var watchedType = form.find(".myxp-platforms:checked").attr("data-text");
+	if(emoji != undefined && url != "" && url != undefined && watchedType != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
+}
+
+function InitializeGameCardUpdate(gameid){
+	$(".game-discover-card").each(function(){
+		if($(this).attr("data-gameid") == gameid){
+			var container = $(this).find(".game-nav-title");
+			container.html("<div class='game-card-action-pick' style='text-align:center;'><div class='game-card-summary-add-xp'><i class='material-icons game-card-summary-add-xp-icon'>save</i><span class='game-card-summary-add-xp-text'>Saving</span></div></div>");
+		}
+	});
+	$(".game-card-action-pick").unbind();
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+	});
+}
+
+function FinishGameCardUpdate(gameid){
+	$(".game-discover-card").each(function(){
+		if($(this).attr("data-gameid") == gameid){
+			var container = $(this).find(".game-nav-title");
+			$.ajax({ url: '../php/webService.php',
+				data: {action: "UpdateGameCard", gameid: gameid },
+				type: 'post',
+				success: function(output) {
+					container.html(output);
+				},
+				error: function(x, t, m) {
+					if(t==="timeout") {
+						ToastError("Server Timeout");
+					} else {
+						ToastError(t);
+					}
+				},
+				timeout:45000
+			});
+		}
+	});
 }
 
 function SwitchGameContent(elem){

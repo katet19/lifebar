@@ -612,7 +612,7 @@
 	position: relative;
 	text-align: left;
     background-color: #C5CAE9;
-	height: 300px;
+	height: 270px;
 	display:block;
 }
 
@@ -646,7 +646,7 @@
 .game-discover-card .card-content,  .game-discover-dismiss-card  .card-content{
 	background-color: white;
 	padding: 0px !important;
-	height: 100px;
+	height: 70px;
 }
 
 .game-discover-card .card-reveal, .game-discover-dismiss-card .card-reveal{
@@ -657,8 +657,9 @@
 .game-discover-card .card-content .card-title, .game-discover-dismiss-card .card-content .card-title{
 	font-size: 1em;
 	line-height: 18px;
-	height:90px;
+	height:70px;
 	position: relative;
+	cursor: inherit;
 }
 
 .game-discover-card .card-reveal .card-title, .game-discover-dismiss-card .card-reveal .card-title{
@@ -834,7 +835,7 @@
 }
 
 .searchResultsContainer, .CategoryDetailsContainer{
-	margin: 6em 2.5% 1em;
+	/*margin: 6em 2.5% 1em;*/
 }
 
 .categoryIcon{
@@ -917,6 +918,7 @@
 	border-bottom: 1px solid #9BA09F;
 	color: #474747;
 	padding: 0.5em;
+	background-color: rgb(237, 236, 236);
 }
 .RekeaseDateIcon{
 	color: rgba(0, 0, 0, 0.87);
@@ -1203,7 +1205,7 @@
 		top:100px;
 	}
 	.game-discover-card{
-		height:250px;
+		height:220px;
 	}
 	.ReleaseDateHeader {
 		font-size:1.25em;

@@ -68,11 +68,11 @@ function Search(searchstring){
  			});
   			Waves.displayEffect();
  			AttachGameCardEvents();
- 			$(".SeeAllBtn").on('click',function(){
+ 			/*$(".SeeAllBtn").on('click',function(){
  				var context = $(this).attr("data-context");
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
- 			});
+ 			});*/
  			
  			$('html').on('click', function(){
 				CloseSearch();

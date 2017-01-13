@@ -63,12 +63,16 @@ function Toast(msg){
 }
 
 function ToastProgress(msg){
-	Materialize.toast(msg, 5000);
+	Materialize.toast(msg, 12000);
 }
 
 
 function ToastError(msg){
 	Materialize.toast(msg, 5000);
+}
+
+function ToastLong(msg){
+	Materialize.toast(msg, 3540000);
 }
 
 function ToastUpdate(){

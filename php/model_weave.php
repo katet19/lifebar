@@ -15,9 +15,10 @@ class Weave
 	public $_preferredXP;
 	public $_subpreferredXP1;
 	public $_subpreferredXP2;
+	public $_lifebarXP;
 	
 	
-	function __construct($id, $userID, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth, $preferredXP, $subpreferredXP1, $subpreferredXP2) {
+	function __construct($id, $userID, $totalXP, $recentPW, $recentXP, $overallTierTotal, $percentagePlayed, $percentageWatched, $totalAgrees, $totalFollowers, $percentageBoth, $preferredXP, $subpreferredXP1, $subpreferredXP2, $lifebarXP) {
 		$this->_id = $id;
 		$this->_userID = $userID;
 		$this->_totalXP = $totalXP;
@@ -32,6 +33,7 @@ class Weave
 		$this->_preferredXP = $preferredXP;
 		$this->_subpreferredXP1 = $subpreferredXP1;
 		$this->_subpreferredXP2 = $subpreferredXP2;
+		$this->_lifebarXP = $lifebarXP;
 	}
 	
 }

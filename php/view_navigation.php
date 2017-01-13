@@ -46,30 +46,21 @@ function DisplayHeaderNavigation(){ ?>
 
 function DisplayLifebarForUser(){
 	$user = $_SESSION['logged-in'];
-	$lifebar = GetLifeBarSize($user);
-	$lifetime = explode("||", $user->_weave->_overallTierTotal);
-	$total = $lifetime[0] + $lifetime[1] + $lifetime[2] + $lifetime[3] + $lifetime[4];
-	if($total == 0){
-		if($lifetime[0] != 0)
-			$tier1 = round(($lifetime[0] / $total) * 100);
-		if($lifetime[1] != 0)
-			$tier2 = round(($lifetime[1] / $total) * 100);
-		if($lifetime[2] != 0)
-			$tier3 = round(($lifetime[2] / $total) * 100);
-		if($lifetime[3] != 0)
-			$tier4 = round(($lifetime[3] / $total) * 100);
-		if($lifetime[4] != 0)
-			$tier5 = round(($lifetime[4] / $total) * 100);
-	}else{
-		$total = $tier1 = $tier2 = $tier3 = $tier4 = $tier5 = 0;
-	}
+	$total = $user->_weave->_lifebarXP;
+	$currLevel = GetCurrentLevel($total);
+	$minmax = GetMinMaxLevel($currLevel);
+	$currWidth =  round((($total - $minmax[0]) / ($minmax[1] - $minmax[0])) * 100);
 	?>
-	<div class="lifebar-container">
-        <div class="lifebar-bar-container-min" style='width: <?php echo $lifebar[0]; ?>;color: white;top: 35px;margin-left: 65px;'>
-        	<div class="lifebar-fill-min-circle" data-position="bottom" style='width: <?php if($lifebar[1] > 6){ echo $lifebar[1]; }else{ echo '6'; } ?>%;'></div>
+	<div class="lifebar-container" data-level="<?php echo $currLevel; ?>" data-min="<?php echo $minmax[0]; ?>" data-max="<?php echo $minmax[1]; ?>" data-xp="<?php echo $total; ?>">
+        <div class="lifebar-bar-container-min" style='width:100%;color: white;top: 38px;margin-left: 65px;'>
+        	<div class="lifebar-fill-min-circle" data-position="bottom" style='width:<?php echo $currWidth; ?>%;'></div>
         </div>
         <div class="lifebar-username-min">
-			<span class="card-title activator"><span style="font-weight:500;"><?php echo $user->_username; ?></span> <span style='margin-left:25px;'>lvl 1</span></span>
+			<span class="card-title activator">
+				<span style="font-weight:500;"><?php echo $user->_username; ?></span> 
+				<div class="lifebar-bar-level-header"><span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
+				<div class="lifebar-bar-xp-popup">XP</div>
+			</span>
         </div>
 		<div class='lifebar-image'>
 			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
@@ -95,11 +86,11 @@ function DisplaySideDrawer(){ ?>
 				<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 			<?php } ?>
 			<div class="divider"></div>
-			<!--<li><a href="#!" class="supportBlogButton"><i class="material-icons">description</i> Blog</a></li>-->
-			<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>
-			<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>
+			<li><a href="#!" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>
+			<!--<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>-->
+			<!--<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>-->
 			<div class="divider"></div>
-			<li><a href="#!" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
+			<li><a href="#logout" class="signOutButton"><i class="material-icons">exit_to_app</i> Sign out</a></li>
 	</ul>
 	<?php } ?>
 <?php }

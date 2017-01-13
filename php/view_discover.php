@@ -699,8 +699,8 @@ function DisplaySearchResults($searchstring){
 			if($first && $game->_gbid > 0){ $first = false; ?>
 	        <div class="col s12">
 		      	<div class="searchHeader" style='margin-top:0em;'>
-		      		Games <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($games); ?>)</span>
-		      		<div class="SeeAllBtn GameSeeAllBtn" data-context="gameResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none;'></i>See all</a></div>
+		      		 <?php echo $searchstring; ?> <span style='font-size: 0.6em;vertical-align: middle;margin-left: 15px;'>(<?php echo sizeof($games); ?> games)</span>
+		      		<!--<div class="SeeAllBtn GameSeeAllBtn" data-context="gameResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none;'></i>See all</a></div>-->
 		      	</div>
 	        </div>
 			<?php }
@@ -717,8 +717,8 @@ function DisplaySearchResults($searchstring){
     		if($firstsecond){ $firstsecond = false;?>
 	         <div class="col s12">
 		      	<div class="searchHeader" <?php if($first){ echo "style='margin-top:0em;'"; }?> >
-		      		People <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($users); ?>)</span>
-		      		<div class="SeeAllBtn UserSeeAllBtn" data-context="userResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none'></i>See all</a></div>
+		      		<?php echo $searchstring; ?> <span style='font-size: 0.6em;vertical-align: middle;margin-left: 15px;'>(<?php echo sizeof($users); ?> people)</span>
+		      		<!--<div class="SeeAllBtn UserSeeAllBtn" data-context="userResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none'></i>See all</a></div>-->
 		      	</div>
 	        </div>
 			<?php }

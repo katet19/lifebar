@@ -738,15 +738,15 @@ OLD STUFF
 }
 
 .backContainer{
-	background-color: rgb(215, 214, 214);
-	color: rgba(0,0,0,0.7);
-	text-align: left;
-	position:fixed;
-	display: inline-block;
-	top: 55px;
-	left: 0;
-	right: 0;
-	z-index: 6;
+    background-color: rgb(215, 214, 214);
+    color: rgba(0,0,0,0.7);
+    text-align: left;
+    position: absolute;
+    display: inline-block;
+    top: -100px;
+    left: 0;
+    right: 0;
+    z-index: 6;
 }
 
 .backContainerSideContent{
@@ -876,6 +876,9 @@ OLD STUFF
 }
 
 @media only screen and (max-width : 600px) {
+	#gamemini.outerContainer{
+		width:100% !important;
+	}
 	#navigationContainer{
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;

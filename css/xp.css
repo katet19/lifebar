@@ -6,7 +6,7 @@
 .modal-content-container{
     position: absolute;
     top: 10vh;
-    bottom: 10vh;
+    bottom: 0vh;
     overflow: auto;
     right: 0;
     left: 0;
@@ -28,6 +28,22 @@
 
 .collapsible-header i{
     font-size:1.5em;
+}
+
+.collapsible-history-divider{
+    text-align: left;
+    margin-top: 30px;
+    padding: 5px 15px;
+    background-color: #ddd;
+    font-weight: 400;
+    font-size: 1.25em;
+}
+
+.collapsible-header-time{
+    display: inline-block;
+    font-size: 0.7em;
+    position: absolute;
+    right: 5px;
 }
 
 .tier-modal-body{
@@ -466,6 +482,16 @@ OLD STUFF
 	margin-top: -10;
 }
 
+.myxp-details-agree-container{
+    position: absolute;
+    bottom: 10px;
+    height: 35px;
+    right: 130px;
+    left: 35px;
+    text-align: left;
+    overflow: hidden;
+}
+
 .myxp-details-agree-count{
   font-size: 1.5em;
   color: #fff;
@@ -484,6 +510,7 @@ OLD STUFF
 
 .myxp-details-agree-list{
   text-align:left;
+  display:inline-block;
 }
 
 .myxp-details-agree-listitem{
@@ -642,7 +669,9 @@ OLD STUFF
 }
 
 .bp-progress-item{
-	padding: 5px 10px 50px;
+    width: 400px;
+    text-align: left;
+    overflow: hidden;
 }
 
 .bp-quick-header{
@@ -652,19 +681,25 @@ OLD STUFF
 
 .bp-progress-item-name{
     font-size: 1.25em;
-    font-weight:500;
-    color: rgba(0,0,0,0.7);
+    overflow: hidden;
+    height: 27px;
+    width: 100%;
+    font-weight: 500;
+    color: white;
+    text-align: left;
 }
 .bp-progress-item-desc{
-    margin-top: -5px;
+    margin-top: -8px;
     margin-bottom: 5px;
+    font-size: 0.8em;
+    text-align: left;
 }
 
 .bp-progress-item-bar{
-	width: 90%;
+    width: 100%;
     height: 15px;
     background-color: #ddd;
-    position:relative;
+    position: relative;
 }
 
 .bp-progress-item-bar-before{
@@ -680,7 +715,7 @@ OLD STUFF
 	position:absolute;
 	top:0;
 	width:0;
-	background-color:#64B5F6;
+	background-color:#3F51B5;
     -webkit-transition: all 1s ease-out;
     -moz-transition: all 1s ease-out;
     -o-transition: all 1s ease-out;
@@ -717,23 +752,25 @@ OLD STUFF
 
 .bp-progress-item-levelup{
     font-weight: 500;
-    float: right;
-    margin-right: 10%;
-    padding-right: 5px;
-    margin-top: 3px;
+    float: left;
+    font-size: 0.8em;
 }
 
 .bp-item-image{
-    width: 200px;
-    height: 75px;
+    width: 100px;
+    height: 40px;
     display: inline-block;
 }
 
 .bp-progress-item-details{
-	display:inline-block;
-	margin-left:20px;
-    height: 75px;
+    display: inline-block;
+    height: 40px;
+    position: absolute;
     vertical-align: top;
+    overflow: hidden;
+    top: 10px;
+    right: 25px;
+    left: 140px;
 }
 
 .bp-btn{
@@ -803,7 +840,7 @@ OLD STUFF
 }
 
 .bp-item-image-icon{
-	font-size: 3em;
+	font-size: 1.75em;
     color: rgba(0,0,0,0.5);
 }
 
@@ -829,6 +866,35 @@ OLD STUFF
 	left:65px;
 	font-size:1.1em;
 	top: -7px !important;
+}
+
+.lifebar-bar-level-header{
+    position: relative;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 10px;
+    top: -1px;
+    border-radius: 2px;
+    width: 30px;
+    background-color: white;
+    line-height: 19px;
+    color: #3F51B5;
+    text-align: center;
+}
+
+.lifebar-bar-xp-popup{
+    opacity:0;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 0.8em;
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
 }
 
 .visual-sentence-label{
@@ -863,6 +929,36 @@ OLD STUFF
 	padding-top: 20px !important;
 	position: relative;
 }
+
+.levelupToastText{
+	-webkit-animation: color_change 1s infinite alternate;
+	-moz-animation: color_change 1s infinite alternate;
+	-ms-animation: color_change 1s infinite alternate;
+	-o-animation: color_change 1s infinite alternate;
+	animation: color_change 1s infinite alternate;
+}
+
+@-webkit-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-moz-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-ms-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@-o-keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+@keyframes color_change {
+    0%{ color: #268c5e}
+	100% { color: #00ff8b; }
+}
+
 @media only screen and (max-width : 600px) {
 	.myxp-GraphContainer{
 		width:100%;
