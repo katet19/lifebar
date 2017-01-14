@@ -41,22 +41,20 @@ function ShowLanding(){
 function AttachSignUpLandingEvents(){
 	$("#SignupSubmitBtnLanding").on("click", function(e){
 		var errors = "";
-		if($("#landing-sign-up").find("#signup_username").val() === "")
+		if($("#signup_username").val() === "")
 			errors = errors + "Username cannot be blank<br>";
-		if($("#landing-sign-up").find("#signup_email").val() === "")
+		if($("#signup_email").val() === "")
 			errors = errors + "Email cannot be blank<br>";
-		if($("#landing-sign-up").find("#signup_password").val() === "")
+		if($("#signup_password").val() === "")
 			errors = errors + "Password cannot be blank<br>";
-		//if($("#landing-sign-up").find("#signup_password").val() !== $("#landing-sign-up").find("#signup_confirm_password").val())
-		//	errors = errors + "Passwords do not match<br>";
-		if($("#landing-sign-up").find("#signup_username").val().indexOf(' ') >= 0)
+		if($("#signup_username").val().indexOf(' ') >= 0)
 			errors = errors + "Username can not have spaces<br>";
 			
 		if(errors === "")
-			VerifyNewUserDataLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_email").val());	
+			VerifyNewUserDataLanding($("#signup_username").val(), $("#signup_email").val(), $(this).parent().parent());	
 		else{
-			$("#landing-sign-up").find(".validation").html(errors);
-			$("#landing-sign-up").find(".validation").show();
+			$(this).parent().parent().find(".validation").html(errors);
+			$(this).parent().parent().find(".validation").show();
 		}
 			
 	});
@@ -99,7 +97,7 @@ function SignupFromLanding(username, password, email, first, last){
 	});
 }
 
-function VerifyNewUserDataLanding(username, email){
+function VerifyNewUserDataLanding(username, email, element){
 	var errors = "";
 	$.ajax({ url: '../php/webService.php',
          data: {action: "VerifyNewUser", username: username, email: email },
@@ -111,10 +109,10 @@ function VerifyNewUserDataLanding(username, email){
          				errors = errors + "Email is already used<br>";
          			}
          			if(errors !== ""){
-         				$("#landing-sign-up").find(".validation").html(errors);
-						$("#landing-sign-up").find(".validation").show();
+         				element.find(".validation").html(errors);
+						element.find(".validation").show();
          			}else{
-         				SignupFromLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_password").val(), $("#landing-sign-up").find("#signup_email").val(), '', '');
+         				SignupFromLanding(element.find("#signup_username").val(), element.find("#signup_password").val(), element.find("#signup_email").val(), '', '');
          			}
         },
         error: function(x, t, m) {

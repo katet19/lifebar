@@ -135,7 +135,7 @@ a{
     background-color: #F44336;
 }
 
-.btn:hover, .btn-large{
+.btn:hover, .btn-large:hover{
   background-color: #FF4081 !important;
 }
 
@@ -291,6 +291,13 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
   color:rgba(0, 0, 0, 0.87);
 }
 
+.landing-intro-text{
+  font-size: 4em;
+  font-weight: 200;
+  line-height: 70px;
+  color: white;
+}
+
 [type="radio"] + label:before, [type="radio"] + label:after{
   margin-top:0;
 }
@@ -327,5 +334,12 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
     right: inherit !important;
     left: 1% !important;
     max-width: 86%;
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .landing-intro-text{
+    font-size: 2em;
+    line-height: 35px;
   }
 }
