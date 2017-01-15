@@ -296,6 +296,7 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
   font-weight: 200;
   line-height: 70px;
   color: white;
+  margin-bottom:200px;
 }
 
 [type="radio"] + label:before, [type="radio"] + label:after{
@@ -341,5 +342,6 @@ input[type=range] + .thumb, input[type=range]::-webkit-slider-thumb, input[type=
   .landing-intro-text{
     font-size: 2em;
     line-height: 35px;
+    margin-bottom:100px;
   }
 }

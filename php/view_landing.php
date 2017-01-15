@@ -6,13 +6,13 @@
     <div class="col s12" style='color:white;'>
       <div style='font-weight: 300;text-align: left;font-size: 2.5em;position:fixed;'><span style='font-weight:bold;'>Life</span>bar</div>
     </div>
-    <div class="col s8 offset-s2" style='margin-top:150px;'>
+    <div class="col s8 offset-s2 m7 offset-m2 l6 offset-l3" style='margin-top:150px;'>
       <div class='landing-intro-text'>
-      Lifebar is a social platform to <br><b>capture</b> & <b>celebrate</b><br> your life with games!
+      Lifebar is a social platform to <b>capture</b> & <b>celebrate</b> your life with games!
       </div>
     </div>
   </div>
-  <div class='row' style='margin:200px 0 0 0;'>
+  <div class='row' style='margin:0;'>
     <div class="col s12">
       <?php DisplayLandingSignup(); ?>
     </div>

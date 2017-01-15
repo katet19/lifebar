@@ -73,9 +73,9 @@ function DisplayLogin(){
 function DisplayLandingSignup(){
 	?>
     <div class="row">
-		  <div class="col s12 m6" style='border-radius: 10px;background-color: rgba(0,0,0,0.4);padding: 10px 0 0;'>
+		  <div class="col s12 m5 offset-m1" style='border-radius: 10px;background-color: rgba(0,0,0,0.5);padding: 30px 0;'>
 					<div class="row">
-	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;font-weight: 200;margin:10px 0;'>
+	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;margin:10px 0;'>
 	  	   			Sign up for the beta to start building your lifebar today!
 	  	   		</div>
 	  	   	</div>
@@ -107,9 +107,9 @@ function DisplayLandingSignup(){
 			    <div class="col s11 validation" style='text-align: center;color:white;display:none;margin: 30px 0 10px;'></div>
 	      	</div>
 	  	</div>
-	   <div class="col s12 m6" >
+	   <div class="col s12 m5" >
 	  	   	<div class="row">
-	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;font-weight: 200;'>
+	  	   		<div class="social-login-third-party-header" style='color:white;font-size:1.2em;'>
 	  	   			Signup / Login using a third party account
 	  	   		</div>
 	  	   	</div>
