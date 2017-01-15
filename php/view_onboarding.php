@@ -76,30 +76,30 @@ function SocialDetails(){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m8 offset-m2 search-results" style="margin-top:20px;margin-bottom:50px;display:none;">
+		<div class="col s12 search-results" style="margin-top:20px;margin-bottom:50px;display:none;">
 			
 		</div>
-		<div class="col s12 m8 offset-m2 search-results-selected" style="margin-bottom:50px;display:none;">
+		<div class="col s12 search-results-selected" style="margin-bottom:50px;display:none;">
 			<div class="onboarding-follow-header">Following from Search Results</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
+		<div class="col s12" style='position: relative;margin-top: 50px;'>
 			<div class="onboarding-follow-header">Personalities you might like</div>
 	        	<input type="checkbox" id="onboarding-follow-personalities-all" />
 	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow All</label>
 		</div>
-		<div class="col s12 m8 offset-m2">
+		<div class="col s12">
 			<?php foreach($critics as $critic){
 				DisplayFollowUserCard($critic, false, false, false);	
 			}?>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 50px;'>
+		<div class="col s12" style='position: relative;margin-top: 50px;'>
 			<div class="onboarding-follow-header">Follow personalities from your favorite sites</div>
 		</div>
-		<div class="col s12 m8 offset-m2">
+		<div class="col s12">
 			<?php foreach($pubs as $pub){
 				?>
 				<div class="col s4 m3 l2">
@@ -115,12 +115,12 @@ function SocialDetails(){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m8 offset-m2" style='position: relative;margin-top: 75px;'>
+		<div class="col s12" style='position: relative;margin-top: 75px;'>
 			<div class="onboarding-follow-header">Members you might like</div>
 	        	<input type="checkbox" id="onboarding-follow-users-all" />
 	        	<label for="onboarding-follow-users-all" class="onboarding-follow-personalities-all">Follow All</label>
 		</div>
-		<div class="col s12 m8 offset-m2">
+		<div class="col s12">
 			<?php 
 			$count = 0; $list = array();
 			while($count < 8){
@@ -163,7 +163,7 @@ function GamingPrefDetails(){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m8 offset-m2">
+		<div class="col s12">
 			<div class="row">
 				<?php foreach($details as $detail){ ?>
 				<div class="col s6 m4 l3">
