@@ -49,9 +49,9 @@ function AttachSignUpLandingEvents(){
 			errors = errors + "Password cannot be blank<br>";
 		if($("#signup_username").val().indexOf(' ') >= 0)
 			errors = errors + "Username can not have spaces<br>";
-			
+
 		if(errors === "")
-			VerifyNewUserDataLanding($("#signup_username").val(), $("#signup_email").val(), $(this).parent().parent());	
+			VerifyNewUserDataLanding($("#signup_username").val(), $("#signup_password").val(), $("#signup_email").val(), $(this).parent().parent());	
 		else{
 			$(this).parent().parent().find(".validation").html(errors);
 			$(this).parent().parent().find(".validation").show();
@@ -97,7 +97,7 @@ function SignupFromLanding(username, password, email, first, last){
 	});
 }
 
-function VerifyNewUserDataLanding(username, email, element){
+function VerifyNewUserDataLanding(username, password, email, element){
 	var errors = "";
 	$.ajax({ url: '../php/webService.php',
          data: {action: "VerifyNewUser", username: username, email: email },
@@ -112,7 +112,7 @@ function VerifyNewUserDataLanding(username, email, element){
          				element.find(".validation").html(errors);
 						element.find(".validation").show();
          			}else{
-         				SignupFromLanding(element.find("#signup_username").val(), element.find("#signup_password").val(), element.find("#signup_email").val(), '', '');
+         				SignupFromLanding(username, password, email, '', '');
          			}
         },
         error: function(x, t, m) {

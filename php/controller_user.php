@@ -167,6 +167,7 @@ function RegisterUser($username, $password, $first, $last, $email, $privacy){
 		$user = Login($username, $password);
 		AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
+		CalculateWeave($user->_id);
 	}
 	Close($mysqli, $result);
 	return $user;
