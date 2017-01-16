@@ -4,37 +4,36 @@ function AccountDetails(){
 	?>
 	
 	<div class="row" style='margin-bottom:50px;'>
-		<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
-			<?php if($_SESSION['logged-in']->_weave->_totalXP > 0){ ?>
-				<div class='onboarding-big-welcome'>Welcome back, <?php echo $_SESSION['logged-in']->_username; ?>!</div>
-				<div class='onboarding-sub-welcome'>Thank you for your help in making Lifebar the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
-				<div class='onboarding-sub-welcome'>We want to personalize Lifebar for you. Tell us a little bit about your yourself, so you can get the most out of Lifebar.</div>
-			<?php }else{ ?>
-				<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
-				<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>save</span> and <span style='font-weight:500;'>share</span> your life playing & watching video games!</div>
-				<div class='onboarding-sub-welcome'>Tell us a little bit about your yourself and we'll help you get set up.</div>
-			<?php } ?>
+		<div class="col s10 offset-s1" style='text-align:left;'>
+			<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
+			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>capture</span> and <span style='font-weight:500;'>celebrate</span> your life playing & watching video games!</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> 
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">visibility</i> Add your watched experiences, whether it's your thoughts on the latest Mario 64 speed run or the most interesting E3 reveals you can quickly save and share with others</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">gamepad</i>Journal your time playing a game and capture your thoughts and feelings as you play from start to finish.</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank intersting sub-lists based on year, genre & platform</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">whatshot</i> Follow your favorite gaming personalities & friends to create a personalized gaming activity feed</div>
+			<div class='onboarding-sub-welcome' style='margin-top:10px;'>Tell us a little bit about your yourself and we'll help you get set up.</div>
 		</div>
 	</div>
   	<div class="row">
       	<div class="input-field col s10 offset-s1 m6 offset-m3">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/steam-badge.png' style='height:45px;width:45px;'></i>
 	        <input id="steam_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
-	        <label for="steam_id" style='margin-left: 4rem;'  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
+	        <label for="steam_id" style='margin-left: 4rem;text-align:left;'  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
 	  	</div>
   	</div>
   	<div class="row">
 		<div class="input-field col s10 offset-s1 m6 offset-m3">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/xbox-badge.png' style='height:45px;width:45px;border-radius: 5px;'></i>
 	        <input id="xbox_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
-	        <label for="xbox_id"  style='margin-left: 4rem;' <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
+	        <label for="xbox_id"  style='margin-left: 4rem;text-align:left;' <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
 	  	</div>
   	</div>
   	<div class="row">
 	  	<div class="input-field col s10 offset-s1 m6 offset-m3">
 		    <img class="prefix" src='http://lifebar.io/Images/Generic/playstation-badge.png' style='height:45px;width:45px;'>
 		    <input id="psn_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
-		    <label for="psn_id" style='margin-left: 4rem;'  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
+		    <label for="psn_id" style='margin-left: 4rem;text-align:left;'  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
 	  	</div>
   	</div>
     <div class="row">
@@ -58,12 +57,12 @@ function SocialDetails(){
 	$users = GetUsersWithPopularQuotes('');
 	$pubs = GetAllPublications();
 	?>
-	<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
+	<div class="col s10 offset-s1" style='text-align:left;'>
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
 		<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
 	</div>
 	<div class="row" style='margin-bottom:5px;'>
-		<div class="col s10 offset-s1 m6 l4 offset-l4 offset-m4" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
+		<div class="col s10 offset-s1" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
 			<i class="mdi-action-search small onboarding-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
 			<div class='onboarding-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
 				<input id="onboarding-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
@@ -71,7 +70,7 @@ function SocialDetails(){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m6 l4 offset-l4 offset-m4">
+		<div class="col s12">
 			<div class='onboarding-description'>Search for <span style='font-weight:400;'>personalities</span> by name or <span style='font-weight:400;'>friends</span> by username/gamertag</div>
 		</div>
 	</div>
@@ -157,7 +156,7 @@ function GamingPrefDetails(){
 	$details = GetOnboardingMilestones();
 	?>
 	<div class="row">
-		<div class="col s10 offset-s1 m6 offset-m3" style='text-align:left;'>
+		<div class="col s10 offset-s1" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Your gaming preferences/history</div>
 			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & developers you are <span style='font-weight:500;'>most familiar</span> with.</div>
 		</div>

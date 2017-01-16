@@ -4,10 +4,10 @@ function DisplayNavigation(){
 }
 
 function DisplayHeaderNavigation(){ ?>
-	<div id='onboarding-header'>
+	<!--<div id='onboarding-header'>
 		<div class="onboarding-progress">Step: 1 of 3</div>
   		<div class="btn onboarding-next" style='color:#D32F2F;background-color:white;font-weight:bold;-webkit-box-shadow:none;box-shadow:none;margin-right: 30px;float:right;'>Next</div>
-	</div>
+	</div>-->
 	<div id="navigation-header">
 		<div class="row navigation-row">
 			<div class="col navigation-col navigation-menu navigation-menu-slide-out">
