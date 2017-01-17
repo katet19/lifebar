@@ -74,6 +74,7 @@ function AttachSignUpLandingEvents(){
 }
 
 function SignupFromLanding(username, password, email, first, last){
+	ShowPopUp("<div style='font-size:2em;padding:100px 0;'>Creating new user...</div>");
 	$("#SignupSubmitBtnLanding").hide();
 	$("#landing-sign-up").find(".validation").show();
 	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');

@@ -235,7 +235,7 @@ function SearchForUsers(searchstring){
 	     type: 'post',
 	     success: function(output) {
 	     	var moved = false;
-	     	$(".searchfollow").each(function(){
+	     	searchbox.find(".searchfollow").each(function(){
 	     		if(this.checked == false){
 	     			$(this).parent().parent().parent().parent().remove();
 				}else{

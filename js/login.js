@@ -218,6 +218,7 @@ function RequestLoginReset(email){
 }
 
 function Logout(){
+	ShowPopUp("<div style='font-size:2em;padding:100px 0;'>Logging out...</div>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "Logout" },
      type: 'post',

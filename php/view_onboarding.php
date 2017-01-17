@@ -5,39 +5,39 @@ function AccountDetails(){
 	
 	<div class="row" style='margin-bottom:50px;'>
 		<div class="col s10 offset-s1" style='text-align:left;'>
-			<div class='onboarding-big-welcome'>Welcome to Lifebar <?php echo $_SESSION['logged-in']->_username; ?>!</div>
+			<div class='onboarding-big-welcome'>Welcome to Lifebar <span style='color:#3F51B5'><?php echo $_SESSION['logged-in']->_username; ?></span>!</div>
 			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>capture</span> and <span style='font-weight:500;'>celebrate</span> your life playing & watching video games!</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> 
+			<!--<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> -->
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">visibility</i> Add your watched experiences, whether it's your thoughts on the latest Mario 64 speed run or the most interesting E3 reveals you can quickly save and share with others</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">gamepad</i>Journal your time playing a game and capture your thoughts and feelings as you play from start to finish.</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank intersting sub-lists based on year, genre & platform</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">whatshot</i> Follow your favorite gaming personalities & friends to create a personalized gaming activity feed</div>
-			<div class='onboarding-sub-welcome' style='margin-top:10px;'>Tell us a little bit about your yourself and we'll help you get set up.</div>
+			<div class='onboarding-sub-welcome' style='margin-top:10px;'>Tell us a little bit about your yourself and we'll help you get started</div>
 		</div>
 	</div>
   	<div class="row">
-      	<div class="input-field col s10 offset-s1 m6 offset-m3">
+      	<div class="input-field col s10 offset-s1 m6 offset-m1">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/steam-badge.png' style='height:45px;width:45px;'></i>
 	        <input id="steam_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
 	        <label for="steam_id" style='margin-left: 4rem;text-align:left;'  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
 	  	</div>
   	</div>
   	<div class="row">
-		<div class="input-field col s10 offset-s1 m6 offset-m3">
+		<div class="input-field col s10 offset-s1 m6 offset-m1">
 	        <img class="prefix" src='http://lifebar.io/Images/Generic/xbox-badge.png' style='height:45px;width:45px;border-radius: 5px;'></i>
 	        <input id="xbox_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
 	        <label for="xbox_id"  style='margin-left: 4rem;text-align:left;' <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
 	  	</div>
   	</div>
   	<div class="row">
-	  	<div class="input-field col s10 offset-s1 m6 offset-m3">
+	  	<div class="input-field col s10 offset-s1 m6 offset-m1">
 		    <img class="prefix" src='http://lifebar.io/Images/Generic/playstation-badge.png' style='height:45px;width:45px;'>
 		    <input id="psn_id" style='margin-left: 4rem;font-size:1.25em;' type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
 		    <label for="psn_id" style='margin-left: 4rem;text-align:left;'  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
 	  	</div>
   	</div>
     <div class="row">
-      	<div class="input-field col s6 offset-s1 m6 offset-m3">
+      	<div class="input-field col s6 offset-s1 m6 offset-m1">
       		<?php if($_SESSION['logged-in']->_birthdate != ''){ $now = Date('Y');$age = $now - $_SESSION['logged-in']->_birthdate; }else{ $age = 25; } ?>
       		<div style='float: left;margin-right: 10px;line-height: 50px;font-size: 1.5em;font-weight: 400;display: inline-block;'>Age</div>
 	        <input id="age_id" style='font-size:1.25em;width:50px;float:left;text-align:center;' type="text" value="<?php echo $age; ?>">
@@ -57,7 +57,7 @@ function SocialDetails(){
 	$users = GetUsersWithPopularQuotes('');
 	$pubs = GetAllPublications();
 	?>
-	<div class="col s10 offset-s1" style='text-align:left;'>
+	<div class="col s10 offset-s1">
 		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
 		<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
 	</div>

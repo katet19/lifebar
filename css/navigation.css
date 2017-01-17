@@ -261,6 +261,7 @@ OLD STUFF
 	font-size:2em;
 	font-weight:500;
 	margin-top:50px;
+	margin-bottom:25px;
 }
 
 .onboarding-sub-welcome{
@@ -278,9 +279,15 @@ OLD STUFF
 }
 
 .onboarding-sub-welcome-icon{
-	vertical-align: top;
+    vertical-align: top;
     float: left;
     margin: 0 18px 35px 25px;
+    background-color: #3F51B5;
+    color: white;
+    border-radius: 50%;
+    height: 40px;
+    padding: 8px 8px;
+    width: 40px;
 }
 
 .onboarding-image-welcome{

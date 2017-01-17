@@ -80,7 +80,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         		<div class="feed-horizontal-card" style='max-height:150px;'  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 				    <a class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				    </a>
-			    	<div class="feed-card-content" <?php if($showquote){ ?>style=''<?php } ?>>
+			    	<div class="feed-card-content" <?php if($showquote){ ?>style='height:150px;'<?php } ?>>
 					  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes" && !$showquote)){ ?>
 					      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
 					      		<i class="mdi-editor-format-quote"></i>
