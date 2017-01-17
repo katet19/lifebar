@@ -153,36 +153,47 @@ function ViewMoreMembers($exclude){
 }
 
 function GamingPrefDetails(){
-	$details = GetOnboardingMilestones();
+	$bestgames = GetBestExperiencesOnboarding();
+	$trendinggames = GetTrendingGamesOnboarding();
+	if(sizeof($trendingames) < 4){
+		$trendingames = GetOnboardingGames();
+	}
 	?>
 	<div class="row">
 		<div class="col s10 offset-s1" style='text-align:left;'>
-			<div class='onboarding-big-welcome'>Your gaming preferences/history</div>
-			<div class='onboarding-sub-welcome'>Help us customize your experience by picking a few platforms, franchises & developers you are <span style='font-weight:500;'>most familiar</span> with.</div>
+			<div class='onboarding-big-welcome'>Get started with a few games</div>
+			<div class='onboarding-sub-welcome'>Browse or search for games that you have experienced and start building your personal Lifebar!</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> <b>Star Rating:</b> Quickly rate every game using a traditional 5 star scale. Your star rating helps drive our Ranking system.</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i> <b>Details</b>: You have a variety of options when adding details about your time with a game. You can post your thoughts, add platform & percentage completed or add details about a let's play, speed run, trailer or anything else you might have watched. <br><br>Adding details to a game will show up in other member's activity feeds. Enter thoughtful, funny or insightful details to get 1ups from other members!</div>
 		</div>
 	</div>
 	<div class="row">
+		<div class="col s12" style='position: relative;margin-top: 75px;'>
+			<div class="onboarding-follow-header">Trending games on Lifebar</div>
+		</div>
 		<div class="col s12">
-			<div class="row">
-				<?php foreach($details as $detail){ ?>
-				<div class="col s6 m4 l3">
-					<div class="knowledge-container" style='background-color:#0a67a3;' data-id="<?php echo $detail->_id; ?>" data-objectid="<?php echo $detail->_category."_".$detail->_objectid; ?>">
-						<?php if($detail->_image == ""){ ?>
-							<div class="onboarding-pref-image" style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class="bp-item-image-icon mdi-content-flag"></i>
-						<?php }else{ ?>
-							<div class="onboarding-pref-image" style="background:url(<?php echo $detail->_image; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-						<?php } ?>
-							<i class="pref-checkmark fa fa-check"></i>
-							<div class="onboarding-pref-image-title">
-								<?php echo $detail->_name; ?>
-							</div>
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-			</div>
+			<?php 
+			$count = 0; $list = array();
+			foreach($trendinggames as $game){
+				DisplayGameCard($game, '', '');
+				$count++;
+			}?>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col s12" style='position: relative;margin-top: 75px;'>
+			<div class="onboarding-follow-header">Top tier games on Lifebar</div>
+		</div>
+		<div class="col s12">
+			<?php 
+			$count = 0; $list = array();
+			foreach($bestgames as $game){
+				DisplayGameCard($game, '', '');
+				$count++;
+			}?>
+		</div>
+	</div>
+	
   	<div class="onboarding-top-level" style='margin-top:100px;'>
   		<div class="btn onboarding-next" style='font-weight:bold;'>Finish</div>
   	</div>

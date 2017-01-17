@@ -863,6 +863,78 @@ function GetBestExperiences(){
 	return $game;
 }
 
+function GetBestExperiencesOnboarding(){
+	$game= array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select * from `Games` ORDER BY `Tier1` DESC LIMIT 0,12")) {
+		while($row = mysqli_fetch_array($result)){
+				$game[] = new Game($row["ID"], 
+					$row["GBID"],
+					$row["Title"],
+					$row["Rated"],
+					$row["Released"],
+					$row["Genre"],
+					$row["Platforms"],
+					$row["Year"],
+					$row["ImageLarge"],
+					$row["ImageSmall"],
+					$row["Highlight"],
+					$row["Publisher"],
+					$row["Developer"],
+					$row["Alias"],
+					$row["Theme"],
+					$row["Franchise"],
+					$row["Similar"],
+					$row["Tier1"],
+					$row["Tier2"],
+					$row["Tier3"],
+					$row["Tier4"],
+					$row["Tier5"]
+					);
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $game;
+}
+
+function GetOnboardingGames(){
+	$games = array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select `GameID` FROM `Events` WHERE `Event` in ('ADDED','UPDATED') group by `GameID` order by ID DESC LIMIT 0,12")) {
+		while($row = mysqli_fetch_array($result)){
+				$games[] = GetGame($row["GameID"]);
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $games;
+}
+
+function GetTrendingGamesOnboarding(){
+	$games= array();
+	$mysqli = Connect();
+	$thisquarter = date('Y-m-d', strtotime("now -30 days") );
+	$month = date('m');
+	if($month > 0 && $month < 4){ 
+		$startmonth = date('Y')+"-01-01";
+	}else if($month > 3 && $month < 7){ 
+		$startmonth = date('Y')+"-04-01";
+	}else if($month > 6 && $month < 10){ 
+		$startmonth = date('Y')+"-07-01";
+	}else{
+		$startmonth = date('Y')+"-10-01";
+	}
+	if ($result = $mysqli->query("select * from `Sub-Experiences` exp where `DateEntered` >= '".$thisquarter."' GROUP BY  `GameID` ORDER BY COUNT(  `GameID` ) DESC LIMIT 12")) {
+		while($row = mysqli_fetch_array($result)){
+			$games[] = GetGame($row["GameID"], $mysqli);
+		}
+	}
+	Close($mysqli, $result);
+
+	return $games;
+}
+
 function GetExperiencedUsersCategory(){
 	$users = array();
 	$mysqli = Connect();
