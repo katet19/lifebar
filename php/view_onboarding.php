@@ -1,9 +1,12 @@
 <?php
 
 function AccountDetails(){
+	if($_SESSION['logged-in']->_steam != "" || $_SESSION['logged-in']->_psn != "" || $_SESSION['logged-in']->_xbox != ""){
+		SocialDetails();
+	}else{
 	?>
 	
-	<div class="row" style='margin-bottom:50px;'>
+	<div class="row onboarding-account-step" style='margin-bottom:50px;'>
 		<div class="col s10 offset-s1" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Welcome to Lifebar <span style='color:#3F51B5'><?php echo $_SESSION['logged-in']->_username; ?></span>!</div>
 			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>capture</span> and <span style='font-weight:500;'>celebrate</span> your life playing & watching video games!</div>
@@ -50,92 +53,98 @@ function AccountDetails(){
   		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
   	</div>
 	<?php
+	}
 }
 
 function SocialDetails(){
-	$critics = GetActivePersonalities();
-	$users = GetUsersWithPopularQuotes('');
-	$pubs = GetAllPublications();
-	?>
-	<div class="col s10 offset-s1">
-		<div class='onboarding-big-welcome'>Follow friends and personalities</div>
-		<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
-	</div>
-	<div class="row" style='margin-bottom:5px;'>
-		<div class="col s10 offset-s1" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
-			<i class="mdi-action-search small onboarding-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
-			<div class='onboarding-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
-				<input id="onboarding-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
+	$connections = GetConnectedTo($_SESSION['logged-in']->_id);
+	if(sizeof($connections) > 0){
+		GamingPrefDetails();
+	}else{
+		$critics = GetActivePersonalities();
+		$users = GetUsersWithPopularQuotes('');
+		$pubs = GetAllPublications();
+		?>
+		<div class="col s10 offset-s1 onboarding-social-step">
+			<div class='onboarding-big-welcome'>Follow friends and personalities</div>
+			<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
+		</div>
+		<div class="row" style='margin-bottom:5px;'>
+			<div class="col s10 offset-s1" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>
+				<i class="mdi-action-search small onboarding-search-icon" style='color:rgba(0,0,0,0.9);left: 10px;right:inherit;'></i>
+				<div class='onboarding-search-box z-depth-1' style='background-color:white;width:100%;color:rgba(0,0,0,0.9);'>
+					<input id="onboarding-search" type="text" style='border: none !important;color:rgba(0,0,0,0.9);margin: 0;display:inline-block;'>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col s12">
-			<div class='onboarding-description'>Search for <span style='font-weight:400;'>personalities</span> by name or <span style='font-weight:400;'>friends</span> by username/gamertag</div>
+		<div class="row">
+			<div class="col s12">
+				<div class='onboarding-description'>Search for <span style='font-weight:400;'>personalities</span> by name or <span style='font-weight:400;'>friends</span> by username/gamertag</div>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 search-results" style="margin-top:20px;margin-bottom:50px;display:none;">
-			
+		<div class="row">
+			<div class="col s12 search-results" style="margin-top:20px;margin-bottom:50px;display:none;">
+				
+			</div>
+			<div class="col s12 search-results-selected" style="margin-bottom:50px;display:none;">
+				<div class="onboarding-follow-header">Following from Search Results</div>
+			</div>
 		</div>
-		<div class="col s12 search-results-selected" style="margin-bottom:50px;display:none;">
-			<div class="onboarding-follow-header">Following from Search Results</div>
+		<div class="row">
+			<div class="col s12" style='position: relative;margin-top: 50px;'>
+				<div class="onboarding-follow-header">Personalities you might like</div>
+					<input type="checkbox" id="onboarding-follow-personalities-all" />
+					<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow All</label>
+			</div>
+			<div class="col s12">
+				<?php foreach($critics as $critic){
+					DisplayFollowUserCard($critic, false, false, false);	
+				}?>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col s12" style='position: relative;margin-top: 50px;'>
-			<div class="onboarding-follow-header">Personalities you might like</div>
-	        	<input type="checkbox" id="onboarding-follow-personalities-all" />
-	        	<label for="onboarding-follow-personalities-all" class="onboarding-follow-personalities-all">Follow All</label>
-		</div>
-		<div class="col s12">
-			<?php foreach($critics as $critic){
-				DisplayFollowUserCard($critic, false, false, false);	
-			}?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12" style='position: relative;margin-top: 50px;'>
-			<div class="onboarding-follow-header">Follow personalities from your favorite sites</div>
-		</div>
-		<div class="col s12">
-			<?php foreach($pubs as $pub){
-				?>
-				<div class="col s4 m3 l2">
-					<div class="onboarding-pub z-depth-1" style="background:url(http://lifebar.io/Images/Generic/Logos/<?php echo strtolower(str_replace(" ","",$pub)).".png"; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-						<i class="pref-checkmark fa fa-check" style='top: 5px;right: 5px;font-size: 1.25em;'></i>
-     					<div style="display: block;vertical-align: middle;height: 45px;padding-top: 10px;overflow: hidden;color:white;line-height: 14px;">
-							<?php echo $pub; ?>
+		<div class="row">
+			<div class="col s12" style='position: relative;margin-top: 50px;'>
+				<div class="onboarding-follow-header">Follow personalities from your favorite sites</div>
+			</div>
+			<div class="col s12">
+				<?php foreach($pubs as $pub){
+					?>
+					<div class="col s4 m3 l2">
+						<div class="onboarding-pub z-depth-1" style="background:url(http://lifebar.io/Images/Generic/Logos/<?php echo strtolower(str_replace(" ","",$pub)).".png"; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+							<i class="pref-checkmark fa fa-check" style='top: 5px;right: 5px;font-size: 1.25em;'></i>
+							<div style="display: block;vertical-align: middle;height: 45px;padding-top: 10px;overflow: hidden;color:white;line-height: 14px;">
+								<?php echo $pub; ?>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php
-			}?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12" style='position: relative;margin-top: 75px;'>
-			<div class="onboarding-follow-header">Members you might like</div>
-	        	<input type="checkbox" id="onboarding-follow-users-all" />
-	        	<label for="onboarding-follow-users-all" class="onboarding-follow-personalities-all">Follow All</label>
-		</div>
-		<div class="col s12">
-			<?php 
-			$count = 0; $list = array();
-			while($count < 8){
-				DisplayFollowUserCard($users[0][$count], false, true, false);
-				$list[] = $users[0][$count]->_id;
-				$count++;
-			}?>
-			<div>
-				<div class="btn-flat onboarding-member-view-more" style='margin-top:20px;font-weight:bold;' data-alreadyshowing='<?php echo implode(",",$list); ?>'><i class="fa fa-refresh" style='margin-right:10px;'></i> View More Lifebar Members</div>
+					<?php
+				}?>
 			</div>
 		</div>
-	</div>
-  	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
-  	</div>
-	<?php
+		<div class="row">
+			<div class="col s12" style='position: relative;margin-top: 75px;'>
+				<div class="onboarding-follow-header">Members you might like</div>
+					<input type="checkbox" id="onboarding-follow-users-all" />
+					<label for="onboarding-follow-users-all" class="onboarding-follow-personalities-all">Follow All</label>
+			</div>
+			<div class="col s12">
+				<?php 
+				$count = 0; $list = array();
+				while($count < 8){
+					DisplayFollowUserCard($users[0][$count], false, true, false);
+					$list[] = $users[0][$count]->_id;
+					$count++;
+				}?>
+				<div>
+					<div class="btn-flat onboarding-member-view-more" style='margin-top:20px;font-weight:bold;' data-alreadyshowing='<?php echo implode(",",$list); ?>'><i class="fa fa-refresh" style='margin-right:10px;'></i> View More Lifebar Members</div>
+				</div>
+			</div>
+		</div>
+		<div class="onboarding-top-level" style='margin-top:100px;'>
+			<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
+		</div>
+		<?php
+	}
 }
 
 function ViewMoreMembers($exclude){
@@ -160,10 +169,10 @@ function GamingPrefDetails(){
 	}
 	?>
 	<div class="row">
-		<div class="col s10 offset-s1" style='text-align:left;'>
+		<div class="col s10 offset-s1 onboarding-game-step" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Get started with a few games</div>
 			<div class='onboarding-sub-welcome'>Browse or search for games that you have experienced and start building your personal Lifebar!</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> <b>Star Rating:</b> Quickly rate every game using a traditional 5 star scale. Your star rating helps drive our Ranking system.</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> <b>Star Rating:</b> Quickly rate games using a traditional 5 star scale. Your star rating helps drive our Ranking system.</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i> <b>Details</b>: You have a variety of options when adding details about your time with a game. You can post your thoughts, add platform & percentage completed or add details about a let's play, speed run, trailer or anything else you might have watched. <br><br>Adding details to a game will show up in other member's activity feeds. Enter thoughtful, funny or insightful details to get 1ups from other members!</div>
 		</div>
 	</div>

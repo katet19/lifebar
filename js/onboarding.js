@@ -2,17 +2,97 @@ function ShowOnboarding(){
 	$("#onboarding-header").css({"display":"inline-block"});
 	$(".mainNav, .userContainer").css({"display":"none"});
 	$("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
+
 	var windowWidth = $(window).width();
 	if($(window).width() < 599){
 		$(".identificationContainer").css({"display":"none"});
 	}
- 	GAPage('Onboarding1of3', '/onboarding1of3');
- 	$(".onboarding-next").unbind();
- 	$(".onboarding-next").on("click", function(e){
- 		SaveOnboardingAccount();
- 		e.stopPropagation();
- 		ShowSocial();
- 	});
+	if($(".onboarding-account-step").length > 0){
+		GAPage('Onboarding1of3', '/onboarding1of3');
+		$(".onboarding-next").unbind();
+		$(".onboarding-next").on("click", function(e){
+			SaveOnboardingAccount();
+			e.stopPropagation();
+			ShowSocial();
+		});
+	}else if($(".onboarding-social-step").length > 0){
+		$(".onboarding-next").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			SaveOnboardingSocial();
+ 			e.stopPropagation();
+ 			ShowGamingPref();
+ 		});
+ 		$(".onboarding-member-view-more").on("click", function(){
+ 			var exclude = $(this).attr("data-alreadyshowing");	
+ 			ViewMoreMembers(exclude, $(this));
+ 		});
+ 		$("#onboarding-follow-personalities-all").change(function() {
+			if(this.checked){
+				$(".criticquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".criticquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#onboarding-follow-users-all").change(function() {
+			if(this.checked){
+				$(".userquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".userquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#onboarding-search").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if($("#onboarding-search").val() != ''){
+					SearchForUsers($("#onboarding-search").val());
+				}
+			} 
+		});
+		$(".onboarding-search-icon").on('click', function (e) {
+			if($("#onboarding-search").val() != ''){
+				e.stopPropagation(); 
+				SearchForUsers($("#onboarding-search").val());
+			}
+		});
+		
+ 		$(".onboarding-pub").on("click", function(){
+ 			if($(this).hasClass("onboarding-pub-active")){
+ 				$(this).removeClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"0"});
+ 			}else{
+ 				$(this).addClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"1"});
+ 			}
+ 		});
+	}else if($(".onboarding-game-step").length > 0){
+ 		$(".onboarding-next").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			e.stopPropagation();
+ 			$(".mainNav, .userContainer").css({"display":"inherit"});
+ 			$("#onboarding-header").css({"display":"none"});
+ 			var windowWidth = $(window).width();
+			if($(window).width() < 599){
+ 				$(".identificationContainer").css({"display":"inline-block"});
+			}
+ 			ShowDiscoverHome();
+ 		});
+	}
 }
 
 function SaveOnboardingAccount(){
@@ -170,7 +250,6 @@ function ShowGamingPref(){
  		UpdateBrowserHash("onboarding");
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
- 			SaveOnboardingGamingPref();
  			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
  			$("#onboarding-header").css({"display":"none"});
@@ -179,15 +258,6 @@ function ShowGamingPref(){
  				$(".identificationContainer").css({"display":"inline-block"});
 			}
  			ShowDiscoverHome();
- 		});
- 		$(".onboarding-pref-image").on("click", function(){
- 			if($(this).hasClass("onboarding-pref-image-active")){
- 				$(this).removeClass("onboarding-pref-image-active");
- 				$(this).find(".pref-checkmark").css({"opacity":"0"});
- 			}else{
- 				$(this).addClass("onboarding-pref-image-active");
- 				$(this).find(".pref-checkmark").css({"opacity":"1"});
- 			}
  		});
      },
         error: function(x, t, m) {
