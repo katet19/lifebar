@@ -866,7 +866,48 @@ function GetBestExperiences(){
 function GetBestExperiencesOnboarding(){
 	$game= array();
 	$mysqli = Connect();
-	if ($result = $mysqli->query("select * from `Games` ORDER BY `Tier1` DESC LIMIT 0,12")) {
+	if ($result = $mysqli->query("select g.*, count(e.`GameID`) FROM `Experiences` e, `Games` g where `Tier` = 1 and e.`GameID` = g.`ID` group by e.`GameID` order by count(e.`GameID`) DESC LIMIT 0,12")) {
+		while($row = mysqli_fetch_array($result)){
+				$game[] = new Game($row["ID"], 
+					$row["GBID"],
+					$row["Title"],
+					$row["Rated"],
+					$row["Released"],
+					$row["Genre"],
+					$row["Platforms"],
+					$row["Year"],
+					$row["ImageLarge"],
+					$row["ImageSmall"],
+					$row["Highlight"],
+					$row["Publisher"],
+					$row["Developer"],
+					$row["Alias"],
+					$row["Theme"],
+					$row["Franchise"],
+					$row["Similar"],
+					$row["Tier1"],
+					$row["Tier2"],
+					$row["Tier3"],
+					$row["Tier4"],
+					$row["Tier5"]
+					);
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $game;
+}
+
+function GetGoldenYearsOnboarding(){
+	$game= array();
+	$mysqli = Connect();
+	$minyear = 1995;
+	$maxyear = 2005;
+	$currYear = date('Y');
+	$age = $currYear - $_SESSION['logged-in']->_birthdate;
+	$minyear = $currYear - ($age - 9);
+	$maxyear = $currYear - ($age - 13);
+	if ($result = $mysqli->query("select g.*, count(e.`GameID`) FROM `Experiences` e, `Games` g where e.`GameID` = g.`ID` and g.`Year` >= ".$minyear." and g.`Year` <= ".$maxyear." group by e.`GameID` order by count(e.`GameID`) DESC LIMIT 0,12")) {
 		while($row = mysqli_fetch_array($result)){
 				$game[] = new Game($row["ID"], 
 					$row["GBID"],

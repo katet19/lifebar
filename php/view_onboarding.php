@@ -164,6 +164,7 @@ function ViewMoreMembers($exclude){
 function GamingPrefDetails(){
 	$bestgames = GetBestExperiencesOnboarding();
 	$trendinggames = GetTrendingGamesOnboarding();
+	$goldengames = GetGoldenYearsOnboarding();
 	if(sizeof($trendingames) < 4){
 		$trendingames = GetOnboardingGames();
 	}
@@ -171,9 +172,9 @@ function GamingPrefDetails(){
 	<div class="row">
 		<div class="col s10 offset-s1 onboarding-game-step" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Get started with a few games</div>
-			<div class='onboarding-sub-welcome'>Browse or search for games that you have experienced and start building your personal Lifebar!</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> <b>Star Rating:</b> Quickly rate games using a traditional 5 star scale. Your star rating helps drive our Ranking system.</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i> <b>Details</b>: You have a variety of options when adding details about your time with a game. You can post your thoughts, add platform & percentage completed or add details about a let's play, speed run, trailer or anything else you might have watched. <br><br>Adding details to a game will show up in other member's activity feeds. Enter thoughtful, funny or insightful details to get 1ups from other members!</div>
+			<div class='onboarding-sub-welcome'>Browse for games that you have experienced and start building your personal Lifebar!</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> <b>Star Rating:</b> Quickly rate games using a traditional 5 star scale. Your star rating helps drive our Ranking system and will is the fastest way to start building your Lifebar.</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i> <b>Details</b>: You have a variety of options when adding details about your time with a game. You can post your thoughts, add platform & percentage completed or add details about a let's play, speed run, trailer or anything else you might have watched. <br><br>Adding details to a game will show up in other member's activity feeds. Enter thoughtful, funny or insightful details to get 1ups from other members! Providing details & short summaries are the best way to gain XP.</div>
 		</div>
 	</div>
 	<div class="row">
@@ -202,7 +203,19 @@ function GamingPrefDetails(){
 			}?>
 		</div>
 	</div>
-	
+	<div class="row">
+		<div class="col s12" style='position: relative;margin-top: 75px;'>
+			<div class="onboarding-follow-header">Popular games from your golden years of gaming</div>
+		</div>
+		<div class="col s12">
+			<?php 
+			$count = 0; $list = array();
+			foreach($goldengames as $game){
+				DisplayGameCard($game, '', '');
+				$count++;
+			}?>
+		</div>
+	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
   		<div class="btn onboarding-next" style='font-weight:bold;'>Finish</div>
   	</div>

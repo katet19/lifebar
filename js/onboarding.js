@@ -1,8 +1,4 @@
 function ShowOnboarding(){
-	$("#onboarding-header").css({"display":"inline-block"});
-	$(".mainNav, .userContainer").css({"display":"none"});
-	$("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
-
 	var windowWidth = $(window).width();
 	if($(window).width() < 599){
 		$(".identificationContainer").css({"display":"none"});
@@ -161,6 +157,7 @@ function ShowSocial(){
  			e.stopPropagation();
  			ShowGamingPref();
  		});
+		if($(".onboarding-social-step").length > 0){
  		$(".onboarding-member-view-more").on("click", function(){
  			var exclude = $(this).attr("data-alreadyshowing");	
  			ViewMoreMembers(exclude, $(this));
@@ -219,7 +216,48 @@ function ShowSocial(){
  				$(this).find(".pref-checkmark").css({"opacity":"1"});
  			}
  		});
- 		
+		}else  if($(".onboarding-game-step").length > 0){
+			$(".onboarding-next").unbind();
+			$(".onboarding-next").on("click", function(e){
+				e.stopPropagation();
+				$(".mainNav, .userContainer").css({"display":"inherit"});
+				$("#onboarding-header").css({"display":"none"});
+				var windowWidth = $(window).width();
+				if($(window).width() < 599){
+					$(".identificationContainer").css({"display":"inline-block"});
+				}
+				ShowDiscoverHome();
+			});
+			$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+			$(".game-card-action-pick").on("click", function(e){
+				e.stopPropagation();
+				if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+					GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+			});
+			$(".game-discover-card .card-image").on("click", function(e){ 
+				e.stopPropagation(); 
+				CloseSearch();
+				$(".searchInput input").val('');
+				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
+				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+			});
+			$(".card-game-secondary-actions").on("click", function(e){ 
+				e.stopPropagation(); 
+				CloseSearch();
+				$(".searchInput input").val('');
+				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
+				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+			});
+			AttachStarEvents();
+		}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
