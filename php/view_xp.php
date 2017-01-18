@@ -460,7 +460,7 @@ function ShowDateSelector($xp, $subxp = null){
 			if($subxp != null){
 				$date = explode("-",$subxp->_date);
 			}else{
-				$date = explode('-',$xp->_date);
+				$date[] = $xp->_game->_year;
 			} 
 			$releaseyear = $xp->_game->_year;
 			$releaseyear = $releaseyear - 5;

@@ -8,7 +8,7 @@
     </div>
     <div class="col s8 offset-s2 m7 offset-m2 l6 offset-l3" style='margin-top:150px;'>
       <div class='landing-intro-text'>
-      Lifebar is a social platform to <b>capture</b> & <b>celebrate</b> your life with games!
+      Lifebar is a social platform to <b>capture</b> & <b>celebrate</b> your life with video games!
       </div>
     </div>
   </div>
