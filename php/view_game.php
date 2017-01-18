@@ -553,12 +553,12 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 							<i class="material-icons">bookmark_border</i>
 						<?php } ?>
 					</div>
-					<div class="game-card-secondary-action-i game-card-quick-collection-add" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<!--<div class="game-card-secondary-action-i game-card-quick-collection-add" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 						<i class="material-icons">library_add</i>
-					</div>
-					<div class="game-card-secondary-action-i game-card-quick-share" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					</div>-->
+					<!--<div class="game-card-secondary-action-i game-card-quick-share" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 						<i class="material-icons">share</i>
-					</div>
+					</div>-->
 					<?php if($type == "Lifebar Backlog"){ ?>
 						<div class="game-card-secondary-action-i game-card-quick-dismiss" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 							<i class="material-icons">remove_circle_outline</i></span>
