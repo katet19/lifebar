@@ -1,5 +1,5 @@
 <?php function DisplayDiscoverTab(){ 
-	if($_SESSION['logged-in']->_totalXP == 0 && $_SESSION['logged-in']->_id > 0){
+	if($_SESSION['logged-in']->_weave->_lifebarXP == 0 && $_SESSION['logged-in']->_id > 0){
 		AccountDetails();
 	}else{ ?>
 	<div class="discover-top-level">

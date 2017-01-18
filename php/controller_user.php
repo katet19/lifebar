@@ -99,6 +99,7 @@ function SaveOnboardingAccount($steam, $xbox, $psn, $age){
 	$birthyear = $now - $age;
 	$mysqli->query("Update `Users` SET `Birthdate`='".$birthyear."-01-01', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
 	Close($mysqli, $result);
+	FastLogin($id);
 }
 
 function SaveOnboardingFollowing($following, $pubs){
