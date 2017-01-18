@@ -178,7 +178,7 @@ function GamingPrefDetails(){
 	</div>
 	<div class="row">
 		<div class="col s12" style='position: relative;margin-top: 75px;'>
-			<div class="onboarding-follow-header">Trending games on Lifebar</div>
+			<div class="onboarding-follow-header">Trending right now</div>
 		</div>
 		<div class="col s12">
 			<?php 
@@ -191,7 +191,7 @@ function GamingPrefDetails(){
 	</div>
 	<div class="row">
 		<div class="col s12" style='position: relative;margin-top: 75px;'>
-			<div class="onboarding-follow-header">Top tier games on Lifebar</div>
+			<div class="onboarding-follow-header">Top tier games by Lifebar members</div>
 		</div>
 		<div class="col s12">
 			<?php 
