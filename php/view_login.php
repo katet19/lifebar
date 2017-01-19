@@ -73,7 +73,7 @@ function DisplayLogin(){
 function DisplayLandingSignup(){
 	?>
     <div class="row">
-		  <div class="col s12 m5 offset-m1" style='border-radius: 10px;background-color: rgba(0,0,0,0.5);padding: 30px 0;'>
+		  <div class="col s12 m5 offset-m1" style='border-radius: 10px;background-color: #3F51B5;padding: 30px 0;'>
 					<div class="row">
 	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;margin:10px 0;'>
 	  	   			Sign up for the beta to start building your lifebar today!
@@ -83,21 +83,21 @@ function DisplayLandingSignup(){
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-account-circle prefix"></i>
 		        <input id="signup_username" type="text">
-		        <label for="signup_username">Username</label>
+		        <label for="signup_username" style='color:white;'>Username</label>
 		      </div>
 	      	</div>
 	    	<div class="row">
 	  	      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-lock prefix"></i>
 		        <input id="signup_password" type="password">
-		        <label for="signup_password">Password</label>
+		        <label for="signup_password" style='color:white;'>Password</label>
 		      </div>
 	      	</div>
 	  	    <div class="row">
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-communication-email prefix"></i>
 		        <input id="signup_email" type="text">
-		        <label for="signup_email">Email</label>
+		        <label for="signup_email" style='color:white;'>Email</label>
 		      </div>
 	      	</div>
 		    <div class="row">
