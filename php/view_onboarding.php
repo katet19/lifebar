@@ -50,7 +50,7 @@ function AccountDetails(){
   	  	</div>
   	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
+  		<div class="btn-large onboarding-next" style='font-weight:bold;'>Next</div>
   	</div>
 	<?php
 	}
@@ -141,7 +141,7 @@ function SocialDetails(){
 			</div>
 		</div>
 		<div class="onboarding-top-level" style='margin-top:100px;'>
-			<div class="btn onboarding-next" style='font-weight:bold;'>Next</div>
+			<div class="btn-large onboarding-next" style='font-weight:bold;'>Next</div>
 		</div>
 		<?php
 	}
@@ -217,7 +217,7 @@ function GamingPrefDetails(){
 		</div>
 	</div>
   	<div class="onboarding-top-level" style='margin-top:100px;'>
-  		<div class="btn onboarding-next" style='font-weight:bold;'>Finish</div>
+  		<div class="btn-large onboarding-next" style='font-weight:bold;'>Finish</div>
   	</div>
 	<?php
 }
