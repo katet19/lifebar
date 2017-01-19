@@ -327,12 +327,15 @@ function AttachGameCardEvents(){
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover"), false, false, 'MyXPWatched');
 	});
 	$(".game-card-quick-bookmark").on("click", function(e){
-		if($(this).find(".nav-game-action-isBookmarked").length > 0){
-			SubmitBookmark("RemoveBookmark", $(this).parent().attr("data-id"));
-			$(this).find(".nav-game-action-btn").removeClass("nav-game-action-isBookmarked");
+		e.stopPropagation();
+		if($(this).hasClass("nav-game-action-isBookmarked")){
+			SubmitBookmark("RemoveBookmark", $(this).attr("data-id"));
+			$(this).find("i").text("bookmark_border");
+			$(this).removeClass("nav-game-action-isBookmarked");
 		}else{
-			SubmitBookmark("AddBookmark", $(this).parent().attr("data-id"));
-			$(this).find(".nav-game-action-btn").addClass("nav-game-action-isBookmarked");
+			SubmitBookmark("AddBookmark", $(this).attr("data-id"));
+			$(this).find("i").text("bookmark");
+			$(this).addClass("nav-game-action-isBookmarked");
 		}
 	});
 	$(".game-discover-card .card-image").on("click", function(e){ 

@@ -38,10 +38,6 @@
 	text-align: center;
 }
 
-.nav-game-action-isBookmarked{
-	color:#e64444 !important;
-}
-
 .nav-game-actions .col:hover>.nav-game-action-btn, .nav-game-actions .col:hover i {
 	color:gray !important;
 }

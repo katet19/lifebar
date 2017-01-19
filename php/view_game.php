@@ -546,7 +546,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 			</a>
 			<div class="card-game-secondary-actions">
 				<div class="game-card-secondary-action-container">
-					<div class="game-card-secondary-action-i game-card-quick-bookmark" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="game-card-secondary-action-i game-card-quick-bookmark <?php if($xp->_bucketlist == "Yes"){ ?>nav-game-action-isBookmarked<?php } ?>" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 						<?php if($xp->_bucketlist == "Yes"){ ?>
 							<i class="material-icons">bookmark</i>
 						<?php }else{ ?>
