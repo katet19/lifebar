@@ -186,8 +186,8 @@ function DisplayBattleProgressToasts($user, $myprogress, $gameid){
 	<?php  } 
 	} 
 
-	/*$games = AddSimilarGames($_SESSION['logged-in']->_id, $gameid); 
-	if(isset($games)){ ?>
+	AddSimilarGames($_SESSION['logged-in']->_id, $gameid); 
+	/*if(isset($games)){ ?>
 		<div class='bp-progress-item'>
 			<span style='font-weight: bold;margin-right: 10px;font-size: 2em;vertical-align: middle;'><?php echo sizeof($games); ?></span> game(s) added to your Lifebar Backlog!
 		</div>
