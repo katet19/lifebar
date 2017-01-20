@@ -45,14 +45,14 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         <div class="card-image waves-effect waves-block" <?php if($showquote){ ?>style='background-color:#F1F5F8;'<?php } ?>>
         	<div class="col s12 valign-wrapper">
         		<?php if($showbtn){ ?>
-        			<div class='btn follow-from-discover' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people left'></i>Follow</div>
-					<div class='btn dismiss-from-discover grey' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline left'></i>Dismiss</div>
+        			<div class='btn follow-from-discover' target='Follow User' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons'>person_add</i></div>
+					<div class='btn dismiss-from-discover grey' target='Dismiss User' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons'>remove_circle_outline</i></div>
         		<?php }else{ ?>
 	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
 	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
 	        	<?php } ?>
         		<div class="<?php if($showbtn){ ?>user-follow-card-image-w-game<?php }else{ ?>user-follow-card-image<?php } ?>" style="margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
-        			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+        			<?php if($user->_badge != ""){ ?><img class="srank-badge-follow" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>
 		      	<?php if($showquote && $user->_security == "Authenticated"){ ?> 
 		      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
@@ -77,10 +77,10 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         		$event = GetMostAgreedQuoteForUser($user->_id);
         		$game = GetGame($event->_gameid);
         	?>
-        		<div class="feed-horizontal-card"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-				    <a class="feed-card-image waves-effect waves-block" style="width:100px;display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+        		<div class="feed-horizontal-card" style='max-height:150px;'  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				    <a class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				    </a>
-			    	<div class="feed-card-content" <?php if($showquote){ ?>style='left:100px;'<?php } ?>>
+			    	<div class="feed-card-content" <?php if($showquote){ ?>style='height:150px;'<?php } ?>>
 					  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes" && !$showquote)){ ?>
 					      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
 					      		<i class="mdi-editor-format-quote"></i>
@@ -90,7 +90,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
 							      		<i class="mdi-editor-format-quote"></i>
 								  </div>
 			  			<?php } ?>
-	      				<div class="feed-card-title grey-text text-darken-4">
+	      				<div class="feed-card-title grey-text text-darken-4" style='font-size:1em;'>
 				      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 					  		<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div> <?php echo $event->_quote; ?>
 					    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 

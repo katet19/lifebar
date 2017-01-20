@@ -434,6 +434,16 @@
     right: inherit !important;
 }
 
+.srank-badge-follow{
+	position: absolute !important;
+    height: 30px;
+    top: 60px !important;
+    left: inherit !important;
+    width: 30px !important;
+    right: inherit !important;
+    margin-left: 45px;
+}
+
 .authenticated-mark{
     height: 18px;
     width: 18px;
@@ -508,7 +518,21 @@
 
 .social-login-header{
 	font-size:1.5em;
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+	text-align:center;
+}
+
+.social-login-third-party-header{
+	font-size:1.5em;
+    margin-top: 40px;
+    margin-bottom: 15px;
+	text-align:center;
+}
+
+.modular-social-login-header{
+	font-size:1.5em;
+    margin-top: 20px;
     margin-bottom: 15px;
 	text-align:center;
 }
@@ -558,13 +582,13 @@
 
 .user-follow-card-title{
 	position: relative !important;
-	right: 0 !important;
 	display: inline-block !important;
-	width: 50% !important;
-	left: 0 !important;
 	padding: 16px !important;
 	text-align: left !important; 
 	cursor: default !important;
+	right: auto !important;
+    width: calc(100% - 150px)!important;
+    left: 100px !important;
 }
 .loginModalPadding{
 	margin-top:40px;
@@ -589,8 +613,11 @@
 		margin-right:auto !important;
 		margin-top:15px;
 	}
-	.social-login-header{
+	.modular-social-login-header{
 		display:none;
+	}
+	.social-login-third-party-header{
+		margin-top:90px;
 	}
 	.login-modal-divider{
 		border-right: none;

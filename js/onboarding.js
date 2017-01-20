@@ -1,52 +1,18 @@
 function ShowOnboarding(){
-	$("#onboarding-header").css({"display":"inline-block"});
-	$(".mainNav, .userContainer").css({"display":"none"});
-	$("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
 	var windowWidth = $(window).width();
 	if($(window).width() < 599){
 		$(".identificationContainer").css({"display":"none"});
 	}
- 	GAPage('Onboarding1of3', '/onboarding1of3');
- 	$(".onboarding-next").unbind();
- 	$(".onboarding-next").on("click", function(e){
- 		SaveOnboardingAccount();
- 		e.stopPropagation();
- 		ShowSocial();
- 	});
-}
-
-function SaveOnboardingAccount(){
-	var steam = $("#steam_id").val();
-	var xbox = $("#xbox_id").val();
-	var psn = $("#psn_id").val();
-	var age = $("#age_id").val();
-	$.ajax({ url: '../php/webService.php',
-	     data: {action: "SaveAccountInfo", steam: steam, xbox: xbox, psn: psn, age: age },
-	     type: 'post',
-	     success: function(output) {
-
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
+	if($(".onboarding-account-step").length > 0){
+		GAPage('Onboarding1of3', '/onboarding1of3');
+		$(".onboarding-next").unbind();
+		$(".onboarding-next").on("click", function(e){
+			SaveOnboardingAccount();
+			e.stopPropagation();
+			ShowSocial();
 		});
-}
-
-function ShowSocial(){
-	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "ShowOnboardingSocial" },
-     type: 'post',
-     success: function(output) {
-     	$(".onboarding-progress").html("Step: 2 of 3");
- 		$("#discoverInnerContainer").html(output);
- 		UpdateBrowserHash("onboarding");
- 		$(".onboarding-next").unbind();
+	}else if($(".onboarding-social-step").length > 0){
+		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
  			SaveOnboardingSocial();
  			e.stopPropagation();
@@ -110,7 +76,188 @@ function ShowSocial(){
  				$(this).find(".pref-checkmark").css({"opacity":"1"});
  			}
  		});
- 		
+	}else if($(".onboarding-game-step").length > 0){
+ 		$(".onboarding-next").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			e.stopPropagation();
+ 			$(".mainNav, .userContainer").css({"display":"inherit"});
+ 			$("#onboarding-header").css({"display":"none"});
+ 			var windowWidth = $(window).width();
+			if($(window).width() < 599){
+ 				$(".identificationContainer").css({"display":"inline-block"});
+			}
+ 			ShowDiscoverHome();
+ 		});
+		$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+		$(".game-card-action-pick").on("click", function(e){
+			e.stopPropagation();
+			if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+				GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+		});
+		$(".game-discover-card .card-image").on("click", function(e){ 
+			e.stopPropagation(); 
+			CloseSearch();
+			$(".searchInput input").val('');
+			$('html').unbind();
+			$('html').click(function(){
+				if($("#userAccountNav").is(":visible"))
+					$("#userAccountNav").hide(250);
+			});
+			ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+		});
+		$(".card-game-secondary-actions").on("click", function(e){ 
+			e.stopPropagation(); 
+			CloseSearch();
+			$(".searchInput input").val('');
+			$('html').unbind();
+			$('html').click(function(){
+				if($("#userAccountNav").is(":visible"))
+					$("#userAccountNav").hide(250);
+			});
+			ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+		});
+		AttachStarEvents();
+	}
+}
+
+function SaveOnboardingAccount(){
+	var steam = $("#steam_id").val();
+	var xbox = $("#xbox_id").val();
+	var psn = $("#psn_id").val();
+	var age = $("#age_id").val();
+	$.ajax({ url: '../php/webService.php',
+	     data: {action: "SaveAccountInfo", steam: steam, xbox: xbox, psn: psn, age: age },
+	     type: 'post',
+	     success: function(output) {
+
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+}
+
+function ShowSocial(){
+	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowOnboardingSocial" },
+     type: 'post',
+     success: function(output) {
+     	$(".onboarding-progress").html("Step: 2 of 3");
+ 		$("#discoverInnerContainer").html(output);
+ 		UpdateBrowserHash("onboarding");
+ 		$(".onboarding-next").unbind();
+ 		$(".onboarding-next").on("click", function(e){
+ 			SaveOnboardingSocial();
+ 			e.stopPropagation();
+ 			ShowGamingPref();
+ 		});
+		if($(".onboarding-social-step").length > 0){
+ 		$(".onboarding-member-view-more").on("click", function(){
+ 			var exclude = $(this).attr("data-alreadyshowing");	
+ 			ViewMoreMembers(exclude, $(this));
+ 		});
+ 		$("#onboarding-follow-personalities-all").change(function() {
+			if(this.checked){
+				$(".criticquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".criticquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#onboarding-follow-users-all").change(function() {
+			if(this.checked){
+				$(".userquickfollow").each(function(){
+					if(!this.checked){
+						this.checked = true;
+					}	
+				});
+			}else{
+				$(".userquickfollow").each(function(){
+					if(this.checked){
+						this.checked = false;
+					}	
+				});
+			}
+ 		});
+ 		$("#onboarding-search").on('keypress keyup', function (e) {
+			if (e.keyCode === 13) { 
+				e.stopPropagation(); 	
+				if($("#onboarding-search").val() != ''){
+					SearchForUsers($("#onboarding-search").val());
+				}
+			} 
+		});
+		$(".onboarding-search-icon").on('click', function (e) {
+			if($("#onboarding-search").val() != ''){
+				e.stopPropagation(); 
+				SearchForUsers($("#onboarding-search").val());
+			}
+		});
+		
+ 		$(".onboarding-pub").on("click", function(){
+ 			if($(this).hasClass("onboarding-pub-active")){
+ 				$(this).removeClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"0"});
+ 			}else{
+ 				$(this).addClass("onboarding-pub-active");
+ 				$(this).find(".pref-checkmark").css({"opacity":"1"});
+ 			}
+ 		});
+		}else  if($(".onboarding-game-step").length > 0){
+			$(".onboarding-next").unbind();
+			$(".onboarding-next").on("click", function(e){
+				e.stopPropagation();
+				$(".mainNav, .userContainer").css({"display":"inherit"});
+				$("#onboarding-header").css({"display":"none"});
+				var windowWidth = $(window).width();
+				if($(window).width() < 599){
+					$(".identificationContainer").css({"display":"inline-block"});
+				}
+				ShowDiscoverHome();
+			});
+			$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+			$(".game-card-action-pick").on("click", function(e){
+				e.stopPropagation();
+				if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+					GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+			});
+			$(".game-discover-card .card-image").on("click", function(e){ 
+				e.stopPropagation(); 
+				CloseSearch();
+				$(".searchInput input").val('');
+				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
+				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+			});
+			$(".card-game-secondary-actions").on("click", function(e){ 
+				e.stopPropagation(); 
+				CloseSearch();
+				$(".searchInput input").val('');
+				$('html').unbind();
+				$('html').click(function(){
+					if($("#userAccountNav").is(":visible"))
+						$("#userAccountNav").hide(250);
+				});
+				ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+			});
+			AttachStarEvents();
+		}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -170,7 +317,6 @@ function ShowGamingPref(){
  		UpdateBrowserHash("onboarding");
  		$(".onboarding-next").unbind();
  		$(".onboarding-next").on("click", function(e){
- 			SaveOnboardingGamingPref();
  			e.stopPropagation();
  			$(".mainNav, .userContainer").css({"display":"inherit"});
  			$("#onboarding-header").css({"display":"none"});
@@ -180,15 +326,35 @@ function ShowGamingPref(){
 			}
  			ShowDiscoverHome();
  		});
- 		$(".onboarding-pref-image").on("click", function(){
- 			if($(this).hasClass("onboarding-pref-image-active")){
- 				$(this).removeClass("onboarding-pref-image-active");
- 				$(this).find(".pref-checkmark").css({"opacity":"0"});
- 			}else{
- 				$(this).addClass("onboarding-pref-image-active");
- 				$(this).find(".pref-checkmark").css({"opacity":"1"});
- 			}
- 		});
+		$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+		$(".game-card-action-pick").on("click", function(e){
+			e.stopPropagation();
+			if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+				GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+		});
+		$(".game-discover-card .card-image").on("click", function(e){ 
+			e.stopPropagation(); 
+			CloseSearch();
+			$(".searchInput input").val('');
+			$('html').unbind();
+			$('html').click(function(){
+				if($("#userAccountNav").is(":visible"))
+					$("#userAccountNav").hide(250);
+			});
+			ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+		});
+		$(".card-game-secondary-actions").on("click", function(e){ 
+			e.stopPropagation(); 
+			CloseSearch();
+			$(".searchInput input").val('');
+			$('html').unbind();
+			$('html').click(function(){
+				if($("#userAccountNav").is(":visible"))
+					$("#userAccountNav").hide(250);
+			});
+			ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+		});
+		AttachStarEvents();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -235,7 +401,7 @@ function SearchForUsers(searchstring){
 	     type: 'post',
 	     success: function(output) {
 	     	var moved = false;
-	     	$(".searchfollow").each(function(){
+	     	searchbox.find(".searchfollow").each(function(){
 	     		if(this.checked == false){
 	     			$(this).parent().parent().parent().parent().remove();
 				}else{

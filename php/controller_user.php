@@ -99,6 +99,7 @@ function SaveOnboardingAccount($steam, $xbox, $psn, $age){
 	$birthyear = $now - $age;
 	$mysqli->query("Update `Users` SET `Birthdate`='".$birthyear."-01-01', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
 	Close($mysqli, $result);
+	FastLogin($id);
 }
 
 function SaveOnboardingFollowing($following, $pubs){
@@ -165,8 +166,9 @@ function RegisterUser($username, $password, $first, $last, $email, $privacy){
 		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
 		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
-		AddIntroNotifications($user->_id, $mysqli);
+		//AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
+		CalculateWeave($user->_id);
 	}
 	Close($mysqli, $result);
 	return $user;

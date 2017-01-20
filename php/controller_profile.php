@@ -2,7 +2,11 @@
 require_once "includes.php";
 
 function GetCurrentLevel($xp){
-	return ceil(0.3 * sqrt($xp));
+	$level = ceil(0.3 * sqrt($xp));
+	if($level == 0)
+		return 1;
+	else
+		return $level;
 }
 
 function GetMinMaxLevel($level){

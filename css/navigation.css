@@ -261,11 +261,33 @@ OLD STUFF
 	font-size:2em;
 	font-weight:500;
 	margin-top:50px;
+	margin-bottom:25px;
 }
 
 .onboarding-sub-welcome{
 	font-size:1.5em;
 	margin:5px 0 15px;
+	float:left;
+	width:100%;
+}
+
+.onboarding-sub-sub-welcome{
+	font-size:1.1em;
+	margin:5px 0;
+	float:left;
+	width:100%;
+}
+
+.onboarding-sub-welcome-icon{
+    vertical-align: top;
+    float: left;
+    margin: 0 18px 35px 25px;
+    background-color: #3F51B5;
+    color: white;
+    border-radius: 50%;
+    height: 40px;
+    padding: 8px 8px;
+    width: 40px;
 }
 
 .onboarding-image-welcome{
@@ -289,7 +311,7 @@ OLD STUFF
 }
 
 .onboarding-pub:hover{
-	background:#39a1f4 !important;
+	background:#F50057 !important;
 	color:white;
 }
 
@@ -374,7 +396,7 @@ OLD STUFF
     top: 0;
     right: 0;
     padding: 0 10px 0 35px;
-    background-color: rgb(63, 128, 202);
+    background-color: #F50057;
 }
 
 .pref-checkmark{
@@ -410,7 +432,7 @@ OLD STUFF
 }
 
 .onboarding-pub-active{
-	background:#39a1f4 !important;
+	background:#F50057 !important;
 	color:white;
 }
 
@@ -434,7 +456,6 @@ OLD STUFF
 	width:100%;
 	text-align:center;
     padding-top: 9px;
-    background-color:#3F51B5;
 }
 
 

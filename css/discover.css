@@ -1066,7 +1066,7 @@
     position: absolute;
     top: 20px;
     right: 10px;
-	width:130px;
+	width:auto;
 }
 
 .dismiss-from-discover{
@@ -1074,7 +1074,7 @@
     position: absolute;
     top: 70px;
     right: 10px;
-	width:130px;
+	width:auto;
 }
 
 .follow-from-discover-small{

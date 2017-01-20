@@ -53,8 +53,7 @@ function BuildDiscoverFlow($userid){
 		$dItems[] = $dAtts;
 	
 	//Games pref list
-	$prefs = GetUserPrefs($userid, $mysqli);
-	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
+	$golden = GetGoldenYearsNoXP($mysqli);
 	$backlog = GetGamesFromBacklog($userid);
 	$backlogShow = false;
 	if(sizeof($backlog) > 5){
@@ -65,12 +64,12 @@ function BuildDiscoverFlow($userid){
 			$dAtts['GAMES'] = $backlog;
 			$dItems[] = $dAtts;	
 			$backlogShow = true;
-	}else if(sizeof($prefList['Games']) > 0){
+	}else if(sizeof($golden) > 0){
 			unset($dAtts);
 			$dAtts['DTYPE'] = 'GAMELIST';
-			$dAtts['CATEGORY'] = $prefList['Title'];
-			$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
-			$dAtts['GAMES'] = $prefList['Games'];
+			$dAtts['CATEGORY'] = "The Golden Years";
+			$dAtts['CATEGORYDESC'] = "Games released during your more informative age. See Paul Barnett's <a href='http://www.giantbomb.com/podcasts/paul-barnett-s-golden-rule/1600-709/' target='_blank'>Golden Rule</a>";
+			$dAtts['GAMES'] = $golden;
 			$dItems[] = $dAtts;	
 	}
 		
@@ -88,13 +87,13 @@ function BuildDiscoverFlow($userid){
 		$dAtts['DTYPE'] = 'INVITEFRIENDS';
 		$dItems[] = $dAtts;
 		
-	//Check if we can show gaming prefs
-	if($backlogShow && sizeof($prefList['Games']) > 0){
+	//Check if we can show gaming golden years
+	if($backlogShow && sizeof($golden) > 0){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = $prefList['Title'];
-		$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
-		$dAtts['GAMES'] = $prefList['Games'];
+		$dAtts['CATEGORY'] = "The Golden Years";
+		$dAtts['CATEGORYDESC'] = "Games released during your more informative age. See Paul Barnett's <a href='http://www.giantbomb.com/podcasts/paul-barnett-s-golden-rule/1600-709/' target='_blank'>Golden Rule</a>";
+		$dAtts['GAMES'] = $golden;
 		$dItems[] = $dAtts;	
 	}
 

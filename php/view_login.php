@@ -23,7 +23,7 @@ function DisplayLogin(){
       	</div>
 	  	<div class="row">
 	      <div class="col s11" style='text-align: center;font-size: 1.5em;'>
-	    	<a href="#" class="waves-effect btn-flat" id="LoginSubmitBtn">Login</a>
+	    		<a href="#" class="waves-effect btn-flat" id="LoginSubmitBtn">Login</a>
 	      </div>
 	      <div class="col s11 validation" style='text-align: center;color:red;display:none;'></div>
 	      <div class="col s11 forgotPasswordBtn" style='text-align: center;margin-top:2em;'>
@@ -39,7 +39,7 @@ function DisplayLogin(){
   	   </div>
   	   <div class="col s12 m6 social-login-container" >
   	   	<div class="row">
-  	   		<div class="social-login-header">
+  	   		<div class="modular-social-login-header">
   	   			Sign in using a third party account
   	   		</div>
   	   	</div>
@@ -72,43 +72,45 @@ function DisplayLogin(){
 
 function DisplayLandingSignup(){
 	?>
-    <div class="row" style="margin-bottom:60px;">
-    	<div class="col s12">
-    		<div style='font-size: 1.5em;margin-bottom: 30px;font-weight: 300;color:white;'>Sign up for the beta to start building your lifebar today!</div>
-    	</div>
-		  <div class="col s12 m6">
+    <div class="row">
+		  <div class="col s12 m5 offset-m1" style='border-radius: 10px;background-color: #3F51B5;padding: 30px 0;'>
+					<div class="row">
+	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;margin:10px 0;'>
+	  	   			Sign up for the beta to start building your lifebar today!
+	  	   		</div>
+	  	   	</div>
 		    <div class="row">
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-account-circle prefix"></i>
 		        <input id="signup_username" type="text">
-		        <label for="signup_username">Username</label>
+		        <label for="signup_username" style='color:white;'>Username</label>
 		      </div>
 	      	</div>
 	    	<div class="row">
 	  	      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-lock prefix"></i>
 		        <input id="signup_password" type="password">
-		        <label for="signup_password">Password</label>
+		        <label for="signup_password" style='color:white;'>Password</label>
 		      </div>
 	      	</div>
 	  	    <div class="row">
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-communication-email prefix"></i>
 		        <input id="signup_email" type="text">
-		        <label for="signup_email">Email</label>
+		        <label for="signup_email" style='color:white;'>Email</label>
 		      </div>
 	      	</div>
 		    <div class="row">
-			    <div class="col s11" style='text-align: center;font-size: 1.5em;margin-top:1em;'>
+			    <div class="col s11" style='text-align: center;margin-top:1em;'>
 			    	<div class="waves-effect btn-large" id="SignupSubmitBtnLanding">SIGN UP</div>
 			    </div>
-			    <div class="col s11 validation" style='text-align: center;color:red;display:none;'></div>
+			    <div class="col s11 validation" style='text-align: center;color:white;display:none;margin: 30px 0 10px;'></div>
 	      	</div>
 	  	</div>
-	   <div class="col s12 m6" >
+	   <div class="col s12 m5" >
 	  	   	<div class="row">
-	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;'>
-	  	   			Login using a third party account
+	  	   		<div class="social-login-third-party-header" style='color:white;font-size:1.2em;'>
+	  	   			Signup / Login using a third party account
 	  	   		</div>
 	  	   	</div>
 	  	   	<div class="row" style='text-align: center;'>
@@ -129,7 +131,7 @@ function DisplayLandingSignup(){
 	  	   			</div>
 	  	   		</div>
 	  	   	</div>
-					 <div class="btn-large waves-effect waves-light landing-login-mobile" style='z-index:100;background-color: rgba(0,0,0,0.3);'>Login</div>
+					 <div class="btn waves-effect waves-light landing-login-mobile" style='z-index:100;background-color: rgba(0,0,0,0.3);'>Login</div>
   	   </div>
   </div>
 	<?php
