@@ -12,5 +12,10 @@
     "ignore": [
         "\\.vscode",
         "\\.git"
-    ]
+    ],
+    "generatedFiles": {
+        "uploadOnSave": true,
+        "path": "/css/scss",
+        "extensionsToInclude": [".css"]
+    }
 }

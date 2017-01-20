@@ -2,12 +2,12 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     return gulp.src('./css/**/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('css'));
+        .pipe(gulp.dest('css/scss'));
 });
 
-gulp.task('default', ['sass'], function () {
+gulp.task('default', ['sass'], function() {
     gulp.watch('css/*.scss', ['sass']);
 })
