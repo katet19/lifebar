@@ -1,87 +1,89 @@
-.dashboard-question-header
-{
+/**
+
+#Converted All
+
+**/
+
+.dashboard-question-header {
     font-size: 1.5em;
     margin-bottom: 20px;
     line-height: 26px;
     margin-top: 20px;
 }
 
-.dashboard-card
-{
+.dashboard-card {
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     -ms-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
-    background-color:white;
-    color:rgba(0,0,0,0.7);
-    padding:10px;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
     position: relative;
-    min-height:245px;
+    min-height: 245px;
     margin-bottom: 20px;
 }
 
-.dashboard-card-calltoaction
-{
-    background-color:#F50057;
-    color:white;
+.dashboard-card-calltoaction {
+    background-color: #F50057;
+    color: white;
     cursor: pointer;
 }
 
-.dashboard-card-calltonotice{
-    background-color:#607D8B;
-    color:white;
+.dashboard-card-calltonotice {
+    background-color: #607D8B;
+    color: white;
     cursor: pointer;
 }
 
-.dashboard-card-calltoaction:hover
-{
+.dashboard-card-calltoaction:hover {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color:#1E88E5;
+    background-color: #1E88E5;
 }
 
-.dashboard-card-calltonotice:hover{
+.dashboard-card-calltonotice:hover {
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color:#546E7A;
+    background-color: #546E7A;
 }
 
-.dashboard-calltonotice-container{
+.dashboard-calltonotice-container {
     margin-top: 40px;
 }
 
-.dashboard-calltoaction-container i, .dashboard-calltonotice-container i
-{
+.dashboard-calltoaction-container i,
+.dashboard-calltonotice-container i {
     font-size: 5em;
     display: block;
     margin-top: -20px;
 }
 
-.dashboard-calltoaction-container span, .dashboard-calltonotice-container span
-{
+.dashboard-calltoaction-container span,
+.dashboard-calltonotice-container span {
     text-transform: uppercase;
     font-weight: 500;
     position: relative;
     font-size: 1.25em;
     top: -15px;
 }
-.dashboard-platform-container .badge-small{
-    margin-bottom:10px;
+
+.dashboard-platform-container .badge-small {
+    margin-bottom: 10px;
 }
 
-.dashboard-tier-label
-{
+.dashboard-tier-label {
     font-size: 0.25em;
     position: relative;
     top: 5px;
-    display:none;
-    font-weight:bold;
+    display: none;
+    font-weight: bold;
 }
 
-.dashboard-tier-block{
+.dashboard-tier-block {
     color: white;
     display: inline-block;
     font-size: 0.6em;
@@ -92,7 +94,7 @@
     top: -20px;
 }
 
-.dashboard-card-relative-label{
+.dashboard-card-relative-label {
     color: white;
     font-weight: 400;
     font-size: 1em;
@@ -100,22 +102,22 @@
     text-align: center;
     width: 100%;
     top: 20px;
-    display:none;
+    display: none;
 }
 
-.dashboard-card-relative-tier{
+.dashboard-card-relative-tier {
     color: white;
     font-size: 4em;
     line-height: 100px;
     font-weight: bold;
 }
 
-.dashboard-card-relative-container{
+.dashboard-card-relative-container {
     display: inline-block;
-    padding:15px 0;
+    padding: 15px 0;
 }
 
-.dashboard-card-game-small{
+.dashboard-card-game-small {
     width: 95px;
     border-radius: 50%;
     height: 95px;
@@ -127,35 +129,35 @@
     margin-right: auto;
 }
 
-.dashboard-card-tiny-header{
-    position:absolute;
-    top:10px;
-    left:10px;
-    font-size:0.9em;
-    font-weight:400;
+.dashboard-card-tiny-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.9em;
+    font-weight: 400;
 }
 
-.dashboard-card-date-top{
+.dashboard-card-date-top {
     font-size: 3em;
     text-transform: UPPERCASE;
     margin: 20px 0 0;
 }
 
-.dashboard-card-date-unknown{
+.dashboard-card-date-unknown {
     font-size: 5em;
     text-transform: UPPERCASE;
     margin: 40px 0 0;
     font-weight: bold;
 }
 
-.dashboard-card-date-bottom{
+.dashboard-card-date-bottom {
     font-size: 5em;
     text-transform: UPPERCASE;
     margin: -30px 0 0;
     font-weight: bold;
 }
 
-.dashboard-card-date-info{
+.dashboard-card-date-info {
     font-size: 1em !important;
     position: relative !important;
     top: -15px !important;
@@ -165,18 +167,17 @@
     text-transform: none !important;
 }
 
-.dashboard-platform-container{
+.dashboard-platform-container {
     margin-top: 40px;
 }
 
-@media only screen and (max-width : 600px) {
-    .dashboard-card-game-small{
+@media only screen and (max-width: 600px) {
+    .dashboard-card-game-small {
         width: 75px;
         height: 75px;
         top: 70px;
     }
-
-    .dashboard-card-relative-tier{
+    .dashboard-card-relative-tier {
         font-size: 3em;
         line-height: 75px;
     }

@@ -6,8 +6,8 @@ function ShowActivityContent(filter) {
     ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
     var windowWidth = $(window).width();
     $("#activity").css({ "display": "inline-block", "left": -windowWidth });
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({ "display": "none" });
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, { duration: 200, queue: false, easing: 'easeOutQuad' });
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({ "display": "none" });
+    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, { duration: 200, queue: false, easing: 'easeOutQuad' });
     $("#activity").velocity({ "left": 0 }, { duration: 200, queue: false, easing: 'easeOutQuad' });
     $("#gameInnerContainer").html("");
     if ($(window).width() > 599) {
@@ -62,17 +62,17 @@ function RefreshActivity(filter) {
 function AttachActivityEvents() {
     $(".user-discover-card").on("click", function(e) {
         e.stopPropagation();
-        ShowUserProfile($(this).attr("data-id"));
+        ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
     });
-    $(".large-avatar, .user-avatar").on("click", function(e) {
+    $(".feed-avatar, .user-avatar").on("click", function(e) {
         e.stopPropagation();
-        ShowUserProfile($(this).attr("data-id"));
+        ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
     });
     $(".feed-activity-user-link-action").on("click", function(e) {
         e.stopPropagation();
-        ShowUserProfile($(this).attr("data-id"));
+        ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
     });
-    $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e) {
+    $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e) {
         e.stopPropagation();
         ShowGame($(this).attr("data-gbid"), $("#activity"));
     })
@@ -113,7 +113,6 @@ function AttachActivityEvents() {
             timeout: 45000
         });
 
-<<<<<<< HEAD
     });
     $(".shareBtn").on('click', function() {
         ShowShareModal("event", $(this).attr("data-eventid"));
@@ -126,49 +125,6 @@ function AttachActivityEvents() {
                 EndlessLoader();
         }
     });
-=======
-	 });
-	$(".shareBtn").on('click', function(){
-		ShowShareModal("event", $(this).attr("data-eventid"));
-	});
-	$(".game-card-action-pick, .game-discover-card .card-image").unbind();
-	$(".game-card-action-pick").on("click", function(e){
-		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
-			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
-	});
-	$(".game-discover-card .card-image").on("click", function(e){ 
-		e.stopPropagation(); 
-		CloseSearch();
-		$(".searchInput input").val('');
-		$('html').unbind();
-		$('html').click(function(){
-			if($("#userAccountNav").is(":visible"))
-				$("#userAccountNav").hide(250);
-		});
-		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
-	});
-	$(".card-game-secondary-actions").on("click", function(e){ 
-		e.stopPropagation(); 
-		CloseSearch();
-		$(".searchInput input").val('');
-		$('html').unbind();
-		$('html').click(function(){
-			if($("#userAccountNav").is(":visible"))
-				$("#userAccountNav").hide(250);
-		});
-		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
-	});
-	AttachStarEvents();
-	 AttachAgreesFromActivity();
-	 $(window).unbind("scroll");
-	 $(window).scroll(function(){
-	 	if(isScrolledIntoView($("#feed-endless-loader"))){
-	 		if($("#feed-endless-loader").html() == "")
-      			EndlessLoader();
-	 	}
-     });
->>>>>>> Akuma
 }
 
 function AttachActivityVideoEvents() {

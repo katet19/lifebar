@@ -15,7 +15,7 @@
     ],
     "generatedFiles": {
         "uploadOnSave": true,
-        "path": "/css/scss",
+        "path": "/css",
         "extensionsToInclude": [".css"]
     }
 }
