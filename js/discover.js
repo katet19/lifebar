@@ -508,6 +508,34 @@ function AttachWatchedDiscoverXP(){
 					$(".myxp-quote").on('keyup', function(){
 						ToggleSaveButtonPlayingNow($(this).parent().parent());
 					});
+					$(".save-watched-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var form = $(this).parent().parent();
+							var gameid = form.attr("data-gameid");
+							var quote = form.find(".myxp-quote").val();
+							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+							var watchedType = form.attr("data-length");
+							var url = form.attr("data-url");
+							var year = form.attr("data-year");
+							var action = "SaveWatchedExperience";
+							$.ajax({ url: '../php/webService.php',
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
+							$(".fixed-close-modal-btn").click();
+						}
+					});
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
 					xpElement.css({"background-color":"#757575"});
 					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
