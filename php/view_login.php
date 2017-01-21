@@ -73,7 +73,7 @@ function DisplayLogin(){
 function DisplayLandingSignup(){
 	?>
     <div class="row">
-		  <div class="col s12 m5 offset-m1" style='border-radius: 10px;background-color: #3F51B5;padding: 30px 0;'>
+		  <div class="col s12 m5 offset-m1 z-depth-3" style='border-radius: 10px;background-color: #303F9F;padding: 30px 0;'>
 					<div class="row">
 	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;margin:10px 0;'>
 	  	   			Sign up for the beta to start building your lifebar today!
