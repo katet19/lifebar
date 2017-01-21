@@ -503,9 +503,11 @@ function AttachWatchedDiscoverXP(){
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
+						ToggleSaveButtonPlayingNow($(this).parent().parent().parent());
+					});
+					$(".myxp-quote").on('keyup', function(){
 						ToggleSaveButtonPlayingNow($(this).parent().parent());
 					});
-
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
 					xpElement.css({"background-color":"#757575"});
 					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
