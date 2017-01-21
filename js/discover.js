@@ -499,7 +499,13 @@ function AttachWatchedDiscoverXP(){
 				success: function(output) {
 					$(".daily-watch-xp-entry").html(output);
 					$(".myxp-video-goto-full").hide();
-					AttachActivityVideoEvents();
+					//AttachActivityVideoEvents();
+					$(".modal-xp-emoji-icon").on('click', function(){
+						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+						$(this).addClass("modal-xp-emoji-icon-active");
+						ToggleSaveButtonPlayingNow($(this).parent().parent());
+					});
+
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
 					xpElement.css({"background-color":"#757575"});
 					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
@@ -524,6 +530,16 @@ function AttachWatchedDiscoverXP(){
 			});
 		}
  	});
+}
+
+function ToggleSaveButtonPlayingNow(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var summary = form.find(".myxp-quote").val();
+	if(emoji != undefined && summary != "" && summary != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
 }
 
 function DisplayGraphs(){
