@@ -510,7 +510,7 @@ function AttachWatchedDiscoverXP(){
 					});
 					$(".save-watched-xp").on('click', function(){
 						if(!$(this).hasClass("disabled")){
-							var form = $(this).parent().parent();
+							var form = $(this).parent();
 							var gameid = form.attr("data-gameid");
 							var quote = form.find(".myxp-quote").val();
 							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
@@ -533,7 +533,6 @@ function AttachWatchedDiscoverXP(){
 								},
 								timeout:45000
 							});
-							$(".fixed-close-modal-btn").click();
 						}
 					});
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
