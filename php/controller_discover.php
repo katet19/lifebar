@@ -294,7 +294,7 @@ function GetSuggestedMembers($mysqli, $userid){
 
 function GetSuggestedWatch($mysqli, $userid){
 	$videos = array();
-	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,6";
+	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,25";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				unset($video);

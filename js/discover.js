@@ -518,11 +518,22 @@ function AttachWatchedDiscoverXP(){
 							var url = form.attr("data-url");
 							var year = form.attr("data-year");
 							var action = "SaveWatchedExperience";
+							$(this).removeClass("save-btn");
+							$(this).html("<i class='material-icons'>save</i><span class='game-card-summary-add-xp-text'>Saving</span>");
 							$.ajax({ url: '../php/webService.php',
 								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
+									form.find(".save-watched-xp").html("<i class='material-icons'>cloud_done</i><span class='game-card-summary-add-xp-text'>Details Saved!</span>");
+									setTimeout(function(){ 
+										$(".daily-watch-title").show();
+										$(".daily-watch-xp-entry").hide();
+										$(".daily-watch-xp-entry").html("");
+										xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+										xpElement.css({"background-color":"#F50057"});
+										AttachWatchedDiscoverXP();
+									 }, 750);
 								},
 								error: function(x, t, m) {
 									if(t==="timeout") {

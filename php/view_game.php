@@ -342,7 +342,7 @@ function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
 
 function DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID){
 	?>
-	<div class="col s12" style='text-align:left;position:relative;top:15px;'>
+	<div class="col s12" style='text-align:left;position:relative;top:0px;'>
 		<div class="row" style='margin-bottom:0px;'>
 			<div class="col s12">
 				<div class="modal-xp-header" style='margin:0;'>How was the overall experience?</div>
@@ -364,11 +364,11 @@ function DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID){
 			</div>
 		</div>
 	</div>
-	<div class="input-field col s12" style="margin-top: 50px;">
+	<div class="input-field col s12" style="margin-top: 30px;">
 		<textarea id="myxp-quote" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
 		<label for="myxp-quote" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Summary (disabled)"; }else{ echo "Summarize your experience"; } ?></label>
     </div>
-	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 2em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
+	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 1em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<?php
 }
 
@@ -455,7 +455,7 @@ function DisplayWatchedXPEntryAjax($url, $gameid){
 	}
 	
 	?>
-	<div class="col m12 video-card z-depth-1" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>" style='height:400px;'>
+	<div class="col m12 video-card z-depth-1" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>" style='height:330px;'>
 		<?php DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID); ?>
 	</div>
 	<?php
