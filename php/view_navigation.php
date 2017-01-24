@@ -83,7 +83,7 @@ function DisplaySideDrawer(){ ?>
 			<li id="nav-notifications" style='position:relative;'><a href="#notifications"><i class="material-icons">notifications_none</i> Notifications</a></li>
 			<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
 			<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
-				<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
+				<li id="nav-admin"><a href="#admin" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 			<?php } ?>
 			<div class="divider"></div>
 			<li><a href="#!" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>
