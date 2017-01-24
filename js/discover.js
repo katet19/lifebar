@@ -519,21 +519,30 @@ function AttachWatchedDiscoverXP(){
 							var year = form.attr("data-year");
 							var action = "SaveWatchedExperience";
 							$(this).removeClass("save-btn");
-							$(this).html("<i class='material-icons'>save</i><span class='game-card-summary-add-xp-text'>Saving</span>");
+							$(this).html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>save</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Saving</span>");
 							$.ajax({ url: '../php/webService.php',
 								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
 								type: 'post',
 								success: function(output) {
 									ManageXPRewards(output);
-									form.find(".save-watched-xp").html("<i class='material-icons'>cloud_done</i><span class='game-card-summary-add-xp-text'>Details Saved!</span>");
+									form.find(".save-watched-xp").html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>cloud_done</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Details Saved!</span>");
 									setTimeout(function(){ 
 										$(".daily-watch-title").show();
 										$(".daily-watch-xp-entry").hide();
 										$(".daily-watch-xp-entry").html("");
-										xpElement.html("ADD <i class='mdi-action-visibility'></i>");
-										xpElement.css({"background-color":"#F50057"});
+										var next = xpElement.parent().next();
+										//xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+										//xpElement.css({"background-color":"#F50057"});
 										AttachWatchedDiscoverXP();
-									 }, 750);
+										setTimeout(function(){ 
+											var next = xpElement.parent().next();
+											xpElement.parent().css({"opacity":"0"});
+											setTimeout(function(){ 
+												xpElement.parent().remove(); 
+												next.click();
+											}, 300);
+										}, 500);
+									 }, 1000);
 								},
 								error: function(x, t, m) {
 									if(t==="timeout") {
