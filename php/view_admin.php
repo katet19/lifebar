@@ -242,7 +242,7 @@ function DisplayPendingReviews(){
 						        </ul>
 					        </div>
 					        <div class="col s12 m3 l2">
-					        	<div class='btn admin-review-search-btn'><i class="mdi-action-search small"></i></div>
+					        	<div class='btn admin-review-search-btn'><i class="material-icons">search</i></div>
 					        </div>
 			        	</div>
 				        <div class="row">
@@ -306,7 +306,7 @@ function DisplayPendingReviews(){
 	</div>
 	<div class="col s12 m6 admin-review-iframe-container">
 		<div class="row">
-			<div class="card admin-card" style='  position: fixed;  top: 125px;  bottom: 10px;  right: 0;  left: 50%;'>
+			<div class="card admin-card" style='position: fixed;top: 80px;bottom: 10px;right: 10px;left: calc(45% + 225px) !important;'>
 				<iframe id="admin-review-iframe" src="" height='100%' width='100%' style='width:100%;height:100%;'></iframe>
 			</div>
 		</div>
