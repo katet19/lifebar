@@ -413,6 +413,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 				DisplayFeedXPIcon($xp, $event);
 
 				$eventXP = "";
+				$isWatched = false;
 				if(sizeof($xp->_playedxp) > 0){
 					foreach($xp->_playedxp as $playxp){
 						if($playxp->_entereddate == $event->_date)
@@ -422,6 +423,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 					foreach($xp->_watchedxp as $watchxp){
 						if($watchxp->_entereddate == $event->_date)
 							$eventXP = $watchxp;
+							$isWatched = true;
 					}
 				}
 
@@ -429,7 +431,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 					$eventXP = $xp->_playedxp[0];
 
 
-				if(sizeof($xp->_playedxp) > 0){
+				if($eventXP != "" && !$isWatched){
 						if($eventXP->_completed == "101")
 							$percent = 100;
 						else
@@ -442,13 +444,19 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 							<?php } 
 							?>
 						</div>
+						<?php if($eventXP->_hours > 0){ ?>
+							<div class="feed-action-details-card">
+								<i class="material-icons" style='font-size:1em;vertical-align: middle;'>access_time</i>
+								<?php echo $eventXP->_hours." hours"; ?>
+							</div>
+						<?php } ?>
 						<div class="feed-action-details-card">
 							<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
 							<?php echo $eventXP->_platform; ?>
 						</div>
 				<?php
-				}else if(sizeof($xp->_watchedxp) > 0){
-						$length = $watchedxp[0]->_length;
+				}else if($eventXP != "" && $isWatched){
+						$length = $eventXP->_length;
 						if($length == "Watched a speed run"){
 							$icon = "directions_walk";
 						}else if($length == "Watched a complete single player playthrough" || $length == "Watched a complete playthrough"){
@@ -466,7 +474,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 						}
 						?>
 						<div class="feed-action-details-card">
-							<i class="material-icons" style='font-size:1em;vertical-align: middle;'><?php echo $icon; ?></i>
+							<i class="material-icons" style='font-size:1.5em;vertical-align: middle;'><?php echo $icon; ?></i>
 							<?php echo $length; ?>
 						</div>
 				<?php } 
@@ -990,21 +998,19 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 function DisplayFeedXPIcon($xp, $event){
 	if(sizeof($xp->_playedxp) > 0){
 		?>
-			<!--<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">-->
-			<div class="feed-action-details-card">
-				<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.3em;vertical-align: sub;'>					
-					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>						
-				</i>
-			</div>
+		<div class="feed-action-details-card">
+			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.6em;position: relative;top: 6px;left:-3px;'>					
+				<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>						
+			</i>
+		</div>
 		<?php
 	}else if(sizeof($xp->_watchedxp) > 0){
 		?>
-			<!--<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">-->
-			<div class="feed-action-details-card">
-				<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.3em;vertical-align: sub;'>
-					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>	
-				</i>
-			</div>
+		<div class="feed-action-details-card">
+			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.6em;position: relative;top: 6px;left:-3px;'>
+				<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>	
+			</i>
+		</div>
 		<?php
 	}
 }
