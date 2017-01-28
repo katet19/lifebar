@@ -239,9 +239,10 @@
     text-align: right;
     width: 100%;
     margin-top: 10px;
+    height:36px;
 }
 
-.feed-agrees-label{
+.agrees-label{
     margin: 0 10px !important;
     vertical-align: text-top;
 }
@@ -409,8 +410,25 @@
   padding-bottom: 20px;
 }
 
+.feed-action-details{
+  position:relative;
+  display:inline-block;
+  top: -3px;
+}
+
 .feed-card-metadata{
   font-size:0.9em;
+}
+
+.feed-action-details-card{
+    background-color: white;
+    color: gray;
+    font-weight: 400;
+    padding: 1px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    display: inline-block;
+    margin-left: 2px;
 }
 
 .tierInProgress{

@@ -402,18 +402,78 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content">
-	  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes")){
-				DisplayFeedXPIcon($xp, $event);
-	  	}else if($event->_quote != ''){ 
-	  			DisplayFeedXPIcon($xp, $event);
-	   		} ?>
-	      <div class="feed-card-title">
-			<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
-	  		"<?php echo $event->_quote; ?>"
+	      <div class="feed-card-title" style='<?php if(sizeof($xp->_playedxp) > 0){ echo "padding-bottom:30px;"; } ?>'>
+			<div class="feed-card-level-game_title feed-activity-game-link" style='<?php if(!$multiple){ echo "display:none;"; } ?>' data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+	  		<?php echo $event->_quote; ?>
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
 	  		<i class='authenticated-mark material-icons' title="Verified Account">verified_user</i>
 	  		<?php } ?>
-	      </div>
+			<div class="feed-action-details">
+				<?php 
+				DisplayFeedXPIcon($xp, $event);
+
+				$eventXP = "";
+				if(sizeof($xp->_playedxp) > 0){
+					foreach($xp->_playedxp as $playxp){
+						if($playxp->_entereddate == $event->_date)
+							$eventXP = $playxp;
+					}
+				}else if(sizeof($xp->_watchedxp) > 0 && $eventXP == ""){
+					foreach($xp->_watchedxp as $watchxp){
+						if($watchxp->_entereddate == $event->_date)
+							$eventXP = $watchxp;
+					}
+				}
+
+				if($eventXP == "" && sizeof($xp->_playedxp) > 0)
+					$eventXP = $xp->_playedxp[0];
+
+
+				if(sizeof($xp->_playedxp) > 0){
+						if($eventXP->_completed == "101")
+							$percent = 100;
+						else
+							$percent = $eventXP->_completed; ?>
+						<div class="feed-action-details-card">
+							<i class="material-icons" style='font-size:1em;vertical-align: middle;'>games</i>
+							<?php 
+							if($percent < 100){ echo $percent."%"; }else{ ?>
+								Finished
+							<?php } 
+							?>
+						</div>
+						<div class="feed-action-details-card">
+							<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
+							<?php echo $eventXP->_platform; ?>
+						</div>
+				<?php
+				}else if(sizeof($xp->_watchedxp) > 0){
+						$length = $watchedxp[0]->_length;
+						if($length == "Watched a speed run"){
+							$icon = "directions_walk";
+						}else if($length == "Watched a complete single player playthrough" || $length == "Watched a complete playthrough"){
+							$icon = "beenhere";
+						}else if($length == "Watched competitive play"){
+							$icon = "headset_mic";
+						}else if($length == "Watched multiple hours" || $length == "Watched gameplay" || $length == "Watched an hour or less"){
+							$icon = "videogame_asset";
+						}else if($length == "Watched promotional gameplay"){
+							$icon = "movie_creation";
+						}else if($length == "Watched a developer diary"){
+							$icon = "class";
+						}else{
+							$icon = "theaters";
+						}
+						?>
+						<div class="feed-action-details-card">
+							<i class="material-icons" style='font-size:1em;vertical-align: middle;'><?php echo $icon; ?></i>
+							<?php echo $length; ?>
+						</div>
+				<?php } 
+		
+				?>
+		  	</div>
+		  </div>
 		  <div class='divider'></div>
 	      <div class="feed-action-container">
 				<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
@@ -930,17 +990,19 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 function DisplayFeedXPIcon($xp, $event){
 	if(sizeof($xp->_playedxp) > 0){
 		?>
-			<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">
-				<i class='material-icons feed-card-icon tierTextColor<?php echo $event->_tier; ?>'>
-					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+			<!--<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">-->
+			<div class="feed-action-details-card">
+				<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.3em;vertical-align: sub;'>					
+					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>						
 				</i>
 			</div>
 		<?php
 	}else if(sizeof($xp->_watchedxp) > 0){
 		?>
-			<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">
-				<i class='material-icons feed-card-icon tierTextColor<?php echo $event->_tier; ?>'>
-					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; }  ?>	
+			<!--<div class="feed-card-icon-container z-depth-2" style='background-color:#FFF;'  title="<?php echo "XP ".$event->_tier; ?>">-->
+			<div class="feed-action-details-card">
+				<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.3em;vertical-align: sub;'>
+					<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>	
 				</i>
 			</div>
 		<?php
