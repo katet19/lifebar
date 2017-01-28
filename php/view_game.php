@@ -387,8 +387,9 @@ function DisplayEmbeddedVideo($video){?>
 				<iframe data-cbsi-video width="640" height="400" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
 			<?php }else if(strpos($video['URL'] , 'youtube.com') !== false || strpos($video['URL'] , 'youtu.be') !== false){
 					$url = "https://www.youtube.com/embed/";
-					$vidArray = explode("/", $video['URL']);
-					$video['URL'] = $url.end(str_replace("watch?v=","",$vidArray));
+					$vurl = str_replace("watch?v=","",$video['URL']);
+					$vidArray = explode("/", $vurl);
+					$video['URL'] = $url.end($vidArray);
 					?>
 					<iframe width="560" height="315" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
 			<?php }else if(strpos($video['URL'], 'gamespot.com') !== false){
