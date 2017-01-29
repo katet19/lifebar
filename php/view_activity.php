@@ -453,10 +453,12 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 											<?php echo $eventXP->_hours." hours"; ?>
 										</div>
 									<?php } ?>
-									<div class="feed-action-details-small-card">
-										<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
-										<?php echo $eventXP->_platform; ?>
-									</div>
+									<?php if($user->_security != "Journalist"){ ?>
+										<div class="feed-action-details-small-card">
+											<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
+											<?php echo $eventXP->_platform; ?>
+										</div>
+									<?php } ?>
 							<?php
 							}else if($eventXP != "" && $isWatched){
 									$length = $eventXP->_length;
@@ -541,10 +543,12 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 								<?php echo $eventXP->_hours." hours"; ?>
 							</div>
 						<?php } ?>
+						<?php if($user->_security != "Journalist"){ ?>
 						<div class="feed-action-details-card">
 							<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
 							<?php echo $eventXP->_platform; ?>
 						</div>
+						<?php } ?>
 				<?php
 				}else if($eventXP != "" && $isWatched){
 						$length = $eventXP->_length;
