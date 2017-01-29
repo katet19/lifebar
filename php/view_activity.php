@@ -385,19 +385,36 @@ function FeedXPItem($feed, $conn, $mutualconn){
 function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multiple, $conn, $mutualconn){ 
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
 		if($event->_quote == ''){ ?>
-		<div class="col s6" style='position:relative;padding: 0 1rem 0 0;'>
+		<div class="col s6 m6 l4" style='position:relative;padding: 0 1rem 0 0;'>
 			<a class="card game-discover-card feed-game-discover-card <?php echo $classId; ?>" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" data-count="<?php echo $count; ?>" data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				<div class="card-image waves-effect waves-block" style="height:100px !important;width:100%;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				</div>
 				<div class="card-content" style='height:65px;'>
-					<div class="feed-card-tier-badge-container">
-						<i class="material-icons tierTextColor<?php echo $xp->_tier; ?> feed-card-tier-badge">
-							<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>
-						</i>
-					</div>
-					<div class="card-title activator grey-text text-darken-4" style='height:60px;'>
-						<div class="game-nav-title game-nav-title-with-space" title="<?php echo $game->_title; ?>">
-							<?php echo $game->_title;
+					<?php
+					if(sizeof($xp->_playedxp) > 0){
+						?>
+						<div class="feed-action-details-small-emoji">
+							<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size:1.3em;vertical-align: middle;margin-top:-4px;'>					
+								<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>						
+							</i>
+						</div>
+						<?php
+					}else if(sizeof($xp->_watchedxp) > 0){
+						?>
+						<div class="feed-action-details-small-emoji">
+							<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size:1.3em;vertical-align: middle;margin-top:-4px;'>
+								<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>	
+							</i>
+						</div>
+						<?php
+					}
+					?>
+					<div class="card-title activator grey-text text-darken-4" style='height:55px;'>
+						<div class="feed-card-small-title">
+							<?php echo $game->_title; ?>
+						</div>
+						<div class="feed-action-details" style='top: 0;left: 5px;width: 95%;line-height: 10px;'>
+							<?php
 							$eventXP = "";
 							$isWatched = false;
 							if(sizeof($xp->_playedxp) > 0){
@@ -422,7 +439,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 										$percent = 100;
 									else
 										$percent = $eventXP->_completed; ?>
-									<div class="feed-action-details-card" style='display: block;top: 3px;margin-left: 0;'>
+									<div class="feed-action-details-small-card">
 										<i class="material-icons" style='font-size:1em;vertical-align: middle;'>games</i>
 										<?php 
 										if($percent < 100){ echo $percent."%"; }else{ ?>
@@ -431,12 +448,12 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 										?>
 									</div>
 									<?php if($eventXP->_hours > 0){ ?>
-										<div class="feed-action-details-card" style='top: 3px;'>
+										<div class="feed-action-details-small-card">
 											<i class="material-icons" style='font-size:1em;vertical-align: middle;'>access_time</i>
 											<?php echo $eventXP->_hours." hours"; ?>
 										</div>
 									<?php } ?>
-									<div class="feed-action-details-card" style='top: 3px;'>
+									<div class="feed-action-details-small-card">
 										<i class="material-icons" style='font-size:1em;vertical-align: middle;'>tv</i>
 										<?php echo $eventXP->_platform; ?>
 									</div>
@@ -459,8 +476,8 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 										$icon = "theaters";
 									}
 									?>
-									<div class="feed-action-details-card" style='display: block;top: 3px;margin-left: 0;width: 100%;'>
-										<i class="material-icons" style='font-size:1.5em;vertical-align: middle;'><?php echo $icon; ?></i>
+									<div class="feed-action-details-small-card">
+										<i class="material-icons" style='font-size:1em;vertical-align: middle;'><?php echo $icon; ?></i>
 										<?php echo $length; ?>
 									</div>
 							<?php } 

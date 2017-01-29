@@ -252,6 +252,15 @@
   font-size: 0.7em;
 }
 
+.feed-card-small-title{
+    font-size: 0.9em;
+    padding: 14px 8px 0;
+    line-height: 15px;
+    height: 30px;
+    font-weight: 500;
+    overflow: hidden;
+}
+
 .feed-activity-when-info{
   font-size: 0.7em;
   display: block;
@@ -433,6 +442,28 @@
     margin-left: 3px;
 }
 
+.feed-action-details-small-card{
+    color: gray;
+    font-weight: 400;
+    padding: 1px;
+    font-size: 0.7em;
+    position: relative;
+    top: 5px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3px;
+}
+
+.feed-action-details-small-emoji{
+    position: absolute;
+    top: 82px;
+    font-size: 1.5em;
+    background-color: white;
+    border-radius: 25px;
+    padding: 0 2px;
+    left: 20px;
+}
+
 .tierInProgress{
 background-color: transparent !important;
     width: 25px !important;
@@ -506,7 +537,8 @@ background-color: transparent !important;
 	  	background-color:#999 !important;
 	}
 	.feed-card-content{
-		left: 120px;
+    padding: 10px 20px 10px;
+    width: -webkit-calc(100% - 120px);
 	}
 	.feed-activity-title{
 		font-size: 1em;
