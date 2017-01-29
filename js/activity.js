@@ -86,31 +86,7 @@ function AttachActivityEvents(){
  	 	e.stopPropagation();
 		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
 	 });
-	 $(".watchBtn").on("click", function(e){
- 		e.stopPropagation();
-		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
-		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
-  		var gameid = $(this).attr("data-gameid");
-  		var url = $(this).attr("data-url");
- 		$.ajax({ url: '../php/webService.php',
-	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
-	     type: 'post',
-	     success: function(output) {
- 			$("#BattleProgess").html(output); 
- 			$(".myxp-video-goto-full").hide();
- 			AttachActivityVideoEvents();
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-
-	 });
+	AttachWatchFromXP();
 	$(".shareBtn").on('click', function(){
 		ShowShareModal("event", $(this).attr("data-eventid"));
 	});

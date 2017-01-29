@@ -409,6 +409,7 @@ function DisplayEmbeddedVideo($video){?>
 function DisplayVideoForGame($url, $gameid){
 	$video = GetVideoXPForGame($url, $gameid);
 	$xp = GetVideoMyXPForGame($url, $gameid);
+	$game = GetGame($gameid);
 	$tier = $xp->_archivetier;
 	$summary = $xp->_archivequote;
 	$month = date('n');
@@ -426,10 +427,17 @@ function DisplayVideoForGame($url, $gameid){
 	?>
 	<div class="col s12">
 		<div class="row">
-			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						<div style='font-size:0.7em;'>Watch Video</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>	
+			<div class="col m12 video-card" style='margin-bottom:20px;margin-top:11vh;' data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 				<?php DisplayEmbeddedVideo($video); ?>
 			</div>
-			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="col m12 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 				<?php DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID); ?>
 			</div>
 		</div>

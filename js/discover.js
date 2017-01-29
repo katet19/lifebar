@@ -498,8 +498,6 @@ function AttachWatchedDiscoverXP(){
 				type: 'post',
 				success: function(output) {
 					$(".daily-watch-xp-entry").html(output);
-					$(".myxp-video-goto-full").hide();
-					//AttachActivityVideoEvents();
 					$(".modal-xp-emoji-icon").on('click', function(){
 						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
 						$(this).addClass("modal-xp-emoji-icon-active");
