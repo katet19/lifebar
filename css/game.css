@@ -72,6 +72,20 @@
     cursor: pointer;
 }
 
+.fixed-save-close-modal-btn{
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 1em;
+    padding: 5px 10px;
+    z-index: 10000;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    background-color: #F50057;
+    cursor: pointer;
+}
+
 .card-game-secondary-actions{
 	opacity: 0;
 	background-color:rgba(0,0,0,0.7);
@@ -193,7 +207,7 @@
 
 .game-card-summary-add-xp:hover>.game-card-summary-add-xp-icon, .game-card-summary-add-xp:hover>.game-card-summary-add-xp-text,
 .game-card-summary-watch-container:hover i, .game-card-summary-watch-container:hover,
-.game-nav-title:hover{
+.game-nav-title:hover, .fixed-save-close-modal-btn:hover{
 	color:#F50057 !important;
 }
 

@@ -1,12 +1,35 @@
 function ShowUserSettings(){
-	ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+	$(".lean-overlay").each(function(){ $(this).remove(); } );
+	$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
+	SCROLL_POS = $(window).scrollTop();
+	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
+	$("#gamemini.outerContainer").css({ "right": "0" });
+	ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
+	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+
 	$.ajax({ url: '../php/webService.php',
          data: {action: "UserSettings" },
          type: 'post',
          success: function(output) {
-			$("#BattleProgess").html(output); 
-            AttachUserSettingEvents();
-            $("#user-settings-account").show();
+			$("#gameminiInnerContainer").html(output);
+			$('.collapsible').collapsible();
+			$(".fixed-save-close-modal-btn, .lean-overlay, .delete-xp").unbind();
+			$(".lean-overlay").on('click', function(){
+				var windowWidth = $(window).width();
+				HideFocus();
+				$("#gamemini").css({ "right": "-40%" }); 
+				$(".lean-overlay").each(function(){ $(this).remove(); } );
+				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+			});
+			$(".fixed-save-close-modal-btn").on('click', function(){
+				var windowWidth = $(window).width();
+				HideFocus();
+				$("#gamemini").css({ "right": "-40%" }); 
+				$(".lean-overlay").each(function(){ $(this).remove(); } );
+				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+			});
+
+            //AttachUserSettingEvents();
             GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
