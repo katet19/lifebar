@@ -13,6 +13,7 @@ function ShowUserSettings(){
          success: function(output) {
 			$("#gameminiInnerContainer").html(output);
 			$('.collapsible').collapsible();
+			$('select').material_select();
 			$(".fixed-save-close-modal-btn, .lean-overlay, .delete-xp").unbind();
 			$(".lean-overlay").on('click', function(){
 				var windowWidth = $(window).width();

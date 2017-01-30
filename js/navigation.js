@@ -110,6 +110,10 @@ function NavigateToPage(page, fromURL = false){
 				$('body').css({'overflow-y':'scroll'});
 				$("#nav-activity").addClass("nav-slide-out-selected-page");
 				ShowActivityHome();
+			}else if(page[0] == "#settings"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-settings").addClass("nav-slide-out-selected-page");
+				ShowUserSettings();
 			}else if(page[0] == "#notifications"){
 				$('body').css({'overflow-y':'scroll'});
 				ShowNotificationsHome();
@@ -139,6 +143,8 @@ function NavigateToPage(page, fromURL = false){
 				ShowNotificationsHome();
 			else if(page == "#admin")
 				ShowAdminHome();
+			else if(page == "#settings")
+				ShowUserSettings();
 			else if(page == "#landing")
 				ShowLanding();
 			else if(page == "#profile")
@@ -226,19 +232,6 @@ function UserAccountNav(){
 	$('html').click(function(){
 		if($("#userAccountNav").is(":visible"))
 			$("#userAccountNav").hide(250);
-	});
-	$(".settingsButton").on('click', function(e){
-		e.stopPropagation();
-		$("#userAccountNav").hide(250);
-		CloseSideNavigation();
-		ShowUserSettings();
-	});
-	$(".adminButton").on('click', function(e){
-		e.stopPropagation();
-		HideFocus();
-		$("#userAccountNav").hide(250);
-		CloseSideNavigation();
-		ShowAdminHome();
 	});
 	$(".profileButton, .userAvatar, .userNameTitle").on('click', function(e){
 		var id = $(".userContainer").attr("data-id");

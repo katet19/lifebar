@@ -52,8 +52,7 @@ function DisplayBadgeManagementForUser($userid){
 	$userbadges = GetAllBadgesForUser($userid);
 	$user = GetUser($userid);
 	?>
-	<div class="col s12 settings-header" style='display:block;margin-top:0'>Your Badges</div>
-	<div class="col s12">
+	<div class="col s12" style='margin-top:1em;padding:0 1rem;'>
 		<?php 
 		if(sizeof($userbadges) > 0){
 			foreach($userbadges as $badge){
