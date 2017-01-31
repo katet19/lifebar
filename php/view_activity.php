@@ -490,8 +490,8 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 				</div>
 			</a>
 		</div>
-	<?php }else{ ?>
-	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	<?php }else if($agreedcount <= 2){ ?>
+		<div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
 	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content">
@@ -602,6 +602,123 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 				<?php } ?>
 				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
 					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>"><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
+				<?php } ?>
+				<!--<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>-->
+	      </div>
+	    </div>
+	  </div>
+	<?php }else{ ?>
+	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;width:100%;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    </a>
+	    <div class="feed-card-content" style='width:100%;background-color:rgba(0,0,0,0.7);'>
+	      <div class="feed-card-title" style='font-size: 2em;color:white;padding-bottom: 60px;padding-top: 30px;'>
+			<div class="feed-card-level-game_title feed-activity-game-link" style='color:white;font-size:0.5em;<?php if(!$multiple){ echo "display:none;"; } ?>' data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
+	  		<?php echo $event->_quote; ?>
+	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
+	  		<i class='authenticated-mark material-icons' title="Verified Account">verified_user</i>
+	  		<?php } ?>
+			<div class="feed-action-details">
+				<?php 
+				DisplayFeedXPIcon($xp, $event, true);
+
+				$eventXP = "";
+				$isWatched = false;
+				if(sizeof($xp->_playedxp) > 0){
+					foreach($xp->_playedxp as $playxp){
+						if($playxp->_entereddate == $event->_date)
+							$eventXP = $playxp;
+					}
+				}else if(sizeof($xp->_watchedxp) > 0 && $eventXP == ""){
+					foreach($xp->_watchedxp as $watchxp){
+						if($watchxp->_entereddate == $event->_date)
+							$eventXP = $watchxp;
+							$isWatched = true;
+					}
+				}
+
+				if($eventXP == "" && sizeof($xp->_playedxp) > 0)
+					$eventXP = $xp->_playedxp[0];
+
+
+				if($eventXP != "" && !$isWatched){
+						if($eventXP->_completed == "101")
+							$percent = 100;
+						else
+							$percent = $eventXP->_completed; ?>
+						<div class="feed-action-details-card" style='color:white;'>
+							<i class="material-icons" style='font-size:0.7em;vertical-align: middle;color:white;'>games</i>
+							<?php 
+							if($percent < 100){ echo $percent."%"; }else{ ?>
+								Finished
+							<?php } 
+							?>
+						</div>
+						<?php if($eventXP->_hours > 0){ ?>
+							<div class="feed-action-details-card" style='color:white;'>
+								<i class="material-icons" style='font-size:0.7em;vertical-align: middle;color:white;'>access_time</i>
+								<?php echo $eventXP->_hours." hours"; ?>
+							</div>
+						<?php } ?>
+						<?php if($user->_security != "Journalist"){ ?>
+						<div class="feed-action-details-card" style='color:white;'>
+							<i class="material-icons" style='font-size:0.7em;vertical-align: middle;color:white;'>tv</i>
+							<?php echo $eventXP->_platform; ?>
+						</div>
+						<?php } ?>
+				<?php
+				}else if($eventXP != "" && $isWatched){
+						$length = $eventXP->_length;
+						if($length == "Watched a speed run"){
+							$icon = "directions_walk";
+						}else if($length == "Watched a complete single player playthrough" || $length == "Watched a complete playthrough"){
+							$icon = "beenhere";
+						}else if($length == "Watched competitive play"){
+							$icon = "headset_mic";
+						}else if($length == "Watched multiple hours" || $length == "Watched gameplay" || $length == "Watched an hour or less"){
+							$icon = "videogame_asset";
+						}else if($length == "Watched promotional gameplay"){
+							$icon = "movie_creation";
+						}else if($length == "Watched a developer diary"){
+							$icon = "class";
+						}else{
+							$icon = "theaters";
+						}
+						?>
+						<div class="feed-action-details-card" style='color:white;'>
+							<i class="material-icons" style='font-size:1.3em;vertical-align: middle;color:white;'><?php echo $icon; ?></i>
+							<?php echo $length; ?>
+						</div>
+				<?php } 
+		
+				?>
+		  	</div>
+		  </div>
+		  <div class='divider'></div>
+	      <div class="feed-action-container">
+				<div class="myxp-details-agree-container" <?php if($agreedcount > 0){ ?>style='display:block;'<?php } ?>>
+					<div class='agreeBtnCount badge-lives' <?php if($agreedcount > 0){ ?>style='display:inline-block;'<?php } ?>><?php echo $agreedcount; ?></div>
+					<div class="myxp-details-agree-list">
+					<?php
+						$i = 0;
+						while($i < sizeof($agrees) && $i < 15){ ?>
+						<div class="myxp-details-agree-listitem">
+							<?php $useragree = GetUser($agrees[$i]); ?>
+							<div class="user-avatar" style="margin-top:3px;width:30px;border-radius:50%;display: inline-block;float:left;height:30px;background:url(<?php echo $useragree->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" title='<?php echo $useragree->_username; ?>'></div>
+						</div>
+					<?php	
+					$i++;
+					} ?>
+					</div>
+				</div>
+	      		<?php if($xp->_link != ''){ ?>
+					<a href='<?php echo $xp->_link; ?>' target='_blank' ><div class="btn-flat waves-effect readBtn" style='color:white;'>READ</div></a>
+				<?php } ?>
+	      		<?php if($event->_url != '' && $_SESSION['logged-in']->_id > 0){ ?>
+					<div data-url='<?php echo $event->_url; ?>' data-gameid='<?php echo $game->_id; ?>' class="btn-flat waves-effect watchBtn" style='color:white;'>WATCH</div>
+				<?php } ?>
+				<?php if($_SESSION['logged-in']->_id != $user->_id && $event->_quote != ''){ ?>
+					<div class="btn-flat waves-effect <?php if(in_array($_SESSION['logged-in']->_id, $agrees) || $_SESSION['logged-in']->_id <= 0){ echo "disagreeBtn"; }else{ echo "agreeBtn"; } ?>" data-eventid="<?php echo $event->_id; ?>" data-agreedwith="<?php echo $user->_id; ?>" data-gameid="<?php echo $xp->_gameid; ?>" data-username="<?php echo $username ?>" style='color:white;'><?php if(in_array($_SESSION['logged-in']->_id, $agrees)){ echo "- 1up"; }else if($_SESSION['logged-in']->_id > 0){  echo "+ 1up"; } ?></div>
 				<?php } ?>
 				<!--<div class="shareBtn btn-flat waves-effect" data-userid='<?php echo  $event->_userid; ?>' data-eventid="<?php echo $event->_id; ?>"><i class="material-icons">share</i></div>-->
 	      </div>
@@ -1090,11 +1207,11 @@ function FeedSteamImport($feed, $conn, $mutualconn){
 <?php
 }
 
-function DisplayFeedXPIcon($xp, $event){
+function DisplayFeedXPIcon($xp, $event, $special = false){
 	if(sizeof($xp->_playedxp) > 0){
 		?>
 		<div class="feed-action-details-card">
-			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.6em;position: relative;top: 6px;left:-3px;'>					
+			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='<?php if($special){ echo "font-size: 1.3em;background-color:white;border-radius:50%;position: relative;top: 6px;left:-3px;"; }else{ echo "font-size: 1.6em;position: relative;top: 6px;left:-3px;"; } ?>'>
 				<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>						
 			</i>
 		</div>
@@ -1102,7 +1219,7 @@ function DisplayFeedXPIcon($xp, $event){
 	}else if(sizeof($xp->_watchedxp) > 0){
 		?>
 		<div class="feed-action-details-card">
-			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='font-size: 1.6em;position: relative;top: 6px;left:-3px;'>
+			<i class='material-icons tierTextColor<?php echo $event->_tier; ?>' style='<?php if($special){ echo "font-size: 1.3em;background-color:white;border-radius:50%;position: relative;top: 6px;left:-3px;"; }else{ echo "font-size: 1.6em;position: relative;top: 6px;left:-3px;"; } ?>'>
 				<?php if($event->_tier == 1){ echo "sentiment_very_satisfied"; }else if($event->_tier == 2){ echo "sentiment_satisfied"; }else if($event->_tier == 3){ echo "sentiment_neutral"; }else if($event->_tier == 4){ echo "sentiment_dissatisfied"; }else if($event->_tier == 5){ echo "sentiment_very_dissatisfied"; } ?>	
 			</i>
 		</div>
