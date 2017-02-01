@@ -609,7 +609,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	  </div>
 	<?php }else{ ?>
 	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;width:100%;height:150px;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 40%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;width:100%;height:150px;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content" style='width:100%;margin-top:150px;'>
 	      <div class="feed-card-title-special">
