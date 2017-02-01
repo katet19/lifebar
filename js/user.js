@@ -23,6 +23,7 @@ function ShowUserSettings(){
 				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 			});
 			$(".fixed-save-close-modal-btn").on('click', function(){
+				UserSettingsValidation();
 				var windowWidth = $(window).width();
 				HideFocus();
 				$("#gamemini").css({ "right": "-40%" }); 
@@ -30,7 +31,7 @@ function ShowUserSettings(){
 				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 			});
 
-            //AttachUserSettingEvents();
+            AttachUserSettingEvents();
             GAPage('Settings', '/settings');
          },
         error: function(x, t, m) {
@@ -45,17 +46,6 @@ function ShowUserSettings(){
 }
 
 function AttachUserSettingEvents(){
-    $("#SaveUserSettingsSubmitBtn").on('click', function(e){
-    	e.stopPropagation();
-    	UserSettingsValidation();	
-    });
-    $(".tab a").on("click", function(){
-    	$(".settings-active").removeClass("settings-active");
-    	$(this).addClass("settings-active");
-    	var container = $(this).attr("data-id");
-    	$(".user-settings-box").hide();
-    	$("#"+container).show();
-    });
     $('input[type=radio][name=avatargroup]').change(function() {
     	UpdateAvatarPreview();
     });
