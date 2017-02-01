@@ -57,7 +57,7 @@ function DisplayBadgeManagementForUser($userid){
 		if(sizeof($userbadges) > 0){
 			foreach($userbadges as $badge){
 			?>
-				<div class="badge-card z-depth-1">
+				<div class="badge-card">
 					<div class="badge-image-container">
 						<img class="badge-preview" src='http://lifebar.io/Images/Badges/<?php echo $badge->_file; ?>'></img>
 					</div>
@@ -65,14 +65,17 @@ function DisplayBadgeManagementForUser($userid){
 						<div class="badge-name"><?php echo $badge->_title; ?></div>
 						<div class="badge-desc"><?php echo $badge->_description; ?></div>
 						<?php if($badge->_file == $user->_badge){ ?>
-							<div class="btn badge-btn badge-unequip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Unequip</div>
+							<div class="btn-flat badge-btn badge-unequip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Unequip</div>
 						<?php }else{ ?>
-							<div class="btn badge-btn badge-equip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Equip</div>
+							<div class="btn-flat badge-btn badge-equip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Equip</div>
 						<?php } ?>
 					</div>
 				</div>
 			<?php
 			}
+		}else{?>
+			<div style=''>Earn badges by using & exploring Lifebar! <br>Come back here to equip them once they have been earned.</div>
+		<?php
 		}
 		?>
 	</div>
