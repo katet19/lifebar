@@ -73,7 +73,13 @@ function DisplayBadgeManagementForUser($userid){
 				</div>
 			<?php
 			}
-		}else{?>
+		}else{
+			?>
+			<div>
+				<img src='http://lifebar.io/Images/Badges/SBadge.svg' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+				<img src='http://lifebar.io/Images/Badges/alpha.png' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+				<img src='http://lifebar.io/Images/Badges/2dcon2016.png' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+			</div>
 			<div style=''>Earn badges by using & exploring Lifebar! <br>Come back here to equip them once they have been earned.</div>
 		<?php
 		}
