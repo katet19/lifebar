@@ -495,7 +495,7 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
 	    <div class="feed-card-content">
-	      <div class="feed-card-title" style='<?php if(sizeof($xp->_playedxp) > 0){ echo "padding-bottom:30px;"; } ?>'>
+	      <div class="feed-card-title">
 			<div class="feed-card-level-game_title feed-activity-game-link" style='<?php if(!$multiple){ echo "display:none;"; } ?>' data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	  		<?php echo $event->_quote; ?>
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
@@ -609,10 +609,10 @@ function FeedGameXPCard($game, $user, $event, $xp, $agrees, $agreedcount, $multi
 	  </div>
 	<?php }else{ ?>
 	  <div class="feed-horizontal-card z-depth-1"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;width:100%;height:200px;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+	    <a class="feed-card-image waves-effect waves-block" href="/#game/<?php echo $game->_id; ?>/<?php echo urlencode($game->_title); ?>/" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;width:100%;height:150px;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 	    </a>
-	    <div class="feed-card-content" style='width:100%;margin-top:200px;'>
-	      <div class="feed-card-title" style='font-size: 2em;padding-bottom: 60px;padding-top: 30px;'>
+	    <div class="feed-card-content" style='width:100%;margin-top:150px;'>
+	      <div class="feed-card-title-special">
 			<div class="feed-card-level-game_title feed-activity-game-link" style='font-size:0.5em;<?php if(!$multiple){ echo "display:none;"; } ?>' data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 	  		<?php echo $event->_quote; ?>
 	    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 

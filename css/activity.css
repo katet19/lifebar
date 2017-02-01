@@ -416,8 +416,15 @@
 
 .feed-card-title{
 	font-size:1.3em;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   word-wrap: break-word;
+}
+
+.feed-card-title-special{
+  word-wrap: break-word;
+  font-size: 2em;
+  padding-bottom: 60px;
+  padding-top: 30px;
 }
 
 .feed-action-details{
@@ -546,7 +553,6 @@ background-color: transparent !important;
 		margin-left: 110px;
 	}
 	.feed-card-image{
-		height: 150px;
 		width:120px;
 	}
 	.feed-content-col{
@@ -555,7 +561,13 @@ background-color: transparent !important;
 		  top: -25px;
 	}
 	.feed-card-title{
+    padding-bottom: 10px;
 		font-size:0.8em;
+	}
+  .feed-card-title-special{
+		font-size:1.2em;
+    padding-bottom: 40px;
+    padding-top: 20px;
 	}
 	.feed-card-icon-container{
 		top:50px;
