@@ -199,7 +199,7 @@
 
 .lifebar-container{
     position: absolute;
-    width: calc(100% - 250px);
+    width: calc(100% - 400px);
     text-align: left;
 }
 
