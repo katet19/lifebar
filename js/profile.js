@@ -885,14 +885,10 @@ function UnequipBadge(userid){
 	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
 	     type: 'post',
 	     success: function(output) {
- 	     	btn.addClass("badge-equip");
+			btn.addClass("badge-equip");
 	     	btn.removeClass("badge-unequip");
 	     	btn.html("Equip");
-			Toast("Badge Unequipped");
-			if($(".avatar-preview").length > 0){
-				UpdateAvatarBadge("REMOVE");
-			}
-			
+			Toast("Badge Unequipped");			
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
@@ -915,13 +911,14 @@ function EquipBadge(userid){
 	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
 	     type: 'post',
 	     success: function(output) {
+			$(".badge-unequip").each(function(){
+				$(this).removeClass("badge-unequip");
+				$(this).html("Equip");
+			});
  	     	btn.addClass("badge-unequip");
 	     	btn.removeClass("badge-equip");
 	     	btn.html("Unequip");
 			Toast("Badge Equipped");
-			if($(".avatar-preview").length > 0){
-				UpdateAvatarBadge(output);
-			}
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
