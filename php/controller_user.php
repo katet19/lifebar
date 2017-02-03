@@ -36,7 +36,7 @@ function ApplyPromoCode($userid, $promo){
 		while($row = mysqli_fetch_array($result)){
 			if($row['RewardType'] == 'BADGE'){
 				GiveBadgeAccess($userid, $row['Reward']);
-				echo "<div style='font-size:1.2em;font-weight:500;'>Unlocked <i>".$row['Name']."</i> Badge!</div> <div style='color:rgba(0,0,0,0.6);'>Go to Settings > Avatars & Badges to select your new badge.</div>";
+				echo "<div style='font-size:1.2em;font-weight:500;'>Unlocked <i>".$row['Name']."</i> Badge!</div> <div style='color:rgba(0,0,0,0.6);'>Go to Settings > Badge to equip your new badge.</div>";
 				$nothingFound = false;
 			}
 		}
