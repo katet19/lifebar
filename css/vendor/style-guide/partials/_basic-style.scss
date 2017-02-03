@@ -16,27 +16,27 @@ html * {
 }
 
 html {
-    font-size: 62.5%;
+    // font-size: 62.5%;
 }
 
 body {
-    font-size: 1.6rem;
-    font-family: $primary-font;
+    // font-size: 1.6rem;
+    // font-family: $primary-font;
 }
 
 a {
-    text-decoration: none;
+    // text-decoration: none;
 }
 
 img {
-    max-width: 100%;
+    // max-width: 100%;
 }
 
 input,
 textarea,
 select {
-    font-family: $primary-font;
-    font-size: 1.6rem;
+    // font-family: $primary-font;
+    // font-size: 1.6rem;
 }
 
 header {
@@ -290,10 +290,8 @@ section {
     li {
         text-align: center;
         // @include column(.48);
-        margin: 0 4% 1em 0;
-        &:nth-of-type(2n) {
-            margin-right: 0;
-        }
+        width: 10%;
+        display: inline-block;
     }
     .cd-color-swatch {
         position: relative;

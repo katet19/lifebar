@@ -5,7 +5,7 @@ xBackground
 -------------------------------- */
 body {
   /* this is the page background */
-  background-color: #ffffff; }
+  background-color: #ffffff; } 
 
 /* -------------------------------- 
 
@@ -14,7 +14,7 @@ xPatterns
 -------------------------------- */
 .cd-box {
   /* this is the container of various design elements - i.e. the 2 logo of the branding section */
-  border: 1px solid #e6e6e6;
+  border: 1px solid #C5CAE9;
   border-radius: 3px;
   background: #ffffff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -25,47 +25,15 @@ xPatterns
 xNavigation 
 
 -------------------------------- */
-header {
-  background-color: #19191a; }
-
-.cd-logo {
-  /* logo box style */
-  background-color: #5f8ee4;
-  width: 120px; }
-
-.cd-main-nav {
-  /* main navigation background color - full screen on small devices */
-  background: #19191a; }
-  .cd-main-nav li a {
-    color: #ffffff;
-    border-color: #262627; }
-
-.cd-nav-trigger span {
-  /* hamburger menu */
-  background-color: #ffffff; }
-  .cd-nav-trigger span::before, .cd-nav-trigger span::after {
-    /* upper and lower lines */
-    background-color: #ffffff; }
-
-.nav-is-visible .cd-nav-trigger span {
-  /* hide line in the center on mobile when nav is visible */
-  background-color: rgba(255, 255, 255, 0); }
-  .nav-is-visible .cd-nav-trigger span::before, .nav-is-visible .cd-nav-trigger span::after {
-    /* preserve visibility of upper and lower lines - close icon */
-    background-color: white; }
-
-.cd-download {
-  /* download button top-right visible on big devices */
-  background-color: #323234; }
-  .no-touch .cd-download:hover {
-    background-color: #3f3f41; }
-  .cd-download span {
-    /* tooltip */
-    background: #5f8ee4;
-    color: #ffffff; }
-    .cd-download span::before {
-      /* right arrow color */
-      border-color: #5f8ee4; }
+main {
+  width: 90%;
+  max-width: 1125px;
+  margin: 0 auto;
+  margin-left: 200px;
+  padding: 50px 0; }
+  main > h1 {
+    text-align: center;
+    margin: 3em 0; }
 
 /* -------------------------------- 
 
@@ -73,309 +41,7 @@ xPage title
 
 -------------------------------- */
 main > h1 {
-  color: #19191a; }
-
-/* -------------------------------- 
-
-xTypography 
-
--------------------------------- */
-h1,
-h2 {
-  font-family: "Open Sans", sans-serif;
-  color: #19191a; }
-
-h1 {
-  font-size: 2.4rem;
-  font-weight: 300;
-  line-height: 1.2;
-  margin: 0 0 .4em; }
-
-h2 {
-  font-weight: bold;
-  text-transform: uppercase;
-  margin: 1em 0; }
-
-section > h2::before {
-  /* number before each section title */
-  color: silver; }
-
-p {
-  font-size: 1.4rem;
-  line-height: 1.4;
-  color: #58585b; }
-  p a {
-    color: #5f8ee4;
-    text-decoration: underline; }
-
-/* -------------------------------- 
-
-xButtons 
-
--------------------------------- */
-.btn {
-  border: none;
-  box-shadow: none;
-  border-radius: .25em;
-  font-size: 1.4rem;
-  font-family: "Open Sans", sans-serif;
-  color: #ffffff;
-  padding: .6em 2.2em;
-  cursor: pointer;
-  background: #5f8ee4; }
-  .btn:focus {
-    outline: none; }
-  .no-touch .btn:hover {
-    background: #759de8; }
-  .btn.btn-success {
-    background: #6fce72; }
-    .no-touch .btn.btn-success:hover {
-      background: #82d485; }
-  .btn.btn-alert {
-    background: #e4655f; }
-    .no-touch .btn.btn-alert:hover {
-      background: #e87a75; }
-  .btn.btn-outline {
-    color: #5f8ee4;
-    background: transparent;
-    box-shadow: inset 0 0 0 1px #5f8ee4; }
-    .no-touch .btn.btn-outline:hover {
-      color: #ffffff;
-      background: #5f8ee4; }
-
-.cd-buttons .cd-box:nth-of-type(2) span {
-  /* CSS class name color */
-  color: #5f8ee4; }
-
-/* -------------------------------- 
-
-xIcons 
-
--------------------------------- */
-.cd-icons li {
-  /* icons size */
-  width: 32px;
-  height: 32px; }
-
-/* -------------------------------- 
-
-xForm 
-
--------------------------------- */
-input[type=text],
-select {
-  border: 1px solid #e6e6e6;
-  border-radius: .25em;
-  background: #ffffff; }
-  input[type=text]:focus,
-  select:focus {
-    outline: none; }
-
-input[type=text] {
-  padding: .6em 1em;
-  box-shadow: inset 1px 1px rgba(0, 0, 0, 0.03); }
-  input[type=text].success {
-    border-color: #6fce72;
-    box-shadow: 0 0 6px rgba(111, 206, 114, 0.2); }
-  input[type=text].alert {
-    border-color: #e4655f;
-    box-shadow: 0 0 6px rgba(228, 101, 95, 0.2); }
-  input[type=text]:focus {
-    border-color: #5f8ee4;
-    box-shadow: 0 0 6px rgba(95, 142, 228, 0.2); }
-
-input[type=radio],
-input[type=checkbox] {
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0; }
-
-.radio-label,
-.checkbox-label {
-  padding-left: 24px; }
-  .radio-label::before, .radio-label::after,
-  .checkbox-label::before,
-  .checkbox-label::after {
-    /* custom radio and check boxes */
-    content: '';
-    display: block;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 50%; }
-  .radio-label::before,
-  .checkbox-label::before {
-    left: 0;
-    border: 1px solid #e6e6e6;
-    box-shadow: inset 1px 1px rgba(0, 0, 0, 0.03); }
-  .radio-label::after,
-  .checkbox-label::after {
-    left: 3px;
-    background: url("../assets/form/icon-check.svg") no-repeat center center;
-    display: none; }
-
-.radio-label::before {
-  border-radius: 50%; }
-
-.checkbox-label::before {
-  border-radius: 3px; }
-
-input[type=radio]:checked + label::before,
-input[type=checkbox]:checked + label::before {
-  background-color: #19191a;
-  border: none;
-  box-shadow: none; }
-
-input[type=radio]:checked + label::after,
-input[type=checkbox]:checked + label::after {
-  display: block; }
-
-.cd-select::after {
-  /* switcher arrow for select element */
-  content: '';
-  position: absolute;
-  z-index: 1;
-  right: 14px;
-  top: 50%;
-  display: block;
-  width: 16px;
-  height: 16px;
-  background: url("../assets/form/icon-select.svg") no-repeat center center;
-  pointer-events: none; }
-
-select {
-  position: relative;
-  padding: .6em 2em .6em 1em;
-  cursor: pointer; }
-
-/* -------------------------------- 
-
-xBasic style
-
--------------------------------- */
-html * {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
-
-html {
-  font-size: 62.5%; }
-
-body {
-  font-size: 1.6rem;
-  font-family: "Merriweather", serif; }
-
-a {
-  text-decoration: none; }
-
-img {
-  max-width: 100%; }
-
-input,
-textarea,
-select {
-  font-family: "Merriweather", serif;
-  font-size: 1.6rem; }
-
-header {
-  position: fixed;
-  height: 50px;
-  width: 100%;
-  top: 0;
-  left: 0;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  z-index: 10; }
-  header nav {
-    display: inline-block; }
-
-.cd-logo {
-  display: inline-block;
-  height: 100%;
-  position: relative; }
-  .cd-logo img {
-    position: absolute;
-    display: block;
-    top: 50%;
-    left: 50%; }
-
-.cd-nav-trigger {
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 50px;
-  overflow: hidden;
-  white-space: nowrap;
-  color: transparent; }
-  .cd-nav-trigger span {
-    position: absolute;
-    height: 2px;
-    width: 20px;
-    top: 50%;
-    margin-top: -1px;
-    left: 50%;
-    margin-left: -10px; }
-    .cd-nav-trigger span::before, .cd-nav-trigger span::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      /* Force Hardware Acceleration in WebKit */
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      will-change: transform; }
-
-.cd-main-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  padding: 50px 0;
-  text-align: center; }
-  .cd-main-nav li a {
-    display: block;
-    font-size: 1.8rem;
-    padding: 1em 0;
-    border-bottom-width: 1px;
-    border-style: solid; }
-  .cd-main-nav li:first-of-type a {
-    border-top-width: 1px; }
-  @media only screen and (min-width: 1024px) {
-    .cd-main-nav {
-      position: static;
-      display: table;
-      width: auto;
-      height: 80px;
-      background: transparent;
-      padding: 0 2em;
-      text-align: left; }
-      .cd-main-nav li {
-        display: table-cell;
-        vertical-align: middle;
-        padding: 0 1em; }
-      .cd-main-nav li a {
-        display: inline-block;
-        font-size: 1.6rem;
-        padding: .4em .2em;
-        border-bottom: none; }
-      .cd-main-nav li:first-of-type a {
-        border-top: none; } }
-  @media only screen and (min-width: 1600px) {
-    .cd-main-nav {
-      display: none; } }
-
-main {
-  width: 90%;
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 50px 0; }
-  main > h1 {
-    text-align: center;
-    margin: 3em 0; }
+  color: #F50057; }
 
 section {
   margin: 3em 0; }
@@ -425,9 +91,8 @@ section {
 /* xColor section - basic style */
 .cd-colors li {
   text-align: center;
-  margin: 0 4% 1em 0; }
-  .cd-colors li:nth-of-type(2n) {
-    margin-right: 0; }
+  width: 12%;
+  display: inline-block; }
 
 .cd-colors .cd-color-swatch {
   position: relative;
@@ -450,39 +115,116 @@ section {
   padding: .6em 0; }
 
 .cd-colors li:nth-of-type(1) .cd-color-swatch {
-  background: #5f8ee4; }
+  background: #3F51B5; }
   .cd-colors li:nth-of-type(1) .cd-color-swatch::before {
-    background: #759de8; }
+    background: #4d5ec1; }
   .cd-colors li:nth-of-type(1) .cd-color-swatch::after {
-    background: #497fe0; }
+    background: #3849a2; }
 
 .cd-colors li:nth-of-type(2) .cd-color-swatch {
-  background: #19191a; }
+  background: #303F9F; }
   .cd-colors li:nth-of-type(2) .cd-color-swatch::before {
-    background: #262627; }
+    background: #3647b3; }
   .cd-colors li:nth-of-type(2) .cd-color-swatch::after {
-    background: #0d0d0d; }
+    background: #2a378b; }
 
 .cd-colors li:nth-of-type(3) .cd-color-swatch {
-  background: #e4655f; }
+  background: #C5CAE9; }
   .cd-colors li:nth-of-type(3) .cd-color-swatch::before {
-    background: #e87a75; }
+    background: #d7dbf0; }
   .cd-colors li:nth-of-type(3) .cd-color-swatch::after {
-    background: #e05049; }
+    background: #b3b9e2; }
 
 .cd-colors li:nth-of-type(4) .cd-color-swatch {
-  background: #e6e6e6; }
+  background: #ffffff; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::before {
-    background: #f3f3f3; }
+    background: white; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::after {
-    background: #d9d9d9; }
+    background: #f2f2f2; }
 
 .cd-colors li:nth-of-type(5) .cd-color-swatch {
-  background: #ffffff; }
+  background: #212121; }
   .cd-colors li:nth-of-type(5) .cd-color-swatch::before {
-    background: white; }
+    background: #2e2e2e; }
   .cd-colors li:nth-of-type(5) .cd-color-swatch::after {
-    background: #f2f2f2; }
+    background: #141414; }
+
+.cd-colors li:nth-of-type(6) .cd-color-swatch {
+  background: #757575; }
+  .cd-colors li:nth-of-type(6) .cd-color-swatch::before {
+    background: #828282; }
+  .cd-colors li:nth-of-type(6) .cd-color-swatch::after {
+    background: #686868; }
+
+.cd-colors li:nth-of-type(7) .cd-color-swatch {
+  background: #F50057; }
+  .cd-colors li:nth-of-type(7) .cd-color-swatch::before {
+    background: #ff1065; }
+  .cd-colors li:nth-of-type(7) .cd-color-swatch::after {
+    background: #dc004e; }
+
+.cd-colors li:nth-of-type(8) .cd-color-swatch {
+  background: #FF4081; }
+  .cd-colors li:nth-of-type(8) .cd-color-swatch::before {
+    background: #ff5a92; }
+  .cd-colors li:nth-of-type(8) .cd-color-swatch::after {
+    background: #ff2770; }
+
+.cd-colors li:nth-of-type(9) .cd-color-swatch {
+  background: #F44336; }
+  .cd-colors li:nth-of-type(9) .cd-color-swatch::before {
+    background: #f55a4e; }
+  .cd-colors li:nth-of-type(9) .cd-color-swatch::after {
+    background: #f32c1e; }
+
+.cd-colors li:nth-of-type(10) .cd-color-swatch {
+  background: #26A69A; }
+  .cd-colors li:nth-of-type(10) .cd-color-swatch::before {
+    background: #2bbbad; }
+  .cd-colors li:nth-of-type(10) .cd-color-swatch::after {
+    background: #219187; }
+
+.cd-colors li:nth-of-type(11) .cd-color-swatch {
+  background: #2BBBAD; }
+  .cd-colors li:nth-of-type(11) .cd-color-swatch::before {
+    background: #30cfc0; }
+  .cd-colors li:nth-of-type(11) .cd-color-swatch::after {
+    background: #26a69a; }
+
+.cd-colors li:nth-of-type(12) .cd-color-swatch {
+  background: #0A67A3; }
+  .cd-colors li:nth-of-type(12) .cd-color-swatch::before {
+    background: #0b76bb; }
+  .cd-colors li:nth-of-type(12) .cd-color-swatch::after {
+    background: #09588b; }
+
+.cd-colors li:nth-of-type(13) .cd-color-swatch {
+  background: #00B25C; }
+  .cd-colors li:nth-of-type(13) .cd-color-swatch::before {
+    background: #00cc69; }
+  .cd-colors li:nth-of-type(13) .cd-color-swatch::after {
+    background: #00994f; }
+
+.cd-colors li:nth-of-type(14) .cd-color-swatch {
+  background: #FF8E00; }
+  .cd-colors li:nth-of-type(14) .cd-color-swatch::before {
+    background: #ff991a; }
+  .cd-colors li:nth-of-type(14) .cd-color-swatch::after {
+    background: #e68000; }
+
+.cd-colors li:nth-of-type(15) .cd-color-swatch {
+  background: #FF4100; }
+  .cd-colors li:nth-of-type(15) .cd-color-swatch::before {
+    background: #ff541a; }
+  .cd-colors li:nth-of-type(15) .cd-color-swatch::after {
+    background: #e63b00; }
+
+.cd-colors li:nth-of-type(16) .cd-color-swatch {
+  background: #DB0058; }
+  .cd-colors li:nth-of-type(16) .cd-color-swatch::before {
+    background: #f50062; }
+  .cd-colors li:nth-of-type(16) .cd-color-swatch::after {
+    background: #c2004e; }
 
 .cd-typography .cd-box,
 .cd-buttons .cd-box,
@@ -493,7 +235,7 @@ section {
 /* xTypography section - basic style */
 .cd-typography h1::before {
   content: 'Aa - ';
-  color: #5f8ee4; }
+  color: #3F51B5; }
 
 .cd-buttons .cd-box:first-of-type {
   border-bottom-left-radius: 0;
@@ -557,3 +299,121 @@ section {
 
 .no-csstransitions .cd-select::after {
   display: none; }
+
+/* -------------------------------- 
+
+xTypography 
+
+-------------------------------- */
+section > h2::before {
+  /* number before each section title */
+  color: #8e97d4; }
+
+/* -------------------------------- 
+
+xButtons 
+
+-------------------------------- */
+/* -------------------------------- 
+
+xIcons 
+
+-------------------------------- */
+.cd-icons li {
+  /* icons size */
+  width: 32px;
+  height: 32px; }
+
+/* -------------------------------- 
+
+xForm 
+
+-------------------------------- */
+input[type=text],
+select {
+  border: 1px solid #C5CAE9;
+  border-radius: .25em;
+  background: #ffffff; }
+  input[type=text]:focus,
+  select:focus {
+    outline: none; }
+
+input[type=text] {
+  padding: .6em 1em;
+  box-shadow: inset 1px 1px rgba(0, 0, 0, 0.03); }
+  input[type=text].success {
+    border-color: #6fce72;
+    box-shadow: 0 0 6px rgba(111, 206, 114, 0.2); }
+  input[type=text].alert {
+    border-color: #F44336;
+    box-shadow: 0 0 6px rgba(244, 67, 54, 0.2); }
+  input[type=text]:focus {
+    border-color: #3F51B5;
+    box-shadow: 0 0 6px rgba(63, 81, 181, 0.2); }
+
+input[type=radio],
+input[type=checkbox] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0; }
+
+.radio-label,
+.checkbox-label {
+  padding-left: 24px; }
+  .radio-label::before, .radio-label::after,
+  .checkbox-label::before,
+  .checkbox-label::after {
+    /* custom radio and check boxes */
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%; }
+  .radio-label::before,
+  .checkbox-label::before {
+    left: 0;
+    border: 1px solid #C5CAE9;
+    box-shadow: inset 1px 1px rgba(0, 0, 0, 0.03); }
+  .radio-label::after,
+  .checkbox-label::after {
+    left: 3px;
+    background: url("../assets/form/icon-check.svg") no-repeat center center;
+    display: none; }
+
+.radio-label::before {
+  border-radius: 50%; }
+
+.checkbox-label::before {
+  border-radius: 3px; }
+
+input[type=radio]:checked + label::before,
+input[type=checkbox]:checked + label::before {
+  background-color: #F50057;
+  border: none;
+  box-shadow: none; }
+
+input[type=radio]:checked + label::after,
+input[type=checkbox]:checked + label::after {
+  display: block; }
+
+.cd-select::after {
+  /* switcher arrow for select element */
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  top: 50%;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: url("../assets/form/icon-select.svg") no-repeat center center;
+  pointer-events: none; }
+
+select {
+  position: relative;
+  padding: .6em 2em .6em 1em;
+  cursor: pointer; }
