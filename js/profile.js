@@ -4,16 +4,15 @@ function ShowUserProfile(id, mine, browserNav){
 
 function ShowUserContent(userid, mine, browserNav){
 	var windowWidth = $(window).width();
-    $("#profile").css({"display":"inline-block", "left": windowWidth});
+    $("#profile").css({"display":"inline-block", "right": "-75%"});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
-	$('body').css({'overflow-y':'hidden'});
-	if($("#profile").hasClass("outerContainer-slide-out"))
-		$("#profile.outerContainer-slide-out").css({ "left": "225px" });
-	else
-    	$("#profile.outerContainer").css({ "left": 0 });
+	SCROLL_POS = $(window).scrollTop();
+	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
+	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("#profile.outerContainer").css({ "right": 0 });
 
   	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
@@ -49,10 +48,11 @@ function ShowUserContent(userid, mine, browserNav){
 }
 
 function AttachProfileEvents(userid){
-	$(".fixed-close-modal-btn").on('click', function(){
-		var windowWidth = $(window).width();
-		$("#profile").css({ "left": windowWidth }); 
-		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').css({'overflow-y':'scroll'}); }, 300);
+	$(".fixed-close-modal-btn, .lean-overlay").unbind();
+	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+		$("#profile").css({ "right": "-75%" }); 
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 	});
  	$(".userprofile-card-avatar").on("click", function(e){
   		e.stopPropagation();
