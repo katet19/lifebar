@@ -93,6 +93,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <script type="text/javascript" src="../js/collection.js"></script>
 <script type="text/javascript" src="../js/import.js"></script>
 <script type="text/javascript" src="../js/onboarding.js"></script>
+<script type="text/javascript" src="../js/ranking.js"></script>
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",

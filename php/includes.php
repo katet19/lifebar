@@ -54,6 +54,7 @@ require_once 'controller_user.php';
 require_once 'controller_email.php';
 require_once 'controller_discover.php';
 require_once 'controller_daily.php';
+require_once 'controller_ranking.php';
 //Errors
 require_once 'error_handler.php';
 set_error_handler('customError', E_ERROR | E_PARSE | E_WARNING); 

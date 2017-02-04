@@ -16,6 +16,7 @@
 		CollectionServices();
 		OnboardingServices();
 		FormServices();
+		RankingService();
 	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
@@ -593,6 +594,11 @@
 		}
 		if($_POST['action'] == 'RemoveBookmark' && isset($_POST['gameid']) && $_SESSION['logged-in']->_id > 0){
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
+		}
+	}
+	function RankingService(){
+		if($_POST['action'] == 'DisplayRanking' && $_SESSION['logged-in']->_id > 0){
+			DisplayRanking($_SESSION['logged-in']->_id);
 		}
 	}
 	function UserServices(){
