@@ -260,7 +260,7 @@ function GetSuggestedPersonalities($mysqli, $userid){
 	$users = array();
 	$count = array();
 	$date = date('Y-m-d', strtotime("now -90 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` and users.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` and users.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 8";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -294,7 +294,7 @@ function GetSuggestedMembers($mysqli, $userid){
 
 function GetSuggestedWatch($mysqli, $userid){
 	$videos = array();
-	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,6";
+	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,12";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				unset($video);

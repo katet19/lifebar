@@ -560,9 +560,7 @@ function ManageXPRewards(output){
 }
 
 function GameCardAction(action, gameid){
-	if(action == "more" || action == "bookmark"){
-
-	}else if(action == "xp"){
+	if(action == "xp"){
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
@@ -571,7 +569,6 @@ function GameCardAction(action, gameid){
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
 		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
 
-		
 		$.ajax({ url: '../php/webService.php',
 			data: {action: "ShowXPModal", gameid: gameid },
 			type: 'post',
@@ -947,17 +944,67 @@ function DisplayUserDetails(userid, username){
 function AttachWatchFromXP(){
 	$(".watchBtn").on("click", function(e){
  		e.stopPropagation();
-		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
-		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
+		SCROLL_POS = $(window).scrollTop();
+		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
+		$("#gamemini.outerContainer").css({ "right": "0" });
+		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
+		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+
   		var gameid = $(this).attr("data-gameid");
   		var url = $(this).attr("data-url");
  		$.ajax({ url: '../php/webService.php',
 	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
 	     type: 'post',
 	     success: function(output) {
- 			$("#BattleProgess").html(output); 
- 			$(".myxp-video-goto-full").hide();
- 			AttachActivityVideoEvents();
+			$("#gameminiInnerContainer").html(output);
+			$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
+			$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+				var windowWidth = $(window).width();
+				HideFocus();
+				$("#gamemini").css({ "right": "-40%" }); 
+				$(".lean-overlay").each(function(){ $(this).remove(); } );
+				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+			});
+			$(".modal-xp-emoji-icon").on('click', function(){
+				$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+				$(this).addClass("modal-xp-emoji-icon-active");
+				ToggleSaveButtonPlayingNow($(this).parent().parent().parent());
+			});
+			$(".myxp-quote").on('keyup', function(){
+				ToggleSaveButtonPlayingNow($(this).parent().parent());
+			});
+			$(".save-watched-xp").on('click', function(){
+				if(!$(this).hasClass("disabled")){
+					var form = $(this).parent();
+					var gameid = form.attr("data-gameid");
+					var quote = form.find(".myxp-quote").val();
+					var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+					var watchedType = form.attr("data-length");
+					var url = form.attr("data-url");
+					var year = form.attr("data-year");
+					var action = "SaveWatchedExperience";
+					$(this).removeClass("save-btn");
+					$(this).html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>save</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Saving</span>");
+					$.ajax({ url: '../php/webService.php',
+						data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+						type: 'post',
+						success: function(output) {
+							ManageXPRewards(output);
+							form.find(".save-watched-xp").html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>cloud_done</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Details Saved!</span>");
+						},
+						error: function(x, t, m) {
+							if(t==="timeout") {
+								ToastError("Server Timeout");
+							} else {
+								ToastError(t);
+							}
+						},
+						timeout:45000
+					});
+				}
+			});
 	     },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {

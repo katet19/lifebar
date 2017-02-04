@@ -304,8 +304,9 @@ function NormalizeVideoURLs($url){
 		}
 	}else if(strpos($url , 'youtube.com') !== false || strpos($url , 'youtu.be') !== false){
 			$vurl = "https://www.youtube.com/embed/";
+			$url = str_replace("watch?v=","",$url);
 			$vidArray = explode("/", $url);
-			$vurl = $vurl.end(str_replace("watch?v=","",$vidArray));
+			$vurl = $vurl.end($vidArray);
 	}else if(strpos($video['URL'], 'gamespot.com') !== false){
 			$vurl = "http://www.gamespot.com/videos/embed/";
 			$vidArray = explode("-", $video['URL']);

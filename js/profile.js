@@ -898,6 +898,7 @@ function AttachRemoveBadge(userid) {
     });
 }
 
+<<<<<<< HEAD
 function UnequipBadge(userid) {
     $(".badge-unequip").unbind();
     $(".badge-unequip").on("click", function() {
@@ -957,6 +958,62 @@ function EquipBadge(userid) {
             timeout: 45000
         });
     });
+=======
+function UnequipBadge(userid){
+	$(".badge-unequip").unbind();
+	$(".badge-unequip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+			btn.addClass("badge-equip");
+	     	btn.removeClass("badge-unequip");
+	     	btn.html("Equip");
+			Toast("Badge Unequipped");			
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function EquipBadge(userid){
+	$(".badge-equip").unbind();
+	$(".badge-equip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+			$(".badge-unequip").each(function(){
+				$(this).removeClass("badge-unequip");
+				$(this).html("Equip");
+			});
+ 	     	btn.addClass("badge-unequip");
+	     	btn.removeClass("badge-equip");
+	     	btn.html("Unequip");
+			Toast("Badge Equipped");
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+>>>>>>> Akuma
 }
 
 function FollowUserFromFab(followid, name) {

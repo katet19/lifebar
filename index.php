@@ -150,7 +150,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	<div id="settings" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
 		<div id="settingsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>
 	</div>
-	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 110px;position: absolute;  width: 100%;  z-index: 3;">
+	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;">
 		<div id="adminInnerContainer" class="innerContainer" style="min-height:100%;"></div>
 	</div>
 	<div id="landing" class="col s12 outerContainer outerContainer-slide-out" style="padding:0 !important;display:none;left: 0px;bottom: 0px;right: 0px;top: 0px;position: absolute;margin-left: 0px !important;width: 100%;z-index: 99;width: 100% !important;">
