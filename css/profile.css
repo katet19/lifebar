@@ -1478,7 +1478,7 @@
 }
 
 .user-avatar:hover{
-	border: 2px solid #F50057;
+	opacity: 0.8;
 }
 
 .userprofile-discover-card .card-content .card-title{
