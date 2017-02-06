@@ -81,4 +81,5 @@ require_once 'view_xp.php';
 require_once 'view_profile.php';
 require_once 'view_onboarding.php';
 require_once 'view_daily.php';
+require_once 'view_ranking.php';
 ?>
