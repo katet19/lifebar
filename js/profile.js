@@ -1,5 +1,6 @@
 function ShowUserProfile(id, mine, browserNav){
-	ShowUserContent(id,mine);
+	if(!$("#profile").is(":visible"))
+		ShowUserContent(id,mine);
 }
 
 function ShowUserContent(userid, mine, browserNav){
@@ -19,22 +20,9 @@ function ShowUserContent(userid, mine, browserNav){
      data: {action: "DisplayWeave", userid: userid },
      type: 'post',
      success: function(output) {
-     			$("#profileInnerContainer").html(output);
-      			Waves.displayEffect();
-  	 			var name = $("#profileContentContainer").attr("data-name");
-      			DisplayCriticGraph();
-      			DisplayLifeTimeChart();
-      			DisplaySkillsChart();
-      			AttachProfileEvents(userid);
-  				AttachFabHoverEvent();
-				AttachFloatingIconWeaveButtonEvents();
-				if(browserNav)
-					UpdateBrowserHash("profile/"+userid+"/"+name);
-					
-  				if(!mine)
-  					GAPage('Profile', '/profile/'+name);
-				else
-  					GAPage('Profile', '/profile/personal/'+name);
+			$("#profileInnerContainer").html(output);
+			Waves.displayEffect();
+			AttachShowUserActivityEvents();
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -1169,48 +1157,48 @@ function ShowUserActivity(userid){
 }
 
 function AttachShowUserActivityEvents(){
-		 $(".user-discover-card").on("click", function(e){
-		  	e.stopPropagation();
-		 	ShowUserProfile($(this).attr("data-id"));
-		 });
-	 	 $(".feed-avatar, .user-avatar").on("click", function(e){
-		  	e.stopPropagation();
-		 	ShowUserProfile($(this).attr("data-id"));
-		 });
-		 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
-		 	e.stopPropagation(); 
-		 	ShowGame($(this).attr("data-gbid"), $("#activity"));
-		 })
-		 $(".feed-card-image").on("click", function(e){
-		 	e.stopPropagation(); 
-		 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
-		 })
-		 AttachAgreesFromActivity();
-		 AttachSecondaryEvents();
-		 $(window).unbind("scroll");
-		 $(window).scroll(function(){
-		 	if(isScrolledIntoView($("#feed-endless-loader"))){
-		 		if($("#feed-endless-loader").html() == "")
-	      			EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
-		 	}
-	     }); 
+		$(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
+		$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+			$("#profile").css({ "right": "-75%" }); 
+			$(".lean-overlay").each(function(){ $(this).remove(); } );
+			$(".feed-avatar, .user-avatar").on("click", function(e){
+				e.stopPropagation();
+				ShowUserProfile($(this).attr("data-id"));
+			});
+			setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+		});
+		AttachAgreesFromActivity();
+		$("#profileInnerContainer").unbind("scroll");
+		$("#profileInnerContainer").find(".feed-avatar-col").css({"opacity":"0"});
+		$("#profileInnerContainer").find(".game-discover-card").css({"height":"200px"});
+		$("#profileInnerContainer").find(".game-discover-card .card-content").each(function(){
+			if($(this).parent().height() != 165)
+				$(this).hide();
+		});
+		$("#profileInnerContainer").find(".watchBtn").hide();
+		$("#profileInnerContainer").scroll(function(){
+		if(isScrolledIntoView($("#profileInnerContainer").find("#feed-endless-loader"))){
+			if($("#profileInnerContainer").find("#feed-endless-loader").html() == "")
+				EndlessUserAcitivtyLoader($("#profileInnerContainer").find(".activity-top-level").attr("data-id"));
+		}
+		}); 
 }
 
 function EndlessUserAcitivtyLoader(userid){
-	ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
-	$("#feed-endless-loader").append("<br><br><br>");
-	var page = $("#feed-endless-loader").attr("data-page");
-	var date = $("#feed-endless-loader").attr("data-date");
-	var filter = $("#feed-endless-loader").attr("data-filter");
+	ShowLoader($("#profileInnerContainer").find("#feed-endless-loader"), 'big', "<br><br><br>");
+	$("#profileInnerContainer").find("#feed-endless-loader").append("<br><br><br>");
+	var page = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page");
+	var date = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date");
+	var filter = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-filter");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
      type: 'post',
      success: function(output) {
-		$("#feed-endless-loader").before(output);
-		$("#feed-endless-loader").html("");
-		$("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
-		var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
-		$("#feed-endless-loader").attr("data-date", lastdate);
+		$("#profileInnerContainer").find("#feed-endless-loader").before(output);
+		$("#profileInnerContainer").find("#feed-endless-loader").html("");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+		var lastdate = $("#profileInnerContainer").find("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-date", lastdate);
 		AttachShowUserActivityEvents(userid);
      },
         error: function(x, t, m) {

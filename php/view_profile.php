@@ -3,10 +3,15 @@ function DisplayWeave($userid){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($userid);
-	if($user->_security == "Journalist")
+	/*if($user->_security == "Journalist")
 		DisplayCriticWeave($userid, $user, $conn, $mutualconn);
 	else if($user->_id > 0)
-		DisplayUserWeave($userid, $user, $conn, $mutualconn);
+		DisplayUserWeave($userid, $user, $conn, $mutualconn);*/
+	?>
+	<div class="activity-top-level" data-id='<?php echo $user->_id; ?>' >
+		<?php DisplayMainActivity($userid, "My Activity"); ?>
+	</div>
+	<?php
 }
 
 function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
