@@ -3,15 +3,27 @@ function DisplayWeave($userid){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($userid);
-	/*if($user->_security == "Journalist")
-		DisplayCriticWeave($userid, $user, $conn, $mutualconn);
-	else if($user->_id > 0)
-		DisplayUserWeave($userid, $user, $conn, $mutualconn);*/
-	?>
-	<div class="activity-top-level" data-id='<?php echo $user->_id; ?>' >
-		<?php DisplayMainActivity($userid, "My Activity"); ?>
+	DisplayUserHeader($user);
+}
+
+function DisplayUserHeader($user){ ?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+					<?php DisplayLifeBarForUser($user); ?>
+				</div>
+			</div>	
+			<div class="modal-content-container">
+				<div class="activity-top-level" data-id='<?php echo $user->_id; ?>' >
+					<?php DisplayMainActivity($userid, "My Activity"); ?>
+				</div>
+			</div>		
+		</div>
 	</div>
-	<?php
+<?php
 }
 
 function DisplayCriticWeave($userid, $user, $conn, $mutualconn){

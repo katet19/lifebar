@@ -20,7 +20,8 @@ function DisplayHeaderNavigation(){ ?>
 			</div>
 		    <div class="col navigation-col navigation-lifebar navigation-lifebar-slide-out">
 				<?php if($_SESSION['logged-in'] != null){
-				     DisplayLifeBarForUser();
+					$user = $_SESSION['logged-in'];
+				     DisplayLifeBarForUser($user);
 				 }?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
@@ -44,8 +45,7 @@ function DisplayHeaderNavigation(){ ?>
 	</div>
 <?php }
 
-function DisplayLifebarForUser(){
-	$user = $_SESSION['logged-in'];
+function DisplayLifebarForUser($user){
 	$total = $user->_weave->_lifebarXP;
 	$currLevel = GetCurrentLevel($total);
 	$minmax = GetMinMaxLevel($currLevel);
