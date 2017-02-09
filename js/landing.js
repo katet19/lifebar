@@ -1,5 +1,6 @@
 function ShowLanding(){
 	var windowWidth = $(window).width();
+	var urlparam = window.location.search;
     $("#landing").css({"display":"inline-block", "left": -windowWidth});
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #navigation-header").css({"display":"none"});
     $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
@@ -7,13 +8,14 @@ function ShowLanding(){
 	$("#landing").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 		ShowLoader($("#landingInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
-	     data: {action: "ShowLanding" },
+	     data: {action: "ShowLanding", param: urlparam },
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
 	 		UpdateBrowserHash("landing");
  			$(".indicator").css({"display":"none"});
-			$(".active").removeClass("active");
+			if(urlparam != "?autogenerate")
+				$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
 			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); if($(window).width() > 599){ $("#username").focus(); } });
 			AttachSignUpEvents();

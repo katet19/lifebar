@@ -682,7 +682,7 @@
 			SubmitPWReset($_POST['key'], $_POST['password']);
 		
 		if($_POST['action'] == 'ShowLanding'){
-			ShowLanding();
+			ShowLanding($_POST['param']);
 		}
 		if($_POST['action'] == 'ThirdPartyLogin'){
 			RegisterThirdPartyUser($_POST['username'], $_POST['email'], $_POST['first'], $_POST['last'], $_POST['image'], $_POST['thirdpartyID'], $_POST['whoAmI']);
