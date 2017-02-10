@@ -112,10 +112,11 @@
 }
 
 .critic-disclaimer{
-    font-size: 1.1em;
-    padding: 5px 0 25px !important;
     text-align: center;
-    font-weight: 500;
+    font-size: 0.5em;
+    font-weight: 400;
+    position: absolute;
+    bottom: -7px;
 }
 
 /*
