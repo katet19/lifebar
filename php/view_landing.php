@@ -1,5 +1,5 @@
 <?php
-	function ShowLanding(){ ?>
+	function ShowLanding($param){ ?>
   <div style='position:fixed;top:0;left:0;right:0;bottom:0;z-index: -1;background: url(http://i.giphy.com/2zakdpTkRX5YI.gif) no-repeat center center fixed;background-size: cover;'>
   </div>
   <div class="row">
@@ -14,7 +14,7 @@
   </div>
   <div class='row' style='margin:0;'>
     <div class="col s12">
-      <?php DisplayLandingSignup(); ?>
+      <?php DisplayLandingSignup($param); ?>
     </div>
   </div>
 <?php }

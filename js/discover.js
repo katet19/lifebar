@@ -498,8 +498,61 @@ function AttachWatchedDiscoverXP(){
 				type: 'post',
 				success: function(output) {
 					$(".daily-watch-xp-entry").html(output);
-					$(".myxp-video-goto-full").hide();
-					AttachActivityVideoEvents();
+					$(".modal-xp-emoji-icon").on('click', function(){
+						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+						$(this).addClass("modal-xp-emoji-icon-active");
+						ToggleSaveButtonPlayingNow($(this).parent().parent().parent());
+					});
+					$(".myxp-quote").on('keyup', function(){
+						ToggleSaveButtonPlayingNow($(this).parent().parent());
+					});
+					$(".save-watched-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var form = $(this).parent();
+							var gameid = form.attr("data-gameid");
+							var quote = form.find(".myxp-quote").val();
+							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+							var watchedType = form.attr("data-length");
+							var url = form.attr("data-url");
+							var year = form.attr("data-year");
+							var action = "SaveWatchedExperience";
+							$(this).removeClass("save-btn");
+							$(this).html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>save</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Saving</span>");
+							$.ajax({ url: '../php/webService.php',
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+									form.find(".save-watched-xp").html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>cloud_done</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Details Saved!</span>");
+									setTimeout(function(){ 
+										$(".daily-watch-title").show();
+										$(".daily-watch-xp-entry").hide();
+										$(".daily-watch-xp-entry").html("");
+										var next = xpElement.parent().next();
+										//xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+										//xpElement.css({"background-color":"#F50057"});
+										AttachWatchedDiscoverXP();
+										setTimeout(function(){ 
+											var next = xpElement.parent().next();
+											xpElement.parent().css({"opacity":"0"});
+											setTimeout(function(){ 
+												xpElement.parent().remove(); 
+												next.click();
+											}, 300);
+										}, 500);
+									 }, 1000);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
+						}
+					});
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
 					xpElement.css({"background-color":"#757575"});
 					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
@@ -524,6 +577,16 @@ function AttachWatchedDiscoverXP(){
 			});
 		}
  	});
+}
+
+function ToggleSaveButtonPlayingNow(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var summary = form.find(".myxp-quote").val();
+	if(emoji != undefined && summary != "" && summary != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
 }
 
 function DisplayGraphs(){

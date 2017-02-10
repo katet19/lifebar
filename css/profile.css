@@ -112,10 +112,11 @@
 }
 
 .critic-disclaimer{
-    font-size: 1.1em;
-    padding: 5px 0 25px !important;
     text-align: center;
-    font-weight: 500;
+    font-size: 0.5em;
+    font-weight: 400;
+    position: absolute;
+    bottom: -7px;
 }
 
 /*
@@ -198,9 +199,8 @@
 }
 
 .lifebar-container{
-    position: relative;
-    width: -webkit-calc(100% - 200px);
-    width: calc(100% - 200px);
+    position: absolute;
+    width: calc(100% - 400px);
     text-align: left;
 }
 
@@ -1479,7 +1479,7 @@
 }
 
 .user-avatar:hover{
-	border: 2px solid #F50057;
+	opacity: 0.8;
 }
 
 .userprofile-discover-card .card-content .card-title{
@@ -1698,6 +1698,9 @@
 }
 
 @media only screen and (max-width : 600px) {
+    .lifebar-username-min{
+        width:100%;
+    }
 	.mylibrary-vert-line, .mylibrary-divider-bullet{
 		display:none;
 	}
@@ -1732,6 +1735,11 @@
 		height: 25px;
 		top: 28px;
 	}
+    .lifebar-container{
+        position: absolute;
+        width: calc(100% - 210px);
+        text-align: left;
+    }
 	.lifebar-container-circle{
 		width:90%;
 		margin:20px 5% 0 0;

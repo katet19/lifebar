@@ -807,8 +807,8 @@ function AttachUnmappedManagerEvents(){
 
 function AttachPendingReviewsEvents(){
 	$("select").material_select();
-	var h =  $("#adminInnerContainer").height();
-	$("#admin-review-iframe").css({'height': h });
+	//var h =  $("#adminInnerContainer").height();
+	//$("#admin-review-iframe").css({'height': h });
 	$('.admin-review-search-btn').on('click', function(e){ 
 		e.stopPropagation(); 
 		SearchForGame($(this).parent().parent().find(".admin-review-search").val(), $(this).parent().parent());

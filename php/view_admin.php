@@ -15,7 +15,7 @@ function DisplayAdmin($userid){
 					XP Management
 				</div>
 			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-editor-mode-comment" style='margin: 0 5px;'></i> Pending Reviews <div class="admin-counter"><?php echo $admindata[7]; ?></div></span>
@@ -26,7 +26,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-editor-mode-comment" style='margin: 0 5px;'></i> IGN Archive Reviews <div class="admin-counter"><?php echo number_format(IGNRemaining()); ?> left</div></span>
@@ -38,7 +38,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="cyan-text text-darken-2">
 		          	<div style='  font-size: 3em;'><?php echo number_format($admindata[0]); ?></div>
@@ -56,7 +56,7 @@ function DisplayAdmin($userid){
 					Game Management
 				</div>
 			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 					<div class="card admin-card">
 						<div class="card-content">
 							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Backlog Game Updater</span>
@@ -66,7 +66,7 @@ function DisplayAdmin($userid){
 						</div>
 					</div>
 			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 					<div class="card admin-card">
 						<div class="card-content">
 							<span class="card-title"><i class="mdi-action-cached" style='margin: 0 5px;'></i> Search Cache</span>
@@ -76,7 +76,7 @@ function DisplayAdmin($userid){
 						</div>
 					</div>
 			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-action-question-answer" style='margin: 0 5px;'></i> Daily Reflection Schedule</span>
@@ -86,7 +86,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	            	<?php $reportedTotals = GetImportReported(); ?>
@@ -98,7 +98,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="cyan-text text-darken-2">
 		          	<div style='  font-size: 3em;'><?php echo number_format($gamedata[0]); ?></div>
@@ -117,7 +117,7 @@ function DisplayAdmin($userid){
 					User Management
 				</div>
 			</div>
-			<div class="col s12 m6 l4">
+			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-communication-email" style='margin: 0 5px;'></i> Export Email List</span>
@@ -127,7 +127,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-  			<div class="col s12 m6 l4">
+  			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-action-assignment-ind" style='margin: 0 5px;'></i> Calculate User Weave</span>
@@ -137,7 +137,7 @@ function DisplayAdmin($userid){
 	            </div>
 	          </div>
   			</div>
-  			<div class="col s6 m3 l2">
+  			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="deep-purple-text text-darken-1">
 		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[0]); ?></div>
@@ -145,7 +145,7 @@ function DisplayAdmin($userid){
 		          </div>
 		        </div>
 			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="deep-purple-text text-darken-1">
 		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[1]); ?></div>
@@ -153,7 +153,7 @@ function DisplayAdmin($userid){
 		          </div>
 		        </div>
 			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="deep-purple-text text-darken-1">
 		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[4]); ?></div>
@@ -161,7 +161,7 @@ function DisplayAdmin($userid){
 		          </div>
 		        </div>
 			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="deep-purple-text text-darken-1">
 		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[3]); ?></div>
@@ -169,7 +169,7 @@ function DisplayAdmin($userid){
 		          </div>
 		        </div>
 			</div>
-			<div class="col s6 m3 l2">
+			<div class="col s6">
 		        <div class="card-panel admin-card" style='height: 140px;'>
 		          <div class="deep-purple-text text-darken-1">
 		          	<div style='  font-size: 3em;'><?php echo number_format($userdata[2]); ?></div>
@@ -189,7 +189,7 @@ function DisplayAdmin($userid){
 					Database Management
 				</div>
 			</div>
-  			<div class="col s12 m6 l4">
+  			<div class="col s12 m6">
 	          <div class="card admin-card">
 	            <div class="card-content">
 	              <span class="card-title"><i class="mdi-device-data-usage" style='margin: 0 5px;'></i> See Database Threads</span>
@@ -242,7 +242,7 @@ function DisplayPendingReviews(){
 						        </ul>
 					        </div>
 					        <div class="col s12 m3 l2">
-					        	<div class='btn admin-review-search-btn'><i class="mdi-action-search small"></i></div>
+					        	<div class='btn admin-review-search-btn'><i class="material-icons">search</i></div>
 					        </div>
 			        	</div>
 				        <div class="row">
@@ -306,7 +306,7 @@ function DisplayPendingReviews(){
 	</div>
 	<div class="col s12 m6 admin-review-iframe-container">
 		<div class="row">
-			<div class="card admin-card" style='  position: fixed;  top: 125px;  bottom: 10px;  right: 0;  left: 50%;'>
+			<div class="card admin-card" style='position: fixed;top: 80px;bottom: 10px;right: 10px;left: calc(45% + 225px) !important;'>
 				<iframe id="admin-review-iframe" src="" height='100%' width='100%' style='width:100%;height:100%;'></iframe>
 			</div>
 		</div>

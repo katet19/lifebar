@@ -58,6 +58,10 @@ function ShowSideLoader(){
 	$("#sideContainer").html("<div class='progress progress-side-bar'><div class='indeterminate'></div></div>");
 }
 
+function ShowSpecialLoadingMessage(message){
+	ShowPopUp("<div class='progress progress-side-bar'><div class='indeterminate'></div></div><div>" + message + "</div>");
+}
+
 function Toast(msg){
 	Materialize.toast(msg, 5000);
 }

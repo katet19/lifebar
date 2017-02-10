@@ -20,7 +20,8 @@ function DisplayHeaderNavigation(){ ?>
 			</div>
 		    <div class="col navigation-col navigation-lifebar navigation-lifebar-slide-out">
 				<?php if($_SESSION['logged-in'] != null){
-				     DisplayLifeBarForUser();
+					$user = $_SESSION['logged-in'];
+				     DisplayLifeBarForUser($user);
 				 }?>
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<div class="userContainer" data-id="<?php echo $_SESSION['logged-in']->_id; ?>" data-username="<?php echo $_SESSION['logged-in']->_username; ?>" data-email="<?php echo $_SESSION['logged-in']->_email; ?>">
@@ -44,8 +45,7 @@ function DisplayHeaderNavigation(){ ?>
 	</div>
 <?php }
 
-function DisplayLifebarForUser(){
-	$user = $_SESSION['logged-in'];
+function DisplayLifebarForUser($user){
 	$total = $user->_weave->_lifebarXP;
 	$currLevel = GetCurrentLevel($total);
 	$minmax = GetMinMaxLevel($currLevel);
@@ -76,14 +76,14 @@ function DisplaySideDrawer(){ ?>
 	<ul id="nav-slide-out" class="nav-display-slide-out">
 		<li class="nav-slide-out-selected-page" id="nav-discover"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
 		<li id="nav-activity"><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
+		<li id="nav-ranking"><a href="#ranking"><i class="material-icons">swap_vert</i> Rank</a></li>
 		<!--<li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>-->
 		<!--<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>-->
-		
 			<div class="divider"></div>
 			<li id="nav-notifications" style='position:relative;'><a href="#notifications"><i class="material-icons">notifications_none</i> Notifications</a></li>
-			<li><a href="#!" class="settingsButton"><i class="material-icons">settings</i> Settings</a></li>
+			<li id="nav-settings"><a href="#settings"><i class="material-icons">settings</i> Settings</a></li>
 			<?php if($_SESSION['logged-in']->_security == "Admin" || $_SESSION['logged-in']->_security == "AdminMenuOnly"){ ?>
-				<li id="nav-admin"><a href="#!" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
+				<li id="nav-admin"><a href="#admin" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 			<?php } ?>
 			<div class="divider"></div>
 			<li><a href="#!" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>

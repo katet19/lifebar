@@ -1,5 +1,6 @@
 function ShowLanding(){
 	var windowWidth = $(window).width();
+	var urlparam = window.location.search;
     $("#landing").css({"display":"inline-block", "left": -windowWidth});
     $("#activity, #discover, #analytics, #admin, #notifications, #user, #navigation-header").css({"display":"none"});
     $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
@@ -7,13 +8,14 @@ function ShowLanding(){
 	$("#landing").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 		ShowLoader($("#landingInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
-	     data: {action: "ShowLanding" },
+	     data: {action: "ShowLanding", param: urlparam },
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
 	 		UpdateBrowserHash("landing");
  			$(".indicator").css({"display":"none"});
-			$(".active").removeClass("active");
+			if(urlparam != "?autogenerate")
+				$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
 			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); if($(window).width() > 599){ $("#username").focus(); } });
 			AttachSignUpEvents();
@@ -74,7 +76,7 @@ function AttachSignUpLandingEvents(){
 }
 
 function SignupFromLanding(username, password, email, first, last){
-	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;background-color: #3F51B5;color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>build</i> Creating new user</div>");
+	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;color: #3F51B5;background-color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>build</i> Creating new user</div>");
 	$("#SignupSubmitBtnLanding").hide();
 	$("#landing-sign-up").find(".validation").show();
 	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');

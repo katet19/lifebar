@@ -9,11 +9,11 @@ function AccountDetails(){
 	<div class="row onboarding-account-step" style='margin-bottom:50px;'>
 		<div class="col s10 offset-s1" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Welcome to Lifebar <span style='color:#3F51B5'><?php echo $_SESSION['logged-in']->_username; ?></span>!</div>
-			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:500;'>capture</span> and <span style='font-weight:500;'>celebrate</span> your life playing & watching video games!</div>
+			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:bold;color:#303F9F;'>capture</span> and <span style='font-weight:bold;color:#303F9F;'>celebrate</span> your life playing & watching video games!</div>
 			<!--<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> -->
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">visibility</i> Add your watched experiences, whether it's your thoughts on the latest Mario 64 speed run or the most interesting E3 reveals you can quickly save and share with others</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">gamepad</i>Journal your time playing a game and capture your thoughts and feelings as you play from start to finish.</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank intersting sub-lists based on year, genre & platform</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank interesting sub-lists based on year, genre & platform</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">whatshot</i> Follow your favorite gaming personalities & friends to create a personalized gaming activity feed</div>
 			<div class='onboarding-sub-welcome' style='margin-top:10px;'>Tell us a little bit about your yourself and we'll help you get started</div>
 		</div>
@@ -67,7 +67,7 @@ function SocialDetails(){
 		?>
 		<div class="col s10 offset-s1 onboarding-social-step">
 			<div class='onboarding-big-welcome'>Follow friends and personalities</div>
-			<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:500;'>insight</span> from fellow gamers!</div>
+			<div class='onboarding-sub-welcome'>Light up your activity feed with <span style='font-weight:bold;color:#303F9F;'>insight</span> from fellow gamers!</div>
 		</div>
 		<div class="row" style='margin-bottom:5px;'>
 			<div class="col s10 offset-s1" style='height: 47px;position: relative;text-align: right;z-index: 0;margin-top: 20px;'>

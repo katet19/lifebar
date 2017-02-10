@@ -162,6 +162,7 @@ function DisplayBattleProgressToasts($user, $myprogress, $gameid){
 	if(isset($myprogress)){
 		foreach($myprogress as $progress){ ?>
 		<div class='bp-progress-item'>
+			<i class="material-icons" style='position:absolute;top:5px;right:5px;color:white;cursor:pointer;' onclick='this.parentNode.parentNode.remove();'>close</i>
 			<?php if($progress->_image == ""){ ?>
 				<div class='bp-item-image z-depth-1' style='text-align: center;background-color: orange;padding-top: 5px;margin-bottom: 5px;'><i class='bp-item-image-icon material-icons'>flag</i></div>
 			<?php }else{ ?>

@@ -157,9 +157,10 @@
 #game.outerContainer, #profile.outerContainer, #gamemini.outerContainer{
 	display: none;
     position: fixed;
-    z-index: 100;
+    z-index: 1003;
 	top: 60px;
 	padding: 0 !important;
+	width: 75% !important;
 }
 
 #game.outerContainer-slide-out, #profile.outerContainer-slide-out{
@@ -212,9 +213,8 @@
 		-ms-transition: all 0.3s ease;
 		transition: all 0.3s ease;
 		left:-200px;
-		top:50px;
 		padding-top:15px;
-		z-index:1000;
+		z-index:1005;
 		bottom:-15px;
 		background-color:rgb(237, 236, 236);
 	}
@@ -925,7 +925,7 @@ OLD STUFF
 		background-color:transparent;
 		width:auto;
 		left:auto;
-		right:1em;
+		right:0em;
 	}
 	
 	.searchContainerMobile{

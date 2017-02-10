@@ -55,6 +55,16 @@ function DisplaySideNav(){
 	$(".navigation-menu").addClass("navigation-menu-slide-out");
 	$(".navigation-menu-logo").addClass("navigation-menu-logo-slide-out");
 	$(".navigation-lifebar").addClass("navigation-lifebar-slide-out");
+	if($(window).width() < 992){
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$(".lean-overlay").unbind();
+		$(".lean-overlay").on('click', function(){
+			HideFocus();
+			HideSideNav();
+			$(".lean-overlay").each(function(){ $(this).remove(); } );
+		});
+	}
 }
 
 function HideSideNav(){
@@ -63,6 +73,8 @@ function HideSideNav(){
 	$(".navigation-menu").removeClass("navigation-menu-slide-out");
 	$(".navigation-menu-logo").removeClass("navigation-menu-logo-slide-out");
 	$(".navigation-lifebar").removeClass("navigation-lifebar-slide-out");
+	HideFocus();
+	$(".lean-overlay").each(function(){ $(this).remove(); } );
 }
 
 function UpdateBrowserHash(hash){
@@ -110,6 +122,10 @@ function NavigateToPage(page, fromURL = false){
 				$('body').css({'overflow-y':'scroll'});
 				$("#nav-activity").addClass("nav-slide-out-selected-page");
 				ShowActivityHome();
+			}else if(page[0] == "#settings"){
+				$('body').css({'overflow-y':'scroll'});
+				$("#nav-settings").addClass("nav-slide-out-selected-page");
+				ShowUserSettings();
 			}else if(page[0] == "#notifications"){
 				$('body').css({'overflow-y':'scroll'});
 				ShowNotificationsHome();
@@ -123,12 +139,19 @@ function NavigateToPage(page, fromURL = false){
 			}else if(page[0] == "#profile"){
 				$("#nav-profile").addClass("nav-slide-out-selected-page");
 				ShowUserProfile($(".userContainer").attr("data-id"), true);
+			}else if(page[0] == "#ranking"){
+				$("#nav-ranking").addClass("nav-slide-out-selected-page");
+				ShowRanking();
 			}else{
 				$('body').css({'overflow-y':'scroll'});
 				ShowDiscoverHome();
 			}
 			GLOBAL_HASH_REDIRECT = "";
 		}else{
+			var windowWidth = $(window).width();
+			if(windowWidth <= 991){
+				HideSideNav();
+			}
 			GLOBAL_HASH_REDIRECT = "NO";
 			$('body').css({'overflow-y':'scroll'});
 			if(page == "#discover" || page == "#daily")
@@ -139,10 +162,14 @@ function NavigateToPage(page, fromURL = false){
 				ShowNotificationsHome();
 			else if(page == "#admin")
 				ShowAdminHome();
+			else if(page == "#settings")
+				ShowUserSettings();
 			else if(page == "#landing")
 				ShowLanding();
 			else if(page == "#profile")
 				ShowUserProfile($(".userContainer").attr("data-id"), true);
+			else if(page == "#ranking")
+				ShowRanking();
 			else if(page == "#collections")
 				DisplayUserCollection($(".userContainer").attr("data-id"));
 			else if(page != "#logout")
@@ -226,19 +253,6 @@ function UserAccountNav(){
 	$('html').click(function(){
 		if($("#userAccountNav").is(":visible"))
 			$("#userAccountNav").hide(250);
-	});
-	$(".settingsButton").on('click', function(e){
-		e.stopPropagation();
-		$("#userAccountNav").hide(250);
-		CloseSideNavigation();
-		ShowUserSettings();
-	});
-	$(".adminButton").on('click', function(e){
-		e.stopPropagation();
-		HideFocus();
-		$("#userAccountNav").hide(250);
-		CloseSideNavigation();
-		ShowAdminHome();
 	});
 	$(".profileButton, .userAvatar, .userNameTitle").on('click', function(e){
 		var id = $(".userContainer").attr("data-id");

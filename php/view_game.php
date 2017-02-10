@@ -381,44 +381,33 @@ function DisplayGameVideoCard($video, $uniqueID = 0, $summary = '', $tier = ''){
 
 function DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID){
 	?>
-	<div class="col s12" style='text-align:left;position:relative;top:15px;'>
-		<div class="collection-game-myxp-gutter"><i class="mdi-social-poll left"></i></div>
-		<div class="collection-game-myxp-header">Tier</div>
-		<div class="collection-game-myxp-container" >
-		 	<div class="collection-myxp-tier-container">
-		  	    <div class="collection-myxp-tier t5 tierBorderColor5 <?php if($tier == 5){ echo "tierBorderColor5selected myxp-selected-tier"; } ?>" data-tier='5' >5 <div class="collection-myxp-label" style='color: #DB0058;'>Worst</div></div>
-			    <div class="collection-myxp-tier t4 tierBorderColor4 <?php if($tier == 4){ echo "tierBorderColor4selected myxp-selected-tier"; } ?>" data-tier='4' >4</div>
-			    <div class="collection-myxp-tier t3 tierBorderColor3 <?php if($tier == 3){ echo "tierBorderColor3selected myxp-selected-tier"; } ?>" data-tier='3' >3</div>
-		  	    <div class="collection-myxp-tier t2 tierBorderColor2 <?php if($tier == 2){ echo "tierBorderColor2selected myxp-selected-tier"; } ?>" data-tier='2' >2</div>
-		  	    <div class="collection-myxp-tier t1 tierBorderColor1 <?php if($tier == 1){ echo "tierBorderColor1selected myxp-selected-tier"; } ?>" data-tier='1' >1 <div class="collection-myxp-label" style='left:15px;color: #0A67A3;'>Best</div></div>
-		  	</div>
-	  	</div>
+	<div class="col s12" style='text-align:left;position:relative;top:0px;'>
+		<div class="row" style='margin-bottom:0px;'>
+			<div class="col s12">
+				<div class="modal-xp-header" style='margin:0;'>How was the overall experience?</div>
+			</div>
+			<div class="col s2 offset-s1 modal-xp-emoji-icon tierTextColor5 <?php if($subxp != null && $subxp->_archivetier == 5){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="5">
+				<i class="material-icons" style='font-size:1em;'>sentiment_very_dissatisfied</i>
+			</div>
+			<div class="col s2 modal-xp-emoji-icon tierTextColor4 <?php if($subxp != null && $subxp->_archivetier == 4){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="4">
+				<i class="material-icons" style='font-size:1em;'>sentiment_dissatisfied</i>
+			</div>
+			<div class="col s2 modal-xp-emoji-icon tierTextColor3 <?php if($subxp != null && $subxp->_archivetier == 3){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="3">
+				<i class="material-icons" style='font-size:1em;'>sentiment_neutral</i>
+			</div>
+			<div class="col s2 modal-xp-emoji-icon tierTextColor2 <?php if($subxp != null && $subxp->_archivetier == 2){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="2">
+				<i class="material-icons" style='font-size:1em;'>sentiment_satisfied</i>
+			</div>
+			<div class="col s2 modal-xp-emoji-icon tierTextColor1 <?php if($subxp != null && $subxp->_archivetier == 1){?>modal-xp-emoji-icon-active<?php } ?>" data-tier="1">
+				<i class="material-icons" style='font-size:1em;'>sentiment_very_satisfied</i>
+			</div>
+		</div>
 	</div>
-	<div class="input-field col s12" style="margin-top: 140px;">
-  		<div class="collection-game-myxp-gutter"><i class="mdi-editor-format-quote quoteflip left" style='font-size: 1.5em;margin-top: -8px;'></i></div>
-		<div class="collection-game-myxp-header">Summary</div>
-		<div class="collection-game-myxp-container" style='top: 75px;'>
-	  	    <script>
-		      function countChar<?php echo $uniqueID; ?>(val) {
-		        var len = val.value.length;
-		        if (len > 140) {
-		          val.value = val.value.substring(0, 140);
-		        } else {
-		          $('#charNumCollection<?php echo $uniqueID; ?>').html(len);
-		        }
-		      };
-		    </script>
-	        <textarea id="myxp-collection-quote" class="myxp-quote materialize-textarea" onkeyup="countChar<?php echo $uniqueID; ?>(this)" maxlength="140"><?php echo $summary; ?></textarea>
-	        <label for="myxp-collection-quote" <?php if($summary != ""){ echo "class='active'"; } ?> ><?php if($tier > 0){ ?>Update your experience (optional)<?php }else{ ?>Enter a summary of your experience here (optional)<?php } ?></label>
-        	<?php if($_SESSION['logged-in']->_id > 0){ ?>
-				<a class="waves-effect waves-light btn disabled myxp-post" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>POST</a>
-        		<a class="waves-effect waves-light btn-flat myxp-video-goto-full" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;font-size:0.9em;font-weight:500;'><i class="mdi-content-forward left"></i>Go to full XP entry</a>
-			<?php }else{ ?>
-				<a class="waves-effect waves-light btn fab-login" style='padding: 0 1em;float:right;margin-left:50px;margin-top: -10px;'><i class="mdi-editor-mode-edit left"></i>LOGIN TO POST</a>
-			<?php } ?>
-	        <div class="myxp-quote-counter" style='float: left;margin-top: -15px;font-size:1em;'><span id='charNumCollection<?php echo $uniqueID; ?>'><?php echo strlen($summary); ?></span>/140</div>
-        </div>
-      </div>
+	<div class="input-field col s12" style="margin-top: 30px;">
+		<textarea id="myxp-quote" class="materialize-textarea myxp-quote" length="140" maxlength="140" <?php if($existing){?>disabled style='background-color:#ddd;padding: 5px;color: gray;'<?php } ?>><?php if($existing){ echo $subxp->_archivequote; } ?></textarea>
+		<label for="myxp-quote" <?php if($existing){ echo "class='active' style='top: 0.5em;'"; } ?> ><?php if($existing){ echo "Summary (disabled)"; }else{ echo "Summarize your experience"; } ?></label>
+    </div>
+	<div class="save-btn disabled modal-btn-pos save-watched-xp" style='margin: 1em 0;' data-gameid='<?php echo $xp->_game->_id; ?>'>Save Details</div>
 	<?php
 }
 
@@ -437,8 +426,9 @@ function DisplayEmbeddedVideo($video){?>
 				<iframe data-cbsi-video width="640" height="400" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
 			<?php }else if(strpos($video['URL'] , 'youtube.com') !== false || strpos($video['URL'] , 'youtu.be') !== false){
 					$url = "https://www.youtube.com/embed/";
-					$vidArray = explode("/", $video['URL']);
-					$video['URL'] = $url.end(str_replace("watch?v=","",$vidArray));
+					$vurl = str_replace("watch?v=","",$video['URL']);
+					$vidArray = explode("/", $vurl);
+					$video['URL'] = $url.end($vidArray);
 					?>
 					<iframe width="560" height="315" src="<?php echo $video['URL']; ?>" frameborder="0" allowfullscreen></iframe>
 			<?php }else if(strpos($video['URL'], 'gamespot.com') !== false){
@@ -458,6 +448,7 @@ function DisplayEmbeddedVideo($video){?>
 function DisplayVideoForGame($url, $gameid){
 	$video = GetVideoXPForGame($url, $gameid);
 	$xp = GetVideoMyXPForGame($url, $gameid);
+	$game = GetGame($gameid);
 	$tier = $xp->_archivetier;
 	$summary = $xp->_archivequote;
 	$month = date('n');
@@ -475,10 +466,17 @@ function DisplayVideoForGame($url, $gameid){
 	?>
 	<div class="col s12">
 		<div class="row">
-			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						<div style='font-size:0.7em;'>Watch Video</div><div style='font-weight:300;'><?php echo $game->_title;?></div>
+				</div>
+			</div>	
+			<div class="col m12 video-card" style='margin-bottom:20px;margin-top:11vh;' data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 				<?php DisplayEmbeddedVideo($video); ?>
 			</div>
-			<div class="col m12 l6 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
+			<div class="col m12 video-card" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>">
 				<?php DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID); ?>
 			</div>
 		</div>
@@ -505,7 +503,7 @@ function DisplayWatchedXPEntryAjax($url, $gameid){
 	}
 	
 	?>
-	<div class="col m12 video-card z-depth-1" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>" style='height:400px;'>
+	<div class="col m12 video-card z-depth-1" data-gameid="<?php echo $gameid; ?>" data-source="<?php echo $video['Source']; ?>" data-url="<?php echo htmlentities($video['URL']); ?>" data-length="<?php echo $video['Length']; ?>" data-year="<?php echo date("Y"); ?>" data-quarter="<?php echo $quarter; ?>" style='height:330px;'>
 		<?php DisplayXPEntryAtVideo($video, $summary, $tier, $uniqueID); ?>
 	</div>
 	<?php

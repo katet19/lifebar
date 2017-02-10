@@ -1,5 +1,164 @@
 <?php
 function DisplayUserSettings(){
+	$settingsimage = "http://68.media.tumblr.com/tumblr_lmojhxT9YN1qzp9weo1_1280.jpg";
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-save-close-modal-btn">SAVE & CLOSE</div>
+			<div class="GameHeaderContainer" style='height:10vh;'>
+				<div class="GameHeaderBackground" style="height:10vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $settingsimage; ?>) 50% 59%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $settingsimage; ?>) 50% 59%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $settingsimage; ?>) 50% 59%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $settingsimage; ?>) 50% 59%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header">
+						<div style='font-size:0.7em;'>Settings</div><div style='font-weight:300;'><?php echo $_SESSION['logged-in']->_username;?></div>
+				</div>
+			</div>	
+			<div class="modal-content-container" style='overflow:hidden;'>
+					<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion" id="userSettings" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">account_circle</i>Personal</div>
+								<div class="collapsible-body">
+									<div id="user-settings-account">
+										<div class="row" style=' margin-top: 1em;margin-right:1em;'>
+										<div class="col s12">
+											<div class="row">
+												<div class="input-field col s12">
+													<input id="settings_username" type="text" value="<?php echo $_SESSION['logged-in']->_username; ?>">
+													<label for="settings_username" <?php if($_SESSION['logged-in']->_username != ""){ echo "class='active'"; } ?>>Username</label>
+												</div>
+												<div class="input-field col s12 m12 l6">
+													<input id="settings_password" type="password">
+													<label for="settings_password">Change Password</label>
+												</div>
+												<div class="input-field col s12 m12 l6">
+													<input id="settings_confirm_password" type="password">
+													<label for="settings_confirm_password">Confirm Change Password</label>
+												</div>
+												<div class="input-field col s12">
+													<input id="settings_email" type="text" value="<?php echo $_SESSION['logged-in']->_email; ?>">
+													<label for="settings_email"  <?php if($_SESSION['logged-in']->_email != ""){ echo "class='active'"; } ?>>Email</label>
+												</div>
+												<div class="input-field col s12 m12 l6">
+													<input id="first_name" type="text" value="<?php echo $_SESSION['logged-in']->_first; ?>">
+													<label for="first_name"  <?php if($_SESSION['logged-in']->_first != ""){ echo "class='active'"; } ?>>First Name</label>
+												</div>
+												<div class="input-field col s12 m12 l6">
+													<input id="last_name" type="text" value="<?php echo $_SESSION['logged-in']->_last; ?>">
+													<label for="last_name"  <?php if($_SESSION['logged-in']->_last != ""){ echo "class='active'"; } ?>>Last Name</label>
+												</div>
+												<div class="col s12" style='text-align:left;'>
+													<div class="" style='display:inline-block;color:#9e9e9e;position: relative;top: 10px;'>Birth Year</div>
+													<div class="input-field">
+														<select id="birth_year">
+															<?php for($i = date("Y"); $i > 1930; $i--){ ?>
+																<option value="<?php echo $i; ?>" <?php if($i == $_SESSION['logged-in']->_birthdate){ echo "selected"; } ?>><?php echo $i; ?></option>
+															<?php } ?>
+														</select>
+													</div>
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">sync</i>3rd-party Accounts</div>
+								<div class="collapsible-body">
+											<div class="row" style=' margin-top: 1em;margin-right:1em;padding: 0 0.75rem;'>
+												<div class="input-field col s12">
+													<input id="steam_id" type="text" value="<?php echo $_SESSION['logged-in']->_steam; ?>">
+													<label for="steam_id"  <?php if($_SESSION['logged-in']->_steam != ""){ echo "class='active'"; } ?>>Steam ID</label>
+												</div>
+													<div class="input-field col s12">
+													<input id="xbox_id" type="text" value="<?php echo $_SESSION['logged-in']->_xbox; ?>">
+													<label for="xbox_id"  <?php if($_SESSION['logged-in']->_xbox != ""){ echo "class='active'"; } ?>>Xbox Live ID</label>
+												</div>
+												<div class="input-field col s12">
+													<input id="psn_id" type="text" value="<?php echo $_SESSION['logged-in']->_psn; ?>">
+													<label for="psn_id"  <?php if($_SESSION['logged-in']->_psn != ""){ echo "class='active'"; } ?>>PSN ID</label>
+												</div>
+												<div class="input-field col s12">
+													<input id="twitter_id" type="text" value="<?php echo $_SESSION['logged-in']->_twitter; ?>">
+													<label for="twitter_id"  <?php if($_SESSION['logged-in']->_twitter != ""){ echo "class='active'"; } ?>>Twitter @</label>
+												</div>
+												<?php if($_SESSION['logged-in']->_security == "Authenticated" || $_SESSION['logged-in']->_security == "Journalist"){ ?>
+													<div class="input-field col s12">
+														<input id="title_id" type="text" value="<?php echo $_SESSION['logged-in']->_title; ?>">
+														<label for="title_id"  <?php if($_SESSION['logged-in']->_title != ""){ echo "class='active'"; } ?>>Publication / Website Name / Title</label>
+													</div>
+													<div class="input-field col s12">
+														<input id="personalweb_id" type="text" value="<?php echo $_SESSION['logged-in']->_website; ?>">
+														<label for="personalweb_id"  <?php if($_SESSION['logged-in']->_website != ""){ echo "class='active'"; } ?>>URL to publication or website</label>
+													</div>
+												<?php } ?>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">face</i>Avatar</div>
+								<div class="collapsible-body">
+									<div class="row" style=' margin-top: 2em;margin-right:1em;padding: 0 0.75rem;'>
+										<div class="col s12" style='text-align: center;'>
+											<div class="avatar-item">
+												<input name="avatargroup" class="with-gap" type="radio" id="gravatar" data-image="<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>" <?php if($_SESSION['logged-in']->_image == "Gravatar"){ echo "checked"; } ?>  />
+												<label for="gravatar">Use your Profile image from <a href="http://gravatar.com" target="_blank">Gravatar</a></label>
+											</div >
+											<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:60px;margin-right: auto;margin-left:50px;margin-top: 0px;float:left;height:60px;text-align:left;display:inline-block;background:url(<?php echo get_gravatar($_SESSION['logged-in']->_email); ?>) 50% 59%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+											</div>
+										</div>
+										<div class="col s12" style=' margin-top: 3em;margin-right:1em;'>
+											<div class="avatar-item">
+												<input name="avatargroup" class="with-gap" type="radio" id="weburlradio" <?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo "checked"; } ?> />
+												<label for="weburlradio">Use a web URL</a></label>
+											</div >
+											<input id="weburl" style='width:85%;' type="text" value="<?php if($_SESSION['logged-in']->_image != "Gravatar" && $_SESSION['logged-in']->_image != "Uploaded"){ echo $_SESSION['logged-in']->_image; }else{ echo "http://"; } ?>">
+										</div>
+										<div class="col s12" style=' margin-top: 3em;margin-right:1em;'>
+											<div class="avatar-item">
+													<input name="avatargroup" class="with-gap" type="radio" id="uploaded" <?php if($_SESSION['logged-in']->_image == "Uploaded"){ echo "checked"; } ?> />
+													<label for="uploaded">Upload your own image</a></label>
+											</div >
+											<div style='color: rgba(0,0,0,0.75);margin-left: 50px;'>
+												<ul>
+													<li style='list-style-type: disc;text-align:left;'>JPGs only</li>
+													<li style='list-style-type: disc;text-align:left;'>Best size: 90 x 90</li>
+												</ul>
+											</div>
+											<iframe src='http://lifebar.io/php/view_imageUploader.php?id=<?php echo $_SESSION['logged-in']->_id; ?>' style='width:85%;height: 50px;border:none;'></iframe>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">label</i>Badge</div>
+								<div class="collapsible-body">
+									<div class="row">
+											<div class="row avatar-badge-mgmt">
+												<?php DisplayBadgeManagementForUser($_SESSION['logged-in']->_id); ?>
+											</div>
+									</div>
+							</li>
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">loyalty</i>Cheat Codes</div>
+								<div class="collapsible-body">
+									<div class="row" style=' margin-top: 1em;margin-right:1em;padding: 0 0.75rem;'>
+										<div class="input-field col s12">
+											<input id="settings_promo" type="text" value="">
+											<label for="settings_promo" >Enter your cheat code</label>
+										</div>
+										<div class="col s12">
+											<div class="btn apply-promo-code">Submit Code</div>
+										</div>
+										<div class="col s12 settings-promo-msg">
+										</div>
+									</div>
+								</div>
+							</li>
+					</ul>
+				</div>		
+		</div>
+	</div>
+	<?php
+}
+
+function DisplayUserSettingsOLD(){
 	?>
 	<div id="userSettings" data-id="<?php echo $_SESSION['logged-in']->_id; ?>">
 	  <div class="row">
@@ -146,7 +305,7 @@ function DisplayUserSettings(){
 	      	<?php }else{ ?>
 	      		<div class="col s12 settings-header" style='margin-top:0px;'>Lifebar configuration</div>
 	      	<?php } ?>
-	      	<div clas="row">
+	      	<div class="row">
 		    	<div class="col s12">
 			    	<div class="row">
 			    		<div class="col s1" style='padding: 1em 0.2em;text-align:center;'>

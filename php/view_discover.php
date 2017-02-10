@@ -156,7 +156,7 @@ function DisplayHorizontalWatchList($zdepth, $item){
   			</div>
       	</div>
       	<div class="row">
-      		<div class="col s12 m6">
+      		<div class="col s12 m6" style='height: 390px; overflow: hidden;'>
 				<?php $first = true;
 				foreach($videos as $video){
 					$game = GetGame($video[1]);

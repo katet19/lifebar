@@ -218,7 +218,7 @@ function RequestLoginReset(email){
 }
 
 function Logout(){
-	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;background-color: #3F51B5;color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>exit_to_app</i> Signing out</div>");
+	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;color: #3F51B5;background-color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>exit_to_app</i> Signing out</div>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "Logout" },
      type: 'post',
