@@ -19,7 +19,11 @@ xBackground
 
 body {
     /* this is the page background */
+<<<<<<< HEAD
     background-color: $color-primary-text;
+=======
+    background-color: $color-text-primary;
+>>>>>>> origin/Dan
 }
 
 
@@ -33,7 +37,11 @@ xPatterns
     /* this is the container of various design elements - i.e. the 2 logo of the branding section */
     border: 1px solid $color-primary-light;
     border-radius: 3px;
+<<<<<<< HEAD
     background: $color-primary-text;
+=======
+    background: $color-text-primary;
+>>>>>>> origin/Dan
     box-shadow: 0 1px 1px rgba(#000, .05);
     padding: 6px;
 }
@@ -47,8 +55,14 @@ xNavigation
 
 main {
     width: 90%;
+<<<<<<< HEAD
     max-width: 1225px;
     margin: 0 auto;
+=======
+    max-width: 1125px;
+    margin: 0 auto;
+    margin-left: 200px;
+>>>>>>> origin/Dan
     padding: 50px 0;
     >h1 {
         text-align: center;
@@ -85,7 +99,11 @@ main>h1 {
     color: $color-accent;
     // @include MQ(L) {
     //     /* title goes into the header on big devices */
+<<<<<<< HEAD
     //     color: $color-primary-text;
+=======
+    //     color: $color-text-primary;
+>>>>>>> origin/Dan
     // }
 }
 
@@ -94,6 +112,7 @@ section {
     // @include clearfix;
     &:nth-of-type(1) h2::before {
         content: '1. ';
+<<<<<<< HEAD
     }
     &:nth-of-type(2) h2::before {
         content: '2. ';
@@ -110,6 +129,24 @@ section {
     &:nth-of-type(6) h2::before {
         content: '6. ';
     }
+=======
+    }
+    &:nth-of-type(2) h2::before {
+        content: '2. ';
+    }
+    &:nth-of-type(3) h2::before {
+        content: '3. ';
+    }
+    &:nth-of-type(4) h2::before {
+        content: '4. ';
+    }
+    &:nth-of-type(5) h2::before {
+        content: '5. ';
+    }
+    &:nth-of-type(6) h2::before {
+        content: '6. ';
+    }
+>>>>>>> origin/Dan
     // @include MQ(S) {
     // 	margin: 3em 0 5em;
     // }
@@ -128,11 +165,19 @@ section {
 .cd-branding {
     .cd-box {
         margin-bottom: 1em;
+<<<<<<< HEAD
     }
     img {
         display: block;
         width: 100%;
     }
+=======
+    }
+    img {
+        display: block;
+        width: 100%;
+    }
+>>>>>>> origin/Dan
     ul:last-of-type {
         padding-top: .6em;
         li {
@@ -186,6 +231,7 @@ section {
         // @include column(.48);
         width: 12%;
         display: inline-block;
+<<<<<<< HEAD
     }
     .cd-color-swatch {
         position: relative;
@@ -263,6 +309,85 @@ section {
         }
         &::after {
             background: darken($color-secondary-text, 5%);
+=======
+    }
+    .cd-color-swatch {
+        position: relative;
+        width: 100%;
+        padding: 50% 0;
+        &::before,
+        &::after {
+            /* lighter and darker color shades of the same swatch */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 50%;
+            height: 20%;
+        }
+        &::before {
+            left: 0;
+        }
+        &::after {
+            right: 0;
+        }
+    }
+    b {
+        display: block;
+        padding: .6em 0;
+    }
+    li:nth-of-type(1) .cd-color-swatch {
+        background: $color-primary;
+        &::before {
+            background: lighten($color-primary, 5%);
+        }
+        &::after {
+            background: darken($color-primary, 5%);
+        }
+    }
+    li:nth-of-type(2) .cd-color-swatch {
+        background: $color-primary-dark;
+        &::before {
+            background: lighten($color-primary-dark, 5%);
+        }
+        &::after {
+            background: darken($color-primary-dark, 5%);
+        }
+    }
+    li:nth-of-type(3) .cd-color-swatch {
+        background: $color-primary-light;
+        &::before {
+            background: lighten($color-primary-light, 5%);
+        }
+        &::after {
+            background: darken($color-primary-light, 5%);
+        }
+    }
+    li:nth-of-type(4) .cd-color-swatch {
+        background: $color-text;
+        &::before {
+            background: lighten($color-text, 5%);
+        }
+        &::after {
+            background: darken($color-text, 5%);
+        }
+    }
+    li:nth-of-type(5) .cd-color-swatch {
+        background: $color-text-primary;
+        &::before {
+            background: lighten($color-text-primary, 5%);
+        }
+        &::after {
+            background: darken($color-text-primary, 5%);
+        }
+    }
+    li:nth-of-type(6) .cd-color-swatch {
+        background: $color-text-secondary;
+        &::before {
+            background: lighten($color-text-secondary, 5%);
+        }
+        &::after {
+            background: darken($color-text-secondary, 5%);
+>>>>>>> origin/Dan
         }
     }
     li:nth-of-type(7) .cd-color-swatch {
@@ -524,6 +649,25 @@ xIcons
 
 /* -------------------------------- 
 
+xSlideout
+
+-------------------------------- */
+
+.no-slide {
+    padding: 0px;
+    display: none !important;
+    right: -40%;
+}
+
+.slide {
+    padding: 0px;
+    display: inline-block !important;
+    right: 0px;
+}
+
+
+/* -------------------------------- 
+
 xForm 
 
 -------------------------------- */
@@ -532,7 +676,11 @@ input[type=text],
 select {
     border: 1px solid $color-primary-light;
     border-radius: .25em;
+<<<<<<< HEAD
     background: $color-primary-text;
+=======
+    background: $color-text-primary;
+>>>>>>> origin/Dan
     &:focus {
         outline: none;
     }

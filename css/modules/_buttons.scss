@@ -1,4 +1,5 @@
 @import '../base/mixins';
+<<<<<<< HEAD
 .btn,
 .btn-large {
     background-color: #F50057 !important;
@@ -70,9 +71,83 @@
     font-size: 1.75em;
     color: rgba(0, 0, 0, 0.2);
     @include transition(all 0.3s ease-in-out);
+=======
+@import '../base/variables';
+.btn,
+.btn-large {
+    font-weight: 400;
+}
+
+.btn-flat {
+    font-weight: 500;
+    color: $color-accent;
+    &:hover {
+        color: $color-accent-hover !important;
+    }
+}
+
+.btn-save {
+    background-color: $color-save !important;
+    &:hover {
+        background-color: $color-save-hover !important;
+    }
+}
+
+.btn-cancel {
+    //formerly cancel-btn
+    background-color: $color-text-secondary !important;
+    &:hover {
+        background-color: $color-cancel-hover !important;
+    }
+}
+
+.btn-user-card {
+    padding: 0 1rem;
+    position: absolute;
+    right: 10px;
+    width: auto;
+}
+
+.btn-user-card-small {
+    padding: 5px 0px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.follow-from-discover {
+    //used in js
+    @extend .btn-user-card;
+    top: 20px;
+}
+
+.dismiss-from-discover {
+    //used in js
+    @extend .btn-user-card;
+    top: 70px;
+}
+
+.follow-from-discover-small,
+.dismiss-from-discover-small {
+    //used in js
+    @extend .btn-user-card-small;
+    &:hover {
+        background-color: $color-accent;
+        @include shadow;
+        i {
+            color: white;
+        }
+    }
+}
+
+.dismiss-from-discover-small {
+    //used in js
+    @extend .btn-user-card-small;
+>>>>>>> origin/Dan
 }
 
 .fixed-close-modal-btn {
+    //used in js
     position: absolute;
     right: 10px;
     top: 15px;
@@ -83,7 +158,12 @@
     line-height: 50px;
     font-weight: bold;
     color: white;
-    background-color: #F50057;
+    background-color: $color-accent;
     width: 50px;
     cursor: pointer;
+    .material-icons {
+        font-size: 1.2em;
+        vertical-align: sub;
+        line-height: inherit;
+    }
 }

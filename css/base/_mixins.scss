@@ -31,10 +31,31 @@
     }
 }
 
+<<<<<<< HEAD
+=======
+@mixin box-sizing($value) {
+    -webkit-box-sizing: $value;
+    -moz-box-sizing: $value;
+    box-sizing: $value;
+}
+
+>>>>>>> origin/Dan
 @mixin shadow {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+<<<<<<< HEAD
+=======
+@mixin bg-cover {
+    background-position: 50% 25%;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    z-index: 0;
+}
+
+>>>>>>> origin/Dan
 @mixin card {
     position: relative;
     overflow: hidden;
@@ -49,6 +70,14 @@
 }
 
 @mixin fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+@mixin fill-bottom {
     position: absolute;
     bottom: 0;
     left: 0;

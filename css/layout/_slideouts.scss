@@ -1,0 +1,180 @@
+@import '../base/mixins';
+@import '../base/variables';
+#game.outerContainer,
+#profile.outerContainer,
+#gamemini.outerContainer {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 60px;
+    padding: 0 !important;
+    .outerContainer-slide-out {
+        right: 0;
+        width: 75% !important;
+        margin-left: 0 !important;
+        z-index: 1003 !important;
+    }
+}
+
+#gamemini.outerContainer {
+    right: 0;
+    width: 40% !important;
+    margin-left: 0 !important;
+    z-index: 1003 !important;
+}
+
+.modalInnerContainer {
+    position: relative;
+    top: 0em;
+    min-height: 90%;
+    text-align: center;
+    height: -webkit-calc(100vh - 60px);
+    overflow: auto;
+    background-color: white;
+}
+
+.slideout-small-header-container {
+    //formerly GameHeaderContainer
+    height: 10vh;
+    width: 100%;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+    @include transition(all 0.5s ease);
+}
+
+.slideout-small-header-bg {
+    //formerly GameHeaderBackground
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 10vh;
+    @include transition(all 0.5s ease);
+    @include bg-cover;
+}
+
+.slideout-small-header-title-container {
+    //formerly modal-header
+    font-size: 1.75em;
+    font-weight: bold;
+    text-align: left;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 75px;
+    bottom: 10px;
+    left: 10px;
+    line-height: 30px;
+    margin: 0;
+    overflow: hidden;
+    .slideout-title {
+        font-size: 2vh;
+    }
+    .slideout-game-title {
+        font-weight: 300;
+        font-size: 4vh;
+        position: absolute;
+        bottom: 3px;
+        line-height: 2vh;
+    }
+}
+
+.slideout-small-content-container {
+    //formerly modal-content-container
+    position: absolute;
+    top: 10vh;
+    bottom: 0vh;
+    overflow: auto;
+    right: 0;
+    left: 0;
+}
+
+.slideout-collapsible-container {
+    //formerly tier-modal-collapsible-container
+    border-right: none !important;
+    border-left: none !important;
+    box-shadow: none !important;
+    margin: 0 0 1rem 0 !important;
+}
+
+.slideout-collapsible-header {
+    //formerly xp-modal-header
+    font-size: 1em !important;
+    color: $color-text-secondary;
+    font-weight: 300 !important;
+    text-align: left;
+    &:hover {
+        background-color: $color-accent;
+        color: $color-text-primary !important;
+        i {
+            color: $color-text-primary !important;
+        }
+    }
+}
+
+.active {
+    >.slideout-collapsible-header {
+        color: $color-text-primary;
+        background-color: $color-primary;
+        >i {
+            color: $color-text-primary;
+        }
+    }
+}
+
+.slideout-header-icon {
+    color: $color-text-secondary;
+}
+
+.modal-xp-header {
+    //used in js
+    margin: 25px 0 5px;
+    color: $color-text-secondary;
+    text-align: left;
+}
+
+.modal-xp-emoji-icon {
+    //used in js
+    padding: 5px 0;
+    font-size: 3.5em;
+    cursor: pointer;
+    opacity: 0.3;
+    @include transition(all 0.3s ease);
+    &:hover,
+    &-active {
+        opacity: 1.0;
+    }
+    i {
+        font-size: 1em;
+    }
+}
+
+.modal-xp-header-advanced {
+    //used in js
+    margin: 25px 0 5px;
+    color: $color-text-secondary;
+    text-align: left;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    &:hover {
+        color: $color-accent;
+    }
+}
+
+.modal-xp-advanced-options-container {
+    @include transition(all 0.3s ease);
+    width: 100%;
+    display: none;
+    &-active {
+        display: inline-block !important;
+    }
+}
+
+.slideout-btn-pos {
+    //formerly modal-btn-pos
+    margin: 2em 0 0;
+}

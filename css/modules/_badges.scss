@@ -1,0 +1,27 @@
+    .badge-lives {
+        @include box-sizing(border-box);
+        font-size: 1em;
+        color: #43a047;
+        border-radius: 2px;
+        background-clip: padding-box;
+        padding: 8px 5px 8px 0px;
+        font-weight: bold;
+        text-align: center;
+        display: none;
+        vertical-align: top;
+        &:after {
+            content: "up";
+        }
+    }
+    
+    .srank-badge {
+        //used in js
+        position: absolute !important;
+        height: 30px;
+        bottom: 10px !important;
+        top: inherit !important;
+        left: inherit !important;
+        width: 30px !important;
+        right: inherit !important;
+        margin-left: 60px;
+    }

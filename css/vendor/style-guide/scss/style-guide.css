@@ -27,8 +27,13 @@ xNavigation
 -------------------------------- */
 main {
   width: 90%;
+<<<<<<< HEAD
   max-width: 1225px;
+=======
+  max-width: 1125px;
+>>>>>>> origin/Dan
   margin: 0 auto;
+  margin-left: 200px;
   padding: 50px 0; }
   main > h1 {
     text-align: center;
@@ -135,11 +140,19 @@ section {
     background: #b3b9e2; }
 
 .cd-colors li:nth-of-type(4) .cd-color-swatch {
+<<<<<<< HEAD
   background: #ffffff; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::before {
     background: white; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::after {
     background: #f2f2f2; }
+=======
+  background: #212121; }
+  .cd-colors li:nth-of-type(4) .cd-color-swatch::before {
+    background: #2e2e2e; }
+  .cd-colors li:nth-of-type(4) .cd-color-swatch::after {
+    background: #141414; }
+>>>>>>> origin/Dan
 
 .cd-colors li:nth-of-type(5) .cd-color-swatch {
   background: #212121; }
@@ -147,6 +160,83 @@ section {
     background: #2e2e2e; }
   .cd-colors li:nth-of-type(5) .cd-color-swatch::after {
     background: #141414; }
+
+.cd-colors li:nth-of-type(6) .cd-color-swatch {
+  background: #757575; }
+  .cd-colors li:nth-of-type(6) .cd-color-swatch::before {
+    background: #828282; }
+  .cd-colors li:nth-of-type(6) .cd-color-swatch::after {
+    background: #686868; }
+
+.cd-colors li:nth-of-type(7) .cd-color-swatch {
+  background: #F50057; }
+  .cd-colors li:nth-of-type(7) .cd-color-swatch::before {
+    background: #ff1065; }
+  .cd-colors li:nth-of-type(7) .cd-color-swatch::after {
+    background: #dc004e; }
+
+.cd-colors li:nth-of-type(8) .cd-color-swatch {
+  background: #FF4081; }
+  .cd-colors li:nth-of-type(8) .cd-color-swatch::before {
+    background: #ff5a92; }
+  .cd-colors li:nth-of-type(8) .cd-color-swatch::after {
+    background: #ff2770; }
+
+.cd-colors li:nth-of-type(9) .cd-color-swatch {
+  background: #F44336; }
+  .cd-colors li:nth-of-type(9) .cd-color-swatch::before {
+    background: #f55a4e; }
+  .cd-colors li:nth-of-type(9) .cd-color-swatch::after {
+    background: #f32c1e; }
+
+.cd-colors li:nth-of-type(10) .cd-color-swatch {
+  background: #26A69A; }
+  .cd-colors li:nth-of-type(10) .cd-color-swatch::before {
+    background: #2bbbad; }
+  .cd-colors li:nth-of-type(10) .cd-color-swatch::after {
+    background: #219187; }
+
+.cd-colors li:nth-of-type(11) .cd-color-swatch {
+  background: #2BBBAD; }
+  .cd-colors li:nth-of-type(11) .cd-color-swatch::before {
+    background: #30cfc0; }
+  .cd-colors li:nth-of-type(11) .cd-color-swatch::after {
+    background: #26a69a; }
+
+.cd-colors li:nth-of-type(12) .cd-color-swatch {
+  background: #0A67A3; }
+  .cd-colors li:nth-of-type(12) .cd-color-swatch::before {
+    background: #0b76bb; }
+  .cd-colors li:nth-of-type(12) .cd-color-swatch::after {
+    background: #09588b; }
+
+.cd-colors li:nth-of-type(13) .cd-color-swatch {
+  background: #00B25C; }
+  .cd-colors li:nth-of-type(13) .cd-color-swatch::before {
+    background: #00cc69; }
+  .cd-colors li:nth-of-type(13) .cd-color-swatch::after {
+    background: #00994f; }
+
+.cd-colors li:nth-of-type(14) .cd-color-swatch {
+  background: #FF8E00; }
+  .cd-colors li:nth-of-type(14) .cd-color-swatch::before {
+    background: #ff991a; }
+  .cd-colors li:nth-of-type(14) .cd-color-swatch::after {
+    background: #e68000; }
+
+.cd-colors li:nth-of-type(15) .cd-color-swatch {
+  background: #FF4100; }
+  .cd-colors li:nth-of-type(15) .cd-color-swatch::before {
+    background: #ff541a; }
+  .cd-colors li:nth-of-type(15) .cd-color-swatch::after {
+    background: #e63b00; }
+
+.cd-colors li:nth-of-type(16) .cd-color-swatch {
+  background: #DB0058; }
+  .cd-colors li:nth-of-type(16) .cd-color-swatch::before {
+    background: #f50062; }
+  .cd-colors li:nth-of-type(16) .cd-color-swatch::after {
+    background: #c2004e; }
 
 .cd-colors li:nth-of-type(6) .cd-color-swatch {
   background: #757575; }
@@ -325,6 +415,24 @@ xIcons
 
 /* -------------------------------- 
 
+<<<<<<< HEAD
+=======
+xSlideout
+
+-------------------------------- */
+.no-slide {
+  padding: 0px;
+  display: none !important;
+  right: -40%; }
+
+.slide {
+  padding: 0px;
+  display: inline-block !important;
+  right: 0px; }
+
+/* -------------------------------- 
+
+>>>>>>> origin/Dan
 xForm 
 
 -------------------------------- */

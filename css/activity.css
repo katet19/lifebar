@@ -350,14 +350,18 @@
     text-align: right;
     width: 100%;
     margin-top: 10px;
-    height:36px;
+    height: 36px;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 .feed-agrees-label {
 =======
 .agrees-label{
 >>>>>>> Akuma
+=======
+.feed-agrees-label {
+>>>>>>> origin/Dan
     margin: 0 10px !important;
     vertical-align: text-top;
 }
@@ -368,11 +372,20 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .feed-activity-when-info {
     font-size: 0.7em;
     display: block;
 =======
 .feed-card-small-title{
+=======
+.feed-activity-when-info {
+    font-size: 0.7em;
+    display: block;
+}
+
+.feed-card-small-title {
+>>>>>>> origin/Dan
     font-size: 0.9em;
     padding: 14px 8px 0;
     line-height: 15px;
@@ -381,10 +394,16 @@
     overflow: hidden;
 }
 
+<<<<<<< HEAD
 .feed-activity-when-info{
   font-size: 0.7em;
   display: block;
 >>>>>>> Akuma
+=======
+.feed-activity-when-info {
+    font-size: 0.7em;
+    display: block;
+>>>>>>> origin/Dan
 }
 
 .feed-bookmark-title {
@@ -537,6 +556,7 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .feed-card-title {
     font-size: 1.3em;
     padding-bottom: 20px;
@@ -545,20 +565,33 @@
 	font-size:1.3em;
   padding-bottom: 30px;
   word-wrap: break-word;
+=======
+.feed-card-title {
+    font-size: 1.3em;
+    padding-bottom: 30px;
+    word-wrap: break-word;
+>>>>>>> origin/Dan
 }
 
-.feed-card-title-special{
-  word-wrap: break-word;
-  font-size: 2em;
-  padding-bottom: 60px;
-  padding-top: 30px;
+.feed-card-title-special {
+    word-wrap: break-word;
+    font-size: 2em;
+    padding-bottom: 60px;
+    padding-top: 30px;
 }
 
+<<<<<<< HEAD
 .feed-action-details{
   position:relative;
   display:block;
   top: 10px;
 >>>>>>> Akuma
+=======
+.feed-action-details {
+    position: relative;
+    display: block;
+    top: 10px;
+>>>>>>> origin/Dan
 }
 
 .feed-card-metadata {
@@ -566,10 +599,14 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .tierInProgress {
     background-color: transparent !important;
 =======
 .feed-action-details-card{
+=======
+.feed-action-details-card {
+>>>>>>> origin/Dan
     color: gray;
     font-weight: 400;
     padding: 1px;
@@ -581,7 +618,7 @@
     margin-left: 3px;
 }
 
-.feed-action-details-small-card{
+.feed-action-details-small-card {
     color: gray;
     font-weight: 400;
     padding: 1px;
@@ -593,7 +630,7 @@
     margin-left: 3px;
 }
 
-.feed-action-details-small-emoji{
+.feed-action-details-small-emoji {
     position: absolute;
     top: 82px;
     font-size: 1.5em;
@@ -603,9 +640,14 @@
     left: 20px;
 }
 
+<<<<<<< HEAD
 .tierInProgress{
 background-color: transparent !important;
 >>>>>>> Akuma
+=======
+.tierInProgress {
+    background-color: transparent !important;
+>>>>>>> origin/Dan
     width: 25px !important;
     height: 25px !important;
     left: -7px !important;
@@ -635,6 +677,14 @@ background-color: transparent !important;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+.feed-visual-sentence-perct {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+>>>>>>> origin/Dan
 .feed-visual-sentence-perct {
     display: inline-block;
     vertical-align: middle;
@@ -646,6 +696,7 @@ background-color: transparent !important;
     vertical-align: middle;
     font-weight: 500;
     padding: 0 2px;
+<<<<<<< HEAD
 =======
 .feed-visual-sentence-perct{
 	display:inline-block;
@@ -741,6 +792,92 @@ background-color: transparent !important;
 		font-size:35px !important;
 	}
 >>>>>>> Akuma
+=======
+}
+
+.feed-visual-sentence-sublabel {
+    font-size: 0.5em;
+}
+
+@media only screen and (max-width: 599px) {
+    .feed-activity-game-container {
+        margin-top: 15px;
+        width: 100%;
+        margin-left: 0;
+    }
+    .feed-avatar-col {
+        width: 60px !important;
+    }
+    .feed-avatar {
+        width: 45px;
+        height: 45px;
+    }
+    .feed-vert-line {
+        left: 95px;
+    }
+    .feed-date-divider-bullet {
+        left: 91px;
+    }
+    .feed-date-divider-month {
+        width: 58px;
+    }
+    .feed-activity-icon-xp {
+        margin-top: 8px;
+        background-color: #999 !important;
+    }
+    .feed-card-content {
+        padding: 10px 20px 10px;
+        width: -webkit-calc(100% - 120px);
+    }
+    .feed-activity-title {
+        font-size: 1em;
+        padding-top: 28px;
+        margin-left: 110px;
+    }
+    .feed-card-image {
+        width: 120px;
+    }
+    .feed-content-col {
+        width: 100% !important;
+        padding: 0 !important;
+        top: -25px;
+    }
+    .feed-card-title {
+        padding-bottom: 10px;
+        font-size: 0.8em;
+    }
+    .feed-card-title-special {
+        font-size: 1.2em;
+        padding-bottom: 40px;
+        padding-top: 20px;
+    }
+    .feed-card-icon-container {
+        top: 50px;
+    }
+    .feed-bookmark-image {
+        width: 100%;
+    }
+    .feed-bookmark-card {
+        width: 100%;
+    }
+    .feed-agree-box {
+        left: 0;
+        width: 100%;
+    }
+    .tierInProgessLarge {
+        background-color: transparent !important;
+        width: 15px !important;
+        height: 15px !important;
+        left: 5px !important;
+        top: -35px !important;
+        font-size: 25px !important;
+        cursor: default;
+    }
+    .biggerminiTierIcon {
+        font-size: 35px !important;
+    }
+    >>>>>>>Akuma
+>>>>>>> origin/Dan
 }
 
 .feed-visual-sentence-sublabel {
