@@ -27,16 +27,25 @@
 //  22. Flow Text
 //  23. Collections
 //  24. Progress Bar
+<<<<<<< HEAD
+=======
 //
 //
+>>>>>>> origin/Dan
 // 1. Colors
 // ==========================================================================
 $color-primary: #3F51B5;
 $color-primary-dark: #303F9F;
 $color-primary-light: #C5CAE9;
+<<<<<<< HEAD
+$color-primary-text: #ffffff;
+$color-text: #212121;
+$color-secondary-text: #757575;
+=======
 $color-text: #212121;
 $color-text-primary: #ffffff;
 $color-text-secondary: #757575;
+>>>>>>> origin/Dan
 $color-accent: #F50057;
 $color-accent-hover: #FF4081;
 $color-cancel-hover: #F44336;
@@ -47,9 +56,12 @@ $color-tier2: #00B25C;
 $color-tier3: #FF8E00;
 $color-tier4: #FF4100;
 $color-tier5: #DB0058;
+<<<<<<< HEAD
+=======
 $color-bg: #ddd;
 $color-bg-light: #f5f5f5;
 $color-bg-dark: #c4c4c4;
+>>>>>>> origin/Dan
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 // 2. Badges
@@ -76,7 +88,11 @@ $button-raised-color: #fff !default;
 $button-large-icon-font-size: 1.6rem !default;
 $button-large-height: $button-height * 1.5 !default;
 // Flat buttons
+<<<<<<< HEAD
+$button-flat-color: #343434 !default;
+=======
 $button-flat-color: $color-accent !default;
+>>>>>>> origin/Dan
 $button-flat-disabled-color: lighten(#999, 10%) !default;
 // Floating buttons
 $button-floating-background: $color-accent !default;

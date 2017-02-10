@@ -70,34 +70,39 @@ function DisplayLogin(){
 	<?php
 }
 
-function DisplayLandingSignup(){
+function DisplayLandingSignup($param){
+	echo $param;
 	?>
     <div class="row">
 		  <div class="col s12 m5 offset-m1 z-depth-3" style='border-radius: 10px;background-color: #303F9F;padding: 30px 0;'>
 					<div class="row">
 	  	   		<div class="social-login-header" style='color:white;font-size:1.2em;margin:10px 0;'>
-	  	   			Sign up for the beta to start building your lifebar today!
+						 <?php if(trim($param) == '?autogenerate'){?>
+						 		<span style='padding:0 15px;display:inline-block'>Thanks for your time & providing valuable feedback! Hit sign up and get started right away.</span>
+						 <?php }else{ ?>
+	  	   				Sign up for the beta to start building your lifebar today!
+						 <?php } ?>
 	  	   		</div>
 	  	   	</div>
 		    <div class="row">
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-account-circle prefix"></i>
-		        <input id="signup_username" type="text">
-		        <label for="signup_username" style='color:white;'>Username</label>
+		        <input id="signup_username" type="text" value="<?php if(trim($param) == '?autogenerate'){ echo uniqid("Gamer"); } ?>">
+		        <label for="signup_username" <?php if(trim($param) == '?autogenerate'){ echo "class='active'"; } ?> style='color:white;'>Username</label>
 		      </div>
 	      	</div>
 	    	<div class="row">
 	  	      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-action-lock prefix"></i>
-		        <input id="signup_password" type="password">
-		        <label for="signup_password" style='color:white;'>Password</label>
+		        <input id="signup_password" type="password" value="<?php if(trim($param) == '?autogenerate'){ echo "123456"; } ?>">
+		        <label for="signup_password" <?php if(trim($param) == '?autogenerate'){ echo "class='active'"; } ?> style='color:white;'>Password</label>
 		      </div>
 	      	</div>
 	  	    <div class="row">
 		      <div class="input-field col s11" style='text-align:left;color: white;'>
 		        <i class="mdi-communication-email prefix"></i>
-		        <input id="signup_email" type="text">
-		        <label for="signup_email" style='color:white;'>Email</label>
+		        <input id="signup_email" type="text" value="<?php if(trim($param) == '?autogenerate'){ echo "test_user@notreal.com"; } ?>">
+		        <label for="signup_email" <?php if(trim($param) == '?autogenerate'){ echo "class='active'"; } ?> style='color:white;'>Email</label>
 		      </div>
 	      	</div>
 		    <div class="row">

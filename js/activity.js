@@ -59,6 +59,10 @@ function RefreshActivity(filter) {
     });
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Dan
 function AttachActivityEvents() {
     $(".user-discover-card").on("click", function(e) {
         e.stopPropagation();
@@ -129,6 +133,81 @@ function AttachActivityEvents() {
                 EndlessLoader();
         }
     });
+<<<<<<< HEAD
+=======
+function AttachActivityEvents(){
+	 $(".user-discover-card").on("click", function(e){
+	  	e.stopPropagation();
+		ShowUserProfile($(this).attr("data-id"));
+	 });
+ 	 $(".feed-avatar, .user-avatar").on("click", function(e){
+	  	e.stopPropagation();
+	 	ShowUserProfile($(this).attr("data-id"));
+	 });
+  	 $(".feed-activity-user-link-action").on("click", function(e){
+	  	e.stopPropagation();
+	 	ShowUserProfile($(this).attr("data-id"));
+	 });
+	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
+	 	e.stopPropagation(); 
+	 	ShowGame($(this).attr("data-gbid"), $("#activity"));
+	 })
+	 $(".feed-card-image").on("click", function(e){
+	 	e.stopPropagation(); 
+	 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
+	 })
+	 $(".feed-activity-collection-link").on("click", function(e){
+	 	e.stopPropagation();
+		DisplayCollectionDetails($(this).attr("data-cid"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
+	 });
+ 	 $(".collection-box-container").on("click", function(e){
+ 	 	e.stopPropagation();
+		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
+	 });
+	AttachWatchFromXP();
+	$(".shareBtn").on('click', function(){
+		ShowShareModal("event", $(this).attr("data-eventid"));
+	});
+	$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+	});
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".card-game-secondary-actions").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	AttachStarEvents();
+	 AttachAgreesFromActivity();
+	 $(window).unbind("scroll");
+	 $(window).scroll(function(){
+	 	if(isScrolledIntoView($("#feed-endless-loader"))){
+	 		if($("#feed-endless-loader").html() == "")
+      			EndlessLoader();
+	 	}
+     });
+>>>>>>> Akuma
+=======
+>>>>>>> origin/Dan
 }
 
 function AttachActivityVideoEvents() {

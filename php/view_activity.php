@@ -256,7 +256,7 @@ function FeedDateDivider($date){
 					<div class="feed-date-divider-bullet"></div>
 					<div class="feed-date-divider-day">
 						<?php echo $datetime[1]; ?>
-						<span style='color:#D32F2F'>/</span>
+						<span style='color:#3F51B5'>/</span>
 						<span style="font-weight:100;"><?php echo $year[0]; ?></span>
 					</div>
 				<?php }else{ ?>

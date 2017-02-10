@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function ShowUserProfile(id, mine, browserNav) {
     ShowUserContent(id, mine);
 }
@@ -38,6 +39,34 @@ function ShowUserContent(userid, mine, browserNav) {
             else
                 GAPage('Profile', '/profile/personal/' + name);
         },
+=======
+function ShowUserProfile(id, mine, browserNav){
+	if(!$("#profile").is(":visible"))
+		ShowUserContent(id,mine);
+}
+
+function ShowUserContent(userid, mine, browserNav){
+	var windowWidth = $(window).width();
+    $("#profile").css({"display":"inline-block", "right": "-75%"});
+	if($(window).width() > 599){
+		$("#navigation-header").css({"display":"block"});
+		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	}
+	SCROLL_POS = $(window).scrollTop();
+	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
+	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("#profile.outerContainer").css({ "right": 0 });
+
+  	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayWeave", userid: userid },
+     type: 'post',
+     success: function(output) {
+			$("#profileInnerContainer").html(output);
+			Waves.displayEffect();
+			AttachShowUserActivityEvents();
+     },
+>>>>>>> Akuma
         error: function(x, t, m) {
             if (t === "timeout") {
                 ToastError("Server Timeout");
@@ -49,6 +78,7 @@ function ShowUserContent(userid, mine, browserNav) {
     });
 }
 
+<<<<<<< HEAD
 function AttachProfileEvents(userid) {
     $(".fixed-close-modal-btn").on('click', function() {
         var windowWidth = $(window).width();
@@ -159,6 +189,116 @@ function AttachProfileEvents(userid) {
     $(".newprofile-best-item").on('click', function() {
         ShowGame($(this).attr("data-id"), $("#profile"));
     });
+=======
+function AttachProfileEvents(userid){
+	$(".fixed-close-modal-btn, .lean-overlay").unbind();
+	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+		$("#profile").css({ "right": "-75%" }); 
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+	});
+ 	$(".userprofile-card-avatar").on("click", function(e){
+  		e.stopPropagation();
+ 		ShowUserProfile($(this).attr("data-userid"));
+ 	});
+ 	$(".userprofile-game-card-image").on('click', function(e){
+ 		e.stopPropagation();
+ 	 	var game = $(this).parent().attr("data-gbid");
+	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
+ 	});
+	$(".card-tier-container").on('click', function(){
+		$(this).addClass("card-tier-container-active");
+		$(this).parent().parent().find(".card-tier").hide();
+		$(this).find(".card-tier-details").addClass("card-tier-details-active");
+		$(this).find(".mdi-content-add-circle").on("click", function(e){
+			e.stopPropagation();
+			$(this).parent().parent().parent().removeClass("card-tier-container-active");
+			$(this).parent().parent().removeClass("card-tier-details-active");
+			$(this).parent().parent().parent().parent().find(".card-tier").show();
+		});
+	});
+	$(".badge-view-more").on('click', function(){
+		DisplayUserBadges(userid);		
+	});
+	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .calendar-card, .profile-highlighted-game, .profile-best-game, .checkpoint-container").on("click", function(e){
+	 	e.stopPropagation();
+	 	var game = $(this).attr("data-gbid");
+	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
+	 });
+ 	 $(".profile-highlighted-game-quote, .profile-highlighted-game-name").on("click", function(e){
+	 	e.stopPropagation();
+	 	var game = $(this).parent().find(".profile-highlighted-game").attr("data-gbid");
+	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
+	 });
+	 $(".ability-spy").on("click", function(){
+ 		DisplaySpy(userid);
+	 });
+	 $(".ability-charisma").on("click", function(){
+	 	DisplayCharisma(userid);
+	 });
+ 	 $(".ability-leadership").on("click", function(){
+	 	DisplayLeadership(userid);
+	 });
+  	 $(".ability-tracking").on("click", function(){
+	 	DisplayTracking(userid);
+	 });
+	 $(".abilities-view-more").on("click", function(){
+ 		DisplayAbilitiesViewMore(userid);
+	 });
+	 $(".knowledge-view-more").on("click", function(){
+	 	DisplayKnowledgeViewMore(userid);
+	 });
+	 $(".knowledge-container").on("click", function(){
+	 	DisplayKnowledgeDetails(userid, $(this).attr("data-objectid"), $(this).attr("data-progid"));
+	 });
+	 $(".gear-view-more").on("click", function(){
+	 	DisplayGearViewMore(userid);
+	 });
+  	$(".badge-small").on("click", function(){
+ 		var id = $(this).attr("data-objectid");
+ 		var progid = $(this).attr("data-progid");
+ 		DisplayGearDetails(userid, id, progid);
+ 	});
+ 	$(".profile-best-view-more").on("click", function(){
+ 		DisplayBestViewMore(userid);	
+ 	});
+ 	 $(".developer-view-more").on("click", function(){
+	 	DisplayDeveloperViewMore(userid);
+	 });
+ 	 $(".developer-profile-item").on("click", function(){
+	 	DisplayDeveloperDetails(userid, $(this).attr("data-objectid"), $(this).attr("data-progid"));
+	 });
+	 $(".mylibrary").on("click", function(){
+	 	DisplayMyLibrary(userid);
+	 });
+ 	 $(".view-collections").on("click", function(){
+ 		DisplayUserCollection(userid);
+	 });
+ 	 $(".collection-box-container").on("click", function(){
+		 DisplayCollectionDetails($(this).attr("data-id"), 'Profile', userid);	
+	 });
+	 /*
+	 * New Profile
+	 */
+	 $(".newprofile-link-discover").on('click', function(){
+ 		ShowDiscoverHome();
+	 });
+	 $(".newprofile-skills-item").on("click", function(){
+	 	AdvancedSearch('', '', '', '', '', $(this).attr("data-id"), '');
+	 });
+	 $(".newprofile-knowledge-item").on('click', function(){
+	 	AdvancedSearch('', '', '', '', '', '', $(this).attr("data-id"));
+	 });
+ 	 $(".newprofile-gear-item").on('click', function(){
+	 	AdvancedSearch('', $(this).attr("data-id"), '', '', '', '', '');
+	 });
+  	 $(".newprofile-dev-item").on('click', function(){
+	 	AdvancedSearch('', '', '', '', $(this).attr("data-id"), '', '');
+	 });
+  	 $(".newprofile-best-item").on('click', function(){
+	 	ShowGame($(this).attr("data-id"), $("#profile"));
+	 });
+>>>>>>> Akuma
 }
 
 function EndlessMyLibraryLoader(userid) {
@@ -904,6 +1044,10 @@ function AttachRemoveBadge(userid) {
     });
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Dan
 function UnequipBadge(userid) {
     $(".badge-unequip").unbind();
     $(".badge-unequip").on("click", function() {
@@ -960,6 +1104,65 @@ function EquipBadge(userid) {
             timeout: 45000
         });
     });
+<<<<<<< HEAD
+=======
+function UnequipBadge(userid){
+	$(".badge-unequip").unbind();
+	$(".badge-unequip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+			btn.addClass("badge-equip");
+	     	btn.removeClass("badge-unequip");
+	     	btn.html("Equip");
+			Toast("Badge Unequipped");			
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+}
+
+function EquipBadge(userid){
+	$(".badge-equip").unbind();
+	$(".badge-equip").on("click", function(){
+		var btn = $(this);
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+	     type: 'post',
+	     success: function(output) {
+			$(".badge-unequip").each(function(){
+				$(this).removeClass("badge-unequip");
+				$(this).html("Equip");
+			});
+ 	     	btn.addClass("badge-unequip");
+	     	btn.removeClass("badge-equip");
+	     	btn.html("Unequip");
+			Toast("Badge Equipped");
+			AttachManageBadgeEvents(userid);
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});
+	});
+>>>>>>> Akuma
+=======
+>>>>>>> origin/Dan
 }
 
 function FollowUserFromFab(followid, name) {
@@ -1194,6 +1397,7 @@ function ShowUserActivity(userid) {
     });
 }
 
+<<<<<<< HEAD
 function AttachShowUserActivityEvents() {
     $(".user-discover-card").on("click", function(e) {
         e.stopPropagation();
@@ -1240,6 +1444,53 @@ function EndlessUserAcitivtyLoader(userid) {
             $("#feed-endless-loader").attr("data-date", lastdate);
             AttachShowUserActivityEvents(userid);
         },
+=======
+function AttachShowUserActivityEvents(){
+		$(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
+		$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+			$("#profile").css({ "right": "-75%" }); 
+			$(".lean-overlay").each(function(){ $(this).remove(); } );
+			$(".feed-avatar, .user-avatar").on("click", function(e){
+				e.stopPropagation();
+				ShowUserProfile($(this).attr("data-id"));
+			});
+			setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+		});
+		AttachAgreesFromActivity();
+		$("#profileInnerContainer").unbind("scroll");
+		$("#profileInnerContainer").find(".feed-avatar-col").css({"opacity":"0"});
+		$("#profileInnerContainer").find(".game-discover-card").css({"height":"200px"});
+		$("#profileInnerContainer").find(".game-discover-card .card-content").each(function(){
+			if($(this).parent().height() != 165)
+				$(this).hide();
+		});
+		$("#profileInnerContainer").find(".watchBtn").hide();
+		$("#profileInnerContainer").scroll(function(){
+		if(isScrolledIntoView($("#profileInnerContainer").find("#feed-endless-loader"))){
+			if($("#profileInnerContainer").find("#feed-endless-loader").html() == "")
+				EndlessUserAcitivtyLoader($("#profileInnerContainer").find(".activity-top-level").attr("data-id"));
+		}
+		}); 
+}
+
+function EndlessUserAcitivtyLoader(userid){
+	ShowLoader($("#profileInnerContainer").find("#feed-endless-loader"), 'big', "<br><br><br>");
+	$("#profileInnerContainer").find("#feed-endless-loader").append("<br><br><br>");
+	var page = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page");
+	var date = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date");
+	var filter = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-filter");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
+     type: 'post',
+     success: function(output) {
+		$("#profileInnerContainer").find("#feed-endless-loader").before(output);
+		$("#profileInnerContainer").find("#feed-endless-loader").html("");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+		var lastdate = $("#profileInnerContainer").find("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-date", lastdate);
+		AttachShowUserActivityEvents(userid);
+     },
+>>>>>>> Akuma
         error: function(x, t, m) {
             if (t === "timeout") {
                 ToastError("Server Timeout");

@@ -157,9 +157,10 @@
 #game.outerContainer, #profile.outerContainer, #gamemini.outerContainer{
 	display: none;
     position: fixed;
-    z-index: 100;
+    z-index: 1003;
 	top: 60px;
 	padding: 0 !important;
+	width: 75% !important;
 }
 
 #game.outerContainer-slide-out, #profile.outerContainer-slide-out{

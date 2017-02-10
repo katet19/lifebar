@@ -13,7 +13,7 @@ function AccountDetails(){
 			<!--<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> -->
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">visibility</i> Add your watched experiences, whether it's your thoughts on the latest Mario 64 speed run or the most interesting E3 reveals you can quickly save and share with others</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">gamepad</i>Journal your time playing a game and capture your thoughts and feelings as you play from start to finish.</div>
-			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank intersting sub-lists based on year, genre & platform</div>
+			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">swap_vert</i> Rank your all time games list and rank interesting sub-lists based on year, genre & platform</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">whatshot</i> Follow your favorite gaming personalities & friends to create a personalized gaming activity feed</div>
 			<div class='onboarding-sub-welcome' style='margin-top:10px;'>Tell us a little bit about your yourself and we'll help you get started</div>
 		</div>

@@ -16,6 +16,7 @@
 		CollectionServices();
 		OnboardingServices();
 		FormServices();
+		RankingService();
 	}else if(isset($_POST['action']) && $GLOBALS["DownForMaintenance"]){
 		?>
 		<div style='font-size: 3em;font-weight: 100;padding-top: 100px;'>Lifebar is temporarily down for maintenance</div>
@@ -595,6 +596,11 @@
 			SubmitBookmark($_SESSION['logged-in']->_id,$_POST['gameid'],"No");
 		}
 	}
+	function RankingService(){
+		if($_POST['action'] == 'DisplayRanking' && $_SESSION['logged-in']->_id > 0){
+			DisplayRanking($_SESSION['logged-in']->_id);
+		}
+	}
 	function UserServices(){
 		if($_POST['action'] == 'FollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){
 			AddConnection($_SESSION['logged-in']->_id, $_POST['followid'], true);
@@ -676,7 +682,7 @@
 			SubmitPWReset($_POST['key'], $_POST['password']);
 		
 		if($_POST['action'] == 'ShowLanding'){
-			ShowLanding();
+			ShowLanding($_POST['param']);
 		}
 		if($_POST['action'] == 'ThirdPartyLogin'){
 			RegisterThirdPartyUser($_POST['username'], $_POST['email'], $_POST['first'], $_POST['last'], $_POST['image'], $_POST['thirdpartyID'], $_POST['whoAmI']);
