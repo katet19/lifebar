@@ -2,7 +2,7 @@
 @import '../partials/layout'; // responsive grid and media queries
 @import '../../../base/mixins';
 @import '../../../base/variables';
-// additional colors
+// additional colors 
 $success: #6fce72; // green
 $alert: $color-cancel-hover; // red
 // fonts 
@@ -91,7 +91,8 @@ main>h1 {
 }
 
 section {
-    margin: 3em 0;
+    margin: 6em 0;
+    padding-top: 40px;
     // @include clearfix;
     &:nth-of-type(1) h2::before {
         content: '1. ';
