@@ -5,7 +5,7 @@ xBackground
 -------------------------------- */
 body {
   /* this is the page background */
-  background-color: #ffffff; } 
+  background-color: #ffffff; }
 
 /* -------------------------------- 
 
@@ -136,18 +136,18 @@ section {
     background: #b3b9e2; }
 
 .cd-colors li:nth-of-type(4) .cd-color-swatch {
-  background: #ffffff; }
+  background: #212121; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::before {
-    background: white; }
+    background: #2e2e2e; }
   .cd-colors li:nth-of-type(4) .cd-color-swatch::after {
-    background: #f2f2f2; }
+    background: #141414; }
 
 .cd-colors li:nth-of-type(5) .cd-color-swatch {
-  background: #212121; }
+  background: #ffffff; }
   .cd-colors li:nth-of-type(5) .cd-color-swatch::before {
-    background: #2e2e2e; }
+    background: white; }
   .cd-colors li:nth-of-type(5) .cd-color-swatch::after {
-    background: #141414; }
+    background: #f2f2f2; }
 
 .cd-colors li:nth-of-type(6) .cd-color-swatch {
   background: #757575; }
@@ -323,6 +323,21 @@ xIcons
   /* icons size */
   width: 32px;
   height: 32px; }
+
+/* -------------------------------- 
+
+xSlideout
+
+-------------------------------- */
+.no-slide {
+  padding: 0px;
+  display: none !important;
+  right: -40%; }
+
+.slide {
+  padding: 0px;
+  display: inline-block !important;
+  right: 0px; }
 
 /* -------------------------------- 
 

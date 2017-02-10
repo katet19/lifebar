@@ -609,12 +609,12 @@
 }
 
 .game-discover-card{
-	position: relative;
+	/*position: relative;
 	text-align: left;
     background-color: #C5CAE9;
 	height: 270px;
-	display:block;
-}
+	display:block;*/
+} 
 
 .game-discover-dismiss-card{
 	position: relative;

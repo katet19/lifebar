@@ -1,78 +1,79 @@
 @import '../base/mixins';
+@import '../base/variables';
 .btn,
 .btn-large {
-    background-color: #F50057 !important;
-    color: white !important;
     font-weight: 400;
 }
 
-.btn-save {
-    //formerly save-btn
-    @include shadow;
-    font-weight: 400;
-    text-decoration: none;
-    color: #fff;
-    background-color: #26a69a;
-    text-align: center;
-    letter-spacing: .5px;
-    transition: .2s ease-out;
-    cursor: pointer;
+.btn-flat {
+    font-weight: 500;
+    color: $color-accent;
     &:hover {
-        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-        background-color: #2bbbad;
+        color: $color-accent-hover !important;
     }
-    &.disabled {
-        background-color: #DFDFDF !important;
-        box-shadow: none !important;
-        color: #9F9F9F !important;
-        cursor: default;
-        &:hover {
-            box-shadow: none !important;
-            background-color: #DFDFDF !important;
+}
+
+.btn-save {
+    background-color: $color-save !important;
+    &:hover {
+        background-color: $color-save-hover !important;
+    }
+}
+
+.btn-cancel {
+    //formerly cancel-btn
+    background-color: $color-text-secondary !important;
+    &:hover {
+        background-color: $color-cancel-hover !important;
+    }
+}
+
+.btn-user-card {
+    padding: 0 1rem;
+    position: absolute;
+    right: 10px;
+    width: auto;
+}
+
+.btn-user-card-small {
+    padding: 5px 0px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.follow-from-discover {
+    //used in js
+    @extend .btn-user-card;
+    top: 20px;
+}
+
+.dismiss-from-discover {
+    //used in js
+    @extend .btn-user-card;
+    top: 70px;
+}
+
+.follow-from-discover-small,
+.dismiss-from-discover-small {
+    //used in js
+    @extend .btn-user-card-small;
+    &:hover {
+        background-color: $color-accent;
+        @include shadow;
+        i {
+            color: white;
         }
     }
 }
 
-.cancel-btn {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    border: none;
-    border-radius: 2px;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    outline: 0;
-    padding: 0 2rem;
-    text-transform: uppercase;
-    vertical-align: middle;
-    -webkit-tap-highlight-color: transparent;
-    color: white !important;
-    font-weight: 400;
-    text-decoration: none;
-    color: #fff;
-    background-color: #757575;
-    text-align: center;
-    letter-spacing: .5px;
-    transition: .2s ease-out;
-    cursor: pointer;
-}
-
-.cancel-btn:hover {
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-    background-color: #F44336;
-}
-
-.btn:hover,
-.btn-large:hover {
-    background-color: #FF4081 !important;
-}
-
-.nav-game-action-btn {
-    font-size: 1.75em;
-    color: rgba(0, 0, 0, 0.2);
-    @include transition(all 0.3s ease-in-out);
+.dismiss-from-discover-small {
+    //used in js
+    @extend .btn-user-card-small;
 }
 
 .fixed-close-modal-btn {
+    //used in js
     position: absolute;
     right: 10px;
     top: 15px;
@@ -83,7 +84,12 @@
     line-height: 50px;
     font-weight: bold;
     color: white;
-    background-color: #F50057;
+    background-color: $color-accent;
     width: 50px;
     cursor: pointer;
+    .material-icons {
+        font-size: 1.2em;
+        vertical-align: sub;
+        line-height: inherit;
+    }
 }

@@ -1,13 +1,256 @@
 @import '../base/mixins';
-.feed-horizontal-card {
-    @include card;
-    text-align: left;
-    display: inline-block;
-    background-color: #C5CAE9;
-    width: 100%;
+@import '../base/global';
+// ==========================================================================
+// Cards
+// ==========================================================================
+//
+// Table of Contents:
+//
+// 1. Game Action Card (.game-discover-card)
+//      _________________________________________________
+//  a.  |                   .card-game-secondary-actions|
+//      |                                               |
+//      |                                               |
+//      |                                               |
+//      |                                               |
+//      |                  .card-image                  |
+//      |                                               |
+//      |                                               |
+//      |                                               |
+//      |                                               |
+//      |                                               |
+//      |              .card-game-image-title           |
+//      |_______________________________________________|
+//  b.  |                                               |
+//      |                 .card-actions                 | <---
+//      |            .game-card-action-pick             |     |   .card-content                      ii                                                           iii
+//      |                .card-action-btn               |     |   .card-title
+//      |_______________________________________________|     |           |_______________________________________________________|   |_______________________________________________________| 
+//   c. |      .game-nav-title .game-card-action-pick   |     |           |      .game-nav-title .game-card-action-pick           |   |      .game-nav-title .game-card-action-pick           |
+//    i |.card-summary-prog-title                       |     |           | .card-summary-watch-container .game-card-action-pick  |   | .card-summary-watch-container .game-card-action-pick  |
+//      |.card-summary-progbar-container                |     |           |                .game-card-summary-add-xp              |   |                                                       |
+//      |                   .card-summary-progbar       |     |           |              .game-card-summary-add-xp-icon           |   |                     .tierTextColor                    |
+//      |_______________________________________________| <---            |_____________.game-card-summary-add-xp-text____ _______|   |________________.card-summary-watch-length_____________|
+//
+// 2. Bookmark Card
+// 3. User Cards
+//
+//
+//
+// 1. Game Card
+// ==========================================================================
+.game-discover-card {
+    //used in js
+    .card-image {
+        height: 200px !important;
+    }
+    .card-content {
+        background-color: white;
+        padding: 0px !important;
+        height: 70px;
+        .card-title {
+            font-size: 1em;
+            line-height: 18px;
+            height: 70px;
+            position: relative;
+            cursor: inherit;
+        }
+    }
 }
 
+// ==========================================================================
+// a.
+.card-game-image-title {
+    @include fill-bottom;
+    color: $color-text-primary;
+    padding: 3px 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.card-game-secondary-actions {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    @include transition(all 0.3s ease-in-out);
+    @include fill;
+    height: 200px;
+    text-align: right;
+    padding: 5px;
+    cursor: pointer;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.card-game-secondary-action-i {
+    display: inline-block;
+    padding: 5px;
+    color: $color-text-primary;
+    cursor: pointer;
+    border-radius: 2px;
+    &:hover {
+        background-color: $color-accent;
+        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+// ==========================================================================
+// b.
+.card-actions {
+    //formerly nav-game-actions
+    margin-bottom: 0px;
+    background-color: $color-bg;
+    .col {
+        cursor: pointer;
+        @include transition(all 0.3s ease-in-out);
+        text-align: center;
+        &:hover {
+            // background-color: #F50057 !important;
+            color: $color-text-secondary !important;
+            // -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            // -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            // box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            >.nav-game-action-btn,
+            i {
+                color: $color-text-secondary !important;
+            }
+        }
+    }
+}
+
+.game-card-action-pick {
+    //used in js
+    padding: 4px 0 !important;
+    font-weight: 500;
+}
+
+.card-action-btn {
+    //formerly nav-game-action-btn
+    font-size: 1.75em;
+    color: rgba(0, 0, 0, 0.2);
+    @include transition(all 0.3s ease-in-out);
+}
+
+// ==========================================================================
+// c.
+.game-nav-title {
+    //used in js
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 35px;
+    padding: 0px;
+    font-weight: 500;
+    color: #212121;
+    cursor: pointer;
+    &:hover {
+        color: $color-accent !important;
+        .card-summary-progbar {
+            background-color: $color-accent !important;
+        }
+        .card-summary-progbar-container {
+            background-color: lighten($color-accent, 30%) !important;
+        }
+    }
+}
+
+// ==========================================================================
+// c. i.
+.card-summary-prog-title {
+    font-size: 1em;
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    display: inline-block;
+    left: 5px;
+    font-weight: 500;
+    top: 8px;
+}
+
+.card-summary-progbar-container {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+    right: 5px;
+    height: 15px;
+    background-color: lightgray;
+    padding: 0 !important;
+}
+
+.card-summary-progbar {
+    height: 15px;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
+    text-align: center;
+}
+
+// ==========================================================================
+// c. ii.
+.card-summary-watch-container {
+    width: 100%;
+    padding: 5px 2px !important;
+    text-align: center;
+    overflow: hidden;
+    height: 35px;
+    cursor: pointer;
+    margin-top: -3px;
+    &:hover {
+        color: $color-accent;
+        i {
+            color: $color-accent;
+        }
+    }
+}
+
+.game-card-summary-add-xp {
+    //used in js
+    font-size: 0.9em;
+    margin-left: 5px;
+    font-weight: bold;
+    position: relative;
+    top: -6px;
+    cursor: pointer;
+    // padding: 8px 0;
+    &:hover>.game-card-summary-add-xp-text {
+        color: $color-accent;
+    }
+}
+
+.game-card-summary-add-xp-icon {
+    //used in js
+    font-size: 1.5em;
+    vertical-align: middle;
+    color: gray;
+}
+
+.game-card-summary-add-xp-text {
+    //used in js
+    font-size: 0.9em;
+    margin-left: 5px;
+    color: gray;
+    position: relative;
+    top: 1px;
+}
+
+// ==========================================================================
+// c. iii.
+.card-summary-watch {
+    position: relative;
+    top: -6px;
+}
+
+.card-summary-watch-length {
+    font-size: 0.9em;
+    margin-left: 5px;
+}
+
+// 2. Bookmark Card
+// ==========================================================================
 .feed-bookmark-card {
+    //used in js
+    @extend .z-depth-1;
     @include card;
     width: 300px;
     background-color: white;
@@ -20,6 +263,270 @@
     }
 }
 
+.feed-activity-game-link {
+    //used in js
+    cursor: pointer;
+    font-weight: 400;
+    @include transition(all 0.3s ease);
+    &:hover {
+        color: $color-accent;
+    }
+}
+
+// 3. User Card
+// ==========================================================================
+.user-discover-card,
+.card-user-follow {
+    //used in js
+    position: relative;
+    text-align: left;
+    display: block;
+    .card-image {
+        height: 120px !important;
+        background-color: $color-bg-dark;
+    }
+    .card-content {
+        background-color: white;
+        height: 65px;
+        padding: 10px 24px 8px 16px !important;
+        .card-title {
+            font-size: 1em;
+            line-height: 15px;
+            font-weight: 500;
+        }
+    }
+    .card-reveal {
+        padding: 10px 24px 8px 16px !important;
+        z-index: 4;
+        .card-title {
+            font-size: 1em;
+            line-height: 17px;
+            font-weight: 500;
+        }
+    }
+}
+
+.card-user-follow {
+    .card-content {
+        height: 100px;
+    }
+}
+
+.card-user-follow-large {
+    @extend .card-user-follow;
+    .card-content {
+        height: 185px;
+        .card-horizontal {
+            @extend .z-depth-0;
+        }
+    }
+}
+
+.card-user-follow-btn-container {
+    margin: -10px -24px 10px -16px !important;
+    background-color: $color-bg-light;
+}
+
+.card-user-follow-large-gameIMG {
+    //formerly user-follow-card-image-w-game
+    @include bg-cover;
+    margin-right: 0;
+    z-index: 0;
+    cursor: default;
+    width: 90px;
+    border-radius: 50%;
+    margin-left: 0;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    height: 90px;
+}
+
+.card-user-follow-large-title {
+    position: relative !important;
+    display: inline-block !important;
+    padding: 16px !important;
+    text-align: left !important;
+    cursor: default !important;
+    right: auto !important;
+    width: calc(100% - 150px)!important;
+    left: 100px !important;
+}
+
+// 4. Activity Cards
+// ==========================================================================
+// a. Compact Card
+.feed-game-discover-card {
+    //used in js
+    // @extend .z-depth-1;
+    // height: 165px !important;
+    .card-content {
+        height: 65px !important;
+    }
+}
+
+.action-details-emoji-small {
+    //formerly feed-action-details-small-emoji
+    position: absolute;
+    top: 82px;
+    font-size: 1.5em;
+    background-color: white;
+    border-radius: 25px;
+    padding: 6px 2px;
+    left: 20px;
+}
+
+.card-activity-title {
+    font-size: 0.9em;
+    padding: 14px 8px 0;
+    line-height: 15px;
+    height: 30px;
+    font-weight: 500;
+    overflow: hidden;
+}
+
+// ==========================================================================
+// b. Horizontal Card
+.card-horizontal {
+    @include card;
+    @extend .z-depth-1;
+    text-align: left;
+    display: inline-block;
+    background-color: $color-bg-light;
+    width: 100%;
+}
+
+.feed-card-image {
+    //used in js
+    @include bg-cover;
+    display: inline-block;
+    width: 150px;
+    position: absolute;
+    height: 100%;
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.card-horizontal-content {
+    //formerly feed-card-content
+    padding: 10px 20px 10px 35px;
+    position: relative;
+    background-color: white;
+    float: right;
+    width: -webkit-calc(100% - 150px);
+}
+
+.card-horizontal-title {
+    //formerly feed-card-title
+    font-size: 1.3em;
+    padding-bottom: 30px;
+    word-wrap: break-word;
+}
+
+.card-horizontal-game_title {
+    //formerly feed-card-level-game_title
+    font-weight: 500;
+    font-size: 0.7em;
+}
+
+.feed-activity-game-link,
+.feed-activity-user-link-action {
+    //used in js
+    cursor: pointer;
+    font-weight: 400;
+    @include transition(all 0.3s ease);
+    &:hover {
+        color: $color-accent;
+    }
+}
+
+.action-details {
+    //formerly feed-action-details
+    position: relative;
+    display: block;
+    top: 10px;
+}
+
+.action-details-card {
+    //formerly feed-action-details-card
+    color: $color-text-secondary;
+    font-weight: 400;
+    padding: 1px;
+    font-size: 0.7em;
+    position: relative;
+    top: -5px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.action-details-card-small {
+    //formerly feed-action-details-small-card
+    @extend .action-details-card;
+    top: 5px;
+    vertical-align: top;
+}
+
+.action-container {
+    //formerly feed-action-container 
+    right: 0px;
+    display: block;
+    text-align: right;
+    width: 100%;
+    margin-top: 10px;
+    height: 36px;
+}
+
+.card-horizontal-footer-container {
+    //formerly myxp-details-agree-container
+    position: absolute;
+    bottom: 10px;
+    height: 35px;
+    right: 130px;
+    left: 35px;
+    text-align: left;
+    overflow: hidden;
+    display: block;
+}
+
+.card-horizontal-footer-list {
+    //formerly myxp-details-agree-list
+    text-align: left;
+    display: inline-block;
+}
+
+.myxp-details-agree-listitem {
+    //used in js
+    display: inline-block;
+}
+
+// ==========================================================================
+// c. Large Horizontal Card
+.feed-card-image-special {
+    width: 100%;
+    height: 150px;
+}
+
+.card-horizontal-title-special {
+    //formerly feed-card-title-special
+    @extend .card-horizontal-title;
+    font-size: 2em;
+    padding-bottom: 60px;
+}
+
+.card-horizontal-content-special {
+    @extend .card-horizontal-content;
+    width: 100%;
+    margin-top: 150px;
+}
+
+//
+//
+//
+//
+//
+//
 .feed-release-card {
     @include card;
     width: 100%;
@@ -32,41 +539,6 @@
     }
 }
 
-.feed-game-discover-card {
-    height: 165px !important;
-}
-
-.feed-card-image {
-    display: inline-block;
-    width: 150px;
-    position: absolute;
-    height: 100%;
-    &:hover {
-        opacity: 0.9;
-    }
-}
-
-.feed-card-content {
-    padding: 10px 20px 10px 35px;
-    position: relative;
-    background-color: white;
-    float: right;
-    width: -webkit-calc(100% - 150px);
-}
-
-.feed-card-icon-container {
-    font-size: 1.75em;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-    color: white;
-    top: 20px;
-    left: -20px;
-    padding-top: 1.25px;
-    position: absolute;
-    border-radius: 50%;
-}
-
 .feed-card-icon {
     font-size: 2.25em;
     position: absolute;
@@ -76,49 +548,31 @@
     border-radius: 50%;
 }
 
-.game-card-action-pick {
-    padding: 4px 0 !important;
-    font-weight: 500;
+// CLEAN UP
+// ==========================================================================
+.game-discover-card .card-reveal,
+.game-discover-dismiss-card .card-reveal {
+    padding: 16px 24px 8px 16px !important;
+    z-index: 2;
 }
 
-.card-game-secondary-actions {
-    opacity: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    @include transition(all 0.3s ease-in-out);
-    //@include fill;  check if bottom an be 0 first
-    top: 0;
-    height: 200px;
-    left: 0;
-    right: 0;
-    position: absolute;
+.game-discover-card .card-content .card-title,
+.game-discover-dismiss-card .card-content .card-title {
+    font-size: 1em;
+    line-height: 18px;
+    height: 70px;
+    position: relative;
+    cursor: inherit;
 }
 
-.card-game-secondary-actions:hover {
-    opacity: 1;
+.game-discover-card .card-reveal .card-title,
+.game-discover-dismiss-card .card-reveal .card-title {
+    font-size: 1em;
+    line-height: 22px;
 }
 
-.game-card-secondary-action-container {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    text-align: right;
-}
-
-.game-card-secondary-action-i {
-    display: inline-block;
-    padding: 5px 5px 0px;
-    color: white;
-    cursor: pointer;
-    border-radius: 2px;
-}
-
-.game-card-secondary-action-i:hover {
-    background-color: #F50057;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
+// DASHBOARD
+// ==========================================================================
 .dashboard-card {
     @include transition(all 0.3s ease-out);
     background-color: white;

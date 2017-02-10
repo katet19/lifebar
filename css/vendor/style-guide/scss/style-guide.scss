@@ -19,7 +19,7 @@ xBackground
 
 body {
     /* this is the page background */
-    background-color: $color-primary-text;
+    background-color: $color-text-primary;
 }
 
 
@@ -33,10 +33,11 @@ xPatterns
     /* this is the container of various design elements - i.e. the 2 logo of the branding section */
     border: 1px solid $color-primary-light;
     border-radius: 3px;
-    background: $color-primary-text;
+    background: $color-text-primary;
     box-shadow: 0 1px 1px rgba(#000, .05);
     padding: 6px;
 }
+
 
 /* -------------------------------- 
 
@@ -85,7 +86,7 @@ main>h1 {
     color: $color-accent;
     // @include MQ(L) {
     //     /* title goes into the header on big devices */
-    //     color: $color-primary-text;
+    //     color: $color-text-primary;
     // }
 }
 
@@ -239,15 +240,6 @@ section {
         }
     }
     li:nth-of-type(4) .cd-color-swatch {
-        background: $color-primary-text;
-        &::before {
-            background: lighten($color-primary-text, 5%);
-        }
-        &::after {
-            background: darken($color-primary-text, 5%);
-        }
-    }
-    li:nth-of-type(5) .cd-color-swatch {
         background: $color-text;
         &::before {
             background: lighten($color-text, 5%);
@@ -256,13 +248,22 @@ section {
             background: darken($color-text, 5%);
         }
     }
-    li:nth-of-type(6) .cd-color-swatch {
-        background: $color-secondary-text;
+    li:nth-of-type(5) .cd-color-swatch {
+        background: $color-text-primary;
         &::before {
-            background: lighten($color-secondary-text, 5%);
+            background: lighten($color-text-primary, 5%);
         }
         &::after {
-            background: darken($color-secondary-text, 5%);
+            background: darken($color-text-primary, 5%);
+        }
+    }
+    li:nth-of-type(6) .cd-color-swatch {
+        background: $color-text-secondary;
+        &::before {
+            background: lighten($color-text-secondary, 5%);
+        }
+        &::after {
+            background: darken($color-text-secondary, 5%);
         }
     }
     li:nth-of-type(7) .cd-color-swatch {
@@ -524,6 +525,25 @@ xIcons
 
 /* -------------------------------- 
 
+xSlideout
+
+-------------------------------- */
+
+.no-slide {
+    padding: 0px;
+    display: none !important;
+    right: -40%;
+}
+
+.slide {
+    padding: 0px;
+    display: inline-block !important;
+    right: 0px;
+}
+
+
+/* -------------------------------- 
+
 xForm 
 
 -------------------------------- */
@@ -532,7 +552,7 @@ input[type=text],
 select {
     border: 1px solid $color-primary-light;
     border-radius: .25em;
-    background: $color-primary-text;
+    background: $color-text-primary;
     &:focus {
         outline: none;
     }

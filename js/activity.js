@@ -59,21 +59,20 @@ function RefreshActivity(filter) {
     });
 }
 
-<<<<<<< HEAD
 function AttachActivityEvents() {
     $(".user-discover-card").on("click", function(e) {
         e.stopPropagation();
-        ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+        ShowUserProfile($(this).attr("data-id"));
     });
     $(".feed-avatar, .user-avatar").on("click", function(e) {
         e.stopPropagation();
-        ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+        ShowUserProfile($(this).attr("data-id"));
     });
     $(".feed-activity-user-link-action").on("click", function(e) {
         e.stopPropagation();
-        ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+        ShowUserProfile($(this).attr("data-id"));
     });
-    $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e) {
+    $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e) {
         e.stopPropagation();
         ShowGame($(this).attr("data-gbid"), $("#activity"));
     })
@@ -89,35 +88,39 @@ function AttachActivityEvents() {
         e.stopPropagation();
         DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);
     });
-    $(".watchBtn").on("click", function(e) {
-        e.stopPropagation();
-        ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
-        ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
-        var gameid = $(this).attr("data-gameid");
-        var url = $(this).attr("data-url");
-        $.ajax({
-            url: '../php/webService.php',
-            data: { action: "DisplayVideoForGame", url: url, gameid: gameid },
-            type: 'post',
-            success: function(output) {
-                $("#BattleProgess").html(output);
-                $(".myxp-video-goto-full").hide();
-                AttachActivityVideoEvents();
-            },
-            error: function(x, t, m) {
-                if (t === "timeout") {
-                    ToastError("Server Timeout");
-                } else {
-                    ToastError(t);
-                }
-            },
-            timeout: 45000
-        });
-
-    });
+    AttachWatchFromXP();
     $(".shareBtn").on('click', function() {
         ShowShareModal("event", $(this).attr("data-eventid"));
     });
+    $(".game-card-action-pick, .game-discover-card .card-image").unbind();
+    $(".game-card-action-pick").on("click", function(e) {
+        e.stopPropagation();
+        if ($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+            GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+    });
+    $(".game-discover-card .card-image").on("click", function(e) {
+        e.stopPropagation();
+        CloseSearch();
+        $(".searchInput input").val('');
+        $('html').unbind();
+        $('html').click(function() {
+            if ($("#userAccountNav").is(":visible"))
+                $("#userAccountNav").hide(250);
+        });
+        ShowGame($(this).parent().attr("data-gbid"), $("#discover"));
+    });
+    $(".card-game-secondary-actions").on("click", function(e) {
+        e.stopPropagation();
+        CloseSearch();
+        $(".searchInput input").val('');
+        $('html').unbind();
+        $('html').click(function() {
+            if ($("#userAccountNav").is(":visible"))
+                $("#userAccountNav").hide(250);
+        });
+        ShowGame($(this).parent().attr("data-gbid"), $("#discover"));
+    });
+    AttachStarEvents();
     AttachAgreesFromActivity();
     $(window).unbind("scroll");
     $(window).scroll(function() {
@@ -126,78 +129,6 @@ function AttachActivityEvents() {
                 EndlessLoader();
         }
     });
-=======
-function AttachActivityEvents(){
-	 $(".user-discover-card").on("click", function(e){
-	  	e.stopPropagation();
-		ShowUserProfile($(this).attr("data-id"));
-	 });
- 	 $(".feed-avatar, .user-avatar").on("click", function(e){
-	  	e.stopPropagation();
-	 	ShowUserProfile($(this).attr("data-id"));
-	 });
-  	 $(".feed-activity-user-link-action").on("click", function(e){
-	  	e.stopPropagation();
-	 	ShowUserProfile($(this).attr("data-id"));
-	 });
-	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
-	 	e.stopPropagation(); 
-	 	ShowGame($(this).attr("data-gbid"), $("#activity"));
-	 })
-	 $(".feed-card-image").on("click", function(e){
-	 	e.stopPropagation(); 
-	 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
-	 })
-	 $(".feed-activity-collection-link").on("click", function(e){
-	 	e.stopPropagation();
-		DisplayCollectionDetails($(this).attr("data-cid"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
-	 });
- 	 $(".collection-box-container").on("click", function(e){
- 	 	e.stopPropagation();
-		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
-	 });
-	AttachWatchFromXP();
-	$(".shareBtn").on('click', function(){
-		ShowShareModal("event", $(this).attr("data-eventid"));
-	});
-	$(".game-card-action-pick, .game-discover-card .card-image").unbind();
-	$(".game-card-action-pick").on("click", function(e){
-		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
-			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
-	});
-	$(".game-discover-card .card-image").on("click", function(e){ 
-		e.stopPropagation(); 
-		CloseSearch();
-		$(".searchInput input").val('');
-		$('html').unbind();
-		$('html').click(function(){
-			if($("#userAccountNav").is(":visible"))
-				$("#userAccountNav").hide(250);
-		});
-		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
-	});
-	$(".card-game-secondary-actions").on("click", function(e){ 
-		e.stopPropagation(); 
-		CloseSearch();
-		$(".searchInput input").val('');
-		$('html').unbind();
-		$('html').click(function(){
-			if($("#userAccountNav").is(":visible"))
-				$("#userAccountNav").hide(250);
-		});
-		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
-	});
-	AttachStarEvents();
-	 AttachAgreesFromActivity();
-	 $(window).unbind("scroll");
-	 $(window).scroll(function(){
-	 	if(isScrolledIntoView($("#feed-endless-loader"))){
-	 		if($("#feed-endless-loader").html() == "")
-      			EndlessLoader();
-	 	}
-     });
->>>>>>> Akuma
 }
 
 function AttachActivityVideoEvents() {

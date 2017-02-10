@@ -7,26 +7,6 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-.GameHeaderContainer {
-    height: 35vh;
-    width: 100%;
-    left: 0;
-    position: absolute;
-    z-index: 1;
-    background-color: black;
-    @include transition(all 0.5s ease);
-}
-
-.GameHeaderBackground {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    left: 0;
-    height: 35vh;
-    /*35em;*/
-    @include transition(all 0.5s ease);
-}
-
 .GameTitle {
     position: absolute;
     top: 30px;
@@ -37,14 +17,6 @@
     z-index: 3;
     line-height: 25px;
     @include transition(all 0.5s ease);
-}
-
-.game-card-image-title {
-    @include fill;
-    color: white;
-    padding: 3px 5px;
-    background-color: rgba(0, 0, 0, 0.5);
-    text-align: center;
 }
 
 .dashboard-question-header {

@@ -53,8 +53,10 @@ function AttachProfileEvents(userid) {
     $(".fixed-close-modal-btn").on('click', function() {
         var windowWidth = $(window).width();
         $("#profile").css({ "left": windowWidth });
-        setTimeout(function() { $("#profile").css({ "display": "none" });
-            $('body').css({ 'overflow-y': 'scroll' }); }, 300);
+        setTimeout(function() {
+            $("#profile").css({ "display": "none" });
+            $('body').css({ 'overflow-y': 'scroll' });
+        }, 300);
     });
     $(".userprofile-card-avatar").on("click", function(e) {
         e.stopPropagation();
@@ -586,8 +588,10 @@ function AttachNavInThread() {
         var current = $(this).parent().find(".thread-nav-active");
         current.removeClass("thread-nav-active");
         current.addClass("thread-nav-right");
-        setTimeout(function() { current.addClass("thread-nav-hidden");
-            current.removeClass("thread-nav-right"); }, 1000);
+        setTimeout(function() {
+            current.addClass("thread-nav-hidden");
+            current.removeClass("thread-nav-right");
+        }, 1000);
         var prev = current.prev();
         prev.removeClass("thread-nav-hidden");
         prev.addClass("thread-nav-active");
@@ -603,8 +607,10 @@ function AttachNavInThread() {
         var current = $(this).parent().find(".thread-nav-active");
         current.removeClass("thread-nav-active");
         current.addClass("thread-nav-left");
-        setTimeout(function() { current.addClass("thread-nav-hidden");
-            current.removeClass("thread-nav-left"); }, 1000);
+        setTimeout(function() {
+            current.addClass("thread-nav-hidden");
+            current.removeClass("thread-nav-left");
+        }, 1000);
         var next = current.next();
         next.removeClass("thread-nav-hidden");
         next.addClass("thread-nav-active");
@@ -898,7 +904,6 @@ function AttachRemoveBadge(userid) {
     });
 }
 
-<<<<<<< HEAD
 function UnequipBadge(userid) {
     $(".badge-unequip").unbind();
     $(".badge-unequip").on("click", function() {
@@ -912,10 +917,6 @@ function UnequipBadge(userid) {
                 btn.removeClass("badge-unequip");
                 btn.html("Equip");
                 Toast("Badge Unequipped");
-                if ($(".avatar-preview").length > 0) {
-                    UpdateAvatarBadge("REMOVE");
-                }
-
                 AttachManageBadgeEvents(userid);
             },
             error: function(x, t, m) {
@@ -939,13 +940,14 @@ function EquipBadge(userid) {
             data: { action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
             type: 'post',
             success: function(output) {
+                $(".badge-unequip").each(function() {
+                    $(this).removeClass("badge-unequip");
+                    $(this).html("Equip");
+                });
                 btn.addClass("badge-unequip");
                 btn.removeClass("badge-equip");
                 btn.html("Unequip");
                 Toast("Badge Equipped");
-                if ($(".avatar-preview").length > 0) {
-                    UpdateAvatarBadge(output);
-                }
                 AttachManageBadgeEvents(userid);
             },
             error: function(x, t, m) {
@@ -958,62 +960,6 @@ function EquipBadge(userid) {
             timeout: 45000
         });
     });
-=======
-function UnequipBadge(userid){
-	$(".badge-unequip").unbind();
-	$(".badge-unequip").on("click", function(){
-		var btn = $(this);
-		$.ajax({ url: '../php/webService.php',
-	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
-	     type: 'post',
-	     success: function(output) {
-			btn.addClass("badge-equip");
-	     	btn.removeClass("badge-unequip");
-	     	btn.html("Equip");
-			Toast("Badge Unequipped");			
-			AttachManageBadgeEvents(userid);
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-	});
-}
-
-function EquipBadge(userid){
-	$(".badge-equip").unbind();
-	$(".badge-equip").on("click", function(){
-		var btn = $(this);
-		$.ajax({ url: '../php/webService.php',
-	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
-	     type: 'post',
-	     success: function(output) {
-			$(".badge-unequip").each(function(){
-				$(this).removeClass("badge-unequip");
-				$(this).html("Equip");
-			});
- 	     	btn.addClass("badge-unequip");
-	     	btn.removeClass("badge-equip");
-	     	btn.html("Unequip");
-			Toast("Badge Equipped");
-			AttachManageBadgeEvents(userid);
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-	});
->>>>>>> Akuma
 }
 
 function FollowUserFromFab(followid, name) {
