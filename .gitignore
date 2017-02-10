@@ -1,2 +1,5 @@
 index.php
 .vscode/ftp-sync.json
+.DS_Store
+
+css/.DS_Store
