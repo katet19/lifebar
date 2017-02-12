@@ -23,6 +23,14 @@ function ShowUserContent(userid, mine, browserNav){
 			$("#profileInnerContainer").html(output);
 			Waves.displayEffect();
 			AttachShowUserActivityEvents();
+			$(".user-profile-unfollow-btn").on("click", function(){
+				UnfollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+				$(this).html("<i class='material-icons left'>person_add</i> Follow");
+			});
+			$(".user-profile-follow-btn").on("click", function(){
+				FollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+				$(this).html("<i class='material-icons left'>person_outline</i> Unfollow");
+			});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
