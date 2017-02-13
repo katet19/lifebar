@@ -52,14 +52,14 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 
 					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
 						<div class="user-profile-admin-btn-container">							
-						<?php if($user->_security == "Journalist"){ ?>
-							<div class="btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">file_cloud_upload</i> Upload small</div>
-							<div class="btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">file_cloud_upload</i> Upload big</div>
-						<?php } ?>
-	        			<div class="btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">lock</i> Badge Access</div>
-        				<div class="btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment</i> Change Title</div>
-        				<div class="btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment_ind</i> Change Role</div>
-						<div class="btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cached</i> Run Weave Calc</div>
+							<?php if($user->_security == "Journalist"){ ?>
+								<div class="btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cloud_upload</i> Upload small</div>
+								<div class="btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cloud_upload</i> Upload big</div>
+							<?php } ?>
+							<div class="btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">lock</i> Badge Access</div>
+							<div class="btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment</i> Change Title</div>
+							<div class="btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment_ind</i> Change Role</div>
+							<div class="btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cached</i> Run Weave Calc</div>
 						</div>
 					<?php } ?>
 
