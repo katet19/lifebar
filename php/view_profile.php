@@ -50,6 +50,19 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 						<div class="btn user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> Follow</div>
 					<?php } ?>
 
+					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+						<div class="user-profile-admin-btn-container">							
+						<?php if($user->_security == "Journalist"){ ?>
+							<div class="btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">file_cloud_upload</i> Upload small</div>
+							<div class="btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">file_cloud_upload</i> Upload big</div>
+						<?php } ?>
+	        			<div class="btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">lock</i> Badge Access</div>
+        				<div class="btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment</i> Change Title</div>
+        				<div class="btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment_ind</i> Change Role</div>
+						<div class="btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cached</i> Run Weave Calc</div>
+						</div>
+					<?php } ?>
+
 					<?php if($user->_security == "Journalist"){ ?>
 						<div class="col s12 critic-disclaimer">
 							<i class="fa fa-exclamation-triangle" style='color:#FF9800'></i> <?php echo DisplayNameReturn($user); ?>'s Profile is curated by Lifebar and is strictly based off their published reviews 
