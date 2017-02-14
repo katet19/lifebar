@@ -44,24 +44,24 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 							<div class="user-profile-label">Games</div>
 						</div>
 					</div>
-					<?php if(in_array($user->_id, $conn)){ ?>
-						<div class="btn user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_outline</i> Unfollow</div>
-					<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
-						<div class="btn user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> Follow</div>
-					<?php } ?>
+					<div class="user-profile-admin-btn-container">	
+						<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+								<?php if($user->_security == "Journalist"){ ?>
+									<div class="btn user-profile-btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cloud_upload</i> <span>Upload small</span></div>
+									<div class="btn user-profile-btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cloud_upload</i> <span>Upload big</span></div>
+								<?php } ?>
+								<div class="btn user-profile-btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">lock</i> <span>Badge Access</span></div>
+								<div class="btn user-profile-btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment</i> <span>Change Title</span></div>
+								<div class="btn user-profile-btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment_ind</i> <span>Change Role</span></div>
+								<div class="btn user-profile-btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cached</i> <span>Run Weave Calc</span></div>
+						<?php } ?>
 
-					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
-						<div class="user-profile-admin-btn-container">							
-							<?php if($user->_security == "Journalist"){ ?>
-								<div class="btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cloud_upload</i> Upload small</div>
-								<div class="btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cloud_upload</i> Upload big</div>
-							<?php } ?>
-							<div class="btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">lock</i> Badge Access</div>
-							<div class="btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment</i> Change Title</div>
-							<div class="btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">assignment_ind</i> Change Role</div>
-							<div class="btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons">cached</i> Run Weave Calc</div>
-						</div>
-					<?php } ?>
+						<?php if(in_array($user->_id, $conn)){ ?>
+							<div class="btn user-profile-btn user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_outline</i> <span>Unfollow</span></div>
+						<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
+							<div class="btn user-profile-btnuser-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> <span>Follow</span></div>
+						<?php } ?>
+					</div>
 
 					<?php if($user->_security == "Journalist"){ ?>
 						<div class="col s12 critic-disclaimer">

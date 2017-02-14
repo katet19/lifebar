@@ -148,17 +148,23 @@
     font-weight: 500;
 }
 
-.user-profile-follow-btn, .user-profile-unfollow-btn{
-    position: absolute;
-    right: -50px;
-    font-size: 0.6em;
-    bottom: -23px;
-    z-index:10;
+.user-profile-btn{
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    overflow:hidden;
+    width:80px;
+}
+
+.user-profile-btn:hover{
+    width:300px;
 }
 
 .user-profile-admin-btn-container{
     position: absolute;
-    right: 20px;
+    right: -20px;
     bottom: -23px;
     z-index:10;
     font-size: 0.6em;
