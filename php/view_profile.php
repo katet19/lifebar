@@ -36,12 +36,12 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 							<div class="user-profile-label">Followers</div>
 						</div>
 						<div class="user-profile-item-container">
-							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalAgrees); ?></div>
-							<div class="user-profile-label">1ups</div>
-						</div>
-						<div class="user-profile-item-container">
 							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalXP); ?></div>
 							<div class="user-profile-label">Games</div>
+						</div>
+						<div class="user-profile-item-container">
+							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalAgrees); ?></div>
+							<div class="user-profile-label">1ups</div>
 						</div>
 					</div>
 					<div class="user-profile-admin-btn-container">	
@@ -59,7 +59,7 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 						<?php if(in_array($user->_id, $conn)){ ?>
 							<div class="btn user-profile-btn user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_outline</i> <span>Unfollow</span></div>
 						<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
-							<div class="btn user-profile-btnuser-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> <span>Follow</span></div>
+							<div class="btn user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> <span>Follow</span></div>
 						<?php } ?>
 					</div>
 

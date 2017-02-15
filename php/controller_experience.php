@@ -1,6 +1,20 @@
 <?php
 require_once "includes.php";
 
+function GetTotalQuotes($userid){
+	$mysqli = Connect();
+	$total  = 0;
+	$query = "select count(*) from `Events` where `UserID` = '".$userid."' and `Event` in ('ADDED','UPDATE','FINISHED')";
+	if ($result = $mysqli->query($query)) {
+		while($row = mysqli_fetch_array($result)){
+			$total = $row['count(*)'];
+		}	
+	}
+
+	Close($mysqli, $result);
+	return $total;
+}
+
 function GetSmartTierList($gameid, $userid){
 	$mysqli = Connect();
 	$xp = GetExperienceForUserCompleteOrEmptyGame($userid, $gameid, $mysqli);
