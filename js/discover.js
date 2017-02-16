@@ -30,8 +30,8 @@ function Search(searchstring){
 	GLOBAL_TAB_REDIRECT = "Search";
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	ManuallyNavigateToTab("#discover");
