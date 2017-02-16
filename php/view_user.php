@@ -683,6 +683,7 @@ function BuildWatchedSentence($exp){
 function DisplayRoleManagement($userid){
 	$user = GetUser($userid);
 	?>
+	<div style='padding:20px;'>
 	  <label class="myxp-form-box-header" style='font-size: 1.25em;font-weight: 300;'>User Roles</label>
 	  <div class="myxp-form-select-item" style='margin: 10px 25%;text-align: left;'>
 	      <input name="rolegroup" class="with-gap" type="radio" id="user-role" <?php if($user->_security == 'User'){ echo "checked"; }?> />
@@ -697,6 +698,7 @@ function DisplayRoleManagement($userid){
 	    <label for="journalist-role">Journalist</label>
 	    </div >
 	    <div class='btn save-role-change' style='margin-top: 25px;'>Save Role Changes</div>
+	</div>
 	<?php
 }
 

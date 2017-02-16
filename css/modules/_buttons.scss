@@ -1,77 +1,4 @@
 @import '../base/mixins';
-<<<<<<< HEAD
-.btn,
-.btn-large {
-    background-color: #F50057 !important;
-    color: white !important;
-    font-weight: 400;
-}
-
-.btn-save {
-    //formerly save-btn
-    @include shadow;
-    font-weight: 400;
-    text-decoration: none;
-    color: #fff;
-    background-color: #26a69a;
-    text-align: center;
-    letter-spacing: .5px;
-    transition: .2s ease-out;
-    cursor: pointer;
-    &:hover {
-        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-        background-color: #2bbbad;
-    }
-    &.disabled {
-        background-color: #DFDFDF !important;
-        box-shadow: none !important;
-        color: #9F9F9F !important;
-        cursor: default;
-        &:hover {
-            box-shadow: none !important;
-            background-color: #DFDFDF !important;
-        }
-    }
-}
-
-.cancel-btn {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    border: none;
-    border-radius: 2px;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    outline: 0;
-    padding: 0 2rem;
-    text-transform: uppercase;
-    vertical-align: middle;
-    -webkit-tap-highlight-color: transparent;
-    color: white !important;
-    font-weight: 400;
-    text-decoration: none;
-    color: #fff;
-    background-color: #757575;
-    text-align: center;
-    letter-spacing: .5px;
-    transition: .2s ease-out;
-    cursor: pointer;
-}
-
-.cancel-btn:hover {
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-    background-color: #F44336;
-}
-
-.btn:hover,
-.btn-large:hover {
-    background-color: #FF4081 !important;
-}
-
-.nav-game-action-btn {
-    font-size: 1.75em;
-    color: rgba(0, 0, 0, 0.2);
-    @include transition(all 0.3s ease-in-out);
-=======
 @import '../base/variables';
 .btn,
 .btn-large {
@@ -143,7 +70,6 @@
 .dismiss-from-discover-small {
     //used in js
     @extend .btn-user-card-small;
->>>>>>> origin/Dan
 }
 
 .fixed-close-modal-btn {
@@ -161,9 +87,22 @@
     background-color: $color-accent;
     width: 50px;
     cursor: pointer;
+    @include shadow;
+    @include transition(all 0.3s ease-in-out);
     .material-icons {
         font-size: 1.2em;
         vertical-align: sub;
         line-height: inherit;
     }
+    &:hover {
+        background-color: $color-accent-hover;
+    }
+}
+
+.fixed-save-close-modal-btn {
+    //used in js
+    @extend .fixed-close-modal-btn;
+    font-size: 1em;
+    padding: 5px 10px;
+    border-radius: 2px;
 }

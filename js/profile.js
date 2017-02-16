@@ -1,20 +1,19 @@
-<<<<<<< HEAD
 function ShowUserProfile(id, mine, browserNav) {
-    ShowUserContent(id, mine);
+    if (!$("#profile").is(":visible"))
+        ShowUserContent(id, mine);
 }
 
 function ShowUserContent(userid, mine, browserNav) {
     var windowWidth = $(window).width();
-    $("#profile").css({ "display": "inline-block", "left": windowWidth });
+    $("#profile").css({ "display": "inline-block", "right": "-75%" });
     if ($(window).width() > 599) {
         $("#navigation-header").css({ "display": "block" });
         $("#navigationContainer").css({ "-webkit-box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)" });
     }
-    $('body').css({ 'overflow-y': 'hidden' });
-    if ($("#profile").hasClass("outerContainer-slide-out"))
-        $("#profile.outerContainer-slide-out").css({ "left": "225px" });
-    else
-        $("#profile.outerContainer").css({ "left": 0 });
+    SCROLL_POS = $(window).scrollTop();
+    $('body').css({ 'top': -($('body').scrollTop()) + 'px' }).addClass("bodynoscroll");
+    $("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+    $("#profile.outerContainer").css({ "right": 0 });
 
     ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
     $.ajax({
@@ -24,49 +23,16 @@ function ShowUserContent(userid, mine, browserNav) {
         success: function(output) {
             $("#profileInnerContainer").html(output);
             Waves.displayEffect();
-            var name = $("#profileContentContainer").attr("data-name");
-            DisplayCriticGraph();
-            DisplayLifeTimeChart();
-            DisplaySkillsChart();
-            AttachProfileEvents(userid);
-            AttachFabHoverEvent();
-            AttachFloatingIconWeaveButtonEvents();
-            if (browserNav)
-                UpdateBrowserHash("profile/" + userid + "/" + name);
-
-            if (!mine)
-                GAPage('Profile', '/profile/' + name);
-            else
-                GAPage('Profile', '/profile/personal/' + name);
+            AttachShowUserActivityEvents();
+            $(".user-profile-unfollow-btn").on("click", function() {
+                UnfollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+                $(this).html("<i class='material-icons left'>person_add</i> Follow");
+            });
+            $(".user-profile-follow-btn").on("click", function() {
+                FollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+                $(this).html("<i class='material-icons left'>person_outline</i> Unfollow");
+            });
         },
-=======
-function ShowUserProfile(id, mine, browserNav){
-	if(!$("#profile").is(":visible"))
-		ShowUserContent(id,mine);
-}
-
-function ShowUserContent(userid, mine, browserNav){
-	var windowWidth = $(window).width();
-    $("#profile").css({"display":"inline-block", "right": "-75%"});
-	if($(window).width() > 599){
-		$("#navigation-header").css({"display":"block"});
-		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
-	}
-	SCROLL_POS = $(window).scrollTop();
-	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
-	$("#profile.outerContainer").css({ "right": 0 });
-
-  	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "DisplayWeave", userid: userid },
-     type: 'post',
-     success: function(output) {
-			$("#profileInnerContainer").html(output);
-			Waves.displayEffect();
-			AttachShowUserActivityEvents();
-     },
->>>>>>> Akuma
         error: function(x, t, m) {
             if (t === "timeout") {
                 ToastError("Server Timeout");
@@ -78,15 +44,13 @@ function ShowUserContent(userid, mine, browserNav){
     });
 }
 
-<<<<<<< HEAD
 function AttachProfileEvents(userid) {
-    $(".fixed-close-modal-btn").on('click', function() {
-        var windowWidth = $(window).width();
-        $("#profile").css({ "left": windowWidth });
-        setTimeout(function() {
-            $("#profile").css({ "display": "none" });
-            $('body').css({ 'overflow-y': 'scroll' });
-        }, 300);
+    $(".fixed-close-modal-btn, .lean-overlay").unbind();
+    $(".fixed-close-modal-btn, .lean-overlay").on('click', function() {
+        $("#profile").css({ "right": "-75%" });
+        $(".lean-overlay").each(function() { $(this).remove(); });
+        setTimeout(function() { $("#profile").css({ "display": "none" });
+            $('body').removeClass("bodynoscroll").css({ 'top': $(window).scrollTop(SCROLL_POS) + 'px' }); }, 300);
     });
     $(".userprofile-card-avatar").on("click", function(e) {
         e.stopPropagation();
@@ -189,116 +153,6 @@ function AttachProfileEvents(userid) {
     $(".newprofile-best-item").on('click', function() {
         ShowGame($(this).attr("data-id"), $("#profile"));
     });
-=======
-function AttachProfileEvents(userid){
-	$(".fixed-close-modal-btn, .lean-overlay").unbind();
-	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
-		$("#profile").css({ "right": "-75%" }); 
-		$(".lean-overlay").each(function(){ $(this).remove(); } );
-		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-	});
- 	$(".userprofile-card-avatar").on("click", function(e){
-  		e.stopPropagation();
- 		ShowUserProfile($(this).attr("data-userid"));
- 	});
- 	$(".userprofile-game-card-image").on('click', function(e){
- 		e.stopPropagation();
- 	 	var game = $(this).parent().attr("data-gbid");
-	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
- 	});
-	$(".card-tier-container").on('click', function(){
-		$(this).addClass("card-tier-container-active");
-		$(this).parent().parent().find(".card-tier").hide();
-		$(this).find(".card-tier-details").addClass("card-tier-details-active");
-		$(this).find(".mdi-content-add-circle").on("click", function(e){
-			e.stopPropagation();
-			$(this).parent().parent().parent().removeClass("card-tier-container-active");
-			$(this).parent().parent().removeClass("card-tier-details-active");
-			$(this).parent().parent().parent().parent().find(".card-tier").show();
-		});
-	});
-	$(".badge-view-more").on('click', function(){
-		DisplayUserBadges(userid);		
-	});
-	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .calendar-card, .profile-highlighted-game, .profile-best-game, .checkpoint-container").on("click", function(e){
-	 	e.stopPropagation();
-	 	var game = $(this).attr("data-gbid");
-	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
-	 });
- 	 $(".profile-highlighted-game-quote, .profile-highlighted-game-name").on("click", function(e){
-	 	e.stopPropagation();
-	 	var game = $(this).parent().find(".profile-highlighted-game").attr("data-gbid");
-	 	setTimeout(function(){ ShowGame(game, $("#profile")); }, 500);
-	 });
-	 $(".ability-spy").on("click", function(){
- 		DisplaySpy(userid);
-	 });
-	 $(".ability-charisma").on("click", function(){
-	 	DisplayCharisma(userid);
-	 });
- 	 $(".ability-leadership").on("click", function(){
-	 	DisplayLeadership(userid);
-	 });
-  	 $(".ability-tracking").on("click", function(){
-	 	DisplayTracking(userid);
-	 });
-	 $(".abilities-view-more").on("click", function(){
- 		DisplayAbilitiesViewMore(userid);
-	 });
-	 $(".knowledge-view-more").on("click", function(){
-	 	DisplayKnowledgeViewMore(userid);
-	 });
-	 $(".knowledge-container").on("click", function(){
-	 	DisplayKnowledgeDetails(userid, $(this).attr("data-objectid"), $(this).attr("data-progid"));
-	 });
-	 $(".gear-view-more").on("click", function(){
-	 	DisplayGearViewMore(userid);
-	 });
-  	$(".badge-small").on("click", function(){
- 		var id = $(this).attr("data-objectid");
- 		var progid = $(this).attr("data-progid");
- 		DisplayGearDetails(userid, id, progid);
- 	});
- 	$(".profile-best-view-more").on("click", function(){
- 		DisplayBestViewMore(userid);	
- 	});
- 	 $(".developer-view-more").on("click", function(){
-	 	DisplayDeveloperViewMore(userid);
-	 });
- 	 $(".developer-profile-item").on("click", function(){
-	 	DisplayDeveloperDetails(userid, $(this).attr("data-objectid"), $(this).attr("data-progid"));
-	 });
-	 $(".mylibrary").on("click", function(){
-	 	DisplayMyLibrary(userid);
-	 });
- 	 $(".view-collections").on("click", function(){
- 		DisplayUserCollection(userid);
-	 });
- 	 $(".collection-box-container").on("click", function(){
-		 DisplayCollectionDetails($(this).attr("data-id"), 'Profile', userid);	
-	 });
-	 /*
-	 * New Profile
-	 */
-	 $(".newprofile-link-discover").on('click', function(){
- 		ShowDiscoverHome();
-	 });
-	 $(".newprofile-skills-item").on("click", function(){
-	 	AdvancedSearch('', '', '', '', '', $(this).attr("data-id"), '');
-	 });
-	 $(".newprofile-knowledge-item").on('click', function(){
-	 	AdvancedSearch('', '', '', '', '', '', $(this).attr("data-id"));
-	 });
- 	 $(".newprofile-gear-item").on('click', function(){
-	 	AdvancedSearch('', $(this).attr("data-id"), '', '', '', '', '');
-	 });
-  	 $(".newprofile-dev-item").on('click', function(){
-	 	AdvancedSearch('', '', '', '', $(this).attr("data-id"), '', '');
-	 });
-  	 $(".newprofile-best-item").on('click', function(){
-	 	ShowGame($(this).attr("data-id"), $("#profile"));
-	 });
->>>>>>> Akuma
 }
 
 function EndlessMyLibraryLoader(userid) {
@@ -1044,10 +898,13 @@ function AttachRemoveBadge(userid) {
     });
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/Dan
+<<
+<< << < HEAD
+    <<
+    << << < HEAD ===
+    === = >>>
+    >>> > origin / Dan
+
 function UnequipBadge(userid) {
     $(".badge-unequip").unbind();
     $(".badge-unequip").on("click", function() {
@@ -1103,401 +960,411 @@ function EquipBadge(userid) {
             },
             timeout: 45000
         });
-    });
-<<<<<<< HEAD
-=======
-function UnequipBadge(userid){
-	$(".badge-unequip").unbind();
-	$(".badge-unequip").on("click", function(){
-		var btn = $(this);
-		$.ajax({ url: '../php/webService.php',
-	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
-	     type: 'post',
-	     success: function(output) {
-			btn.addClass("badge-equip");
-	     	btn.removeClass("badge-unequip");
-	     	btn.html("Equip");
-			Toast("Badge Unequipped");			
-			AttachManageBadgeEvents(userid);
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-	});
-}
+    }); <<
+    << << < HEAD
+        ===
+        === =
+        function UnequipBadge(userid) {
+            $(".badge-unequip").unbind();
+            $(".badge-unequip").on("click", function() {
+                var btn = $(this);
+                $.ajax({
+                    url: '../php/webService.php',
+                    data: { action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+                    type: 'post',
+                    success: function(output) {
+                        btn.addClass("badge-equip");
+                        btn.removeClass("badge-unequip");
+                        btn.html("Equip");
+                        Toast("Badge Unequipped");
+                        AttachManageBadgeEvents(userid);
+                    },
+                    error: function(x, t, m) {
+                        if (t === "timeout") {
+                            ToastError("Server Timeout");
+                        } else {
+                            ToastError(t);
+                        }
+                    },
+                    timeout: 45000
+                });
+            });
+        }
 
-function EquipBadge(userid){
-	$(".badge-equip").unbind();
-	$(".badge-equip").on("click", function(){
-		var btn = $(this);
-		$.ajax({ url: '../php/webService.php',
-	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
-	     type: 'post',
-	     success: function(output) {
-			$(".badge-unequip").each(function(){
-				$(this).removeClass("badge-unequip");
-				$(this).html("Equip");
-			});
- 	     	btn.addClass("badge-unequip");
-	     	btn.removeClass("badge-equip");
-	     	btn.html("Unequip");
-			Toast("Badge Equipped");
-			AttachManageBadgeEvents(userid);
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-	});
->>>>>>> Akuma
-=======
->>>>>>> origin/Dan
-}
+    function EquipBadge(userid) {
+        $(".badge-equip").unbind();
+        $(".badge-equip").on("click", function() {
+            var btn = $(this);
+            $.ajax({
+                url: '../php/webService.php',
+                data: { action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
+                type: 'post',
+                success: function(output) {
+                    $(".badge-unequip").each(function() {
+                        $(this).removeClass("badge-unequip");
+                        $(this).html("Equip");
+                    });
+                    btn.addClass("badge-unequip");
+                    btn.removeClass("badge-equip");
+                    btn.html("Unequip");
+                    Toast("Badge Equipped");
+                    AttachManageBadgeEvents(userid);
+                },
+                error: function(x, t, m) {
+                    if (t === "timeout") {
+                        ToastError("Server Timeout");
+                    } else {
+                        ToastError(t);
+                    }
+                },
+                timeout: 45000
+            });
+        }); >>>
+        >>> > Akuma
+            ===
+            === = >>>
+            >>> > origin / Dan
+    }
 
-function FollowUserFromFab(followid, name) {
-    $.ajax({
-        url: '../php/webService.php',
-        data: { action: "FollowUser", followid: followid },
-        type: 'post',
-        success: function(output) {
-            Toast("You are now following " + name);
-        },
-        error: function(x, t, m) {
-            if (t === "timeout") {
-                ToastError("Server Timeout");
-            } else {
-                ToastError(t);
-            }
-        },
-        timeout: 45000
-    });
-}
-
-function UnfollowUserFromFab(followid, name) {
-    $.ajax({
-        url: '../php/webService.php',
-        data: { action: "UnfollowUser", followid: followid },
-        type: 'post',
-        success: function(output) {
-            Toast("You are no longer following " + name);
-        },
-        error: function(x, t, m) {
-            if (t === "timeout") {
-                ToastError("Server Timeout");
-            } else {
-                ToastError(t);
-            }
-        },
-        timeout: 45000
-    });
-}
-
-function DisplayTierPieChart() {
-    if ($(".GraphTierPieChart").length > 0) {
-        $(".GraphTierPieChart").each(function() {
-            var experiencedUsersGraph = $(this).get(0).getContext("2d");
-            var data = [{
-                    value: parseInt($(this).attr("data-t5")),
-                    color: "#0A67A3",
-                    highlight: "#1398f0",
-                    label: "Tier 5"
-                },
-                {
-                    value: parseInt($(this).attr("data-t4")),
-                    color: "#00B25C",
-                    highlight: "#00d771",
-                    label: "Tier 4"
-                },
-                {
-                    value: parseInt($(this).attr("data-t3")),
-                    color: "#FF8E00",
-                    highlight: "#ffac46",
-                    label: "Tier 3"
-                },
-                {
-                    value: parseInt($(this).attr("data-t2")),
-                    color: "#FF4100",
-                    highlight: "#ff632f",
-                    label: "Tier 2"
-                },
-                {
-                    value: parseInt($(this).attr("data-t1")),
-                    color: "#DB0058",
-                    highlight: "#ff247b",
-                    label: "Tier 1"
+    function FollowUserFromFab(followid, name) {
+        $.ajax({
+            url: '../php/webService.php',
+            data: { action: "FollowUser", followid: followid },
+            type: 'post',
+            success: function(output) {
+                Toast("You are now following " + name);
+            },
+            error: function(x, t, m) {
+                if (t === "timeout") {
+                    ToastError("Server Timeout");
+                } else {
+                    ToastError(t);
                 }
-            ];
-            if ($(window).width() >= 600) {
-                $(this).attr('height', 200);
-            } else {
-                $(this).attr('height', 125);
-            }
-            var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: true });
+            },
+            timeout: 45000
         });
     }
-}
 
-function DisplayCriticGraph() {
-    if ($(".GraphCriticUsers").length > 0) {
-        $(".GraphCriticUsers").each(function() {
-            var experiencedUsersGraph = $(this).get(0).getContext("2d");
-            var data = {
-                labels: ["", "", "", "", ""],
-                datasets: [{
-                    label: "Lifetime XP",
-                    fillColor: "rgba(85, 85, 147, 0.41)",
-                    strokeColor: "rgba(85, 85, 147, 0.9)",
-                    pointColor: "rgba(85, 85, 147, 0.9)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(71,71,71,1)",
-                    data: [$(this).attr("data-t5"), $(this).attr("data-t4"), $(this).attr("data-t3"), $(this).attr("data-t2"), $(this).attr("data-t1")]
-                }]
-            };
-            $(this).attr('width', $(this).parent().width() - 40);
-            $(this).attr('height', 250);
-            var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth: 4, showScale: true, bezierCurve: true, pointDot: false, scaleShowGridLines: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", animation: true });
-
+    function UnfollowUserFromFab(followid, name) {
+        $.ajax({
+            url: '../php/webService.php',
+            data: { action: "UnfollowUser", followid: followid },
+            type: 'post',
+            success: function(output) {
+                Toast("You are no longer following " + name);
+            },
+            error: function(x, t, m) {
+                if (t === "timeout") {
+                    ToastError("Server Timeout");
+                } else {
+                    ToastError(t);
+                }
+            },
+            timeout: 45000
         });
     }
-}
 
-function DisplaySkillsChart() {
-    if ($(".GraphSkills").length > 0) {
-        $(".GraphSkills").each(function() {
-            var skillGraph = $(this).get(0).getContext("2d");
-            var dataLabels = $(this).attr('data-labels');
-            var labelArray = dataLabels.split(",");
-            var dataValues = $(this).attr('data-values');
-            var valueArray = dataValues.split(",");
-            var allLabels = [];
-            var allValues = [];
-            $.each(labelArray, function(key, value) {
-                allLabels.push(value);
-            });
-            $.each(valueArray, function(key, value) {
-                allValues.push(value);
-            });
-
-            var data = {
-                labels: allLabels,
-                datasets: [{
-                    label: "Skills",
-                    fillColor: "rgba(156, 39, 176, 0.5)",
-                    strokeColor: "rgba(156, 39, 176, 0.5)",
-                    pointColor: "rgba(156, 39, 176, 0.5)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(71,71,71,1)",
-                    data: allValues
-                }]
-            };
-            $(this).attr('width', $(this).parent().width() - 25);
-            $(this).attr('height', 360);
-            var temp = new Chart(skillGraph).Radar(data, { animation: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", scaleShowLine: false, angleLineColor: "rgba(0,0,0,.2)", pointLabelFontSize: 14 });
-        });
-    }
-}
-
-function DisplayLifeTimeChart() {
-    if ($(".GraphLifeTime").length > 0) {
-        $(".GraphLifeTime").each(function() {
-            var lifetimeGraph = $(this).get(0).getContext("2d");
-            var dataBirth = $(this).attr("data-birth");
-            var birthArray = dataBirth.split(",");
-            var dataPlayed = $(this).attr("data-played");
-            var playedArray = dataPlayed.split(",");
-            var dataWatched = $(this).attr("data-watched");
-            var watchedArray = dataWatched.split(",");
-            var allLabels = [];
-            var allPlayed = [];
-            var allWatched = [];
-            $.each(birthArray, function(key, value) {
-                allLabels.push(value);
-            });
-            $.each(playedArray, function(key, value) {
-                allPlayed.push(value);
-            });
-            $.each(watchedArray, function(key, value) {
-                allWatched.push(value);
-            });
-
-            var data = {
-                labels: allLabels,
-                datasets: [{
-                        label: "Played XP",
-                        fillColor: "rgba(156, 39, 176, 0.1)",
-                        strokeColor: "rgb(156, 39, 176)",
-                        pointColor: "rgb(156, 39, 176)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(71,71,71,1)",
-                        data: allPlayed
+    function DisplayTierPieChart() {
+        if ($(".GraphTierPieChart").length > 0) {
+            $(".GraphTierPieChart").each(function() {
+                var experiencedUsersGraph = $(this).get(0).getContext("2d");
+                var data = [{
+                        value: parseInt($(this).attr("data-t5")),
+                        color: "#0A67A3",
+                        highlight: "#1398f0",
+                        label: "Tier 5"
                     },
                     {
-                        label: "Watched XP",
-                        fillColor: "rgba(3, 169, 244, 0.1)",
-                        strokeColor: "rgb(3, 169, 244)",
-                        pointColor: "rgb(3, 169, 244)",
+                        value: parseInt($(this).attr("data-t4")),
+                        color: "#00B25C",
+                        highlight: "#00d771",
+                        label: "Tier 4"
+                    },
+                    {
+                        value: parseInt($(this).attr("data-t3")),
+                        color: "#FF8E00",
+                        highlight: "#ffac46",
+                        label: "Tier 3"
+                    },
+                    {
+                        value: parseInt($(this).attr("data-t2")),
+                        color: "#FF4100",
+                        highlight: "#ff632f",
+                        label: "Tier 2"
+                    },
+                    {
+                        value: parseInt($(this).attr("data-t1")),
+                        color: "#DB0058",
+                        highlight: "#ff247b",
+                        label: "Tier 1"
+                    }
+                ];
+                if ($(window).width() >= 600) {
+                    $(this).attr('height', 200);
+                } else {
+                    $(this).attr('height', 125);
+                }
+                var tierChart = new Chart(experiencedUsersGraph).Doughnut(data, { animation: false, showTooltips: true });
+            });
+        }
+    }
+
+    function DisplayCriticGraph() {
+        if ($(".GraphCriticUsers").length > 0) {
+            $(".GraphCriticUsers").each(function() {
+                var experiencedUsersGraph = $(this).get(0).getContext("2d");
+                var data = {
+                    labels: ["", "", "", "", ""],
+                    datasets: [{
+                        label: "Lifetime XP",
+                        fillColor: "rgba(85, 85, 147, 0.41)",
+                        strokeColor: "rgba(85, 85, 147, 0.9)",
+                        pointColor: "rgba(85, 85, 147, 0.9)",
                         pointStrokeColor: "#fff",
                         pointHighlightFill: "#fff",
                         pointHighlightStroke: "rgba(71,71,71,1)",
-                        data: allWatched
-                    }
-                ]
-            };
-            $(this).attr('width', $(this).parent().width() - 25);
-            $(this).attr('height', 380);
-            var temp = new Chart(lifetimeGraph).Line(data, { animation: false, datasetStrokeWidth: 4, showScale: true, bezierCurve: true, pointDot: false, scaleShowGridLines: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>" });
+                        data: [$(this).attr("data-t5"), $(this).attr("data-t4"), $(this).attr("data-t3"), $(this).attr("data-t2"), $(this).attr("data-t1")]
+                    }]
+                };
+                $(this).attr('width', $(this).parent().width() - 40);
+                $(this).attr('height', 250);
+                var temp = new Chart(experiencedUsersGraph).Line(data, { animation: false, datasetStrokeWidth: 4, showScale: true, bezierCurve: true, pointDot: false, scaleShowGridLines: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", animation: true });
 
+            });
+        }
+    }
+
+    function DisplaySkillsChart() {
+        if ($(".GraphSkills").length > 0) {
+            $(".GraphSkills").each(function() {
+                var skillGraph = $(this).get(0).getContext("2d");
+                var dataLabels = $(this).attr('data-labels');
+                var labelArray = dataLabels.split(",");
+                var dataValues = $(this).attr('data-values');
+                var valueArray = dataValues.split(",");
+                var allLabels = [];
+                var allValues = [];
+                $.each(labelArray, function(key, value) {
+                    allLabels.push(value);
+                });
+                $.each(valueArray, function(key, value) {
+                    allValues.push(value);
+                });
+
+                var data = {
+                    labels: allLabels,
+                    datasets: [{
+                        label: "Skills",
+                        fillColor: "rgba(156, 39, 176, 0.5)",
+                        strokeColor: "rgba(156, 39, 176, 0.5)",
+                        pointColor: "rgba(156, 39, 176, 0.5)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(71,71,71,1)",
+                        data: allValues
+                    }]
+                };
+                $(this).attr('width', $(this).parent().width() - 25);
+                $(this).attr('height', 360);
+                var temp = new Chart(skillGraph).Radar(data, { animation: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>", scaleShowLine: false, angleLineColor: "rgba(0,0,0,.2)", pointLabelFontSize: 14 });
+            });
+        }
+    }
+
+    function DisplayLifeTimeChart() {
+        if ($(".GraphLifeTime").length > 0) {
+            $(".GraphLifeTime").each(function() {
+                var lifetimeGraph = $(this).get(0).getContext("2d");
+                var dataBirth = $(this).attr("data-birth");
+                var birthArray = dataBirth.split(",");
+                var dataPlayed = $(this).attr("data-played");
+                var playedArray = dataPlayed.split(",");
+                var dataWatched = $(this).attr("data-watched");
+                var watchedArray = dataWatched.split(",");
+                var allLabels = [];
+                var allPlayed = [];
+                var allWatched = [];
+                $.each(birthArray, function(key, value) {
+                    allLabels.push(value);
+                });
+                $.each(playedArray, function(key, value) {
+                    allPlayed.push(value);
+                });
+                $.each(watchedArray, function(key, value) {
+                    allWatched.push(value);
+                });
+
+                var data = {
+                    labels: allLabels,
+                    datasets: [{
+                            label: "Played XP",
+                            fillColor: "rgba(156, 39, 176, 0.1)",
+                            strokeColor: "rgb(156, 39, 176)",
+                            pointColor: "rgb(156, 39, 176)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(71,71,71,1)",
+                            data: allPlayed
+                        },
+                        {
+                            label: "Watched XP",
+                            fillColor: "rgba(3, 169, 244, 0.1)",
+                            strokeColor: "rgb(3, 169, 244)",
+                            pointColor: "rgb(3, 169, 244)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(71,71,71,1)",
+                            data: allWatched
+                        }
+                    ]
+                };
+                $(this).attr('width', $(this).parent().width() - 25);
+                $(this).attr('height', 380);
+                var temp = new Chart(lifetimeGraph).Line(data, { animation: false, datasetStrokeWidth: 4, showScale: true, bezierCurve: true, pointDot: false, scaleShowGridLines: false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>" });
+
+            });
+        }
+    }
+
+    function ShowUserActivity(userid) {
+        ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
+        var windowWidth = $(window).width();
+        $("#activity").css({ "display": "inline-block", "left": -windowWidth });
+        $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({ "display": "none" });
+        $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, { duration: 200, queue: false, easing: 'easeOutQuad' });
+        $("#activity").velocity({ "left": 0 }, { duration: 200, queue: false, easing: 'easeOutQuad' });
+        if ($(window).width() > 599) {
+            $("#navigation-header").css({ "display": "block" });
+            $("#navigationContainer").css({ "-webkit-box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)" });
+        }
+        $.ajax({
+            url: '../php/webService.php',
+            data: { action: "ShowUserProfileActivity", userid: userid },
+            type: 'post',
+            success: function(output) {
+                $("#activityInnerContainer").html(output);
+                window.scrollTo(0, 0);
+                Waves.displayEffect();
+                AttachShowUserActivityEvents();
+            },
+            error: function(x, t, m) {
+                if (t === "timeout") {
+                    ToastError("Server Timeout");
+                } else {
+                    ToastError(t);
+                }
+            },
+            timeout: 45000
         });
     }
-}
 
-function ShowUserActivity(userid) {
-    ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
-    var windowWidth = $(window).width();
-    $("#activity").css({ "display": "inline-block", "left": -windowWidth });
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({ "display": "none" });
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, { duration: 200, queue: false, easing: 'easeOutQuad' });
-    $("#activity").velocity({ "left": 0 }, { duration: 200, queue: false, easing: 'easeOutQuad' });
-    if ($(window).width() > 599) {
-        $("#navigation-header").css({ "display": "block" });
-        $("#navigationContainer").css({ "-webkit-box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow": "0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)" });
+    <<
+    << << < HEAD
+
+    function AttachShowUserActivityEvents() {
+        $(".user-discover-card").on("click", function(e) {
+            e.stopPropagation();
+            ShowUserProfile($(this).attr("data-id"));
+        });
+        $(".large-avatar, .user-avatar").on("click", function(e) {
+            e.stopPropagation();
+            ShowUserProfile($(this).attr("data-id"));
+        });
+        $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e) {
+            e.stopPropagation();
+            ShowGame($(this).attr("data-gbid"), $("#activity"));
+        })
+        $(".feed-card-image").on("click", function(e) {
+            e.stopPropagation();
+            ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
+        })
+        AttachAgreesFromActivity();
+        AttachSecondaryEvents();
+        $(window).unbind("scroll");
+        $(window).scroll(function() {
+            if (isScrolledIntoView($("#feed-endless-loader"))) {
+                if ($("#feed-endless-loader").html() == "")
+                    EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
+            }
+        });
     }
-    $.ajax({
-        url: '../php/webService.php',
-        data: { action: "ShowUserProfileActivity", userid: userid },
-        type: 'post',
-        success: function(output) {
-            $("#activityInnerContainer").html(output);
-            window.scrollTo(0, 0);
-            Waves.displayEffect();
-            AttachShowUserActivityEvents();
-        },
-        error: function(x, t, m) {
-            if (t === "timeout") {
-                ToastError("Server Timeout");
-            } else {
-                ToastError(t);
-            }
-        },
-        timeout: 45000
-    });
-}
 
-<<<<<<< HEAD
-function AttachShowUserActivityEvents() {
-    $(".user-discover-card").on("click", function(e) {
-        e.stopPropagation();
-        ShowUserProfile($(this).attr("data-id"));
-    });
-    $(".large-avatar, .user-avatar").on("click", function(e) {
-        e.stopPropagation();
-        ShowUserProfile($(this).attr("data-id"));
-    });
-    $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e) {
-        e.stopPropagation();
-        ShowGame($(this).attr("data-gbid"), $("#activity"));
-    })
-    $(".feed-card-image").on("click", function(e) {
-        e.stopPropagation();
-        ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
-    })
-    AttachAgreesFromActivity();
-    AttachSecondaryEvents();
-    $(window).unbind("scroll");
-    $(window).scroll(function() {
-        if (isScrolledIntoView($("#feed-endless-loader"))) {
-            if ($("#feed-endless-loader").html() == "")
-                EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
-        }
-    });
-}
+    function EndlessUserAcitivtyLoader(userid) {
+        ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
+        $("#feed-endless-loader").append("<br><br><br>");
+        var page = $("#feed-endless-loader").attr("data-page");
+        var date = $("#feed-endless-loader").attr("data-date");
+        var filter = $("#feed-endless-loader").attr("data-filter");
+        $.ajax({
+                    url: '../php/webService.php',
+                    data: { action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
+                    type: 'post',
+                    success: function(output) {
+                        $("#feed-endless-loader").before(output);
+                        $("#feed-endless-loader").html("");
+                        $("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+                        var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+                        $("#feed-endless-loader").attr("data-date", lastdate);
+                        AttachShowUserActivityEvents(userid);
+                    },
+                    ===
+                    === =
+                    function AttachShowUserActivityEvents() {
+                        $(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
+                        $(".fixed-close-modal-btn, .lean-overlay").on('click', function() {
+                            $("#profile").css({ "right": "-75%" });
+                            $(".lean-overlay").each(function() { $(this).remove(); });
+                            $(".feed-avatar, .user-avatar").on("click", function(e) {
+                                e.stopPropagation();
+                                ShowUserProfile($(this).attr("data-id"));
+                            });
+                            setTimeout(function() { $("#profile").css({ "display": "none" });
+                                $('body').removeClass("bodynoscroll").css({ 'top': $(window).scrollTop(SCROLL_POS) + 'px' }); }, 300);
+                        });
+                        AttachAgreesFromActivity();
+                        $("#profileInnerContainer").unbind("scroll");
+                        $("#profileInnerContainer").find(".feed-avatar-col").css({ "opacity": "0" });
+                        $("#profileInnerContainer").find(".game-discover-card").css({ "height": "200px" });
+                        $("#profileInnerContainer").find(".game-discover-card .card-content").each(function() {
+                            if ($(this).parent().height() != 165)
+                                $(this).hide();
+                        });
+                        $("#profileInnerContainer").find(".watchBtn").hide();
+                        $("#profileInnerContainer").scroll(function() {
+                            if (isScrolledIntoView($("#profileInnerContainer").find("#feed-endless-loader"))) {
+                                if ($("#profileInnerContainer").find("#feed-endless-loader").html() == "")
+                                    EndlessUserAcitivtyLoader($("#profileInnerContainer").find(".activity-top-level").attr("data-id"));
+                            }
+                        });
+                    }
 
-function EndlessUserAcitivtyLoader(userid) {
-    ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
-    $("#feed-endless-loader").append("<br><br><br>");
-    var page = $("#feed-endless-loader").attr("data-page");
-    var date = $("#feed-endless-loader").attr("data-date");
-    var filter = $("#feed-endless-loader").attr("data-filter");
-    $.ajax({
-        url: '../php/webService.php',
-        data: { action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
-        type: 'post',
-        success: function(output) {
-            $("#feed-endless-loader").before(output);
-            $("#feed-endless-loader").html("");
-            $("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
-            var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
-            $("#feed-endless-loader").attr("data-date", lastdate);
-            AttachShowUserActivityEvents(userid);
-        },
-=======
-function AttachShowUserActivityEvents(){
-		$(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
-		$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
-			$("#profile").css({ "right": "-75%" }); 
-			$(".lean-overlay").each(function(){ $(this).remove(); } );
-			$(".feed-avatar, .user-avatar").on("click", function(e){
-				e.stopPropagation();
-				ShowUserProfile($(this).attr("data-id"));
-			});
-			setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
-		});
-		AttachAgreesFromActivity();
-		$("#profileInnerContainer").unbind("scroll");
-		$("#profileInnerContainer").find(".feed-avatar-col").css({"opacity":"0"});
-		$("#profileInnerContainer").find(".game-discover-card").css({"height":"200px"});
-		$("#profileInnerContainer").find(".game-discover-card .card-content").each(function(){
-			if($(this).parent().height() != 165)
-				$(this).hide();
-		});
-		$("#profileInnerContainer").find(".watchBtn").hide();
-		$("#profileInnerContainer").scroll(function(){
-		if(isScrolledIntoView($("#profileInnerContainer").find("#feed-endless-loader"))){
-			if($("#profileInnerContainer").find("#feed-endless-loader").html() == "")
-				EndlessUserAcitivtyLoader($("#profileInnerContainer").find(".activity-top-level").attr("data-id"));
-		}
-		}); 
-}
-
-function EndlessUserAcitivtyLoader(userid){
-	ShowLoader($("#profileInnerContainer").find("#feed-endless-loader"), 'big', "<br><br><br>");
-	$("#profileInnerContainer").find("#feed-endless-loader").append("<br><br><br>");
-	var page = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page");
-	var date = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date");
-	var filter = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-filter");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
-     type: 'post',
-     success: function(output) {
-		$("#profileInnerContainer").find("#feed-endless-loader").before(output);
-		$("#profileInnerContainer").find("#feed-endless-loader").html("");
-		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
-		var lastdate = $("#profileInnerContainer").find("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
-		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-date", lastdate);
-		AttachShowUserActivityEvents(userid);
-     },
->>>>>>> Akuma
-        error: function(x, t, m) {
-            if (t === "timeout") {
-                ToastError("Server Timeout");
-            } else {
-                ToastError(t);
-            }
-        },
-        timeout: 45000
-    });
-}
+                    function EndlessUserAcitivtyLoader(userid) {
+                        ShowLoader($("#profileInnerContainer").find("#feed-endless-loader"), 'big', "<br><br><br>");
+                        $("#profileInnerContainer").find("#feed-endless-loader").append("<br><br><br>");
+                        var page = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page");
+                        var date = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date");
+                        var filter = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-filter");
+                        $.ajax({
+                            url: '../php/webService.php',
+                            data: { action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
+                            type: 'post',
+                            success: function(output) {
+                                $("#profileInnerContainer").find("#feed-endless-loader").before(output);
+                                $("#profileInnerContainer").find("#feed-endless-loader").html("");
+                                $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+                                var lastdate = $("#profileInnerContainer").find("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+                                $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date", lastdate);
+                                AttachShowUserActivityEvents(userid);
+                            },
+                            >>>
+                            >>> > Akuma
+                            error: function(x, t, m) {
+                                if (t === "timeout") {
+                                    ToastError("Server Timeout");
+                                } else {
+                                    ToastError(t);
+                                }
+                            },
+                            timeout: 45000
+                        });
+                    }

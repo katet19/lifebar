@@ -70,6 +70,12 @@
     background-color: #F50057;
     width: 50px;
     cursor: pointer;
+	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .fixed-save-close-modal-btn{
@@ -84,6 +90,16 @@
     color: white;
     background-color: #F50057;
     cursor: pointer;
+	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.fixed-close-modal-btn:hover, .fixed-save-close-modal-btn:hover{
+	background-color: #FF4081 !important;
 }
 
 .star-icon{
