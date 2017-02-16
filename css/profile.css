@@ -336,6 +336,21 @@
     transition: all 0.5s ease-out;
 }
 
+.lifebar-username-profile{
+    display: inline-block;
+    text-align: left;
+    font-size: 1.3em;
+    position: absolute;
+    color: white;
+    top: 22px;
+    left: 95px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
 .lifebar-fill{
     background-color: #009688;/*#43A047;*/
     height: 30px;
@@ -1699,6 +1714,31 @@
     text-transform: uppercase;
 }
 
+.lifebar-bar-level-header-profile{
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 2px;
+    background-color: white;
+    color: #3F51B5;
+    text-align: center;
+    font-size: 0.6em;
+    top: -4px;
+    width: 35px;
+    line-height: 25px;
+}
+.activity-profile{
+    margin-top:20vh;
+    position:absolute;
+    margin-left: -60px;
+    background-color:rgb(237, 236, 236);
+    z-index: 0;
+}
+
+.ProfileHeaderContainer{
+	height:20vh !important;
+}
+
 @media only screen and (max-width : 992px) {
 	.profile-best-left-card-container > .col > .userprofile-discover-card{
 		display:none;
@@ -1749,8 +1789,43 @@
 }
 
 @media only screen and (max-width : 600px) {
+    .user-profile-btn{
+        display:none
+    }
+    .critic-disclaimer{
+        line-height: 12px;
+        top: 65px;
+    }
     .lifebar-username-min{
         width:100%;
+    }
+    .lifebar-username-profile{
+        top: 18px;
+        left: 95px;
+        font-size: 0.7em;
+        line-height: 18px;
+        width:100%;
+    }
+    .lifebar-bar-level-header-profile{
+        font-size: 0.9em;
+        top: 5px;
+        width: 35px;
+        line-height: 25px;
+        text-align: center;
+        margin-left: 0px;
+    }
+    .ProfileHeaderContainer{
+        height:35vh !important;
+    }   
+    .activity-profile{
+        margin-top:35vh;
+        margin-left: -10px;
+    }
+    .user-profile-container{
+        display: inline-block;
+        width: 120%;
+        margin: 0;
+        padding-top: 100px;
     }
 	.mylibrary-vert-line, .mylibrary-divider-bullet{
 		display:none;

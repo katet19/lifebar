@@ -150,7 +150,8 @@
     min-height: 90%;
     text-align: center;
     height: -webkit-calc(100vh - 60px);
-    overflow: auto;
+    overflow-y: auto;
+	overflow-x:hidden;
     background-color: white;
 }
 
@@ -900,6 +901,9 @@ OLD STUFF
 	#gamemini.outerContainer{
 		width:100% !important;
 	}
+	 #profile.outerContainer, #game.outerContainer{
+		width:90% !important;
+	 }
 	#navigationContainer{
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
@@ -958,11 +962,6 @@ OLD STUFF
 		background-color: transparent !important;
 		font-size:1.5em !important;
 		color:white !important;
-	}
-	
-	.backContainer{
-		background-color:#3F51B5;
-		top: 75px;
 	}
 	
 	.backContainer .backButton .small, .backContainer .backButton .backButtonLabel{

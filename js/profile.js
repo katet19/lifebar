@@ -5,10 +5,13 @@ function ShowUserProfile(id, mine, browserNav){
 
 function ShowUserContent(userid, mine, browserNav){
 	var windowWidth = $(window).width();
-    $("#profile").css({"display":"inline-block", "right": "-75%"});
+
 	if($(window).width() > 599){
+		$("#profile").css({"display":"inline-block", "right": "-90%"});
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	}else{
+		$("#profile").css({"display":"inline-block", "right": "-75%"});
 	}
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
@@ -103,9 +106,14 @@ function ShowUserContent(userid, mine, browserNav){
 }
 
 function AttachProfileEvents(userid){
+	$(".user-profile-unfollow-btn").show();
 	$(".fixed-close-modal-btn, .lean-overlay").unbind();
 	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
-		$("#profile").css({ "right": "-75%" }); 
+		if($(window).width() > 599){
+			$("#profile").css({"right": "-90%"});
+		}else{
+			$("#profile").css({ "right": "-75%" }); 
+		}
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 	});
