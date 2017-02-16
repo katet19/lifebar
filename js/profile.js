@@ -31,6 +31,65 @@ function ShowUserContent(userid, mine, browserNav){
 				FollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
 				$(this).html("<i class='material-icons left'>person_outline</i> Unfollow");
 			});
+			$(".user-add-small-image-btn").on('click', function(){
+				var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
+				ShowPopUp(html);	
+			});
+			$(".user-add-large-image-btn").on('click', function(){
+				var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
+				ShowPopUp(html);
+			});
+			$(".user-run-weave-cal-btn").on('click', function(){
+				Toast("Calculating user's weave");
+				$.ajax({ url: '../php/webService.php',
+				data: {action: "RunWeaveCalculator", userid: $(this).attr("data-userid")  },
+				type: 'post',
+				success: function(output) {
+					Toast("Finished calculating and updating weave. Please refresh to see changes.")
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+			});
+			$(".user-share-btn").on("click", function(){
+				ShowShareModal("user", $(this).attr("data-userid"));
+			});
+			$(".user-set-title").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				var html = "<div class='row'><div class='col s12 input-field'><input type=text name='updatetitle' id='updatetitle' /><label for='updatetitle'>Title/Publication</label></div><div class='btn wave-effect update-title-btn'>Update Title<div></div>";
+				ShowPopUp(html);
+					$(".update-title-btn").on('click', function(){
+						$.ajax({ url: '../php/webService.php',
+						data: {action: "SaveTitle", userid: userid, title: $("#updatetitle").val()  },
+						type: 'post',
+						success: function(output) {
+							Toast("Users Title/Publication updated. Please refresh to see changes.")
+						},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+					});
+			});
+			$(".user-set-role").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				DisplayRoleManagement(userid);
+			});
+			$(".user-manage-badge").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				DisplayManageBadge(userid);
+			});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
