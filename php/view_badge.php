@@ -5,7 +5,7 @@ function DisplayAdminControlsForUser($userid){
 	$userbadges = GetAllBadgeForUserList($userid);
 	$user = GetUser($userid);
 	?>
-	<div class="row">
+	<div class="row" style='padding:20px;'>
 		<div class="col s12">
 			<div class='analyze-card-header'>
 				<div class='analyze-card-title'><i class="fa fa-certificate"></i> Admin Badge Management</div>
