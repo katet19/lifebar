@@ -86,6 +86,8 @@ function GetMyFeed($userid, $page, $filter){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "My Activity"){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",45");
+		}else if($filter == "Game Activity"){
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`GameID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",250");
 		}else if($filter == "All Users"){
 			$collectionList = GetSubscribedCollectionList($userid, $mysqli);
 			$collectionQuery = array();

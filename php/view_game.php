@@ -77,10 +77,12 @@ function ShowGameContent($game, $myxp, $otherxp, $videoxp){
 		}
 	} ?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
-		<div id="game-dashboard-tab" class="col s12 game-tab game-tab-active">
-			<?php ShowGameDashboard($game, $myxp, $videoxp, $refpts, $collections, $similar, $allusers); ?>
-			<div class="col s12 m12 l10" id='dashboard-game-width-box'></div>
-		</div>
+		<div class="activity-top-level game-activity" data-id='<?php echo $game->_id; ?>' >
+			<?php DisplayMainActivity($game->_id, "Game Activity"); ?>
+		</div>	
+
+
+
 		<?php if($id > 0){ ?>
 			<div id="game-community-tab" class="col s12 game-tab">
 				<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
