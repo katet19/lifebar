@@ -313,7 +313,7 @@ function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
@@ -561,13 +561,13 @@ function ManageXPRewards(output){
 
 function GameCardAction(action, gameid){
 	if(action == "xp"){
-		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
 		$("#gamemini.outerContainer").css({ "right": "0" });
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
-		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$("body").append("<div class='lean-overlay-details' id='materialize-lean-overlay-1' style='z-index: 1005; display: block; opacity: 0.5;'></div>");
 
 		$.ajax({ url: '../php/webService.php',
 			data: {action: "ShowXPModal", gameid: gameid },
@@ -577,12 +577,12 @@ function GameCardAction(action, gameid){
 				$('.collapsible').collapsible();
 				$('textarea#myxp-quote').characterCounter();
 				$(".myxp-platform-checked").each(function(){ $(this).click(); });
-				$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
-				$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+				$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
+				$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
 					var windowWidth = $(window).width();
 					HideFocus();
 					$("#gamemini").css({ "right": "-40%" }); 
-					$(".lean-overlay").each(function(){ $(this).remove(); } );
+					$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 					setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 				});
 				$(".cancel-xp").on("click", function(){
@@ -792,7 +792,7 @@ function InitializeGameCardUpdate(gameid){
 	$(".game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
@@ -944,13 +944,13 @@ function DisplayUserDetails(userid, username){
 function AttachWatchFromXP(){
 	$(".watchBtn").on("click", function(e){
  		e.stopPropagation();
-		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
 		$("#gamemini.outerContainer").css({ "right": "0" });
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
-		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$("body").append("<div class='lean-overlay-details' id='materialize-lean-overlay-1' style='z-index: 1005; display: block; opacity: 0.5;'></div>");
 
   		var gameid = $(this).attr("data-gameid");
   		var url = $(this).attr("data-url");
@@ -959,12 +959,12 @@ function AttachWatchFromXP(){
 	     type: 'post',
 	     success: function(output) {
 			$("#gameminiInnerContainer").html(output);
-			$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
-			$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+			$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
+			$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
 				var windowWidth = $(window).width();
 				HideFocus();
 				$("#gamemini").css({ "right": "-40%" }); 
-				$(".lean-overlay").each(function(){ $(this).remove(); } );
+				$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 			});
 			$(".modal-xp-emoji-icon").on('click', function(){
