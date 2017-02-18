@@ -52,86 +52,11 @@ function ShowGameNav($gbid){
 
 function ShowGameContent($game, $myxp, $otherxp, $videoxp){ 
 	$id = $_SESSION['logged-in']->_id;
-	if($id != ""){
-		$verified = GetVerifiedXPForGame($game->_id, $id);
-		$curated = GetCuratedXPForGame($game->_id, $id);
-		$myusers = GetMyUsersXPForGame($game->_id, $id);
-		$allusers = $verified + $curated + $myusers;
-	}else{
-		$id = -1;
-	}
-	$otherverified = GetOutsideVerifiedXPForGame($game->_id, $id);
-	$othercurated = GetOutsideCuratedXPForGame($game->_id, $id);
-	$otherusers = GetOutsideUsersXPForGame($game->_id, $id);
-	if($id > 0)
-		$allusers = $allusers + $otherverified + $othercurated + $otherusers;
-	else
-		$allusers = $otherverified + $othercurated + $otherusers;
-
-	$refpts = GetReflectionPointsForGame($game->_id);
-	$collections = GetCollectionsForGame($game->_id);
-	$similarlist = explode(',', $game->_similar);
-	foreach($similarlist as $sim){
-		if($sim > 0){
-			$similar[] = GetGameByGBIDFull($sim);
-		}
-	} ?>
+	?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div class="activity-top-level game-activity" data-id='<?php echo $game->_id; ?>' >
 			<?php DisplayMainActivity($game->_id, "Game Activity"); ?>
 		</div>	
-
-
-
-		<?php if($id > 0){ ?>
-			<div id="game-community-tab" class="col s12 game-tab">
-				<?php ShowCommunityFollowing($game, $_SESSION['logged-in']->_id, $myxp, $verified, $curated, $myusers); ?>
-				<div class="col s12 m12 l10" id='game-width-box'></div>
-			</div>
-			<div id="game-community-others-tab" class="col s12 game-tab">
-				<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
-			</div>
-		<?php }else{ ?>
-			<div id="game-community-tab" class="col s12 game-tab">
-				<?php ShowCommunityEveryoneElse($game, $_SESSION['logged-in']->_id, $myxp, $otherverified, $othercurated, $otherusers); ?>
-				<div class="col s12 m12 l10" id='game-width-box'></div>
-			</div>
-		<?php } ?>
-		<div id="game-analyze-tab" class="col s12 game-tab"><?php DisplayAnalyzeTab($_SESSION['logged-in'], $myxp, $game); ?></div>
-		<div id="game-video-tab" class="col s12 game-tab" style='z-index:2;'>
-			<?php ShowGameVideos($videoxp, $myxp); ?>
-		</div>
-		<div id="game-myxp-tab" class="col s12 game-tab">
-			<?php 
-			if($_SESSION['logged-in']->_id > 0){
-				ShowMyXP($myxp, $_SESSION['logged-in']->_id, '', '');
-			}else{
-			?>
-				<div class="info-label">Sign Up/Login to enter your experience with this game.</div>
-				<div class="btn waves-effect waves-light fab-login"><i class="mdi-editor-mode-edit left"></i> Login</div>
-			<?php
-			} ?>
-			<div class="col s12 m12 l10" id='myxp-game-width-box'></div>
-		</div>
-		<div id="game-userxp-tab" class="col s12 game-tab">
-			<?php if($otherxp != -1){
-					ShowUserXP($otherxp);
-					}?>
-		</div>
-		<div id="game-reflectionpoints-tab" class='col s12 game-tab'>
-			<?php ShowReflectionPoints($refpts); ?>
-		</div>
-		<?php /*
-		<div id="game-longform-tab" class="col s12 game-tab">
-			<?php ShowLongForm($game); ?>
-		</div>
-		*/ ?>
-		<div id="game-similargames-tab" class='col s12 game-tab'>
-			<?php ShowSimilarGames($similar); ?>
-		</div>
-		<div id="game-collections-tab" class='col s12 game-tab'>
-			<?php ShowGameCollections($collections, $game); ?>
-		</div>
 	</div>
 <?php }
 
@@ -486,9 +411,6 @@ function DisplayAllCommunityCards($users, $type){
 
 function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	?>
-	<div class="fixed-action-btn" id="game-fab">
-		<?php ShowMyGameFAB($game->_id, $myxp); ?>
-	</div>
 	<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
@@ -507,8 +429,8 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 		</div>
 		<div  class="GameHeaderActionBar">
 	          <div class="card-title activator grey-text text-darken-4">
-				<div class="nav-game-actions row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s6 m6 l5 offset-l1">
+				<div class="game-action-bar-list row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<!--<div class="col s6 m6 l5 offset-l1">
 						<?php if($myxp->_tier > 0){ ?>
 							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;top: 3px;'>
 								<?php DisplayStarSequence($myxp->_tier, true); ?>
@@ -525,7 +447,50 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 					</div>
 					<div class="col s6 m6 l5 game-nav-title" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 						<?php DisplayGameCardXPDetailSummary($myxp); ?> 
+					</div>-->
+					<div class="col">
+						<div class="game-action-bar-item">
+							<?php if($myxp->_bucketlist == "Yes"){ ?>
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark</i>
+								<span class="game-action-bar-item-title">Remove Bookmark</span>
+							<?php }else{ ?>
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark_border</i>
+								<span class="game-action-bar-item-title">Bookmark</span>
+							<?php } ?>
+						</div>
 					</div>
+					<div class="col">
+						<div class="game-action-bar-item">
+							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">photo_album</i>
+							<span class="game-action-bar-item-title">Pin to Profile</span>
+						</div>
+					</div>
+					<div class="col">
+						<div class="game-action-bar-item">
+							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
+							<span class="game-action-bar-item-title">Share</span>
+						</div>
+					</div>
+					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+						<div class="col">
+							<div class="game-action-bar-item">
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">file_upload</i>
+								<span class="game-action-bar-item-title">Upload Image</span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="game-action-bar-item">
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">update</i>
+								<span class="game-action-bar-item-title">Update from GB</span>
+							</div>
+						</div>
+						<div class="col">
+							<div class="game-action-bar-item">
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">forum</i>
+								<span class="game-action-bar-item-title">New Ref Pt</span>
+							</div>
+						</div>
+					<?php } ?>
 				</div>
 			  </div>
 		</div>

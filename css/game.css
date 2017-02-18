@@ -269,6 +269,25 @@
 	background-color:#f38fb1 !important;
 }
 
+.game-action-bar-item{
+	font-size: 0.8em;
+    padding: 10px 0;
+}
+
+.game-action-bar-item:hover{
+	color:#F50057 !important;
+	cursor: pointer;
+}
+
+.game-action-bar-item-title{
+    margin-left: 2px;
+}
+
+.game-action-bar-list{
+	margin-bottom: 0px;
+    background-color: #ddd;
+}
+
 /*
 OLD STUFF
 */
@@ -995,6 +1014,9 @@ refpt-header-subquestion-hidden{
 	    left: inherit;
 	    top: -75px;
 	    right: 20px;
+	}
+	.game-action-bar-item-title{
+		display:none;
 	}
 }
 
