@@ -492,7 +492,43 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 	<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 	<div class="GameHeaderContainer">
 		<div class="GameHeaderBackground" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-		<div class="GameTitle"><i class="mdi-navigation-menu HideForDesktop" style='color: white;margin-right: 10px;font-size: 1.25em;vertical-align: bottom;'></i> <?php echo $game->_title; ?></div>
+		<div class="GameTitle"><?php echo $game->_title; ?></div>
+		<div class="GameMeta">
+			<?php $platforms = explode("\n", $game->_platforms); 
+				$platforms = array_filter($platforms);
+				foreach($platforms as $platform){ 
+					if($platform != ""){ 
+						$platform = str_replace(array("\n", "\t", "\r"), '', $platform); ?>
+						<div style="margin-bottom:5px;color:white;">
+							<?php echo $platform;?>
+						</div>
+				<?php 	} 
+				} ?>
+		</div>
+		<div  class="GameHeaderActionBar">
+	          <div class="card-title activator grey-text text-darken-4">
+				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="col s12 m6">
+						<?php if($myxp->_tier > 0){ ?>
+							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;top: 3px;'>
+								<?php DisplayStarSequence($myxp->_tier, true); ?>
+							</div>
+						<?php }else{ ?>
+							<div class="nav-game-action-btn" style='position: relative;top: 3px;'>
+								<i class="material-icons star-icon star-icon-1">star_border</i>
+								<i class="material-icons star-icon star-icon-2">star_border</i>
+								<i class="material-icons star-icon star-icon-3">star_border</i>
+								<i class="material-icons star-icon star-icon-4">star_border</i>
+								<i class="material-icons star-icon star-icon-5">star_border</i>
+							</div>
+						<?php } ?>
+					</div>
+					<div class="col m6 s12 game-nav-title" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
+						<?php DisplayGameCardXPDetailSummary($myxp); ?> 
+					</div>
+				</div>
+			  </div>
+		</div>
 	</div>
 	<?php
 }
