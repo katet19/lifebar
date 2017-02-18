@@ -181,7 +181,7 @@
 	box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.star-icon{
+.star-icon, .game-action-icon{
     font-size: 1em;
     display: inline-block;
     margin: 0 -8px;
@@ -247,13 +247,11 @@
 .game-card-summary-add-xp-icon{
 	font-size: 1.5em;
     vertical-align: middle;
-    color: gray;
 }
 
 .game-card-summary-add-xp-text{
 	font-size:0.9em;
 	margin-left:5px;
-	color: gray;
 	position:relative;
 	top:1px;
 }
@@ -832,7 +830,7 @@ refpt-header-subquestion-hidden{
     height: 35px;
     padding: 0px;
     font-weight: 500;
-    color: #212121;
+    color: gray;
 	cursor: pointer;
 }
 
@@ -913,9 +911,6 @@ refpt-header-subquestion-hidden{
 	#game-slide-out li{
 		padding: 15px 12px 15px 15px;
 	}
-	.GameHeaderContainer, .GameHeaderBackground{
-		height:22em;
-	}
 	.GameHeaderBackground{
 		width:100%;
 	}
@@ -941,21 +936,17 @@ refpt-header-subquestion-hidden{
 	    left: 1.5em;
 	    margin-top: 10px;
 	}
-	.star-icon{
+	.star-icon, .game-action-icon{
 		font-size:0.8em;
 	}
 }
 
 @media only screen and (max-width : 600px) {
-	.GameHeaderContainer{
-		height:14em;
-		/*position:absolute;*/
-	}
-	.GameHeaderBackground{
-		height:14em;
-	}
 	.card-game-secondary-actions{
 		height:150px;
+	}
+	.GameMeta{
+		top:35px;
 	}
 	.fixed-action-btn{
 		position: fixed !important;

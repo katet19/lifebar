@@ -507,8 +507,8 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 		</div>
 		<div  class="GameHeaderActionBar">
 	          <div class="card-title activator grey-text text-darken-4">
-				<div class="nav-game-actions row" data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
-					<div class="col s12 m6">
+				<div class="nav-game-actions row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+					<div class="col s6 m6 l5 offset-l1">
 						<?php if($myxp->_tier > 0){ ?>
 							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;top: 3px;'>
 								<?php DisplayStarSequence($myxp->_tier, true); ?>
@@ -523,7 +523,7 @@ function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
 							</div>
 						<?php } ?>
 					</div>
-					<div class="col m6 s12 game-nav-title" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
+					<div class="col s6 m6 l5 game-nav-title" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 						<?php DisplayGameCardXPDetailSummary($myxp); ?> 
 					</div>
 				</div>
