@@ -52,7 +52,7 @@
 }
 
 .game-activity-col{
-    height:225px !important;
+    height:210px !important;
     text-align: center;
     position:relative;
     top:20px;
@@ -234,6 +234,19 @@
     display: inline-block;
     margin: 0 -8px;
     padding: 0px 4px;
+}
+
+.game-activity-content .game-card-summary-prog-bar-container{
+    height:25px !important;
+    left:50px !important;
+}
+
+.game-activity-content .game-card-summary-prog-bar{
+    height:25px !important;
+}
+
+.game-activity-content .game-card-summary-prog-title{
+    top:0px;
 }
 
 .game-card-summary-prog-bar-container{

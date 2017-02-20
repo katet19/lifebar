@@ -48,11 +48,11 @@ function ShowGameContent($game, $myxp, $otherxp){
 								</div>
 								<div class="game-activity-content-sub-header">
 									<?php if($toprating == $myxp->_tier){ ?>
-										You agree with other Lifebar members.
+										You <b>agree</b> with most other members.
 									<?php }else if($toprating > $myxp->_tier){ ?>
-										You rated the game higher than other Lifebar members.
+										You rated <b>higher</b> than other members.
 									<?php }else if($toprating > 0){ ?>
-										You rated the game lower than other Lifebar members.
+										You rated <b>lower</b> than other members.
 									<?php } ?>
 									<br>
 									Community Average: <b>
@@ -71,7 +71,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 											Community Average: 
 											<b><?php  if($toprating == 5){ echo "1"; }else if($toprating == 4){ echo "2"; }else if($toprating == 3){ echo "3"; }else  if($toprating == 2){ echo "4"; }else if($toprating == 1){ echo "5"; } ?></b> of <b>5</b> stars
 										<?php }else{ ?>
-											The community hasn't rated this game yet
+											You haven't rated this game yet
 										<?php } ?>
 									</div>
 							<?php } ?>
@@ -81,7 +81,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 				<div class="game-activity-col col s12 m4 l4"  data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<div class="card-panel white game-activity-col-card">
 						<div class="game-activity-title">Details</div>
-						<div class="game-activity-content game-nav-title" style='top:6px;'>
+						<div class="game-activity-content game-nav-title" style='top:6px;font-size:1.25em;'>
 							<?php DisplayGameCardXPDetailSummary($myxp); ?> 
 						</div>
 						<div class="game-activity-content-sub-header">
@@ -89,60 +89,159 @@ function ShowGameContent($game, $myxp, $otherxp){
 									$totalXp = sizeof($myxp->_playedxp) + sizeof($myxp->_watchedxp);
 									if($totalXp > 1){
 										echo "You have entered <b>".$totalXp."</b> details";
+									}else{
+										echo "You have entered <b>1</b> detail";
 									}
-								}?>
+								}else{
+									echo "Add played or watched details";
+								} ?>
 						</div>
 					</div>
 				</div>
 				<div class="game-activity-col  col s12 m4 l4" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<div class="card-panel white game-activity-col-card">
 						<div class="game-activity-title">Ranking</div>
-						<div class="game-activity-content">
 							<?php if($myxp->_rank > 0){ ?>
-								<div class="game-activity-rank-content">
-									<div class="game-activity-rank-item">
-										<?php echo $myxp->_rank; ?>
+								<div class="game-activity-content">
+									<div class="game-activity-rank-content">
+										<div class="game-activity-rank-item">
+											<?php echo $myxp->_rank; ?>
+										</div>
+										<div class="game-activity-rank-title">
+											<?php echo $game->_year; ?>
+										</div>
 									</div>
-									<div class="game-activity-rank-title">
-										<?php echo $game->_year; ?>
+									<div class="game-activity-rank-content">
+										<div class="game-activity-rank-item">
+											/
+										</div>
+										<div class="game-activity-rank-title">
+											&nbsp;
+										</div>
+									</div>
+									<div class="game-activity-rank-content">
+										<div class="game-activity-rank-item">
+											<?php echo $myxp->_rank; ?>
+										</div>
+										<div class="game-activity-rank-title">
+											All-Time
+										</div>
 									</div>
 								</div>
-								<div class="game-activity-rank-content">
-									<div class="game-activity-rank-item">
-										/
-									</div>
-									<div class="game-activity-rank-title">
-										&nbsp;
-									</div>
-								</div>
-								<div class="game-activity-rank-content">
-									<div class="game-activity-rank-item">
-										<?php echo $myxp->_rank; ?>
-									</div>
-									<div class="game-activity-rank-title">
-										All-Time
-									</div>
+								<div class="game-activity-content-sub-header">
 								</div>
 							<?php }else{ ?>
-								<div class="game-activity-rank-content">
-									<div class="game-activity-rank-item">
-										Unranked
-									</div>
-									<div class="game-activity-rank-title">
-										<?php echo $game->_year; ?> / All-Time
+								<div class="game-activity-content">
+									<div class="game-activity-rank-content">
+										<div class="game-activity-rank-item">
+											Unranked
+										</div>
+										<div class="game-activity-rank-title">
+											&nbsp;
+										</div>
 									</div>
 								</div>
+								<div class="game-activity-content-sub-header">
+									You haven't ranked this game yet
+								</div>
 							<?php } ?>
-						</div>
 					</div>
 				</div>
 			</div>
-			<div class="activity-top-level" style='position:absolute;' data-id='<?php echo $game->_id; ?>' >
+			<div class="row game-community-graph" style='margin-left:1rem;margin-right:1rem;'>
+				<?php BuildCommunitySpectrum($_SESSION['logged-in'], $myxp, $game); ?>
+			</div>
+			<div class="activity-top-level" style='position:absolute;width:100%;' data-id='<?php echo $game->_id; ?>' >
 				<?php DisplayMainActivity($game->_id, "Game Activity"); ?>
 			</div>	
 		</div>
 	</div>
 <?php }
+
+
+function BuildCommunitySpectrum($user, $myxp, $game){
+	if($user->_id > 0){
+		$following = GetFollowingTiersForGame($game->_id, $user->_id);
+		$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
+	}
+	$critics = GetCriticTiersForGame($game->_id);
+	$criticTotal = $critics[1] + $critics[2] + $critics[3] + $critics[4] + $critics[5];
+	$users = GetUserTiersForGame($game->_id);
+	$usersTotal = $users[1] + $users[2] + $users[3] + $users[4] + $users[5];
+	if($followingTotal + $crticTotal + $usersTotal > 3){
+	?>
+		<div class="col s12">
+			<div class="card-panel white" style='position:relative;'>
+				<div class="game-activity-title">Community Rating Breakdown</div>
+				<div class="row" style='margin-bottom:0px;'>
+					<div class="col s12" style='margin-top:30px;'>
+						<canvas class="GraphCommunityUsers" style='margin:0.5em 20px 1em'  
+							<?php if(sizeof($following) > 1){ ?> data-followingTotal="<?php echo $followingTotal; ?>" data-ft1="<?php echo $following[1] ;?>" data-ft2="<?php echo $following[2] ;?>" data-ft3="<?php echo $following[3] ;?>" data-ft4="<?php echo $following[4] ;?>" data-ft5="<?php echo $following[5]; ?>" <?php } ?>
+							<?php if(sizeof($critics) > 1){ ?> data-criticTotal="<?php echo $criticTotal; ?>" data-yt1="<?php echo $critics[1] ;?>" data-yt2="<?php echo $critics[2] ;?>" data-yt3="<?php echo $critics[3] ;?>" data-yt4="<?php echo $critics[4] ;?>" data-yt5="<?php echo $critics[5]; ?>" <?php } ?>
+							<?php if(sizeof($users) > 1){ ?> data-usersTotal="<?php echo $usersTotal; ?>" data-gt1="<?php echo $users[1] ;?>" data-gt2="<?php echo $users[2] ;?>" data-gt3="<?php echo $users[3] ;?>" data-gt4="<?php echo $users[4] ;?>" data-gt5="<?php echo $users[5]; ?>" <?php } ?>
+						></canvas>
+						<div class="analyze-exp-spectrum-tier">
+							<?php if($myxp->_tier == 5){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:27.8%;'>
+							<?php if($myxp->_tier == 4){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:49.3%;'>
+							<?php if($myxp->_tier == 3){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:71%;'>
+							<?php if($myxp->_tier == 2){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="analyze-exp-spectrum-tier" style='left:92.5%;'>
+							<?php if($myxp->_tier == 1){ ?>
+								<div class="analyze-exp-spectrum-game-piece">
+									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
+									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
+								</div>
+							<?php } ?>
+						</div>
+					</div>
+					<div class="col s12">
+						<div class="analyze-exp-key">
+							<div class="analyze-line-item" style='background-color:rgba(196, 77, 88, 0.9);'>
+								<div class="analyze-line-desc"><i class='material-icons left' style='font-size: 1.5em;'>public</i> Members</div>
+							</div>
+							<?php if($user->_id > 0){ ?>
+								<div class="analyze-line-item" style='background-color:rgba(78, 205, 196, 0.9)'>
+									<div class="analyze-line-desc"><i class='material-icons left' style='font-size: 1.5em;'>people</i> Following</div>
+								</div>
+							<?php } ?>
+							<div class="analyze-line-item"  style='background-color:rgba(85, 98, 112, 0.9)';>
+								<div class="analyze-line-desc"><i class='material-icons left' style='font-size: 1.5em;'>school</i> Critics</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php
+	}
+}
 
 function ShowSimilarGames($similar){
 	if(sizeof($similar) > 0){ 

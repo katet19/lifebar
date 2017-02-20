@@ -208,6 +208,8 @@ function AttachGameEvents(currentTab){
 		});
 	}
 
+	DisplayExpSpectrum($(".game-community-graph"));
+
 	$("#game-slide-out li").on("click", function(){
 		SwitchGameContent($(this));
 	});
@@ -2082,13 +2084,13 @@ function DisplayExpSpectrum(elem){
 			var gt1 = ($(this).attr("data-gt1") > 0) ? Math.round(($(this).attr("data-gt1") / usersTotal) * 100) : 0;
 			
 			var data = {
-		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
+		    labels: ["1 star", "2 stars", "3 stars", "4 stars", "5 Stars"],
 		    datasets: [
 		        {
 		            label: "Following",
-		            fillColor: "rgba(76, 175, 80, 0.41)",
-		            strokeColor: "rgba(76, 175, 80, 0.9)",
-		            pointColor: "rgba(76, 175, 80, 0.9)",
+		            fillColor: "rgba(78, 205, 196, 0)",
+		            strokeColor: "rgba(78, 205, 196, 0.9)",
+		            pointColor: "rgba(78, 205, 196, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2096,9 +2098,9 @@ function DisplayExpSpectrum(elem){
 		        },
 		        {
 		            label: "Critics",
-		            fillColor: "rgba(255, 87, 34, 0.41)",
-		            strokeColor: "rgba(255, 87, 34, 0.9)",
-		            pointColor: "rgba(255, 87, 34, 0.9)",
+		            fillColor: "rgba(85, 98, 112, 0)",
+		            strokeColor: "rgba(85, 98, 112, 0.9)",
+		            pointColor: "rgba(85, 98, 112, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2106,9 +2108,9 @@ function DisplayExpSpectrum(elem){
 		        },
 		        {
 		            label: "Members",
-		            fillColor: "rgba(63, 81, 181, 0.41)",
-		            strokeColor: "rgba(63, 81, 181, 0.9)",
-		            pointColor: "rgba(63, 81, 181, 0.9)",
+		            fillColor: "rgba(196, 77, 88, 0)",
+		            strokeColor: "rgba(196, 77, 88, 0.9)",
+		            pointColor: "rgba(196, 77, 88, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2126,7 +2128,7 @@ function DisplayExpSpectrum(elem){
 			$(this).attr('width', $(this).parent().width() - 40);
 		
 		if($(window).width() > 599)
-        	$(this).attr('height', 300);
+        	$(this).attr('height', 200);
     	else
     		$(this).attr('height', 150);
 		var temp = new Chart(communityGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });
