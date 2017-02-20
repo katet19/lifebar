@@ -614,47 +614,47 @@ function ShowGameHeader($game, $myxp, $otherxp){
 	          <div class="card-title activator grey-text text-darken-4">
 				<div class="game-action-bar-list row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
 					<div class="col">
-						<div class="game-action-bar-item">
+						<div class="game-action-bar-item game-action-bookmark" data-gameid="<?php echo $game->_id; ?>">
 							<?php if($myxp->_bucketlist == "Yes"){ ?>
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark</i>
 								<span class="game-action-bar-item-title">Remove Bookmark</span>
 							<?php }else{ ?>
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark_border</i>
-								<span class="game-action-bar-item-title">Bookmark</span>
+								<span class="game-action-bar-item-title">Add Bookmark</span>
 							<?php } ?>
 						</div>
 					</div>
 					<div class="col">
-						<div class="game-action-bar-item">
+						<div class="game-action-bar-item game-action-pin-to-profile" data-gameid="<?php echo $game->_id; ?>">
 							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">photo_album</i>
 							<span class="game-action-bar-item-title">Pin to Profile</span>
 						</div>
 					</div>
 					<div class="col">
-						<div class="game-action-bar-item">
+						<div class="game-action-bar-item game-action-share">
 							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
 							<span class="game-action-bar-item-title">Share</span>
 						</div>
 					</div>
 					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
 						<div class="col">
-							<div class="game-action-bar-item">
+							<div class="game-action-bar-item game-action-file-upload" data-gameid="<?php echo $game->_id; ?>" data-year="<?php echo $game->_year; ?>">
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">file_upload</i>
 								<span class="game-action-bar-item-title">Upload Image</span>
 							</div>
 						</div>
 						<div class="col">
-							<div class="game-action-bar-item">
+							<div class="game-action-bar-item game-action-gb-update" data-gameid="<?php echo $game->_id; ?>">
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">update</i>
 								<span class="game-action-bar-item-title">Update from GB</span>
 							</div>
 						</div>
-						<div class="col">
-							<div class="game-action-bar-item">
+						<!--<div class="col">
+							<div class="game-action-bar-item game-action-new-ref-pt">
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">forum</i>
 								<span class="game-action-bar-item-title">New Ref Pt</span>
 							</div>
-						</div>
+						</div>-->
 					<?php } ?>
 				</div>
 			  </div>

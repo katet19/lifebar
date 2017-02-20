@@ -14,7 +14,7 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	}
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("body").append("<div class='lean-overlay' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 	$("#game.outerContainer").css({ "right": 0 });
 
 	if(!isID){
@@ -132,7 +132,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
     $("#game.outerContainer").css({ "right": 0 });
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("body").append("<div class='lean-overlay' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 	ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayGame", gbid: gbid },
@@ -201,112 +201,11 @@ function AttachGameEvents(currentTab){
 		$("#gameInnerContainer .backContainer").css({"top":"7px", "position":"absolute"});
 	}
 
-	if($(window).width() < 992){
-		$(".GameTitle").on("click", function(e){
-			e.stopPropagation();
-			DisplayGameNav();
-		});
-	}
-
 	DisplayExpSpectrum($(".game-community-graph"));
-
-	$("#game-slide-out li").on("click", function(){
-		SwitchGameContent($(this));
-	});
-	$(".game-tab-first").click();
-	var iconOnHover="";
-	if($(".fixed-action-btn .game-add-played-btn").length > 0)
-		iconOnHover = "mdi-hardware-gamepad";
-	else if($(".fixed-action-btn .game-add-watched-btn").length > 0)
-		iconOnHover = "mdi-action-visibility";
-	else
-		iconOnHover = "mdi-action-bookmark";
-		
-	$(".ShowInfoBtn").on('click', function(){
-  		var html = $('#infoModal').html();
-  		ShowPopUp(html);
-	});
-	AttachEditEvents();
- 	$(".critic-name-container, .myxp-details-agree-listitem").on("click", function(e){
-  		e.stopPropagation();
- 		ShowUserProfile($(this).attr("data-id"));
- 	});
+	AttachActionBarGameEvents();
  	AttachAgrees();
   	Waves.displayEffect();
-  	
-  	$(".detailsBtn").on('click', function(e){ 
-  		var userid = $(this).attr("data-uid");
-  		var username = $(this).attr("data-uname");
-  		DisplayUserDetails(userid, username);
-  	});
-	 	
- 	$(".ptalk-link-games").on("click", function(){
- 		window.open("http://tidbits.io/c/games");
- 	});
- 	
- 	$(".myxp-share-tier-quote").unbind();
- 	$(".myxp-share-tier-quote").on('click', function(){
-		var gameid = $("#gameContentContainer").attr("data-id");
-		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
-	});
- 	$(".myxp-profile-tier-quote").on('click', function(){
-		ShowUserProfile($(this).attr("data-userid"));
-	});
-	$(".edit-ref-pt").on("click", function(){
-		var refptID = $(this).attr("data-id");
-		EditReflectionPopUp(refptID);
-	});
-	$(".myxp-save-journal").on("click",function(){
-		SaveJournalEntry($(this).attr("data-gameid"));
-	});
-	$(".myxp-journal-edit-btn").on("click", function(){
-		ShowJournalEdit();
-	});
-	$(".myxp-cancel-journal").on("click", function(){
-		HideJournalEdit();
-	});
-	$(".collection-box-container").on("click", function(e){
-		e.stopPropagation();
-		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
-	});
-	$(".dashboard-collection-view").on("click", function(e){
-		SwitchGameContent($(".game-collections-tab"));
-	});
-	$(".dashboard-similar-view").on("click", function(e){
-		SwitchGameContent($(".game-similargames-tab"));
-	});
-	$(".dashboard-community-view").on("click", function(e){
-		SwitchGameContent($(".game-community-tab"));
-	});
-	$(".game-ref-pt-btn").on("click", function(e){
-		SwitchGameContent($(".game-reflectionpoints-tab"));
-	});
-	$(".knowledge-container").on("click", function(){
-		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
-	 });
-  	$(".badge-small").on("click", function(){
- 		var id = $(this).attr("data-objectid");
- 		var progid = $(this).attr("data-progid");
- 		DisplayGearDetails($(".userContainer").attr("data-id"), id, progid);
- 	});
-	$(".game-unwatched-btn").on("click", function(){
-		SwitchGameContent($(".game-video-tab"));
-		$(".video-is-watched").hide();
-		$(".video-show-watched").show();
-	});
-	$(".video-show-watched").on('click', function(){
-		$(this).hide();
-		$(".video-is-watched").show(250);
-	});
-	AttachEventsForReflectionPoints();
 	$("select").material_select();
-	DisplayFormResultsGraph();
- 	AttachFloatingIconEvent(iconOnHover);
-	AttachFloatingIconButtonEvents();
-	AttachMyXPEvents();
-	AttachCriticBookmark();
-	AttachAnalyzeEvents();
-	AttachVideoEvents();
 	AttachWatchFromXP();
 	AttachGameCardEvents();
 }
@@ -1148,12 +1047,6 @@ function ValidateVideoXPEntry(button){
 		element.find(".myxp-post").removeClass("disabled");
 }
 
-function AttachCriticBookmark(){
-	$(".no-critic-bookmark").on('click', function(e){
-		SubmitBookmark("AddBookmark", $(".game-add-bookmark-btn").attr("data-gameid"));	
-	});
-}
-
 function AnalyzeViewMoreButtons(){
 	$(".analyze-card").each(function(){ 
 		if($(this).find(".analyze-view-more-hide").length > 0){
@@ -1406,53 +1299,31 @@ function RequestUpdateFromGiantBomb(gameid){
 	});
 }
 
-function AttachFloatingIconButtonEvents(){
-	$(".game-remove-bookmark-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
+function AttachActionBarGameEvents(){
+	$(".game-action-bookmark").on('click', function(){
+		if($(this).find("i").text() == "bookmark"){
 			SubmitBookmark("RemoveBookmark", $(this).attr("data-gameid"));
-		}
-	});
-	$(".game-add-bookmark-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
+			$(this).find(".game-action-bar-item-title").text("Add Bookmark");
+			$(this).find("i").text("bookmark_border");
+		}else{
 			SubmitBookmark("AddBookmark", $(this).attr("data-gameid"));
+			$(this).find(".game-action-bar-item-title").text("Remove Bookmark");
+			$(this).find("i").text("bookmark");
 		}
 	});
-	$(".game-collection-btn").on('click', function(){
-		DisplayCollectionPopUp($(this).attr("data-gameid"));	
-	});
-	$(".game-add-watched-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
-			AddWatchedFabEvent('','','','','');
-		}
-	});
-
-	$(".game-add-played-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
-			AddPlayedFabEvent();		
-		}
-	});
-	$(".game-update-info-btn").on('click', function(){
+	$(".game-action-gb-update").on('click', function(){
 		RequestUpdateFromGiantBomb($(this).attr("data-gameid"));	
 	});
-	$(".game-add-image-btn").on('click', function(){
+	$(".game-action-file-upload").on('click', function(){
 		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
-	$(".game-create-reflection-point").on('click', function(){
-		DisplayReflectionPopUp($(this).attr("data-gameid"));
+	$(".game-action-share").on("click", function(){
+		ShowShareModal("game", $(this).attr("data-gameid"));
 	});
-	$(".game-share-btn").on("click", function(){
-		var gameid = $("#gameContentContainer").attr("data-id");
-		ShowShareModal("game", gameid);
-	});
-	$(".fab-login").on('click', function(){
-		 $('#signupModal').openModal();
-		 GAEvent('Game', 'Login');
-	});
-	$(".game-set-fav-btn").on("click", function(){
-		if($(".game-set-fav-btn").css("opacity") == 1){
-			DisplayEquipXP();
-		}	
+	$(".game-action-pin-to-profile").on("click", function(){
+		UpdatePreferredXP($(this).attr("data-gameid"), 1);
+		Toast("Pinned game image to your user profile");
 	});
 }
 
@@ -1714,20 +1585,6 @@ function MoveDownPostAgree(xp, count){
 		});
 	}
 }
-
-function AttachEditEvents(){
-	$(".myxp-edit-played").on('click', function(){
-		UpdatePlayedEvent();
-	});
-	$(".myxp-edit-watched").on('click', function(){
-		var watchid = $(this).attr("data-id");
-		UpdateWatchedEvent(watchid);
-	});
-	$(".myxp-edit-tier-quote").on('click', function(){
-		UpdateTierQuoteEvent();	
-	});
-}
-
 
 function DisplayReflectionPopUp(gameid){
 	$.ajax({ url: '../php/webService.php',
