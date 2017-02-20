@@ -26,30 +26,65 @@ function ShowGameContent($game, $myxp, $otherxp){
 	?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div class="game-activity">
-			<div class="row">
-				<div class="col s12 m4 l4">
-					<?php if($myxp->_tier > 0){ ?>
-						<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
-							<?php DisplayStarSequence($myxp->_tier, true); ?>
+			<div class="row" style='margin-left: 1rem;margin-right: 1rem;'>
+				<div class="game-activity-col col s12 m4 l4">
+					<div class="card-panel white game-activity-col-card">
+						<div class="game-activity-title">Rating</div>
+						<div class="game-activity-content">
+							<?php if($myxp->_tier > 0){ ?>
+								<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
+									<?php DisplayStarSequence($myxp->_tier, true); ?>
+								</div>
+							<?php }else{ ?>
+								<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;'>
+									<i class="material-icons star-icon star-icon-1">star_border</i>
+									<i class="material-icons star-icon star-icon-2">star_border</i>
+									<i class="material-icons star-icon star-icon-3">star_border</i>
+									<i class="material-icons star-icon star-icon-4">star_border</i>
+									<i class="material-icons star-icon star-icon-5">star_border</i>
+								</div>
+							<?php } ?>
 						</div>
-					<?php }else{ ?>
-						<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;'>
-							<i class="material-icons star-icon star-icon-1">star_border</i>
-							<i class="material-icons star-icon star-icon-2">star_border</i>
-							<i class="material-icons star-icon star-icon-3">star_border</i>
-							<i class="material-icons star-icon star-icon-4">star_border</i>
-							<i class="material-icons star-icon star-icon-5">star_border</i>
+        			</div>
+				</div>
+				<div class="game-activity-col col s12 m4 l4"  data-action="xp" data-id='<?php echo $game->_id; ?>'>
+					<div class="card-panel white game-activity-col-card">
+						<div class="game-activity-title">Details</div>
+						<div class="game-activity-content game-nav-title" style='top:6px;'>
+							<?php DisplayGameCardXPDetailSummary($myxp); ?> 
 						</div>
-					<?php } ?>
-					<div class="">Star Rating</div>
+					</div>
 				</div>
-				<div class="col s12 m4 l4 game-nav-title" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
-					<?php DisplayGameCardXPDetailSummary($myxp); ?> 
-					<div class="">Experience Details</div>
-				</div>
-				<div class="col s12 m4 l4" style="margin-top: 3px;" data-action="xp" data-id='<?php echo $game->_id; ?>'>
-					RANK 
-					<div class="">Ranking</div>
+				<div class="game-activity-col  col s12 m4 l4" data-action="xp" data-id='<?php echo $game->_id; ?>'>
+					<div class="card-panel white game-activity-col-card">
+						<div class="game-activity-title">Ranking</div>
+						<div class="game-activity-content">
+							<div class="game-activity-rank-content">
+								<div class="game-activity-rank-item">
+									Unranked
+								</div>
+								<div class="game-activity-rank-title">
+									<?php echo $game->_year; ?>
+								</div>
+							</div>
+							<div class="game-activity-rank-content">
+								<div class="game-activity-rank-item">
+									/
+								</div>
+								<div class="game-activity-rank-title">
+									&nbsp;
+								</div>
+							</div>
+							<div class="game-activity-rank-content">
+								<div class="game-activity-rank-item">
+									Unranked
+								</div>
+								<div class="game-activity-rank-title">
+									All-Time
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="activity-top-level" style='position:absolute;' data-id='<?php echo $game->_id; ?>' >
@@ -621,7 +656,7 @@ function DisplayGameCardXPDetailSummary($xp){
 				</div>
   	  <?php }else if(sizeof($xp->_watchedxp) > 0){ 
   	  		$length = "";
-    		foreach($xp->_watchedxp as $watched){
+    		$watched = $xp->_watchedxp[0];
 				$length = $watched->_length;
     			if($watched->_length == "Watched a speed run"){
     				$icon = "directions_walk";
@@ -638,7 +673,6 @@ function DisplayGameCardXPDetailSummary($xp){
     			}else{
 					$icon = "theaters";
     			}
-    		}
     		?>
 			<div class="game-card-summary-watch-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 				<div class="game-card-summary-watch">

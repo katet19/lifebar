@@ -36,9 +36,47 @@
     transition: all 0.5s ease;
 }
 
+.game-activity-title{
+    display: block;
+    font-size: 0.9em;
+    top: 10px;
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: 300;
+    left: 20px;
+}
+
+.game-activity-content{
+    margin-top:30px;
+    width:100%;
+}
+
+.game-activity-col{
+    height:200px !important;
+    text-align: center;
+    position:relative;
+    top:20px;
+}
+
 .GameMeta div{
 	padding-right:7px;
 	display:inline-block
+}
+
+.game-activity-col-card{
+    height:150px;
+}
+
+.game-activity-rank-content{
+    display:inline-block;
+}
+
+.game-activity-rank-item{
+    font-size:1.5em;
+}
+
+.game-activity-rank-title{
+    font-weight:400;
 }
 
 .game-activity{
