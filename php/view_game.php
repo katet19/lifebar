@@ -174,7 +174,7 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 			<div class="card-panel white" style='position:relative;'>
 				<div class="game-activity-title">Community Rating Breakdown</div>
 				<div class="row" style='margin-bottom:0px;'>
-					<div class="col s12" style='margin-top:30px;'>
+					<div class="col s12" style='margin-top:30px;padding:0;'>
 						<canvas class="GraphCommunityUsers" style='margin:0.5em 20px 1em'  
 							<?php if(sizeof($following) > 1){ ?> data-followingTotal="<?php echo $followingTotal; ?>" data-ft1="<?php echo $following[1] ;?>" data-ft2="<?php echo $following[2] ;?>" data-ft3="<?php echo $following[3] ;?>" data-ft4="<?php echo $following[4] ;?>" data-ft5="<?php echo $following[5]; ?>" <?php } ?>
 							<?php if(sizeof($critics) > 1){ ?> data-criticTotal="<?php echo $criticTotal; ?>" data-yt1="<?php echo $critics[1] ;?>" data-yt2="<?php echo $critics[2] ;?>" data-yt3="<?php echo $critics[3] ;?>" data-yt4="<?php echo $critics[4] ;?>" data-yt5="<?php echo $critics[5]; ?>" <?php } ?>
@@ -182,13 +182,13 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 						></canvas>
 						<div class="analyze-exp-spectrum-tier">
 							<?php if($myxp->_tier == 5){ ?>
-								<div class="analyze-exp-spectrum-game-piece">
+								<div class="analyze-exp-spectrum-game-piece" style='left:0;'>
 									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
 									<div class="analyze-exp-spectrum-game-line tier<?php echo $myxp->_tier; ?>BG">.</div>
 								</div>
 							<?php } ?>
 						</div>
-						<div class="analyze-exp-spectrum-tier" style='left:27.8%;'>
+						<div class="analyze-exp-spectrum-tier" style='left:27.4%;'>
 							<?php if($myxp->_tier == 4){ ?>
 								<div class="analyze-exp-spectrum-game-piece">
 									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
@@ -204,7 +204,7 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 								</div>
 							<?php } ?>
 						</div>
-						<div class="analyze-exp-spectrum-tier" style='left:71%;'>
+						<div class="analyze-exp-spectrum-tier" style='left:auto;right:calc(60px + 23%)'>
 							<?php if($myxp->_tier == 2){ ?>
 								<div class="analyze-exp-spectrum-game-piece">
 									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
@@ -212,7 +212,7 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 								</div>
 							<?php } ?>
 						</div>
-						<div class="analyze-exp-spectrum-tier" style='left:92.5%;'>
+						<div class="analyze-exp-spectrum-tier" style='left:auto;right:60px;'>
 							<?php if($myxp->_tier == 1){ ?>
 								<div class="analyze-exp-spectrum-game-piece">
 									<i class="material-icons tierTextColor<?php echo $myxp->_tier; ?>" style='position: absolute;top: -20px;left: -11px;'>location_on</i>
