@@ -23,6 +23,17 @@ function DisplayGameViaID($gameid, $userid){
 
 function ShowGameContent($game, $myxp, $otherxp){ 
 	$id = $_SESSION['logged-in']->_id;
+	$allusers = GetAllUserXPForGame($game->_id);
+	$rating = array();
+	foreach($allusers as $allxp)
+		$rating[$allxp->_tier] = $rating[$allxp->_tier] + 1;
+
+    if(sizeof($rating) > 0){
+        arsort($rating);
+        reset($rating);
+        $toprating = key($rating);
+	}
+
 	?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
 		<div class="game-activity">
@@ -32,8 +43,20 @@ function ShowGameContent($game, $myxp, $otherxp){
 						<div class="game-activity-title">Rating</div>
 						<div class="game-activity-content">
 							<?php if($myxp->_tier > 0){ ?>
-								<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
+								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
 									<?php DisplayStarSequence($myxp->_tier, true); ?>
+								</div>
+								<div class="game-activity-content-sub-header">
+									<?php if($toprating == $myxp->_tier){ ?>
+										You agree with other Lifebar members.
+									<?php }else if($toprating > $myxp->_tier){ ?>
+										You rated the game higher than other Lifebar members.
+									<?php }else if($toprating > 0){ ?>
+										You rated the game lower than other Lifebar members.
+									<?php } ?>
+									<br>
+									Community Average: <b>
+									<?php  if($toprating == 5){ echo "1"; }else if($toprating == 4){ echo "2"; }else if($toprating == 3){ echo "3"; }else  if($toprating == 2){ echo "4"; }else if($toprating == 1){ echo "5"; } ?></b> of <b>5</b> stars
 								</div>
 							<?php }else{ ?>
 								<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;'>
@@ -43,6 +66,14 @@ function ShowGameContent($game, $myxp, $otherxp){
 									<i class="material-icons star-icon star-icon-4">star_border</i>
 									<i class="material-icons star-icon star-icon-5">star_border</i>
 								</div>
+									<div class="game-activity-content-sub-header">
+										<?php if($toprating > 0){ ?>
+											Community Average: 
+											<b><?php  if($toprating == 5){ echo "1"; }else if($toprating == 4){ echo "2"; }else if($toprating == 3){ echo "3"; }else  if($toprating == 2){ echo "4"; }else if($toprating == 1){ echo "5"; } ?></b> of <b>5</b> stars
+										<?php }else{ ?>
+											The community hasn't rated this game yet
+										<?php } ?>
+									</div>
 							<?php } ?>
 						</div>
         			</div>
@@ -53,36 +84,55 @@ function ShowGameContent($game, $myxp, $otherxp){
 						<div class="game-activity-content game-nav-title" style='top:6px;'>
 							<?php DisplayGameCardXPDetailSummary($myxp); ?> 
 						</div>
+						<div class="game-activity-content-sub-header">
+								<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){
+									$totalXp = sizeof($myxp->_playedxp) + sizeof($myxp->_watchedxp);
+									if($totalXp > 1){
+										echo "You have entered <b>".$totalXp."</b> details";
+									}
+								}?>
+						</div>
 					</div>
 				</div>
 				<div class="game-activity-col  col s12 m4 l4" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<div class="card-panel white game-activity-col-card">
 						<div class="game-activity-title">Ranking</div>
 						<div class="game-activity-content">
-							<div class="game-activity-rank-content">
-								<div class="game-activity-rank-item">
-									Unranked
+							<?php if($myxp->_rank > 0){ ?>
+								<div class="game-activity-rank-content">
+									<div class="game-activity-rank-item">
+										<?php echo $myxp->_rank; ?>
+									</div>
+									<div class="game-activity-rank-title">
+										<?php echo $game->_year; ?>
+									</div>
 								</div>
-								<div class="game-activity-rank-title">
-									<?php echo $game->_year; ?>
+								<div class="game-activity-rank-content">
+									<div class="game-activity-rank-item">
+										/
+									</div>
+									<div class="game-activity-rank-title">
+										&nbsp;
+									</div>
 								</div>
-							</div>
-							<div class="game-activity-rank-content">
-								<div class="game-activity-rank-item">
-									/
+								<div class="game-activity-rank-content">
+									<div class="game-activity-rank-item">
+										<?php echo $myxp->_rank; ?>
+									</div>
+									<div class="game-activity-rank-title">
+										All-Time
+									</div>
 								</div>
-								<div class="game-activity-rank-title">
-									&nbsp;
+							<?php }else{ ?>
+								<div class="game-activity-rank-content">
+									<div class="game-activity-rank-item">
+										Unranked
+									</div>
+									<div class="game-activity-rank-title">
+										<?php echo $game->_year; ?> / All-Time
+									</div>
 								</div>
-							</div>
-							<div class="game-activity-rank-content">
-								<div class="game-activity-rank-item">
-									Unranked
-								</div>
-								<div class="game-activity-rank-title">
-									All-Time
-								</div>
-							</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>

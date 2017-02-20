@@ -39,10 +39,10 @@
 .game-activity-title{
     display: block;
     font-size: 0.9em;
-    top: 10px;
+    top: 15px;
     position: absolute;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: bold;
     left: 20px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .game-activity-col{
-    height:200px !important;
+    height:225px !important;
     text-align: center;
     position:relative;
     top:20px;
@@ -64,7 +64,17 @@
 }
 
 .game-activity-col-card{
-    height:150px;
+    height:175px;
+}
+
+.game-activity-content-sub-header{
+    color: #777;
+    font-size: 0.8em;
+    position: absolute;
+    text-align: center;
+    left: 20px;
+    right: 20px;
+    top: 120px;
 }
 
 .game-activity-rank-content{
