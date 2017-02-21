@@ -1303,12 +1303,12 @@ function AttachActionBarGameEvents(){
 	$(".game-action-bookmark").on('click', function(){
 		if($(this).find("i").text() == "bookmark"){
 			SubmitBookmark("RemoveBookmark", $(this).attr("data-gameid"));
-			$(this).find(".game-action-bar-item-title").text("Add Bookmark");
 			$(this).find("i").text("bookmark_border");
+			$(this).find("i").removeClass("red-text");
 		}else{
 			SubmitBookmark("AddBookmark", $(this).attr("data-gameid"));
-			$(this).find(".game-action-bar-item-title").text("Remove Bookmark");
 			$(this).find("i").text("bookmark");
+			$(this).find("i").addClass("red-text");
 		}
 	});
 	$(".game-action-gb-update").on('click', function(){
@@ -1322,8 +1322,17 @@ function AttachActionBarGameEvents(){
 		ShowShareModal("game", $(this).attr("data-gameid"));
 	});
 	$(".game-action-pin-to-profile").on("click", function(){
-		UpdatePreferredXP($(this).attr("data-gameid"), 1);
-		Toast("Pinned game image to your user profile");
+		if($(this).find("i").text() == "photo_album"){
+			$(this).find("i").text("photo");
+			$(this).find("i").removeClass("blue-text");
+			Toast("Removed game image from your user profile");
+			UpdatePreferredXP(-1, 1);
+		}else{
+			$(this).find("i").text("photo_album");
+			$(this).find("i").addClass("blue-text");
+			Toast("Pinned game image to your user profile");
+			UpdatePreferredXP($(this).attr("data-gameid"), 1);
+		}
 	});
 }
 

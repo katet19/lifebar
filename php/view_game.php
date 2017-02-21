@@ -616,20 +616,27 @@ function ShowGameHeader($game, $myxp, $otherxp){
 					<div class="col">
 						<div class="game-action-bar-item game-action-bookmark" data-gameid="<?php echo $game->_id; ?>">
 							<?php if($myxp->_bucketlist == "Yes"){ ?>
-								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark</i>
-								<span class="game-action-bar-item-title">Remove Bookmark</span>
+								<i class="material-icons red-text" style="font-size:1.75em;vertical-align: middle;">bookmark</i>
+								<span class="game-action-bar-item-title">Bookmark</span>
 							<?php }else{ ?>
 								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">bookmark_border</i>
-								<span class="game-action-bar-item-title">Add Bookmark</span>
+								<span class="game-action-bar-item-title">Bookmark</span>
 							<?php } ?>
 						</div>
 					</div>
-					<div class="col">
-						<div class="game-action-bar-item game-action-pin-to-profile" data-gameid="<?php echo $game->_id; ?>">
-							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">photo_album</i>
-							<span class="game-action-bar-item-title">Pin to Profile</span>
+					<?php if(sizeof($myxp->_playedxp) > 0 || sizeof($myxp->_watchedxp) > 0){ ?>
+						<div class="col">
+							<div class="game-action-bar-item game-action-pin-to-profile" data-gameid="<?php echo $game->_id; ?>">
+							<?php if($myxp->_username->_weave->_preferredXP == $game->_id){ ?>
+								<i class="material-icons blue-text" style="font-size:1.75em;vertical-align: middle;">photo_album</i>
+								<span class="game-action-bar-item-title">Pin to Profile</span>
+							<?php }else{ ?>
+								<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">photo</i>
+								<span class="game-action-bar-item-title">Pin to Profile</span>
+							<?php } ?>
+							</div>
 						</div>
-					</div>
+					<?php } ?>
 					<div class="col">
 						<div class="game-action-bar-item game-action-share">
 							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
