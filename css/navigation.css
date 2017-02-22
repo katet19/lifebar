@@ -150,7 +150,8 @@
     min-height: 90%;
     text-align: center;
     height: -webkit-calc(100vh - 60px);
-    overflow: auto;
+    overflow-y: auto;
+	overflow-x:hidden;
     background-color: white;
 }
 
@@ -167,14 +168,18 @@
     right: 0;
     width: 75% !important;
 	margin-left: 0 !important;
-	z-index:1003 !important;
+	z-index:1001 !important;
 }
 
 #gamemini.outerContainer{
     right: 0;
     width: 40% !important;
 	margin-left: 0 !important;
-	z-index:1003 !important;
+	z-index:1006 !important;
+}
+
+#gameInnerContainer{
+	background-color: rgb(237, 236, 236);
 }
 
 .searchContainer{
@@ -900,6 +905,9 @@ OLD STUFF
 	#gamemini.outerContainer{
 		width:100% !important;
 	}
+	 #profile.outerContainer, #game.outerContainer{
+		width:90% !important;
+	 }
 	#navigationContainer{
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
@@ -958,11 +966,6 @@ OLD STUFF
 		background-color: transparent !important;
 		font-size:1.5em !important;
 		color:white !important;
-	}
-	
-	.backContainer{
-		background-color:#3F51B5;
-		top: 75px;
 	}
 	
 	.backContainer .backButton .small, .backContainer .backButton .backButtonLabel{

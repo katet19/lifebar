@@ -29,7 +29,8 @@
     min-height: 90%;
     text-align: center;
     height: -webkit-calc(100vh - 60px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: white;
 }
 

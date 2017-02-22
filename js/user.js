@@ -5,7 +5,7 @@ function ShowUserSettings(){
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
 	$("#gamemini.outerContainer").css({ "right": "0" });
 	ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 
 	$.ajax({ url: '../php/webService.php',
          data: {action: "UserSettings" },

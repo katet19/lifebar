@@ -14,7 +14,7 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 	}
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("body").append("<div class='lean-overlay' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 	$("#game.outerContainer").css({ "right": 0 });
 
 	if(!isID){
@@ -132,7 +132,7 @@ function LoadGameDirect(gbid, currentTab, type, gameTab){
     $("#game.outerContainer").css({ "right": 0 });
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
-	$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+	$("body").append("<div class='lean-overlay' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 	ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayGame", gbid: gbid },
@@ -201,110 +201,11 @@ function AttachGameEvents(currentTab){
 		$("#gameInnerContainer .backContainer").css({"top":"7px", "position":"absolute"});
 	}
 
-	if($(window).width() < 992){
-		$(".GameTitle").on("click", function(e){
-			e.stopPropagation();
-			DisplayGameNav();
-		});
-	}
-
-	$("#game-slide-out li").on("click", function(){
-		SwitchGameContent($(this));
-	});
-	$(".game-tab-first").click();
-	var iconOnHover="";
-	if($(".fixed-action-btn .game-add-played-btn").length > 0)
-		iconOnHover = "mdi-hardware-gamepad";
-	else if($(".fixed-action-btn .game-add-watched-btn").length > 0)
-		iconOnHover = "mdi-action-visibility";
-	else
-		iconOnHover = "mdi-action-bookmark";
-		
-	$(".ShowInfoBtn").on('click', function(){
-  		var html = $('#infoModal').html();
-  		ShowPopUp(html);
-	});
-	AttachEditEvents();
- 	$(".critic-name-container, .myxp-details-agree-listitem").on("click", function(e){
-  		e.stopPropagation();
- 		ShowUserProfile($(this).attr("data-id"));
- 	});
+	DisplayExpSpectrum($(".game-community-graph"));
+	AttachActionBarGameEvents();
  	AttachAgrees();
   	Waves.displayEffect();
-  	
-  	$(".detailsBtn").on('click', function(e){ 
-  		var userid = $(this).attr("data-uid");
-  		var username = $(this).attr("data-uname");
-  		DisplayUserDetails(userid, username);
-  	});
-	 	
- 	$(".ptalk-link-games").on("click", function(){
- 		window.open("http://tidbits.io/c/games");
- 	});
- 	
- 	$(".myxp-share-tier-quote").unbind();
- 	$(".myxp-share-tier-quote").on('click', function(){
-		var gameid = $("#gameContentContainer").attr("data-id");
-		ShowShareModal("userxp", gameid+"-"+$(this).attr("data-userid"));
-	});
- 	$(".myxp-profile-tier-quote").on('click', function(){
-		ShowUserProfile($(this).attr("data-userid"));
-	});
-	$(".edit-ref-pt").on("click", function(){
-		var refptID = $(this).attr("data-id");
-		EditReflectionPopUp(refptID);
-	});
-	$(".myxp-save-journal").on("click",function(){
-		SaveJournalEntry($(this).attr("data-gameid"));
-	});
-	$(".myxp-journal-edit-btn").on("click", function(){
-		ShowJournalEdit();
-	});
-	$(".myxp-cancel-journal").on("click", function(){
-		HideJournalEdit();
-	});
-	$(".collection-box-container").on("click", function(e){
-		e.stopPropagation();
-		DisplayCollectionDetails($(this).attr("data-id"), 'GamePage', $(this).attr("data-userid"), false);	
-	});
-	$(".dashboard-collection-view").on("click", function(e){
-		SwitchGameContent($(".game-collections-tab"));
-	});
-	$(".dashboard-similar-view").on("click", function(e){
-		SwitchGameContent($(".game-similargames-tab"));
-	});
-	$(".dashboard-community-view").on("click", function(e){
-		SwitchGameContent($(".game-community-tab"));
-	});
-	$(".game-ref-pt-btn").on("click", function(e){
-		SwitchGameContent($(".game-reflectionpoints-tab"));
-	});
-	$(".knowledge-container").on("click", function(){
-		 DisplayDeveloperDetails($(".userContainer").attr("data-id"), $(this).attr("data-objectid"), $(this).attr("data-progid"));
-	 });
-  	$(".badge-small").on("click", function(){
- 		var id = $(this).attr("data-objectid");
- 		var progid = $(this).attr("data-progid");
- 		DisplayGearDetails($(".userContainer").attr("data-id"), id, progid);
- 	});
-	$(".game-unwatched-btn").on("click", function(){
-		SwitchGameContent($(".game-video-tab"));
-		$(".video-is-watched").hide();
-		$(".video-show-watched").show();
-	});
-	$(".video-show-watched").on('click', function(){
-		$(this).hide();
-		$(".video-is-watched").show(250);
-	});
-	AttachEventsForReflectionPoints();
 	$("select").material_select();
-	DisplayFormResultsGraph();
- 	AttachFloatingIconEvent(iconOnHover);
-	AttachFloatingIconButtonEvents();
-	AttachMyXPEvents();
-	AttachCriticBookmark();
-	AttachAnalyzeEvents();
-	AttachVideoEvents();
 	AttachWatchFromXP();
 	AttachGameCardEvents();
 }
@@ -313,7 +214,7 @@ function AttachGameCardEvents(){
 	$(".game-card-quick-collection, .game-card-quick-played, .game-card-quick-watched, .game-card-quick-bookmark, .game-discover-card .card-image, .game-nav-title, .game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 	$(".game-card-quick-collection").on("click", function(e){
@@ -561,13 +462,13 @@ function ManageXPRewards(output){
 
 function GameCardAction(action, gameid){
 	if(action == "xp"){
-		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
 		$("#gamemini.outerContainer").css({ "right": "0" });
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
-		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$("body").append("<div class='lean-overlay-details' id='materialize-lean-overlay-1' style='z-index: 1005; display: block; opacity: 0.5;'></div>");
 
 		$.ajax({ url: '../php/webService.php',
 			data: {action: "ShowXPModal", gameid: gameid },
@@ -577,12 +478,12 @@ function GameCardAction(action, gameid){
 				$('.collapsible').collapsible();
 				$('textarea#myxp-quote').characterCounter();
 				$(".myxp-platform-checked").each(function(){ $(this).click(); });
-				$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
-				$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+				$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
+				$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
 					var windowWidth = $(window).width();
 					HideFocus();
 					$("#gamemini").css({ "right": "-40%" }); 
-					$(".lean-overlay").each(function(){ $(this).remove(); } );
+					$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 					setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 				});
 				$(".cancel-xp").on("click", function(){
@@ -792,7 +693,7 @@ function InitializeGameCardUpdate(gameid){
 	$(".game-card-action-pick").unbind();
 	$(".game-card-action-pick").on("click", function(e){
 		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
 			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
@@ -944,13 +845,13 @@ function DisplayUserDetails(userid, username){
 function AttachWatchFromXP(){
 	$(".watchBtn").on("click", function(e){
  		e.stopPropagation();
-		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 		$("#gamemini.outerContainer").css({"display":"inline-block", "right": "-40%"});
 		SCROLL_POS = $(window).scrollTop();
 		$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
 		$("#gamemini.outerContainer").css({ "right": "0" });
 		ShowLoader($("#gameminiInnerContainer"), 'big', "<br><br><br>");
-		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$("body").append("<div class='lean-overlay-details' id='materialize-lean-overlay-1' style='z-index: 1005; display: block; opacity: 0.5;'></div>");
 
   		var gameid = $(this).attr("data-gameid");
   		var url = $(this).attr("data-url");
@@ -959,12 +860,12 @@ function AttachWatchFromXP(){
 	     type: 'post',
 	     success: function(output) {
 			$("#gameminiInnerContainer").html(output);
-			$(".fixed-close-modal-btn, .lean-overlay, .delete-xp").unbind();
-			$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+			$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
+			$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
 				var windowWidth = $(window).width();
 				HideFocus();
 				$("#gamemini").css({ "right": "-40%" }); 
-				$(".lean-overlay").each(function(){ $(this).remove(); } );
+				$(".lean-overlay-details").each(function(){ $(this).remove(); } );
 				setTimeout(function(){ $("#gamemini").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 			});
 			$(".modal-xp-emoji-icon").on('click', function(){
@@ -1144,12 +1045,6 @@ function ValidateVideoXPEntry(button){
 	var tier = element.find(".myxp-selected-tier").attr("data-tier");
 	if(tier > 0)
 		element.find(".myxp-post").removeClass("disabled");
-}
-
-function AttachCriticBookmark(){
-	$(".no-critic-bookmark").on('click', function(e){
-		SubmitBookmark("AddBookmark", $(".game-add-bookmark-btn").attr("data-gameid"));	
-	});
 }
 
 function AnalyzeViewMoreButtons(){
@@ -1404,53 +1299,40 @@ function RequestUpdateFromGiantBomb(gameid){
 	});
 }
 
-function AttachFloatingIconButtonEvents(){
-	$(".game-remove-bookmark-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
+function AttachActionBarGameEvents(){
+	$(".game-action-bookmark").on('click', function(){
+		if($(this).find("i").text() == "bookmark"){
 			SubmitBookmark("RemoveBookmark", $(this).attr("data-gameid"));
-		}
-	});
-	$(".game-add-bookmark-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
+			$(this).find("i").text("bookmark_border");
+			$(this).find("i").removeClass("red-text");
+		}else{
 			SubmitBookmark("AddBookmark", $(this).attr("data-gameid"));
+			$(this).find("i").text("bookmark");
+			$(this).find("i").addClass("red-text");
 		}
 	});
-	$(".game-collection-btn").on('click', function(){
-		DisplayCollectionPopUp($(this).attr("data-gameid"));	
-	});
-	$(".game-add-watched-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
-			AddWatchedFabEvent('','','','','');
-		}
-	});
-
-	$(".game-add-played-btn").on('click touchend', function(){
-		if($(".game-collection-btn").css("opacity") == 1){
-			AddPlayedFabEvent();		
-		}
-	});
-	$(".game-update-info-btn").on('click', function(){
+	$(".game-action-gb-update").on('click', function(){
 		RequestUpdateFromGiantBomb($(this).attr("data-gameid"));	
 	});
-	$(".game-add-image-btn").on('click', function(){
+	$(".game-action-file-upload").on('click', function(){
 		var html = "<div><span>Game ID: "+$(this).attr("data-gameid")+"</span> <span>Year: "+$(this).attr("data-gameyear")+"</span></div><br><iframe src='http://lifebar.io/utilities/FileUploader.php' style='width:100%;border:none;'></iframe>";
 		ShowPopUp(html);	
 	});
-	$(".game-create-reflection-point").on('click', function(){
-		DisplayReflectionPopUp($(this).attr("data-gameid"));
+	$(".game-action-share").on("click", function(){
+		ShowShareModal("game", $(this).attr("data-gameid"));
 	});
-	$(".game-share-btn").on("click", function(){
-		var gameid = $("#gameContentContainer").attr("data-id");
-		ShowShareModal("game", gameid);
-	});
-	$(".fab-login").on('click', function(){
-		 $('#signupModal').openModal();
-		 GAEvent('Game', 'Login');
-	});
-	$(".game-set-fav-btn").on("click", function(){
-		if($(".game-set-fav-btn").css("opacity") == 1){
-			DisplayEquipXP();
-		}	
+	$(".game-action-pin-to-profile").on("click", function(){
+		if($(this).find("i").text() == "photo_album"){
+			$(this).find("i").text("photo");
+			$(this).find("i").removeClass("blue-text");
+			Toast("Removed game image from your user profile");
+			UpdatePreferredXP(-1, 1);
+		}else{
+			$(this).find("i").text("photo_album");
+			$(this).find("i").addClass("blue-text");
+			Toast("Pinned game image to your user profile");
+			UpdatePreferredXP($(this).attr("data-gameid"), 1);
+		}
 	});
 }
 
@@ -1712,20 +1594,6 @@ function MoveDownPostAgree(xp, count){
 		});
 	}
 }
-
-function AttachEditEvents(){
-	$(".myxp-edit-played").on('click', function(){
-		UpdatePlayedEvent();
-	});
-	$(".myxp-edit-watched").on('click', function(){
-		var watchid = $(this).attr("data-id");
-		UpdateWatchedEvent(watchid);
-	});
-	$(".myxp-edit-tier-quote").on('click', function(){
-		UpdateTierQuoteEvent();	
-	});
-}
-
 
 function DisplayReflectionPopUp(gameid){
 	$.ajax({ url: '../php/webService.php',
@@ -2082,13 +1950,13 @@ function DisplayExpSpectrum(elem){
 			var gt1 = ($(this).attr("data-gt1") > 0) ? Math.round(($(this).attr("data-gt1") / usersTotal) * 100) : 0;
 			
 			var data = {
-		    labels: ["Tier 5", "Tier 4", "Tier 3", "Tier 2", "Tier 1"],
+		    labels: ["1 star", "2 stars", "3 stars", "4 stars", "5 Stars"],
 		    datasets: [
 		        {
 		            label: "Following",
-		            fillColor: "rgba(76, 175, 80, 0.41)",
-		            strokeColor: "rgba(76, 175, 80, 0.9)",
-		            pointColor: "rgba(76, 175, 80, 0.9)",
+		            fillColor: "rgba(78, 205, 196, 0)",
+		            strokeColor: "rgba(78, 205, 196, 0.9)",
+		            pointColor: "rgba(78, 205, 196, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2096,9 +1964,9 @@ function DisplayExpSpectrum(elem){
 		        },
 		        {
 		            label: "Critics",
-		            fillColor: "rgba(255, 87, 34, 0.41)",
-		            strokeColor: "rgba(255, 87, 34, 0.9)",
-		            pointColor: "rgba(255, 87, 34, 0.9)",
+		            fillColor: "rgba(85, 98, 112, 0)",
+		            strokeColor: "rgba(85, 98, 112, 0.9)",
+		            pointColor: "rgba(85, 98, 112, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2106,9 +1974,9 @@ function DisplayExpSpectrum(elem){
 		        },
 		        {
 		            label: "Members",
-		            fillColor: "rgba(63, 81, 181, 0.41)",
-		            strokeColor: "rgba(63, 81, 181, 0.9)",
-		            pointColor: "rgba(63, 81, 181, 0.9)",
+		            fillColor: "rgba(196, 77, 88, 0)",
+		            strokeColor: "rgba(196, 77, 88, 0.9)",
+		            pointColor: "rgba(196, 77, 88, 0.9)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(71,71,71,1)",
@@ -2126,7 +1994,7 @@ function DisplayExpSpectrum(elem){
 			$(this).attr('width', $(this).parent().width() - 40);
 		
 		if($(window).width() > 599)
-        	$(this).attr('height', 300);
+        	$(this).attr('height', 200);
     	else
     		$(this).attr('height', 150);
 		var temp = new Chart(communityGraph).Line(data, { animation: false, datasetStrokeWidth : 4, showScale: true, bezierCurve : true, pointDot : true, scaleShowGridLines : false, multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>%", animation: true });

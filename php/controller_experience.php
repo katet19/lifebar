@@ -2324,6 +2324,37 @@ function GetOutsideVerifiedXPForGame($gameid, $userid){
 	return $exp;
 }
 
+function GetAllUserXPForGame($gameid){
+	$exp = array();
+	$mysqli = Connect();
+	$game = GetGame($row["GameID"], $mysqli);
+	if ($result = $mysqli->query("select exp.* from `Experiences` exp where exp.`GameID` = '".$gameid."' and exp.`Quote` != '' order by exp.`Tier` ASC")) {
+		while($row = mysqli_fetch_array($result)){
+			$user = GetUser($row["UserID"], $mysqli);
+			$experience = new Experience($row["ID"],
+						$user->_first,
+						$user->_last,
+						$user,
+						$row["UserID"],
+						$row["GameID"],
+						$game,
+						$row["Tier"],
+						$row["Quote"],
+						$row["ExperienceDate"],
+						$row["Link"],
+						$row["Owned"],
+						$row["BucketList"],
+						$row["AuthenticXP"],
+						$row['Rank']);
+				
+			$exp[$row["ID"]] = $experience;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $exp;
+}
+
 function GetExperienceForUserByGame($userid, $gameid, $pconn = null){
 	$experience = "";
 	$mysqli = Connect($pconn);

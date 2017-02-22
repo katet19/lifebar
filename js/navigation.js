@@ -57,7 +57,7 @@ function DisplaySideNav(){
 	$(".navigation-lifebar").addClass("navigation-lifebar-slide-out");
 	if($(window).width() < 992){
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
-		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1002; display: block; opacity: 0.5;'></div>");
+		$("body").append("<div class='lean-overlay' id='materialize-lean-overlay-1' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
 		$(".lean-overlay").unbind();
 		$(".lean-overlay").on('click', function(){
 			HideFocus();

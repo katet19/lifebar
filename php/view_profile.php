@@ -26,8 +26,8 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 	<div class="row">
 		<div class="col s12">
 			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
-			<div class="GameHeaderContainer" style='height:20vh;'>
-				<div class="GameHeaderBackground" style="height:20vh;background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div class="GameHeaderContainer ProfileHeaderContainer">
+				<div class="GameHeaderBackground ProfileHeaderContainer" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header" style='top:10px;bottom:5px;overflow: initial;'>
 					<?php DisplayLifeBarForUserProfile($user); ?>
 					<div class="user-profile-container">
@@ -70,7 +70,7 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 					<?php } ?>
 				</div>
 			</div>	
-			<div class="activity-top-level" style='margin-top:20vh;position:absolute;margin-left: -60px;background-color:rgb(237, 236, 236);z-index: 0;' data-id='<?php echo $user->_id; ?>' >
+			<div class="activity-top-level activity-profile" data-id='<?php echo $user->_id; ?>' >
 				<?php DisplayMainActivity($user->_id, "My Activity"); ?>
 			</div>	
 		</div>
@@ -85,14 +85,11 @@ function DisplayLifeBarForUserProfile($user){
 	$currWidth =  round((($total - $minmax[0]) / ($minmax[1] - $minmax[0])) * 100);
 	?>
 	<div class="lifebar-container" data-level="<?php echo $currLevel; ?>" data-min="<?php echo $minmax[0]; ?>" data-max="<?php echo $minmax[1]; ?>" data-xp="<?php echo $total; ?>">
-        <!--<div class="lifebar-bar-container-min" style='width:100%;color: white;top: 38px;margin-left: 65px;'>
-        	<div class="lifebar-fill-min-circle" data-position="bottom" style='width:<?php echo $currWidth; ?>%;'></div>
-        </div>-->
-        <div class="lifebar-username-min" style='top: 22px;left: 95px;'>
+        <div class="lifebar-username-profile">
 			<span class="card-title activator">
 				<span style="font-weight:300;"><?php echo DisplayNameReturn($user); ?></span> 
 				<?php if($user->_security != "Journalist"){ ?>
-					<div class="lifebar-bar-level-header" style='font-size: 0.6em;top: -4px;width: 35px;line-height: 25px;'><span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
+					<div class="lifebar-bar-level-header-profile"><span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
 				<?php } ?>
 			</span>
         </div>
