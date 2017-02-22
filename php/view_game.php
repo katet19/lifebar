@@ -40,7 +40,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 			<div class="row" style='margin-left: 1rem;margin-right: 1rem;'>
 				<div class="game-activity-col col s12 m4 l4">
 					<div class="card-panel white game-activity-col-card">
-						<div class="game-activity-title">Rating</div>
+						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>star</i> Rating</div>
 						<div class="game-activity-content">
 							<?php if($myxp->_tier > 0){ ?>
 								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
@@ -80,7 +80,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 				</div>
 				<div class="game-activity-col col s12 m4 l4"  data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<div class="card-panel white game-activity-col-card">
-						<div class="game-activity-title">Details</div>
+						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>subject</i> Details</div>
 						<div class="game-activity-content game-nav-title" style='top:6px;font-size:1.25em;'>
 							<?php DisplayGameCardXPDetailSummary($myxp); ?> 
 						</div>
@@ -100,7 +100,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 				</div>
 				<div class="game-activity-col  col s12 m4 l4" data-action="xp" data-id='<?php echo $game->_id; ?>'>
 					<div class="card-panel white game-activity-col-card">
-						<div class="game-activity-title">Ranking</div>
+						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>swap_vert</i> Ranking</div>
 							<?php if($myxp->_rank > 0){ ?>
 								<div class="game-activity-content">
 									<div class="game-activity-rank-content">
@@ -172,7 +172,7 @@ function BuildCommunitySpectrum($user, $myxp, $game){
 	?>
 		<div class="col s12">
 			<div class="card-panel white" style='position:relative;'>
-				<div class="game-activity-title">Community Rating Breakdown</div>
+				<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>timeline</i> Community Rating Breakdown</div>
 				<div class="row" style='margin-bottom:0px;'>
 					<div class="col s12" style='margin-top:30px;padding:0;'>
 						<canvas class="GraphCommunityUsers" style='margin:0.5em 20px 1em'  
