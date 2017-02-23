@@ -929,8 +929,8 @@ function GetShareLink($userid, $type, $otherid){
 		$game = GetGame($otherid);
 		//$header = "Share ".$game->_title." with others";
 		$header = "Select how you would like to share this game";
-		$share = urlencode("Check out analytics and what others are saying about ".$game->_title." @Lifebario!");
-		$shareEmail = urlencode("Check out analytics and what others are saying about ".$game->_title." @Lifebario! ".$url);
+		$share = urlencode("Check out what gamers are saying about ".$game->_title." @Lifebario!");
+		$shareEmail = urlencode("Check out what gamers are saying about ".$game->_title." @Lifebario! ".$url);
 	}else if($type == "user"){
 		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
 		$user = GetUser($otherid);

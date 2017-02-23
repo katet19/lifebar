@@ -136,7 +136,7 @@ function DisplayLifeBarLogo($showtag){ ?>
 function DisplayShareContent($userid, $type, $otherid){
 	$shareData = GetShareLink($userid, $type, $otherid);
 	?>
-	<div class="row">
+	<div class="row" style='padding:20px;'>
 		<div class="col s12">
 			<div class="share-header">
 				<div class="share-header-title">
@@ -158,7 +158,7 @@ function DisplayShareContent($userid, $type, $otherid){
  	   	   		<a href="http://www.tumblr.com/share?v=3&u=<?php echo $shareData[4]; ?>&t=<?php echo $shareData[2]; ?>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=800,width=600');GAEvent('UserShare', 'Tumblr');return false;" class="social-share-btn" target="_blank" style='color:#35465c;'>
 	  	   			<i class="fa fa-tumblr-square"></i>
 	  	   		</a>
-	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" onclick="javascript:GAEvent('UserShare', 'Email');" class="social-share-custom-btn">
+	  	   		<a href="mailto:?subject=<?php echo share; ?>&body=<?php echo $shareData[3]; ?>" onclick="javascript:GAEvent('UserShare', 'Email');" class="social-share-btn">
 	  	   			<i class="fa fa-envelope-o"></i>
 	  	   		</a>
 	    	</div>

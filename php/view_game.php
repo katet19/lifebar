@@ -651,7 +651,7 @@ function ShowGameHeader($game, $myxp, $otherxp){
 						</div>
 					<?php } ?>
 					<div class="col">
-						<div class="game-action-bar-item game-action-share">
+						<div class="game-action-bar-item game-action-share" data-gameid="<?php echo $game->_id; ?>">
 							<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
 							<span class="game-action-bar-item-title">Share</span>
 						</div>
