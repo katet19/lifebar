@@ -92,7 +92,7 @@ function ShowGameContent($game, $myxp, $otherxp){
         			</div>
 				</div>
 				<div class="game-activity-col col s12 m4 l4"  data-action="xp" data-id='<?php echo $game->_id; ?>'>
-					<div class="card-panel white game-activity-col-card">
+					<div class="card-panel white game-activity-col-card" data-gameid="<?php echo $game->_id; ?>">
 						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>subject</i> Details</div>
 						<div class="game-activity-content game-nav-title" style='top:6px;font-size:1.25em;'>
 							<?php DisplayGameCardXPDetailSummary($myxp); ?> 
