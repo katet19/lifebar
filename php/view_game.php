@@ -173,15 +173,13 @@ function ShowGameContent($game, $myxp, $otherxp){
 
 
 function BuildCommunitySpectrum($user, $myxp, $game){
-	if($user->_id > 0){
-		$following = GetFollowingTiersForGame($game->_id, $user->_id);
-		$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
-	}
+	$following = GetFollowingTiersForGame($game->_id, $user->_id);
+	$followingTotal =  $following[1] + $following[2] + $following[3] + $following[4] + $following[5];
 	$critics = GetCriticTiersForGame($game->_id);
 	$criticTotal = $critics[1] + $critics[2] + $critics[3] + $critics[4] + $critics[5];
 	$users = GetUserTiersForGame($game->_id);
 	$usersTotal = $users[1] + $users[2] + $users[3] + $users[4] + $users[5];
-	if($followingTotal + $crticTotal + $usersTotal > 3){
+	if($followingTotal + $crticTotal + $usersTotal > 0){
 	?>
 		<div class="col s12">
 			<div class="card-panel white" style='position:relative;'>
