@@ -24,15 +24,28 @@ function DisplayGameViaID($gameid, $userid){
 function ShowGameContent($game, $myxp, $otherxp){ 
 	$id = $_SESSION['logged-in']->_id;
 	$allusers = GetAllUserXPForGame($game->_id);
-	$rating = array();
-	foreach($allusers as $allxp)
-		$rating[$allxp->_tier] = $rating[$allxp->_tier] + 1;
-
-    if(sizeof($rating) > 0){
-        arsort($rating);
-        reset($rating);
-        $toprating = key($rating);
+	$rating = 0;
+	$ratingCount = 0;
+	foreach($allusers as $allxp){
+		if($allxp->_tier == 1)
+			$ratingScore = 5;
+		else if($allxp->_tier == 2)
+			$ratingScore = 4;
+		else if($allxp->_tier == 3)
+			$ratingScore = 3;
+		else if($allxp->_tier == 4)
+			$ratingScore = 2;
+		else if($allxp->_tier == 5)
+			$ratingScore = 1;
+		
+		$rating = $rating + $ratingScore;
+		$ratingCount++;
+		$ratingScore = 0;
 	}
+	if($rating > 0 && $rating > 0)
+		$toprating = round(($rating / $ratingCount), 1);
+	else
+		$toprating = 0;
 
 	?>
 	<div id="gameContentContainer" data-gbid="<?php echo $game->_gbid; ?>" data-title="<?php echo urlencode($game->_title); ?>" data-id="<?php echo $game->_id; ?>" class="row">
@@ -56,7 +69,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 									<?php } ?>
 									<br>
 									Community Average: <b>
-									<?php  if($toprating == 5){ echo "1"; }else if($toprating == 4){ echo "2"; }else if($toprating == 3){ echo "3"; }else  if($toprating == 2){ echo "4"; }else if($toprating == 1){ echo "5"; } ?></b> of <b>5</b> stars
+									<?php echo $toprating;  ?></b> <i class="material-icons" style='font-size: 1.2em;margin-left: 8px;position: relative;top: 3px;'>people</i> <?php echo $ratingCount;?>
 								</div>
 							<?php }else{ ?>
 								<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;'>
@@ -69,7 +82,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 									<div class="game-activity-content-sub-header">
 										<?php if($toprating > 0){ ?>
 											Community Average: 
-											<b><?php  if($toprating == 5){ echo "1"; }else if($toprating == 4){ echo "2"; }else if($toprating == 3){ echo "3"; }else  if($toprating == 2){ echo "4"; }else if($toprating == 1){ echo "5"; } ?></b> of <b>5</b> stars
+											<b><?php echo $toprating;  ?></b> <i class="material-icons" style='font-size: 1.2em;margin-left: 8px;position: relative;top: 3px;'>people</i> <?php echo $ratingCount;?>
 										<?php }else{ ?>
 											You haven't rated this game yet
 										<?php } ?>
