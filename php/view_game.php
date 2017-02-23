@@ -56,7 +56,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>star</i> Rating</div>
 						<div class="game-activity-content">
 							<?php if($myxp->_tier > 0){ ?>
-								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;'>
+								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;cursor:pointer;'>
 									<?php DisplayStarSequence($myxp->_tier, true); ?>
 								</div>
 								<div class="game-activity-content-sub-header">
@@ -72,7 +72,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 									<?php echo $toprating;  ?></b> <i class="material-icons" style='font-size: 1.2em;margin-left: 8px;position: relative;top: 3px;'>people</i> <?php echo $ratingCount;?>
 								</div>
 							<?php }else{ ?>
-								<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;'>
+								<div class="nav-game-action-btn" style='position: relative;top: 3px;cursor:pointer;font-size:2.5em;cursor:pointer;'>
 									<i class="material-icons star-icon star-icon-1">star_border</i>
 									<i class="material-icons star-icon star-icon-2">star_border</i>
 									<i class="material-icons star-icon star-icon-3">star_border</i>

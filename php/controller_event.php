@@ -209,7 +209,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeed[] = $myfeeditem;
 				
 			}else if($row["Event"] == "TIERCHANGED"){
-				$myfeeditem = array();						
+				/*$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
 				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
@@ -228,7 +228,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeeditem[] = $exp;
 				$myfeeditem[] = 2;
 				$myfeeditem[] = "TIERCHANGED";
-				$myfeed[] = $myfeeditem;
+				$myfeed[] = $myfeeditem;*/
 			
 			}else if($row["Event"] == "QUOTECHANGED"){
 				$myfeeditem = array();						
