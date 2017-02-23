@@ -157,7 +157,7 @@
 .analyze-line-item{
     text-align: left;
     display: inline-block;
-    width: 30%;
+    width: auto;
     font-size: 0.8em;
 }
 
