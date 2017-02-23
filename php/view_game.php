@@ -52,7 +52,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 		<div class="game-activity">
 			<div class="row" style='margin-left: 1rem;margin-right: 1rem;'>
 				<div class="game-activity-col col s12 m4 l4">
-					<div class="card-panel white game-activity-col-card">
+					<div class="card-panel white game-activity-col-card" data-id="<?php echo $game->_id; ?>">
 						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>star</i> Rating</div>
 						<div class="game-activity-content">
 							<?php if($myxp->_tier > 0){ ?>

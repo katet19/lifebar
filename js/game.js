@@ -386,6 +386,54 @@ function AttachStarEvents(){
 				data: {action: "SaveStarRank", gameid: gameid, tier: tier, rank: -1 },
 				type: 'post',
 				success: function(output) {
+					$("#contentContainer").find(".game-discover-card").each(function(){
+						if($(this).attr("data-gameid") == gameid){
+							var card = $(this);
+							card.find(".star-icon").each(function(){
+								$(this).removeClass("tierTextColor1");
+								$(this).removeClass("tierTextColor2");
+								$(this).removeClass("tierTextColor3");
+								$(this).removeClass("tierTextColor4");
+								$(this).removeClass("tierTextColor5");
+								$(this).removeClass("star-icon-pre");
+							});
+							if(star.hasClass("star-icon-5")){
+								card.find(".star-icon-5").text("star"); card.find(".star-icon-5").addClass("tierTextColor1 star-icon-pre");
+								card.find(".star-icon-4").text("star"); card.find(".star-icon-4").addClass("tierTextColor1 star-icon-pre");
+								card.find(".star-icon-3").text("star"); card.find(".star-icon-3").addClass("tierTextColor1 star-icon-pre");
+								card.find(".star-icon-2").text("star"); card.find(".star-icon-2").addClass("tierTextColor1 star-icon-pre");
+								card.find(".star-icon-1").text("star"); card.find(".star-icon-1").addClass("tierTextColor1 star-icon-pre");
+							}
+							else if(star.hasClass("star-icon-4")){
+								card.find(".star-icon-5").text("star_border");
+								card.find(".star-icon-4").text("star"); card.find(".star-icon-4").addClass("tierTextColor2 star-icon-pre");
+								card.find(".star-icon-3").text("star"); card.find(".star-icon-3").addClass("tierTextColor2 star-icon-pre");
+								card.find(".star-icon-2").text("star"); card.find(".star-icon-2").addClass("tierTextColor2 star-icon-pre");
+								card.find(".star-icon-1").text("star"); card.find(".star-icon-1").addClass("tierTextColor2 star-icon-pre");
+							}
+							else if(star.hasClass("star-icon-3")){
+								card.find(".star-icon-5").text("star_border");
+								card.find(".star-icon-4").text("star_border"); 
+								card.find(".star-icon-3").text("star"); card.find(".star-icon-3").addClass("tierTextColor3 star-icon-pre");
+								card.find(".star-icon-2").text("star"); card.find(".star-icon-2").addClass("tierTextColor3 star-icon-pre");
+								card.find(".star-icon-1").text("star"); card.find(".star-icon-1").addClass("tierTextColor3 star-icon-pre");
+							}
+							else if(star.hasClass("star-icon-2")){
+								card.find(".star-icon-5").text("star_border"); 
+								card.find(".star-icon-4").text("star_border");
+								card.find(".star-icon-3").text("star_border");
+								card.find(".star-icon-2").text("star"); card.find(".star-icon-2").addClass("tierTextColor4 star-icon-pre");
+								card.find(".star-icon-1").text("star"); card.find(".star-icon-1").addClass("tierTextColor4 star-icon-pre");
+							}
+							else if(star.hasClass("star-icon-1")){
+								card.find(".star-icon-5").text("star_border");
+								card.find(".star-icon-4").text("star_border");
+								card.find(".star-icon-3").text("star_border");
+								card.find(".star-icon-2").text("star_border");
+								card.find(".star-icon-1").text("star"); card.find(".star-icon-1").addClass("tierTextColor5 star-icon-pre");
+							}
+						}
+					});
 					ManageXPRewards(output);
 				},
 					error: function(x, t, m) {
