@@ -1217,6 +1217,7 @@ function AttachShowUserActivityEvents(){
 		$(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
 		$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
 			$("#profile").css({ "right": "-75%" }); 
+			$("#profileInnerContainer").unbind('scroll');
 			$(".lean-overlay").each(function(){ $(this).remove(); } );
 			$(".feed-avatar, .user-avatar").on("click", function(e){
 				e.stopPropagation();
