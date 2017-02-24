@@ -28,11 +28,17 @@ function ShowUserContent(userid, mine, browserNav){
 			AttachShowUserActivityEvents();
 			$(".user-profile-unfollow-btn").on("click", function(){
 				UnfollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
-				$(this).html("<i class='material-icons left'>person_add</i> Follow");
+				$(this).removeClass("user-profile-unfollow-btn");
+				$(this).addClass("user-profile-follow-btn");
+				$(this).parent().addClass("user-profile-follow-highlight");
+				$(this).html("<i class='material-icons' style='font-size:1.75em;vertical-align: middle;'>person_add</i> Follow");
 			});
 			$(".user-profile-follow-btn").on("click", function(){
 				FollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
-				$(this).html("<i class='material-icons left'>person_outline</i> Unfollow");
+				$(this).removeClass("user-profile-follow-btn");
+				$(this).parent().removeClass("user-profile-follow-highlight");
+				$(this).addClass("user-profile-unfollow-btn");
+				$(this).html("<i class='material-icons' style='font-size:1.75em;vertical-align: middle;'>person_outline</i> Unfollow");
 			});
 			$(".user-add-small-image-btn").on('click', function(){
 				var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
@@ -790,30 +796,6 @@ function AttachFloatingIconWeaveButtonEvents(){
 		DisplayManageBadge(userid);
 	});
 	AttachFollowFABEvents();
-}
-
-function AttachFollowFABEvents(){
-	$(".user-unfollow-btn, .user-follow-btn").unbind();
-	$(".user-unfollow-btn").on('click', function(){
-		UnfollowUserFromFab($(this).attr("data-userid"), $(this).attr("data-username"));
-		$(this).removeClass("user-unfollow-btn");
-		$(this).addClass("user-follow-btn");
-		$(this).find(".GameHiddenActionLabelBigFab").html("Follow");
-		$(this).find(".large").removeClass("mdi-social-person-outline");
-		$(this).find(".large").addClass("mdi-social-group");
-		AttachFabHoverEvent();
-		AttachFollowFABEvents();
-	});
-	$(".user-follow-btn").on('click', function(){
-		FollowUserFromFab($(this).attr("data-userid"), $(this).attr("data-username"));
-		$(this).removeClass("user-follow-btn");
-		$(this).addClass("user-unfollow-btn");
-		$(this).find(".GameHiddenActionLabelBigFab").html("Unfollow");
-		$(this).find(".large").removeClass("mdi-social-person-add");
-		$(this).find(".large").addClass("mdi-social-group");
-		AttachFabHoverEvent();
-		AttachFollowFABEvents();
-	});
 }
 
 function DisplayRoleManagement(userid){

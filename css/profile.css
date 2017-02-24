@@ -1728,7 +1728,7 @@
     line-height: 25px;
 }
 .activity-profile{
-    margin-top:20vh;
+    margin-top:25vh;
     position:absolute;
     margin-left: -60px;
     background-color:rgb(237, 236, 236);
@@ -1737,7 +1737,25 @@
 }
 
 .ProfileHeaderContainer{
-	height:20vh !important;
+	height:25vh !important;
+}
+
+.user-profile-follow-highlight{
+    background-color: #F50057 !important;
+    color: white;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.user-profile-follow-highlight:hover{
+    background-color: #f38fb1 !important;
+}
+
+.user-profile-follow-highlight .game-action-bar-item:hover{
+    color:white !important;
 }
 
 @media only screen and (max-width : 992px) {

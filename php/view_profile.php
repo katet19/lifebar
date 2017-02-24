@@ -44,33 +44,91 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 							<div class="user-profile-label">1ups</div>
 						</div>
 					</div>
-					<div class="user-profile-admin-btn-container">	
+					<!--<div class="user-profile-admin-btn-container">	
 						<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
-								<?php if($user->_security == "Journalist"){ ?>
-									<div class="btn user-profile-btn user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cloud_upload</i> <span>Upload small</span></div>
-									<div class="btn user-profile-btn user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cloud_upload</i> <span>Upload big</span></div>
-								<?php } ?>
 								<div class="btn user-profile-btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">lock</i> <span>Badge Access</span></div>
 								<div class="btn user-profile-btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment</i> <span>Change Title</span></div>
 								<div class="btn user-profile-btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment_ind</i> <span>Change Role</span></div>
 								<div class="btn user-profile-btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cached</i> <span>Run Weave Calc</span></div>
 						<?php } ?>
-
-						<?php if(in_array($user->_id, $conn)){ ?>
-							<div class="btn user-profile-btn user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_outline</i> <span>Unfollow</span></div>
-						<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
-							<div class="btn user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>"><i class="material-icons left">person_add</i> <span>Follow</span></div>
-						<?php } ?>
-					</div>
+					</div>-->
 
 					<?php if($user->_security == "Journalist"){ ?>
 						<div class="col s12 critic-disclaimer">
 							<i class="fa fa-exclamation-triangle" style='color:#FF9800'></i> <?php echo DisplayNameReturn($user); ?>'s Profile is curated by Lifebar and is strictly based off their published reviews 
 						</div>
 					<?php } ?>
+				</div>	
+			<div  class="GameHeaderActionBar">
+						<div class="card-title activator grey-text text-darken-4">
+								<div class="game-action-bar-list row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+										<?php if(in_array($user->_id, $conn)){ ?>
+											<div class="col">
+												<div class="game-action-bar-item user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>">
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">person_outline</i>
+													<span class="game-action-bar-item-title">Unfollow</span>
+												</div>
+											</div>
+										<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
+											<div class="col user-profile-follow-highlight">
+												<div class="game-action-bar-item user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>">
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">person_add</i>
+													<span class="game-action-bar-item-title">Follow</span>
+												</div>
+											</div>
+										<?php } ?>
+									<!--<div class="col">
+										<div class="game-action-bar-item game-action-share" data-gameid="<?php echo $game->_id; ?>">
+											<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
+											<span class="game-action-bar-item-title">Share</span>
+										</div>
+									</div>-->
+									<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+										<div class="col">
+											<div class="game-action-bar-item user-manage-badge" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">lock</i>
+												<span class="game-action-bar-item-title">Badge Access</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-set-title" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">assignment</i>
+												<span class="game-action-bar-item-title">Title</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-set-role" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">assignment_ind</i>
+												<span class="game-action-bar-item-title">Role</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cached</i>
+												<span class="game-action-bar-item-title">Calc Profile</span>
+											</div>
+										</div>
+										<?php if($user->_security == "Journalist"){ ?>
+											<div class="col">
+												<div class="game-action-bar-item user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'>
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cloud_upload</i>
+													<span class="game-action-bar-item-title">Upload small</span>
+												</div>
+											</div>
+											<div class="col">
+												<div class="game-action-bar-item user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'>
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cloud_upload</i>
+													<span class="game-action-bar-item-title">Upload large</span>
+												</div>
+											</div>
+										<?php } ?>
+									<?php } ?>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>	
-			<div class="activity-top-level activity-profile" data-id='<?php echo $user->_id; ?>' >
+			<div class="activity-top-level activity-profile" style='position:absolute;' data-id='<?php echo $user->_id; ?>' >
 				<?php DisplayMainActivity($user->_id, "My Activity"); ?>
 			</div>	
 		</div>
