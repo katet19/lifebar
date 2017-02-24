@@ -1025,6 +1025,9 @@ refpt-header-subquestion-hidden{
 	.card-game-secondary-actions{
 		height:150px;
 	}
+    .game-card-secondary-action-i{
+        display:none;
+    }
 	.GameMeta{
 		top:35px;
 	}
