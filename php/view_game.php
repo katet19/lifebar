@@ -629,23 +629,8 @@ function DisplayAllCommunityCards($users, $type){
 	}
 }
 
-<<<<<<< HEAD
-function DisplayAllCommunityChips($users, $type){
-	$i = sizeof($users);
-	foreach($users as $user){
-		if($type == "Critic")
-			DisplayCriticChip($user, $i);
-		else
-			DisplayUserChip($user, $i);
-			
-		$i--;
-	}
-}
 
-function ShowGameHeader($game, $myxp, $otherxp, $videoxp){
-=======
 function ShowGameHeader($game, $myxp, $otherxp){
->>>>>>> Akuma
 	?>
 	<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 	<div class="GameHeaderContainer">

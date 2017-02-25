@@ -388,6 +388,7 @@
 // ==========================================================================
 // b. Horizontal Card
 .card-horizontal {
+    //formerly feed-horizontal-card
     @include card;
     @extend .z-depth-1;
     text-align: left;
