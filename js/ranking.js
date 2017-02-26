@@ -16,7 +16,20 @@ function ShowRanking(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#activityInnerContainer").html(output);
-             AttachDragAndDropEvents();
+             AttachFilterEvents();
+              $('.dropdown-button').dropdown({
+                    inDuration: 300,
+                    outDuration: 225,
+                    constrainWidth: false, // Does not change width of dropdown to that of the activator
+                    hover: true, // Activate on hover
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: false, // Displays dropdown below the button
+                    alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                    stopPropagation: false // Stops event propagation
+                    }
+                );
+             $('.collapsible').collapsible();
+             //AttachDragAndDropEvents();
             },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -27,6 +40,56 @@ function ShowRanking(){
 	    	},
 	    	timeout:45000
 		});
+}
+
+function AttachFilterEvents(){
+    $(".year-dropdown-filter-item").on('click', function() { 
+        $(".year-dropdown-selected").text($(this).text());
+        FilterLists();
+	});
+    $(".genre-dropdown-filter-item").on('click', function() { 
+        $(".genre-dropdown-selected").text($(this).text());
+        FilterLists();
+	});
+    $(".platform-dropdown-filter-item").on('click', function() { 
+        $(".platform-dropdown-selected").text($(this).text());
+        FilterLists();
+	});
+}
+
+function FilterLists(){
+    var year = $(".year-dropdown-selected").text();
+    var genre = $(".genre-dropdown-selected").text();
+    var platform = $(".platform-dropdown-selected").text();
+    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time"){
+        $(".rank-container").each(function(){
+            $(this).parent().show();
+        });
+    }else{
+        $(".rank-container").each(function(){
+            var genrehide = true;
+            var yearhide = true;
+            var platformhide = true;
+
+            if($(this).attr("data-year").indexOf(year) != -1 || year.indexOf("All-Time") != -1){
+                yearhide = false;
+            }
+
+            if($(this).attr("data-genre").indexOf(genre) != -1 || genre.indexOf("All-Genre") != -1){
+                genrehide = false;
+            }
+
+            if($(this).attr("data-platform").indexOf(platform) != -1 || platform.indexOf("All-Platform") != -1){
+                platformhide = false;
+            }
+
+            if(genrehide || yearhide || platformhide){
+                $(this).parent().hide();
+            }else{
+                $(this).parent().show();
+            }
+        });
+    }
 }
 
 function AttachDragAndDropEvents(){

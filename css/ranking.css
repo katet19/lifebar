@@ -9,6 +9,46 @@
   -webkit-user-drag: element;
 }
 
+.rank-header-container{
+    width:100%;
+    margin:20px 0;
+    text-align:left;
+}
+
+.rank-header-intro{
+    display:inline-block;
+    margin-right:20px;
+}
+
+.rank-list-container{
+    position:absolute;
+    left:0;
+    top:100px;
+    width:50%;
+}
+
+.rank-unranked-list-container{
+    position:absolute;
+    right:0;
+    top:100px;
+    width:40%;
+}
+
+.year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item{
+    font-size: 16px;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+}
+
+#platform-dropdown{
+    width:370px !important;
+}
+
+#genre-dropdown{
+    width:350px !important;
+}
+
 .rank-item-container{
     display:inline-block;
 }
@@ -18,11 +58,18 @@
 }
 
 .rank-container{
-    width:100%;
     float:left;
     padding:10px 5px !important;
     text-align:left;
-    border:1px solid #ddd;
+}
+
+.rank-header-title{
+    font-size: 1.5em;
+    display: block;
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #999;
 }
 
 .rank-item-title{
