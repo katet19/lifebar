@@ -39,8 +39,8 @@ function DisplayCollectionDetails(collectionid, from, fromid, isNew){
 		window.scrollTo(0, 0);
 		var windowWidth = $(window).width();
 	    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-	    $("#activity, #discover, #profiledetails, #settings, #admin, #notifications, #user, #landing").css({"display":"none"});
-		$("#activity, #discover, #profiledetails, #settings, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	    $("#activity, #ranking, #discover, #profiledetails, #settings, #admin, #notifications, #user, #landing").css({"display":"none"});
+		$("#activity, #ranking, #discover, #profiledetails, #settings, #admin, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 		if($(window).width() > 599){
 			$("#navigation-header").css({"display":"block"});
 			$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});

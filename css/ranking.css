@@ -9,6 +9,10 @@
   -webkit-user-drag: element;
 }
 
+#ranking{
+    padding: 1em 20px 1em 0 !important;
+}
+
 .rank-header-container{
     position: fixed;
     top: 80px;
@@ -104,7 +108,7 @@
 
 .rank-container.overbottom{
     opacity: 0.7;
-    border-top:1px solid #F50057;
+    border-top:3px solid #F50057;
 }
 
 .rank-modal-body{
@@ -123,7 +127,12 @@
     text-align:left;
     background-color:white;
     cursor:pointer;
-    border-top:1px solid white;
+    border-top:3px solid white;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .rank-header-title{

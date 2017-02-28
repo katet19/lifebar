@@ -1,21 +1,21 @@
 function ShowRanking(){
-  	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
+  	ShowLoader($("#rankingInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
-    $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#gameInnerContainer").html("");
+    $("#ranking").css({"display":"inline-block", "left": -windowWidth});
+    $("#discover, #activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #activity, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#ranking").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#rankingInnerContainer").html("");
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
 	}
-    ShowLoader($("#gameInnerContainer"), 'big', "<br><br><br>");
+    ShowLoader($("#rankingInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
 	     data: {action: "DisplayRanking" },
 	     type: 'post',
 	     success: function(output) {
-	 		$("#activityInnerContainer").html(output);
+	 		$("#rankingInnerContainer").html(output);
              UpdateAccordionCounter();
              if($(".rank-header-title-count").text() != "0"){
                  ToggleUnrankedModal();

@@ -6,8 +6,8 @@ function ShowAdminHome(){
 function ShowAdminMainContent(){
 	var windowWidth = $(window).width();
     $("#admin").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #analytics, #notifications, #user").css({"display":"none"});
-	$("#activity, #discover, #analytics, #notifications, #user").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #discover, #analytics, #notifications, #user").css({"display":"none"});
+	$("#activity, #ranking, #discover, #analytics, #notifications, #user").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#admin").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	window.scrollTo(0, 0);
   	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");

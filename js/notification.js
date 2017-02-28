@@ -7,8 +7,8 @@ function ShowNotificationMainContent(){
   	ShowLoader($("#notificationsInnerContainer"), 'big', "<br><br><br>");
     var windowWidth = $(window).width();
     $("#notifications").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #admin, #profiledetails, #settings, #activity, #user, #landing").css({"display":"none"});
-    $("#discover, #admin, #profiledetails, #settings, #activity, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #activity, #user, #landing").css({"display":"none"});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #activity, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#notifications").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
   	$("#gameInnerContainer").html("");
   	

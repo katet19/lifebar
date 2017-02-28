@@ -127,8 +127,8 @@ function LoadGame(gbid, currentTab, isID, browserNav, gameTab){
 function LoadGameDirect(gbid, currentTab, type, gameTab){
 	var windowWidth = $(window).width();
     $("#game").css({"display":"inline-block", "right": "-75%"});
-    $("#activity, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").css({"display":"none"});
-	$("#activity, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").css({"display":"none"});
+	$("#activity, #ranking, #discover, #analytics, #admin, #notifications, #user, #landing, #profile").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
     $("#game.outerContainer").css({ "right": 0 });
 	SCROLL_POS = $(window).scrollTop();
 	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");

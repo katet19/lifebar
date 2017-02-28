@@ -1186,8 +1186,8 @@ function ShowUserActivity(userid){
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
-    $("#discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
