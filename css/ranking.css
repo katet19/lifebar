@@ -10,9 +10,14 @@
 }
 
 .rank-header-container{
-    width:100%;
-    margin:20px 0;
-    text-align:left;
+    position: fixed;
+    top: 80px;
+    text-align: left;
+    background-color: white;
+    padding: 2px 15px;
+    right: 20px;
+    left: 225px;
+    z-index:10;
 }
 
 .rank-header-intro{
@@ -24,14 +29,40 @@
     position:absolute;
     left:0;
     top:100px;
-    width:50%;
+    width:100%;
 }
 
 .rank-unranked-list-container{
-    position:absolute;
-    right:0;
-    top:10vh;
-    width:40%;
+    position: fixed;
+    right: 20px;
+    background-color: white;
+    top: inherit;
+    width:30%;
+    bottom: 20px;
+    height: 40px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    z-index:9;
+}
+
+.rank-unranked-list-container:hover{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.rank-unranked-list-container-active, .rank-unranked-list-container-active:hover{
+    height:inherit;
+    top:140px;
+    width:30%;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.rank-unranked-list-container-active .rank-header-title{
+    background-color:white;
+    color:inherit;
 }
 
 .year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item{
@@ -67,13 +98,19 @@
     display:inline-block;
 }
 
-.rank-item-container.over{
-    opacity: 0.4;
+.rank-container.over{
+    opacity: 0.6;
+}
+
+.rank-container.overbottom{
+    opacity: 0.7;
+    border-top:1px solid #F50057;
 }
 
 .rank-modal-body{
-    height: -webkit-calc(85vh - 360px);
+    height: -webkit-calc(100vh - 420px);
     overflow-y: auto;
+    background-color:white;
 }
 
 .rank-collapsible-header .tier-modal-icon{
@@ -84,22 +121,45 @@
     float:left;
     padding:10px 5px !important;
     text-align:left;
+    background-color:white;
+    cursor:pointer;
+    border-top:1px solid white;
 }
 
 .rank-header-title{
-    font-size: 1.5em;
+    font-size: 1em;
     display: block;
+    text-transform: uppercase;
     text-align: left;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #999;
+    font-weight: 500;
+    padding: 10px 15px;
+    background-color:#F50057;
+    color:white;
 }
 
-.rank-item-title{
-    
+.rank-header-title:hover {
+    background-color:#FF4081 !important;
+    color:white;
+}
+
+.rank-header-title i{
+    float: right;
+    font-size: 2em;
+    position: relative;
+    top: -4px;
+}
+
+.rank-header-title-count{
+    margin-right:5px;
 }
 
 .rank-count{
     display:inline-block;
     margin-right:5px;
+}
+
+.rank-drag-drop-placeholder{
+    margin-top:20px;
+    border:1px dashed gray;
+    background-color:transparent !important;
 }

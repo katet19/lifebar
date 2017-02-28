@@ -17,20 +17,26 @@ function ShowRanking(){
 	     success: function(output) {
 	 		$("#activityInnerContainer").html(output);
              UpdateAccordionCounter();
-             AttachFilterEvents();
-              $('.dropdown-button').dropdown({
-                    inDuration: 300,
-                    outDuration: 225,
-                    constrainWidth: false, // Does not change width of dropdown to that of the activator
-                    hover: true, // Activate on hover
-                    gutter: 0, // Spacing from edge
-                    belowOrigin: false, // Displays dropdown below the button
-                    alignment: 'left', // Displays dropdown with edge aligned to the left of button
-                    stopPropagation: false // Stops event propagation
-                    }
-                );
+             if($(".rank-header-title-count").text() != "0"){
+                 ToggleUnrankedModal();
+             }
+             $(".rank-header-title").on("click", function(){
+                ToggleUnrankedModal();
+             });
+            AttachFilterEvents();
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+                }
+            );
              $('.collapsible').collapsible();
-             //AttachDragAndDropEvents();
+             AttachDragAndDropEvents();
             },
 	        error: function(x, t, m) {
 		        if(t==="timeout") {
@@ -41,6 +47,16 @@ function ShowRanking(){
 	    	},
 	    	timeout:45000
 		});
+}
+
+function ToggleUnrankedModal(){
+    if($(".rank-unranked-list-container-active").length > 0){
+        $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
+        $(".rank-unranked-list-container .rank-header-title i").text("expand_less");
+    }else{
+        $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
+        $(".rank-unranked-list-container .rank-header-title i").text("expand_more");
+    }
 }
 
 function AttachFilterEvents(){
@@ -64,7 +80,7 @@ function FilterLists(){
     var platform = $(".platform-dropdown-selected").text();
     if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time"){
         $(".rank-container").each(function(){
-            $(this).parent().removeClass("hide-game-rank");
+            $(this).removeClass("hide-game-rank");
         });
     }else{
         $(".rank-container").each(function(){
@@ -85,28 +101,34 @@ function FilterLists(){
             }
 
             if(genrehide || yearhide || platformhide){
-                $(this).parent().addClass("hide-game-rank");
+                $(this).addClass("hide-game-rank");
             }else{
-                $(this).parent().removeClass("hide-game-rank");
+                $(this).removeClass("hide-game-rank");
             }
         });
+
+        $(".rank-drag-drop-placeholder").removeClass("hide-game-rank");
     }
     UpdateAccordionCounter();
 }
 
 function UpdateAccordionCounter(){
+    var totalcount = 0;
     $(".rank-modal-body").each(function(){
         var counter = 0;
         $(this).find(".rank-container").each(function(){
-            if(!$(this).parent().hasClass("hide-game-rank"))
+            if(!$(this).hasClass("hide-game-rank")){
                 counter++;
+                totalcount++;
+            }
         });
         $(this).parent().find(".collapsible-header .rank-modal-text").text(counter);
+        $(".rank-header-title-count").text(totalcount.toLocaleString('en-US'));
     });
 }
 
 function AttachDragAndDropEvents(){
-    var rankitems = document.querySelectorAll('.rank-item-container');
+    var rankitems = document.querySelectorAll('.rank-container');
     var dragSrcEl = null;
     [].forEach.call(rankitems, function(rankitems) {
         rankitems.addEventListener('dragstart', handleDragStart, false);
@@ -117,11 +139,8 @@ function AttachDragAndDropEvents(){
         rankitems.addEventListener('dragend', handleDragEnd, false);
     });
 
-    function handleDragStart(e) {
-        this.style.color = '#3F51B5';
-        
+    function handleDragStart(e) {        
         dragSrcEl = this;
-
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', this.innerHTML);
     }
@@ -131,16 +150,17 @@ function AttachDragAndDropEvents(){
             e.preventDefault();
         }
         e.dataTransfer.dropEffect = 'move'; 
+        this.classList.add('overbottom');
 
         return false;
     }
 
     function handleDragEnter(e) {
-        this.classList.add('over');
+        this.classList.add('overbottom');
     }
 
     function handleDragLeave(e) {
-        this.classList.remove('over');
+        this.classList.remove('overbottom');
     }
 
     function handleDrop(e) {
@@ -149,15 +169,15 @@ function AttachDragAndDropEvents(){
         }
         if (dragSrcEl != this) {
             dragSrcEl.style.color = 'inherit';
-            dragSrcEl.innerHTML = this.innerHTML;
-            this.innerHTML = e.dataTransfer.getData('text/html');
+            this.parentNode.insertBefore(dragSrcEl, this);
+            UpdateAccordionCounter();
         }
         return false;
     }
 
     function handleDragEnd(e) {
         [].forEach.call(rankitems, function (rankitem) {
-            rankitem.classList.remove('over');
+            rankitem.classList.remove('overbottom');
         });
     }
 }

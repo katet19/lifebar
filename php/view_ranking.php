@@ -7,7 +7,7 @@ function DisplayRanking($userid){
     $count = 1; 
     ?>
     <div class="row" style='position:absolute;width:100%;'>
-        <div class="rank-header-container">
+        <div class="rank-header-container z-depth-1">
             <div class="rank-header-intro"><i class='material-icons left' style='font-size: 1.5em;'>filter_list</i> Filter</div>
             <a class='dropdown-button btn-flat year-dropdown-selected' href='#' data-activates='year-dropdown'>All-Time</a>
             <ul id='year-dropdown' class='dropdown-content'>
@@ -46,8 +46,7 @@ function DisplayRanking($userid){
         <div class="rank-list-container">
             <?php
             foreach($rankedlist as $item){ ?>
-                <div class="row">
-                    <div class="col s12 rank-container"
+                    <div class="col s12 rank-container" draggable="true"
                         data-genre="<?php echo $item->_genre;?>"
                         data-platform="<?php echo $item->_platforms;?>"
                         data-year="<?php echo $item->_year;?>"
@@ -55,21 +54,35 @@ function DisplayRanking($userid){
                         data-rank="<?php echo $item->_rank;?>"
                     >
                         <div class="rank-count">
-                            <?php echo $count; ?>
                         </div>
-                        <div class="rank-item-container" draggable="true">
+                        <div class="rank-item-container">
                             <div class="rank-item-title">
                                 <?php echo $item->_title; ?>
                             </div>
                         </div>
                     </div>
-                </div>
             <?php $count++; 
             }
             ?>
+                <div class="col s12 rank-container rank-drag-drop-placeholder" draggable="true"
+                    data-genre=""
+                    data-platform=""
+                    data-year=""
+                    data-loaded-rank=""
+                    data-rank=""
+                >
+                <div class="rank-count">
+                </div>
+                <div class="rank-item-container">
+                    <div class="rank-item-title">
+                        Drag here to add to bottom of list
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="offset-s1 rank-unranked-list-container">
-            <div class="rank-header-title">Unranked</div>
+        <div class="rank-unranked-list-container z-depth-1">
+            <div class="rank-header-title"><span class="rank-header-title-count"></span> Unranked Games <i class="material-icons">expand_more</i></div>
             <?php 
             ShowUnRankedList($unrankedlist);
             ?>
@@ -150,20 +163,18 @@ function ShowUnRankedList($unrankedlist){
 }
 
 function ShowUnRankedItem($item){ ?>
-    <div class="row">
-        <div class="col s12 rank-container"
-            data-genre="<?php echo $item->_genre;?>"
-            data-platform="<?php echo $item->_platforms;?>"
-            data-year="<?php if($item->_year == 0){ echo "Unreleased"; }else{ echo $item->_year; } ?>"
-            data-loaded-rank="<?php echo $item->_rank;?>"
-            data-rank="<?php echo $item->_rank;?>"
-        >
-            <div class="rank-count">
-            </div>
-            <div class="rank-item-container" draggable="true">
-                <div class="rank-item-title">
-                    <?php echo $item->_title; ?>
-                </div>
+    <div class="col s12 rank-container" draggable="true"
+        data-genre="<?php echo $item->_genre;?>"
+        data-platform="<?php echo $item->_platforms;?>"
+        data-year="<?php if($item->_year == 0){ echo "Unreleased"; }else{ echo $item->_year; } ?>"
+        data-loaded-rank="<?php echo $item->_rank;?>"
+        data-rank="<?php echo $item->_rank;?>"
+    >
+        <div class="rank-count">
+        </div>
+        <div class="rank-item-container">
+            <div class="rank-item-title">
+                <?php echo $item->_title; ?>
             </div>
         </div>
     </div>
