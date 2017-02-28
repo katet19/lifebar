@@ -16,6 +16,7 @@ function ShowRanking(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#activityInnerContainer").html(output);
+             UpdateAccordionCounter();
              AttachFilterEvents();
               $('.dropdown-button').dropdown({
                     inDuration: 300,
@@ -63,7 +64,7 @@ function FilterLists(){
     var platform = $(".platform-dropdown-selected").text();
     if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time"){
         $(".rank-container").each(function(){
-            $(this).parent().show();
+            $(this).parent().removeClass("hide-game-rank");
         });
     }else{
         $(".rank-container").each(function(){
@@ -84,12 +85,24 @@ function FilterLists(){
             }
 
             if(genrehide || yearhide || platformhide){
-                $(this).parent().hide();
+                $(this).parent().addClass("hide-game-rank");
             }else{
-                $(this).parent().show();
+                $(this).parent().removeClass("hide-game-rank");
             }
         });
     }
+    UpdateAccordionCounter();
+}
+
+function UpdateAccordionCounter(){
+    $(".rank-modal-body").each(function(){
+        var counter = 0;
+        $(this).find(".rank-container").each(function(){
+            if(!$(this).parent().hasClass("hide-game-rank"))
+                counter++;
+        });
+        $(this).parent().find(".collapsible-header .rank-modal-text").text(counter);
+    });
 }
 
 function AttachDragAndDropEvents(){

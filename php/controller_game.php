@@ -703,19 +703,6 @@ function GetPlatforms(){
 	return $platforms;
 }
 
-function GetPlatformsByExperience($userid){
-	$mysqli = Connect();
-	$platformquery = "select * from `Link_Platforms` l, `Sub-Experiences` s where s.`UserID` = '".$userid."' and s.`PlatformIDs` = l.`GBID`  GROUP BY `NAME` ORDER BY `Name`";
-	if ($platformresult = $mysqli->query($platformquery)){
-		while($row = mysqli_fetch_array($platformresult)){
-			$platforms[] = $row['Name'];
-		}
-	}
-	Close($mysqli, $platformresult);
-	
-	return $platforms;
-}
-
 function GetGenres(){
 	$mysqli = Connect();
 	$genre = array();

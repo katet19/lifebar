@@ -30,7 +30,7 @@
 .rank-unranked-list-container{
     position:absolute;
     right:0;
-    top:100px;
+    top:10vh;
     width:40%;
 }
 
@@ -49,12 +49,35 @@
     width:350px !important;
 }
 
+#year-dropdown{
+    width:125px !important;
+}
+
+.hide-game-rank{
+    display:none;
+}
+
+.rank-modal-text{
+    float: right;
+    font-size: 1.5em;
+    color: rgba(0,0,0,0.6);
+}
+
 .rank-item-container{
     display:inline-block;
 }
 
 .rank-item-container.over{
     opacity: 0.4;
+}
+
+.rank-modal-body{
+    height: -webkit-calc(85vh - 360px);
+    overflow-y: auto;
+}
+
+.rank-collapsible-header .tier-modal-icon{
+    margin-right:0em;
 }
 
 .rank-container{

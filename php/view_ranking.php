@@ -12,19 +12,18 @@ function DisplayRanking($userid){
             <a class='dropdown-button btn-flat year-dropdown-selected' href='#' data-activates='year-dropdown'>All-Time</a>
             <ul id='year-dropdown' class='dropdown-content'>
                 <li class='year-dropdown-filter-item'>All-Time</li>
-                    <?php $year = 2018;
-                        while($year > 1980){
+                    <?php $years = GetYearsByExperience($userid); 
+                        foreach($years as $year){
                             ?>
                             <li class='year-dropdown-filter-item'><?php echo $year; ?></li>
                             <?php
-                            $year--;
                         }
                     ?>
             </ul>
             <a class='dropdown-button btn-flat genre-dropdown-selected' href='#' data-activates='genre-dropdown'>All-Genre</a>
             <ul id='genre-dropdown' class='dropdown-content'>
                 <li class='genre-dropdown-filter-item'>All-Genre</li>
-                    <?php $genres = GetGenres(); 
+                    <?php $genres = GetGenresByExperience($userid); 
                         foreach($genres as $genre){
                             ?>
                             <li class='genre-dropdown-filter-item'><?php echo $genre; ?></li>
@@ -79,12 +78,83 @@ function DisplayRanking($userid){
     <?php
 }
 
+function ShowUnRankedList($unrankedlist){
+	if(sizeof($unrankedlist) > 0){
+		$filter = explode(",", $tierlist[0][3]);
+		$count = 1;
+		?>
+		<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 1){ echo 'active'; } ?> tier1BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(1); ?></div>
+				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #0A67A3;'>
+					<?php 
+					  foreach($unrankedlist as $item){
+							if($item->_tier == 1){
+								ShowUnRankedItem($item);
+								$count++;
+							}
+						} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 2){ echo 'active'; } ?> tier2BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(2); ?></div>
+				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #00B25C;'>
+					<?php 
+					  foreach($unrankedlist as $item){
+							if($item->_tier == 2){
+								ShowUnRankedItem($item);
+								$count++;
+							}
+						} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 3){echo 'active'; } ?> tier3BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(3); ?></div>
+				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #FF8E00;'>
+					<?php 
+					  foreach($unrankedlist as $item){
+							if($item->_tier == 3){
+								ShowUnRankedItem($item);
+								$count++;
+							}
+						} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 4){ echo 'active'; } ?> tier4BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(4); ?></div>
+				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid rgb(255, 65, 0);'>
+					<?php 
+					  foreach($unrankedlist as $item){
+							if($item->_tier == 4){
+								ShowUnRankedItem($item);
+								$count++;
+							}
+						} ?>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 5){ echo 'active'; } ?> tier5BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(5); ?></div>
+				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #DB0058;'>
+					<?php 
+					  foreach($unrankedlist as $item){
+							if($item->_tier == 5){
+								ShowUnRankedItem($item);
+								$count++;
+							}
+						} ?>
+				</div>
+			</li>
+		</ul>
+		<?php
+	}
+}
+
 function ShowUnRankedItem($item){ ?>
     <div class="row">
         <div class="col s12 rank-container"
             data-genre="<?php echo $item->_genre;?>"
             data-platform="<?php echo $item->_platforms;?>"
-            data-year="<?php echo $item->_year;?>"
+            data-year="<?php if($item->_year == 0){ echo "Unreleased"; }else{ echo $item->_year; } ?>"
             data-loaded-rank="<?php echo $item->_rank;?>"
             data-rank="<?php echo $item->_rank;?>"
         >
@@ -98,76 +168,5 @@ function ShowUnRankedItem($item){ ?>
         </div>
     </div>
     <?php
-}
-
-function ShowUnRankedList($unrankedlist){
-	if(sizeof($unrankedlist) > 0){
-		$filter = explode(",", $tierlist[0][3]);
-		$count = 1;
-		?>
-		<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
-			<li>
-				<div class="collapsible-header <?php if($unrankedlist[0]->_tier == 1){ echo 'active'; } ?> tier1BGHover"><div class="tier-modal-text">FANTASTIC</div> <?php DisplayStarSequence(1); ?></div>
-				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #0A67A3;'>
-					<?php 
-					  foreach($unrankedlist as $item){
-							if($item->_tier == 1){
-								ShowUnRankedItem($item);
-								$count++;
-							}
-						} ?>
-				</div>
-			</li>
-			<li>
-				<div class="collapsible-header <?php if($unrankedlist[0]->_tier == 2){ echo 'active'; } ?> tier2BGHover"><div class="tier-modal-text">GOOD</div> <?php DisplayStarSequence(2); ?></div>
-				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #00B25C;'>
-					<?php 
-					  foreach($unrankedlist as $item){
-							if($item->_tier == 2){
-								ShowUnRankedItem($item);
-								$count++;
-							}
-						} ?>
-				</div>
-			</li>
-			<li>
-				<div class="collapsible-header <?php if($unrankedlist[0]->_tier == 3){echo 'active'; } ?> tier3BGHover"><div class="tier-modal-text">AVERAGE</div> <?php DisplayStarSequence(3); ?></div>
-				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #FF8E00;'>
-					<?php 
-					  foreach($unrankedlist as $item){
-							if($item->_tier == 3){
-								ShowUnRankedItem($item);
-								$count++;
-							}
-						} ?>
-				</div>
-			</li>
-			<li>
-				<div class="collapsible-header <?php if($unrankedlist[0]->_tier == 4){ echo 'active'; } ?> tier4BGHover"><div class="tier-modal-text">POOR</div> <?php DisplayStarSequence(4); ?></div>
-				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid rgb(255, 65, 0);'>
-					<?php 
-					  foreach($unrankedlist as $item){
-							if($item->_tier == 4){
-								ShowUnRankedItem($item);
-								$count++;
-							}
-						} ?>
-				</div>
-			</li>
-			<li>
-				<div class="collapsible-header <?php if($unrankedlist[0]->_tier == 5){ echo 'active'; } ?> tier5BGHover"><div class="tier-modal-text">TERRIBLE</div> <?php DisplayStarSequence(5); ?></div>
-				<div class="collapsible-body tier-modal-body" style='border-bottom:2px solid #DB0058;'>
-					<?php 
-					  foreach($unrankedlist as $item){
-							if($item->_tier == 5){
-								ShowUnRankedItem($item);
-								$count++;
-							}
-						} ?>
-				</div>
-			</li>
-		</ul>
-		<?php
-	}
 }
 ?>

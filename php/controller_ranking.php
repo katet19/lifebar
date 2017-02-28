@@ -46,4 +46,47 @@ function GetMyUnrankedList($userid, $year, $platform, $genre){
 	Close($mysqli, $result);
 	return $ranklist;
 }
+
+function GetPlatformsByExperience($userid){
+	$mysqli = Connect();
+	$platformquery = "select * from `Link_Platforms` l, `Sub-Experiences` s where s.`UserID` = '".$userid."' and s.`PlatformIDs` = l.`GBID`  GROUP BY `NAME` ORDER BY `Name`";
+	if ($platformresult = $mysqli->query($platformquery)){
+		while($row = mysqli_fetch_array($platformresult)){
+			$platforms[] = $row['Name'];
+		}
+	}
+	Close($mysqli, $platformresult);
+	
+	return $platforms;
+}
+
+function GetGenresByExperience($userid){
+	$mysqli = Connect();
+	$genrequery = "select l.`Name` as Name from `Link_Genre` l, `Experiences` e, `Game_Genre` gg, `Games` g where e.`UserID` = '".$userid."' and e.`GameID` = g.`ID` and g.`GBID` = gg.`GBID` and gg.`GenreID` = l.`GBID` GROUP BY l.`NAME` ORDER BY l.`Name`";
+	if ($genreresult = $mysqli->query($genrequery)){
+		while($row = mysqli_fetch_array($genreresult)){
+			$genres[] = $row['Name'];
+		}
+	}
+	Close($mysqli, $genreresult);
+	
+	return $genres;
+}
+
+function GetYearsByExperience($userid){
+	$mysqli = Connect();
+	$yearquery = "select `Year` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and e.`GameID` = g.`ID` GROUP BY `Year` ORDER BY `Year` DESC";
+	if ($yearresult = $mysqli->query($yearquery)){
+		while($row = mysqli_fetch_array($yearresult)){
+			if($row['Year'] == 0){
+				$row['Year'] = "Unreleased";
+			}
+
+			$years[] = $row['Year'];
+		}
+	}
+	Close($mysqli, $yearresult);
+	
+	return $years;
+}
 ?>
