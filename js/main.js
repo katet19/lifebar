@@ -67,7 +67,7 @@ function Toast(msg){
 }
 
 function ToastProgress(msg){
-	Materialize.toast(msg, 9000);
+	Materialize.toast(msg, 7000);
 }
 
 
