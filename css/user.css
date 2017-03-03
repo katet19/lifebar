@@ -67,6 +67,10 @@
 	height:120px !important;
 }	
 
+.user-follow-card .card-image, .user-follow-card .card-image .col .user-follow-card-image-w-game, .user-follow-card .card-image .col .user-follow-card-title{
+	cursor: pointer;
+}
+
 .user-discover-card .card-content, .user-follow-card .card-content{
 	background-color: white;
 	height: 65px;

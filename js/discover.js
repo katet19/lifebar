@@ -312,7 +312,8 @@ function AttachDiscoverHomeEvents(){
 	$(".daily-header-game-title, .view-game-spoiler").on('click', function(){
 		ShowGame($(this).attr("data-id"), $("#discover"));
 	});
- 	$(".follow-from-discover").on("click", function(){
+ 	$(".follow-from-discover").on("click", function(e){
+		 e.stopPropagation();
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();
 		}else{
@@ -327,7 +328,8 @@ function AttachDiscoverHomeEvents(){
 
 		}
  	});
-	$(".dismiss-from-discover").on("click", function(){
+	$(".dismiss-from-discover").on("click", function(e){
+		e.stopPropagation();
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();
 		}else{
@@ -418,6 +420,10 @@ function AttachDiscoverHomeEvents(){
  	 	e.stopPropagation();
  		ShowUserProfile($(this).attr("data-id"));
  	});
+	$(".user-follow-card .card-image").on("click", function(e){
+		e.stopPropagation();
+ 		ShowUserProfile($(this).parent().attr("data-id"));
+	});
   	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
  		ShowUserProfile($(this).attr("data-id"));
