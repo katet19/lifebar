@@ -70,6 +70,10 @@ function ToastProgress(msg){
 	Materialize.toast(msg, 7000);
 }
 
+function ToastSpecial(msg){
+	Materialize.toast(msg, 10000);
+	$(".toast-special").parent().css({"background-color":"#3F51B5"});
+}
 
 function ToastError(msg){
 	Materialize.toast(msg, 5000);
