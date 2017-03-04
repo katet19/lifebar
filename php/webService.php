@@ -600,6 +600,9 @@
 		if($_POST['action'] == 'DisplayRanking' && $_SESSION['logged-in']->_id > 0){
 			DisplayRanking($_SESSION['logged-in']->_id);
 		}
+		if($_POST['action'] == 'SaveUserRankedList' && $_SESSION['logged-in']->_id > 0){
+			SaveUserRankedList($_SESSION['logged-in']->_id, $_POST['rankedList']);
+		}
 	}
 	function UserServices(){
 		if($_POST['action'] == 'FollowUser' && isset($_POST['followid']) && $_SESSION['logged-in']->_id > 0){

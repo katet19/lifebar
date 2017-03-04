@@ -2567,10 +2567,7 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	else
 		$authentic = "No";
 		
-	if($newXP == false){
-		if($rank > 0)
-			ResequenceRanks($rank, $gameid, $user, $mysqli);
-		
+	if($newXP == false){		
 		$update = "update `Experiences` set `Quote`='$quote',`Tier`='$tier',`ExperienceDate`='$dates',`Link`='$link',`AuthenticXP`='$authentic' where `UserID` = '$user' and `GameID` = '$gameid'";
 		$result = $mysqli->query($update);
 		if($result == '' || $result == false)
@@ -2639,24 +2636,25 @@ function CalculateXPGain($type, $isNew = true){
 	}
 }
 
-function ResequenceRanks($rank, $gameid, $userid, $mysqli){
-	$query = "select * from `Experiences` where  `UserID` = '".$userid."' and `Rank` > 0 order by `Rank` ASC";
-	if ($result = $mysqli->query($query)) {
+function SaveUserRankedList($userid, $rankingList){
+	$mysqli = Connect();
+
+	if($rankingList != ""){
+		$rankedGames = explode(",",$rankingList);
+		//Reset ranked list
+		$mysqli->query("update `Experiences` set `Rank` = '0' where `UserID` = '".$userid."'");
+
 		$count = 1;
-		while($row = mysqli_fetch_array($result)){
-			if($row['Rank'] < $rank && $row['GameID'] != $gameid){
-				$count++;
-			}else if($row['Rank'] != $rank && $row['GameID'] == $gameid ){
-				//omit game from counter
-				$rankupdate = "update `Experiences` set `Rank` = '".$rank."' where `ID` = '".$row['ID']."'";
-				$mysqli->query($rankupdate);
-			}else{
-				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `ID` = '".$row['ID']."'";
+		foreach($rankedGames as $gameid){
+			if($gameid > 0){
+				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `UserID` = '".$userid."' and `GameID` = '".$gameid."'";
 				$mysqli->query($rankupdate);
 				$count++;
 			}
 		}
 	}
+
+	Close($mysqli, $result);
 }
 
 function SubmitBookmark($user,$gameid,$bucketlist){

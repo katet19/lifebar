@@ -8,7 +8,7 @@ function DisplayRanking($userid){
     ?>
     <div class="row" style='position:absolute;width:100%;'>
         <div class="rank-header-container z-depth-1">
-            <div class="rank-header-intro"><i class='material-icons left' style='font-size: 1.5em;'>filter_list</i> Filter</div>
+            <div class="rank-header-intro"><i class='material-icons left' style='font-size: 1.5em;'>filter_list</i></div>
             <a class='dropdown-button btn-flat year-dropdown-selected' href='#' data-activates='year-dropdown'>All-Time</a>
             <ul id='year-dropdown' class='dropdown-content'>
                 <li class='year-dropdown-filter-item'>All-Time</li>
@@ -42,6 +42,7 @@ function DisplayRanking($userid){
                         }
                     ?>
             </ul>
+            <div class="save-btn disabled rank-save-btn"><i class="material-icons left" style='font-size:1.5em;position: relative;top: 7px;'>save</i> Save</div>
         </div>
         <div class="rank-list-container">
             <?php
@@ -52,13 +53,19 @@ function DisplayRanking($userid){
                         data-year="<?php echo $item->_year;?>"
                         data-loaded-rank="<?php echo $item->_rank;?>"
                         data-rank="<?php echo $item->_rank;?>"
+                        data-id="<?php echo $item->_id;?>"
+                        data-image="<?php echo $item->_imagesmall; ?>"
                     >
-                        <div class="rank-count">
+                        <div class="rank-count-container">
                         </div>
                         <div class="rank-item-container">
-                            <div class="rank-item-title">
+                            <div class="rank-item-title" style="padding-left:130px;">
                                 <?php echo $item->_title; ?>
                             </div>
+                        </div>
+                        <div class="rank-image" style='background:url(<?php echo $item->_imagesmall; ?>) 50% 25%;'>
+                        </div>
+                        <div class="rank-history">
                         </div>
                     </div>
             <?php $count++; 
@@ -71,11 +78,16 @@ function DisplayRanking($userid){
                     data-loaded-rank=""
                     data-rank=""
                 >
-                <div class="rank-count">
+                <div class="rank-count-container">
                 </div>
                 <div class="rank-item-container">
                     <div class="rank-item-title">
-                        Drag here to add to bottom of list
+                        <i class='material-icons left' style='position:relative;font-size:1.5em;'>add_box</i> 
+                        <?php if($count == 1){ ?>
+                            <span class="rank-drag-drop-text">DRAG HERE TO START LIST</span>
+                        <?php }else{ ?> 
+                            <span class="rank-drag-drop-text">DRAG HERE TO ADD TO THE BOTTOM OF LIST</span>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -169,13 +181,19 @@ function ShowUnRankedItem($item){ ?>
         data-year="<?php if($item->_year == 0){ echo "Unreleased"; }else{ echo $item->_year; } ?>"
         data-loaded-rank="<?php echo $item->_rank;?>"
         data-rank="<?php echo $item->_rank;?>"
+        data-id="<?php echo $item->_id;?>"
+        data-image="<?php echo $item->_imagesmall; ?>"
     >
-        <div class="rank-count">
+        <div class="rank-count-container">
         </div>
         <div class="rank-item-container">
             <div class="rank-item-title">
                 <?php echo $item->_title; ?>
             </div>
+        </div>
+        <div class="rank-image">
+        </div>
+        <div class="rank-history">
         </div>
     </div>
     <?php
