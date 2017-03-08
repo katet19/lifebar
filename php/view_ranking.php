@@ -46,8 +46,8 @@ function DisplayRanking($userid){
             <ul id='xp-dropdown' class='dropdown-content'>
                 <li class='xp-dropdown-filter-item'>All-Experiences</li>
                 <li class='xp-dropdown-filter-item'>Played</li>
-                <li class='xp-dropdown-filter-item'>Watched</li>
                 <li class='xp-dropdown-filter-item'>Finished</li>
+                <li class='xp-dropdown-filter-item'>Watched</li>
             </ul>
             <div class="save-btn disabled rank-save-btn"><i class="material-icons left" style='font-size:1.5em;position: relative;top: 7px;'>save</i> Save</div>
         </div>
