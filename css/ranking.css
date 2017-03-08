@@ -69,7 +69,7 @@
     color:inherit;
 }
 
-.year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item{
+.year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item, .xp-dropdown-filter-item{
     font-size: 16px;
     display: block;
     line-height: 22px;
@@ -81,6 +81,10 @@
 }
 
 #genre-dropdown{
+    width:350px !important;
+}
+
+#xp-dropdown{
     width:350px !important;
 }
 

@@ -4,8 +4,11 @@ require_once "includes.php";
 function GetMyRankedList($userid, $year, $platform, $genre){
 	$mysqli = Connect();
 	$ranklist = array();
-	$myquery = "select g.*, `Tier`, `Rank`  from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Rank` > 0";
-	
+	$myquery = "select g.*, `Tier`, `Rank`, (select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played') as `Played`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Watched') as `Watched`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played' and (`Completed` = 100 or `Completed` = 101)) as `Finished`
+				from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Rank` > 0";
+
 	if($year > -1)
 		$myquery = $myquery . " and g.`Year` == '".$year."' ";
 	if($platform != '')
@@ -17,6 +20,14 @@ function GetMyRankedList($userid, $year, $platform, $genre){
 
 	if ($result = $mysqli->query($myquery)) {
 		while($row = mysqli_fetch_array($result)){
+			if($row["Finished"] > 0)
+				$row['XPType'] = "Played Finished";
+			else if($row['Played'] > 0)
+				$row['XPType'] = $row['XPType']." Played";
+
+			if($row['Watched'] > 0)
+				$row['XPType'] = $row['XPType']." Watched";
+			
 			$ranklist[] = GameRankObject($row);
 		}
 	}
@@ -27,8 +38,11 @@ function GetMyRankedList($userid, $year, $platform, $genre){
 function GetMyUnrankedList($userid, $year, $platform, $genre){
 	$mysqli = Connect();
 	$ranklist = array();
-	$myquery = "select g.*, `Tier`, `Rank` from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Rank` <= 0 and e.`Tier` > 0";
-	
+	$myquery = "select g.*, `Tier`, `Rank`, (select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played') as `Played`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Watched') as `Watched`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played' and  (`Completed` = 100 or `Completed` = 101)) as `Finished`
+				from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and g.`ID` = e.`GameID` and e.`Rank` <= 0 and e.`Tier` > 0";
+
 	if($year > -1)
 		$myquery = $myquery . " and g.`Year` == '".$year."' ";
 	if($platform != '')
@@ -40,6 +54,13 @@ function GetMyUnrankedList($userid, $year, $platform, $genre){
 
 	if ($result = $mysqli->query($myquery)) {
 		while($row = mysqli_fetch_array($result)){
+			if($row["Finished"] > 0)
+				$row['XPType'] = "Played Finished";
+			else if($row['Played'] > 0)
+				$row['XPType'] = $row['XPType']." Played";
+
+			if($row['Watched'] > 0)
+				$row['XPType'] = $row['XPType']." Watched";
 			$ranklist[] = GameRankObject($row);
 		}
 	}

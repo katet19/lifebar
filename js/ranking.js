@@ -112,6 +112,10 @@ function AttachFilterEvents(){
         $(".platform-dropdown-selected").text($(this).text());
         FilterLists();
 	});
+    $(".xp-dropdown-filter-item").on('click', function() { 
+        $(".xp-dropdown-selected").text($(this).text());
+        FilterLists();
+	});
 }
 
 function UpdateRankedPositions(showingAll){
@@ -158,8 +162,9 @@ function FilterLists(){
     var year = $(".year-dropdown-selected").text();
     var genre = $(".genre-dropdown-selected").text();
     var platform = $(".platform-dropdown-selected").text();
+    var xp = $(".xp-dropdown-selected").text();
     var showingAll = true;
-    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time"){
+    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time" && xp == "All-Experiences"){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
         });
@@ -169,6 +174,7 @@ function FilterLists(){
             var genrehide = true;
             var yearhide = true;
             var platformhide = true;
+            var xphide = true;
 
             if($(this).attr("data-year").indexOf(year) != -1 || year.indexOf("All-Time") != -1){
                 yearhide = false;
@@ -182,7 +188,11 @@ function FilterLists(){
                 platformhide = false;
             }
 
-            if(genrehide || yearhide || platformhide){
+            if($(this).attr("data-xp").indexOf(xp) != -1 || xp.indexOf("All-Experiences") != -1){
+                xphide = false;
+            }
+
+            if(genrehide || yearhide || platformhide || xphide){
                 $(this).addClass("hide-game-rank");
             }else{
                 $(this).removeClass("hide-game-rank");
@@ -261,8 +271,9 @@ function AttachDragAndDropEvents(){
             var year = $(".year-dropdown-selected").text();
             var genre = $(".genre-dropdown-selected").text();
             var platform = $(".platform-dropdown-selected").text();
+            var xp = $(".xp-dropdown-selected").text();
             var showingAll = false;
-            if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time"){
+            if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time" && xp == "All-Experiences"){
                 showingAll = true;
             }
 

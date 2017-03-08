@@ -103,8 +103,9 @@ class GameRank
 	public $_similar;
 	public $_tier;
 	public $_rank;
+	public $_xptype;
 	
-	function __construct($id, $gbid, $title, $rated, $released, $genre, $platforms, $year, $image, $imagesmall, $publisher, $developer, $alias, $theme, $franchise, $similar, $tier, $rank) {
+	function __construct($id, $gbid, $title, $rated, $released, $genre, $platforms, $year, $image, $imagesmall, $publisher, $developer, $alias, $theme, $franchise, $similar, $tier, $rank, $xptype) {
 		$this->_id = $id;
 		$this->_gbid = $gbid;
 		$this->_title = $title;
@@ -129,6 +130,7 @@ class GameRank
 		$this->_similar = $similar;
 		$this->_tier = $tier;
 		$this->_rank = $rank;
+		$this->_xptype = $xptype;
 	}	
 }
 
@@ -150,7 +152,8 @@ function GameRankObject($row){
 				$row["Franchise"],
 				$row["Similar"],
 				$row["Tier"],
-				$row["Rank"]
+				$row["Rank"],
+				$row["XPType"]
 				);
 }
 

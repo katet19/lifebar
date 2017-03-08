@@ -42,6 +42,13 @@ function DisplayRanking($userid){
                         }
                     ?>
             </ul>
+            <a class='dropdown-button btn-flat xp-dropdown-selected' href='#' data-activates='xp-dropdown'>All-Experiences</a>
+            <ul id='xp-dropdown' class='dropdown-content'>
+                <li class='xp-dropdown-filter-item'>All-Experiences</li>
+                <li class='xp-dropdown-filter-item'>Played</li>
+                <li class='xp-dropdown-filter-item'>Watched</li>
+                <li class='xp-dropdown-filter-item'>Finished</li>
+            </ul>
             <div class="save-btn disabled rank-save-btn"><i class="material-icons left" style='font-size:1.5em;position: relative;top: 7px;'>save</i> Save</div>
         </div>
         <div class="rank-list-container">
@@ -55,6 +62,7 @@ function DisplayRanking($userid){
                         data-rank="<?php echo $item->_rank;?>"
                         data-id="<?php echo $item->_id;?>"
                         data-image="<?php echo $item->_imagesmall; ?>"
+                        data-xp="<?php echo $item->_xptype; ?>"
                     >
                         <div class="rank-count-container">
                         </div>
@@ -77,6 +85,7 @@ function DisplayRanking($userid){
                     data-year=""
                     data-loaded-rank=""
                     data-rank=""
+                    data-xp=""
                 >
                 <div class="rank-count-container">
                 </div>
@@ -183,6 +192,7 @@ function ShowUnRankedItem($item){ ?>
         data-rank="<?php echo $item->_rank;?>"
         data-id="<?php echo $item->_id;?>"
         data-image="<?php echo $item->_imagesmall; ?>"
+        data-xp="<?php echo $item->_xptype;  ?>"
     >
         <div class="rank-count-container">
         </div>
