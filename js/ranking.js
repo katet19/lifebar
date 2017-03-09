@@ -55,11 +55,14 @@ function ShowRanking(){
 function SaveRankedList(){
     if(!$(".rank-save-btn").hasClass("disabled")){
         var rankedList = "";
+        var count = 1;
         $(".rank-list-container").find(".rank-container").each(function(){
             var gameid = $(this).attr("data-id");
             if(gameid > 0){
                 rankedList = rankedList + gameid + ",";
             }
+            $(this).attr("data-loaded-rank", count);
+            count++;
         });
 
         $.ajax({ url: '../php/webService.php',
@@ -68,6 +71,7 @@ function SaveRankedList(){
             success: function(output) {
                 Toast("Saved your Rankings");
                 $(".rank-save-btn").addClass("disabled");
+                $(".rank-history").html("");
             },
             error: function(x, t, m) {
                 if(t==="timeout") {
