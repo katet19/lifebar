@@ -97,9 +97,15 @@ function ToggleUnrankedModal(){
     if($(".rank-unranked-list-container-active").length > 0){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         $(".rank-unranked-list-container .rank-header-title i").text("expand_less");
+        if($(window).width() > 599){
+            $(".rank-list-container").css({"width":"100%"});
+        }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
         $(".rank-unranked-list-container .rank-header-title i").text("expand_more");
+        if($(window).width() > 599){
+            $(".rank-list-container").css({"width":"60%"});
+        }
     }
 }
 
@@ -149,7 +155,8 @@ function UpdateRankedPositions(showingAll){
             }else{
                 $(this).find(".rank-history").html("");
             }
-
+             $(this).stop();
+             
             localcount++;
         }
         globalcount++;
@@ -220,6 +227,7 @@ function UpdateAccordionCounter(showingAll){
         });
         $(this).parent().find(".collapsible-header .rank-modal-text").text(counter);
         $(".rank-header-title-count").text(totalcount.toLocaleString('en-US'));
+        $(this).stop();
     });
     UpdateRankedPositions(showingAll);
 }
