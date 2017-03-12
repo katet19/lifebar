@@ -98,7 +98,7 @@ function ToggleUnrankedModal(){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         $(".rank-unranked-list-container .rank-header-title i").text("keyboard_arrow_left");
         if($(window).width() > 599){
-            $(".rank-list-container").css({"width":"calc(100% - 90px)"});
+            $(".rank-list-container").css({"width":"calc(100% - 40px)"});
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");

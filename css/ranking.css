@@ -34,13 +34,13 @@
     position:absolute;
     left:0;
     top:100px;
-    width: calc(100% - 90px);
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: calc(100% - 40px);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .rank-unranked-list-container{
     position: fixed;
-    right: calc(-30%);
+    right: -30%;
     background-color: white;
     top:150px;
     width:30%;
@@ -60,14 +60,9 @@
 }
 
 .rank-unranked-list-container-active, .rank-unranked-list-container-active:hover{
-    right:0;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.rank-unranked-list-container-active .rank-header-title{
-    background-color:white;
-    color:inherit;
-    left:0;
-    border-radius:0;
+    right:0px;
+    width:calc(30% - 40px);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 .year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item, .xp-dropdown-filter-item{
@@ -224,19 +219,19 @@
 }
 
 .rank-header-title{
-    font-size: 1em;
+    font-size: 1.25em;
     display: block;
     text-transform: uppercase;
     text-align: left;
     font-weight: 500;
-    padding: 15px 5px 15px 35px;
+    padding: 20px 5px 20px 45px;
     line-height: 12px;
-    background-color: #F50057;
-    color: white;
+    background-color: white;
+    color: #F50057;
     position:absolute;
-    left:-90px;
+    left:-40px;
     right:0px;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
 }
 
 .rank-header-title:hover {
@@ -245,9 +240,9 @@
 }
 .rank-header-title i{
     left: 0px;
-    font-size: 2.5em;
+    font-size: 2.25em;
     position: absolute;
-    top: 4px;
+    top: 7px;
 }
 
 .rank-header-title-count{

@@ -7,7 +7,7 @@ function DisplayRanking($userid){
     $count = 1; 
     ?>
     <div class="row" style='position:absolute;width:100%;'>
-        <div class="rank-header-container z-depth-1">
+        <div class="rank-header-container z-depth-2">
             <div class="rank-header-intro"><i class='material-icons left' style='font-size: 1.5em;'>filter_list</i></div>
             <a class='dropdown-button btn-flat year-dropdown-selected' href='#' data-activates='year-dropdown'>All-Time</a>
             <ul id='year-dropdown' class='dropdown-content'>
@@ -105,7 +105,7 @@ function DisplayRanking($userid){
 
         </div>
         <div class="rank-unranked-list-container z-depth-1">
-            <div class="rank-header-title"><i class="material-icons">keyboard_arrow_left</i><span class="rank-header-title-count"></span> Unranked Games</div>
+            <div class="rank-header-title z-depth-1"><i class="material-icons">keyboard_arrow_left</i><span class="rank-header-title-count"></span> Unranked Games</div>
             <?php 
             ShowUnRankedList($unrankedlist);
             ?>
@@ -119,7 +119,7 @@ function ShowUnRankedList($unrankedlist){
 		$filter = explode(",", $tierlist[0][3]);
 		$count = 1;
 		?>
-		<ul class="collapsible tier-modal-collapsible-container" style='margin-top: 41px !important;' data-collapsible="accordion">
+		<ul class="collapsible tier-modal-collapsible-container" style='margin-top: 51px !important;' data-collapsible="accordion">
 			<li>
 				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 1){ echo 'active'; } ?> tier1BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(1); ?></div>
 				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #0A67A3;'>
