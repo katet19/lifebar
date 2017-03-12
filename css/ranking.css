@@ -17,11 +17,12 @@
     position: fixed;
     top: 80px;
     text-align: left;
-    background-color: #F50057 !important;
+    background-color: #999999 !important;
     padding: 5px 15px;
-    right: 20px;
+    right: 0px;
     left: 225px;
     z-index:10;
+    margin-bottom:100px;
 }
 
 .rank-header-intro{
@@ -33,18 +34,18 @@
     position:absolute;
     left:0;
     top:100px;
-    width:100%;
+    width: calc(100% - 90px);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .rank-unranked-list-container{
     position: fixed;
-    right: 20px;
+    right: calc(-30%);
     background-color: white;
-    top: inherit;
+    top:150px;
     width:30%;
-    bottom: 20px;
-    height: 40px;
-    overflow: hidden;
+    bottom: 0px;
+    height: 100%;
     cursor: pointer;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -59,14 +60,14 @@
 }
 
 .rank-unranked-list-container-active, .rank-unranked-list-container-active:hover{
-    height:inherit;
-    top:140px;
-    width:30%;
+    right:0;
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .rank-unranked-list-container-active .rank-header-title{
     background-color:white;
     color:inherit;
+    left:0;
+    border-radius:0;
 }
 
 .year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item, .xp-dropdown-filter-item{
@@ -134,6 +135,22 @@
 
 .rank-save-btn{
     float:right;
+    background-color: #26a69a !important;
+    position:fixed;
+    top:75px;
+    cursor: pointer;
+    right:10px;
+    z-index:11;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+.rank-save-btn:hover{
+    opacity:0.8;
+    background-color: #26a69a !important;
+}
+
+.rank-save-btn.disabled i{
+    color: #9F9F9F;
 }
 
 .rank-container{
@@ -156,20 +173,18 @@
 }
 
 .rank-list-container .rank-container:hover{
-    margin: 5px 0 5px -10px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    width: calc(100% + 20px);
+    border-top-color:lightyellow !important;
+    background-color:lightyellow !important;
 }
 
-.rank-drag-drop-placeholder:hover{
-    margin:0px 0px 100px 0px !important;
-    width:100% !important;
-    box-shadow:none !important;
+.rank-list-container .rank-drag-drop-placeholder:hover{
+    border-top: 3px dashed transparent !important;
+    background-color: transparent !important;
 }
 
 .rank-modal-body .rank-container:hover{
-    background-color:#F50057;
-    color:white;
+    border-top-color:lightyellow !important;
+    background-color:lightyellow !important;
 }
 
 .rank-move-highlight{
@@ -214,21 +229,25 @@
     text-transform: uppercase;
     text-align: left;
     font-weight: 500;
-    padding: 10px 15px;
-    background-color:#F50057;
-    color:white;
+    padding: 15px 5px 15px 35px;
+    line-height: 12px;
+    background-color: #F50057;
+    color: white;
+    position:absolute;
+    left:-90px;
+    right:0px;
+    border-radius: 10px;
 }
 
 .rank-header-title:hover {
     background-color:#FF4081 !important;
     color:white;
 }
-
 .rank-header-title i{
-    float: right;
-    font-size: 2em;
-    position: relative;
-    top: -4px;
+    left: 0px;
+    font-size: 2.5em;
+    position: absolute;
+    top: 4px;
 }
 
 .rank-header-title-count{
@@ -261,13 +280,13 @@
 }
 
 .rank-drag-drop-placeholder{
-    margin-top: 0px;
-    margin-bottom: 100px;
     border-top: 3px dashed transparent;
     background-color: transparent !important;
     font-weight: 500;
     color: gray;
-    padding: 10px 5px 10px 15px !important;
+    padding: 20px 5px 10px 15px !important;
+    position:absolute;
+    top: 100%;
 }
 
 @media only screen and (max-width : 600px) {

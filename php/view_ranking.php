@@ -35,10 +35,12 @@ function DisplayRanking($userid){
             <ul id='platform-dropdown' class='dropdown-content'>
                 <li class='platform-dropdown-filter-item'>All-Platform</li>
                     <?php $platforms = GetPlatformsByExperience($userid); 
-                        foreach($platforms as $platform){
-                            ?>
-                            <li class='platform-dropdown-filter-item'><?php echo $platform; ?></li>
-                            <?php
+                        if(sizeof($platforms) > 0){
+                            foreach($platforms as $platform){
+                                ?>
+                                <li class='platform-dropdown-filter-item'><?php echo $platform; ?></li>
+                                <?php
+                            }
                         }
                     ?>
             </ul>
@@ -49,8 +51,8 @@ function DisplayRanking($userid){
                 <li class='xp-dropdown-filter-item'>Finished</li>
                 <li class='xp-dropdown-filter-item'>Watched</li>
             </ul>
-            <div class="save-btn disabled rank-save-btn"><i class="material-icons left" style='font-size:1.5em;position: relative;top: 7px;'>save</i> Save</div>
         </div>
+        <div class="btn-floating btn-large disabled rank-save-btn"><i class="material-icons left" style='font-size:2em;position: relative;top: 0px;'>save</i> Save</div>
         <div class="rank-list-container">
             <?php
             foreach($rankedlist as $item){ ?>
@@ -103,7 +105,7 @@ function DisplayRanking($userid){
 
         </div>
         <div class="rank-unranked-list-container z-depth-1">
-            <div class="rank-header-title"><span class="rank-header-title-count"></span> Unranked Games <i class="material-icons">expand_more</i></div>
+            <div class="rank-header-title"><i class="material-icons">keyboard_arrow_left</i><span class="rank-header-title-count"></span> Unranked Games</div>
             <?php 
             ShowUnRankedList($unrankedlist);
             ?>
@@ -117,7 +119,7 @@ function ShowUnRankedList($unrankedlist){
 		$filter = explode(",", $tierlist[0][3]);
 		$count = 1;
 		?>
-		<ul class="collapsible tier-modal-collapsible-container" data-collapsible="accordion">
+		<ul class="collapsible tier-modal-collapsible-container" style='margin-top: 41px !important;' data-collapsible="accordion">
 			<li>
 				<div class="collapsible-header rank-collapsible-header <?php if($unrankedlist[0]->_tier == 1){ echo 'active'; } ?> tier1BGHover" style='font-size:1em;'><div class="rank-modal-text">0</div> <?php DisplayStarSequence(1); ?></div>
 				<div class="collapsible-body rank-modal-body" style='border-bottom:2px solid #0A67A3;'>
