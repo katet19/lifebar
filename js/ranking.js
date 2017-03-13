@@ -20,8 +20,11 @@ function ShowRanking(){
              if($(".rank-header-title-count").text() != "0"){
                  ToggleUnrankedModal();
              }
-             $(".rank-header-title").on("click", function(){
+             $(".rank-unranked-list-container .rank-header-title").on("click", function(){
                 ToggleUnrankedModal();
+             });
+             $(".rank-filter-list-container .rank-header-title").on("click", function(){
+                ToggleFilterModal();
              });
              $(".rank-save-btn").on("click", function(){
                 SaveRankedList();
@@ -102,6 +105,7 @@ function ToggleUnrankedModal(){
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
+        $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         $(".rank-unranked-list-container .rank-header-title i").text("keyboard_arrow_right");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
@@ -109,17 +113,37 @@ function ToggleUnrankedModal(){
     }
 }
 
+function ToggleFilterModal(){
+    if($(".rank-filter-list-container-active").length > 0){
+        $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
+        if($(window).width() > 599){
+            $(".rank-list-container").css({"width":"calc(100% - 60px)"});
+        }
+    }else{
+        $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
+        $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
+        if($(window).width() > 599){
+            $(".rank-list-container").css({"width":"60%"});
+        }
+    }
+}
+
 function AttachFilterEvents(){
-    $(".year-dropdown-filter-item").on('click', function() { 
-        $(".year-dropdown-selected").text($(this).text());
+    $(".year-dropdown-filter-item").on('click', function() {
+        var years = ""; 
+        $(this).parent().find(".year-dropdown-filter-item").each(function(){
+            if($(this).find("input:checked").length > 0)
+                years = $(this).attr("data-year")+","+years;
+        });
+        $("#rank-filter-year").attr('data-filter', years);
         FilterLists();
 	});
     $(".genre-dropdown-filter-item").on('click', function() { 
-        $(".genre-dropdown-selected").text($(this).text());
+        $(".genre-dropdown-selected").text($(this).attr("data-genre"));
         FilterLists();
 	});
     $(".platform-dropdown-filter-item").on('click', function() { 
-        $(".platform-dropdown-selected").text($(this).text());
+        $(".platform-dropdown-selected").text($(this).attr("data-platform"));
         FilterLists();
 	});
     $(".xp-dropdown-filter-item").on('click', function() { 
@@ -170,12 +194,12 @@ function UpdateRankedPositions(showingAll){
 }
 
 function FilterLists(){
-    var year = $(".year-dropdown-selected").text();
+    var year = $("#rank-filter-year").attr("data-filter").split(",");
     var genre = $(".genre-dropdown-selected").text();
     var platform = $(".platform-dropdown-selected").text();
     var xp = $(".xp-dropdown-selected").text();
     var showingAll = true;
-    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time" && xp == "All-Experiences"){
+    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "ALL" && xp == "All-Experiences"){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
         });
@@ -187,7 +211,7 @@ function FilterLists(){
             var platformhide = true;
             var xphide = true;
 
-            if($(this).attr("data-year").indexOf(year) != -1 || year.indexOf("All-Time") != -1){
+            if(year.length > 0 && ($.inArray($(this).attr("data-year"), year) != -1 || year[0].indexOf("ALL") != -1)){
                 yearhide = false;
             }
 
