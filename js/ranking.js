@@ -101,12 +101,14 @@ function ToggleUnrankedModal(){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-save-btn").removeClass("rank-save-btn-shift");
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
+            $(".rank-save-btn").addClass("rank-save-btn-shift");
         }
     }
 }
@@ -116,12 +118,14 @@ function ToggleFilterModal(){
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-save-btn").removeClass("rank-save-btn-shift");
         }
     }else{
         $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
+            $(".rank-save-btn").addClass("rank-save-btn-shift");
         }
     }
 }
@@ -297,6 +301,8 @@ function UpdateAccordionCounter(showingAll){
         $(".rank-header-title-count").text(totalcount.toLocaleString('en-US'));
         $(this).stop();
     });
+    $(".rank-unranked-list-container .rank-header-title").css({"left":"-120px", "background-color":"lightyellow"});
+    setTimeout(function(){ $(".rank-unranked-list-container .rank-header-title").css({"left":"-60px", "background-color":"white"}); }, 1000);
     UpdateRankedPositions(showingAll);
 }
 

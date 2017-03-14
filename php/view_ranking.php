@@ -62,7 +62,7 @@ function DisplayRanking($userid){
 
         </div>
         <div class="rank-filter-list-container z-depth-1">
-            <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Global Filter</div>
+            <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Filter List</div>
             <?php 
             ShowFilterList($userid);
             ?>
