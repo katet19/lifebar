@@ -99,6 +99,7 @@ function ToggleSaveRankedBtn(){
 function ToggleUnrankedModal(){
     if($(".rank-unranked-list-container-active").length > 0){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
+        $(".rank-header-title-count").removeClass("rank-header-title-count-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
@@ -106,6 +107,7 @@ function ToggleUnrankedModal(){
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
+        $(".rank-header-title-count").addClass("rank-header-title-count-active");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
@@ -133,7 +135,7 @@ function ToggleFilterModal(){
 function AttachFilterEvents(){
     $(".year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item, .xp-dropdown-filter-item").unbind();
     $(".year-dropdown-filter-item").on('click', function() {
-        var years = ""; 
+       var years = ""; 
         $(this).parent().find(".year-dropdown-filter-item").each(function(){
             if($(this).find("input:checked").length > 0)
                 years = $(this).attr("data-year")+","+years;
@@ -225,11 +227,29 @@ function FilterLists(){
     var platform = $("#rank-filter-platform").attr("data-filter").split(",");
     var xp = $("#rank-filter-xp").attr("data-filter").split(",");
     var showingAll = true;
+    $(".rank-header-container").html("");
     if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL"){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
         });
+        $(".rank-header-container").append("<div class='filter-chip'>Full Ranked List</div>");
     }else{
+        for(var i = 0; i < year.length - 1; i++){
+            $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + "</div>");
+        }
+
+        for(var i = 0; i < genre.length - 1; i++){
+            $(".rank-header-container").append("<div class='filter-chip'>" + genre[i] + "</div>");
+        }
+
+        for(var i = 0; i < platform.length - 1; i++){
+            $(".rank-header-container").append("<div class='filter-chip'>" + platform[i] + "</div>");
+        }
+
+        for(var i = 0; i < xp.length - 1; i++){
+            $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + "</div>");
+        }
+        
         showingAll = false;
         $(".rank-container").each(function(){
             var genrehide = true;
