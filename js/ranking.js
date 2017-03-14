@@ -127,6 +127,7 @@ function ToggleFilterModal(){
 }
 
 function AttachFilterEvents(){
+    $(".year-dropdown-filter-item, .genre-dropdown-filter-item, .platform-dropdown-filter-item, .xp-dropdown-filter-item").unbind();
     $(".year-dropdown-filter-item").on('click', function() {
         var years = ""; 
         $(this).parent().find(".year-dropdown-filter-item").each(function(){
@@ -237,20 +238,37 @@ function FilterLists(){
                 yearhide = false;
             }
 
-            if(platform.length > 0 && platform[0].indexOf("ALL") == -1){
-                platformhide = false;               
-                for(var i = 0; i < platform.length; i++){
-                    if(currRow.attr("data-platform").indexOf(platform[i]) != -1)
-                        platformhide = true;
+            if(platform.length > 0){  
+                if(platform[0].indexOf("ALL") == -1){       
+                    for(var i = 0; i < platform.length - 1; i++){
+                        if(currRow.attr("data-platform").indexOf(platform[i]) != -1)
+                            platformhide = false;
+                    }
+                }else{
+                    platformhide = false;
                 }
             }
 
-            if(genre.length > 0 && ($.inArray($(this).attr("data-genre"), genre) != -1 || genre[0].indexOf("ALL") != -1)){
-                genrehide = false;
+            if(genre.length > 0){  
+                if(genre[0].indexOf("ALL") == -1){       
+                    for(var i = 0; i < genre.length - 1; i++){
+                        if(currRow.attr("data-genre").indexOf(genre[i]) != -1)
+                            genrehide = false;
+                    }
+                }else{
+                    genrehide = false;
+                }
             }
 
-            if(xp.length > 0 && ($.inArray($(this).attr("data-xp"), xp) != -1 || xp[0].indexOf("ALL") != -1)){
-                xphide = false;
+            if(xp.length > 0){  
+                if(xp[0].indexOf("ALL") == -1){       
+                    for(var i = 0; i < xp.length - 1; i++){
+                        if(currRow.attr("data-xp").indexOf(xp[i]) != -1)
+                            xphide = false;
+                    }
+                }else{
+                    xphide = false;
+                }
             }
 
             if(genrehide || yearhide || platformhide || xphide){
