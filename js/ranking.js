@@ -103,6 +103,7 @@ function ToggleUnrankedModal(){
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
+            $(".rank-header-container").removeClass("rank-header-container-active");
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
@@ -111,6 +112,7 @@ function ToggleUnrankedModal(){
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
+            $(".rank-header-container").addClass("rank-header-container-active");
         }
     }
 }
@@ -121,6 +123,7 @@ function ToggleFilterModal(){
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
+            $(".rank-header-container").removeClass("rank-header-container-active");
         }
     }else{
         $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
@@ -128,6 +131,7 @@ function ToggleFilterModal(){
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
+            $(".rank-header-container").addClass("rank-header-container-active");
         }
     }
 }
@@ -232,22 +236,21 @@ function FilterLists(){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
         });
-        $(".rank-header-container").append("<div class='filter-chip'>Full Ranked List</div>");
     }else{
         for(var i = 0; i < year.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + "</div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + " <span>X</span></div>");
         }
 
         for(var i = 0; i < genre.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + genre[i] + "</div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + genre[i] + " <span>X</span></div>");
         }
 
         for(var i = 0; i < platform.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + platform[i] + "</div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + platform[i] + " <span>X</span></div>");
         }
 
         for(var i = 0; i < xp.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + "</div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + " <span>X</span></div>");
         }
         
         showingAll = false;
