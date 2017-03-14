@@ -99,14 +99,12 @@ function ToggleSaveRankedBtn(){
 function ToggleUnrankedModal(){
     if($(".rank-unranked-list-container-active").length > 0){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
-        $(".rank-unranked-list-container .rank-header-title i").text("keyboard_arrow_left");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"calc(100% - 60px)"});
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
-        $(".rank-unranked-list-container .rank-header-title i").text("keyboard_arrow_right");
         if($(window).width() > 599){
             $(".rank-list-container").css({"width":"60%"});
         }
@@ -135,19 +133,42 @@ function AttachFilterEvents(){
             if($(this).find("input:checked").length > 0)
                 years = $(this).attr("data-year")+","+years;
         });
+        if(years == "")
+            years = "ALL";
         $("#rank-filter-year").attr('data-filter', years);
         FilterLists();
 	});
-    $(".genre-dropdown-filter-item").on('click', function() { 
-        $(".genre-dropdown-selected").text($(this).attr("data-genre"));
+    $(".genre-dropdown-filter-item").on('click', function() {
+        var genre = ""; 
+        $(this).parent().find(".genre-dropdown-filter-item").each(function(){
+            if($(this).find("input:checked").length > 0)
+                genre = $(this).attr("data-genre")+","+genre;
+        });
+        if(genre == "")
+            genre = "ALL";
+        $("#rank-filter-genre").attr('data-filter', genre);
         FilterLists();
 	});
-    $(".platform-dropdown-filter-item").on('click', function() { 
-        $(".platform-dropdown-selected").text($(this).attr("data-platform"));
+    $(".platform-dropdown-filter-item").on('click', function() {
+        var platforms = ""; 
+        $(this).parent().find(".platform-dropdown-filter-item").each(function(){
+            if($(this).find("input:checked").length > 0)
+                platforms = $(this).attr("data-platform")+","+platforms;
+        });
+        if(platforms == "")
+            platforms = "ALL";
+        $("#rank-filter-platform").attr('data-filter', platforms);
         FilterLists();
 	});
-    $(".xp-dropdown-filter-item").on('click', function() { 
-        $(".xp-dropdown-selected").text($(this).text());
+    $(".xp-dropdown-filter-item").on('click', function() {
+        var xp = ""; 
+        $(this).parent().find(".xp-dropdown-filter-item").each(function(){
+            if($(this).find("input:checked").length > 0)
+                xp = $(this).attr("data-xp")+","+xp;
+        });
+        if(xp == "")
+            xp = "ALL";
+        $("#rank-filter-xp").attr('data-filter', xp);
         FilterLists();
 	});
 }
@@ -195,11 +216,11 @@ function UpdateRankedPositions(showingAll){
 
 function FilterLists(){
     var year = $("#rank-filter-year").attr("data-filter").split(",");
-    var genre = $(".genre-dropdown-selected").text();
-    var platform = $(".platform-dropdown-selected").text();
-    var xp = $(".xp-dropdown-selected").text();
+    var genre = $("#rank-filter-genre").attr("data-filter").split(",");
+    var platform = $("#rank-filter-platform").attr("data-filter").split(",");
+    var xp = $("#rank-filter-xp").attr("data-filter").split(",");
     var showingAll = true;
-    if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "ALL" && xp == "All-Experiences"){
+    if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL"){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
         });
@@ -210,20 +231,25 @@ function FilterLists(){
             var yearhide = true;
             var platformhide = true;
             var xphide = true;
+            var currRow = $(this);
 
             if(year.length > 0 && ($.inArray($(this).attr("data-year"), year) != -1 || year[0].indexOf("ALL") != -1)){
                 yearhide = false;
             }
 
-            if($(this).attr("data-genre").indexOf(genre) != -1 || genre.indexOf("All-Genre") != -1){
+            if(platform.length > 0 && platform[0].indexOf("ALL") == -1){
+                platformhide = false;               
+                for(var i = 0; i < platform.length; i++){
+                    if(currRow.attr("data-platform").indexOf(platform[i]) != -1)
+                        platformhide = true;
+                }
+            }
+
+            if(genre.length > 0 && ($.inArray($(this).attr("data-genre"), genre) != -1 || genre[0].indexOf("ALL") != -1)){
                 genrehide = false;
             }
 
-            if($(this).attr("data-platform").indexOf(platform) != -1 || platform.indexOf("All-Platform") != -1){
-                platformhide = false;
-            }
-
-            if($(this).attr("data-xp").indexOf(xp) != -1 || xp.indexOf("All-Experiences") != -1){
+            if(xp.length > 0 && ($.inArray($(this).attr("data-xp"), xp) != -1 || xp[0].indexOf("ALL") != -1)){
                 xphide = false;
             }
 

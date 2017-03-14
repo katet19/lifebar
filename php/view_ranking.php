@@ -8,41 +8,6 @@ function DisplayRanking($userid){
     ?>
     <div class="row" style='position:absolute;width:100%;'>
         <div class="rank-header-container z-depth-2">
-            <div class="rank-header-intro"><i class='material-icons left' style='font-size: 1.5em;'>filter_list</i></div>
-
-            <a class='dropdown-button btn-flat genre-dropdown-selected' href='#' data-activates='genre-dropdown'>All-Genre</a>
-            <ul id='genre-dropdown' class='dropdown-content'>
-                <li class='genre-dropdown-filter-item' data-genre="All-Genre">All-Genre</li>
-                    <?php $genres = GetGenresByExperience($userid); 
-                    if(sizeof($genres) > 0){
-                        foreach($genres as $genre){
-                            ?>
-                            <li class='genre-dropdown-filter-item' data-genre="<?php echo $genre; ?>"><?php echo $genre; ?></li>
-                            <?php
-                        }
-                    }
-                    ?>
-            </ul>
-            <a class='dropdown-button btn-flat platform-dropdown-selected' href='#' data-activates='platform-dropdown'>All-Platform</a>
-            <ul id='platform-dropdown' class='dropdown-content'>
-                <li class='platform-dropdown-filter-item' data-platform="All-Platform">All-Platform</li>
-                    <?php $platforms = GetPlatformsByExperience($userid); 
-                        if(sizeof($platforms) > 0){
-                            foreach($platforms as $platform){
-                                ?>
-                                <li class='platform-dropdown-filter-item' data-platform="<?php echo $platform; ?>"><?php echo $platform; ?></li>
-                                <?php
-                            }
-                        }
-                    ?>
-            </ul>
-            <a class='dropdown-button btn-flat xp-dropdown-selected' href='#' data-activates='xp-dropdown'>All-Experiences</a>
-            <ul id='xp-dropdown' class='dropdown-content'>
-                <li class='xp-dropdown-filter-item'>All-Experiences</li>
-                <li class='xp-dropdown-filter-item'>Played</li>
-                <li class='xp-dropdown-filter-item'>Finished</li>
-                <li class='xp-dropdown-filter-item'>Watched</li>
-            </ul>
         </div>
         <div class="btn-floating btn-large disabled rank-save-btn"><i class="material-icons left" style='font-size:2em;position: relative;top: 0px;'>save</i> Save</div>
         <div class="rank-list-container">
@@ -97,13 +62,13 @@ function DisplayRanking($userid){
 
         </div>
         <div class="rank-filter-list-container z-depth-1">
-            <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Filter List</div>
+            <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Global Filter</div>
             <?php 
             ShowFilterList($userid);
             ?>
         </div>
         <div class="rank-unranked-list-container z-depth-1">
-            <div class="rank-header-title z-depth-1"><i class="material-icons">keyboard_arrow_left</i><span class="rank-header-title-count"></span> Unranked Games</div>
+            <div class="rank-header-title z-depth-1"><i class="material-icons">playlist_add</i><span class="rank-header-title-count"></span> Unranked Games</div>
             <?php 
             ShowUnRankedList($unrankedlist);
             ?>
@@ -116,13 +81,13 @@ function ShowFilterList($userid){
 ?>
 		<ul class="collapsible tier-modal-collapsible-container" style='margin-top: 51px !important;' data-collapsible="accordion">
 			<li>
-				<div class="collapsible-header rank-collapsible-header" id="rank-filter-year" data-filter="ALL" style='font-size:1em;'>Year</div>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-year" data-filter="ALL" style='font-size:1em;'>Year</div>
 				<div class="collapsible-body rank-modal-body">
                         <?php $years = GetYearsByExperience($userid); 
                         if(sizeof($years) > 0){
                             foreach($years as $year){
                                 ?>
-                                <div class='col s12 year-dropdown-filter-item' data-year="<?php echo $year; ?>">
+                                <div class='col s12 year-dropdown-filter-item filter-line-item' data-year="<?php echo $year; ?>">
                                     <input type="checkbox" class="year-dropdown-checkbox" id="<?php echo $year; ?>" />
                                     <label for="<?php echo $year; ?>"><?php echo $year; ?></label>
                                 </div>
@@ -130,6 +95,57 @@ function ShowFilterList($userid){
                             }
                         }
                         ?>
+				</div>
+			</li>
+            <li>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-genre" data-filter="ALL" style='font-size:1em;'>Genre</div>
+				<div class="collapsible-body rank-modal-body">
+                    <?php $genres = GetGenresByExperience($userid); 
+                    if(sizeof($genres) > 0){
+                        foreach($genres as $genre){
+                            ?>
+                                <div class='col s12 genre-dropdown-filter-item filter-line-item' data-genre="<?php echo $genre; ?>">
+                                    <input type="checkbox" class="genre-dropdown-checkbox" id="<?php echo $genre; ?>" />
+                                    <label for="<?php echo $genre; ?>"><?php echo $genre; ?></label>
+                                </div>
+                            <?php
+                        }
+                    }
+                    ?>
+				</div>
+			</li>
+            <li>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-platform" data-filter="ALL" style='font-size:1em;'>Platform</div>
+				<div class="collapsible-body rank-modal-body">
+                    <?php $platforms = GetPlatformsByExperience($userid); 
+                        if(sizeof($platforms) > 0){
+                            foreach($platforms as $platform){
+                                ?>
+                                <div class='col s12 platform-dropdown-filter-item filter-line-item' data-platform="<?php echo $platform; ?>">
+                                    <input type="checkbox" class="platform-dropdown-checkbox" id="<?php echo $platform; ?>" />
+                                    <label for="<?php echo $platform; ?>"><?php echo $platform; ?></label>
+                                </div>
+                                <?php
+                            }
+                        }
+                    ?>
+				</div>
+			</li>
+            <li>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-xp" data-filter="ALL" style='font-size:1em;'>Experience Details</div>
+				<div class="collapsible-body rank-modal-body">
+                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp="Played">
+                        <input type="checkbox" class="xp-dropdown-checkbox" id="played" />
+                        <label for="played">Played</label>
+                    </div>
+                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp="Finished">
+                        <input type="checkbox" class="xp-dropdown-checkbox" id="Finished" />
+                        <label for="Finished">Finished</label>
+                    </div>
+                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp"Watched">
+                        <input type="checkbox" class="xp-dropdown-checkbox" id="Watched" />
+                        <label for="Watched">Watched</label>
+                    </div>
 				</div>
 			</li>
         </ul>
