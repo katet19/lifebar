@@ -52,7 +52,28 @@ function DisplayRanking($userid){
                     <div class="rank-item-title">
                         <i class='material-icons left' style='position:relative;font-size:1.5em;'>add_box</i> 
                         <?php if($count == 1){ ?>
-                            <span class="rank-drag-drop-text">DRAG HERE TO START LIST</span>
+                            <span class="rank-drag-drop-text">DRAG GAME HERE TO START LIST</span>
+                            <div class="rank-welcome-container">
+                                <?php if(sizeof($unrankedlist) > 10){ ?>
+                                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                                        <div class='onboarding-big-welcome'>Rank your games!</div>
+                                        <div class='onboarding-sub-welcome'>Ok, take a deep breathe...</div>
+                                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i>Nice work rating games you have experienced. Now comes the tough part of ranking them. We recommend you start small, maybe games from last year, or your favorite RPGs and then slowly expand the list. Use the filters to your advantage to narrow the scope.</div>
+                                    </div>
+                                <?php }else if(sizeof($unrankedlist) > 0){ ?>
+                                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                                        <div class='onboarding-big-welcome'>Rank your games!</div>
+                                        <div class='onboarding-sub-welcome'>You are off to a good start, but...</div>
+                                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
+                                    </div>
+                                <?php }else{ ?>
+                                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                                        <div class='onboarding-big-welcome'>Rank your games!</div>
+                                        <div class='onboarding-sub-welcome'>We are missing some key info to get you started</div>
+                                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         <?php }else{ ?> 
                             <span class="rank-drag-drop-text">DRAG HERE TO ADD TO THE BOTTOM OF LIST</span>
                         <?php } ?>

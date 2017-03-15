@@ -320,11 +320,13 @@
     padding: 20px 5px 10px 15px !important;
     position:absolute;
     top: 100%;
+    margin-bottom:50px;
+    width: calc(100% - 40px);
 }
 
 .filter-line-item{
     float: left !important;
-    padding: 2px 5px 2px 20px !important;
+    padding: 4px 5px 4px 25px !important;
     text-align: left;
 }
 

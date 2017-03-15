@@ -16,7 +16,7 @@ function ShowRanking(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#rankingInnerContainer").html(output);
-             UpdateAccordionCounter(true);
+             UpdateAccordionCounter(true, false);
              if($(".rank-header-title-count").text() != "0"){
                  ToggleUnrankedModal();
              }
@@ -101,7 +101,8 @@ function ToggleUnrankedModal(){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         $(".rank-header-title-count").removeClass("rank-header-title-count-active");
         if($(window).width() > 599){
-            $(".rank-list-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-list-container, .rank-welcome-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-drag-drop-placeholder").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
             $(".rank-header-container").removeClass("rank-header-container-active");
         }
@@ -110,7 +111,8 @@ function ToggleUnrankedModal(){
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         $(".rank-header-title-count").addClass("rank-header-title-count-active");
         if($(window).width() > 599){
-            $(".rank-list-container").css({"width":"60%"});
+            $(".rank-list-container, .rank-welcome-container").css({"width":"60%"});
+            $(".rank-drag-drop-placeholder").css({"width":"60%)"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
             $(".rank-header-container").addClass("rank-header-container-active");
         }
@@ -121,7 +123,8 @@ function ToggleFilterModal(){
     if($(".rank-filter-list-container-active").length > 0){
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         if($(window).width() > 599){
-            $(".rank-list-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-list-container, .rank-welcome-container").css({"width":"calc(100% - 60px)"});
+            $(".rank-drag-drop-placeholder").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
             $(".rank-header-container").removeClass("rank-header-container-active");
         }
@@ -129,7 +132,8 @@ function ToggleFilterModal(){
         $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
         if($(window).width() > 599){
-            $(".rank-list-container").css({"width":"60%"});
+            $(".rank-list-container, .rank-welcome-container").css({"width":"60%"});
+            $(".rank-drag-drop-placeholder").css({"width":"60%)"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
             $(".rank-header-container").addClass("rank-header-container-active");
         }
@@ -219,8 +223,9 @@ function UpdateRankedPositions(showingAll){
     });
 
     if(localcount == 1){
-        $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO START LIST");
+        $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG GAME HERE TO START LIST");
     }else{
+        $(".rank-welcome-container").hide();
         $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO ADD TO THE BOTTOM OF LIST");
     }
 }
@@ -307,10 +312,10 @@ function FilterLists(){
 
         $(".rank-drag-drop-placeholder").removeClass("hide-game-rank");
     }
-    UpdateAccordionCounter(showingAll);
+    UpdateAccordionCounter(showingAll, true);
 }
 
-function UpdateAccordionCounter(showingAll){
+function UpdateAccordionCounter(showingAll, highlight){
     var totalcount = 0;
     $(".rank-modal-body").each(function(){
         var counter = 0;
@@ -324,8 +329,12 @@ function UpdateAccordionCounter(showingAll){
         $(".rank-header-title-count").text(totalcount.toLocaleString('en-US'));
         $(this).stop();
     });
-    $(".rank-unranked-list-container .rank-header-title").css({"left":"-120px", "background-color":"lightyellow"});
-    setTimeout(function(){ $(".rank-unranked-list-container .rank-header-title").css({"left":"-60px", "background-color":"white"}); }, 1000);
+    
+    if(highlight){
+        $(".rank-unranked-list-container .rank-header-title").css({"left":"-120px", "background-color":"lightyellow"});
+        setTimeout(function(){ $(".rank-unranked-list-container .rank-header-title").css({"left":"-60px", "background-color":"white"}); }, 1000);
+    }
+
     UpdateRankedPositions(showingAll);
 }
 
@@ -369,7 +378,7 @@ function AttachDragAndDropEvents(){
         if (e.stopPropagation) {
             e.stopPropagation();
         }
-        if (dragSrcEl != this) {
+        if (dragSrcEl != this && this.parentNode.className == "rank-list-container") {
             dragSrcEl.style.color = 'inherit';
             this.parentNode.insertBefore(dragSrcEl, this);
 
@@ -386,7 +395,7 @@ function AttachDragAndDropEvents(){
                 showingAll = true;
             }
 
-            UpdateAccordionCounter(showingAll);
+            UpdateAccordionCounter(showingAll, false);
             ToggleSaveRankedBtn();
         }
         return false;
