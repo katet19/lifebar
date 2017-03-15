@@ -1,0 +1,6 @@
+body {
+  color: #212121;
+  background-color: #edecec;
+  -webkit-font-smoothing: subpixel-antialiased;
+  overflow-y: scroll;
+  position: static; }

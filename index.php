@@ -1,6 +1,5 @@
 <?php 
 require 'includes.php'; 
-
 if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security != 'Admin'){?>-->
 	<html>
 	<title>Lifebar - Down for Maintenance</title>
@@ -176,9 +175,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-52980217-1', 'auto');
-
 </script>
 </body>
 </html>
