@@ -99,6 +99,7 @@ function ToggleSaveRankedBtn(){
 function ToggleUnrankedModal(){
     if($(".rank-unranked-list-container-active").length > 0){
         $(".rank-unranked-list-container-active").removeClass("rank-unranked-list-container-active");
+        $(".rank-filter-list-container").removeClass("rank-filter-list-container-active");
         $(".rank-header-title-count").removeClass("rank-header-title-count-active");
         if($(window).width() > 599){
             $(".rank-list-container, .rank-welcome-container").css({"width":"calc(100% - 60px)"});
@@ -108,7 +109,7 @@ function ToggleUnrankedModal(){
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
-        $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
+        $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
         $(".rank-header-title-count").addClass("rank-header-title-count-active");
         if($(window).width() > 599){
             $(".rank-list-container, .rank-welcome-container").css({"width":"60%"});
@@ -120,7 +121,7 @@ function ToggleUnrankedModal(){
 }
 
 function ToggleFilterModal(){
-    if($(".rank-filter-list-container-active").length > 0){
+    if($(".rank-filter-list-container-active").length > 0 && $(".rank-unranked-list-container-active").length == 0){
         $(".rank-filter-list-container-active").removeClass("rank-filter-list-container-active");
         if($(window).width() > 599){
             $(".rank-list-container, .rank-welcome-container").css({"width":"calc(100% - 60px)"});
