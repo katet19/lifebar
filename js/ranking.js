@@ -191,11 +191,11 @@ function AttachFilterEvents(){
         $("#rank-filter-type").attr('data-filter', $(this).attr("data-type"));
         if($(this).attr("data-type") == "Hide")
         {
-            $(".minimize-game-rank").addClass("hide-game-rank");
-            $(".minimize-game-rank").removeClass("minimize-game-rank");
+            $(".rank-list-container .minimize-game-rank").addClass("hide-game-rank");
+            $(".rank-list-container .minimize-game-rank").removeClass("minimize-game-rank");
         }else{
-            $(".hide-game-rank").addClass("minimize-game-rank");
-            $(".hide-game-rank").removeClass("hide-game-rank");
+            $(".rank-list-container .hide-game-rank").addClass("minimize-game-rank");
+            $(".rank-list-container .hide-game-rank").removeClass("hide-game-rank");
         }
         FilterLists();
 	});
@@ -252,23 +252,24 @@ function FilterLists(){
     $(".rank-header-container").html("");
     if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL"){
         $(".rank-container").each(function(){
-            $(this).removeClass(getFilterType());
+            $(this).removeClass("hide-game-rank");
+            $(this).removeClass("minimize-game-rank");
         });
     }else{
         for(var i = 0; i < year.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + " <span>X</span></div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + "</div>");
         }
 
         for(var i = 0; i < genre.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + genre[i] + " <span>X</span></div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + genre[i] + "</div>");
         }
 
         for(var i = 0; i < platform.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + platform[i] + " <span>X</span></div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + platform[i] + "</div>");
         }
 
         for(var i = 0; i < xp.length - 1; i++){
-            $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + " <span>X</span></div>");
+            $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + "</div>");
         }
         
         showingAll = false;
@@ -278,6 +279,9 @@ function FilterLists(){
             var platformhide = true;
             var xphide = true;
             var currRow = $(this);
+            var isUnranked = false;
+            if($(this).parent().hasClass("rank-modal-body"))
+                isUnranked = true;
 
             if(year.length > 0 && ($.inArray($(this).attr("data-year"), year) != -1 || year[0].indexOf("ALL") != -1)){
                 yearhide = false;
@@ -317,9 +321,15 @@ function FilterLists(){
             }
 
             if(genrehide || yearhide || platformhide || xphide){
-                $(this).addClass(getFilterType());
+                if(isUnranked)
+                    $(this).addClass("hide-game-rank");
+                else
+                    $(this).addClass(getFilterType());
             }else{
-                $(this).removeClass(getFilterType());
+                if(isUnranked)
+                    $(this).removeClass("hide-game-rank");
+                else
+                    $(this).removeClass(getFilterType());
             }
         });
 
@@ -333,7 +343,7 @@ function UpdateAccordionCounter(showingAll, highlight){
     $(".rank-modal-body").each(function(){
         var counter = 0;
         $(this).find(".rank-container").each(function(){
-            if(!$(this).hasClass(getFilterType())){
+            if(!$(this).hasClass("hide-game-rank")){
                 counter++;
                 totalcount++;
             }
@@ -353,10 +363,10 @@ function UpdateAccordionCounter(showingAll, highlight){
 
 function getFilterType(){
     var type = $("#rank-filter-type").attr("data-filter");
-    if(type == "Hide")
-        return "hide-game-rank";
-    else
+    if(type == "Minimize")
         return "minimize-game-rank";
+    else
+        return "hide-game-rank";
 }
 
 function AttachDragAndDropEvents(){

@@ -170,6 +170,11 @@
     background-color:white;
 }
 
+.active>.rank-collapsible-header{
+    background-color: #3F51B5;
+    color:white;
+}
+
 .rank-collapsible-header .tier-modal-icon{
     margin-right:0em;
 }
