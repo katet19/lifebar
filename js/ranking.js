@@ -187,13 +187,25 @@ function AttachFilterEvents(){
         $("#rank-filter-xp").attr('data-filter', xp);
         FilterLists();
 	});
+    $(".filter-type-item").on('click', function() {
+        $("#rank-filter-type").attr('data-filter', $(this).attr("data-type"));
+        if($(this).attr("data-type") == "Hide")
+        {
+            $(".minimize-game-rank").addClass("hide-game-rank");
+            $(".minimize-game-rank").removeClass("minimize-game-rank");
+        }else{
+            $(".hide-game-rank").addClass("minimize-game-rank");
+            $(".hide-game-rank").removeClass("hide-game-rank");
+        }
+        FilterLists();
+	});
 }
 
 function UpdateRankedPositions(showingAll){
     var localcount = 1;
     var globalcount = 1;
     $(".rank-list-container").find(".rank-container").each(function(){
-        if(!$(this).hasClass("rank-drag-drop-placeholder") && !$(this).hasClass("hide-game-rank")){
+        if(!$(this).hasClass("rank-drag-drop-placeholder") && !$(this).hasClass(getFilterType())){
             if(showingAll){
                 $(this).find(".rank-count-container").html("<div class='rank-count-main'>" + localcount + "</div>");
             }else{
@@ -240,7 +252,7 @@ function FilterLists(){
     $(".rank-header-container").html("");
     if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL"){
         $(".rank-container").each(function(){
-            $(this).removeClass("hide-game-rank");
+            $(this).removeClass(getFilterType());
         });
     }else{
         for(var i = 0; i < year.length - 1; i++){
@@ -305,13 +317,13 @@ function FilterLists(){
             }
 
             if(genrehide || yearhide || platformhide || xphide){
-                $(this).addClass("hide-game-rank");
+                $(this).addClass(getFilterType());
             }else{
-                $(this).removeClass("hide-game-rank");
+                $(this).removeClass(getFilterType());
             }
         });
 
-        $(".rank-drag-drop-placeholder").removeClass("hide-game-rank");
+        $(".rank-drag-drop-placeholder").removeClass(getFilterType());
     }
     UpdateAccordionCounter(showingAll, true);
 }
@@ -321,7 +333,7 @@ function UpdateAccordionCounter(showingAll, highlight){
     $(".rank-modal-body").each(function(){
         var counter = 0;
         $(this).find(".rank-container").each(function(){
-            if(!$(this).hasClass("hide-game-rank")){
+            if(!$(this).hasClass(getFilterType())){
                 counter++;
                 totalcount++;
             }
@@ -337,6 +349,14 @@ function UpdateAccordionCounter(showingAll, highlight){
     }
 
     UpdateRankedPositions(showingAll);
+}
+
+function getFilterType(){
+    var type = $("#rank-filter-type").attr("data-filter");
+    if(type == "Hide")
+        return "hide-game-rank";
+    else
+        return "minimize-game-rank";
 }
 
 function AttachDragAndDropEvents(){

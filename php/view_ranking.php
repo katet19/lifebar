@@ -37,7 +37,7 @@ function DisplayRanking($userid){
         <div class="rank-list-container">
             <?php
             foreach($rankedlist as $item){ ?>
-                    <div class="col s12 rank-container" draggable="true"
+                    <div class="rank-container" draggable="true"
                         data-genre="<?php echo $item->_genre;?>"
                         data-platform="<?php echo $item->_platforms;?>"
                         data-year="<?php echo $item->_year;?>"
@@ -62,7 +62,7 @@ function DisplayRanking($userid){
             <?php $count++; 
             }
             ?>
-                <div class="col s12 rank-container rank-drag-drop-placeholder" draggable="true"
+                <div class="rank-container rank-drag-drop-placeholder" draggable="true"
                     data-genre=""
                     data-platform=""
                     data-year=""
@@ -172,6 +172,19 @@ function ShowFilterList($userid){
                     </div>
 				</div>
 			</li>
+            <li>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="Hide" style='font-size:1em;'>Advanced Settings</div>
+				<div class="collapsible-body rank-modal-body">
+                    <div class='col s12 filter-type-item filter-line-item' data-type="Hide">
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter" checked/>
+                        <label for="HideFilter">Hide games that are filtered</label>
+                    </div>
+                    <div class='col s12 filter-type-item filter-line-item' data-type="Minimize">
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="MinimizeFilter" />
+                        <label for="MinimizeFilter">Minimize games that are filtered</label>
+                    </div>
+				</div>
+			</li>
         </ul>
 <?php
 }
@@ -248,7 +261,7 @@ function ShowUnRankedList($unrankedlist){
 }
 
 function ShowUnRankedItem($item){ ?>
-    <div class="col s12 rank-container" draggable="true"
+    <div class="rank-container" draggable="true"
         data-genre="<?php echo $item->_genre;?>"
         data-platform="<?php echo $item->_platforms;?>"
         data-year="<?php if($item->_year == 0){ echo "Unreleased"; }else{ echo $item->_year; } ?>"

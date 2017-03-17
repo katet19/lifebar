@@ -121,6 +121,27 @@
     display:none;
 }
 
+.minimize-game-rank{
+    opacity:0.3;
+    padding:5px !important;
+}
+
+.minimize-game-rank .rank-image{
+    display:none;
+}
+
+.minimize-game-rank .rank-count-container{
+    top: 1px;
+}
+
+.minimize-game-rank .rank-item-container .rank-item-title{
+    padding-left: 100px !important;
+}
+
+.filter-type-item>label:before, .filter-type-item>label:after{
+    top:4px;
+}
+
 .rank-modal-text{
     float: right;
     font-size: 1.5em;
@@ -180,7 +201,8 @@
 .rank-container{
     float:left;
     position: relative;
-    padding: 15px 5px 15px 100px !important;
+    padding: 15px 5px 15px 100px;
+    width: 100%;
     text-align:left;
     background-color:white;
     cursor: move;
