@@ -29,6 +29,9 @@ function ShowRanking(){
              $(".rank-save-btn").on("click", function(){
                 SaveRankedList();
              });
+             $(".rank-container").on("click", function(){
+                ToggleGameRankSelection($(this));
+             });
             AttachFilterEvents();
             $('.dropdown-button').dropdown({
                 inDuration: 300,
@@ -85,6 +88,15 @@ function SaveRankedList(){
             },
             timeout:45000
         });
+    }
+}
+
+function ToggleGameRankSelection(game){
+    if(game.hasClass('active')){
+        game.removeClass("active");
+    }else{
+        $(".rank-container.active").removeClass("active");
+        game.addClass("active");
     }
 }
 
@@ -387,6 +399,7 @@ function AttachDragAndDropEvents(){
     });
 
     function handleDragStart(e) {        
+        $(".rank-container.active").removeClass("active");
         dragSrcEl = this;
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', this.innerHTML);

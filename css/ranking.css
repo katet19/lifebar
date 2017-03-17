@@ -164,6 +164,19 @@
     border-top:3px solid #F50057;
 }
 
+.rank-container.active{
+    background-color:#F50057;
+    border-top-color:#F50057 !important;
+    color:white !important;
+}
+
+.rank-list-container .rank-container.active  .rank-history-new,
+.rank-list-container .rank-container.active  .rank-history-red,
+.rank-list-container .rank-container.active  .rank-history-green,
+.rank-list-container .rank-container.active .rank-count-container .rank-count-secondary{
+    color:white;
+}
+
 .rank-modal-body{
     height: -webkit-calc(100vh - 420px);
     overflow-y: auto;
@@ -224,18 +237,28 @@
 }
 
 .rank-list-container .rank-container:hover{
-    border-top-color:lightyellow !important;
-    background-color:lightyellow !important;
+    background-color:#FF4081 !important;
+    border-top-color:#FF4081 !important;
+    color:white !important;
 }
 
 .rank-list-container .rank-drag-drop-placeholder:hover{
     border-top: 3px dashed transparent !important;
     background-color: transparent !important;
+    color:inherit !important;
 }
 
 .rank-modal-body .rank-container:hover{
-    border-top-color:lightyellow !important;
-    background-color:lightyellow !important;
+    border-top-color:#FF4081 !important;
+    background-color:#FF4081 !important;
+    color:white !important;
+}
+
+.rank-list-container .rank-container:hover  .rank-history-new,
+.rank-list-container .rank-container:hover  .rank-history-red,
+.rank-list-container .rank-container:hover  .rank-history-green,
+.rank-list-container .rank-container:hover .rank-count-container .rank-count-secondary{
+    color:white;
 }
 
 .rank-move-highlight{
