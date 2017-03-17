@@ -129,8 +129,8 @@ function ShowFilterList($userid){
                         foreach($genres as $genre){
                             ?>
                                 <div class='col s12 genre-dropdown-filter-item filter-line-item' data-genre="<?php echo $genre; ?>">
-                                    <input type="checkbox" class="genre-dropdown-checkbox" id="<?php echo $genre; ?>" />
-                                    <label for="<?php echo $genre; ?>"><?php echo $genre; ?></label>
+                                    <input type="checkbox" class="genre-dropdown-checkbox" id="<?php echo str_replace(" ", "_", $genre); ?>" />
+                                    <label for="<?php echo str_replace(" ", "_", $genre); ?>"><?php echo $genre; ?></label>
                                 </div>
                             <?php
                         }
@@ -146,8 +146,8 @@ function ShowFilterList($userid){
                             foreach($platforms as $platform){
                                 ?>
                                 <div class='col s12 platform-dropdown-filter-item filter-line-item' data-platform="<?php echo $platform; ?>">
-                                    <input type="checkbox" class="platform-dropdown-checkbox" id="<?php echo $platform; ?>" />
-                                    <label for="<?php echo $platform; ?>"><?php echo $platform; ?></label>
+                                    <input type="checkbox" class="platform-dropdown-checkbox" id="<?php echo str_replace(" ", "_", $platform); ?>" />
+                                    <label for="<?php echo str_replace(" ", "_", $platform); ?>"><?php echo $platform; ?></label>
                                 </div>
                                 <?php
                             }

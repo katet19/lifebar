@@ -271,6 +271,11 @@ function FilterLists(){
         for(var i = 0; i < xp.length - 1; i++){
             $(".rank-header-container").append("<div class='filter-chip'>" + xp[i] + "</div>");
         }
+        $(".filter-chip").unbind();
+        $(".filter-chip").on("click", function(){
+            $("#"+$(this).text().replace(" ","_")).click();
+            $(this).remove();
+        });
         
         showingAll = false;
         $(".rank-container").each(function(){
