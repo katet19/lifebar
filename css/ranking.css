@@ -236,19 +236,13 @@
     transition: all 0.2s ease;
 }
 
-.rank-list-container .rank-container:hover{
-    background-color:#FF4081 !important;
-    border-top-color:#FF4081 !important;
-    color:white !important;
-}
-
 .rank-list-container .rank-drag-drop-placeholder:hover{
     border-top: 3px dashed transparent !important;
     background-color: transparent !important;
     color:inherit !important;
 }
 
-.rank-modal-body .rank-container:hover{
+.rank-container-hover{
     border-top-color:#FF4081 !important;
     background-color:#FF4081 !important;
     color:white !important;
@@ -264,6 +258,7 @@
 .rank-move-highlight{
     border-top-color:lightyellow !important;
     background-color:lightyellow !important;
+    color: rgb(33, 33, 33) !important;
 }
 
 .rank-modal-body>.rank-container{

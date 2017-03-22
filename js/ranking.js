@@ -16,6 +16,12 @@ function ShowRanking(){
 	     type: 'post',
 	     success: function(output) {
 	 		$("#rankingInnerContainer").html(output);
+            $(".rank-container").hover(function(){ 
+                    $(this).addClass("rank-container-hover");
+                }, function(){ 
+                    $(this).removeClass("rank-container-hover");
+                }
+            );
              UpdateAccordionCounter(true, false);
              if($(".rank-header-title-count").text() != "0"){
                  ToggleUnrankedModal();
