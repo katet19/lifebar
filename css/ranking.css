@@ -38,6 +38,7 @@
     display: inline-block;
     float: left;
     text-align:left;
+    background-color:#eee;
 }
 
 .rank-unranked-list-container{
@@ -246,6 +247,34 @@
     border-top-color:#FF4081 !important;
     background-color:#FF4081 !important;
     color:white !important;
+}
+
+.rank-list-insert-btn{
+    color: gray;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    padding: 5px 20px;
+    cursor: pointer;
+    float: left;
+    position: relative;
+    width: 100%;
+    opacity:0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.rank-list-insert-btn-expand{
+    opacity:1;
+}
+
+
+.rank-list-insert-btn:hover{
+    color:white !important;
+    background-color:#FF4081 !important;
 }
 
 .rank-list-container .rank-container:hover  .rank-history-new,

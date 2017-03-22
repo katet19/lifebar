@@ -98,12 +98,55 @@ function SaveRankedList(){
 }
 
 function ToggleGameRankSelection(game){
-    if(game.hasClass('active')){
-        game.removeClass("active");
-    }else{
-        $(".rank-container.active").removeClass("active");
-        game.addClass("active");
+    if(!game.hasClass("rank-drag-drop-placeholder")){
+        if(game.hasClass('active')){
+            game.removeClass("active");
+            $(".rank-list-insert-btn").removeClass("rank-list-insert-btn-expand");
+            setTimeout(function(){ $(".rank-list-insert-btn").remove(); }, 300);
+            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO ADD TO THE BOTTOM OF LIST");
+        }else{
+            $(".rank-container.active").removeClass("active");
+            var currentID = -1;
+            $(".rank-list-insert-btn").remove();
+            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("ADD TO THE END OF THE LIST");
+            $(".rank-list-container").find(".rank-container").each(function(){
+                $(this).removeClass("rank-list-interact");
+                if($(this).attr("data-id") != game.attr("data-id") && currentID != game.attr("data-id") && !$(this).hasClass("rank-drag-drop-placeholder") && !$(this).hasClass("hide-game-rank")){
+                    $("<div class='rank-list-insert-btn'><i class='material-icons left' style='position:relative;font-size:1.5em;'>add_box</i> INSERT HERE</div>").insertBefore($(this));
+                }
+                
+                currentID = $(this).attr("data-id");
+            });
+            AttachInsertEvent();
+            game.addClass("active");
+        }
     }
+}
+
+function AttachInsertEvent(){
+    $(".rank-list-insert-btn").addClass("rank-list-insert-btn-expand");
+    $(".rank-list-insert-btn").unbind();
+    $(".rank-list-insert-btn").on("click", function(){
+        var game =  $(".rank-container.active");
+        game.removeClass('active');
+        game.insertBefore($(this));
+
+        game.addClass("rank-move-highlight");
+
+        setTimeout(function(){ game.removeClass("rank-move-highlight"); }, 750);
+
+        var year = $(".year-dropdown-selected").text();
+        var genre = $(".genre-dropdown-selected").text();
+        var platform = $(".platform-dropdown-selected").text();
+        var xp = $(".xp-dropdown-selected").text();
+        var showingAll = false;
+        if(genre.indexOf("All-Genre") != -1 && platform.indexOf("All-Platform") != -1 && year == "All-Time" && xp == "All-Experiences"){
+            showingAll = true;
+        }
+        $(".rank-list-insert-btn").remove();
+        UpdateAccordionCounter(showingAll, false);
+        ToggleSaveRankedBtn();
+    });
 }
 
 function ToggleSaveRankedBtn(){
@@ -436,6 +479,8 @@ function AttachDragAndDropEvents(){
         if (dragSrcEl != this && this.parentNode.className == "rank-list-container") {
             dragSrcEl.style.color = 'inherit';
             this.parentNode.insertBefore(dragSrcEl, this);
+            $(".rank-list-insert-btn").removeClass("rank-list-insert-btn-expand");
+            setTimeout(function(){ $(".rank-list-insert-btn").remove(); }, 300);
 
             dragSrcEl.className += " rank-move-highlight";
 
