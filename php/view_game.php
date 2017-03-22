@@ -811,12 +811,12 @@ function DisplayGameCardXPDetailSummary($xp){
 					$percent = 100;
 				else
 					$percent = $xp->_playedxp[0]->_completed; ?>
-				<div class="game-card-summary-prog-title">
+				<div class="game-card-summary-prog-title game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 					<?php if($percent < 100){ echo $percent."%"; }else{ ?>
 						<i class="material-icons" style='font-size: 1.5em;vertical-align: middle;margin-top: -2px;margin-left: 3px;'>check</i>
 					<?php } ?>
 				</div>
-				<div class="game-card-summary-prog-bar-container">
+				<div class="game-card-summary-prog-bar-container game-card-action-pick" data-action="xp"  data-id='<?php echo $xp->_game->_id; ?>'>
 					<div class="game-card-summary-prog-bar tier<?php echo $xp->_playedxp[0]->_archivetier; ?>BG" style='width:<?php echo $percent; ?>%'>
 						<?php if($percent >= 100){ ?><div style='color:white;font-size:0.7em;display:none;'>Completed</div><?php } ?>
 					</div>
