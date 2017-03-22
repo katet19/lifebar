@@ -2636,27 +2636,6 @@ function CalculateXPGain($type, $isNew = true){
 	}
 }
 
-function SaveUserRankedList($userid, $rankingList){
-	$mysqli = Connect();
-
-	if($rankingList != ""){
-		$rankedGames = explode(",",$rankingList);
-		//Reset ranked list
-		$mysqli->query("update `Experiences` set `Rank` = '0' where `UserID` = '".$userid."'");
-
-		$count = 1;
-		foreach($rankedGames as $gameid){
-			if($gameid > 0){
-				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `UserID` = '".$userid."' and `GameID` = '".$gameid."'";
-				$mysqli->query($rankupdate);
-				$count++;
-			}
-		}
-	}
-
-	Close($mysqli, $result);
-}
-
 function SubmitBookmark($user,$gameid,$bucketlist){
 	$mysqli = Connect();
 	$game = GetGame($gameid);
