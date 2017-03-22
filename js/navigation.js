@@ -102,14 +102,19 @@ function NavigateToPage(page, fromURL = false){
 				$("#nav-collections").addClass("nav-slide-out-selected-page");
 				DisplayUserCollection($(".userContainer").attr("data-id"));
 			}else if(page[0] == "#game" && page[1] > 0){
-			if(page[3] == "User")
-				page[3] = "User/"+page[4]+"/"+page[5];
+				if(page[3] == "User")
+					page[3] = "User/"+page[4]+"/"+page[5];
+
+				$("#nav-discover").addClass("nav-slide-out-selected-page");
+				ShowDiscoverHome();
 				ShowGame(page[1], '', true, false, page[3]);
 			}else if(page[0] == "#profile" && page[1] > 0){
 				$('body').css({'overflow-y':'scroll'});
 				if(page[1] == $(".userContainer").attr("data-id"))
 					$("#nav-profile").addClass("nav-slide-out-selected-page");
-
+				
+				$("#nav-discover").addClass("nav-slide-out-selected-page");
+				ShowDiscoverHome();
 				ShowUserProfile(page[1], false);
 			}else if(page[0] == "#search" && page[1] != ''){
 				$('body').css({'overflow-y':'scroll'});
