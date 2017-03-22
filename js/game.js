@@ -194,7 +194,7 @@ function AttachGameEvents(currentTab){
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
 		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
 	});
-	
+
 	if($(window).width() < 600){
 		$(".backButtonLabel").css({"padding":"0"});
 		$("#gameInnerContainer .backContainer").show();
@@ -526,8 +526,8 @@ function GameCardAction(action, gameid){
 				$('.collapsible').collapsible();
 				$('textarea#myxp-quote').characterCounter();
 				$(".myxp-platform-checked").each(function(){ $(this).click(); });
-				$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
-				$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
+				$(".fixed-close-modal-btn-top, .lean-overlay-details, .delete-xp").unbind();
+				$(".fixed-close-modal-btn-top, .lean-overlay-details").on('click', function(){
 					var windowWidth = $(window).width();
 					HideFocus();
 					$("#gamemini").css({ "right": "-40%" }); 
@@ -558,7 +558,7 @@ function GameCardAction(action, gameid){
 							},
 							timeout:45000
 						});
-						$(".fixed-close-modal-btn").click();
+						$(".fixed-close-modal-btn-top").click();
 				});
 				$('select').material_select();
 				$(".modal-xp-header-advanced").on("click", function(){
@@ -625,7 +625,7 @@ function GameCardAction(action, gameid){
 							},
 							timeout:45000
 						});
-						$(".fixed-close-modal-btn").click();
+						$(".fixed-close-modal-btn-top").click();
 					}
 				});
 				$(".save-watched-xp").on('click', function(){
@@ -659,7 +659,7 @@ function GameCardAction(action, gameid){
 							},
 							timeout:45000
 						});
-						$(".fixed-close-modal-btn").click();
+						$(".fixed-close-modal-btn-top").click();
 					}
 				});
 				$(".save-post-xp").on('click', function(){
@@ -684,7 +684,7 @@ function GameCardAction(action, gameid){
 							},
 							timeout:45000
 						});
-						$(".fixed-close-modal-btn").click();
+						$(".fixed-close-modal-btn-top").click();
 					}
 				});
 			},
@@ -911,8 +911,8 @@ function AttachWatchFromXP(){
 	     type: 'post',
 	     success: function(output) {
 			$("#gameminiInnerContainer").html(output);
-			$(".fixed-close-modal-btn, .lean-overlay-details, .delete-xp").unbind();
-			$(".fixed-close-modal-btn, .lean-overlay-details").on('click', function(){
+			$(".fixed-close-modal-btn-top, .lean-overlay-details, .delete-xp").unbind();
+			$(".fixed-close-modal-btn-top, .lean-overlay-details").on('click', function(){
 				var windowWidth = $(window).width();
 				HideFocus();
 				$("#gamemini").css({ "right": "-40%" }); 

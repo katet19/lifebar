@@ -141,7 +141,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.fixed-close-modal-btn{
+.fixed-close-modal-btn, .fixed-close-modal-btn-top{
 	position: absolute;
     right: 10px;
     top: 15px;
@@ -183,7 +183,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.fixed-close-modal-btn:hover, .fixed-save-close-modal-btn:hover{
+.fixed-close-modal-btn:hover, .fixed-save-close-modal-btn:hover, .fixed-close-modal-btn-top:hover,{
 	background-color: #FF4081 !important;
 }
 
