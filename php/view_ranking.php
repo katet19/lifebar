@@ -9,31 +9,7 @@ function DisplayRanking($userid){
     <div class="row" style='position:absolute;width:100%;'>
         <div class="rank-header-container">
         </div>
-        <div class="btn-floating btn-large disabled rank-save-btn"><i class="material-icons left" style='font-size:2em;position: relative;top: 0px;'>save</i> Save</div>
-        <?php if(sizeof($rankedlist) == 0){ ?>
-            <div class="rank-welcome-container">
-                <?php if(sizeof($unrankedlist) > 10){ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>Ok, take a deep breathe...</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i>Nice work rating games you have experienced. Now comes the tough part of ranking them. We recommend you start small, maybe games from last year, or your favorite RPGs and then slowly expand the list. Use the filters to your advantage to narrow the scope.</div>
-                    </div>
-                <?php }else if(sizeof($unrankedlist) > 0){ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>You are off to a good start, but...</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
-                    </div>
-                <?php }else{ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>We are missing some key info to get you started</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
-                    </div>
-                <?php } ?>
-            </div>
-        <?php } ?>
-        
+        <div class="btn-floating btn-large disabled rank-save-btn"><i class="material-icons left" style='font-size:2em;position: relative;top: 0px;'>save</i> Save</div>        
         <div class="rank-list-container">
             <?php
             foreach($rankedlist as $item){ ?>
@@ -85,6 +61,30 @@ function DisplayRanking($userid){
             </div>
 
         </div>
+        <?php if(sizeof($rankedlist) == 0){ ?>
+            <div class="rank-welcome-container">
+                <?php if(sizeof($unrankedlist) > 10){ ?>
+                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
+                        <div class='onboarding-sub-welcome'>Ok, take a deep breathe...</div>
+                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i>Nice work rating games you have experienced. Now comes the tough part of ranking them. We recommend you start small, maybe games from last year, or your favorite RPGs and then slowly expand the list. Use the filters to your advantage to narrow the scope.</div>
+                    </div>
+                <?php }else if(sizeof($unrankedlist) > 0){ ?>
+                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
+                        <div class='onboarding-sub-welcome'>You are off to a good start, but...</div>
+                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
+                    </div>
+                <?php }else{ ?>
+                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
+                        <div class='onboarding-sub-welcome'>We are missing some key info to get you started</div>
+                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php } ?>
+        <div class="rank-current-selection"></div>
         <div class="rank-filter-list-container z-depth-1">
             <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Filter List</div>
             <?php 

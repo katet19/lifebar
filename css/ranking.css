@@ -39,6 +39,31 @@
     float: left;
     text-align:left;
     background-color:#eee;
+    position:relative;
+}
+
+.rank-welcome-container{
+    width: calc(100% - 40px);
+    margin-top:160px;
+}
+
+.rank-current-selection{
+    position: fixed;
+    right: 10px;
+    border-radius: 5px 5px 0px 0px;
+    bottom: -60px;
+    background-color: #3F51B5;
+    color: white;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.rank-current-selection-active{
+    bottom:0px !important;
+}
+
+.rank-current-selection-active-shift{
+    right:calc(30% + 10px);
 }
 
 .rank-unranked-list-container{
@@ -79,14 +104,14 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.rank-unranked-list-container-active, .rank-unranked-list-container-active:hover{
-    right:0px;
+.rank-unranked-list-container-active{
+    right:0px !important;
     width:calc(30% - 40px);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.rank-filter-list-container-active, .rank-filter-list-container-active:hover{
-    right:0px;
+.rank-filter-list-container-active{
+    right:0px !important;
     width:calc(30% - 40px);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
@@ -208,6 +233,10 @@
     right:calc(30% + 10px);
 }
 
+.rank-save-btn-shift-up{
+    bottom:45px !important;
+}
+
 .rank-save-btn:hover{
     opacity:0.8;
     background-color: #26a69a !important;
@@ -238,7 +267,7 @@
 }
 
 .rank-list-container .rank-drag-drop-placeholder:hover{
-    border-top: 3px dashed transparent !important;
+    border-top: 1px dashed gray !important;
     background-color: transparent !important;
     color:inherit !important;
 }
@@ -252,14 +281,14 @@
 .rank-list-insert-btn{
     color: gray;
     text-transform: uppercase;
+    border: 1px dashed gray;
     font-weight: bold;
-    border-bottom: 1px solid #eee;
-    padding: 5px 20px;
+    padding: 5px 15px;
     cursor: pointer;
     float: left;
     position: relative;
     width: 100%;
-    opacity:0;
+    opacity: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -387,15 +416,16 @@
 }
 
 .rank-drag-drop-placeholder{
-    border-top: 3px dashed transparent;
+    border: 1px dashed gray;
     background-color: transparent !important;
     font-weight: 500;
     color: gray;
-    padding: 20px 5px 10px 15px !important;
-    position:absolute;
+    margin-top: 10px;
+    padding: 10px 5px 10px 15px !important;
+    position: absolute;
     top: 100%;
-    margin-bottom:50px;
-    width: calc(100% - 40px);
+    width: 100%;
+    margin-bottom: 50px;
 }
 
 .filter-line-item{
@@ -452,5 +482,26 @@
 @media only screen and (max-width : 600px) {
     .rank-user-container{
         left:10px;
+    }
+    .rank-unranked-list-container{
+        width:80%;
+        right:-80%;
+    }
+    .rank-unranked-list-container-active{
+        width: calc(80% - 40px);
+    }
+    .rank-filter-list-container-active{
+        width: calc(80% - 40px);
+        top:155px;
+    }
+    .rank-filter-list-container{
+        top:155px;
+    }
+    .rank-welcome-container{
+        width: calc(100% - 40px);
+    }
+    .rank-current-selection{
+        right: 0px;
+        left:0px;
     }
 }

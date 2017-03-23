@@ -23,7 +23,7 @@ function ShowRanking(){
                 }
             );
              UpdateAccordionCounter(true, false);
-             if($(".rank-header-title-count").text() != "0"){
+             if($(".rank-header-title-count").text() != "0" && $(window).width() > 599){
                  ToggleUnrankedModal();
              }
              $(".rank-unranked-list-container .rank-header-title").on("click", function(){
@@ -102,13 +102,26 @@ function ToggleGameRankSelection(game){
         if(game.hasClass('active')){
             game.removeClass("active");
             $(".rank-list-insert-btn").removeClass("rank-list-insert-btn-expand");
+            $(".rank-current-selection").removeClass("rank-current-selection-active");
+            $(".rank-save-btn").removeClass("rank-save-btn-shift-up");
             setTimeout(function(){ $(".rank-list-insert-btn").remove(); }, 300);
-            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO ADD TO THE BOTTOM OF LIST");
+            if($(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text() == "ADD TO THE END OF THE LIST"){
+                $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO ADD TO THE BOTTOM OF LIST");
+            }else{
+                $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG GAME HERE TO START LIST");
+            }
         }else{
             $(".rank-container.active").removeClass("active");
             var currentID = -1;
             $(".rank-list-insert-btn").remove();
-            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("ADD TO THE END OF THE LIST");
+            $(".rank-current-selection").text(game.find(".rank-item-title").text());
+            $(".rank-current-selection").addClass("rank-current-selection-active");
+            $(".rank-save-btn").addClass("rank-save-btn-shift-up");
+            if($(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text() == "DRAG HERE TO ADD TO THE BOTTOM OF LIST"){
+                $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("ADD TO THE END OF THE LIST");
+            }else{
+                $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("CLICK HERE TO START LIST");
+            }
             $(".rank-list-container").find(".rank-container").each(function(){
                 $(this).removeClass("rank-list-interact");
                 if($(this).attr("data-id") != game.attr("data-id") && currentID != game.attr("data-id") && !$(this).hasClass("rank-drag-drop-placeholder") && !$(this).hasClass("hide-game-rank")){
@@ -118,6 +131,11 @@ function ToggleGameRankSelection(game){
                 currentID = $(this).attr("data-id");
             });
             AttachInsertEvent();
+
+            if($(window).width() <= 600 && $(".rank-unranked-list-container-active").length > 0){
+                ToggleUnrankedModal();
+            }
+
             game.addClass("active");
         }
     }
@@ -125,10 +143,12 @@ function ToggleGameRankSelection(game){
 
 function AttachInsertEvent(){
     $(".rank-list-insert-btn").addClass("rank-list-insert-btn-expand");
-    $(".rank-list-insert-btn").unbind();
-    $(".rank-list-insert-btn").on("click", function(){
+    $(".rank-list-insert-btn, .rank-drag-drop-placeholder, .rank-current-selected").unbind();
+    $(".rank-list-insert-btn, .rank-drag-drop-placeholder").on("click", function(){
         var game =  $(".rank-container.active");
         game.removeClass('active');
+        $(".rank-current-selection").removeClass("rank-current-selection-active");
+        $(".rank-save-btn").removeClass("rank-save-btn-shift-up");
         game.insertBefore($(this));
 
         game.addClass("rank-move-highlight");
@@ -144,8 +164,21 @@ function AttachInsertEvent(){
             showingAll = true;
         }
         $(".rank-list-insert-btn").remove();
+        $(".rank-drag-drop-placeholder").unbind();
         UpdateAccordionCounter(showingAll, false);
         ToggleSaveRankedBtn();
+    });
+    $(".rank-current-selection").on("click", function(){
+        $(".rank-container.active").removeClass("active");
+        $(".rank-list-insert-btn").removeClass("rank-list-insert-btn-expand");
+        $(".rank-current-selection").removeClass("rank-current-selection-active");
+        $(".rank-save-btn").removeClass("rank-save-btn-shift-up");
+        setTimeout(function(){ $(".rank-list-insert-btn").remove(); }, 300);
+        if($(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text() == "ADD TO THE END OF THE LIST"){
+            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG HERE TO ADD TO THE BOTTOM OF LIST");
+        }else{
+            $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("DRAG GAME HERE TO START LIST");
+        }
     });
 }
 
@@ -167,6 +200,7 @@ function ToggleUnrankedModal(){
             $(".rank-drag-drop-placeholder").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
             $(".rank-header-container").removeClass("rank-header-container-active");
+            $(".rank-current-selection").removeClass("rank-current-selection-active-shift");
         }
     }else{
         $(".rank-unranked-list-container").addClass("rank-unranked-list-container-active");
@@ -177,6 +211,7 @@ function ToggleUnrankedModal(){
             $(".rank-drag-drop-placeholder").css({"width":"60%)"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
             $(".rank-header-container").addClass("rank-header-container-active");
+            $(".rank-current-selection").addClass("rank-current-selection-active-shift");
         }
     }
 }
@@ -189,6 +224,7 @@ function ToggleFilterModal(){
             $(".rank-drag-drop-placeholder").css({"width":"calc(100% - 60px)"});
             $(".rank-save-btn").removeClass("rank-save-btn-shift");
             $(".rank-header-container").removeClass("rank-header-container-active");
+            $(".rank-current-selection").removeClass("rank-current-selection-active-shift");
         }
     }else{
         $(".rank-filter-list-container").addClass("rank-filter-list-container-active");
@@ -198,6 +234,7 @@ function ToggleFilterModal(){
             $(".rank-drag-drop-placeholder").css({"width":"60%)"});
             $(".rank-save-btn").addClass("rank-save-btn-shift");
             $(".rank-header-container").addClass("rank-header-container-active");
+            $(".rank-current-selection").addClass("rank-current-selection-active-shift");
         }
     }
 }
@@ -305,6 +342,9 @@ function UpdateRankedPositions(showingAll){
 }
 
 function FilterLists(){
+    $(".rank-container.active").removeClass("active");
+    $(".rank-list-insert-btn").remove();
+
     var year = $("#rank-filter-year").attr("data-filter").split(",");
     var genre = $("#rank-filter-genre").attr("data-filter").split(",");
     var platform = $("#rank-filter-platform").attr("data-filter").split(",");
