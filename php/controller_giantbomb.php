@@ -79,7 +79,7 @@ function RequestGameFromGiantBomb($searchstring){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	//if(strrpos($searchstring, " ")){
 		//$request = 'http://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&filter=name:'.$searchstring;
-		$request = 'http://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&limit=40&query='.$searchstring.'&resources=game';
+		$request = 'https://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&limit=40&query='.$searchstring.'&resources=game';
 		$request = str_replace(" ", "+", $request);
 	//}else{
 	//	$request = 'http://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&query="'.$searchstring.'"&resources=game';
@@ -89,7 +89,7 @@ function RequestGameFromGiantBomb($searchstring){
 	//echo $request;
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	$userAgent = 'Lifebar.io';
 	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
@@ -104,7 +104,7 @@ function RequestGameFromGiantBomb($searchstring){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	if($decoded != null && sizeof($decoded->results > 0)){
+	if($decoded != null && sizeof($decoded->results) > 0){
 		foreach($decoded->results as $game){
 			if($game->original_release_date != ""){
 				$release = explode(" ",$game->original_release_date);
@@ -249,7 +249,7 @@ function RequestGameFromGiantBomb($searchstring){
 			}
 		}
 	}else{
-		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."'");
+		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."' CURL:".$curl_response);
 	}
 	
 	return $gameresults;
