@@ -479,6 +479,23 @@
     color:white;
 }
 
+.rank-remove-btn{
+    display: none;
+    float: right;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.87);
+    padding: 2px 5px;
+    font-size: 0.7em;
+    border-radius: 3px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.rank-remove-btn:hover{
+    background-color: #F50057;
+    color:white;
+}
+
 @media only screen and (max-width : 600px) {
     .rank-user-container{
         left:10px;

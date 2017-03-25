@@ -100,6 +100,7 @@ function SaveRankedList(){
 function ToggleGameRankSelection(game){
     if(!game.hasClass("rank-drag-drop-placeholder")){
         if(game.hasClass('active')){
+            $(".rank-remove-btn").hide();
             game.removeClass("active");
             $(".rank-list-insert-btn").removeClass("rank-list-insert-btn-expand");
             $(".rank-current-selection").removeClass("rank-current-selection-active");
@@ -122,6 +123,8 @@ function ToggleGameRankSelection(game){
             }else{
                 $(".rank-drag-drop-placeholder").find(".rank-drag-drop-text").text("CLICK HERE TO START LIST");
             }
+            $(".rank-remove-btn").hide();
+
             $(".rank-list-container").find(".rank-container").each(function(){
                 $(this).removeClass("rank-list-interact");
                 if($(this).attr("data-id") != game.attr("data-id") && currentID != game.attr("data-id") && !$(this).hasClass("rank-drag-drop-placeholder") && !$(this).hasClass("hide-game-rank")){
@@ -130,20 +133,28 @@ function ToggleGameRankSelection(game){
                 
                 currentID = $(this).attr("data-id");
             });
-            AttachInsertEvent();
+            AttachSelectedGameEvents();
 
             if($(window).width() <= 600 && $(".rank-unranked-list-container-active").length > 0){
                 ToggleUnrankedModal();
             }
 
             game.addClass("active");
+            if(game.parent().hasClass("rank-list-container")){
+                game.find(".rank-remove-btn").show();
+            }
         }
     }
 }
 
-function AttachInsertEvent(){
+function AttachSelectedGameEvents(){
     $(".rank-list-insert-btn").addClass("rank-list-insert-btn-expand");
-    $(".rank-list-insert-btn, .rank-drag-drop-placeholder, .rank-current-selected").unbind();
+    $(".rank-list-insert-btn, .rank-drag-drop-placeholder, .rank-current-selected, .rank-remove-btn").unbind();
+    $(".rank-remove-btn").on("click", function(e){
+        e.stopImmediatePropagation();
+        ToggleGameRankSelection($(this).parent());
+        $(this).parent().remove();
+    });
     $(".rank-list-insert-btn, .rank-drag-drop-placeholder").on("click", function(){
         var game =  $(".rank-container.active");
         game.removeClass('active');

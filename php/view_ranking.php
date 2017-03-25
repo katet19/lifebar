@@ -30,10 +30,9 @@ function DisplayRanking($userid){
                                 <?php echo $item->_title; ?>
                             </div>
                         </div>
-                        <div class="rank-image" style='background:url(<?php echo $item->_imagesmall; ?>) 50% 25%;'>
-                        </div>
-                        <div class="rank-history">
-                        </div>
+                        <div class="rank-image" style='background:url(<?php echo $item->_imagesmall; ?>) 50% 25%;'></div>
+                        <div class="rank-history"></div>
+                        <div class="rank-remove-btn">REMOVE</div>
                     </div>
             <?php $count++; 
             }
@@ -278,10 +277,9 @@ function ShowUnRankedItem($item){ ?>
                 <?php echo $item->_title; ?>
             </div>
         </div>
-        <div class="rank-image">
-        </div>
-        <div class="rank-history">
-        </div>
+        <div class="rank-image"></div>
+        <div class="rank-history"></div>
+        <div class="rank-remove-btn">REMOVE</div>
     </div>
     <?php
 }
