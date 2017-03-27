@@ -79,14 +79,16 @@
 
 .game-activity-rank-content{
     display:inline-block;
+    margin-right:40px;
 }
 
 .game-activity-rank-item{
-    font-size:1.5em;
+    font-size:2em;
 }
 
 .game-activity-rank-title{
     font-weight:400;
+    margin-top: -5px;
 }
 
 .game-activity{

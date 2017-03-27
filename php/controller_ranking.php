@@ -68,6 +68,24 @@ function GetMyUnrankedList($userid, $year, $platform, $genre){
 	return $ranklist;
 }
 
+function GetRankedPosForYear($gameid, $year){
+	$mysqli = Connect();
+	$pos = 1;
+	$finalrank = 0;
+	$query = "select * from `Experiences` e, `Games` g where e.`UserID` = '".$userid."' and e.`Rank` > 0 and e.`GameID` = g.`ID` and g.`Year` = '".$year."'  ORDER BY `Rank` ASC";
+	if ($result = $mysqli->query($query)){
+		while($row = mysqli_fetch_array($result)){
+			if($gameid == $row['GameID'])
+				$finalrank = $pos;
+
+			$pos++;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $pos;
+}
+
 function GetPlatformsByExperience($userid){
 	$mysqli = Connect();
 	$platformquery = "select * from `Link_Platforms` l, `Sub-Experiences` s where s.`UserID` = '".$userid."' and s.`PlatformIDs` = l.`GBID`  GROUP BY `NAME` ORDER BY `Name`";
