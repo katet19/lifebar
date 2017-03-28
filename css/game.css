@@ -80,15 +80,23 @@
 .game-activity-rank-content{
     display:inline-block;
     margin-right:40px;
+    color:gray;
 }
 
 .game-activity-rank-item{
-    font-size:2em;
+    font-size: 2.75em;
+    font-weight: 300;
+}
+
+.game-activity-rank-item span{
+    font-size:0.5em;
+    vertical-align: super;
 }
 
 .game-activity-rank-title{
-    font-weight:400;
-    margin-top: -5px;
+    font-weight: 400;
+    font-size: 0.8em;
+    text-align: right;
 }
 
 .game-activity{

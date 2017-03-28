@@ -115,11 +115,11 @@ function ShowGameContent($game, $myxp, $otherxp){
 					<div class="card-panel white game-activity-col-card">
 						<div class="game-activity-title"><i class='material-icons' style='font-size: 1.25em;position: relative;top: 2px;margin-right: 3px;'>swap_vert</i> Ranking</div>
 							<?php if($myxp->_rank > 0){ 
-									$rankyear = GetRankedPosForYear($game->_id, $game->_year);?>
+									$rankyear = GetRankedPosForYear($game->_id, $game->_year, $id);?>
 								<div class="game-activity-content">
 									<div class="game-activity-rank-content">
 										<div class="game-activity-rank-item">
-											#<?php echo $rankyear; ?>
+											<span>#</span><?php echo $rankyear; ?>
 										</div>
 										<div class="game-activity-rank-title">
 											<?php echo $game->_year; ?>
@@ -127,7 +127,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 									</div>
 									<div class="game-activity-rank-content" style='margin-right:0px !important;'>
 										<div class="game-activity-rank-item">
-											#<?php echo $myxp->_rank; ?>
+											<span>#</span><?php echo $myxp->_rank; ?>
 										</div>
 										<div class="game-activity-rank-title">
 											All-Time
@@ -138,8 +138,8 @@ function ShowGameContent($game, $myxp, $otherxp){
 								</div>
 							<?php }else{ ?>
 								<div class="game-activity-content">
-									<div class="game-activity-rank-content">
-										<div class="game-activity-rank-item">
+									<div class="game-activity-rank-content" style='margin-right:0px !important;'>
+										<div class="game-activity-rank-item" style='font-size: 1.5em;text-transform: uppercase;font-weight:500;'>
 											Unranked
 										</div>
 										<div class="game-activity-rank-title">

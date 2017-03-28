@@ -68,7 +68,7 @@ function GetMyUnrankedList($userid, $year, $platform, $genre){
 	return $ranklist;
 }
 
-function GetRankedPosForYear($gameid, $year){
+function GetRankedPosForYear($gameid, $year, $userid){
 	$mysqli = Connect();
 	$pos = 1;
 	$finalrank = 0;
@@ -83,7 +83,7 @@ function GetRankedPosForYear($gameid, $year){
 	}
 	Close($mysqli, $result);
 	
-	return $pos;
+	return $finalrank;
 }
 
 function GetPlatformsByExperience($userid){
