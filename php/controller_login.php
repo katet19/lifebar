@@ -26,7 +26,8 @@ function Login($username, $password){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
@@ -66,7 +67,8 @@ function ThirdPartyLogin($thirdpartyID, $whoAmI, $verified, $pconn = null){
 					$row["Title"],
 					$row["Image"],
 					$row["Website"],
-					$row["Badge"]);
+					$row["Badge"],
+					$row["AccountType"]);
 			$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
 			
@@ -109,7 +111,8 @@ function FastLogin($id){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 				$_SESSION['logged-in'] = $myuser;
@@ -143,7 +146,8 @@ function LoginWithCookie($cookieID){
 					$row["Title"],
 					$row["Image"],
 					$row["Website"],
-					$row["Badge"]);
+					$row["Badge"],
+					$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 			$myuser = $user;
 			$_SESSION['logged-in'] = $myuser;
