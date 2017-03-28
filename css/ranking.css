@@ -480,15 +480,17 @@
 }
 
 .rank-remove-btn{
-    display: none;
-    float: right;
+    display:none;
+    position: absolute;
     background-color: white;
     color: rgba(0, 0, 0, 0.87);
-    padding: 2px 5px;
+    padding: 5px 5px;
     font-size: 0.7em;
     border-radius: 3px;
     font-weight: 500;
     cursor: pointer;
+    right: 15px;
+    top: 13px;
 }
 
 .rank-remove-btn:hover{
