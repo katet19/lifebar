@@ -209,6 +209,12 @@
     background-color:white;
 }
 
+.filter-modal-body{
+    height: -webkit-calc(100vh - 540px);
+    overflow-y: auto;
+    background-color:white;
+}
+
 .active>.rank-collapsible-header{
     background-color: #3F51B5;
     color:white;
@@ -524,7 +530,14 @@
 }
 
 .rank-filter-search-wrapper{
+    position: absolute;
+    cursor: pointer;
     float: left;
+    z-index: 10;
+}
+
+.rank-filter-search-wrapper:hover, .rank-filter-search-clear-btn:hover{
+    color:#F50057;
 }
 
 .rank-filter-search-clear-btn{

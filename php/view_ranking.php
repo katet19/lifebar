@@ -106,7 +106,7 @@ function ShowFilterList($userid){
             <div class="rank-filter-search-wrapper">
                 <i class="material-icons left rank-filter-search-btn">search</i>
             </div>
-            <span>
+            <span style='input-field'>
                 <input type="text" class="rank-filter-search-field" placeholder="Search your catalog">
             </span>
             <i class="rank-filter-search-clear-btn material-icons">close</i>
@@ -114,7 +114,7 @@ function ShowFilterList($userid){
 		<ul class="collapsible tier-modal-collapsible-container" style='margin-top:120px !important;' data-collapsible="accordion">
             <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-year" data-filter="ALL" style='font-size:1em;'>Year</div>
-				<div class="collapsible-body rank-modal-body">
+				<div class="collapsible-body filter-modal-body">
                         <?php $years = GetYearsByExperience($userid); 
                         if(sizeof($years) > 0){
                             foreach($years as $year){
@@ -131,7 +131,7 @@ function ShowFilterList($userid){
 			</li>
             <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-genre" data-filter="ALL" style='font-size:1em;'>Genre</div>
-				<div class="collapsible-body rank-modal-body">
+				<div class="collapsible-body filter-modal-body">
                     <?php $genres = GetGenresByExperience($userid); 
                     if(sizeof($genres) > 0){
                         foreach($genres as $genre){
@@ -148,7 +148,7 @@ function ShowFilterList($userid){
 			</li>
             <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-platform" data-filter="ALL" style='font-size:1em;'>Platform</div>
-				<div class="collapsible-body rank-modal-body">
+				<div class="collapsible-body filter-modal-body">
                     <?php $platforms = GetPlatformsByExperience($userid); 
                         if(sizeof($platforms) > 0){
                             foreach($platforms as $platform){
@@ -165,7 +165,7 @@ function ShowFilterList($userid){
 			</li>
             <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-xp" data-filter="ALL" style='font-size:1em;'>Experience Details</div>
-				<div class="collapsible-body rank-modal-body">
+				<div class="collapsible-body filter-modal-body">
                     <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp="Played">
                         <input type="checkbox" class="xp-dropdown-checkbox" id="played" />
                         <label for="played">Played</label>
@@ -182,7 +182,7 @@ function ShowFilterList($userid){
 			</li>
             <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="Hide" style='font-size:1em;'>Advanced Settings</div>
-				<div class="collapsible-body rank-modal-body">
+				<div class="collapsible-body filter-modal-body">
                     <div class='col s12 filter-type-item filter-line-item' data-type="Hide">
                         <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter" checked/>
                         <label for="HideFilter">Hide games that are filtered</label>

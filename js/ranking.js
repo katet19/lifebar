@@ -308,15 +308,22 @@ function AttachFilterEvents(){
         }
         FilterLists();
 	});
-    $(".rank-filter-search-wrapper").on('click', function(){
-        if($(this).attr("data-type") == "Hide")
-        {
-            $(".rank-list-container .minimize-game-rank").addClass("hide-game-rank");
-            $(".rank-list-container .minimize-game-rank").removeClass("minimize-game-rank");
-        }else{
-            $(".rank-list-container .hide-game-rank").addClass("minimize-game-rank");
-            $(".rank-list-container .hide-game-rank").removeClass("hide-game-rank");
+    $(".rank-filter-search-field").on('keypress keyup', function (e) {
+        if (e.keyCode === 13) { 
+            e.stopPropagation(); 	
+            $(".rank-filter-search-wrapper").click();
         }
+        if($(this).val() != ""){
+            $(".rank-filter-search-clear-btn").show();
+        }else{
+            $(".rank-filter-search-clear-btn").hide();
+        }
+    }); 
+    $(".rank-filter-search-clear-btn").on('click', function(){
+        $(".rank-filter-search-field").val("");
+        $(".rank-filter-search-clear-btn").hide();
+    });
+    $(".rank-filter-search-wrapper").on('click', function(){
         FilterLists();
     });
 }
@@ -400,7 +407,13 @@ function FilterLists(){
         }
         $(".filter-chip").unbind();
         $(".filter-chip").on("click", function(){
-            $("#"+$(this).text().replace(" ","_")).click();
+            if($(this).text().indexOf("Search:") != -1){
+                $(".rank-filter-search-field").val("");
+                $(".rank-filter-search-clear-btn").hide();
+                FilterLists();
+            }else
+                $("#"+$(this).text().replace(" ","_")).click();
+            
             $(this).remove();
         });
         
@@ -423,7 +436,7 @@ function FilterLists(){
             if(search == "" && search == "Search your catalog"){
                 searchhide = false;
             }else{
-                if($(this).find(".rank-item-title").text().indexOf(search) != -1)
+                if($(this).find(".rank-item-title").text().toLowerCase().indexOf(search.toLowerCase()) != -1)
                     searchhide = false;
             }
 
