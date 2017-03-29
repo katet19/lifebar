@@ -106,6 +106,7 @@ function VerifyNewUserDataLanding(username, password, email, element){
          data: {action: "VerifyNewUser", username: username, email: email },
          type: 'post',
          success: function(output) {
+			 		var errors = "";
          			if(output.indexOf("Username is already used") >= 0){
          				errors = "Username is already used<br>";
          			}else if(output.indexOf("Email is already used") >= 0){

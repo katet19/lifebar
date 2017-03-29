@@ -60,6 +60,7 @@ function VerifyNewUserData(username, email){
          data: {action: "VerifyNewUser", username: username, email: email },
          type: 'post',
          success: function(output) {
+			 		var errors = "";
          			if(output.indexOf("Username is already used") >= 0){
          				errors = "Username is already used<br>";
          			}else if(output.indexOf("Email is already used") >= 0){
@@ -156,7 +157,7 @@ function Login(user, pw){
 	if(user === "" || pw === ""){
 		DisplayLoginValidation(0);
 	}else{
-		ShowLoader($(".validation"), 'small');
+		ShowLoader($(".validation"), 'small', '');
 		$.ajax({ url: '../php/webService.php',
 	         data: {action: "Login", user: user, pw: pw },
 	         type: 'post',

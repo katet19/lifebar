@@ -25,9 +25,9 @@ function DisplayLogin(){
 	      <div class="col s11" style='text-align: center;font-size: 1.5em;'>
 	    		<a href="#" class="waves-effect btn-flat" id="LoginSubmitBtn">Login</a>
 	      </div>
-	      <div class="col s11 validation" style='text-align: center;color:red;display:none;'></div>
+	      <div class="col s11 validation" style='text-align: center;color:red;'></div>
 	      <div class="col s11 forgotPasswordBtn" style='text-align: center;margin-top:2em;'>
-	      	<div class="waves-effect btn-flat s4">Forgot Password</div>
+	      	<div class="waves-effect btn-flat s4" style='color:#212121 !important;'>Forgot Password</div>
 	      </div>
 	      <div class="input-field col s11 forgotPassword" style="display:none">
 	        <i class="mdi-communication-email prefix"></i>
@@ -109,7 +109,7 @@ function DisplayLandingSignup($param){
 			    <div class="col s11" style='text-align: center;margin-top:1em;'>
 			    	<div class="waves-effect btn-large" id="SignupSubmitBtnLanding">SIGN UP</div>
 			    </div>
-			    <div class="col s11 validation" style='text-align: center;color:white;display:none;margin: 30px 0 10px;'></div>
+			    <div class="col s11 validation" style='text-align: center;color:white;margin: 30px 0 10px;'></div>
 	      	</div>
 	  	</div>
 	   <div class="col s12 m5" >
