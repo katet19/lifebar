@@ -308,6 +308,17 @@ function AttachFilterEvents(){
         }
         FilterLists();
 	});
+    $(".rank-filter-search-wrapper").on('click', function(){
+        if($(this).attr("data-type") == "Hide")
+        {
+            $(".rank-list-container .minimize-game-rank").addClass("hide-game-rank");
+            $(".rank-list-container .minimize-game-rank").removeClass("minimize-game-rank");
+        }else{
+            $(".rank-list-container .hide-game-rank").addClass("minimize-game-rank");
+            $(".rank-list-container .hide-game-rank").removeClass("hide-game-rank");
+        }
+        FilterLists();
+    });
 }
 
 function UpdateRankedPositions(showingAll){
@@ -360,14 +371,18 @@ function FilterLists(){
     var genre = $("#rank-filter-genre").attr("data-filter").split(",");
     var platform = $("#rank-filter-platform").attr("data-filter").split(",");
     var xp = $("#rank-filter-xp").attr("data-filter").split(",");
+    var search = $(".rank-filter-search-field").val();
     var showingAll = true;
     $(".rank-header-container").html("");
-    if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL"){
+    if(genre == "ALL" && platform == "ALL" && year == "ALL" && xp == "ALL" && (search == "" || search == "Search your catalog")){
         $(".rank-container").each(function(){
             $(this).removeClass("hide-game-rank");
             $(this).removeClass("minimize-game-rank");
         });
     }else{
+        if(search != "" && search != "Search your catalog"){
+            $(".rank-header-container").append("<div class='filter-chip'>Search: '" + search + "'</div>");
+        }
         for(var i = 0; i < year.length - 1; i++){
             $(".rank-header-container").append("<div class='filter-chip'>" + year[i] + "</div>");
         }
@@ -395,6 +410,7 @@ function FilterLists(){
             var yearhide = true;
             var platformhide = true;
             var xphide = true;
+            var searchhide = true;
             var currRow = $(this);
             var isUnranked = false;
             if($(this).parent().hasClass("rank-modal-body"))
@@ -402,6 +418,13 @@ function FilterLists(){
 
             if(year.length > 0 && ($.inArray($(this).attr("data-year"), year) != -1 || year[0].indexOf("ALL") != -1)){
                 yearhide = false;
+            }
+
+            if(search == "" && search == "Search your catalog"){
+                searchhide = false;
+            }else{
+                if($(this).find(".rank-item-title").text().indexOf(search) != -1)
+                    searchhide = false;
             }
 
             if(platform.length > 0){  
@@ -437,7 +460,7 @@ function FilterLists(){
                 }
             }
 
-            if(genrehide || yearhide || platformhide || xphide){
+            if(genrehide || yearhide || platformhide || xphide || searchhide){
                 if(isUnranked)
                     $(this).addClass("hide-game-rank");
                 else

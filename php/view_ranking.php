@@ -102,8 +102,17 @@ function DisplayRanking($userid){
 
 function ShowFilterList($userid){
 ?>
-		<ul class="collapsible tier-modal-collapsible-container" style='margin-top: 51px !important;' data-collapsible="accordion">
-			<li>
+        <div class="rank-filter-search">
+            <div class="rank-filter-search-wrapper">
+                <i class="material-icons left rank-filter-search-btn">search</i>
+            </div>
+            <span>
+                <input type="text" class="rank-filter-search-field" placeholder="Search your catalog">
+            </span>
+            <i class="rank-filter-search-clear-btn material-icons">close</i>
+        </div>
+		<ul class="collapsible tier-modal-collapsible-container" style='margin-top:120px !important;' data-collapsible="accordion">
+            <li>
 				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-year" data-filter="ALL" style='font-size:1em;'>Year</div>
 				<div class="collapsible-body rank-modal-body">
                         <?php $years = GetYearsByExperience($userid); 
