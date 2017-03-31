@@ -548,6 +548,10 @@
     display:none;
 }
 
+.rank-item-title-w-image{
+    padding-left:130px;
+}
+
 @media only screen and (max-width : 600px) {
     .rank-user-container{
         left:10px;
@@ -572,5 +576,16 @@
     .rank-current-selection{
         right: 0px;
         left:0px;
+    }
+    .rank-image{
+        position: absolute;
+        top: 0px;
+        left: 100px;
+        width: 50px;
+        height: calc(100% - 3px);
+        background-size: cover;
+    }
+    .rank-item-title-w-image{
+        padding-left:80px;
     }
 }

@@ -26,7 +26,7 @@ function DisplayRanking($userid){
                         <div class="rank-count-container">
                         </div>
                         <div class="rank-item-container">
-                            <div class="rank-item-title" style="padding-left:130px;">
+                            <div class="rank-item-title rank-item-title-w-image">
                                 <?php echo $item->_title; ?>
                             </div>
                         </div>

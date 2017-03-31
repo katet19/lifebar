@@ -341,7 +341,7 @@ function UpdateRankedPositions(showingAll){
 
             var image = $(this).attr("data-image");
             $(this).find(".rank-image").css({"background":"url("+ image +") 50% 25%","background-size":"cover"});
-            $(this).find(".rank-item-title").css({"padding-left":"130px"});
+            $(this).find(".rank-item-title").addClass("rank-item-title-w-image");
 
             var lastTime = parseInt($(this).attr("data-loaded-rank"));
             if(lastTime == 0){
