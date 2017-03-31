@@ -1,6 +1,11 @@
 /*
 * New Profile
 */
+
+#profileInnerContainer{
+    background-color:rgb(237, 236, 236);
+}
+
 .newprofile-highlightedgame{
 	color: white;
     font-size: 2.5em;
@@ -120,32 +125,39 @@
 }
 
 .user-profile-container{
-    margin-top: 90px;
     display: inline-block;
     width: 90%;
     margin: 0 5%;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 120px;
 }
 
 .user-profile-item-container{
-    text-align:center;
-    display:inline-block;
-    margin:0 15px;
+    text-align: center;
+    display: inline-block;
+    margin: 0 15px;
+    background-color: rgba(63,81,181,1);
+    border-radius: 5px;
+    padding: 10px 15px 0px;
+    min-width: 100px;
 }
 
 .user-profile-label{
     color: white;
     font-size: 0.5em;
     display: block;
+    position: relative;
     font-weight: 400;
+    top: -4px;
 }
 
 .user-profile-data{
     color: white;
-    font-size: 1.5em;
+    font-size: 1.1em;
     display: block;
+    position: relative;
     font-weight: 500;
+    top: 3px;
 }
 
 .user-profile-btn{
@@ -1728,18 +1740,17 @@
     line-height: 25px;
 }
 .activity-profile{
-    margin-top:25vh;
     position:absolute;
     margin-left: -60px;
     background-color:rgb(237, 236, 236);
     z-index: 0;
     width: calc(100% + 60px);
 }
-
-.ProfileHeaderContainer{
-	height:25vh !important;
+.rank-profile{
+    position:absolute;
+    top:375px;
+    padding: 20px 0 20px 20px;
 }
-
 .user-profile-follow-highlight{
     background-color: #F50057 !important;
     color: white;
@@ -1756,6 +1767,33 @@
 
 .user-profile-follow-highlight .game-action-bar-item:hover{
     color:white !important;
+}
+
+.profile-tab{
+    position: absolute;
+    top: 35vh;
+    width: 100%;
+    text-align: left;
+    background-color: #ddd;
+}
+
+.profile-tab-header{
+    font-size: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 30px;
+    display: inline-block;
+    font-weight: 500;
+    border-bottom: 3px solid #ddd;
+}
+
+.profile-tab-header:hover{
+    color: #F50057;
+}
+
+.profile-tab-header-active{
+    border-bottom: 3px solid #F50057;
+    color: #F50057;
 }
 
 @media only screen and (max-width : 992px) {
@@ -1833,11 +1871,7 @@
         text-align: center;
         margin-left: 0px;
     }
-    .ProfileHeaderContainer{
-        height:35vh !important;
-    }   
     .activity-profile{
-        margin-top:35vh;
         margin-left: -10px;
     }
     .user-profile-container{
@@ -2021,4 +2055,8 @@
 	.newprofile-skills{
 		font-size:1.4em;
 	}
+    .user-profile-item-container{
+        min-width:inherit;
+        padding: 7px 10px 0px;
+    }
 }

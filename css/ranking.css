@@ -42,6 +42,15 @@
     position:relative;
 }
 
+.rank-list-container-profile{
+    width: calc(100% - 40px);
+    display: inline-block;
+    float: left;
+    text-align:left;
+    background-color:#eee;
+    position:relative;
+}
+
 .rank-welcome-container{
     width: calc(100% - 40px);
     margin-top:160px;
@@ -265,6 +274,22 @@
     cursor: -webkit-grab;
     border-top:3px solid white;
     border-bottom: 1px solid #eee;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.rank-container-profile{
+    float: left;
+    position: relative;
+    padding: 15px 5px 15px 100px;
+    width: 100%;
+    text-align: left;
+    background-color: #eee;
+    border-top: 3px solid #eee;
+    border-bottom: 1px solid #ddd;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;

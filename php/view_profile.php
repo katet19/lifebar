@@ -27,19 +27,22 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 		<div class="col s12">
 			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 			<div class="GameHeaderContainer ProfileHeaderContainer">
-				<div class="GameHeaderBackground ProfileHeaderContainer" style="background: -moz-linear-gradient(bottom, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0.5)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -webkit-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;background: -o-linear-gradient(bottom, rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.7) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="GameHeaderBackground ProfileHeaderContainer" style="    background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 				<div class="modal-header" style='top:10px;bottom:5px;overflow: initial;'>
 					<?php DisplayLifeBarForUserProfile($user); ?>
 					<div class="user-profile-container">
-						<div class="user-profile-item-container">
+						<div class="user-profile-item-container z-depth-1">
 							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalFollowers); ?></div>
 							<div class="user-profile-label">Followers</div>
 						</div>
-						<div class="user-profile-item-container">
+						<div class="user-profile-item-container z-depth-1">
 							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalXP); ?></div>
 							<div class="user-profile-label">Games</div>
 						</div>
-						<div class="user-profile-item-container">
+						<div class="user-profile-item-container z-depth-1">
 							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalAgrees); ?></div>
 							<div class="user-profile-label">1ups</div>
 						</div>
@@ -128,8 +131,21 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 						</div>
 					</div>
 				</div>
-			<div class="activity-top-level activity-profile" style='position:absolute;' data-id='<?php echo $user->_id; ?>' >
+			<div class="profile-tab">
+				<div class="profile-tab-header profile-tab-header-active" data-tab="profile-activity-tab">Activity</div>
+				<div class="profile-tab-header" data-tab="profile-ranked-tab">Ranking</div>
+			</div>
+			<div class="profile-tab-body activity-top-level activity-profile profile-activity-tab" style='position:absolute;top: 378px;' data-id='<?php echo $user->_id; ?>' >
 				<?php DisplayMainActivity($user->_id, "My Activity"); ?>
+			</div>
+			<div class="profile-tab-body rank-profile profile-ranked-tab" style='display:none;'>
+				<?php $rankedlist = GetMyRankedList($user->_id, -1, '', ''); 
+					if(sizeof($rankedlist) > 0){ 
+						ShowProfileRankingList($rankedlist);
+					}else{
+						echo "User hasn't created a ranked list yet";
+					}		
+				?>
 			</div>	
 		</div>
 	</div>

@@ -94,6 +94,40 @@ function DisplayRanking($userid){
     <?php
 }
 
+function ShowProfileRankingList($rankedlist){
+    $count = 1; 
+    ?>
+    <div class="rank-list-container-profile">
+            <?php
+            foreach($rankedlist as $item){ ?>
+                    <div class="rank-container-profile"
+                        data-genre="<?php echo $item->_genre;?>"
+                        data-platform="<?php echo $item->_platforms;?>"
+                        data-year="<?php echo $item->_year;?>"
+                        data-loaded-rank="<?php echo $item->_rank;?>"
+                        data-rank="<?php echo $item->_rank;?>"
+                        data-id="<?php echo $item->_id;?>"
+                        data-image="<?php echo $item->_imagesmall; ?>"
+                        data-xp="<?php echo $item->_xptype; ?>"
+                    >
+                        <div class="rank-count-container">
+                            <div class='rank-count-main'><?php echo $count; ?></div>
+                        </div>
+                        <div class="rank-item-container">
+                            <div class="rank-item-title rank-item-title-w-image">
+                                <?php echo $item->_title; ?>
+                            </div>
+                        </div>
+                        <div class="rank-image" style='background:url(<?php echo $item->_imagesmall; ?>) 50% 25%;background-size:cover;'></div>
+                        <div class="rank-history"></div>
+                    </div>
+            <?php $count++; 
+            }
+            ?>
+        </div>
+    <?php
+}
+
 function ShowFilterList($userid, $sizeOfList){
 ?>
         <div class="rank-filter-search">

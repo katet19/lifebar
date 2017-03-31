@@ -99,6 +99,9 @@ function ShowUserContent(userid, mine, browserNav){
 				var userid = $(this).attr("data-userid");
 				DisplayManageBadge(userid);
 			});
+			$(".profile-tab-header").on("click", function(){
+				ProfileTabNav($(this));
+			});
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -109,6 +112,16 @@ function ShowUserContent(userid, mine, browserNav){
     	},
     	timeout:45000
 	});
+}
+
+function ProfileTabNav(element){
+	if(!element.hasClass("profile-tab-header-active")){
+		$(".profile-tab-header-active").removeClass("profile-tab-header-active");
+		element.addClass("profile-tab-header-active");
+		var tab = element.attr("data-tab");
+		$(".profile-tab-body").hide();
+		$("."+tab).show();
+	}
 }
 
 function AttachProfileEvents(userid){
