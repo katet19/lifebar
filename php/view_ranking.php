@@ -81,7 +81,7 @@ function DisplayRanking($userid){
         <div class="rank-filter-list-container z-depth-1">
             <div class="rank-header-title z-depth-1"><i class="material-icons">filter_list</i> Filter List</div>
             <?php 
-            ShowFilterList($userid);
+            ShowFilterList($userid, sizeof($rankedlist));
             ?>
         </div>
         <div class="rank-unranked-list-container z-depth-1">
@@ -94,7 +94,7 @@ function DisplayRanking($userid){
     <?php
 }
 
-function ShowFilterList($userid){
+function ShowFilterList($userid, $sizeOfList){
 ?>
         <div class="rank-filter-search">
             <div class="rank-filter-search-wrapper">
@@ -175,15 +175,17 @@ function ShowFilterList($userid){
 				</div>
 			</li>
             <li>
-				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="Minimize" style='font-size:1em;'>Advanced Settings</div>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="<?php if($sizeOfList > 30){ ?>Minimize<?php }else{ ?>Hide<?php } ?>" style='font-size:1em;'>Advanced Settings</div>
 				<div class="collapsible-body filter-modal-body">
                     <div class='col s12 filter-type-item filter-line-item' data-type="Hide">
-                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter"/>
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter" <?php if($sizeOfList <= 30){ ?>checked<?php } ?> />
                         <label for="HideFilter">Hide games that are filtered</label>
+                        <div style='font-size:0.8em;margin-left: 35px;'>Best for when you want a clean view of a sub-list of your all time games. Less distracting overall.</div>
                     </div>
                     <div class='col s12 filter-type-item filter-line-item' data-type="Minimize">
-                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="MinimizeFilter" checked />
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="MinimizeFilter" <?php if($sizeOfList > 30){ ?>checked<?php } ?> />
                         <label for="MinimizeFilter">Minimize games that are filtered</label>
+                        <div style='font-size:0.8em;margin-left: 35px;'>Ideal once your all-time list gets longer and being able to keep the entire scope of your list in mind is important.</div>
                     </div>
 				</div>
 			</li>

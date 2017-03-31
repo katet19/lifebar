@@ -317,11 +317,13 @@ function AttachFilterEvents(){
             $(".rank-filter-search-clear-btn").show();
         }else{
             $(".rank-filter-search-clear-btn").hide();
+            FilterLists();
         }
     }); 
     $(".rank-filter-search-clear-btn").on('click', function(){
         $(".rank-filter-search-field").val("");
         $(".rank-filter-search-clear-btn").hide();
+        FilterLists();
     });
     $(".rank-filter-search-wrapper").on('click', function(){
         FilterLists();
