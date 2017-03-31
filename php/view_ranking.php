@@ -62,25 +62,19 @@ function DisplayRanking($userid){
         </div>
         <?php if(sizeof($rankedlist) == 0){ ?>
             <div class="rank-welcome-container">
-                <?php if(sizeof($unrankedlist) > 10){ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>Ok, take a deep breathe...</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon" style='margin-bottom:125px;'>gamepad</i>Nice work rating games you have experienced. Now comes the tough part of ranking them. We recommend you start small, maybe games from last year, or your favorite RPGs and then slowly expand the list. Use the filters to your advantage to narrow the scope.</div>
-                    </div>
-                <?php }else if(sizeof($unrankedlist) > 0){ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>You are off to a good start, but...</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
-                    </div>
-                <?php }else{ ?>
-                    <div class="col s12 onboarding-game-step" style='text-align:left;'>
-                        <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your personal All-Time Ranked List!</div>
-                        <div class='onboarding-sub-welcome'>We are missing some key info to get you started</div>
-                        <div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">star</i> Search, explore Discover or review your Activity feed for games you have experienced and give them a star rating first. Once you have given them a star, you can rank them here.<br><br>Before you start ranking, we recommend you have a good list of games already rated. Try focusing on a genre or year to get a nice list to start with.</div>
-                    </div>
-                <?php } ?>
+                <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                    <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Build your All-Time Ranked List!</div>
+                    <?php if(sizeof($unrankedlist) > 25){ ?>
+                        <div class='onboarding-sub-sub-welcome'><i class='material-icons green-text left' style='font-size:1.5em;'>thumb_up</i> Ready to go!</div>
+                        <div class='onboarding-sub-sub-welcome'>You have a healthy list of games rated & ready to be ranked. Use the filters <i class='material-icons indigo-text' style='font-size:1.5em;position: relative;top: 5px;'>filter_list</i> on the right to help narrow your view and start ranking your personal list!</div>
+                    <?php }else if(sizeof($unrankedlist) > 5){ ?>
+                        <div class='onboarding-sub-sub-welcome'><i class='material-icons orange-text left'  style='font-size:1.5em;'>warning</i> You are off to a good start, but...</div>
+                        <div class='onboarding-sub-sub-welcome'>Before you start ranking, we recommend you have a good list of games already rated. Focusing on a genre, year or your Lifebar backlog will help you build a list of games that are ready to be ranked.</div>
+                    <?php }else{ ?>
+                        <div class='onboarding-sub-sub-welcome'><i class='material-icons red-text left'  style='font-size:1.5em;'>warning</i> We are missing some key info to get you started</div>
+                        <div class='onboarding-sub-sub-welcome'>Explore <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>explore</i> Discover, review your <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>whatshot</i> Activity feed or search for games you have experienced and give them a star rating first. Once you have given them a star rating, you can rank them here.</div>
+                    <?php } ?>
+                </div>
             </div>
         <?php } ?>
         <div class="rank-current-selection"></div>
@@ -181,14 +175,14 @@ function ShowFilterList($userid){
 				</div>
 			</li>
             <li>
-				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="Hide" style='font-size:1em;'>Advanced Settings</div>
+				<div class="collapsible-header rank-collapsible-header filter-line-header" id="rank-filter-type" data-filter="Minimize" style='font-size:1em;'>Advanced Settings</div>
 				<div class="collapsible-body filter-modal-body">
                     <div class='col s12 filter-type-item filter-line-item' data-type="Hide">
-                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter" checked/>
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="HideFilter"/>
                         <label for="HideFilter">Hide games that are filtered</label>
                     </div>
                     <div class='col s12 filter-type-item filter-line-item' data-type="Minimize">
-                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="MinimizeFilter" />
+                        <input type="radio" name="filter-type-radio" class="filter-type-radio" id="MinimizeFilter" checked />
                         <label for="MinimizeFilter">Minimize games that are filtered</label>
                     </div>
 				</div>
