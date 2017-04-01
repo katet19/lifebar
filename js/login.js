@@ -237,3 +237,27 @@ function Logout(){
     	timeout:45000
 	});
 }
+
+function DisplayTermsOfService(){
+ 		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "TOS" },
+	     type: 'post',
+	     success: function(output) {
+			$("#BattleProgess").html(output); 
+			$(".tos-close-btn").on("click", function(){
+				$("#BattleProgess").closeModal();
+				HideFocus();
+			});
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});	
+}

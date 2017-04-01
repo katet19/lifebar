@@ -60,6 +60,9 @@ function AttachSignUpLandingEvents(){
 		}
 			
 	});
+	$(".signup-tos-link").on("click", function(){
+		DisplayTermsOfService();
+	});
 	$(".google-login, .twitter-login, .facebook-login, .steam-login").unbind();
 	$(".google-login").on("click", function(e){
 		googleLogin();

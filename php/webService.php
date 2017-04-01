@@ -693,6 +693,9 @@
 		if($_POST['action'] == 'FinishRegister'){
 			FinishRegisterUser($_SESSION['pending-user']->_id, $_POST['email'], $_POST['username']);
 		}
+		if($_POST['action'] == 'TOS'){
+			DisplayTermsOfService();
+		}
 	}
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){
