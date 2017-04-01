@@ -151,6 +151,20 @@ function DisplayUserSettings(){
 									</div>
 								</div>
 							</li>
+							<li>
+								<div class="collapsible-header xp-modal-header"><i class="material-icons tier-modal-icon">account_balance</i>Policy & Terms of Service</div>
+								<div class="collapsible-body">
+									<div class="row" style=' margin-top: 1em;margin-right:1em;padding: 0 0.75rem;'>
+										<div class="col s12" style='text-align:left;'>
+											<?php DisplayTermsOfService(); ?>
+										</div>
+										<br><br>
+										<div class="col s12" style='text-align:left;'>
+											<?php DisplayPrivacyPolicy(); ?>
+										</div>
+									</div>
+								</div>
+							</li>
 					</ul>
 				</div>		
 		</div>

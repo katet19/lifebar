@@ -289,3 +289,31 @@ function DisplayTermsOfService(){
 	</div>
 	<?php
 }
+
+function DisplayPrivacyPolicy(){
+	?>
+	<div class="row" style='height:100%;overflow:auto;padding:25px 20px;'>
+		<div class="col s12">
+			<h5>Privacy Policy</h5>
+			<ol>
+				<li><strong>Your privacy</strong>: Lifebar is committed to ensuring the privacy of your information.</li>
+				<li><strong>Application</strong>: This Privacy Policy applies to all personal information submitted by you on <em>lifebar.io</em> (the “Website”) and any information that may be automatically retrieved through your use of the Website.</li>
+				<li><strong>Consent</strong>: By accessing and using the Website, you consent to the collection, use, disclosure, storage and processing of your information in accordance with this Privacy Policy.</li>
+				<li><strong>Changes to Privacy Policy</strong>: We may amend or update this Privacy Policy from time to time, with or without notice to you. You agree to be bound by the Privacy Policy that is in effect at the time you access and use the Website.</li>
+				<li><strong>Personal information</strong>: In order to use particular services that we offer, you may need to submit certain personal information such as your email address, name and date of birth. You may be asked to submit further information from time to time. If you connect your Facebook, Google or Twitter accounts to your account with Lifebar, we will access these accounts to identify which of your friends on those services are also using Lifebar.</li>
+				<li><strong>Use of information</strong>: The personal information you provide us will only be used in relation to the services we provide you, to communicate with you in relation to our services or to co-operate with any government, industry or regulatory authorities.</li>
+				<li><strong>Disclosure of information</strong>: Unless you have expressly authorised us to do so, we will not disclose your personal information to any third party except where disclosure relates to the purposes for which the information was collected (as stated in paragraph 6 above).</li>
+				<li><strong>Access to and updates of information</strong>: You may request at any time to see the personal information that we hold on your behalf or to correct or update any of your personal information (to the extent that you are unable to do so yourself on the Website).</li>
+				<li><strong>Storage of information</strong>: We will securely store your personal information in the United States, although you acknowledge and agree that your personal information may be transferred outside of the United States in connection with the services we offer.</li>
+				<li><strong>Retention</strong>: We will hold your personal information both before and after the termination or your account, but only for as long as we are lawfully entitled to do so.</li>
+				<li><strong>Security</strong>: You must keep any login, password or account information relating to your use of the Website secure at all times, and must immediately notify us of any unauthorized use of such information or any other breach of security. We will not be liable for any loss or damage if you fail to comply with this security obligation.</li>
+			</ol>
+			<br>
+			</div>
+			<div class="col s12" style='text-align:center'>
+				<div class="tos-close-btn btn">Close</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}

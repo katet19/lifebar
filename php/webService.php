@@ -696,6 +696,9 @@
 		if($_POST['action'] == 'TOS'){
 			DisplayTermsOfService();
 		}
+		if($_POST['action'] == 'PrivacyPolicy'){
+			DisplayPrivacyPolicy();
+		}
 	}
 	function GeneralServices(){
 		if($_POST['action'] == 'TestScript' ){
