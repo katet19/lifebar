@@ -128,6 +128,39 @@ function ShowProfileRankingList($rankedlist){
     <?php
 }
 
+function ShowActivityRankingList($rankedlist){
+    ?>
+    <div class="rank-list-container-activity">
+            <?php
+            foreach($rankedlist as $item){ ?>
+                    <div class="rank-container-activity"
+                        data-genre="<?php echo $item[0]->_genre;?>"
+                        data-platform="<?php echo $item[0]->_platforms;?>"
+                        data-year="<?php echo $item[0]->_year;?>"
+                        data-loaded-rank="<?php echo $item[0]->_rank;?>"
+                        data-rank="<?php echo $item[1];?>"
+                        data-id="<?php echo $item[0]->_id;?>"
+                        data-image="<?php echo $item[0]->_imagesmall; ?>"
+                    >
+                        <div class="rank-count-container">
+                            <div class='rank-count-main'><?php echo $item[1]; ?></div>
+                        </div>
+                        <div class="rank-item-container">
+                            <div class="rank-item-title rank-item-title-w-image">
+                                <?php echo $item[0]->_title; ?>
+                            </div>
+                        </div>
+                        <div class="rank-image" style='background:url(<?php echo $item[0]->_imagesmall; ?>) 50% 25%;background-size:cover;'></div>
+                        <div class="rank-history"><?php echo $item[2];?></div>
+                    </div>
+            <?php 
+            }
+            ?>
+        </div>
+        <div class="btn-flat" style='float: right;margin-top: 10px;'>VIEW FULL RANKED LIST</div>
+    <?php
+}
+
 function ShowFilterList($userid, $sizeOfList){
 ?>
         <div class="rank-filter-search">

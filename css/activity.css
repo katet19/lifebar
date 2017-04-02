@@ -102,6 +102,11 @@
 	text-align: left;
 }
 
+.feed-activity-rank-container{
+  margin-left: 190px;
+	text-align: left;
+}
+
 .feed-horizontal-card{
     position: relative;
     overflow: hidden;
@@ -518,7 +523,7 @@ background-color: transparent !important;
 }
 
 @media only screen and (max-width : 599px) {
-	.feed-activity-game-container{
+	.feed-activity-game-container, .feed-activity-rank-container{
 	  margin-top: 15px;
 	  width: 100%;
 	  margin-left: 0;

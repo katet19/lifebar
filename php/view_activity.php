@@ -125,6 +125,8 @@ function DisplayMainActivity($userid, $filter){
 					FeedSteamImport($feeditem, $conn, $mutualconn);
 				}else if($feeditem[0][5] == "COLLECTIONUPDATE"){
 					FeedCollectionUpdate($feeditem, $conn, $mutualconn);
+				}else if($feeditem[0][5] == "RANK"){
+					FeedRankItem($feeditem, $conn, $mutualconn);
 				}
 			}
 		?>
@@ -237,8 +239,45 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				FeedCollectionFollowItem($feeditem, $conn, $mutualconn);
 			}else if($feeditem[0][5] == "STEAMIMPORT"){
 				FeedSteamImport($feeditem, $conn, $mutualconn);
+			}else if($feeditem[0][5] == "COLLECTIONUPDATE"){
+					FeedCollectionUpdate($feeditem, $conn, $mutualconn);
+			}else if($feeditem[0][5] == "RANK"){
+				FeedRankItem($feeditem, $conn, $mutualconn);
 			}
 		}
+}
+
+function FeedRankItem($feed, $conn, $mutualconn){
+	$user = GetUser($feed[0][0]->_userid);
+	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $username = $user->_first." ".$user->_last; }else{ $username = $user->_username; } 
+	?>
+	<div class="row" style='margin-bottom: 30px;'>
+		<div class="feed-avatar-col">
+    		<div class="feed-avatar" data-id="<?php echo $user->_id; ?>" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+    			<?php if($user->_badge != ""){ ?><img class="srank-badge-activity" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+    		</div>
+		</div>
+		<div class="feed-activity-icon-col">
+			<div class="feed-activity-icon-xp"><i class="material-icons" style='position: relative;top: 2px;'>swap_vert</i></div>
+		</div>
+		<div class="feed-content-col">
+				<div class="feed-activity-title">
+					<span class="feed-activity-user-link" data-id="<?php echo $user->_id; ?>"><?php echo $username; ?></span>
+					<?php if($feed[0][0]->_tier == 1){  ?>
+						started their All-Time Ranked List
+					<?php }else{ ?>
+						updated their All-Time Ranked List
+					<?php } ?>
+					<span class="feed-activity-when-info"><i class="material-icons" style="font-size: 1em;position: relative;top: 2px;">schedule</i> <?php echo ConvertTimeStampToRelativeTime($feed[0][0]->_date);?></span>
+				</div>
+			<div class="feed-activity-rank-container">
+				<?php					
+					ShowActivityRankingList($feed[0][1]);
+				?>
+			</div>
+		</div>
+	</div>
+<?php
 }
 
 function FeedDateDivider($date){

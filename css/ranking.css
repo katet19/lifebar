@@ -51,6 +51,17 @@
     position:relative;
 }
 
+.rank-list-container-activity{
+    width: 100%;
+    display: inline-block;
+    float: left;
+    margin-top:10px;
+    text-align:left;
+    background-color:#eee;
+    position:relative;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
 .rank-welcome-container{
     width: calc(100% - 40px);
     margin-top:160px;
@@ -289,6 +300,22 @@
     text-align: left;
     background-color: #eee;
     border-top: 3px solid #eee;
+    border-bottom: 1px solid #ddd;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.rank-container-activity{
+    float:left;
+    position: relative;
+    padding: 15px 5px 15px 100px;
+    width: 100%;
+    text-align:left;
+    background-color:white;
+    border-top:3px solid white;
     border-bottom: 1px solid #ddd;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;

@@ -368,6 +368,39 @@ function GetMyFeed($userid, $page, $filter){
 					$myfeeditem[] = "COLLECTIONUPDATE";
 					$myfeed[] = $myfeeditem;
 				}
+			}else if($row["Event"] == "RANK"){
+				$myfeeditem = array();			
+				unset($allgamedata);
+				$rankings = explode(",", $row["Quote"]);
+				foreach($rankings as $rank){
+					unset($gamedata);
+					unset($gamemeta);
+					$gamemeta = explode("||", $rank);
+					$game = GetGame($gamemeta[0]);
+					$gamedata[] = $game;
+					$gamedata[] = $gamemeta[1];
+					$gamedata[] = $gamemeta[2];
+					$allgamedata[] = $gamedata;
+				}
+				$exp = null;
+				$event = new Event($row["ID"],
+						$row["UserID"],
+						$exp->_first." ".$exp->_last,
+						$row["Event"],
+						$row["GameID"],
+						$row["Date"],
+						$row["Quote"],
+						$row["Tier"],
+						$row["URL"]);
+						
+				$myfeeditem[] = $event;
+				$myfeeditem[] = $allgamedata;
+				$myfeeditem[] = $exp;
+				$myfeeditem[] = $exp;
+				$myfeeditem[] = 1;
+				$myfeeditem[] = "RANK";
+				$myfeed[] = $myfeeditem;
+				
 			}
 		}
 	}
