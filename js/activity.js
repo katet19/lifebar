@@ -107,6 +107,10 @@ function AttachActivityEvents(){
 		});
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
+	$(".rank-image").on("click", function(e){
+		e.stopPropagation(); 
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
 	$(".card-game-secondary-actions").on("click", function(e){ 
 		e.stopPropagation(); 
 		CloseSearch();

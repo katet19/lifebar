@@ -388,6 +388,11 @@
     width: 100px;
     height: calc(100% - 3px);
     background-size: cover;
+    cursor:pointer;
+}
+
+.rank-image:hover{
+    opacity:0.8;
 }
 
 .rank-history{

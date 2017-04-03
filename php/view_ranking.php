@@ -20,6 +20,7 @@ function DisplayRanking($userid){
                         data-loaded-rank="<?php echo $item->_rank;?>"
                         data-rank="<?php echo $item->_rank;?>"
                         data-id="<?php echo $item->_id;?>"
+                        data-gbid="<?php echo $item->_gbid;?>"
                         data-image="<?php echo $item->_imagesmall; ?>"
                         data-xp="<?php echo $item->_xptype; ?>"
                     >
@@ -146,6 +147,7 @@ function ShowActivityRankingList($rankedlist){
                         data-loaded-rank="<?php echo $item[0]->_rank;?>"
                         data-rank="<?php echo $item[1];?>"
                         data-id="<?php echo $item[0]->_id;?>"
+                        data-gbid="<?php echo $item[0]->_gbid;?>"
                         data-image="<?php echo $item[0]->_imagesmall; ?>"
                     >
                         <div class="rank-count-container">
@@ -354,6 +356,7 @@ function ShowUnRankedItem($item){ ?>
         data-loaded-rank="<?php echo $item->_rank;?>"
         data-rank="<?php echo $item->_rank;?>"
         data-id="<?php echo $item->_id;?>"
+        data-gbid="<?php echo $item->_gbid;?>"
         data-image="<?php echo $item->_imagesmall; ?>"
         data-xp="<?php echo $item->_xptype;  ?>"
     >

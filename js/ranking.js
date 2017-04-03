@@ -38,6 +38,10 @@ function ShowRanking(){
              $(".rank-container").on("click", function(){
                 ToggleGameRankSelection($(this));
              });
+            $(".rank-image").on("click", function(e){
+                e.stopPropagation(); 
+                ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+            });
             AttachFilterEvents();
             $('.dropdown-button').dropdown({
                 inDuration: 300,
@@ -73,7 +77,7 @@ function SaveRankedList(){
             var change = $(this).attr("data-history");
             if(change == undefined)
                 change = "";
-                
+
             if(gameid > 0){
                 rankedList = rankedList + gameid + "||" + count + "||" + change + ",";
             }
