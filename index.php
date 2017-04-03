@@ -40,7 +40,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<meta name="description" content="Lifebar is a platform to celebrate & capture your life with games. From your earliest memories to your latest speed run, Lifebar captures it all.">
+		<meta name="description" content="Lifebar is a social platform to save, rank & share your life with games. From childhood memories to your latest speed run, Lifebar can capture it all.">
 		<?php
 	}
 	?>
