@@ -70,8 +70,12 @@ function SaveRankedList(){
         var count = 1;
         $(".rank-list-container").find(".rank-container").each(function(){
             var gameid = $(this).attr("data-id");
+            var change = $(this).attr("data-history");
+            if(change == undefined)
+                change = "";
+                
             if(gameid > 0){
-                rankedList = rankedList + gameid + ",";
+                rankedList = rankedList + gameid + "||" + count + "||" + change + ",";
             }
             $(this).attr("data-loaded-rank", count);
             count++;
@@ -348,14 +352,18 @@ function UpdateRankedPositions(showingAll){
             var lastTime = parseInt($(this).attr("data-loaded-rank"));
             if(lastTime == 0){
                 $(this).find(".rank-history").html("<span class='rank-history-new'>NEW</span>");
+                $(this).attr("data-history", "NEW");
             }else if(lastTime > globalcount){
                 var diff = lastTime - globalcount;
                 $(this).find(".rank-history").html("<span class='rank-history-green'><i class='material-icons left' style='margin-right: 5px;'>keyboard_arrow_up</i>"+ diff +"</span>");
+                $(this).attr("data-history", diff);
             }else if(lastTime < globalcount){
                 var diff = globalcount - lastTime;
                 $(this).find(".rank-history").html("<span class='rank-history-red'><i class='material-icons left' style='margin-right: 5px;'>keyboard_arrow_down</i> "+ diff  +"</span>");
+                $(this).attr("data-history", -diff);
             }else{
                 $(this).find(".rank-history").html("");
+                $(this).attr("data-history", "");
             }
              $(this).stop();
              

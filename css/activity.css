@@ -521,6 +521,14 @@ background-color: transparent !important;
 .feed-visual-sentence-sublabel{
 	font-size:0.5em;
 }
+.feed-ranking-gap{
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin: 0px 0px -5px;
+    color: #3f51b5;
+    padding-left: 23px;
+}
 
 @media only screen and (max-width : 599px) {
 	.feed-activity-game-container, .feed-activity-rank-container{

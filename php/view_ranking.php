@@ -129,10 +129,16 @@ function ShowProfileRankingList($rankedlist){
 }
 
 function ShowActivityRankingList($rankedlist){
+    $currPos = "-1";
     ?>
     <div class="rank-list-container-activity">
             <?php
-            foreach($rankedlist as $item){ ?>
+            foreach($rankedlist as $item){
+                    if($item[1] != $currPos + 1 && $currPos != -1){?>
+                        <div class='feed-ranking-gap'>
+                            <i class='material-icons'>more_vert</i>
+                        </div>
+                    <?php } ?>
                     <div class="rank-container-activity"
                         data-genre="<?php echo $item[0]->_genre;?>"
                         data-platform="<?php echo $item[0]->_platforms;?>"
@@ -151,9 +157,18 @@ function ShowActivityRankingList($rankedlist){
                             </div>
                         </div>
                         <div class="rank-image" style='background:url(<?php echo $item[0]->_imagesmall; ?>) 50% 25%;background-size:cover;'></div>
-                        <div class="rank-history"><?php echo $item[2];?></div>
+                        <div class="rank-history">
+                            <?php if($item[2] == "NEW"){ ?>
+                                <span class='rank-history-new'>NEW</span>
+                            <?php }else if($item[2] > 0){ ?>
+                                <span class='rank-history-green'><i class='material-icons left' style='margin-right: 5px;'>keyboard_arrow_up</i><?php echo $item[2]; ?></span>
+                            <?php }else if($item[2] < 0){ ?>
+                                <span class='rank-history-red'><i class='material-icons left' style='margin-right: 5px;'>keyboard_arrow_down</i><?php echo $item[2]; ?></span>
+                            <?php } ?>
+                        </div>
                     </div>
             <?php 
+                $currPos = $item[1];
             }
             ?>
         </div>

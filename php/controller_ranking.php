@@ -138,14 +138,23 @@ function SaveUserRankedList($userid, $rankingList){
 		$mysqli->query("update `Experiences` set `Rank` = '0' where `UserID` = '".$userid."'");
 
 		$count = 1;
-		foreach($rankedGames as $gameid){
-			if($gameid > 0){
-				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `UserID` = '".$userid."' and `GameID` = '".$gameid."'";
+		foreach($rankedGames as $gamemeta){
+			$gamedata = explode("||",$gamemeta);
+			if($gamedata[0] > 0){
+				$rankupdate = "update `Experiences` set `Rank` = '".$count."' where `UserID` = '".$userid."' and `GameID` = '".$gamedata[0]."'";
 				$mysqli->query($rankupdate);
 				$count++;
 			}
+			
+			if(($gamedata[2] == "NEW" || $gamedata[2] > 0) && sizeof($rankingNotable) < 6){
+				$rankingNotable[] = $gamemeta;
+			}
 		}
+
 		AuditRanking($mysqli, $userid, $rankingList);
+
+		if(sizeof($rankingNotable) > 0)
+			CreateRankingEvent($mysqli,$userid, $rankingNotable);
 	}
 
 	Close($mysqli, $result);
@@ -153,5 +162,9 @@ function SaveUserRankedList($userid, $rankingList){
 
 function AuditRanking($mysqli, $userid, $ranklist){
 	$mysqli->query("insert into `Rank_History` (`UserID`,`Log`) values ('".$userid."', '".$ranklist."')");
+}
+
+function CreateRankingEvent($mysqli, $userid, $rankingNotable){
+	$result = $mysqli->query("insert into `Events` (`UserID`,`GameID`,`Event`,`Quote`,`Tier`) values ('".$userid."','0','RANK','".implode(",",$rankingNotable)."','2')");
 }
 ?>
