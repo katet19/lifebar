@@ -122,7 +122,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 											<span>#</span><?php echo $rankyear; ?>
 										</div>
 										<div class="game-activity-rank-title">
-											<?php echo $game->_year; ?>
+											<?php if($game->_year > 0){ echo $game->_year; }else{ echo "Unreleased"; } ?>
 										</div>
 									</div>
 									<div class="game-activity-rank-content" style='margin-right:0px !important;'>
