@@ -6,7 +6,7 @@ function DisplayRanking($userid){
     $unrankedlist = GetMyUnrankedList($userid, -1, '', '');
     $count = 1; 
     ?>
-    <div class="row" style='position:relative;width:100%;'>
+    <div class="row" style='position:relative;width:100%;display:inline-block;'>
         <div class="rank-header-container">
         </div>
         <div class="btn-floating btn-large disabled rank-save-btn"><i class="material-icons left" style='font-size:2em;position: relative;top: 0px;'>save</i> Save</div>        
