@@ -132,8 +132,8 @@ function DisplayUserHeader($user, $conn, $mutualconn){
 					</div>
 				</div>
 			<div class="profile-tab">
-				<div class="profile-tab-header profile-tab-header-active" data-tab="profile-activity-tab">Activity</div>
-				<div class="profile-tab-header" data-tab="profile-ranked-tab">Ranking</div>
+				<div class="profile-tab-header profile-activity profile-tab-header-active" data-tab="profile-activity-tab">Activity</div>
+				<div class="profile-tab-header profile-rank" data-tab="profile-ranked-tab">Ranking</div>
 			</div>
 			<div class="profile-tab-body activity-top-level activity-profile profile-activity-tab" style='position:absolute;top: 378px;' data-id='<?php echo $user->_id; ?>' >
 				<?php DisplayMainActivity($user->_id, "My Activity"); ?>

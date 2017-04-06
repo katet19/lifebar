@@ -129,7 +129,7 @@ function ShowProfileRankingList($rankedlist){
     <?php
 }
 
-function ShowActivityRankingList($rankedlist){
+function ShowActivityRankingList($rankedlist, $userid){
     $currPos = "-1";
     ?>
     <div class="rank-list-container-activity">
@@ -174,7 +174,7 @@ function ShowActivityRankingList($rankedlist){
             }
             ?>
         </div>
-        <div class="btn-flat" style='float: right;margin-top: 10px;'>VIEW FULL RANKED LIST</div>
+        <div class="btn-flat view-ranked-list" data-id="<?php echo $userid; ?>" style='float: right;margin-top: 10px;'>VIEW FULL RANKED LIST</div>
     <?php
 }
 

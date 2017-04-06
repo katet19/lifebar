@@ -111,6 +111,9 @@ function AttachActivityEvents(){
 		e.stopPropagation(); 
 		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
 	});
+	$(".view-ranked-list").on("click", function(){
+		ShowUserProfile($(this).attr("data-id"), "", "RANK");
+	});
 	$(".card-game-secondary-actions").on("click", function(e){ 
 		e.stopPropagation(); 
 		CloseSearch();

@@ -272,7 +272,7 @@ function FeedRankItem($feed, $conn, $mutualconn){
 				</div>
 			<div class="feed-activity-rank-container">
 				<?php					
-					ShowActivityRankingList($feed[0][1]);
+					ShowActivityRankingList($feed[0][1], $user->_id);
 				?>
 			</div>
 		</div>

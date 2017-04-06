@@ -1,6 +1,6 @@
 function ShowUserProfile(id, mine, browserNav){
 	if(!$("#profile").is(":visible"))
-		ShowUserContent(id,mine);
+		ShowUserContent(id,mine, browserNav);
 }
 
 function ShowUserContent(userid, mine, browserNav){
@@ -102,6 +102,9 @@ function ShowUserContent(userid, mine, browserNav){
 			$(".profile-tab-header").on("click", function(){
 				ProfileTabNav($(this));
 			});
+			if(browserNav == "RANK"){
+				ProfileTabNav($(".profile-rank"));
+			}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
