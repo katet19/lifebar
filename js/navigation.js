@@ -267,6 +267,9 @@ function UserAccountNav(){
 		CloseSideNavigation();
  		ManuallyNavigateToTab("#profile");
 	});
+	$(".my-lifebar-image").on("click", function(){
+		ShowUserProfile($(this).attr("data-id"));
+	});
 }
 
 /*

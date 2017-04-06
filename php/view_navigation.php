@@ -62,7 +62,7 @@ function DisplayLifebarForUser($user){
 				<div class="lifebar-bar-xp-popup">XP</div>
 			</span>
         </div>
-		<div class='lifebar-image'>
+		<div class='lifebar-image my-lifebar-image' data-id="<?php echo $user->_id; ?>">
 			<div class="lifebar-avatar-min z-depth-1" style="background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<?php if($user->_badge == "NEVER"){ ?><img class="srank-badge-lifebar" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
 			</div>

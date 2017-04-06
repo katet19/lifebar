@@ -208,6 +208,10 @@
 	font-size:2em;
 }
 
+.my-lifebar-image{
+	cursor: pointer;
+}
+
 @media only screen and (max-width : 992px) {
 	#nav-slide-out{
 		width:200px;
