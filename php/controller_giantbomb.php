@@ -3,7 +3,7 @@ require_once "includes.php";
 
 function RecentlyReleasedFromGB(){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
-	$request = 'http://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&filter=original_release_date:'.date('Y-m-d', strtotime('-30 days')).'%2000:00:00|'.date('Y-m-d').'%2000:00:00&format=json&limit=30';
+	$request = 'https://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&filter=original_release_date:'.date('Y-m-d', strtotime('-30 days')).'%2000:00:00|'.date('Y-m-d').'%2000:00:00&format=json&limit=30';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -78,18 +78,18 @@ function RecentlyReleasedFromGB(){
 function RequestGameFromGiantBomb($searchstring){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	//if(strrpos($searchstring, " ")){
-		//$request = 'http://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&filter=name:'.$searchstring;
-		$request = 'http://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&limit=40&query='.$searchstring.'&resources=game';
+		//$request = 'https://www.giantbomb.com/api/games/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&filter=name:'.$searchstring;
+		$request = 'https://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&limit=40&query='.$searchstring.'&resources=game';
 		$request = str_replace(" ", "+", $request);
 	//}else{
-	//	$request = 'http://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&query="'.$searchstring.'"&resources=game';
+	//	$request = 'https://www.giantbomb.com/api/search/?api_key='.$gbapikey.'&format=json&sort=original_release_date:desc&query="'.$searchstring.'"&resources=game';
 	//	$request = str_replace(" ", "%20", $request);
 	//}
 	
 	//echo $request;
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+	$userAgent = 'Lifebar.io';
 	curl_setopt($curl, CURLOPT_USERAGENT, $userAgent );
 	$curl_response = curl_exec($curl);
 	if ($curl_response === false) {
@@ -104,7 +104,7 @@ function RequestGameFromGiantBomb($searchstring){
 	}
 	$gameresults = array();
 	$myuser = $_SESSION['logged-in'];
-	if($decoded != null && sizeof($decoded->results > 0)){
+	if($decoded != null && sizeof($decoded->results) > 0){
 		foreach($decoded->results as $game){
 			if($game->original_release_date != ""){
 				$release = explode(" ",$game->original_release_date);
@@ -249,7 +249,7 @@ function RequestGameFromGiantBomb($searchstring){
 			}
 		}
 	}else{
-		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."'");
+		ManualErrorMessage("RequestGameFromGiantBomb() failed to return data from GB. Searched for '".$searchstring."' CURL:".$curl_response);
 	}
 	
 	return $gameresults;
@@ -259,7 +259,7 @@ function RequestGameFromGiantBomb($searchstring){
 function RequestGiantBombImage($gameid){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
-	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=image';
+	$request = 'https://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=image';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -295,7 +295,7 @@ function RequestGiantBombImage($gameid){
 function GetVideoDetailsGiantBomb($videoid){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
-	$request = 'http://www.giantbomb.com/api/video/2300-'.$videoid.'/?api_key='.$gbapikey.'&format=json';
+	$request = 'https://www.giantbomb.com/api/video/2300-'.$videoid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -317,7 +317,7 @@ function GetVideoDetailsGiantBomb($videoid){
 
 function RequestUSReleaseFromGiantBombByID($gameid){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
-	$request = 'http://www.giantbomb.com/api/releases/?api_key='.$gbapikey.'&format=json&filter=game:'.$gameid;
+	$request = 'https://www.giantbomb.com/api/releases/?api_key='.$gbapikey.'&format=json&filter=game:'.$gameid;
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -355,7 +355,7 @@ function RequestUSReleaseFromGiantBombByID($gameid){
 function RequestGameFromGiantBombByID($gameid){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
-	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
+	$request = 'https://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -527,7 +527,7 @@ function RequestGameFromGiantBombByID($gameid){
 function UpdateGameFromGiantBombByID($gameid, $reviewed, $pconn = null){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
-	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
+	$request = 'https://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -649,7 +649,7 @@ function UpdateGameFromGiantBombByID($gameid, $reviewed, $pconn = null){
 function FullUpdateViaGameID($gbid, $reviewed){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	//$gbid = 36067;
-	$request = 'http://www.giantbomb.com/api/game/3030-'.$gbid.'/?api_key='.$gbapikey.'&format=json';
+	$request = 'https://www.giantbomb.com/api/game/3030-'.$gbid.'/?api_key='.$gbapikey.'&format=json';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
@@ -1070,7 +1070,7 @@ function SaveTheme($name, $id, $gameid, $gbid, $mysqli){
 function GetRelatedDataForGame($gameid){
 	$gbapikey = '44af5d519adc1c95be92deec4169db0c57116e03';
 	
-	$request = 'http://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=characters,objects,concepts,locations';
+	$request = 'https://www.giantbomb.com/api/game/3030-'.$gameid.'/?api_key='.$gbapikey.'&format=json&field_list=characters,objects,concepts,locations';
 	$curl = curl_init($request);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
