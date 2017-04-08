@@ -3,8 +3,8 @@ function Connect($mysqli = null){
 	if($mysqli != null){
 		return $mysqli;
 	}else{
-		//$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
-        $mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
+		$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
+        //$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
 		if($mysqli->connect_error){ 
 			usleep(50);
 			ConnectTryTwo();
