@@ -1,19 +1,21 @@
 function ShowLanding(){
 	var windowWidth = $(window).width();
+	var urlparam = window.location.search;
     $("#landing").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #analytics, #admin, #notifications, #user, #game, #navigation-header").css({"display":"none"});
+    $("#activity, #ranking, #discover, #analytics, #admin, #notifications, #user, #navigation-header").css({"display":"none"});
     $("#navigationContainer").css({"-webkit-box-shadow":"none", "box-shadow":"none"});
-	$("#activity, #discover, #analytics, #admin, #notifications, #user, #game").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+	$("#activity, #ranking, #discover, #analytics, #admin, #notifications, #user").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#landing").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 		ShowLoader($("#landingInnerContainer"), 'big', "<br><br><br>");
 		$.ajax({ url: '../php/webService.php',
-	     data: {action: "ShowLanding" },
+	     data: {action: "ShowLanding", param: urlparam },
 	     type: 'post',
 	     success: function(output) {
 	 		$("#landingInnerContainer").html(output);
-	 		location.hash = "landing";
+	 		UpdateBrowserHash("landing");
  			$(".indicator").css({"display":"none"});
-			$(".active").removeClass("active");
+			if(urlparam != "?autogenerate")
+				$(".active").removeClass("active");
 			$(".btn-register").on('click', function(e){ $('#signupModal').openModal(); });
 			$(".landing-login, .landing-login-mobile").on('click', function(e){ $('#loginModal').openModal(); if($(window).width() > 599){ $("#username").focus(); } });
 			AttachSignUpEvents();
@@ -41,24 +43,25 @@ function ShowLanding(){
 function AttachSignUpLandingEvents(){
 	$("#SignupSubmitBtnLanding").on("click", function(e){
 		var errors = "";
-		if($("#landing-sign-up").find("#signup_username").val() === "")
+		if($("#signup_username").val() === "")
 			errors = errors + "Username cannot be blank<br>";
-		if($("#landing-sign-up").find("#signup_email").val() === "")
+		if($("#signup_email").val() === "")
 			errors = errors + "Email cannot be blank<br>";
-		if($("#landing-sign-up").find("#signup_password").val() === "")
+		if($("#signup_password").val() === "")
 			errors = errors + "Password cannot be blank<br>";
-		//if($("#landing-sign-up").find("#signup_password").val() !== $("#landing-sign-up").find("#signup_confirm_password").val())
-		//	errors = errors + "Passwords do not match<br>";
-		if($("#landing-sign-up").find("#signup_username").val().indexOf(' ') >= 0)
+		if($("#signup_username").val().indexOf(' ') >= 0)
 			errors = errors + "Username can not have spaces<br>";
-			
+
 		if(errors === "")
-			VerifyNewUserDataLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_email").val());	
+			VerifyNewUserDataLanding($("#signup_username").val(), $("#signup_password").val(), $("#signup_email").val(), $(this).parent().parent());	
 		else{
-			$("#landing-sign-up").find(".validation").html(errors);
-			$("#landing-sign-up").find(".validation").show();
+			$(this).parent().parent().find(".validation").html(errors);
+			$(this).parent().parent().find(".validation").show();
 		}
 			
+	});
+	$(".signup-tos-link").on("click", function(){
+		DisplayTermsOfService();
 	});
 	$(".google-login, .twitter-login, .facebook-login, .steam-login").unbind();
 	$(".google-login").on("click", function(e){
@@ -76,6 +79,7 @@ function AttachSignUpLandingEvents(){
 }
 
 function SignupFromLanding(username, password, email, first, last){
+	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;color: #3F51B5;background-color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>build</i> Creating new user</div>");
 	$("#SignupSubmitBtnLanding").hide();
 	$("#landing-sign-up").find(".validation").show();
 	ShowLoader($("#landing-sign-up").find(".validation"), 'small', '');
@@ -99,22 +103,23 @@ function SignupFromLanding(username, password, email, first, last){
 	});
 }
 
-function VerifyNewUserDataLanding(username, email){
+function VerifyNewUserDataLanding(username, password, email, element){
 	var errors = "";
 	$.ajax({ url: '../php/webService.php',
          data: {action: "VerifyNewUser", username: username, email: email },
          type: 'post',
          success: function(output) {
+			 		var errors = "";
          			if(output.indexOf("Username is already used") >= 0){
          				errors = "Username is already used<br>";
          			}else if(output.indexOf("Email is already used") >= 0){
          				errors = errors + "Email is already used<br>";
          			}
          			if(errors !== ""){
-         				$("#landing-sign-up").find(".validation").html(errors);
-						$("#landing-sign-up").find(".validation").show();
+         				element.find(".validation").html(errors);
+						element.find(".validation").show();
          			}else{
-         				SignupFromLanding($("#landing-sign-up").find("#signup_username").val(), $("#landing-sign-up").find("#signup_password").val(), $("#landing-sign-up").find("#signup_email").val(), '', '');
+         				SignupFromLanding(username, password, email, '', '');
          			}
         },
         error: function(x, t, m) {

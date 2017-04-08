@@ -8,7 +8,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 		<link href="../css/main.css" rel="stylesheet" type="text/css" />
 	</head>
-	<body style='background-color:#D32F2F;color:white;text-align:center;padding:50px 25px'>
+	<body style='background-color:#3F51B5;color:white;text-align:center;padding:50px 25px'>
 		<div><?php DisplayLifeBarLogo(false); ?></div>
 	</body>
 	</html>
@@ -22,7 +22,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<title>Lifebar | Your gaming life</title>
+		<title>Lifebar | We Heart Games ;)</title>
 		<?php
 	} 
 ?>
@@ -30,7 +30,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-Frame-Options" content="deny">
 <meta http-equiv="Cache-control" content="public">
-<meta name="theme-color" content="#D32F2F">
+<meta name="theme-color" content="#3F51B5">
 	<?php if(isset($_GET['game'])){ ?>
 		<meta name="description" content="<?php echo $game->_title." "; 
 				if($game->_developer != ''){ echo "developed by ".$game->_developer." "; }
@@ -38,14 +38,19 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 				?> 
 		">
 		<?php
+	}else{
+		?>
+		<meta name="description" content="Lifebar is a social platform to save, rank & share your life with games. From childhood memories to your latest speed run, Lifebar can capture it all.">
+		<?php
 	}
 	?>
 
 <link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/webflow.css" rel="stylesheet" type="text/css" />
-<link href="../css/font/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="../css/fonts/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="../css/navigation.css" rel="stylesheet" type="text/css" />
 <link href="../css/main.css" rel="stylesheet" type="text/css" />
 <link href="../css/activity.css" rel="stylesheet" type="text/css" />
@@ -63,6 +68,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/badge.css" rel="stylesheet" type="text/css" />
 <link href="../css/collection.css" rel="stylesheet" type="text/css" />
 <link href="../css/import.css" rel="stylesheet" type="text/css" />
+<link href="../css/ranking.css" rel="stylesheet" type="text/css" />
 <link href="../css/lifebar.webflow.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
@@ -88,6 +94,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <script type="text/javascript" src="../js/collection.js"></script>
 <script type="text/javascript" src="../js/import.js"></script>
 <script type="text/javascript" src="../js/onboarding.js"></script>
+<script type="text/javascript" src="../js/ranking.js"></script>
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -116,37 +123,43 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php DisplayNavigation(); ?>
 	</div>
 <div id="contentContainer" class="row">
-	<div id="activity" class="col s12 m12 l9 outerContainer" style='padding: 0'>
-		<div id="activityInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236)"></div>
-	</div>
-	<div id="profile" class="col s12 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;">
-		<div id="profileInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height: 150%;"></div>
-	</div>
-	<div id="profiledetails" class="col s12 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;">
-		<div id="profiledetailsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height: 150%;"></div>
-	</div>
-	<div id="discover" class="col s12 outerContainer" style='padding: 0;'>
-		<div id="discoverInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236)"></div>
-	</div>
-	<div id="notifications" class="col s12 m12 l9 outerContainer" style='padding: 0;display:none;'>
-		<div id="notificationsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236)"></div>
-	</div>
-	<div id="game" class="col s12 m12 l11 outerContainer" style="padding:0;">
-		<div id="gameInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);">
+	<div id="game" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
+		<div id="gameInnerContainer" class="modalInnerContainer z-depth-3">
 			<?php if(isset($_GET['game'])){ 
 				DisplayGameViaID($_GET['game'], -1);	
 			}
 			?>
 		</div>
 	</div>
-	<div id="settings" class="col s12 m12 l9 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
-		<div id="settingsInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height: 150%;"></div>
+	<div id="gamemini" class="col s12 outerContainer" style="padding:0;">
+		<div id="gameminiInnerContainer" class="modalInnerContainer z-depth-5"></div>
 	</div>
-	<div id="admin" class="col s12 m12 l9 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 110px;position: absolute;  width: 100%;  z-index: 3;">
-		<div id="adminInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height:100%;"></div>
+	<div id="profile" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;">
+		<div id="profileInnerContainer" class="modalInnerContainer z-depth-3"></div>
 	</div>
-	<div id="landing" class="col s12 m12 l9 outerContainer" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 0px;position: absolute;  width: 100%;  z-index: 99;">
-		<div id="landingInnerContainer" class="innerContainer" style="top:0; background-color:rgb(237, 236, 236);min-height:100%;"></div>
+	<div id="activity" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0'>
+		<div id="activityInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="ranking" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0'>
+		<div id="rankingInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="profiledetails" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;">
+		<div id="profiledetailsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>
+	</div>
+	<div id="discover" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0;'>
+		<div id="discoverInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="notifications" class="col s12 outerContainer outerContainer-slide-out" style='padding: 0;display:none;'>
+		<div id="notificationsInnerContainer" class="innerContainer"></div>
+	</div>
+	<div id="settings" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;left: 0px;  bottom: 0;  top: 75px;position: absolute;  width: 100%;  z-index: 3;display:none;">
+		<div id="settingsInnerContainer" class="innerContainer" style="min-height: 150%;"></div>
+	</div>
+	<div id="admin" class="col s12 outerContainer outerContainer-slide-out" style="padding:0;display:none;">
+		<div id="adminInnerContainer" class="innerContainer" style="min-height:100%;"></div>
+	</div>
+	<div id="landing" class="col s12 outerContainer outerContainer-slide-out" style="padding:0 !important;display:none;left: 0px;bottom: 0px;right: 0px;top: 0px;position: absolute;margin-left: 0px !important;width: 100%;z-index: 99;width: 100% !important;">
+		<div id="landingInnerContainer" class="innerContainer" style="min-height:100%;background-color: rgba(0,0,0,0.7);"></div>
 	</div>
 </div>
 <div id='fb-root'></div>
@@ -158,7 +171,6 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <?php DisplayUniversalPopUp(); ?>
 <?php DisplayUniversalBottomSheet(); ?>
 <?php DisplayBattleProgressSheet(); ?>
-<?php DisplayUniversalUserPreview(); ?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

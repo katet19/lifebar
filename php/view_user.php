@@ -3,24 +3,23 @@ function DisplayUserCard($user, $count, $classId, $myConnections, $showFollow = 
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 ?>
-   <div class="col <?php if($count == -1){ echo "s6 m5 l4"; }else{ echo "s6 m3 l2"; } ?>" >
+   <div class="col <?php if($count == -1){ echo "s6 m5 l4"; }else{ echo "s6 m4 l3"; } ?>" >
       <div class="card user-discover-card <?php echo $classId; ?>" data-count="<?php echo $count; ?>" data-id="<?php echo $user->_id; ?>" <?php if($showFollow){ ?>style='height:220px;' <?php } ?> >
         <div class="card-image waves-effect waves-block">
         	<div class="col s12 valign-wrapper">
-        		<div class="user-avatar" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+        		<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:90px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:90px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
         			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>
-        		<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
         	</div>
         </div>
         <div class="card-content" <?php if($showFollow){ ?>style='height:100px;' <?php } ?>>
 			<?php if($showFollow){ ?>
 				<div class="user-follow-btn-container row">
 					<div class="col s6" style='padding:0;' title='Dismiss Suggested User'>
-						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline nav-user-action-btn'></i></div>
+						<div class='dismiss-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons nav-user-action-btn'>remove_circle_outline</i></div>
 					</div>
 					<div class="col s6" style='padding:0;' title='Follow User'>
-						<div class='follow-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people nav-user-action-btn'></i></div>
+						<div class='follow-from-discover-small' data-category ='<?php echo $classId; ?>' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons nav-user-action-btn'>person_add</i></div>
 					</div>
 				</div>
 			<?php } ?>
@@ -46,14 +45,14 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         <div class="card-image waves-effect waves-block" <?php if($showquote){ ?>style='background-color:#F1F5F8;'<?php } ?>>
         	<div class="col s12 valign-wrapper">
         		<?php if($showbtn){ ?>
-        			<div class='btn follow-from-discover' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-social-people left'></i>Follow</div>
-					<div class='btn dismiss-from-discover grey' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='mdi-content-remove-circle-outline left'></i>Dismiss</div>
+        			<div class='btn follow-from-discover' target='Follow User' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons'>person_add</i></div>
+					<div class='btn dismiss-from-discover grey' target='Dismiss User' data-id="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"><i class='material-icons'>remove_circle_outline</i></div>
         		<?php }else{ ?>
 	        		<input type="checkbox" <?php if(!$showquote && !$checked){ ?> class='searchfollow' <?php }else if($showquote){ ?> class='userquickfollow' <?php }else{ ?> class='criticquickfollow' <?php } ?> id="follow<?php echo $user->_id; ?>"  data-id="<?php echo $user->_id; ?>" <?php if($checked){ echo "checked"; } ?> />
 	        		<label for="follow<?php echo $user->_id; ?>" class='quickfollow'></label>
 	        	<?php } ?>
         		<div class="<?php if($showbtn){ ?>user-follow-card-image-w-game<?php }else{ ?>user-follow-card-image<?php } ?>" style="margin-right: <?php if($showquote){ ?>0<?php }else{ ?>auto<?php } ?>;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;cursor: default;">
-        			<?php if($user->_badge != ""){ ?><img class="srank-badge" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+        			<?php if($user->_badge != ""){ ?><img class="srank-badge-follow" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
         		</div>
 		      	<?php if($showquote && $user->_security == "Authenticated"){ ?> 
 		      		<div class='authenticated-mark mdi-action-done ' title="Verified Account" style='float:right;'></div>
@@ -78,10 +77,10 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         		$event = GetMostAgreedQuoteForUser($user->_id);
         		$game = GetGame($event->_gameid);
         	?>
-        		<div class="feed-horizontal-card"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-				    <a class="feed-card-image waves-effect waves-block" style="width:100px;display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+        		<div class="feed-horizontal-card" style='max-height:150px;'  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				    <a class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				    </a>
-			    	<div class="feed-card-content" <?php if($showquote){ ?>style='left:100px;'<?php } ?>>
+			    	<div class="feed-card-content" <?php if($showquote){ ?>style='height:150px;'<?php } ?>>
 					  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes" && !$showquote)){ ?>
 					      <div class="feed-card-icon tier<?php echo $event->_tier; ?>BG" title="<?php echo "Tier ".$xp->_tier." - Curated Review"; ?>">
 					      		<i class="mdi-editor-format-quote"></i>
@@ -91,7 +90,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
 							      		<i class="mdi-editor-format-quote"></i>
 								  </div>
 			  			<?php } ?>
-	      				<div class="feed-card-title grey-text text-darken-4">
+	      				<div class="feed-card-title grey-text text-darken-4" style='font-size:1em;'>
 				      		<div class="feed-card-level-game_title feed-activity-game-link" data-gbid="<?php echo $game->_gbid; ?>"><?php echo $game->_title; ?></div>
 					  		<div class="critic-quote-icon"><i class="mdi-editor-format-quote" style='color:rgba(0,0,0,0.8);'></i></div> <?php echo $event->_quote; ?>
 					    	<?php if($user->_security == "Authenticated" && $xp->_authenticxp == "Yes"){ ?> 
@@ -121,8 +120,7 @@ function DisplayCriticQuoteCard($exp, $pos){
 ?>
    <div class="col s12 critic-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
-   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 	        <?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
 	        <div class="user-name">
 	        	<?php if($user->_security == "Journalist" || $user->_security == 'Authenticated'){ ?>
@@ -238,8 +236,7 @@ function DisplayUserQuoteCard($exp, $pos){
 ?>
    <div class="col s12 user-container" <?php if($pos == 1){ echo "style='border-bottom:none;'"; } ?>>
    		<div class="critic-name-container col s12 m12 l3" data-id="<?php echo $user->_id; ?>">
-   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-			<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+			<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<?php if($user->_badge != ""){ ?><img class="srank-badge-review" src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
 			</div>
 	        <div class="user-name">
@@ -344,8 +341,7 @@ function DisplayGlobalLatestXP(){
 		?>
 		<div class="col s12 latest-xp-list-item latest-xp-count-<?php echo $count; ?>" >
 	   		<div class="latest-xp-name-container col s12" data-id="<?php echo $user->_id; ?>">
-	   			<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
-				<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="user-avatar" data-id="<?php echo $user->_id; ?>"  style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		        <div class="user-name">
 		        	<?php if($user->_security == "Journalist"){ ?>
 		          	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php echo $user->_first." ".$user->_last; ?> <span class="subNameInfo" style="display:inline-block"><?php echo $user->_title; ?></span><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
@@ -397,37 +393,13 @@ function DisplayGlobalLatestXP(){
 	} 
 }	 
 
-function DisplayUserPreviewCard($user, $conn, $mutualconn){ ?>
-	<div class="user-preview-card">
-		<div class="card user-preview-card-container" data-id="<?php echo $user->_id; ?>"> 
-	        <div class="card-content">
-				<?php DisplayUserLifeBarRound($user, $conn, $mutualconn, true); ?>
-	        </div>
-	        <div class="card-action">
-	        	<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
-	        		<div style='float: left;color: rgba(0,0,0,0.4);margin: 5px 1em 5px;padding: 0 5% 0 0;line-height: 36px;'><?php echo $user->_email; ?></div>
-	        	<?php } ?>
-	        	<?php if(in_array($user->_id, $conn) || $user->_id == $_SESSION['logged-in']->_id || $_SESSION['logged-in']->_id < 1){ ?>
-	        		
-	        	<?php }else{ ?>
-	        		<div class="btn-flat user-preview-card-follow-action" data-userid="<?php echo $user->_id; ?>" data-name="<?php if($user->_security == "Journalist" || $user->_security == "Authenticated"){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?>"> FOLLOW</div>
-	        		
-	        	<?php } ?>
-	        	<div class="btn-flat user-preview-card-view-activity" data-userid="<?php echo $user->_id; ?>">ACTIVITY</div>
-	        	<div class="btn-flat user-preview-card-view-profile" data-userid="<?php echo $user->_id; ?>">PROFILE</div>
-	        </div>
-	      </div>
-      </div>
-<?php
-}
-
 function BuildDetailsPopUp($exp, $details, $conn){
 	$user = $exp->_username;
 	?>
 	<div id="<?php echo $exp->_game->_id."-".$user->_id; ?>" class="modal detailsBtnModal dynamicModal" style="background-color:white;">
 		<div class="row">
 	   		<div class="latest-xp-name-container col s10">
-				<div class="user-avatar" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="width:45px;border-radius:50%;display: inline-block;float:left;margin-left: 0.5em;margin-top:15px;height:45px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 		        <div class="user-name">
 		        	<span class="card-title activator grey-text text-darken-4" style="font-weight:bold;"><?php if($user->_security == 'Authenticated'){ echo $user->_first." ".$user->_last; }else{ echo $user->_username; } ?> <span class="subNameInfo" style="display:inline-block"><span class="subNameContext"><?php if(sizeof($exp->_playedxp) > 0){ echo " played "; }else if(sizeof($exp->_watchedxp) > 0){ echo " watched "; }else{ echo " experienced "; } ?> </span><span class="subNameGameTitle latest-xp-game-name" data-gameid="<?php echo $exp->_game->_id; ?>" data-gbid="<?php echo $exp->_game->_gbid; ?>" ><?php echo $exp->_game->_title; ?></span></span>
 		        </div>
@@ -460,12 +432,6 @@ function BuildDetailsPopUp($exp, $details, $conn){
 	</div>
 	<?php
 }
-
-
-function DisplayUniversalUserPreview(){ ?>
-	<div id="universalUserPreview" class="modal"></div>
-<?php }
-
 
 function BuildPlayedSentence($exp){
 	$sentence = "I played "; 
@@ -528,6 +494,7 @@ function BuildWatchedSentence($exp){
 function DisplayRoleManagement($userid){
 	$user = GetUser($userid);
 	?>
+	<div style='padding:20px;'>
 	  <label class="myxp-form-box-header" style='font-size: 1.25em;font-weight: 300;'>User Roles</label>
 	  <div class="myxp-form-select-item" style='margin: 10px 25%;text-align: left;'>
 	      <input name="rolegroup" class="with-gap" type="radio" id="user-role" <?php if($user->_security == 'User'){ echo "checked"; }?> />
@@ -542,6 +509,7 @@ function DisplayRoleManagement($userid){
 	    <label for="journalist-role">Journalist</label>
 	    </div >
 	    <div class='btn save-role-change' style='margin-top: 25px;'>Save Role Changes</div>
+	</div>
 	<?php
 }
 

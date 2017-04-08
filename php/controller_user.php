@@ -36,7 +36,7 @@ function ApplyPromoCode($userid, $promo){
 		while($row = mysqli_fetch_array($result)){
 			if($row['RewardType'] == 'BADGE'){
 				GiveBadgeAccess($userid, $row['Reward']);
-				echo "<div style='font-size:1.2em;font-weight:500;'>Unlocked <i>".$row['Name']."</i> Badge!</div> <div style='color:rgba(0,0,0,0.6);'>Go to Settings > Avatars & Badges to select your new badge.</div>";
+				echo "<div style='font-size:1.2em;font-weight:500;'>Unlocked <i>".$row['Name']."</i> Badge!</div> <div style='color:rgba(0,0,0,0.6);'>Go to Settings > Badge to equip your new badge.</div>";
 				$nothingFound = false;
 			}
 		}
@@ -99,6 +99,7 @@ function SaveOnboardingAccount($steam, $xbox, $psn, $age){
 	$birthyear = $now - $age;
 	$mysqli->query("Update `Users` SET `Birthdate`='".$birthyear."-01-01', `SteamName`='".$steam."', `Xbox`='".$xbox."', `PSN`='".$psn."' WHERE `ID` = '".$id."'");
 	Close($mysqli, $result);
+	FastLogin($id);
 }
 
 function SaveOnboardingFollowing($following, $pubs){
@@ -165,8 +166,9 @@ function RegisterUser($username, $password, $first, $last, $email, $privacy){
 		$randomToken = hash('sha256',uniqid(mt_rand(), true).uniqid(mt_rand(), true));
 		$mysqli->query("INSERT INTO `Users` (`Username`,`Hash`,`Email`,`First`,`Last`,`Privacy`, `SessionID`) VALUES ('".$username."','".$hashedpw."','".$email."','".$first."','".$last."','".$privacy."', '".$randomToken."')");
 		$user = Login($username, $password);
-		AddIntroNotifications($user->_id, $mysqli);
+		//AddIntroNotifications($user->_id, $mysqli);
 		CreateDefaultUserCollections($user->_id);
+		CalculateWeave($user->_id);
 	}
 	Close($mysqli, $result);
 	return $user;
@@ -312,7 +314,8 @@ function GetOnboardingCritics(){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 						$user->_weave = GetWeave($row["ID"], $mysqli);
 						$journalist[] = $user;
 		}
@@ -347,7 +350,8 @@ function GetUser($userid, $pconn = null){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -384,7 +388,8 @@ function GetUserByName($username){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$myuser = $user;
 
@@ -420,7 +425,8 @@ function GetJournalists(){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$journalists[] = $user;
 
@@ -522,7 +528,8 @@ function GetConnectedTo($userid){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -639,7 +646,8 @@ function GetConnectedToMe($userid){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -739,7 +747,8 @@ function SearchForUser($search){
 						$row["Title"],
 						$row["Image"],
 						$row["Website"],
-						$row["Badge"]);
+						$row["Badge"],
+						$row["AccountType"]);
 				$user->_weave = GetWeave($row["ID"], $mysqli);
 				$users[] = $user;
 			}
@@ -927,8 +936,8 @@ function GetShareLink($userid, $type, $otherid){
 		$game = GetGame($otherid);
 		//$header = "Share ".$game->_title." with others";
 		$header = "Select how you would like to share this game";
-		$share = urlencode("Check out analytics and what others are saying about ".$game->_title." @Lifebario!");
-		$shareEmail = urlencode("Check out analytics and what others are saying about ".$game->_title." @Lifebario! ".$url);
+		$share = urlencode("Check out what gamers are saying about ".$game->_title." @Lifebario!");
+		$shareEmail = urlencode("Check out what gamers are saying about ".$game->_title." @Lifebario! ".$url);
 	}else if($type == "user"){
 		$url = "http://lifebar.io/1/u.php?i=u".$otherid;
 		$user = GetUser($otherid);

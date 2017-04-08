@@ -317,7 +317,8 @@ function GetKnowledgeGames($knowledgeid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
@@ -348,7 +349,8 @@ function GetKnowledgeGamesForDiscover($knowledgeid, $userid){
 				'',
 				$row["Owned"],
 				$row["BucketList"],
-				$row["AuthenticXP"]);
+				$row["AuthenticXP"],
+				$row['Rank']);
 				$myxp[] = $experience; 
 		}
 	}
@@ -432,7 +434,7 @@ function GetPlatformGames($platformid, $userid){
 function GetPlatformGamesForDiscover($platformid, $userid){
 	$mysqli = Connect();
 	$myxp = array();
-	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 6";
+	$query = $query = "select *, (select `Name` from `Link_Platforms` l where l.`GBID` = '".$platformid."') as 'RealName' from `Game_Platforms` f, `Games` g where f.`PlatformID` = '".$platformid."' and g.`GBID` = f.`GBID` and g.`ID` not in (select `GameID` from `Sub-Experiences` where `UserID` = '".$userid."') LIMIT 0, 8";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 			$user = GetUser($userid);
@@ -449,7 +451,8 @@ function GetPlatformGamesForDiscover($platformid, $userid){
 				'',
 				$row["Owned"],
 				$row["BucketList"],
-				$row["AuthenticXP"]);
+				$row["AuthenticXP"],
+				$row['Rank']);
 				$myxp[] = $experience; 
 		}
 	}
@@ -486,7 +489,6 @@ function GetPlatformsForGame($userid, $gbid){
 	Close($mysqli, $result);
 	return $milestones;
 }
-
 
 function GetDeveloperMilestones($userid, $limit, $type){
 	$mysqli = Connect();
@@ -609,7 +611,8 @@ function GetDeveloperGames($devid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}else{
 				$myxp[] = $xp;
@@ -641,7 +644,8 @@ function GetDeveloperGamesForDiscover($devid, $userid){
 					'',
 					$row["Owned"],
 					$row["BucketList"],
-					$row["AuthenticXP"]);
+					$row["AuthenticXP"],
+					$row['Rank']);
 					$myxp[] = $experience; 
 			}
 		}
@@ -705,14 +709,13 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 			$objectarray[] = "`ObjectID` in (".implode(",",$gamemeta->_platforms).") and `Category` = 'Platform'";
 		
 		if(sizeof($objectarray) > 0){
-			
 			$objectchecks = $objectchecks.implode(" or ",$objectarray)." )";
 		}else
 			$objectchecks = "";
 	}else{
 		$objectchecks = "";
 	}
-	
+
 	if(	$action == "Bookmark" || $action == "Owned"){
 		$results = TestMilestones($userid, $gameid, "select * from `Milestones` where `Type` = 'Bookmark' or `Type` = 'Owned'", $mysqli);
 	}else if($action == "Connection"){
@@ -722,7 +725,7 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 	}else if($action == "Played XP"){
 		$results = TestMilestones($userid, $gameid, "select * from `Milestones` where (`Type` = 'Played' or `Type` = 'XP') ".$objectchecks, $mysqli);
 	}else if($action == "Watched XP"){
-		$results = TestMilestones($userid, $gameid, "select * from `Milestones` where (`Type` = 'Watched'or `Type` = 'XP') ".$objectchecks, $mysqli);
+		$results = TestMilestones($userid, $gameid, "select * from `Milestones` where (`Type` = 'Watched' or `Type` = 'XP') ".$objectchecks, $mysqli);
 	}else if($action == "1up"){
 		$results = TestMilestones($userid, $gameid, "select * from `Milestones` where `Type` = '1up'", $mysqli);
 	}
@@ -734,7 +737,7 @@ function CalculateMilestones($userid, $gameid, $anotheruserid, $action, $critic)
 	Close($mysqli, $result);
 	
 	if(!$critic)
-		DisplayBattleProgress(GetUser($userid), $progress, $gameid);
+		DisplayBattleProgressToasts(GetUser($userid), $progress, $gameid);
 }
 
 function CalculateAllMilestones($userid){

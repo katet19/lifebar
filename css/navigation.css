@@ -1,12 +1,302 @@
+.nav-icon{
+	font-size:2em;
+	cursor: pointer;
+	line-height: 60px;
+	color:white;
+}
+
+.navigation-row{
+	margin:0;
+	height:60px;
+}
+
+#navigation-header{
+	height:60px;
+}
+
+.navigation-col{
+	height:60px;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.navigation-menu{
+	width:50px;
+	overflow:hidden;
+}
+
+.navigation-menu-logo{
+	display: none;
+    font-size: 2em;
+    vertical-align: super;
+    margin-left: 15px;
+}
+
+.navigation-menu-logo-slide-out{
+	display: inline-block;
+}
+
+.navigation-lifebar{
+	width: -webkit-calc(100% - 50px) !important;
+	width: calc(100% - 50px) !important;
+}
+
+.navigation-menu-slide-out{
+	width:220px !important;
+}
+
+.navigation-lifebar-slide-out{
+	width: -webkit-calc(100% - 220px) !important;
+	width: calc(100% - 220px) !important;
+}
+
+#navigationContainer{
+	background-color:#3F51B5;
+	color:white;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index: 10001;
+	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+#nav-slide-out{
+	width:50px;
+	position:fixed;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	left:0px;
+	top:45px;
+	padding-top:15px;
+	z-index:1000;
+	bottom:0;
+	background-color:rgb(237, 236, 236);
+}
+
+.nav-display-slide-out{
+	width:200px !important;
+}
+
+#nav-slide-out li{
+	width: 100%;
+    padding: 8px 12px 8px 15px;
+    cursor: pointer;
+	line-height: 26px;
+	height:40.5px;
+	overflow:hidden;
+}
+
+#nav-slide-out li:hover a{
+	color:#F50057 !important;
+}
+
+#nav-slide-out li.nav-slide-out-selected-page>a{
+	color:#3F51B5 !important;
+	font-weight:bold;
+}
+
+#nav-slide-out li a{
+	color: #616161 !important;
+}
+
+#nav-slide-out li a i{
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+#nav-slide-out div{
+	margin: 16px 0px;
+}
+
+.outerContainer{
+	position:relative;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	width: -webkit-calc(100% - 55px) !important;
+	width: calc(100% - 55px) !important;
+    margin-left: 55px !important;
+	padding: 1em 5% !important;
+}
+
+.outerContainer-slide-out{
+	float: right !important;
+    width: -webkit-calc(100% - 225px) !important;
+	width: calc(100% - 225px) !important;
+}
+
+.innerContainer{
+	position:relative;
+	top:0em;
+	min-height:90%;
+	text-align: center;
+	background-color:rgb(237, 236, 236);
+}
+
+.modalInnerContainer{
+    position: relative;
+    top: 0em;
+    min-height: 90%;
+    text-align: center;
+    height: -webkit-calc(100vh - 60px);
+    overflow-y: auto;
+	overflow-x:hidden;
+    background-color: white;
+}
+
+#game.outerContainer, #profile.outerContainer, #gamemini.outerContainer{
+	display: none;
+    position: fixed;
+    z-index: 1003;
+	top: 60px;
+	padding: 0 !important;
+	width: 75% !important;
+}
+
+#game.outerContainer-slide-out, #profile.outerContainer-slide-out{
+    right: 0;
+    width: 75% !important;
+	margin-left: 0 !important;
+	z-index:1001 !important;
+}
+
+#gamemini.outerContainer{
+    right: 0;
+    width: 40% !important;
+	margin-left: 0 !important;
+	z-index:1006 !important;
+}
+
+#gameInnerContainer{
+	background-color: rgb(237, 236, 236);
+}
+
+.searchContainer{
+    background-color: transparent;
+    display: inline-block;
+    width: auto;
+	height: 47px;
+    position: relative;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.SearchBtn{
+	cursor:pointer;
+	line-height: 45px;
+	color: white;
+    vertical-align: middle;
+    padding: 0px 0.5em;
+    float: left;
+}
+
+.user-notification-icon{
+	font-size:2em;
+}
+
+.my-lifebar-image{
+	cursor: pointer;
+}
+
+@media only screen and (max-width : 992px) {
+	#nav-slide-out{
+		width:200px;
+		position:fixed;
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		-ms-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		left:-200px;
+		padding-top:15px;
+		z-index:1005;
+		bottom:-15px;
+		background-color:rgb(237, 236, 236);
+	}
+
+	.nav-display-slide-out{
+		left: 0px !important;
+		background-color: white !important;
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		border-right: 1px solid lightgray;
+	}
+
+	.outerContainer-slide-out{
+		float: right !important;
+		width: 100% !important;
+	}
+
+	.outerContainer{
+		margin-left: 0px !important;
+		padding: 0 !important;
+		width: 100% !important;
+		float: right !important;
+	}
+
+
+	.navigation-menu-slide-out{
+		width:50px !important;
+	}
+
+	.navigation-menu-logo-slide-out{
+		display: none;
+	}
+
+	.navigation-lifebar-slide-out{
+		width: -webkit-calc(100% - 50px) !important;
+		width: calc(100% - 50px) !important;
+	}
+}
+
+/*
+OLD STUFF
+*/
+
 .onboarding-big-welcome{
 	font-size:2em;
 	font-weight:500;
 	margin-top:50px;
+	margin-bottom:25px;
 }
 
 .onboarding-sub-welcome{
 	font-size:1.5em;
 	margin:5px 0 15px;
+	float:left;
+	width:100%;
+}
+
+.onboarding-sub-sub-welcome{
+	font-size:1.1em;
+	margin:5px 0;
+	float:left;
+	width:100%;
+}
+
+.onboarding-sub-welcome-icon{
+    vertical-align: top;
+    float: left;
+    margin: 0 18px 35px 25px;
+    background-color: #3F51B5;
+    color: white;
+    border-radius: 50%;
+    height: 40px;
+    padding: 8px 8px;
+    width: 40px;
 }
 
 .onboarding-image-welcome{
@@ -30,7 +320,7 @@
 }
 
 .onboarding-pub:hover{
-	background:#39a1f4 !important;
+	background:#F50057 !important;
 	color:white;
 }
 
@@ -69,7 +359,7 @@
 
 .onboarding-pref-image-active .onboarding-pref-image-title{
     padding: 70px 5px;
-    background-color: #2196F3;
+    background-color: #F50057;
 }
 
 .onboarding-pref-image-title{
@@ -115,7 +405,7 @@
     top: 0;
     right: 0;
     padding: 0 10px 0 35px;
-    background-color: rgb(63, 128, 202);
+    background-color: #F50057;
 }
 
 .pref-checkmark{
@@ -151,7 +441,7 @@
 }
 
 .onboarding-pub-active{
-	background:#39a1f4 !important;
+	background:#F50057 !important;
 	color:white;
 }
 
@@ -175,25 +465,9 @@
 	width:100%;
 	text-align:center;
     padding-top: 9px;
-    background-color:#D32F2F;
 }
 
-#navigation-header{
-	height:60px;
-}
 
-#navigationContainer{
-	background-color:#D32F2F;
-	color:white;
-	width:100%;
-	position:fixed;
-	top:0;
-	left:0;
-	z-index: 99;
-	-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-	-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-}
 
 .identificationContainer{
 	display:none;
@@ -213,20 +487,7 @@
 	margin-top:50px;
 }
 
-.outerContainer{
-	position:relative;
-	/*transform: translateX(0);*/
-}
-
-.innerContainer{
-	position:relative;
-	top:1.75rem;
-	background-color:#fff;
-	min-height:90%;
-	text-align: center;
-}
-
-#game{
+#game, #profile, #gamemini{
 	display:none;
 }
 
@@ -377,15 +638,6 @@
 	display:inline-block;
 }
 
-.userNotificiations{
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 2em;
-  vertical-align: middle;
-  cursor:pointer;
-  position: relative;
-}
-
 .userBug{
   display: inline-block;
   margin-right: 10px;
@@ -446,23 +698,6 @@
 	color:#474747;
 }
 
-
-.searchContainer, .searchContainerAnonymous, .searchContainerMobile{
-    background-color: transparent;
-    display: inline-block;
-    width: 150px;
-    position: relative;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-
-.searchContainer:hover{
-
-}
-
 .searchInput{
 	display:inline-block;
 	position: absolute;
@@ -474,10 +709,6 @@
 .searchInput input:focus{
 	border:none;
 	box-shadow:none;
-}
-
-.SearchBtn{
-	cursor:pointer;
 }
 
 .backButtonLabel{
@@ -537,15 +768,15 @@
 }
 
 .backContainer{
-	background-color: rgb(215, 214, 214);
-	color: rgba(0,0,0,0.7);
-	text-align: left;
-	position:fixed;
-	display: inline-block;
-	top: 55px;
-	left: 0;
-	right: 0;
-	z-index: 6;
+    background-color: rgb(215, 214, 214);
+    color: rgba(0,0,0,0.7);
+    text-align: left;
+    position: absolute;
+    display: inline-block;
+    top: -100px;
+    left: 0;
+    right: 0;
+    z-index: 6;
 }
 
 .backContainerSideContent{
@@ -570,8 +801,13 @@
 	padding: 10px 0 3px 0;
 }
 
-.closeMobileSearch{
+.closeSearch{
 	display:none;
+	cursor:pointer;
+	position: absolute;
+	right: 0.3em;
+	top: 0.4em;
+	font-size:1.75em;
 }
 
 .share-header-title{
@@ -619,7 +855,7 @@
 .share-sub-link{
 	cursor: pointer;
 	font-weight:400;
-	color:#2196F3;
+	color:#F50057;
 }
 
 
@@ -637,11 +873,6 @@
 	}
 	.identificationContainer .userContainer .userNameTitle, .identificationContainer .userContainer .userTotalXP {
 		display:none;
-	}
-	.userContainer{
-		top:1em;
-		bottom:auto;
-		width:auto;
 	}
 	.searchContainerAnonymous{
 		background-color:transparent;
@@ -669,12 +900,18 @@
 		top:45px;
 		width:100%;
 	}
-	.userPTalk, .userPTalkHelp, .userNotificiations{
+	.userPTalk, .userPTalkHelp{
 		display:none;
 	}
 }
 
 @media only screen and (max-width : 600px) {
+	#gamemini.outerContainer{
+		width:100% !important;
+	}
+	 #profile.outerContainer, #game.outerContainer{
+		width:90% !important;
+	 }
 	#navigationContainer{
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
@@ -689,12 +926,6 @@
 		z-index: 100 !important;
 		width: 100%;
 	}
-	.userContainer{
-		display:none;
-	}
-	#navigation-header{
-		display:none;
-	}
 	#contentContainer{
 		margin-top:69px;
 	}
@@ -706,7 +937,7 @@
 		background-color:transparent;
 		width:auto;
 		left:auto;
-		right:1em;
+		right:0em;
 	}
 	
 	.searchContainerMobile{
@@ -739,11 +970,6 @@
 		background-color: transparent !important;
 		font-size:1.5em !important;
 		color:white !important;
-	}
-	
-	.backContainer{
-		background-color:#D32F2F;
-		top: 75px;
 	}
 	
 	.backContainer .backButton .small, .backContainer .backButton .backButtonLabel{

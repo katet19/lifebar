@@ -4,7 +4,7 @@ function Connect($mysqli = null){
 		return $mysqli;
 	}else{
 		//$mysqli = new mysqli("localhost", "polygo6_weaving", "dv+kzs3Ek7BH", "polygo6_weave"); // or die('Error: '.mysql_error());
-        $mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_db");
+        $mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
 		if($mysqli->connect_error){ 
 			usleep(50);
 			ConnectTryTwo();
@@ -14,7 +14,7 @@ function Connect($mysqli = null){
 	}
 }
 function ConnectTryTwo(){
-	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_db");
+	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
 	if($mysqli->connect_error){ 
 		usleep(50);
 		ConnectTryThree();
@@ -23,7 +23,7 @@ function ConnectTryTwo(){
 	return $mysqli;
 }
 function ConnectTryThree(){
-	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_db");
+	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
 	if($mysqli->connect_error){ 
 		usleep(400);
 		ConnectTryFour();
@@ -32,7 +32,7 @@ function ConnectTryThree(){
 	return $mysqli;
 }
 function ConnectTryFour(){
-	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_db");
+	$mysqli = new mysqli("localhost", "lifeba8_appuser", "a41e684b36ea57", "lifeba8_dev");
 	if($mysqli->connect_error){ 
 		die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 	}

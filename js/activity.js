@@ -6,8 +6,8 @@ function ShowActivityContent(filter){
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #rankig, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
@@ -60,17 +60,17 @@ function RefreshActivity(filter){
 function AttachActivityEvents(){
 	 $(".user-discover-card").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
+		ShowUserProfile($(this).attr("data-id"));
 	 });
  	 $(".feed-avatar, .user-avatar").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
   	 $(".feed-activity-user-link-action").on("click", function(e){
 	  	e.stopPropagation();
-	 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
+	 	ShowUserProfile($(this).attr("data-id"));
 	 });
-	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
+	 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card, .feed-game-discover-card").on("click", function(e){
 	 	e.stopPropagation(); 
 	 	ShowGame($(this).attr("data-gbid"), $("#activity"));
 	 })
@@ -86,34 +86,46 @@ function AttachActivityEvents(){
  	 	e.stopPropagation();
 		DisplayCollectionDetails($(this).attr("data-id"), 'Activity', $(this).parent().parent().parent().find(".user-preview-card-container").attr("data-id"), false);	
 	 });
-	 $(".watchBtn").on("click", function(e){
- 		e.stopPropagation();
-		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
-		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
-  		var gameid = $(this).attr("data-gameid");
-  		var url = $(this).attr("data-url");
- 		$.ajax({ url: '../php/webService.php',
-	     data: {action: "DisplayVideoForGame", url: url, gameid: gameid },
-	     type: 'post',
-	     success: function(output) {
- 			$("#BattleProgess").html(output); 
- 			$(".myxp-video-goto-full").hide();
- 			AttachActivityVideoEvents();
-	     },
-	        error: function(x, t, m) {
-		        if(t==="timeout") {
-		            ToastError("Server Timeout");
-		        } else {
-		            ToastError(t);
-		        }
-	    	},
-	    	timeout:45000
-		});
-
-	 });
+	AttachWatchFromXP();
 	$(".shareBtn").on('click', function(){
 		ShowShareModal("event", $(this).attr("data-eventid"));
 	});
+	$(".game-card-action-pick, .game-discover-card .card-image").unbind();
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay").length == 0)
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+	});
+	$(".game-discover-card .card-image").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".rank-image").on("click", function(e){
+		e.stopPropagation(); 
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	$(".view-ranked-list").on("click", function(){
+		ShowUserProfile($(this).attr("data-id"), "", "RANK");
+	});
+	$(".card-game-secondary-actions").on("click", function(e){ 
+		e.stopPropagation(); 
+		CloseSearch();
+		$(".searchInput input").val('');
+		$('html').unbind();
+		$('html').click(function(){
+			if($("#userAccountNav").is(":visible"))
+				$("#userAccountNav").hide(250);
+		});
+		ShowGame($(this).parent().attr("data-gbid"), $("#discover")); 
+	});
+	AttachStarEvents();
 	 AttachAgreesFromActivity();
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){

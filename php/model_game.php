@@ -53,8 +53,108 @@ class Game
 		$this->_t3 = $t3;
 		$this->_t4 = $t4;
 		$this->_t5 = $t5;
-	}
-		
+	}	
+}
+
+function GameObject($row){
+	return new Game($row["ID"], 
+				$row["GBID"],
+				$row["Title"],
+				$row["Rated"],
+				$row["Released"],
+				$row["Genre"],
+				$row["Platforms"],
+				$row["Year"],
+				$row["ImageLarge"],
+				$row["ImageSmall"],
+				$row["Highlight"],
+				$row["Publisher"],
+				$row["Developer"],
+				$row["Alias"],
+				$row["Theme"],
+				$row["Franchise"],
+				$row["Similar"],
+				$row["Tier1"],
+				$row["Tier2"],
+				$row["Tier3"],
+				$row["Tier4"],
+				$row["Tier5"]
+				);
+}
+
+
+class GameRank
+{
+	public $_id;
+	public $_gbid;
+	public $_title;
+	public $_rated;
+	public $_released;
+	public $_genre;
+	public $_platforms;
+	public $_year;
+	public $_image;
+	public $_imagesmall;
+	public $_publisher;
+	public $_developer;
+	public $_alias;
+	public $_theme;
+	public $_franchise;
+	public $_similar;
+	public $_tier;
+	public $_rank;
+	public $_xptype;
+	
+	function __construct($id, $gbid, $title, $rated, $released, $genre, $platforms, $year, $image, $imagesmall, $publisher, $developer, $alias, $theme, $franchise, $similar, $tier, $rank, $xptype) {
+		$this->_id = $id;
+		$this->_gbid = $gbid;
+		$this->_title = $title;
+		$this->_rated = $rated;
+		$this->_released = $released;
+		$this->_genre = $genre;
+		$this->_platforms = $platforms;
+		$this->_year = $year;
+		if($imagesmall != '')
+			$this->_imagesmall = $imagesmall;
+		else
+			$this->_imagesmall = $image;
+		if($image != '')
+			$this->_image = $image;
+		else
+			$this->_image = $imagesmall;
+		$this->_publisher = $publisher;
+		$this->_developer = $developer;
+		$this->_alias = $alias;
+		$this->_theme = $theme;
+		$this->_franchise = $franchise;
+		$this->_similar = $similar;
+		$this->_tier = $tier;
+		$this->_rank = $rank;
+		$this->_xptype = $xptype;
+	}	
+}
+
+function GameRankObject($row){
+	return new GameRank($row["ID"], 
+				$row["GBID"],
+				$row["Title"],
+				$row["Rated"],
+				$row["Released"],
+				$row["Genre"],
+				$row["Platforms"],
+				$row["Year"],
+				$row["ImageLarge"],
+				$row["ImageSmall"],
+				$row["Publisher"],
+				$row["Developer"],
+				$row["Alias"],
+				$row["Theme"],
+				$row["Franchise"],
+				$row["Similar"],
+				$row["Tier"],
+				$row["Rank"],
+				$row["XPType"]
+				);
 }
 
 class GameMeta

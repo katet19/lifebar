@@ -46,20 +46,21 @@ function GetMyFeed($userid, $page, $filter){
 		//$result = $mysqli->query("select eve.*, DATE(`Date`) as `ForDate` from `Events` eve where eve.`UserID` = '".$userid."' or eve.`UserID` = '0' or (".implode(" or ", $addedquery).") order by `ForDate` DESC limit ".$page.",45");
 		if($filter == "All"){
 			$mylist = GetConnectedToList($userid, $mysqli);
-			$collectionList = GetSubscribedCollectionList($userid, $mysqli);
+			//$collectionList = GetSubscribedCollectionList($userid, $mysqli);
 			$addedquery = array();
 			foreach($mylist as $user){
 				$addedquery[] = "'".$user."'";
 			}
-			$collectionQuery = array();
-			if(sizeof($collectionList) > 0){
-				foreach($collectionList as $collection){
-					$collectionQuery[] = "'".$collection."'";
-				}
-				$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (eve.`UserID` in (".implode(",", $addedquery).") and eve.`Event` != 'COLLECTIONUPDATE') or (eve.`Event` = 'COLLECTIONUPDATE' and eve.`GameID` in (".implode(",",$collectionQuery).")) order by eve.`Date` DESC limit ".$page.",45");	
-			}else{
+			$addedquery[] = "'".$userid."'";
+			//$collectionQuery = array();
+			//if(sizeof($collectionList) > 0){
+			//	foreach($collectionList as $collection){
+			//		$collectionQuery[] = "'".$collection."'";
+			//	}
+			//	$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (eve.`UserID` in (".implode(",", $addedquery).") and eve.`Event` != 'COLLECTIONUPDATE') or (eve.`Event` = 'COLLECTIONUPDATE' and eve.`GameID` in (".implode(",",$collectionQuery).")) order by //eve.`Date` DESC limit ".$page.",45");	
+			//}else{
 				$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '0' or (eve.`UserID` in (".implode(",", $addedquery).") and eve.`Event` != 'COLLECTIONUPDATE') order by eve.`Date` DESC limit ".$page.",45");
-			}
+			//}
 		}else if($filter == "Only Users I Follow"){
 			$mylist = GetConnectedToUsersList($userid, $mysqli);
 			$collectionList = GetSubscribedCollectionList($userid, $mysqli);
@@ -85,6 +86,8 @@ function GetMyFeed($userid, $page, $filter){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` in (".implode(",", $addedquery).") order by eve.`Date` DESC limit ".$page.",45");
 		}else if($filter == "My Activity"){
 			$result = $mysqli->query("select eve.* from `Events` eve where eve.`UserID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",45");
+		}else if($filter == "Game Activity"){
+			$result = $mysqli->query("select eve.* from `Events` eve where eve.`GameID` = '".$userid."' order by eve.`Date` DESC limit ".$page.",250");
 		}else if($filter == "All Users"){
 			$collectionList = GetSubscribedCollectionList($userid, $mysqli);
 			$collectionQuery = array();
@@ -206,7 +209,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeed[] = $myfeeditem;
 				
 			}else if($row["Event"] == "TIERCHANGED"){
-				$myfeeditem = array();						
+				/*$myfeeditem = array();						
 				$game = GetGame($row["GameID"], $mysqli);
 				$exp = GetExperienceForUserByGame($row["UserID"], $row["GameID"], $mysqli);
 				$event = new Event($row["ID"],
@@ -225,7 +228,7 @@ function GetMyFeed($userid, $page, $filter){
 				$myfeeditem[] = $exp;
 				$myfeeditem[] = 2;
 				$myfeeditem[] = "TIERCHANGED";
-				$myfeed[] = $myfeeditem;
+				$myfeed[] = $myfeeditem;*/
 			
 			}else if($row["Event"] == "QUOTECHANGED"){
 				$myfeeditem = array();						
@@ -365,6 +368,39 @@ function GetMyFeed($userid, $page, $filter){
 					$myfeeditem[] = "COLLECTIONUPDATE";
 					$myfeed[] = $myfeeditem;
 				}
+			}else if($row["Event"] == "RANK"){
+				$myfeeditem = array();			
+				unset($allgamedata);
+				$rankings = explode(",", $row["Quote"]);
+				foreach($rankings as $rank){
+					unset($gamedata);
+					unset($gamemeta);
+					$gamemeta = explode("||", $rank);
+					$game = GetGame($gamemeta[0]);
+					$gamedata[] = $game;
+					$gamedata[] = $gamemeta[1];
+					$gamedata[] = $gamemeta[2];
+					$allgamedata[] = $gamedata;
+				}
+				$exp = null;
+				$event = new Event($row["ID"],
+						$row["UserID"],
+						$exp->_first." ".$exp->_last,
+						$row["Event"],
+						$row["GameID"],
+						$row["Date"],
+						$row["Quote"],
+						$row["Tier"],
+						$row["URL"]);
+						
+				$myfeeditem[] = $event;
+				$myfeeditem[] = $allgamedata;
+				$myfeeditem[] = $exp;
+				$myfeeditem[] = $exp;
+				$myfeeditem[] = 1;
+				$myfeeditem[] = "RANK";
+				$myfeed[] = $myfeeditem;
+				
 			}
 		}
 	}

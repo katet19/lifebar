@@ -5,7 +5,7 @@ function DisplayAdminControlsForUser($userid){
 	$userbadges = GetAllBadgeForUserList($userid);
 	$user = GetUser($userid);
 	?>
-	<div class="row">
+	<div class="row" style='padding:20px;'>
 		<div class="col s12">
 			<div class='analyze-card-header'>
 				<div class='analyze-card-title'><i class="fa fa-certificate"></i> Admin Badge Management</div>
@@ -52,13 +52,12 @@ function DisplayBadgeManagementForUser($userid){
 	$userbadges = GetAllBadgesForUser($userid);
 	$user = GetUser($userid);
 	?>
-	<div class="col s12 settings-header" style='display:block;margin-top:0'>Your Badges</div>
-	<div class="col s12">
+	<div class="col s12" style='margin-top:1em;padding:0 1rem;'>
 		<?php 
 		if(sizeof($userbadges) > 0){
 			foreach($userbadges as $badge){
 			?>
-				<div class="badge-card z-depth-1">
+				<div class="badge-card">
 					<div class="badge-image-container">
 						<img class="badge-preview" src='http://lifebar.io/Images/Badges/<?php echo $badge->_file; ?>'></img>
 					</div>
@@ -66,14 +65,23 @@ function DisplayBadgeManagementForUser($userid){
 						<div class="badge-name"><?php echo $badge->_title; ?></div>
 						<div class="badge-desc"><?php echo $badge->_description; ?></div>
 						<?php if($badge->_file == $user->_badge){ ?>
-							<div class="btn badge-btn badge-unequip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Unequip</div>
+							<div class="btn-flat badge-btn badge-unequip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Unequip</div>
 						<?php }else{ ?>
-							<div class="btn badge-btn badge-equip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Equip</div>
+							<div class="btn-flat badge-btn badge-equip" data-badgeid='<?php echo $badge->_id; ?>' style='padding: 0 1rem;'>Equip</div>
 						<?php } ?>
 					</div>
 				</div>
 			<?php
 			}
+		}else{
+			?>
+			<div>
+				<img src='http://lifebar.io/Images/Badges/SBadge.svg' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+				<img src='http://lifebar.io/Images/Badges/alpha.png' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+				<img src='http://lifebar.io/Images/Badges/2dcon2016.png' style='width:50px;height:50px;padding:5px;filter: grayscale(100%);'>
+			</div>
+			<div style=''>Earn badges by using & exploring Lifebar! <br>Come back here to equip them once they have been earned.</div>
+		<?php
 		}
 		?>
 	</div>

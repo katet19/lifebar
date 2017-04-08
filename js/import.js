@@ -49,8 +49,8 @@ function ImportSteamGames(userid, forceImport, fullreset){
 	$(".indicator").css({"display":"none"});
 	$(".active").removeClass("active");
     $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #ranking, #discover, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -168,7 +168,7 @@ function AttachImportSearchEvents(userid){
 	
 	$(".import-map-to-skip-game").on("click", function(){
 		var importID = $(this).parent().attr("data-importid");	
-		$(this).parent().parent().css({"background-color": "#673AB7"});
+		$(this).parent().parent().css({"background-color": "#3F51B5"});
 		$(this).parent().parent().find(".col").css({"opacity":"0"});
 		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game will always be hidden</div>");
 		var row = $(this).parent().parent().parent();

@@ -1,5 +1,5 @@
 <?php function DisplayDiscoverTab(){ 
-	if(!HasOnboardingPrefs($_SESSION['logged-in']->_id) && $_SESSION['logged-in']->_id > 0){
+	if($_SESSION['logged-in']->_weave->_lifebarXP == 0 && $_SESSION['logged-in']->_id > 0){
 		AccountDetails();
 	}else{ ?>
 	<div class="discover-top-level">
@@ -63,8 +63,7 @@ function DisplayCollectionHighlighted($userid, $collection){
 			<div style="height:500px;width:60%;float:left;z-index:0;background:-webkit-linear-gradient(left, rgba(0,0,0,0.5) 20%, rgba(0,0,0,1.0) 100%), url(<?php echo $coverimage; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
 				<div class="collection-details-total discover-collection-user" style='cursor:pointer;display:inline-block;position:absolute;color:white;font-size: 2.5em;margin: 0;left: 15%;float: none;top: 150px;'>
 					<div class="collection-details-total-num collection-total-counter" data-id="<?php echo $user->_id; ?>">
-						<div class="user-avatar" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
-						<?php DisplayUserPreviewCard($user, $conn, $mutualconn); ?>
+						<div class="user-avatar" data-id="<?php echo $user->_id; ?>" style="display: inline-block;width:100px;border-radius:50%;margin-left: auto;margin-right: auto;margin-top:15px;height:100px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
 					</div>
 					<div class='collection-details-total-lbl' style='font-size: 0.6em;font-weight: 500;margin-top:-30px;'>
 						<span style='font-size: 0.7em;display: block;font-weight: 300;'>created by</span>
@@ -157,14 +156,14 @@ function DisplayHorizontalWatchList($zdepth, $item){
   			</div>
       	</div>
       	<div class="row">
-      		<div class="col s12 m6">
+      		<div class="col s12 m6" style='height: 390px; overflow: hidden;'>
 				<?php $first = true;
 				foreach($videos as $video){
 					$game = GetGame($video[1]);
 					?>
 					<div class="daily-watch-title <?php if($first){ echo "daily-watch-title-active"; } ?>" data-gameid ='<?php echo $video[1]; ?>' data-url="<?php echo $video[0]; ?>">
 						<?php echo $game->_title; ?>
-						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="mdi-action-visibility"></i></span>
+						<span class="daily-watch-title-xp" <?php if($first){ echo "style='display:block;'"; } ?>>ADD <i class="material-icons">visibility</i></span>
 					</div>
 					<?php
 					if($first)
@@ -199,96 +198,94 @@ function DisplayDailyHeader($zdepth, $item){
 	}
 	
 	?>
-	<div class='row' style='z-index:<?php echo $zdepth--; ?>'>
-	    <div class="col s12" style='padding:0;margin: -5px 0 0;'>
-			<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
-				<div class="daily-header-banner">Daily Reflection Point </div>
-				<div class="daily-header-question">
-					<?php echo $item['QUESTION']; ?> 
-					<i class="mdi-action-question-answer daily-reply-button z-depth-2"></i>
+	<div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
+		<div class="daily-header-image" data-normal="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" data-webkit="-webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%" style="background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.7) 100%, rgba(0,0,0,0.7) 101%), url(<?php echo $game->_image; ?>) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.7)), color-stop(101%,rgba(0,0,0,0.7))), url(<?php echo $game->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" >
+			<div class="daily-header-banner">Daily Reflection Point </div>
+			<div class="daily-header-question">
+				<?php echo $item['QUESTION']; ?> 
+				<i class="material-icons daily-reply-button z-depth-2">forum</i>
+			</div>
+			<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
+				<?php echo $game->_title; ?>
+				<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
+					<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
+				<?php } ?>
+			</div>
+			<div class="daily-answers-results-container">
+				<?php 
+					$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
+					if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
+						ShowFormResults($item['ID'], $choicesMade, false);
+				?>
+			</div>
+			<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
+				<?php if(!$showsplrwrng){ ?>
+				<div class="row" style='margin-top:175px;'>
+					<div class="col s10 offset-s1" style='text-align:left;'>
+						<div class="daily-header-subquestion-hidden">
+							<?php echo $item['SUBQUESTION']; ?>
+						</div>
+						<?php 
+							$imagehorizontal = false;
+							$horizontal = false;
+							if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
+							foreach($item['ITEMS'] as $response){
+								?>
+								<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
+									<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
+									<?php if($response['Type'] == 'radio'){ ?>
+										<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+										<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
+									<?php }else if($response['Type'] == 'dropdown'){ ?>
+										<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
+										<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
+									<?php }else if($response['Type'] == 'checkbox'){ ?>
+										<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
+										<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
+									<?php }else if($response['Type'] == 'grid-single'){ ?>
+											<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+												<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+													<i class="daily-checkmark fa fa-check"></i>
+													<div class="daily-pref-image-title">
+														<?php echo $response["Choice"]; ?>
+													</div>
+												</div>
+											</div>
+									<?php }else if($response['Type'] == 'grid-multi'){ ?>
+											<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
+												<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+													<i class="daily-checkmark fa fa-check"></i>
+													<div class="daily-pref-image-title">
+														<?php echo $response["Choice"]; ?>
+													</div>
+												</div>
+											</div>
+									<?php } ?>
+								</div>
+								<?php
+								$first = false;
+							}
+						?>
+						<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
+					</div>
+					<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
+						<div class='save-btn submit-daily-response'>Save</div>
+						<div class='cancel-btn cancel-daily-response cancel-button'>Cancel</div>
+						<div class="btn-flat share-daily-response"><i class="material-icons left" style='font-size: 1.5em;'>share</i> Share</div>
+					</div>
 				</div>
-				<div class="daily-header-game-title" data-id="<?php echo $game->_gbid; ?>">
-					<?php echo $game->_title; ?>
-					<?php if($_SESSION['logged-in']->_security == 'Admin'){ ?>
-						<span class='btn-flat edit-ref-pt' style='margin-bottom: 0;' data-id='<?php echo $item['ID']; ?>'>Edit</span>
-					<?php } ?>
-				</div>
-				<div class="daily-answers-results-container">
-					<?php 
-						$choicesMade =  GetFormChoices($_SESSION['logged-in']->_id, $item['ID']);
-						if(HasFormResults($_SESSION['logged-in']->_id, $item['ID']))
-							ShowFormResults($item['ID'], $choicesMade, false);
-					?>
-				</div>
-				<div class="daily-answers-container" data-type="<?php echo $item['ITEMS'][0]['Type']; ?>">
-					<?php if(!$showsplrwrng){ ?>
+				<?php }else{ ?>
 					<div class="row" style='margin-top:175px;'>
 						<div class="col s10 offset-s1" style='text-align:left;'>
-							<div class="daily-header-subquestion-hidden">
-								<?php echo $item['SUBQUESTION']; ?>
+							<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
+								<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
+								Spoiler Warning!
 							</div>
-							<?php 
-								$imagehorizontal = false;
-								$horizontal = false;
-								if(sizeof($item['ITEMS']) >= 5 && $item['ITEMS'][0]['Type'] != 'grid-single' && $item['ITEMS'][0]['Type'] != 'grid-multi'){ $horizontal = true; }else if(sizeof($item['ITEMS']) >= 7 && ($item['ITEMS'][0]['Type'] == 'grid-single' || $item['ITEMS'][0]['Type'] == 'grid-multi')){ $imagehorizontal = true; }else{ $horizontal = false; } $first = true;
-								foreach($item['ITEMS'] as $response){
-									?>
-									<div class="daily-item-row input-field <?php if($imagehorizontal){ ?>daily-resp-grid daily-response-item-small<?php }else if($response['Type'] == 'grid-single' || $response['Type'] == 'grid-multi'){ ?>daily-resp-grid daily-response-item-dynm-<?php echo sizeof($item['ITEMS']); } ?>" <?php if($horizontal && $response['Type'] != 'grid-single' && $response['Type'] != 'grid-multi' && $response['Type'] != 'dropdown'){ ?>style='width:40%;display:inline-block;'<?php }else if($horizontal && $response['Type'] == 'dropdown'){ ?>style='width:80%;'<?php } ?> data-objid="<?php echo $response['ObjID']; ?>" data-objtype="<?php echo $response['ObjType']; ?>" data-formitemid="<?php echo $response['ID']; ?>" data-formid="<?php echo $response['FormID']; ?>" data-gameid="<?php echo $game->_id; ?>">
-										<?php if($response['Type'] == 'dropdown' && $first){ ?><select id="daily-response-dropdown"><?php } ?>
-										<?php if($response['Type'] == 'radio'){ ?>
-											<input type='radio' class='with-gap' name="dailyresposne" id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
-											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label-radio"><?php echo $response["Choice"]; ?></label>
-										<?php }else if($response['Type'] == 'dropdown'){ ?>
-											<?php if($response['IsDefault'] == 'No' && $response['Type'] == 'dropdown' && $first){ ?> <option value="Please Select">Please Select</option> <?php } ?>
-											<option value="<?php echo $response["ID"]; ?>" <?php if(in_array($response['ID'], $choicesMade)){ echo "selected"; } ?> ><?php echo $response["Choice"]; ?></option>
-										<?php }else if($response['Type'] == 'checkbox'){ ?>
-											<input type="checkbox" class='response-checkbox' id="response<?php echo $response['ID']; ?>" <?php if($response['IsDefault'] == 'Yes' || in_array($response['ID'], $choicesMade)){ ?> checked <?php } ?> >
-											<label for="response<?php echo $response['ID']; ?>" class="daily-response-label"><?php echo $response["Choice"]; ?></label>
-										<?php }else if($response['Type'] == 'grid-single'){ ?>
-												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-													<div class="daily-pref-image z-depth-1 singlegrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-														<i class="daily-checkmark fa fa-check"></i>
-														<div class="daily-pref-image-title">
-															<?php echo $response["Choice"]; ?>
-														</div>
-													</div>
-												</div>
-										<?php }else if($response['Type'] == 'grid-multi'){ ?>
-												<div class="knowledge-container" style='background-color:#FFF;' data-id="<?php echo $response['ID']; ?>">
-													<div class="daily-pref-image z-depth-1 multigrid daily-response-item-dynm-h-<?php echo sizeof($item['ITEMS']); ?> <?php if(in_array($response['ID'], $choicesMade)){ echo "daily-pref-image-active"; } ?>" style="background:url(<?php echo $response['URL']; ?>) 50% 5%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-														<i class="daily-checkmark fa fa-check"></i>
-														<div class="daily-pref-image-title">
-															<?php echo $response["Choice"]; ?>
-														</div>
-													</div>
-												</div>
-										<?php } ?>
-									</div>
-									<?php
-									$first = false;
-								}
-							?>
-							<?php if($response['Type'] == 'dropdown'){ ?></select><?php } ?>
-						</div>
-						<div class="col s10 offset-s1" style='margin-top: 40px;text-align:left;' >
-							<div class='btn submit-daily-response'>Save</div>
-							<div class='btn cancel-daily-response' style='background-color:#F44336'>Cancel</div>
-							<div class="btn-flat share-daily-response"><i class="mdi-social-share left" style='font-size: 1.5em;'></i> Share</div>
+							<div style='font-size: 1.25em;font-weight: 400;margin-bottom: 40px;margin-top: -25px;'>You haven't finished this game yet. This reflection point will spoil your playthrough until you finish.</div>
+							<div class="btn view-game-spoiler" data-id="<?php echo $game->_gbid; ?>">Update your experience now</div>
 						</div>
 					</div>
-					<?php }else{ ?>
-						<div class="row" style='margin-top:175px;'>
-							<div class="col s10 offset-s1" style='text-align:left;'>
-								<div class="daily-header-subquestion-hidden" style='font-weight: bold;font-size: 1.5em;text-transform: uppercase;'>
-									<i class="mdi-alert-warning" style="color:orangered;font-size: 1.5em;vertical-align: sub;"></i>	
-									Spoiler Warning!
-								</div>
-								<div style='font-size: 1.25em;font-weight: 400;margin-bottom: 40px;margin-top: -25px;'>You haven't finished this game yet. This reflection point will spoil your playthrough until you finish.</div>
-								<div class="btn view-game-spoiler" data-id="<?php echo $game->_gbid; ?>">Update your experience now</div>
-							</div>
-						</div>
-					<?php } ?>
-				</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
@@ -312,7 +309,7 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $s
 	      	<?php $count = 1;
 	  		foreach($games as $game){
 				  if($category == "Lifebar Backlog")
-				  	DisplayGameCardWithDismiss($game, $count, $type);
+				  	DisplayGameCard($game, $count, $type, "Lifebar Backlog");
 				  else
 	  				DisplayGameCard($game, $count, $type);
 
@@ -325,7 +322,6 @@ function DisplayHorizontalGameList($zdepth, $category, $games, $type, $color, $s
 function DisplayHorizontalUserList($zdepth, $category, $users, $type, $color, $subcategorymsg, $connections){ ?>
     <div class="col s12 discoverCategory" style='z-index:<?php echo $zdepth--; ?>'>
       	<div class="discoverCategoryHeader" data-category="<?php echo $category; ?>">
-    		<i class="mdi-social-whatshot categoryIcon" style="display:none;background-color: <?php echo $color; ?>;"></i>
       		<div class="discoverCatName">
 	      		<?php echo $category; ?>
 	      		<div class="discoverCatSubName">
@@ -703,8 +699,8 @@ function DisplaySearchResults($searchstring){
 			if($first && $game->_gbid > 0){ $first = false; ?>
 	        <div class="col s12">
 		      	<div class="searchHeader" style='margin-top:0em;'>
-		      		Games <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($games); ?>)</span>
-		      		<div class="SeeAllBtn GameSeeAllBtn" data-context="gameResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none;'></i>See all</a></div>
+		      		 <?php echo $searchstring; ?> <span style='font-size: 0.6em;vertical-align: middle;margin-left: 15px;'>(<?php echo sizeof($games); ?> games)</span>
+		      		<!--<div class="SeeAllBtn GameSeeAllBtn" data-context="gameResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none;'></i>See all</a></div>-->
 		      	</div>
 	        </div>
 			<?php }
@@ -721,8 +717,8 @@ function DisplaySearchResults($searchstring){
     		if($firstsecond){ $firstsecond = false;?>
 	         <div class="col s12">
 		      	<div class="searchHeader" <?php if($first){ echo "style='margin-top:0em;'"; }?> >
-		      		People <span style='font-size: 0.7em;vertical-align: middle;'>(<?php echo sizeof($users); ?>)</span>
-		      		<div class="SeeAllBtn UserSeeAllBtn" data-context="userResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none'></i>See all</a></div>
+		      		<?php echo $searchstring; ?> <span style='font-size: 0.6em;vertical-align: middle;margin-left: 15px;'>(<?php echo sizeof($users); ?> people)</span>
+		      		<!--<div class="SeeAllBtn UserSeeAllBtn" data-context="userResults"><a class="waves-effect waves-light btn"><i class="mdi-action-view-module left" style='font-size: 2em;display:none'></i>See all</a></div>-->
 		      	</div>
 	        </div>
 			<?php }

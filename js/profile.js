@@ -1,46 +1,110 @@
 function ShowUserProfile(id, mine, browserNav){
-	ShowUserContent(id,mine);
+	if(!$("#profile").is(":visible"))
+		ShowUserContent(id,mine, browserNav);
 }
 
 function ShowUserContent(userid, mine, browserNav){
 	var windowWidth = $(window).width();
-	if(!mine){
-		$(".indicator").css({"display":"none"});
-		$(".active").removeClass("active");
-	}
-    $("#profile").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #discover, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
-	$("#profile").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+
 	if($(window).width() > 599){
+		$("#profile").css({"display":"inline-block", "right": "-90%"});
 		$("#navigation-header").css({"display":"block"});
 		$("#navigationContainer").css({"-webkit-box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)", "box-shadow":"0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)"});
+	}else{
+		$("#profile").css({"display":"inline-block", "right": "-75%"});
 	}
+	SCROLL_POS = $(window).scrollTop();
+	$('body').css({'top': -($('body').scrollTop()) + 'px'}).addClass("bodynoscroll");
+	$("body").append("<div class='lean-overlay' style='z-index: 1000; display: block; opacity: 0.5;'></div>");
+	$("#profile.outerContainer").css({ "right": 0 });
 
   	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayWeave", userid: userid },
      type: 'post',
      success: function(output) {
-     			$("#profileInnerContainer").html(output);
-     			window.scrollTo(0, 0);
-      			Waves.displayEffect();
-  	 			var name = $("#profileContentContainer").attr("data-name");
-  	 			GLOBAL_HASH_REDIRECT = "NO";
-	 			location.hash = "profile/"+userid+"/"+name;
-      			DisplayCriticGraph();
-      			//DisplayTierPieChart();
-      			DisplayLifeTimeChart();
-      			DisplaySkillsChart();
-      			AttachProfileEvents(userid);
-  				AttachFabHoverEvent();
-				AttachFloatingIconWeaveButtonEvents();
-	 	 		if(browserNav)
- 	 				GLOBAL_HASH_REDIRECT = "";
-  				if(!mine)
-  					GAPage('Profile', '/profile/'+name);
-  				else
-  					GAPage('Profile', '/profile/personal/'+name);
+			$("#profileInnerContainer").html(output);
+			Waves.displayEffect();
+			AttachShowUserActivityEvents();
+			$(".user-profile-unfollow-btn").on("click", function(){
+				UnfollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+				$(this).removeClass("user-profile-unfollow-btn");
+				$(this).addClass("user-profile-follow-btn");
+				$(this).parent().addClass("user-profile-follow-highlight");
+				$(this).html("<i class='material-icons' style='font-size:1.75em;vertical-align: middle;'>person_add</i> Follow");
+			});
+			$(".user-profile-follow-btn").on("click", function(){
+				FollowUserFromFab($(this).attr("data-id"), $(this).attr("data-name"));
+				$(this).removeClass("user-profile-follow-btn");
+				$(this).parent().removeClass("user-profile-follow-highlight");
+				$(this).addClass("user-profile-unfollow-btn");
+				$(this).html("<i class='material-icons' style='font-size:1.75em;vertical-align: middle;'>person_outline</i> Unfollow");
+			});
+			$(".user-add-small-image-btn").on('click', function(){
+				var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderSmall.php' style='width:100%;border:none;'></iframe>";
+				ShowPopUp(html);	
+			});
+			$(".user-add-large-image-btn").on('click', function(){
+				var html = "<div><span>User ID: "+$(this).attr("data-userid")+"</span><br><iframe src='http://lifebar.io/utilities/FileImageUploaderLarge.php' style='width:100%;border:none;'></iframe>";
+				ShowPopUp(html);
+			});
+			$(".user-run-weave-cal-btn").on('click', function(){
+				Toast("Calculating user's weave");
+				$.ajax({ url: '../php/webService.php',
+				data: {action: "RunWeaveCalculator", userid: $(this).attr("data-userid")  },
+				type: 'post',
+				success: function(output) {
+					Toast("Finished calculating and updating weave. Please refresh to see changes.")
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+			});
+			$(".user-share-btn").on("click", function(){
+				ShowShareModal("user", $(this).attr("data-userid"));
+			});
+			$(".user-set-title").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				var html = "<div class='row'><div class='col s12 input-field'><input type=text name='updatetitle' id='updatetitle' /><label for='updatetitle'>Title/Publication</label></div><div class='btn wave-effect update-title-btn'>Update Title<div></div>";
+				ShowPopUp(html);
+					$(".update-title-btn").on('click', function(){
+						$.ajax({ url: '../php/webService.php',
+						data: {action: "SaveTitle", userid: userid, title: $("#updatetitle").val()  },
+						type: 'post',
+						success: function(output) {
+							Toast("Users Title/Publication updated. Please refresh to see changes.")
+						},
+							error: function(x, t, m) {
+								if(t==="timeout") {
+									ToastError("Server Timeout");
+								} else {
+									ToastError(t);
+								}
+							},
+							timeout:45000
+						});
+					});
+			});
+			$(".user-set-role").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				DisplayRoleManagement(userid);
+			});
+			$(".user-manage-badge").on("click", function(){
+				var userid = $(this).attr("data-userid");
+				DisplayManageBadge(userid);
+			});
+			$(".profile-tab-header").on("click", function(){
+				ProfileTabNav($(this));
+			});
+			if(browserNav == "RANK"){
+				ProfileTabNav($(".profile-rank"));
+			}
      },
         error: function(x, t, m) {
 	        if(t==="timeout") {
@@ -53,10 +117,31 @@ function ShowUserContent(userid, mine, browserNav){
 	});
 }
 
+function ProfileTabNav(element){
+	if(!element.hasClass("profile-tab-header-active")){
+		$(".profile-tab-header-active").removeClass("profile-tab-header-active");
+		element.addClass("profile-tab-header-active");
+		var tab = element.attr("data-tab");
+		$(".profile-tab-body").hide();
+		$("."+tab).show();
+	}
+}
+
 function AttachProfileEvents(userid){
+	$(".user-profile-unfollow-btn").show();
+	$(".fixed-close-modal-btn, .lean-overlay").unbind();
+	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+		if($(window).width() > 599){
+			$("#profile").css({"right": "-90%"});
+		}else{
+			$("#profile").css({ "right": "-75%" }); 
+		}
+		$(".lean-overlay").each(function(){ $(this).remove(); } );
+		setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+	});
  	$(".userprofile-card-avatar").on("click", function(e){
   		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-userid"));
  	});
  	$(".userprofile-game-card-image").on('click', function(e){
  		e.stopPropagation();
@@ -293,7 +378,7 @@ function DisplayAbilitiesViewMore(userid){
  			ShowUserProfile(userid);
  		});
 		$(".badge-card-ability-avatar").on("click", function(){
-			ShowUserPreviewCard($(this).find(".user-preview-card"));	
+			ShowUserProfile($(this).attr("data-userid"));	
 		});
  		$(".card-game-small").on("click", function(e){
  			e.stopPropagation();
@@ -729,30 +814,6 @@ function AttachFloatingIconWeaveButtonEvents(){
 	AttachFollowFABEvents();
 }
 
-function AttachFollowFABEvents(){
-	$(".user-unfollow-btn, .user-follow-btn").unbind();
-	$(".user-unfollow-btn").on('click', function(){
-		UnfollowUserFromFab($(this).attr("data-userid"), $(this).attr("data-username"));
-		$(this).removeClass("user-unfollow-btn");
-		$(this).addClass("user-follow-btn");
-		$(this).find(".GameHiddenActionLabelBigFab").html("Follow");
-		$(this).find(".large").removeClass("mdi-social-person-outline");
-		$(this).find(".large").addClass("mdi-social-group");
-		AttachFabHoverEvent();
-		AttachFollowFABEvents();
-	});
-	$(".user-follow-btn").on('click', function(){
-		FollowUserFromFab($(this).attr("data-userid"), $(this).attr("data-username"));
-		$(this).removeClass("user-follow-btn");
-		$(this).addClass("user-unfollow-btn");
-		$(this).find(".GameHiddenActionLabelBigFab").html("Unfollow");
-		$(this).find(".large").removeClass("mdi-social-person-add");
-		$(this).find(".large").addClass("mdi-social-group");
-		AttachFabHoverEvent();
-		AttachFollowFABEvents();
-	});
-}
-
 function DisplayRoleManagement(userid){
 	$.ajax({ url: '../php/webService.php',
      data: {action: "DisplayRoleManagement", userid: userid },
@@ -885,14 +946,10 @@ function UnequipBadge(userid){
 	     data: {action: "UnequipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
 	     type: 'post',
 	     success: function(output) {
- 	     	btn.addClass("badge-equip");
+			btn.addClass("badge-equip");
 	     	btn.removeClass("badge-unequip");
 	     	btn.html("Equip");
-			Toast("Badge Unequipped");
-			if($(".avatar-preview").length > 0){
-				UpdateAvatarBadge("REMOVE");
-			}
-			
+			Toast("Badge Unequipped");			
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
@@ -915,13 +972,14 @@ function EquipBadge(userid){
 	     data: {action: "EquipBadge", userid: userid, badgeid: $(this).attr("data-badgeid") },
 	     type: 'post',
 	     success: function(output) {
+			$(".badge-unequip").each(function(){
+				$(this).removeClass("badge-unequip");
+				$(this).html("Equip");
+			});
  	     	btn.addClass("badge-unequip");
 	     	btn.removeClass("badge-equip");
 	     	btn.html("Unequip");
 			Toast("Badge Equipped");
-			if($(".avatar-preview").length > 0){
-				UpdateAvatarBadge(output);
-			}
 			AttachManageBadgeEvents(userid);
 	     },
 	        error: function(x, t, m) {
@@ -1144,8 +1202,8 @@ function ShowUserActivity(userid){
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#discover, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#discover, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#activity").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	if($(window).width() > 599){
 		$("#navigation-header").css({"display":"block"});
@@ -1172,48 +1230,49 @@ function ShowUserActivity(userid){
 }
 
 function AttachShowUserActivityEvents(){
-		 $(".user-discover-card").on("click", function(e){
-		  	e.stopPropagation();
-		 	ShowUserPreviewCard($(this).find(".user-preview-card"), $("#activity"));
-		 });
-	 	 $(".feed-avatar, .user-avatar").on("click", function(e){
-		  	e.stopPropagation();
-		 	ShowUserPreviewCard($(this).parent().find(".user-preview-card"), $("#activity"));
-		 });
-		 $(".feed-bookmark-card, .feed-activity-game-link, .feed-release-card").on("click", function(e){
-		 	e.stopPropagation(); 
-		 	ShowGame($(this).attr("data-gbid"), $("#activity"));
-		 })
-		 $(".feed-card-image").on("click", function(e){
-		 	e.stopPropagation(); 
-		 	ShowGame($(this).parent().attr("data-gbid"), $("#activity"));
-		 })
-		 AttachAgreesFromActivity();
-		 AttachSecondaryEvents();
-		 $(window).unbind("scroll");
-		 $(window).scroll(function(){
-		 	if(isScrolledIntoView($("#feed-endless-loader"))){
-		 		if($("#feed-endless-loader").html() == "")
-	      			EndlessUserAcitivtyLoader($(".activity-top-level").attr("data-id"));
-		 	}
-	     }); 
+		$(".fixed-close-modal-btn, .lean-overlay, .feed-avatar, .user-avatar").unbind();
+		$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
+			$("#profile").css({ "right": "-75%" }); 
+			$("#profileInnerContainer").unbind('scroll');
+			$(".lean-overlay").each(function(){ $(this).remove(); } );
+			$(".feed-avatar, .user-avatar").on("click", function(e){
+				e.stopPropagation();
+				ShowUserProfile($(this).attr("data-id"));
+			});
+			setTimeout(function(){ $("#profile").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+		});
+		AttachAgreesFromActivity();
+		$("#profileInnerContainer").unbind("scroll");
+		$("#profileInnerContainer").find(".feed-avatar-col").css({"opacity":"0"});
+		$("#profileInnerContainer").find(".game-discover-card").css({"height":"200px"});
+		$("#profileInnerContainer").find(".game-discover-card .card-content").each(function(){
+			if($(this).parent().height() != 165)
+				$(this).hide();
+		});
+		$("#profileInnerContainer").find(".watchBtn").hide();
+		$("#profileInnerContainer").scroll(function(){
+		if(isScrolledIntoView($("#profileInnerContainer").find("#feed-endless-loader"))){
+			if($("#profileInnerContainer").find("#feed-endless-loader").html() == "")
+				EndlessUserAcitivtyLoader($("#profileInnerContainer").find(".activity-top-level").attr("data-id"));
+		}
+		}); 
 }
 
 function EndlessUserAcitivtyLoader(userid){
-	ShowLoader($("#feed-endless-loader"), 'big', "<br><br><br>");
-	$("#feed-endless-loader").append("<br><br><br>");
-	var page = $("#feed-endless-loader").attr("data-page");
-	var date = $("#feed-endless-loader").attr("data-date");
-	var filter = $("#feed-endless-loader").attr("data-filter");
+	ShowLoader($("#profileInnerContainer").find("#feed-endless-loader"), 'big', "<br><br><br>");
+	$("#profileInnerContainer").find("#feed-endless-loader").append("<br><br><br>");
+	var page = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-page");
+	var date = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-date");
+	var filter = $("#profileInnerContainer").find("#feed-endless-loader").attr("data-filter");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "ShowUserProfileActivityEndless", userid: userid, page: page, date: date },
      type: 'post',
      success: function(output) {
-		$("#feed-endless-loader").before(output);
-		$("#feed-endless-loader").html("");
-		$("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
-		var lastdate = $("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
-		$("#feed-endless-loader").attr("data-date", lastdate);
+		$("#profileInnerContainer").find("#feed-endless-loader").before(output);
+		$("#profileInnerContainer").find("#feed-endless-loader").html("");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-page", parseInt(page) + 45);
+		var lastdate = $("#profileInnerContainer").find("#feed-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
+		$("#profileInnerContainer").find("#feed-endless-loader").attr("data-date", lastdate);
 		AttachShowUserActivityEvents(userid);
      },
         error: function(x, t, m) {

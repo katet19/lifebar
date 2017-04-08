@@ -17,9 +17,10 @@ class Experience
 	public $_authenticxp;
 	public $_playedxp;
 	public $_watchedxp;
-	public $_earlyxp;
+	public $_postedxp;
+	public $_rank;
 	
-	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp) {
+	function __construct($id, $first, $last, $username, $userid, $gameid, $game, $tier, $quote, $date, $link, $owned, $bucketlist, $authenticxp, $rank) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -37,6 +38,7 @@ class Experience
 		$this->_playedxp = array();
 		$this->_watchedxp = array();
 		$this->_early = array();
+		$this->_rank = $rank;
 	}
 		
 }
@@ -58,21 +60,15 @@ class SubExperience
 	public $_archivetier;
 	public $_entereddate;
 	public $_completed;
-	public $_mode;
+	public $_hours;
 	public $_platform;
 	public $_platformids;
-	public $_alpha;
-	public $_dlc;
-	public $_beta;
-	public $_earlyaccess;
-	public $_demo;
-	public $_streamed;
 	public $_archived;
 	public $_authenticxp;
 	
 	
 	
-	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $mode, $platform, $platformids, $dlc, $alpha, $beta, $earlyaccess, $demo, $streamed, $archived, $authenticxp) {
+	function __construct($id, $expid, $userid, $gameid, $type, $source, $date, $url, $length, $thoughts, $archivequote, $archivetier, $entereddate, $completed, $hours, $platform, $platformids, $archived, $authenticxp) {
 		$this->_id = $id;
 		$this->_expid = $expid;
 		$this->_userid= $userid;
@@ -87,15 +83,9 @@ class SubExperience
 		$this->_archivetier = $archivetier;
 		$this->_entereddate = $entereddate;
 		$this->_completed = $completed;
-		$this->_mode = $mode;
+		$this->_hours = $hours;
 		$this->_platform = $platform;
 		$this->_platformids = $platformids;
-		$this->_dlc = $dlc;
-		$this->_alpha = $alpha;
-		$this->_beta = $beta;
-		$this->_earlyaccess = $earlyaccess;
-		$this->_demo = $demo;
-		$this->_streamed = $streamed;
 		$this->_archived = $archived;
 		$this->_authenticxp = $authenticxp;
 	}

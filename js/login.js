@@ -60,6 +60,7 @@ function VerifyNewUserData(username, email){
          data: {action: "VerifyNewUser", username: username, email: email },
          type: 'post',
          success: function(output) {
+			 		var errors = "";
          			if(output.indexOf("Username is already used") >= 0){
          				errors = "Username is already used<br>";
          			}else if(output.indexOf("Email is already used") >= 0){
@@ -156,7 +157,7 @@ function Login(user, pw){
 	if(user === "" || pw === ""){
 		DisplayLoginValidation(0);
 	}else{
-		ShowLoader($(".validation"), 'small');
+		ShowLoader($(".validation"), 'small', '');
 		$.ajax({ url: '../php/webService.php',
 	         data: {action: "Login", user: user, pw: pw },
 	         type: 'post',
@@ -166,7 +167,7 @@ function Login(user, pw){
 	         			}else{
 	         				GAEvent('Login', user);
 	         				setCookie("RememberMe", $.trim(output), 14);
-	         				location.hash = "#activity";
+	         				location.hash = "#discover";
 	         				location.reload();
 	         			}
             },
@@ -218,6 +219,7 @@ function RequestLoginReset(email){
 }
 
 function Logout(){
+	ShowPopUp("<div style='font-size: 2em;padding: 50px 0;color: #3F51B5;background-color: white;'><i class='material-icons' style='font-size: 1.5em; vertical-align: bottom;margin-right: 20px;'>exit_to_app</i> Signing out</div>");
 	$.ajax({ url: '../php/webService.php',
      data: {action: "Logout" },
      type: 'post',
@@ -234,4 +236,52 @@ function Logout(){
     	},
     	timeout:45000
 	});
+}
+
+function DisplayTermsOfService(){
+ 		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "TOS" },
+	     type: 'post',
+	     success: function(output) {
+			$("#BattleProgess").html(output); 
+			$(".tos-close-btn").on("click", function(){
+				$("#BattleProgess").closeModal();
+				HideFocus();
+			});
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});	
+}
+
+function DisplayPrivacyPolicy(){
+ 		ShowProfileDetails("<div class='universalBottomSheetLoading'></div>");
+		ShowLoader($(".universalBottomSheetLoading"), 'big', "<br><br><br>");
+		$.ajax({ url: '../php/webService.php',
+	     data: {action: "PrivacyPolicy" },
+	     type: 'post',
+	     success: function(output) {
+			$("#BattleProgess").html(output); 
+			$(".tos-close-btn").on("click", function(){
+				$("#BattleProgess").closeModal();
+				HideFocus();
+			});
+	     },
+	        error: function(x, t, m) {
+		        if(t==="timeout") {
+		            ToastError("Server Timeout");
+		        } else {
+		            ToastError(t);
+		        }
+	    	},
+	    	timeout:45000
+		});	
 }

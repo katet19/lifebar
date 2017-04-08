@@ -81,7 +81,7 @@
 }
 
 .badge-category-header:hover{
-	color:#2196F3;
+	color:#F50057;
 }
 
 .badge-view-more{
@@ -130,26 +130,24 @@
 
 .badge-card{
     display: inline-block;
-    margin-right: 1.25em;
-    margin-bottom: 20px;
-    width: 350px;
+    width:100%;
     vertical-align: top;
-    height: 150px;
+    border-bottom: 1px solid #ddd;
 }
 
 .badge-preview{
     height: 50px;
     width: 50px;
-    margin-top: 45px;
+    margin-top: 15px;
 }
 
 .badge-image-container{
-    width: 100px;
+    width: 50px;
     display: inline-block;
     height: 100%;
+    margin-right: 10px;
     text-align: center;
     float: left;
-    background-color: #ededed;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -160,21 +158,21 @@
 .badge-details-container{
     display: inline-block;
     height: 100%;
-    width:250px;
+    width: calc(100% - 60px);
     float:left;
     padding: 10px;
+    text-align: left;
     position:relative;
 }
 
 .badge-btn{
-    position:absolute;
-    bottom:-5px;
-    right:10px;
+    float:right;
 }
 
 .badge-name{
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight:500;
+    text-align:left;
 }
 
 .badge-active{

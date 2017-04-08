@@ -26,7 +26,7 @@ function ShowFormResults($formid, $choices, $gamePage){
 					if($i == 0){ echo "<div style='float:left;'>"; }else if($i == 6){ echo "</div><div style='float:left;'>"; } ?>
 					<div class="analyze-doughnut-item">
 						<?php if(sizeof($choices) > 0 && in_array($ref[3], $choices)){ ?>
-							<i class='fa fa-check' style='color:<?php echo $ref[2]; ?>;display:inline-block;background: rgba(255,255,255,0.8); border-radius: 50%;padding: 1px;' ></i>
+							<i class='material-icons' style='color:<?php echo $ref[2]; ?>;vertical-align: text-bottom;font-size:1.25em;display:inline-block;background: rgba(255,255,255,0.8); border-radius: 50%;padding: 1px;' >check</i>
 						<?php 
 						}else{ ?>
 							<div class="analyze-doughnut-block" style='background-color:<?php echo $ref[2]; ?>;'></div>
@@ -63,7 +63,7 @@ function GetRandomColors($random){
 	$colors[] = ["#795548","#8D6E63"];
 	$colors[] = ["#607D8B","#78909C"];
 	$colors[] = ["#03A9F4","#29B6F6"];
-	$colors[] = ["#FFC107","#FFCA28"];	
+	$colors[] = ["#FFC107","#FFCA28"];		
 	
 	if($random)
 		shuffle($colors);
@@ -187,7 +187,7 @@ function DailyForm($game, $user, $refptid){
 		<div class="row">
 			<div class="col s10 offset-s1" style='margin-top: 75px;'>
 				<div class='btn <?php if($refpt != ''){ ?>update-daily<?php }else{ ?>submit-daily<?php } ?>'><?php if($refpt != ''){ ?>Update Reflection Point<?php }else{ ?>Submit for review<?php } ?></div>
-				<div class='btn cancel-daily' style='background-color:#F44336'>Cancel</div>
+				<div class='btn cancel-daily cancel-button'>Cancel</div>
 				<?php if($refpt != ''){ ?>
 					<div class='btn save-as-daily'>Save as New Reflection Point</div>
 					<div class='btn-flat delete-daily' style='color:red;'>Delete</div>
