@@ -482,7 +482,7 @@ function AttachDiscoverHomeEvents(){
 	    	},
 	    	timeout:45000
 		});
-		
+		$(window).unbind("scroll");
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
 	});
