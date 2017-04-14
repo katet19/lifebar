@@ -753,6 +753,11 @@ function FinishGameCardUpdate(gameid){
 					if(container.parent().find(".game-activity-content-sub-header").length > 0){
 						container.parent().find(".game-activity-content-sub-header").html("Updated your details!");
 					}
+					$(".game-card-action-pick").on("click", function(e){
+						e.stopPropagation();
+						if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
+							GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+					});
 				},
 				error: function(x, t, m) {
 					if(t==="timeout") {
@@ -764,11 +769,6 @@ function FinishGameCardUpdate(gameid){
 				timeout:45000
 			});
 		}
-	});
-	$(".game-card-action-pick").on("click", function(e){
-		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
-			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
 
