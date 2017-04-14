@@ -130,7 +130,7 @@ function AttachActivityEvents(){
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
 	 	if(isScrolledIntoView($("#feed-endless-loader"))){
-	 		if($("#feed-endless-loader").html() == "")
+	 		if($("#feed-endless-loader").html() == "" && $("#activity").is(":visible"))
       			EndlessLoader();
 	 	}
      });
