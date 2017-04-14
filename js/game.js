@@ -739,11 +739,6 @@ function InitializeGameCardUpdate(gameid){
 		}
 	});
 	$(".game-card-action-pick").unbind();
-	$(".game-card-action-pick").on("click", function(e){
-		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
-			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
-	});
 }
 
 function FinishGameCardUpdate(gameid){
@@ -769,6 +764,11 @@ function FinishGameCardUpdate(gameid){
 				timeout:45000
 			});
 		}
+	});
+	$(".game-card-action-pick").on("click", function(e){
+		e.stopPropagation();
+		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
+			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
 	});
 }
 
