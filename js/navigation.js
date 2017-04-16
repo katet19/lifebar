@@ -232,7 +232,43 @@ function AttachTabLoadingEvents(){
 	  	window.open("https://lifebar.freshdesk.com");
 	  });
 	  $(".supportBlogButton").on("click", function(){
-	  	window.open("https://medium.com/lifebar-io");
+			$.ajax({ url: '../php/webService.php',
+			     data: {action: 'DisplayFeedback', },
+			     type: 'post',
+			     success: function(output) {
+					ShowPopUp(output);
+					$(".myfeedback-submit").on("click", function(){
+						var feedback = $("#myfeedback").val();
+							$.ajax({ url: '../php/webService.php',
+									data: {action: 'SubmitFeedback', feedback: feedback },
+									type: 'post',
+									success: function(output) {
+										Toast("Thanks for the feedback! We will respond as soon as we can.");
+										$("#universalPopUp").closeModal();
+  										HideFocus();
+									},
+										error: function(x, t, m) {
+											if(t==="timeout") {
+												ToastError("Server Timeout");
+											} else {
+												ToastError(t);
+											}
+										},
+										timeout:45000
+								});
+							
+					});
+			     },
+			        error: function(x, t, m) {
+				        if(t==="timeout") {
+				            ToastError("Server Timeout");
+				        } else {
+				            ToastError(t);
+				        }
+			    	},
+			    	timeout:45000
+			});
+	  	
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){

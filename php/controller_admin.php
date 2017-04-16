@@ -549,6 +549,12 @@ function GetFeedbackData(){
 	return $fdata;
 }
 
+function SubmitFeedback($feedback,$userid){
+	$mysqli = Connect();
+	$mysqli->query("INSERT INTO `Feedback` (`UserID`,`Feedback`) VALUES ($userid', '$feedback')");
+	Close($mysqli, $result);
+}
+
 function GetIGNUnmapped(){
 	$mysqli = Connect();
 	$myuser = $_SESSION['logged-in'];

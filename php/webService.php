@@ -629,6 +629,12 @@
 		if($_POST['action'] == "DismissUser"){
 			IgnoreUser($_POST['dismiss']);
 		}
+		if($_POST['action'] == "DisplayFeedback"){
+			DisplayFeedback();
+		}
+		if($_POST['action'] == "SubmitFeedback"){
+			SubmitFeedback($_POST['feedback'],$_SESSION['logged-in']->_id);
+		}
 	}
 	function DiscoverServices(){
 		if($_POST['action'] == 'Search' && isset($_POST['search'])){

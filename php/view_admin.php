@@ -222,6 +222,19 @@ function DisplayDBThreads(){
 	<?php }
 }
 
+function DisplayFeedback(){
+	?>
+	<div class="row">
+			<div class="input-field col s10 offset-s1">
+				<textarea id="myfeedback" class="materialize-textarea myfeedback" ></textarea>
+				<label for="myfeedback">Enter Feedback, Bugs & Ideas</label>
+			</div>
+			<div class="col s10 offset-s1">
+				<div class='btn myfeedback-submit'>Submit Feedback</div>
+			</div>
+	</div>
+	<?php
+}
 
 function DisplayPendingReviews(){
 	$rssfeeds = GetUnReviewedRSSFeeds();
