@@ -551,7 +551,7 @@ function GetFeedbackData(){
 
 function SubmitFeedback($feedback,$userid){
 	$mysqli = Connect();
-	$mysqli->query("INSERT INTO `Feedback` (`UserID`,`Feedback`) VALUES ($userid', '$feedback')");
+	$mysqli->query("insert into `Feedback` (`UserID`,`Feedback`) VALUES ('$userid', '$feedback')");
 	Close($mysqli, $result);
 }
 

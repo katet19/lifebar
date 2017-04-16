@@ -239,23 +239,24 @@ function AttachTabLoadingEvents(){
 					ShowPopUp(output);
 					$(".myfeedback-submit").on("click", function(){
 						var feedback = $("#myfeedback").val();
-							$.ajax({ url: '../php/webService.php',
-									data: {action: 'SubmitFeedback', feedback: feedback },
-									type: 'post',
-									success: function(output) {
-										Toast("Thanks for the feedback! We will respond as soon as we can.");
-										$("#universalPopUp").closeModal();
-  										HideFocus();
+						Toast("Thanks for the feedback! We will respond as soon as we can.");
+						$("#universalPopUp").closeModal();
+						HideFocus();
+						$.ajax({ url: '../php/webService.php',
+								data: {action: 'SubmitFeedback', feedback: feedback },
+								type: 'post',
+								success: function(output) {
+
+								},
+									error: function(x, t, m) {
+										if(t==="timeout") {
+											ToastError("Server Timeout");
+										} else {
+											ToastError(t);
+										}
 									},
-										error: function(x, t, m) {
-											if(t==="timeout") {
-												ToastError("Server Timeout");
-											} else {
-												ToastError(t);
-											}
-										},
-										timeout:45000
-								});
+									timeout:45000
+							});
 							
 					});
 			     },
