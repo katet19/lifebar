@@ -177,7 +177,7 @@ function NavigateToPage(page, fromURL = false){
 				ShowRanking();
 			else if(page == "#collections")
 				DisplayUserCollection($(".userContainer").attr("data-id"));
-			else if(page != "#logout")
+			else if(page != "#logout" && page != "#feedback")
 				ShowDiscoverHome();
 			GLOBAL_HASH_REDIRECT = "";
 		}
