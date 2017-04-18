@@ -381,7 +381,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
                          <?php } ?>
 					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
-					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?>
+					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days") && sizeof($feed[0][3]->_playedxp) > 0){ ?>
 						reminisced about
 					<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
 						finished
