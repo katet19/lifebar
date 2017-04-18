@@ -347,7 +347,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 					<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>subject</i></div>
 				<?php }else if(sizeof($feed) > 0){ ?>
 					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
-				<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?> 
+				<?php }else if(strtotime($feed[0][0]->_date) < strtotime("now -182 days")){ ?> 
 					<div class="feed-activity-icon-xp"><i class="material-icons">access time</i></div>
 				<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
 					<div class="feed-activity-icon-xp"><i class="material-icons">done</i></div>
@@ -381,7 +381,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
                          <?php } ?>
 					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
-					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days") && sizeof($feed[0][3]->_playedxp) > 0){ ?>
+					<?php }else if(strtotime($feed[0][0]->_date) < strtotime("now -182 days") && sizeof($feed[0][3]->_playedxp) > 0){ ?>
 						reminisced about
 					<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
 						finished
