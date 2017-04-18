@@ -192,7 +192,7 @@ function AttachGameEvents(currentTab){
 	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
 		$("#game").css({ "right": "-75%" }); 
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
-		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); $("#gameInnerContainer").html(""); }, 300);
 	});
 
 	if($(window).width() < 600){
