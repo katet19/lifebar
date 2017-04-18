@@ -224,7 +224,7 @@ function DisplayDBThreads(){
 
 function DisplayFeedback(){
 	?>
-	<div class="row" style='margin-top:50px;'>
+	<div class="row" style='margin:50px 0px;'>
 			<div class="input-field col s10 offset-s1">
 				<textarea id="myfeedback" class="materialize-textarea myfeedback" ></textarea>
 				<label for="myfeedback">Enter feedback, report bugs or send ideas</label>
