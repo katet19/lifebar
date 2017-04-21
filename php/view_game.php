@@ -753,6 +753,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 						<?php if($xp->_tier > 0){ ?>
 							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 								<?php DisplayStarSequence($xp->_tier, true); ?>
+								<i class="material-icons clear-star-ranking">remove_circle_outline</i>
 							</div>
 						<?php }else{ ?>
 							<div class="nav-game-action-btn">

@@ -469,6 +469,11 @@
 				echo CalculateXPGain("star", $isNewXP);
 			}
 		}
+		if($_POST['action'] =='ClearStars' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				ClearStar($_SESSION['logged-in']->_id,$_POST['gameid']);
+			}
+		}
 		if($_POST['action'] =='SavePlayedExperience' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);

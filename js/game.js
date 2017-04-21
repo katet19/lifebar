@@ -317,6 +317,34 @@ function AttachStarEvents(){
 		}
 		element.find(".star-icon-pre").text("star");
 	});
+	$(".clear-star-ranking").on("click", function(){
+		var gameid = $(this).parent().parent().parent().attr("data-id");
+
+		$(this).parent().find(".star-icon").each(function(){
+			$(this).removeClass("tierTextColor1");
+			$(this).removeClass("tierTextColor2");
+			$(this).removeClass("tierTextColor3");
+			$(this).removeClass("tierTextColor4");
+			$(this).removeClass("tierTextColor5");
+			$(this).removeClass("star-icon-pre");
+		});
+
+		$.ajax({ url: '../php/webService.php',
+				data: {action: "ClearStars", gameid: gameid, tier: 0 },
+				type: 'post',
+				success: function(output) {
+
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
+	});
 	$(".star-icon").on("click", function(){
 		var gameid = $(this).parent().parent().parent().attr("data-id");
 		var tier = 0;

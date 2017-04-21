@@ -2584,6 +2584,13 @@ function SaveXP($user,$gameid,$quote,$tier,$quarter, $year,$link,$rank){
 	return $newXP;
 }
 
+function ClearStar($userid, $gameid){
+	$mysqli = Connect();
+	$update = "update `Experiences` set `Tier`='0' where `UserID` = '$userid' and `GameID` = '$gameid'";
+	$result = $mysqli->query($update);
+	Close($mysqli, $result);
+}
+
 function UpdatePlayedXP($user, $gameid, $xpid, $quote, $tier, $completed, $year, $platform,$hours){
 	$mysqli = Connect();
 	$completed = str_replace("%","",$completed);	
