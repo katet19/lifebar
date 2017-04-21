@@ -319,7 +319,11 @@ function AttachStarEvents(){
 	});
 	$(".clear-star-ranking").on("click", function(){
 		var gameid = $(this).parent().parent().parent().attr("data-id");
-
+		$(this).parent().removeClass("tierTextColor1");
+		$(this).parent().removeClass("tierTextColor2");
+		$(this).parent().removeClass("tierTextColor3");
+		$(this).parent().removeClass("tierTextColor4");
+		$(this).parent().removeClass("tierTextColor5");
 		$(this).parent().find(".star-icon").each(function(){
 			$(this).removeClass("tierTextColor1");
 			$(this).removeClass("tierTextColor2");
@@ -327,6 +331,8 @@ function AttachStarEvents(){
 			$(this).removeClass("tierTextColor4");
 			$(this).removeClass("tierTextColor5");
 			$(this).removeClass("star-icon-pre");
+			$(this).removeClass("tier-modal-icon");
+			$(this).text("star_border");
 		});
 
 		$.ajax({ url: '../php/webService.php',
