@@ -258,7 +258,7 @@
     z-index: 2;
 }
 
-.game-card-action-pick:hover .clear-star-ranking{
+.game-card-action-pick:hover .clear-star-ranking, .nav-game-action-btn:hover .clear-star-ranking{
     opacity:1;
 }
 

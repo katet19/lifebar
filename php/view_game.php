@@ -58,6 +58,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 							<?php if($myxp->_tier > 0){ ?>
 								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;cursor:pointer;'>
 									<?php DisplayStarSequence($myxp->_tier, true); ?>
+									<i class="material-icons clear-star-ranking" style='color:gray;'>remove_circle_outline</i>
 								</div>
 								<div class="game-activity-content-sub-header">
 									<?php if($toprating == $myxp->_tier){ ?>
