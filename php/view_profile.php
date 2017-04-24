@@ -427,7 +427,6 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<!-- Checkpoints, MyLibrary -->
 		<div class="col s12 m12 l3">
 			<div class="row">
-				<?php DisplayMyLibraryChicklet($userid);  ?>
 			</div>
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:1215px;">
@@ -1129,16 +1128,6 @@ function DisplayWorstXPForUser($userid, $conn, $mutualconn, $hiddenusername, $la
 		}
 	}
 }
-
-function DisplayMyLibraryChicklet($userid){ 
-		$total = GetMyLibraryCount($userid);
-		?>
-	<div class="profile-card badge-card-container col s12 z-depth-1  waves-effect waves-block mylibrary" style="height:303px;background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">Inventory</div>
-		<div class="mylibrary-total"><?php echo $total; ?></div>
-		<div class="mylibrary-label"><?php if($total == 1){ echo "game"; }else{ echo "games"; } ?></div>
-	</div>
-<?php }
 
  function DisplayCheckpoint($game, $xp, $depth, $responsive, $authenticxp){ ?>
  	<div class="col s12 checkpoint-container waves-effect waves-block" data-gbid='<?php echo $game->_gbid; ?>'>
@@ -2199,128 +2188,6 @@ function DisplayDeveloperDetails($userid, $developer, $progress){
 		<?php
 }
 
-
-function DisplayMyLibrary($userid, $filter){
-	$user = GetUser($userid); ?>	
-	<div class='row' style='margin-top:20px'>
-		<div class="activity-top-level">
-			<?php 
-				$name = "";
-				if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
-				DisplayBackButton($name."'s Inventory");
-				DisplayMainMyLibrary($userid, $filter);
-			?>
-		</div>
-		<?php
-			DisplayMyLibrarySecondaryContent($userid);
-		?>
-	</div>
-<?php	
-}
-
-function DisplayMainMyLibrary($userid, $filter){
-	$mylib = GetMyLibrary($userid, $filter, 0);
-	
-	if($filter == 'Alpha' && sizeof($mylib) > 0){
-		$groupfeed = array();
-		$group = array();
-		$curr_char = "";
-		foreach($mylib as $libitem){
-			$temp_char = strtoupper(substr($libitem[1],0,1));
-			if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-			if($temp_char != $curr_char){
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				$curr_char = $temp_char;
-				unset($group);
-				$group[] = $libitem;
-			}else{
-				$group[] = $libitem;
-			}
-		}
-	}
-	
-	//The last group will get missed in the loop
-	if(sizeof($group) > 0)
-		$groupfeed[] = $group;
-	
-	?>
-		<div class="col s12 mylibrary-container" style='position: relative;'> 
-		<?php
-			if($filter == "Alpha" && sizeof($groupfeed) > 0){
-				$curr_char = strtoupper(substr($groupfeed[0][0][1],0,1));
-				if(!ctype_alpha($curr_char))
-					$curr_char = "#";
-				FeedDivider($curr_char, $filter);
-				foreach($groupfeed as $groupitem){
-					foreach($groupitem as $libitem){
-						$temp_char = strtoupper(substr($libitem[1],0,1));
-						if(!ctype_alpha($temp_char))
-							$temp_char = "#";
-						if($temp_char != $curr_char){
-							FeedDivider($temp_char, $filter);
-							$curr_char = $temp_char;
-						}
-						$libxp = new LibraryExperience($libitem[0], $libitem[5], $libitem[1], $libitem[4], $libitem[6], $libitem[2], $libitem[3]);
-						DisplayGameInList($libxp);
-					}
-				}
-			}
-		?>
-		<?php /*if(sizeof($mylib) == 100){ ?>
-			<!--<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="101" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>-->
-		<?php } */ ?>
-		<div class="mylibrary-vert-line"></div>
-	<?php
-}
-
-function DisplayMyLibraryEndless($userid, $page, $current_group, $filter){
-	$mylib = GetMyLibrary($userid, $filter, $page);
-	
-	if($filter == 'Alpha'){
-		$groupfeed = array();
-		$group = array();
-		$curr_char = $current_group;
-		foreach($mylib as $libitem){
-			$temp_char = substr($libitem[1],0,1);
-			if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-			if($temp_char != $curr_char){
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				$curr_char = $temp_char;
-				unset($group);
-				$group[] = $libitem;
-			}else{
-				$group[] = $libitem;
-			}
-		}
-	}
-	//The last group will get missed in the loop
-	if(sizeof($group) > 0)
-		$groupfeed[] = $group;
-
-	if($filter == "Alpha"){
-		$curr_char = $current_group;
-		if(!ctype_alpha($curr_char))
-			$curr_char = "#";
-
-		foreach($groupfeed as $groupitem){
-			foreach($groupitem as $libitem){
-				$temp_char = substr($libitem[1],0,1);
-				if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-				if($temp_char != $curr_char){
-					FeedDivider($temp_char, $filter);
-					$curr_char = $temp_char;
-				}
-				DisplayGameInList(GetExperienceForUserComplete($userid, $libitem[0]));
-			}
-		}
-	}
-}
-
 function FeedDivider($label, $type){
 	if($type == "Date")
 		$label = explode(" ", ConvertDateToActivityFormat($label));
@@ -2338,46 +2205,6 @@ function FeedDivider($label, $type){
 		</div>
 	</div>
 	<?php
-}
-
-function DisplayMyLibrarySecondaryContent($userid){ ?>
-	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
-		<div class="row activity-secondary-content" style='margin-top: 6em;'>
-			<div class="col s12">
-				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Inventory Sort</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-			  	    <div id="activity-filter-label" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-content-filter-list left"></i>Inventory Filter</div>
-				</div>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="1" id="tier1" checked />
-				<label for="tier1">Tier 1</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="2" id="tier2" checked />
-				<label for="tier2">Tier 2</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="3" id="tier3" checked />
-				<label for="tier3">Tier 3</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="4" id="tier4" checked />
-				<label for="tier4">Tier 4</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="5" id="tier5" checked />
-				<label for="tier5">Tier 5</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="0" id="tier0" checked />
-				<label for="tier0">Tier ?</label>
-			</div>
-		</div>
-	</div>
-<?php
 }
 
 function DisplayProfileActivity($userid){

@@ -147,6 +147,9 @@ function NavigateToPage(page, fromURL = false){
 			}else if(page[0] == "#ranking"){
 				$("#nav-ranking").addClass("nav-slide-out-selected-page");
 				ShowRanking();
+			}else if(page[0] == "#mylibrary"){
+				$("#nav-mylibrary").addClass("nav-slide-out-selected-page");
+				ShowMyLibrary();
 			}else{
 				$('body').css({'overflow-y':'scroll'});
 				ShowDiscoverHome();
@@ -175,6 +178,8 @@ function NavigateToPage(page, fromURL = false){
 				ShowUserProfile($(".userContainer").attr("data-id"), true);
 			else if(page == "#ranking")
 				ShowRanking();
+			else if(page == "#mylibrary")
+				ShowMyLibrary();
 			else if(page == "#collections")
 				DisplayUserCollection($(".userContainer").attr("data-id"));
 			else if(page != "#logout" && page != "#feedback")

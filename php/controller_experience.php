@@ -457,6 +457,45 @@ function AdvancedFilterWeave($userid, $paramaters, $sort){
 	return $experiences;
 }
 
+function GetUserLibrary($userid){
+	$experiences = array();
+	$mysqli = Connect();
+	if ($result = $mysqli->query("select g.*, exp.`Tier`, exp.`Rank`, (select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played') as `Played`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Watched') as `Watched`,
+				(select count(*)  from `Sub-Experiences` where `UserID` = '".$userid."' and `GameID` = g.`ID` and `Type` = 'Played' and (`Completed` = 100 or `Completed` = 101)) as `Finished`
+				from `Experiences` exp, `Games` g where exp.`UserID` = '".$userid."' and exp.`GameID` = g.`ID` order by `Title`")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row["Finished"] > 0)
+				$row['XPType'] = "Played Finished";
+			else if($row['Played'] > 0)
+				$row['XPType'] = $row['XPType']." Played";
+
+			if($row['Watched'] > 0)
+				$row['XPType'] = $row['XPType']." Watched";
+
+			$game = GameRankObject($row);
+			$games[] = $game;
+		}
+	}
+	Close($mysqli, $result);
+	
+	return $games;
+}
+
+function TierToStar($tier){
+	if($tier == 5)
+		return 1;
+	else if($tier == 4)
+		return 2;
+	else if($tier == 3)
+		return 3;
+	else if($tier == 2)
+		return 4;
+	else if($tier == 1)
+		return 5;
+	else
+		return 0;
+}
 
 function SearchForGamesInWeave($searchstring, $userid){
 	$experiences = array();

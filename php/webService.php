@@ -224,14 +224,7 @@
 				DisplayMilestonesTree($_POST["userid"]);
 			else
 				DisplayMilestonesTree($_SESSION['logged-in']->_id);
-		}
-		if($_POST['action'] == "DisplayMyLibrary"){
-			DisplayMyLibrary($_POST["userid"], $_POST["filter"]);
-		}
-		if($_POST['action'] == "DisplayMyLibraryEndless"){
-			DisplayMyLibraryEndless($_POST["userid"], $_POST["page"], $_POST["group"], $_POST["filter"]);
-		}
-		
+		}		
 	}
 	function WeaveServices(){
 		if($_POST['action'] == 'DisplayWeave' ){
@@ -567,6 +560,9 @@
 		}
 		if($_POST['action'] == "SaveJournalEntry"){
 			SaveJournalEntry($_POST['subject'], $_POST['journal'], $_POST['gameid']);
+		}
+		if($_POST['action'] == "DisplayMyLibrary"){
+			DisplayMyLibrary($_SESSION['logged-in']->_id);
 		}
 	}
 	function GameServices(){

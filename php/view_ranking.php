@@ -252,7 +252,7 @@ function ShowFilterList($userid, $sizeOfList){
                         <input type="checkbox" class="xp-dropdown-checkbox" id="Finished" />
                         <label for="Finished">Finished</label>
                     </div>
-                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp"Watched">
+                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp="Watched">
                         <input type="checkbox" class="xp-dropdown-checkbox" id="Watched" />
                         <label for="Watched">Watched</label>
                     </div>

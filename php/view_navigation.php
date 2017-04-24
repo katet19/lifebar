@@ -77,6 +77,7 @@ function DisplaySideDrawer(){ ?>
 		<li class="nav-slide-out-selected-page" id="nav-discover"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
 		<li id="nav-activity"><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
 		<li id="nav-ranking"><a href="#ranking"><i class="material-icons">swap_vert</i> Rank</a></li>
+		<li id="nav-mylibrary"><a href="#mylibrary"><i class="material-icons">view_list</i> My Library</a></li>
 		<!--<li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>-->
 		<!--<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>-->
 			<div class="divider"></div>
