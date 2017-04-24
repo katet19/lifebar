@@ -22,7 +22,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<title>Lifebar | We Heart Games ;)</title>
+		<title>Lifebar &#10084; Games</title>
 		<?php
 	} 
 ?>
