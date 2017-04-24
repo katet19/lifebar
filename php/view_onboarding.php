@@ -9,7 +9,7 @@ function AccountDetails(){
 	<div class="row onboarding-account-step" style='margin-bottom:50px;'>
 		<div class="col s10 offset-s1" style='text-align:left;'>
 			<div class='onboarding-big-welcome'>Welcome to Lifebar <span style='color:#3F51B5'><?php echo $_SESSION['logged-in']->_username; ?></span>!</div>
-			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:bold;color:#303F9F;'>capture</span> and <span style='font-weight:bold;color:#303F9F;'>celebrate</span> your life playing & watching video games!</div>
+			<div class='onboarding-sub-welcome'>Lifebar is the best place to <span style='font-weight:bold;color:#303F9F;'>save</span>, <span style='font-weight:bold;color:#303F9F;'>rank</span> and <span style='font-weight:bold;color:#303F9F;'>share</span> your life playing & watching video games!</div>
 			<!--<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">share</i> Share your thoughts about games, past & present, with friends and fellow gamers.</div> -->
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">visibility</i> Add your watched experiences, whether it's your thoughts on the latest Mario 64 speed run or the most interesting E3 reveals you can quickly save and share with others</div>
 			<div class='onboarding-sub-sub-welcome'><i class="material-icons onboarding-sub-welcome-icon">gamepad</i>Journal your time playing a game and capture your thoughts and feelings as you play from start to finish.</div>

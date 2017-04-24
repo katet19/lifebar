@@ -49,7 +49,14 @@ function DisplayMyLibrary($userid){
                         ?>
                     </div>
                     <?php
-                }
+                }else{ ?>
+                    <div class="mylib-welcome-container">
+                        <div class="col s12 onboarding-game-step" style='text-align:left;'>
+                            <div class='onboarding-big-welcome' style='font-size: 1.5em;margin-toP: 0px;'>Your Library is empty!</div>
+                            <div class='onboarding-sub-sub-welcome'>Take a look at <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>explore</i> Discover, review your <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>whatshot</i> Activity feed or search for games you have experienced. Adding a bookmark, giving a star rating or entering played/watched details will add the game to your Library.</div>
+                        </div>
+                    </div>
+                <?php }
             ?>
         </div>
     </div>
