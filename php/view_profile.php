@@ -1037,41 +1037,42 @@ function DisplayUpcomingQuests($userid){
 		</div>
 		<?php
 	}
-	
-	foreach($xps as $xp){ 
-	  	$game = $xp->_game; 
-	  
-  		$today = new DateTime(date("Y-m-d"));
-		$release = new DateTime($game->_released);
-		$interval = $today->diff($release);
-		$diff = $interval->format("%r%a");
-		if($interval->y > 0){
-			if($interval->y > 1)
-				$coming =  $interval->y." years";
-			else
-				$coming =  $interval->y." year"; 
-		}else if($interval->m > 0){
-			if($interval->m > 1)
-				$coming = $interval->m." months";
-			else
-				$coming = $interval->m." month";
-		}else if($diff > 0){
-			if($interval->d > 1)
-				$coming = $interval->d." days";
-			else
-				$coming = $interval->d." day";
+	if(sizeof($xps) > 0){ 
+		foreach($xps as $xp){ 
+			$game = $xp->_game; 
+		
+			$today = new DateTime(date("Y-m-d"));
+			$release = new DateTime($game->_released);
+			$interval = $today->diff($release);
+			$diff = $interval->format("%r%a");
+			if($interval->y > 0){
+				if($interval->y > 1)
+					$coming =  $interval->y." years";
+				else
+					$coming =  $interval->y." year"; 
+			}else if($interval->m > 0){
+				if($interval->m > 1)
+					$coming = $interval->m." months";
+				else
+					$coming = $interval->m." month";
+			}else if($diff > 0){
+				if($interval->d > 1)
+					$coming = $interval->d." days";
+				else
+					$coming = $interval->d." day";
+			}
+			?>
+			<div class="col s12 m12 l3 calendar-card"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
+				<div class="calendar-image waves-effect waves-block" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
+					<div class="calendar-release"><?php echo date("F jS",strtotime($game->_released)); ?></div>
+					<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>">
+						<?php echo $game->_title; ?>
+						<div class="calendar-countdown z-depth-1"><?php echo $coming; ?></div>
+					</div>
+				</div>
+			</div>
+		<?php
 		}
-		  ?>
-		  <div class="col s12 m12 l3 calendar-card"  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-		    <div class="calendar-image waves-effect waves-block" style="background:url(<?php echo $game->_imagesmall; ?>) 50% 50%;-webkit-background-size: cover;background-size: cover;-moz-background-size: cover;-o-background-size: cover;">
-		    	<div class="calendar-release"><?php echo date("F jS",strtotime($game->_released)); ?></div>
-		    	<div class="feed-card-level-game_title feed-activity-game-link feed-bookmark-title" data-gbid="<?php echo $game->_gbid; ?>">
-		    		<?php echo $game->_title; ?>
-	    			<div class="calendar-countdown z-depth-1"><?php echo $coming; ?></div>
-	    		</div>
-		    </div>
-		  </div>
-	<?php
 	}
 } 
 
