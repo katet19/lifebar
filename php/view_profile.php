@@ -1025,9 +1025,12 @@ function DisplayUpcomingQuests($userid){
 				<div class="newprofile-skills-list newprofile-rightside">
 					<div class="newprofile-sub-header" style='margin-top:0;'>Popular bookmarked games:</div>
 					<ol>
-						<?php foreach($xps as $xp){ ?>
-							<li class="newprofile-best-item" data-id="<?php echo $xp->_game->_gbid; ?>"><?php echo $xp->_game->_title;?></li>
-						<?php } ?>
+						<?php
+							if(sizeof($xps) > 0){ 
+								foreach($xps as $xp){ ?>
+									<li class="newprofile-best-item" data-id="<?php echo $xp->_game->_gbid; ?>"><?php echo $xp->_game->_title;?></li>
+								<?php } 
+							}?>
 					</ol>
 				</div>
 			</div>
