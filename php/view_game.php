@@ -63,7 +63,7 @@ function ShowGameContent($game, $myxp, $otherxp){
 								<div class="game-activity-content-sub-header">
 									<?php if($toprating == $myxp->_tier){ ?>
 										You <b>agree</b> with most other members.
-									<?php }else if($toprating > $myxp->_tier){ ?>
+									<?php }else if($toprating < $myxp->_tier){ ?>
 										You rated <b>higher</b> than other members.
 									<?php }else if($toprating > 0){ ?>
 										You rated <b>lower</b> than other members.
