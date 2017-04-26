@@ -13,9 +13,9 @@ function DisplayHeaderNavigation(){ ?>
 			<div class="col navigation-col navigation-menu navigation-menu-slide-out">
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<i class="material-icons nav-icon">menu</i>
-					<div class="navigation-menu-logo navigation-menu-logo-slide-out"><b>Life</b>bar</div>
+					<div class="navigation-menu-logo navigation-menu-logo-slide-out"><img src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg' style='width: 130px;position: relative;top: 3px;'></div>
 				<?php }else{ ?>
-					<div class="navigation-menu-logo navigation-menu-logo-slide-out" style='margin-top: 5px;'><b>Life</b>bar</div>
+					<div class="navigation-menu-logo navigation-menu-logo-slide-out" style='margin-top: 5px;'><img src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg' style='width: 130px;position: relative;top: 3px;'></div>
 				<?php } ?>
 			</div>
 		    <div class="col navigation-col navigation-lifebar navigation-lifebar-slide-out">
@@ -114,24 +114,6 @@ function DisplayUniversalBottomSheet(){ ?>
 function DisplayBattleProgressSheet(){ ?>
 	<div id="BattleProgess" class="modal bottom-sheet" style="background-color:white;"></div>
 <?php
-}
-
-function DisplayLifeBarLogo($showtag){ ?>
-	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
-		<div class="logoImage">
-			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
-			<?php if($showtag){ ?> <div class="logoAlpha">beta</div><?php } ?>
-		</div>
-	</div>
-	<?php /*
-	<div class="logoContainer">
-		<div class="logoTitle"><b>Life</b>bar</div>
-		<div class="logoAlpha">alpha</div>
-		<div class="logoLifebar">
-			<div class="logoLifebarHealth"></div>
-			<div class="logoLifebarDamage"></div>
-		</div>
-	</div>*/
 }
 
 function DisplayShareContent($userid, $type, $otherid){

@@ -22,7 +22,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<title>Lifebar &#10084; Games</title>
+		<title>Lifebar</title>
 		<?php
 	} 
 ?>
@@ -45,7 +45,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	}
 	?>
 
-<link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://lifebar.io/favicon_3.ico" type="image/x-icon" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
