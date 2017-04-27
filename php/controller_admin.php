@@ -537,6 +537,10 @@ function GetExperienceData(){
 	while($row = mysqli_fetch_array($result)){
 		$edata[] = $row["count(*)"]; 
 	}
+	$result = $mysqli->query("select count(*) from `Feedback` where `Reviewed` = 'No'");
+	while($row = mysqli_fetch_array($result)){
+		$edata[] = $row["count(*)"]; 
+	}
 	Close($mysqli, $result);
 	return $edata;
 }
@@ -644,6 +648,15 @@ function SaveIGNImportForLater($id){
 	$mysqli = Connect();
 	$result = $mysqli->query("Update `ImportReview` set `Owner` = '-1' where `ID` = '".$id."'");
 	Close($mysqli, $result);
+}
+
+function GetUserFeedback(){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Feedback` where `Reviewed` != 'Yes'");
+	while($row = mysqli_fetch_array($result)){
+		$feedback[] = $row;
+	}
+	return $feedback;
 }
 
 function CheckVersion($myver){

@@ -9,6 +9,16 @@ $(function() {
 	});
 });
 
+function ResetContentContainers(){
+	 $("#discover .innerContainer").html("");
+	 $("#activity .innerContainer").html("");
+	 $("#admin  .innerContainer").html("");
+	 $("#profiledetails .innerContainer").html("");
+	 $("#notifications .innerContainer").html("");
+	 $("#user  .innerContainer").html("");
+	 $("#landing .innerContainer").html("");
+	 $("#ranking .innerContainer").html("");
+}
 
  function getParameterByName(name, url) {
       if (!url) url = window.location.href;

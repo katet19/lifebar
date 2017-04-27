@@ -305,6 +305,9 @@
 			EquipBadge($_POST['userid'], $_POST['badgeid']);
 		}
 		if($_SESSION['logged-in']->_security == 'Admin'){
+			if($_POST['action'] == 'DisplayUserFeedback'){
+				DisplayUserFeedback();
+			}
 			if($_POST['action'] == 'DisplayRefPtSchedule'){
 				DisplayRefPtSchedule();
 			}
