@@ -22,54 +22,12 @@ function AddSmallImage($gbid){
 	Close($mysqli, $result);
 }
 
-function FindGamesSmallImage(){
-	$mysqli = Connect();
-	$nothing = true;
-	if ($result = $mysqli->query("select * from `Games` where `ImageSmall` = '' LIMIT 0,15")) {
-		while($row = mysqli_fetch_array($result)){
-			AddSmallImage($row["GBID"]);
-		}
-	}else{
-		echo "<h1>Collected All Small Images</h1>";
-	}
-	
-	if ($result = $mysqli->query("select count(*) as c from `Games` where `ImageSmall` = ''")) {
-		while($row = mysqli_fetch_array($result)){
-			echo $row["c"];
-		}
-	}
-	Close($mysqli, $result);
-}
-
-
 function GetGame($gameid, $pconn = null){
 	$game = "";
 	$mysqli = Connect($pconn);
 	if ($result = $mysqli->query("select * from `Games` where `ID` = ".$gameid)) {
 		while($row = mysqli_fetch_array($result)){
-			$game = new Game($row["ID"], 
-				$row["GBID"],
-				$row["Title"],
-				$row["Rated"],
-				$row["Released"],
-				$row["Genre"],
-				$row["Platforms"],
-				$row["Year"],
-				$row["ImageLarge"],
-				$row["ImageSmall"],
-				$row["Highlight"],
-				$row["Publisher"],
-				$row["Developer"],
-				$row["Alias"],
-				$row["Theme"],
-				$row["Franchise"],
-				$row["Similar"],
-				$row["Tier1"],
-				$row["Tier2"],
-				$row["Tier3"],
-				$row["Tier4"],
-				$row["Tier5"]
-				);
+			$game = GameObject($row);
 		}
 	}
 	if($pconn == null)
@@ -85,29 +43,7 @@ function GetGameByGBID($gbid, $pconn = null){
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 			}
 		}
 	}
@@ -123,29 +59,7 @@ function GetGameByGBIDFull($gbid, $pconn = null){
 	if ($result = $mysqli->query("select * from `Games` where `GBID` = ".$gbid)) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 			}
 		}
 	}
@@ -260,29 +174,7 @@ function AdvancedSearchForGame($search, $platform, $year, $publisher, $developer
 		
 	if ($result = $mysqli->query("select * from `Games` where ".implode(" and ", $query)." LIMIT 0, 25")) {
 		while($row = mysqli_fetch_array($result)){
-			$games[] = new Game($row["ID"], 
-				$row["GBID"],
-				$row["Title"],
-				$row["Rated"],
-				$row["Released"],
-				$row["Genre"],
-				$row["Platforms"],
-				$row["Year"],
-				$row["ImageLarge"],
-				$row["ImageSmall"],
-				$row["Highlight"],
-				$row["Publisher"],
-				$row["Developer"],
-				$row["Alias"],
-				$row["Theme"],
-				$row["Franchise"],
-				$row["Similar"],
-				$row["Tier1"],
-				$row["Tier2"],
-				$row["Tier3"],
-				$row["Tier4"],
-				$row["Tier5"]
-				);
+			$games[] = GameObject($row);
 		}
 	}
 	Close($mysqli, $result);
@@ -335,29 +227,7 @@ function CustomDiscoverQuery($id){
 		
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
-			$games[] = new Game($row["ID"], 
-				$row["GBID"],
-				$row["Title"],
-				$row["Rated"],
-				$row["Released"],
-				$row["Genre"],
-				$row["Platforms"],
-				$row["Year"],
-				$row["ImageLarge"],
-				$row["ImageSmall"],
-				$row["Highlight"],
-				$row["Publisher"],
-				$row["Developer"],
-				$row["Alias"],
-				$row["Theme"],
-				$row["Franchise"],
-				$row["Similar"],
-				$row["Tier1"],
-				$row["Tier2"],
-				$row["Tier3"],
-				$row["Tier4"],
-				$row["Tier5"]
-				);
+			$games[] = GameObject($row);
 		}
 	}
 	Close($mysqli, $result);
@@ -402,29 +272,7 @@ function GetDiscoverCategories(){
 			$custom = $row;
 			if ($result2 = $mysqli->query($query)) {
 				while($row2 = mysqli_fetch_array($result2)){
-					$games[] = new Game($row2["ID"], 
-						$row2["GBID"],
-						$row2["Title"],
-						$row2["Rated"],
-						$row2["Released"],
-						$row2["Genre"],
-						$row2["Platforms"],
-						$row2["Year"],
-						$row2["ImageLarge"],
-						$row2["ImageSmall"],
-						$row2["Highlight"],
-						$row2["Publisher"],
-						$row2["Developer"],
-						$row2["Alias"],
-						$row2["Theme"],
-						$row2["Franchise"],
-						$row2["Similar"],
-						$row2["Tier1"],
-						$row2["Tier2"],
-						$row2["Tier3"],
-						$row2["Tier4"],
-						$row2["Tier5"]
-						);
+					$games[] = GameObject($row2);
 				}
 			}
 			$category[] = $custom;
@@ -442,29 +290,7 @@ function GetDiscoverCategories(){
 				$custom = $row;
 				if ($result2 = $mysqli->query($query)) {
 					while($row2 = mysqli_fetch_array($result2)){
-						$games[] = new Game($row2["ID"], 
-							$row2["GBID"],
-							$row2["Title"],
-							$row2["Rated"],
-							$row2["Released"],
-							$row2["Genre"],
-							$row2["Platforms"],
-							$row2["Year"],
-							$row2["ImageLarge"],
-							$row2["ImageSmall"],
-							$row2["Highlight"],
-							$row2["Publisher"],
-							$row2["Developer"],
-							$row2["Alias"],
-							$row2["Theme"],
-							$row2["Franchise"],
-							$row2["Similar"],
-							$row2["Tier1"],
-							$row2["Tier2"],
-							$row2["Tier3"],
-							$row2["Tier4"],
-							$row2["Tier5"]
-							);
+						$games[] = GameObject($row2);
 					}
 				}
 				$category[] = $custom;
@@ -484,29 +310,7 @@ function SearchForGameLocalFirst($search){
 	if ($result = $mysqli->query("select * from `Games` where `Title` like '%".$search."%' LIMIT 0,25")) {
 		while($row = mysqli_fetch_array($result)){
 			unset($game);
-			$game = new Game($row["ID"], 
-				$row["GBID"],
-				$row["Title"],
-				$row["Rated"],
-				$row["Released"],
-				$row["Genre"],
-				$row["Platforms"],
-				$row["Year"],
-				$row["ImageLarge"],
-				$row["ImageSmall"],
-				$row["Highlight"],
-				$row["Publisher"],
-				$row["Developer"],
-				$row["Alias"],
-				$row["Theme"],
-				$row["Franchise"],
-				$row["Similar"],
-				$row["Tier1"],
-				$row["Tier2"],
-				$row["Tier3"],
-				$row["Tier4"],
-				$row["Tier5"]
-				);
+			$game = GameObject($row);
 				$games[] = $game;
 		}
 	}
@@ -519,32 +323,10 @@ function RecentlyReleasedCategory(){
 	$mysqli = Connect();
 	$games = array();
 	$past = date('Y-m-d', strtotime('-45 days'));
-	if ($result = $mysqli->query("select * from `Games` where `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Released` DESC LIMIT 0,6")) {
+	if ($result = $mysqli->query("select * from `Games` where `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Released` DESC LIMIT 0,8")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 				$games[] = $game;
 			}
 		}
@@ -560,29 +342,7 @@ function RecentlyReleased(){
 	if ($result = $mysqli->query("select * from `Games` where `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Released` DESC LIMIT 0,100")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 				$games[] = $game;
 			}
 		}
@@ -597,29 +357,7 @@ function RecentReleaseRandom($gameid){
 	if ($result = $mysqli->query("select * from `Games` where `ID` != '".$gameid."' and `Released` >= '".$past."' and `Released` <= '".date('Y-m-d')."' ORDER BY `Highlight` DESC, RAND() LIMIT 1")) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 			}
 		}
 	}
@@ -640,29 +378,7 @@ function GetGameFeedByFilter($filter){
 			$feed = array();
 			$feed[] = GetExperienceForGame($row['ID'], $mysqli);
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 				$feed[] = $game;
 			}
 			$games[] = $feed;	
@@ -679,29 +395,7 @@ function GetGamesByFilter($filter){
 	if ($result) {
 		while($row = mysqli_fetch_array($result)){
 			if($row["Title"] != ""){
-				$game = new Game($row["ID"], 
-					$row["GBID"],
-					$row["Title"],
-					$row["Rated"],
-					$row["Released"],
-					$row["Genre"],
-					$row["Platforms"],
-					$row["Year"],
-					$row["ImageLarge"],
-					$row["ImageSmall"],
-					$row["Highlight"],
-					$row["Publisher"],
-					$row["Developer"],
-					$row["Alias"],
-					$row["Theme"],
-					$row["Franchise"],
-					$row["Similar"],
-					$row["Tier1"],
-					$row["Tier2"],
-					$row["Tier3"],
-					$row["Tier4"],
-					$row["Tier5"]
-					);
+				$game = GameObject($row);
 				$games[] = $game;
 			}
 		}
@@ -785,29 +479,7 @@ function GetGameReleaseYears(){
 				if ($result2 = $mysqli->query("select * from `Games` where `Year` = '".$row["Year"]."' and `Released` <= '".date('Y-m-d')."' ORDER BY RAND() LIMIT 1")) {
 					while($row2 = mysqli_fetch_array($result2)){
 						if($row2["Title"] != ""){
-							$game = new Game($row2["ID"], 
-								$row2["GBID"],
-								$row2["Title"],
-								$row2["Rated"],
-								$row2["Released"],
-								$row2["Genre"],
-								$row2["Platforms"],
-								$row2["Year"],
-								$row2["ImageLarge"],
-								$row2["ImageSmall"],
-								$row2["Highlight"],
-								$row2["Publisher"],
-								$row2["Developer"],
-								$row2["Alias"],
-								$row2["Theme"],
-								$row2["Franchise"],
-								$row2["Similar"],
-								$row["Tier1"],
-								$row["Tier2"],
-								$row["Tier3"],
-								$row["Tier4"],
-								$row["Tier5"]
-								);
+							$game = GameObject($row2);
 								$year[] = $game;
 						}
 					}
@@ -1036,7 +708,7 @@ function GetGenres(){
 	$genre = array();
 	if ($result = $mysqli->query("select * from `Genres`")) {
 		while($row = mysqli_fetch_array($result)){
-				$genre[] = '"'.$row["Type"].'"';
+				$genre[] = $row["Type"];
 		}
 	}
 	Close($mysqli, $result);

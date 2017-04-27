@@ -30,8 +30,8 @@ function Search(searchstring){
 	GLOBAL_TAB_REDIRECT = "Search";
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	ManuallyNavigateToTab("#discover");
@@ -64,15 +64,15 @@ function Search(searchstring){
 					if($("#userAccountNav").is(":visible"))
 						$("#userAccountNav").hide(250);
 				});
- 				ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 				ShowUserProfile($(this).attr("data-id"));
  			});
   			Waves.displayEffect();
  			AttachGameCardEvents();
- 			$(".SeeAllBtn").on('click',function(){
+ 			/*$(".SeeAllBtn").on('click',function(){
  				var context = $(this).attr("data-context");
  				$("."+context).show(250);
  				$(this).delay(200).velocity({"opacity":"0"}, function(){ $(this).remove(); });
- 			});
+ 			});*/
  			
  			$('html').on('click', function(){
 				CloseSearch();
@@ -138,23 +138,18 @@ function FilterCategories(){
 }
 
 function OpenSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar").hide();
-		$(".searchInput").css({"left":"3.5em"});
-		$(".SearchBtn").css({"float":"left"});
-	}else if($(window).width() >= 600){
+	 if($(window).width() >= 600){
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar").hide();
+		$(".lifebar-container").hide();
 		$(".searchInput").css({"left":"3.5em"});
 		$(".SearchBtn").css({"float":"left"});
 	}else{
 		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"100%", "background-color" : "rgba(255,255,255,0.2)"});
-		$(".mobileTab, .mobileNav").hide();
+		$(".lifebar-container").hide();
 		$(".searchInput").css({"left":"3em"});
 	}
-	$(".closeMobileSearch").show();
-	$(".closeMobileSearch").on('click', function(e){
+	$(".closeSearch").show();
+	$(".closeSearch").on('click', function(e){
 		e.stopPropagation();
 		CloseSearch();
 	});
@@ -167,40 +162,31 @@ function OpenSearch(){
 }
 
 function CloseSearch(){
-	if($(window).width() >= 993){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"150px", "background-color" : ""});
+ if($(window).width() >= 600){
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
 		setTimeout(function(){
-			$(".userAccountNavButton, .userNotificiations, .userBug, .userAvatar, .loginContainer").show(100);
+			$(".userAccountNavButton, .lifebar-container, .loginContainer").show(100);
 		}, 100);
 		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
-	}else if($(window).width() >= 600){
-		$(".searchContainerAnonymous, .searchContainer").css({"width":"100px", "background-color" : ""});
-		setTimeout(function(){
-			$(".userAccountNavButton, .userBug, .userAvatar, .loginContainer").show(100);
-		}, 100);
-		$(".searchInput").css({"left":"1em"});
-		$(".SearchBtn").css({"float":"inherit"});
 	}else{
-		$(".searchContainerAnonymous, .searchContainer, .searchContainerMobile").css({"width":"auto", "background-color" : ""});
-		$(".mobileTab, .mobileNav").show();
+		$(".searchContainerAnonymous, .searchContainer").css({"width":"auto", "background-color" : ""});
+		$(".lifebar-container").show();
 		$(".searchInput").css({"left":"1em"});
 		$(".searchInput input").val("");
 	}
-	$(".closeMobileSearch").hide();
+	$(".closeSearch").hide();
 	$(".searchInput").css({"display":""});
-	$(".mainNav").parent().show();
 	$(".userContainer").parent().show();
 }
 
 function ShowDiscoverHome(){
 	if(location.hash != "#discover")
-		location.hash = "#discover";
+		UpdateBrowserHash("#discover");
   	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#gameInnerContainer").html("");
 	if($(window).width() > 599){
@@ -264,7 +250,7 @@ function AttachDiscoverSecondaryEvents(){
   	});
    	$(".latest-xp-name-container").on('click', function(e){
    		e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));		
+ 		ShowUserProfile($(this).attr("data-id"));		
  	});
   	ShowExtraSideContent();
   	AttachAgrees();
@@ -326,7 +312,8 @@ function AttachDiscoverHomeEvents(){
 	$(".daily-header-game-title, .view-game-spoiler").on('click', function(){
 		ShowGame($(this).attr("data-id"), $("#discover"));
 	});
- 	$(".follow-from-discover").on("click", function(){
+ 	$(".follow-from-discover").on("click", function(e){
+		 e.stopPropagation();
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();
 		}else{
@@ -341,7 +328,8 @@ function AttachDiscoverHomeEvents(){
 
 		}
  	});
-	$(".dismiss-from-discover").on("click", function(){
+	$(".dismiss-from-discover").on("click", function(e){
+		e.stopPropagation();
 		if($("#loginButton").length > 0){
 			$('#signupModal').openModal(); $("#username").focus();
 		}else{
@@ -430,11 +418,15 @@ function AttachDiscoverHomeEvents(){
 	//User
  	$(".user-discover-card").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
+	$(".user-follow-card .card-image").on("click", function(e){
+		e.stopPropagation();
+ 		ShowUserProfile($(this).parent().attr("data-id"));
+	});
   	$(".discover-collection-user").on("click", function(e){
  	 	e.stopPropagation();
- 		ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 		ShowUserProfile($(this).attr("data-id"));
  	});
  	$(".ViewBtnCollection").on("click", function(){
  		DisplayCollectionDetails($(this).parent().attr("data-catid"), 'Discover', $(this).parent().attr("data-userid"), false);		
@@ -470,7 +462,7 @@ function AttachDiscoverHomeEvents(){
 	 			});
 	 			$(".user-discover-card").on("click", function(e){
  			 		e.stopPropagation();
- 					ShowUserPreviewCard($(this).find(".user-preview-card"));
+ 					ShowUserProfile($(this).attr("data-id"));
 	 			});
 	 			AttachGameCardEvents();
 	 			$(".CategoryGameImageHighlight, .CategoryGameTitle").on("click", function(){
@@ -490,7 +482,7 @@ function AttachDiscoverHomeEvents(){
 	    	},
 	    	timeout:45000
 		});
-		
+		$(window).unbind("scroll");
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
 	});
@@ -512,17 +504,71 @@ function AttachWatchedDiscoverXP(){
 				type: 'post',
 				success: function(output) {
 					$(".daily-watch-xp-entry").html(output);
-					$(".myxp-video-goto-full").hide();
-					AttachActivityVideoEvents();
+					$(".modal-xp-emoji-icon").on('click', function(){
+						$(".modal-xp-emoji-icon-active").removeClass("modal-xp-emoji-icon-active");
+						$(this).addClass("modal-xp-emoji-icon-active");
+						ToggleSaveButtonPlayingNow($(this).parent().parent().parent());
+					});
+					$(".myxp-quote").on('keyup', function(){
+						ToggleSaveButtonPlayingNow($(this).parent().parent());
+					});
+					$(".save-watched-xp").on('click', function(){
+						if(!$(this).hasClass("disabled")){
+							var form = $(this).parent();
+							var gameid = form.attr("data-gameid");
+							var quote = form.find(".myxp-quote").val();
+							var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+							var watchedType = form.attr("data-length");
+							var url = form.attr("data-url");
+							var year = form.attr("data-year");
+							var action = "SaveWatchedExperience";
+							$(this).removeClass("save-btn");
+							$(this).html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>save</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Saving</span>");
+							$.ajax({ url: '../php/webService.php',
+								data: {action: action, gameid: gameid, quote: quote, tier: emoji, watchedType: watchedType, url: url, year: year  },
+								type: 'post',
+								success: function(output) {
+									ManageXPRewards(output);
+									form.find(".save-watched-xp").html("<i class='material-icons' style='vertical-align: middle;color: #3F51B5;'>cloud_done</i><span class='game-card-summary-add-xp-text' style='font-size: 1em;font-weight: bold;'>Details Saved!</span>");
+									setTimeout(function(){ 
+										$(".daily-watch-title").show();
+										$(".daily-watch-xp-entry").hide();
+										$(".daily-watch-xp-entry").html("");
+										var next = xpElement.parent().next();
+										//xpElement.html("ADD <i class='mdi-action-visibility'></i>");
+										//xpElement.css({"background-color":"#F50057"});
+										AttachWatchedDiscoverXP();
+										setTimeout(function(){ 
+											var next = xpElement.parent().next();
+											xpElement.parent().css({"opacity":"0"});
+											setTimeout(function(){ 
+												xpElement.parent().remove(); 
+												next.click();
+											}, 300);
+										}, 500);
+									 }, 1000);
+								},
+								error: function(x, t, m) {
+									if(t==="timeout") {
+										ToastError("Server Timeout");
+									} else {
+										ToastError(t);
+									}
+								},
+								timeout:45000
+							});
+						}
+					});
 					xpElement.html("CLOSE <i class='mdi-navigation-close'></i>");
-					xpElement.css({"background-color":"#F44336"});
+					xpElement.css({"background-color":"#757575"});
+					xpElement.hover(function(){ $(this).css({"background-color":"#F44336"});}, function(){ $(this).css({"background-color":"#757575"});});
 					$(".daily-watch-title-xp").unbind();
 					$(".daily-watch-title-xp").on('click', function(){
 						$(".daily-watch-title").show();
 						$(".daily-watch-xp-entry").hide();
 						$(".daily-watch-xp-entry").html("");
 						xpElement.html("ADD <i class='mdi-action-visibility'></i>");
-						xpElement.css({"background-color":"#0e4c7b"});
+						xpElement.css({"background-color":"#F50057"});
 						AttachWatchedDiscoverXP();
 					});
 				},
@@ -537,6 +583,16 @@ function AttachWatchedDiscoverXP(){
 			});
 		}
  	});
+}
+
+function ToggleSaveButtonPlayingNow(form){
+	var emoji = form.find(".modal-xp-emoji-icon-active").attr("data-tier");
+	var summary = form.find(".myxp-quote").val();
+	if(emoji != undefined && summary != "" && summary != undefined){
+		form.find(".save-btn").removeClass("disabled");
+	}else{
+		form.find(".save-btn").addClass("disabled");
+	}
 }
 
 function DisplayGraphs(){
@@ -606,8 +662,8 @@ function AdvancedSearch(searchstring, platform, year, publisher, developer, genr
 	GLOBAL_TAB_REDIRECT = "Search";
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").css({"display":"none"});
-    $("#activity, #profile, #admin, #profiledetails, #settings, #notifications, #game, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").css({"display":"none"});
+    $("#activity, #ranking, #admin, #profiledetails, #settings, #notifications, #user, #landing").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#discover").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	ManuallyNavigateToTab("#discover");
 	if($(window).width() > 599){

@@ -34,10 +34,9 @@
     display: inline-block;
     padding: 5px;
     position: absolute;
-    bottom: 20px;
+    bottom: 13px;
     font-weight: 300;
-    left: 2.4%;
-    z-index: -1;
+    left: 60px;
     font-size: 1.25em;
 }
 
@@ -50,18 +49,18 @@
 
 .analyze-exp-spectrum-game-piece{
     position: relative;
-    top: -55px;
+    top: -75px;
     font-size: 1.5em;
-    left: 5px;
-    height: 305px;
+    left: 2px;
+    height: 170px;
     display: inline-block;
 }
 
 .analyze-exp-spectrum-game-line{
     position: absolute;
-    top: 31px;
-    bottom: 0;
-    left: 13px;
+    top: 0;
+    bottom: 0px;
+    left: 0;
     color: transparent;
     width: 2px;
     background-color: black;
@@ -156,15 +155,15 @@
 }
 
 .analyze-line-item{
-    text-align:left;
-    display:block;
-    margin-bottom:5px;
-    width:100%;
+    text-align: left;
+    display: inline-block;
+    width: auto;
+    font-size: 0.8em;
 }
 
 .analyze-line-desc{
-    padding:5px 10px;
-    color:white;
+    padding: 10px 30px;
+    color: white;
     font-weight: 400;
 }
 
@@ -213,14 +212,6 @@
     margin-top:-10px;
 }
 
-@media only screen and (max-width : 992px) {
-    .analyze-line-item{
-        display:inline-block;
-        max-width:30%;
-        text-align: center;
-    }
-}
-
 @media only screen and (max-width : 600px) {
 	.analyze-game-list-title{
 		width:60%;
@@ -254,11 +245,6 @@
     }
     .analyze-doughnut-relational{
         margin: 0.5em 5px 1em 0px;
-    }
-    .analyze-line-item{
-        display:block;
-        max-width:100%;
-        text-align: left;
     }
     .analyze-left-card{
         padding-left:0 !important;

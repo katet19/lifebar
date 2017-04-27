@@ -65,6 +65,12 @@ function DeployCSS(){
 
 		$dashboard = file_get_contents("css/dashboard.css");
 		fwrite($deployed, $dashboard);
+
+		$ranking = file_get_contents("css/ranking.css");
+		fwrite($deployed, $ranking);
+
+		$mylibrary = file_get_contents("css/mylibrary.css");
+		fwrite($deployed, $mylibrary);
 		
         $landingwebflow = file_get_contents("css/lifebar.webflow.css");
 		fwrite($deployed, $landingwebflow);

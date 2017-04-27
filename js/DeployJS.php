@@ -66,6 +66,12 @@ function DeployJS($version){
 		
         $onboarding = file_get_contents("js/onboarding.js");
 		fwrite($deployed, $onboarding);
+
+		$ranking = file_get_contents("js/ranking.js");
+		fwrite($deployed, $ranking);
+
+		$mylibrary = file_get_contents("js/mylibrary.js");
+		fwrite($deployed, $mylibrary);
 		
 		echo "Finished deploying JS";
 		fclose($deployed);

@@ -9,6 +9,21 @@ require_once "includes.php";
 	//UpdateUser($old,8146);
 //}
 
+//CleanUpWatched();
+
+function CleanUpWatched(){
+	$mysqli = Connect();
+	if ($result = $mysqli->query("SELECT e.`UserID`, e.`GameID`, (select count(*) from `Sub-Experiences` where `UserID` = e.`UserID` and `GameID` = e.`GameID` and `Type` = 'Watched') as `Watched`, (select count(*) from `Sub-Experiences` where `UserID` = e.`UserID` and `GameID` = e.`GameID` and `Type` = 'Played') as `Played` FROM `Experiences` e WHERE e.`Tier` > 0 order by e.`GameID`, e.`UserID` LIMIT 0,500")) {
+		while($row = mysqli_fetch_array($result)){
+			if($row['Played'] == 0 && $row['Watched'] > 0){
+				echo "Clear Tier for ".$row['UserID']." on ".$row["GameID"]."<br>";
+				$mysqli->query("UPDATE `Experiences` SET `Tier` = 0 where `UserID` = '".$row['UserID']."' and `GameID` = '".$row['GameID']."'");
+			}
+		}
+	}
+}
+
+
 function AssociateLikesToEvents(){
 	$mysqli = Connect();
 	$count = 1;
@@ -535,6 +550,12 @@ function GetFeedbackData(){
 	}
 	
 	return $fdata;
+}
+
+function SubmitFeedback($feedback,$userid){
+	$mysqli = Connect();
+	$mysqli->query("insert into `Feedback` (`UserID`,`Feedback`) VALUES ('$userid', '$feedback')");
+	Close($mysqli, $result);
 }
 
 function GetIGNUnmapped(){

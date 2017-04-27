@@ -3,16 +3,184 @@ function DisplayWeave($userid){
 	$conn = GetConnectedToList($_SESSION['logged-in']->_id);
 	$mutualconn = GetMutalConnections($_SESSION['logged-in']->_id);
 	$user = GetUser($userid);
-	if($user->_security == "Journalist")
-		DisplayCriticWeave($userid, $user, $conn, $mutualconn);
-	else if($user->_id > 0)
-		DisplayUserWeave($userid, $user, $conn, $mutualconn);
+	DisplayUserHeader($user, $conn, $mutualconn);
+}
+
+function DisplayUserHeader($user, $conn, $mutualconn){ 
+	if($user->_weave->_preferredXP > 0)
+		$xp = GetExperienceForUserComplete($user->_id, $user->_weave->_preferredXP);
+	else
+	{
+		$gameid = explode("||",$user->_weave->_recentXP);
+		$xp = GetExperienceForUserComplete($user->_id, $gameid[1]);
+	}
+
+	if($xp->_gameid > 0)
+		$highlightedgame = GetGame($xp->_gameid);
+	else
+	{
+		$highlightedgame = GetGame(8640);
+		$highlightedgame->_image = "https://www.technobuffalo.com/wp-content/uploads/2013/09/Hyper-Light-Drifter-9.jpg";
+	}
+	?>
+	<div class="row">
+		<div class="col s12">
+			<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
+			<div class="GameHeaderContainer ProfileHeaderContainer">
+				<div class="GameHeaderBackground ProfileHeaderContainer" style="    background: -moz-linear-gradient(bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%, rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(40%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.5)), color-stop(101%,rgba(0,0,0,0.5))), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -webkit-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;
+    background: -o-linear-gradient(bottom, rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%,rgba(0,0,0,0.5) 101%), url(<?php echo $highlightedgame->_image; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;"></div>
+				<div class="modal-header" style='top:10px;bottom:5px;overflow: initial;'>
+					<?php DisplayLifeBarForUserProfile($user); ?>
+					<div class="user-profile-container">
+						<div class="user-profile-item-container z-depth-1">
+							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalFollowers); ?></div>
+							<div class="user-profile-label">Followers</div>
+						</div>
+						<div class="user-profile-item-container z-depth-1">
+							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalXP); ?></div>
+							<div class="user-profile-label">Games</div>
+						</div>
+						<div class="user-profile-item-container z-depth-1">
+							<div class="user-profile-data"><?php echo number_format($user->_weave->_totalAgrees); ?></div>
+							<div class="user-profile-label">1ups</div>
+						</div>
+					</div>
+					<!--<div class="user-profile-admin-btn-container">	
+						<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+								<div class="btn user-profile-btn user-manage-badge" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">lock</i> <span>Badge Access</span></div>
+								<div class="btn user-profile-btn user-set-title" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment</i> <span>Change Title</span></div>
+								<div class="btn user-profile-btn user-set-role" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">assignment_ind</i> <span>Change Role</span></div>
+								<div class="btn user-profile-btn user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'><i class="material-icons left">cached</i> <span>Run Weave Calc</span></div>
+						<?php } ?>
+					</div>-->
+
+					<?php if($user->_security == "Journalist"){ ?>
+						<div class="col s12 critic-disclaimer">
+							<i class="fa fa-exclamation-triangle" style='color:#FF9800'></i> <?php echo DisplayNameReturn($user); ?>'s Profile is curated by Lifebar and is strictly based off their published reviews 
+						</div>
+					<?php } ?>
+				</div>	
+			<div  class="GameHeaderActionBar">
+						<div class="card-title activator grey-text text-darken-4">
+								<div class="game-action-bar-list row" style='' data-gbid='<?php echo $game->_gbid;?>' data-id='<?php echo $game->_id; ?>'>
+										<?php if(in_array($user->_id, $conn)){ ?>
+											<div class="col">
+												<div class="game-action-bar-item user-profile-unfollow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>">
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">person_outline</i>
+													<span class="game-action-bar-item-title">Unfollow</span>
+												</div>
+											</div>
+										<?php }else if($user->_id != $_SESSION['logged-in']->_id){ ?>
+											<div class="col user-profile-follow-highlight">
+												<div class="game-action-bar-item user-profile-follow-btn" data-id="<?php echo $user->_id; ?>" data-name="<?php echo DisplayNameReturn($user); ?>">
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">person_add</i>
+													<span class="game-action-bar-item-title">Follow</span>
+												</div>
+											</div>
+										<?php } ?>
+									<!--<div class="col">
+										<div class="game-action-bar-item game-action-share" data-gameid="<?php echo $game->_id; ?>">
+											<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">share</i>
+											<span class="game-action-bar-item-title">Share</span>
+										</div>
+									</div>-->
+									<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
+										<div class="col">
+											<div class="game-action-bar-item user-manage-badge" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">lock</i>
+												<span class="game-action-bar-item-title">Badge Access</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-set-title" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">assignment</i>
+												<span class="game-action-bar-item-title">Title</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-set-role" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">assignment_ind</i>
+												<span class="game-action-bar-item-title">Role</span>
+											</div>
+										</div>
+										<div class="col">
+											<div class="game-action-bar-item user-run-weave-cal-btn" data-userid='<?php echo $user->_id; ?>'>
+												<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cached</i>
+												<span class="game-action-bar-item-title">Calc Profile</span>
+											</div>
+										</div>
+										<?php if($user->_security == "Journalist"){ ?>
+											<div class="col">
+												<div class="game-action-bar-item user-add-small-image-btn" data-userid='<?php echo $user->_id; ?>'>
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cloud_upload</i>
+													<span class="game-action-bar-item-title">Upload small</span>
+												</div>
+											</div>
+											<div class="col">
+												<div class="game-action-bar-item user-add-large-image-btn" data-userid='<?php echo $user->_id; ?>'>
+													<i class="material-icons" style="font-size:1.75em;vertical-align: middle;">cloud_upload</i>
+													<span class="game-action-bar-item-title">Upload large</span>
+												</div>
+											</div>
+										<?php } ?>
+									<?php } ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="profile-tab">
+				<div class="profile-tab-header profile-activity profile-tab-header-active" data-tab="profile-activity-tab">Activity</div>
+				<div class="profile-tab-header profile-rank" data-tab="profile-ranked-tab">Ranking</div>
+			</div>
+			<div class="profile-tab-body activity-top-level activity-profile profile-activity-tab" style='position:absolute;top: 378px;' data-id='<?php echo $user->_id; ?>' >
+				<?php DisplayMainActivity($user->_id, "My Activity"); ?>
+			</div>
+			<div class="profile-tab-body rank-profile profile-ranked-tab" style='display:none;'>
+				<?php $rankedlist = GetMyRankedList($user->_id, -1, '', ''); 
+					if(sizeof($rankedlist) > 0){ 
+						ShowProfileRankingList($rankedlist);
+					}else{
+						echo "User hasn't created a ranked list yet";
+					}		
+				?>
+			</div>	
+		</div>
+	</div>
+<?php
+}
+
+function DisplayLifeBarForUserProfile($user){
+	$total = $user->_weave->_lifebarXP;
+	$currLevel = GetCurrentLevel($total);
+	$minmax = GetMinMaxLevel($currLevel);
+	$currWidth =  round((($total - $minmax[0]) / ($minmax[1] - $minmax[0])) * 100);
+	?>
+	<div class="lifebar-container" data-level="<?php echo $currLevel; ?>" data-min="<?php echo $minmax[0]; ?>" data-max="<?php echo $minmax[1]; ?>" data-xp="<?php echo $total; ?>">
+        <div class="lifebar-username-profile">
+			<span class="card-title activator">
+				<span style="font-weight:300;"><?php echo DisplayNameReturn($user); ?></span> 
+				<?php if($user->_security != "Journalist"){ ?>
+					<div class="lifebar-bar-level-header-profile"><span style='font-weight:bold;'><?php echo $currLevel; ?></span></div>
+				<?php } ?>
+			</span>
+        </div>
+		<div class='lifebar-image'>
+			<div class="lifebar-avatar-min z-depth-1" style="height:60px;width:60px;background:url(<?php echo $user->_thumbnail; ?>) 50% 25%;z-index:3;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
+				<?php if($user->_badge != ""){ ?><img class="srank-badge-lifebar" style='top: 40px !important;right: -10px !important;' src='http://lifebar.io/Images/Badges/<?php echo $user->_badge; ?>'></img><?php } ?>
+			</div>
+	    </div>
+    </div>
+<?php
 }
 
 function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 	$hiddenusername = $user->_first." ".$user->_last;
 	?>
 	<div id="profileContentContainer" class="row" data-name="<?php echo urlencode($user->_username); ?>">
+		<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 		<!-- Lifebar -->
 		<div class="col s12 lifebar-top-level">
 			<?php 	
@@ -159,7 +327,7 @@ function DisplayCriticWeave($userid, $user, $conn, $mutualconn){
 function DisplayUserWeave($userid, $user, $conn, $mutualconn){	
 	if($_SESSION['logged-in']->_realnames == "True" && in_array($userid, $mutualconn)){ $hiddenusername = $user->_first." ".$user->_last; }else{ $hiddenusername = $user->_username; } ?>
 	<div id="profileContentContainer" class="row" data-name="<?php echo urlencode($user->_username); ?>">
-		
+		<div class="fixed-close-modal-btn"><i class="material-icons" style='font-size: 1.2em;vertical-align: sub;'>arrow_forward</i></div>
 		<!-- Lifebar -->
 		<div class="col s12 lifebar-top-level">
 			<?php 	
@@ -259,7 +427,6 @@ function DisplayUserWeave($userid, $user, $conn, $mutualconn){
 		<!-- Checkpoints, MyLibrary -->
 		<div class="col s12 m12 l3">
 			<div class="row">
-				<?php DisplayMyLibraryChicklet($userid);  ?>
 			</div>
 			<div class="row">
 				<div class="profile-card badge-card-container col s12 z-depth-1" style="height:1215px;">
@@ -962,16 +1129,6 @@ function DisplayWorstXPForUser($userid, $conn, $mutualconn, $hiddenusername, $la
 	}
 }
 
-function DisplayMyLibraryChicklet($userid){ 
-		$total = GetMyLibraryCount($userid);
-		?>
-	<div class="profile-card badge-card-container col s12 z-depth-1  waves-effect waves-block mylibrary" style="height:303px;background: -moz-linear-gradient(top, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.4) 100%, rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,0.4)), color-stop(101%,rgba(0,0,0,0.4))), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;background: -o-linear-gradient(top, rgba(0,0,0,0.4) 40%,rgba(0,0,0,0.4) 100%,rgba(0,0,0,0.4) 101%), url(http://lifebar.io/Images/Generic/MyLibrary.jpg) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-		<div class="badge-card-container-header" style="height:initial;width:100%;color:white;">Inventory</div>
-		<div class="mylibrary-total"><?php echo $total; ?></div>
-		<div class="mylibrary-label"><?php if($total == 1){ echo "game"; }else{ echo "games"; } ?></div>
-	</div>
-<?php }
-
  function DisplayCheckpoint($game, $xp, $depth, $responsive, $authenticxp){ ?>
  	<div class="col s12 checkpoint-container waves-effect waves-block" data-gbid='<?php echo $game->_gbid; ?>'>
    		<?php DisplayProfileCheckPointTierIcon($xp); ?>
@@ -1460,7 +1617,6 @@ function DisplaySpyAbility($userid, $abilities, $mutualconn, $conn){
 			foreach($spying as $spy){
 				?>
 				<div class="badge-card-ability-avatar " data-id="<?php echo $spy->_id; ?>" title="<?php if($spy->_security == "Journalist"){ echo $spy->_first." ".$spy->_last; }else{ echo $spy->_username; } ?>" style="border-radius:50%;background:url(<?php echo $spy->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-					<?php if($showpreview){ DisplayUserPreviewCard($spy, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -1497,7 +1653,6 @@ function DisplayLeadershipAbility($userid, $abilities, $mutualconn, $conn){
 			foreach($leader as $lead){
 				?>
 				<div class="badge-card-ability-avatar" data-id="<?php echo $lead->_id; ?>" title="<?php if($lead->_security == "Journalist"){ echo $lead->_first." ".$lead->_last; }else{ echo $lead->_username; } ?>" style="border-radius:50%;background:url(<?php echo $lead->_thumbnail; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;">
-					<?php if($showpreview){ DisplayUserPreviewCard($lead, $conn, $mutualconn); } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -2037,128 +2192,6 @@ function DisplayDeveloperDetails($userid, $developer, $progress){
 		<?php
 }
 
-
-function DisplayMyLibrary($userid, $filter){
-	$user = GetUser($userid); ?>	
-	<div class='row' style='margin-top:20px'>
-		<div class="activity-top-level">
-			<?php 
-				$name = "";
-				if($user->_security == "Journalist"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
-				DisplayBackButton($name."'s Inventory");
-				DisplayMainMyLibrary($userid, $filter);
-			?>
-		</div>
-		<?php
-			DisplayMyLibrarySecondaryContent($userid);
-		?>
-	</div>
-<?php	
-}
-
-function DisplayMainMyLibrary($userid, $filter){
-	$mylib = GetMyLibrary($userid, $filter, 0);
-	
-	if($filter == 'Alpha' && sizeof($mylib) > 0){
-		$groupfeed = array();
-		$group = array();
-		$curr_char = "";
-		foreach($mylib as $libitem){
-			$temp_char = strtoupper(substr($libitem[1],0,1));
-			if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-			if($temp_char != $curr_char){
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				$curr_char = $temp_char;
-				unset($group);
-				$group[] = $libitem;
-			}else{
-				$group[] = $libitem;
-			}
-		}
-	}
-	
-	//The last group will get missed in the loop
-	if(sizeof($group) > 0)
-		$groupfeed[] = $group;
-	
-	?>
-		<div class="col s12 mylibrary-container" style='position: relative;'> 
-		<?php
-			if($filter == "Alpha" && sizeof($groupfeed) > 0){
-				$curr_char = strtoupper(substr($groupfeed[0][0][1],0,1));
-				if(!ctype_alpha($curr_char))
-					$curr_char = "#";
-				FeedDivider($curr_char, $filter);
-				foreach($groupfeed as $groupitem){
-					foreach($groupitem as $libitem){
-						$temp_char = strtoupper(substr($libitem[1],0,1));
-						if(!ctype_alpha($temp_char))
-							$temp_char = "#";
-						if($temp_char != $curr_char){
-							FeedDivider($temp_char, $filter);
-							$curr_char = $temp_char;
-						}
-						$libxp = new LibraryExperience($libitem[0], $libitem[5], $libitem[1], $libitem[4], $libitem[6], $libitem[2], $libitem[3]);
-						DisplayGameInList($libxp);
-					}
-				}
-			}
-		?>
-		<?php /*if(sizeof($mylib) == 100){ ?>
-			<!--<div id="mylibrary-endless-loader" style='position:absolute;bottom:0;left:0;right:0;height:10px;' data-page="101" data-date="<?php echo $curr_char; ?>" data-filter="<?php echo $filter; ?>" ></div>-->
-		<?php } */ ?>
-		<div class="mylibrary-vert-line"></div>
-	<?php
-}
-
-function DisplayMyLibraryEndless($userid, $page, $current_group, $filter){
-	$mylib = GetMyLibrary($userid, $filter, $page);
-	
-	if($filter == 'Alpha'){
-		$groupfeed = array();
-		$group = array();
-		$curr_char = $current_group;
-		foreach($mylib as $libitem){
-			$temp_char = substr($libitem[1],0,1);
-			if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-			if($temp_char != $curr_char){
-				if(sizeof($group) > 0)
-					$groupfeed[] = $group;
-				$curr_char = $temp_char;
-				unset($group);
-				$group[] = $libitem;
-			}else{
-				$group[] = $libitem;
-			}
-		}
-	}
-	//The last group will get missed in the loop
-	if(sizeof($group) > 0)
-		$groupfeed[] = $group;
-
-	if($filter == "Alpha"){
-		$curr_char = $current_group;
-		if(!ctype_alpha($curr_char))
-			$curr_char = "#";
-
-		foreach($groupfeed as $groupitem){
-			foreach($groupitem as $libitem){
-				$temp_char = substr($libitem[1],0,1);
-				if(!ctype_alpha($temp_char))
-					$temp_char = "#";
-				if($temp_char != $curr_char){
-					FeedDivider($temp_char, $filter);
-					$curr_char = $temp_char;
-				}
-				DisplayGameInList(GetExperienceForUserComplete($userid, $libitem[0]));
-			}
-		}
-	}
-}
-
 function FeedDivider($label, $type){
 	if($type == "Date")
 		$label = explode(" ", ConvertDateToActivityFormat($label));
@@ -2176,46 +2209,6 @@ function FeedDivider($label, $type){
 		</div>
 	</div>
 	<?php
-}
-
-function DisplayMyLibrarySecondaryContent($userid){ ?>
-	<div id="sideContainer" class="col s3" style='padding: 0 1.75rem;'>
-		<div class="row activity-secondary-content" style='margin-top: 6em;'>
-			<div class="col s12">
-				<div class="activity-filter-label"><i class="mdi-content-filter-list"></i> Inventory Sort</div>
-			</div>
-			<div class="col s12">
-				<div class="activity-category-box">
-			  	    <div id="activity-filter-label" class="activity-category-selector" style='font-size:1.25rem;' data-filter="Alpha"><i class="mdi-content-filter-list left"></i>Inventory Filter</div>
-				</div>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="1" id="tier1" checked />
-				<label for="tier1">Tier 1</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="2" id="tier2" checked />
-				<label for="tier2">Tier 2</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="3" id="tier3" checked />
-				<label for="tier3">Tier 3</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="4" id="tier4" checked />
-				<label for="tier4">Tier 4</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="5" id="tier5" checked />
-				<label for="tier5">Tier 5</label>
-			</div>
-			<div style="display:block;margin:15px;float:left;">
-			    <input class='mylib-tier' type="checkbox" data-tier="0" id="tier0" checked />
-				<label for="tier0">Tier ?</label>
-			</div>
-		</div>
-	</div>
-<?php
 }
 
 function DisplayProfileActivity($userid){

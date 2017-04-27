@@ -83,7 +83,7 @@
 				     			}else{
 				     				setCookie("RememberMe", userdata[0], 14);
 				     				GAEvent('Third Party Login', 'Google');
-		          					location.hash = "#activity";
+		          					location.hash = "#discover";
 		 							location.reload();
 				     			}
 				      },
@@ -145,7 +145,7 @@
 										     type: 'post',
 										     success: function(output) {
 	     					     				GAEvent('Third Party Register', 'Google');
-					          					location.hash = "#activity";
+					          					location.hash = "#discover";
 					 							location.reload();
 										     },
 											    error: function(x, t, m) {
@@ -382,7 +382,7 @@
 				     			var userdata = finishuser.split("||");
 				     			setCookie("RememberMe", $.trim(userdata[0]), 14);
 				     			GAEvent('Third Party Login', 'Facebook');
-		          				location.hash = "#activity";
+		          				location.hash = "#discover";
 		 						location.reload();
 					      },
 						    error: function(x, t, m) {
@@ -427,7 +427,7 @@
 						     				});
 						     			}else{
 						     				GAEvent('Third Party Login', 'Facebook');
-				          					location.hash = "#activity";
+				          					location.hash = "#discover";
 				 							location.reload();
 						     			}
 							      },
@@ -486,7 +486,7 @@
 									     type: 'post',
 									     success: function(output) {
      					     				GAEvent('Third Party Register', 'Facebook');
-				          					location.hash = "#activity";
+				          					location.hash = "#discover";
 				 							location.reload();
 									     },
 										    error: function(x, t, m) {

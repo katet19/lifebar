@@ -195,7 +195,7 @@ function DisplayUnmappedGameRow($game, $i){ ?>
 					<div class='btn import-ignore-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#C62828;color:white;padding: 0 1rem;' title='Ignore'><i class="fa fa-ban btn-import-action-icon"></i> <span class='btn-import-action-text'>Ignore</span></div>
 					<div class='btn import-report-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#EF6C00;color:white;padding: 0 1rem;' title='Report'><i class="fa fa-exclamation-triangle btn-import-action-icon"></i> <span class='btn-import-action-text'>Report</span></div>
 					<?php if($_SESSION['logged-in']->_security == "Admin"){ ?>
-						<div class='btn import-map-to-skip-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#673AB7;color:white;padding: 0 1rem;' title='Trash'><i class="fa fa-trash-o btn-import-action-icon"></i></div>
+						<div class='btn import-map-to-skip-game' data-id='<?php echo $game['AuditID']; ?>' style='background-color:#3F51B5;color:white;padding: 0 1rem;' title='Trash'><i class="fa fa-trash-o btn-import-action-icon"></i></div>
 					<?php } ?>
 				</div>
 			</div>

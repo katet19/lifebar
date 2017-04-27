@@ -1,6 +1,11 @@
 /*
 * New Profile
 */
+
+#profileInnerContainer{
+    background-color:rgb(237, 236, 236);
+}
+
 .newprofile-highlightedgame{
 	color: white;
     font-size: 2.5em;
@@ -112,10 +117,69 @@
 }
 
 .critic-disclaimer{
-    font-size: 1.1em;
-    padding: 5px 0 25px !important;
+    font-size: 0.4em;
+    font-weight: 400;
+    position: absolute;
+    top: 50px;
+    left: 90px !IMPORTANT;
+}
+
+.user-profile-container{
+    display: inline-block;
+    width: 90%;
+    margin: 0 5%;
     text-align: center;
+    padding-top: 120px;
+}
+
+.user-profile-item-container{
+    text-align: center;
+    display: inline-block;
+    margin: 0 15px;
+    background-color: rgba(63,81,181,1);
+    border-radius: 5px;
+    padding: 10px 15px 0px;
+    min-width: 100px;
+}
+
+.user-profile-label{
+    color: white;
+    font-size: 0.5em;
+    display: block;
+    position: relative;
+    font-weight: 400;
+    top: -4px;
+}
+
+.user-profile-data{
+    color: white;
+    font-size: 1.1em;
+    display: block;
+    position: relative;
     font-weight: 500;
+    top: 3px;
+}
+
+.user-profile-btn{
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    overflow:hidden;
+    width:80px;
+}
+
+.user-profile-btn:hover{
+    width:300px;
+}
+
+.user-profile-admin-btn-container{
+    position: absolute;
+    right: -20px;
+    bottom: -23px;
+    z-index:10;
+    font-size: 0.6em;
 }
 
 /*
@@ -178,11 +242,16 @@
 
 .lifebar-fill-min-circle{
     background-color: #66BB6A;
-    height: 20px;
+    height: 10px;
     top: 0;
     z-index: 2;
     left: -1px;
     position: absolute;
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    transition: all 1s ease-out;
 }
 
 .lifebar-container-circle{
@@ -193,10 +262,9 @@
 }
 
 .lifebar-container{
-	position:absolute;
-	width:90%;
-	margin:0 5% 0 2.5%;
-	text-align:left;
+    position: absolute;
+    width: calc(100% - 400px);
+    text-align: left;
 }
 
 .lifebar-card{
@@ -226,7 +294,7 @@
 .lifebar-bar-container-min{
     top: 32px;
     position: absolute;
-    height: 20px;
+    height: 10px;
     background-color: #ddd; /*#ddd;*/
     margin-left: 100px;
     padding: 1px;
@@ -251,11 +319,12 @@
 }
 
 .lifebar-avatar-min{
-    width: 75px;
+    width: 45px;
     border-radius: 50%;
     display: inline-block;
     margin-left: 0.5em;
-    height: 75px;
+    top: 7px;
+    height: 45px;
     position: absolute;
 	-webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
@@ -269,9 +338,24 @@
     text-align: left;
     font-size: 1.3em;
     position: absolute;
-    left: 100px;
     color: white;
-    top: 4px;
+    top: 8px;
+    left: 65px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+.lifebar-username-profile{
+    display: inline-block;
+    text-align: left;
+    font-size: 1.3em;
+    position: absolute;
+    color: white;
+    top: 22px;
+    left: 95px;
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     -o-transition: all 0.5s ease-out;
@@ -626,7 +710,7 @@
 }
 
 .badge-card-container .ability-container:hover .ability-title, .badge-card-container .ability-container:hover .ability-sub-count, .badge-card-container .ability-container:hover .ability-level, .badge-card-container .ability-container:hover .ability-sub-title{
-	color:#2196F3;
+	color:#F50057;
 }
 
 .ability-sub-title{
@@ -1473,7 +1557,7 @@
 }
 
 .user-avatar:hover{
-	border-radius:0;
+	opacity: 0.8;
 }
 
 .userprofile-discover-card .card-content .card-title{
@@ -1642,6 +1726,76 @@
     text-transform: uppercase;
 }
 
+.lifebar-bar-level-header-profile{
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 2px;
+    background-color: white;
+    color: #3F51B5;
+    text-align: center;
+    font-size: 0.6em;
+    top: -4px;
+    width: 35px;
+    line-height: 25px;
+}
+.activity-profile{
+    position:absolute;
+    margin-left: -60px;
+    background-color:rgb(237, 236, 236);
+    z-index: 0;
+    width: calc(100% + 60px);
+}
+.rank-profile{
+    position:absolute;
+    top:375px;
+    padding: 20px 0 20px 20px;
+}
+.user-profile-follow-highlight{
+    background-color: #F50057 !important;
+    color: white;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.user-profile-follow-highlight:hover{
+    background-color: #f38fb1 !important;
+}
+
+.user-profile-follow-highlight .game-action-bar-item:hover{
+    color:white !important;
+}
+
+.profile-tab{
+    position: absolute;
+    top: 35vh;
+    width: 100%;
+    text-align: left;
+    background-color: #ddd;
+}
+
+.profile-tab-header{
+    font-size: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 30px;
+    display: inline-block;
+    font-weight: 500;
+    border-bottom: 3px solid #ddd;
+}
+
+.profile-tab-header:hover{
+    color: #F50057;
+}
+
+.profile-tab-header-active{
+    border-bottom: 3px solid #F50057;
+    color: #F50057;
+}
+
 @media only screen and (max-width : 992px) {
 	.profile-best-left-card-container > .col > .userprofile-discover-card{
 		display:none;
@@ -1692,6 +1846,40 @@
 }
 
 @media only screen and (max-width : 600px) {
+    .user-profile-btn{
+        display:none
+    }
+    .critic-disclaimer{
+        line-height: 12px;
+        top: 65px;
+    }
+    .lifebar-username-min{
+        width:100%;
+    }
+    .lifebar-username-profile{
+        top: 18px;
+        left: 95px;
+        font-size: 0.7em;
+        line-height: 18px;
+        width:100%;
+    }
+    .lifebar-bar-level-header-profile{
+        font-size: 0.9em;
+        top: 5px;
+        width: 35px;
+        line-height: 25px;
+        text-align: center;
+        margin-left: 0px;
+    }
+    .activity-profile{
+        margin-left: -10px;
+    }
+    .user-profile-container{
+        display: inline-block;
+        width: 120%;
+        margin: 0;
+        padding-top: 100px;
+    }
 	.mylibrary-vert-line, .mylibrary-divider-bullet{
 		display:none;
 	}
@@ -1722,14 +1910,15 @@
 		height:100px;
 		padding: 1em 0em !important;
 	}
-	.lifebar-container{
-		width:90%;
-		margin:0 1% 0 1%;
-	}
 	.lifebar-bar-container{
 		height: 25px;
 		top: 28px;
 	}
+    .lifebar-container{
+        position: absolute;
+        width: calc(100% - 210px);
+        text-align: left;
+    }
 	.lifebar-container-circle{
 		width:90%;
 		margin:20px 5% 0 0;
@@ -1866,4 +2055,8 @@
 	.newprofile-skills{
 		font-size:1.4em;
 	}
+    .user-profile-item-container{
+        min-width:inherit;
+        padding: 7px 10px 0px;
+    }
 }

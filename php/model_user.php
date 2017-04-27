@@ -26,9 +26,10 @@ class User
 	public $_image;
 	public $_website;
 	public $_badge;
+	public $_accountType;
 	
 	
-	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title, $image, $website, $badge) {
+	function __construct($id, $first, $last, $username, $email, $birthdate, $facebook, $twitter, $steam, $xbox, $psn, $google, $security, $defaultwatched, $weaveview, $cookieID, $privacy, $realnames, $title, $image, $website, $badge, $accountType) {
 		$this->_id = $id;
 		$this->_first = $first;
 		$this->_last = $last;
@@ -52,6 +53,7 @@ class User
 		$this->_image = $image;
 		$this->_website = $website;
 		$this->_badge = $badge;
+		$this->_accountType = $accountType;
 		
 		
 		if($security == "Journalist"){

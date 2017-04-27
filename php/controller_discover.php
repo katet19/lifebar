@@ -20,9 +20,39 @@ function BuildDiscoverFlow($userid){
 	* Determine the order & content
 	*/
 	
+	//Recent Releases (ALWAYS SHOWS UP)
+	$recentGames = RecentlyReleasedCategory(); 
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recent Releases";
+		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
+		$dAtts['GAMES'] = $recentGames;
+		$dAtts['TYPE'] = "categoryResults";
+		$dItems[] = $dAtts;
+
+	//Get Recently Played
+	$played = GetCollectionByName("Recently Played", $userid);
+	if($played->_games > 0){
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'GAMELIST';
+		$dAtts['CATEGORY'] = "Recently Played";
+		$dAtts['CATEGORYDESC'] = "Quickly update the games you have played last";
+		$dAtts['GAMES'] = $played->_games;
+		$dItems[] = $dAtts;
+	}
+
+	
+	//Get Watched
+	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
+		unset($dAtts);
+		$dAtts['DTYPE'] = 'WATCHLIST';
+		$dAtts['CATEGORY'] = 'Playing Now';
+		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
+		$dAtts['VIDEOS'] = $suggestedWatch;
+		$dItems[] = $dAtts;
+	
 	//Games pref list
-	$prefs = GetUserPrefs($userid, $mysqli);
-	$prefList = GetAGamingPreferenceList($mysqli, $userid, $prefs); 
+	$golden = GetGoldenYearsNoXP($mysqli);
 	$backlog = GetGamesFromBacklog($userid);
 	$backlogShow = false;
 	if(sizeof($backlog) > 5){
@@ -33,33 +63,14 @@ function BuildDiscoverFlow($userid){
 			$dAtts['GAMES'] = $backlog;
 			$dItems[] = $dAtts;	
 			$backlogShow = true;
-	}else if(sizeof($prefList['Games']) > 0){
+	}else if(sizeof($golden) > 0){
 			unset($dAtts);
 			$dAtts['DTYPE'] = 'GAMELIST';
-			$dAtts['CATEGORY'] = $prefList['Title'];
-			$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
-			$dAtts['GAMES'] = $prefList['Games'];
+			$dAtts['CATEGORY'] = "The Golden Years";
+			$dAtts['CATEGORYDESC'] = "Games released during your more informative age. See Paul Barnett's <a href='http://www.giantbomb.com/podcasts/paul-barnett-s-golden-rule/1600-709/' target='_blank'>Golden Rule</a>";
+			$dAtts['GAMES'] = $golden;
 			$dItems[] = $dAtts;	
 	}
-			
-	//Get Watched
-	$suggestedWatch = GetSuggestedWatch($mysqli, $userid);
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'WATCHLIST';
-		$dAtts['CATEGORY'] = 'Playing Now';
-		$dAtts['CATEGORYDESC'] = "Pull out your favorite snack and check out what members are watching!";
-		$dAtts['VIDEOS'] = $suggestedWatch;
-		$dItems[] = $dAtts;
-		
-	//Recent Releases (ALWAYS SHOWS UP)
-	$recentGames = RecentlyReleasedCategory(); 
-		unset($dAtts);
-		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = "Recent Releases";
-		$dAtts['CATEGORYDESC'] = "Check out the newest games coming out";
-		$dAtts['GAMES'] = $recentGames;
-		$dAtts['TYPE'] = "categoryResults";
-		$dItems[] = $dAtts;
 		
 	//Get Suggested Users that have 1ups that arent' being followed
 	$suggestedMembers = GetSuggestedMembers($mysqli, $userid); 
@@ -75,13 +86,13 @@ function BuildDiscoverFlow($userid){
 		$dAtts['DTYPE'] = 'INVITEFRIENDS';
 		$dItems[] = $dAtts;
 		
-	//Check if we can show gaming prefs
-	if($backlogShow && sizeof($prefList['Games']) > 0){
+	//Check if we can show gaming golden years
+	if($backlogShow && sizeof($golden) > 0){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'GAMELIST';
-		$dAtts['CATEGORY'] = $prefList['Title'];
-		$dAtts['CATEGORYDESC'] = "These games were suggested based on your gaming preferences";
-		$dAtts['GAMES'] = $prefList['Games'];
+		$dAtts['CATEGORY'] = "The Golden Years";
+		$dAtts['CATEGORYDESC'] = "Games released during your more informative age. See Paul Barnett's <a href='http://www.giantbomb.com/podcasts/paul-barnett-s-golden-rule/1600-709/' target='_blank'>Golden Rule</a>";
+		$dAtts['GAMES'] = $golden;
 		$dItems[] = $dAtts;	
 	}
 
@@ -95,13 +106,13 @@ function BuildDiscoverFlow($userid){
 		$dItems[] = $dAtts;	
 	
 	//Get Suggested Collection
-	$suggcoll = GetSuggestedCollection($mysqli, $userid);
+	/*$suggcoll = GetSuggestedCollection($mysqli, $userid);
 	if($suggcoll != ''){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'COLLECTION';
 		$dAtts['COLLECTION'] = $suggcoll;
 		$dItems[] = $dAtts;
-	}
+	}*/
 
 	//Get Users that aren't mutual followers
 	$notmutual = GetNotMutualFollowers($mysqli, $userid);
@@ -166,7 +177,7 @@ function GetGamesFromBacklog($userid){
 	if(sizeof($games) > 0){
 		$count=0;
 		shuffle($games);
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$list[] = $games[$count];
 			$count++;
 		}
@@ -195,7 +206,7 @@ function GetAGamingPreferenceList($mysqli, $userid, $prefs){
 		
 		shuffle($games);
 		$count = 0;
-		while($count < sizeof($games) && $count < 6){
+		while($count < sizeof($games) && $count < 8){
 			$gprefs['Games'][] = $games[$count]->_game;
 			$count++;
 		}
@@ -224,7 +235,7 @@ function GetDaily($mysqli){
 	}
 	
 	if(sizeof($daily) == 0 ){
-		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' and `Daily` = '0000-00-00' order by Rand() limit 0,1";
+		$query = "SELECT * FROM  `Forms` where `FormType` = 'Daily' order by Rand() limit 0,1";
 		if ($result = $mysqli->query($query)) {
 			while($row = mysqli_fetch_array($result)){
 				$daily = $row;
@@ -248,7 +259,7 @@ function GetSuggestedPersonalities($mysqli, $userid){
 	$users = array();
 	$count = array();
 	$date = date('Y-m-d', strtotime("now -90 days") );
-	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` and users.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 6";
+	$query = "select *, Count(`UserID`) as TotalRows from `Events` event, `Users` users WHERE `Date` > '".$date."' and users.`ID` not in (select `Celebrity` from `Connections` conn where conn.`Fan` = '".$userid."' ) and  users.`Access` != 'User' and users.`Access` != 'Admin' and users.`ID` = event.`UserID` and users.`ID` not in (select `UserToIgnore` from `IgnoreUser` where `UserID` = '".$userid."') GROUP BY `UserID` ORDER BY COUNT(  `UserID` ) DESC LIMIT 8";
 	//echo $query;
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
@@ -282,7 +293,7 @@ function GetSuggestedMembers($mysqli, $userid){
 
 function GetSuggestedWatch($mysqli, $userid){
 	$videos = array();
-	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,6";
+	$query = "select * from `Events` event WHERE event.`URL` != '' and event.`URL` not in (select `URL` from `Events` where `UserID` = '".$userid."') GROUP BY `GameID` ORDER BY `ID` DESC LIMIT 0,12";
 	if ($result = $mysqli->query($query)) {
 		while($row = mysqli_fetch_array($result)){
 				unset($video);

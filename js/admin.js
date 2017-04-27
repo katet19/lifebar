@@ -6,8 +6,8 @@ function ShowAdminHome(){
 function ShowAdminMainContent(){
 	var windowWidth = $(window).width();
     $("#admin").css({"display":"inline-block", "left": -windowWidth});
-    $("#activity, #discover, #analytics, #game, #notifications, #user, #profile").css({"display":"none"});
-	$("#activity, #discover, #analytics, #game, #notifications, #user, #profile").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
+    $("#activity, #ranking, #discover, #analytics, #notifications, #user").css({"display":"none"});
+	$("#activity, #ranking, #discover, #analytics, #notifications, #user").velocity({ "left": windowWidth }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	$("#admin").velocity({ "left": 0 }, {duration: 200, queue: false, easing: 'easeOutQuad'});
 	window.scrollTo(0, 0);
   	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
@@ -569,7 +569,7 @@ function AttachReportedGamesEvents(){
 	});
 	$(".import-map-to-skip-game").on("click", function(){
 		var importID = $(this).parent().attr("data-importid");	
-		$(this).parent().parent().css({"background-color": "#673AB7"});
+		$(this).parent().parent().css({"background-color": "#3F51B5"});
 		$(this).parent().parent().find(".col").css({"opacity":"0"});
 		$(this).parent().parent().append("<div style='text-align:center;color:white;font-size:1.5em;line-height:69px;position:absolute;top:0;left:0;width:100%'>Game will always be hidden</div>");
 		var row = $(this).parent().parent().parent();
@@ -807,8 +807,8 @@ function AttachUnmappedManagerEvents(){
 
 function AttachPendingReviewsEvents(){
 	$("select").material_select();
-	var h =  $("#adminInnerContainer").height();
-	$("#admin-review-iframe").css({'height': h });
+	//var h =  $("#adminInnerContainer").height();
+	//$("#admin-review-iframe").css({'height': h });
 	$('.admin-review-search-btn').on('click', function(e){ 
 		e.stopPropagation(); 
 		SearchForGame($(this).parent().parent().find(".admin-review-search").val(), $(this).parent().parent());

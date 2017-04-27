@@ -10,7 +10,7 @@
 
 .collection-box-container:hover .collection-box{
     opacity:0.9;
-    background-color: #2196F3;
+    background-color: #F50057;
 }
 
 .collection-box{
@@ -52,11 +52,11 @@
 }
 
 .collection-add:hover{
-	background-color: #2196F3;
+	background-color: #F50057;
 }
 
 .collection-empty{
-    background-color: #2196F3;
+    background-color: #F50057;
     color: white;
     padding: 23px 10px;
     text-align: center;
@@ -131,7 +131,7 @@
     top: 0;
     right: 0;
     padding: 0 10px 0 35px;
-    background-color: rgb(63, 128, 202);
+    background-color: #C5CAE9;
 }
 
 .collection-details-name{
@@ -641,12 +641,12 @@
 }
 
 .collection-myxp-quarter:hover{
-    background-color:#2196F3;
+    background-color:#F50057;
     color:white;
 }
 
 .collection-myxp-quarter-selected{
-    background-color:#2196F3;
+    background-color:#F50057;
     color:white;
 }
 
@@ -737,7 +737,7 @@
 }
 
 .watched-type-box:hover, .watched-type-box-small:hover{
-    background-color: #2196F3;
+    background-color: #F50057;
     color: white;
 }
 
@@ -757,7 +757,7 @@
     display:none;
 }
 .watched-type-box-selected{
-    background-color: #2196F3;
+    background-color: #F50057;
     color: white;
 }
 

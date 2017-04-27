@@ -1,6 +1,20 @@
 <?php
 require_once "includes.php";
 
+function GetCurrentLevel($xp){
+	$level = ceil(0.3 * sqrt($xp));
+	if($level == 0)
+		return 1;
+	else
+		return $level;
+}
+
+function GetMinMaxLevel($level){
+	$minmax[] = ceil(pow(($level-1) / 0.3, 2));
+	$minmax[] = ceil(pow($level / 0.3, 2)) - 1;
+	return $minmax;
+}
+
 function GetLifeBarSize($user){
 	$total = $user->_weave->_totalXP;
 	if($total >= 100){

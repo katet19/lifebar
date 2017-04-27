@@ -170,9 +170,9 @@ function ProcessEmailQue(){
 }
 
 function GetHeader(){
-	$body = $body."<div style='background-color:rgb(237, 236, 236);width:100%;text-align:center;position:relative;'>";
+	$body = $body."<div style='#3F51B5;width:100%;text-align:center;position:relative;'>";
 	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;'>";
-	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#D32F2F;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/LifebarLogoEmail.png'></div>";
+	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#3F51B5;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg'></div>";
 	return $body;
 }
 
@@ -191,6 +191,7 @@ function SendEmailWithFrom($to, $subject, $message, $from){
 	$headers .= "Reply-To: notify@lifebar.io\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	echo $message;
 	mail($to, $subject, $message, $headers);
 }
 
