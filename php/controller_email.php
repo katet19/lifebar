@@ -11,7 +11,7 @@ function AddInviteEmail($user, $email, $custom){
 		$message = $message."<p style='font-size:16px;font-style:italic;text-align:left;'>".$custom."</p><br><br>";
 	}
 	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#F50057;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>Sign Up!</a>";
-	$message = $message."<p style='font-size:1.5em;text-align:left;'>Lifebar will help you <b>discover</b> new games, <b>share</b> your experiences and <b>visualize</b> a lifetime of gaming.</p>";
+	$message = $message."<p style='font-size:1.5em;text-align:left;'>Lifebar will help you <b>share</b> your experiences, <b>rank</b> your games and <b>share</b> a lifetime of gaming.</p>";
 	$message = $message."<div style='text-align:left;'>";
 	$message = $message."<p style='color:#0a67a3;font-size:20px;'>Play Games. Watch Games. <b>Earn XP!</b></p>";
 	$message = $message."Whether you played a game or watched others play it, your time spent informs your thoughts on that game. At Lifebar we acknowledge they are different types of experiences, but want to recognize the way we experience games is changing rapidly and capturing that variety is important.<br><br>";
@@ -23,7 +23,7 @@ function AddInviteEmail($user, $email, $custom){
 	$message = $message."Lifebar is a work in progress, we are proud of what we have built so far, but we know there is so much more that could be done. Please join us in building a service that captures what we experience, why we experience it and how we experience video games!<br><br>";
 	$message = $message."</div>";
 	$message = $message."<a href='http://lifebar.io' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#F50057;cursor:pointer;text-align:center;padding:5px 15px;margin-bottom:30px;display:inline-block;'>Start building your Lifebar today!</a><br>";
-	$message = $message."Thanks,<br>The Lifebar Team<br><br>";
+	$message = $message."Thanks,<br>Jonathan<br><br>";
 	InsertToEmailQue(trim($email), $from, $user->_id, $subject, $message, 'Invite', '');
 	
 }
