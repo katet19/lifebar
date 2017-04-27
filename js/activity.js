@@ -3,6 +3,7 @@ function ShowActivityHome(){
 }
 
 function ShowActivityContent(filter){
+	ResetContentContainers();
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});

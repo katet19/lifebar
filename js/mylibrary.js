@@ -1,4 +1,5 @@
 function ShowMyLibrary(){
+    ResetContentContainers();
   	ShowLoader($("#rankingInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#ranking").css({"display":"inline-block", "left": -windowWidth});
