@@ -68,6 +68,10 @@ function AttachAdminEvents(){
 		GLOBAL_HASH_REDIRECT = "NO";
 		DisplayPendingReviews();
 	});
+	$(".admin-manage-issues").on('click', function(){
+		GLOBAL_HASH_REDIRECT = "NO";
+		DisplayUserFeedback();
+	});
 	$(".admin-ign-scrape").on('click', function(){
 		ShowPopUp("<iframe src='http://lifebar.io/php/controller_reviewTranslator.php?run=Y' style='width:100%;min-height:600px;height:100%;'/>");	
 	});
@@ -711,6 +715,27 @@ function DisplayPendingReviews(){
      success: function(output) {
  		$("#adminInnerContainer").html(output);
 		AttachPendingReviewsEvents();
+  		Waves.displayEffect();
+     },
+        error: function(x, t, m) {
+	        if(t==="timeout") {
+	            ToastError("Server Timeout");
+	        } else {
+	            ToastError(t);
+	        }
+    	},
+    	timeout:45000
+	});
+}
+
+function DisplayUserFeedback(){
+	ShowLoader($("#adminInnerContainer"), 'big', "<br><br><br>");
+	$.ajax({ url: '../php/webService.php',
+     data: {action: "DisplayUserFeedback" },
+     type: 'post',
+     success: function(output) {
+ 		$("#adminInnerContainer").html(output);
+
   		Waves.displayEffect();
      },
         error: function(x, t, m) {

@@ -37,7 +37,7 @@ function AddAgreedEmail($gameid, $userid, $agreedwith, $eventid){
 		$username = DisplayNameReturn($activeUser);
 		$subject = $username." gave you a 1up!";
 		$from = $username." [via Lifebar]";
-		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
+		$body = $body."<div style='width:100%;padding:20px 0;text-align:center;'><div style='text-align:center;width:80px;border-radius:50%;display: inline-block;height:80px;background:url(".$activeUser->_thumbnail.") 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;'></div></div>";
 		$body = $body."<div style='font-size:1.5em;padding: 0 50px 20px;'><b>".$username."</b> <MINDTHEGAP> appreciated your thoughts on <i>".$game->_title."</i> and gave you a 1up!</div>";
 		$body = $body."<a href='http://lifebar.io/1/u.php?i=e".$eventid."&ga=email' style='text-decoration:none;font-weight:bold;font-size:1.25em;color:white;background-color:#F50057;cursor:pointer;text-align:center;padding:5px 0px;width:100px;margin-bottom:30px;display:inline-block;'>VIEW</a>";
 		$body = $body."<div style='color: #212121 !important;padding: 20px 50px 50px;'><b>\"</b>".$event->_quote."<b>\"</b></div>";
