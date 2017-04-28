@@ -1,7 +1,7 @@
 <?php
 function DeployJS($version){
 	$newversion = $version + 1;
-	$deployed = fopen("js/deployed.js", 'w+');
+	$deployed = fopen("js/deployedv1.js", 'w+');
 	if($deployed){
 		echo "Opened deployed js file <br>";
 		$chart = file_get_contents("js/library/chart.js");

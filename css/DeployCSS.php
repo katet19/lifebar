@@ -1,6 +1,6 @@
 <?php
 function DeployCSS(){
-	$deployed = fopen("css/deployed.css", 'w+');
+	$deployed = fopen("css/deployedv1.css", 'w+');
 	if($deployed){
 		echo "Opened deployed CSS file <br>";
 		$circle = file_get_contents("css/library/circle.css");
