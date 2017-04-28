@@ -37,8 +37,11 @@ function DisplayMainActivity($userid, $filter){
 			$last_type = "";
 			$last_user = 0;
 		}
+
+		$date = explode(" ",$feeditem[0]->_date);
+		$time = explode(":",$date[1]);
 		
-		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type || $feeditem[5]."-".$time[0] == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -70,6 +73,11 @@ function DisplayMainActivity($userid, $filter){
 					$group[] = $feeditem;
 					if($feeditem[5] == "COLLECTIONUPDATE")
 						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else if($feeditem[5] == "RANK"){
+						$date = explode(" ",$feeditem[0]->_date);
+						$time = explode(":",$date[1]);
+						$last_type = $feeditem[5]."-".$time[0];
+					}
 					else
 						$last_type = $feeditem[5];
 						
@@ -81,8 +89,14 @@ function DisplayMainActivity($userid, $filter){
 				$group[] = $feeditem;
 				if($feeditem[5] == "COLLECTIONUPDATE")
 					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else if($feeditem[5] == "RANK"){
+					$date = explode(" ",$feeditem[0]->_date);
+					$time = explode(":",$date[1]);
+					$last_type = $feeditem[5]."-".$time[0];
+				}
 				else
 					$last_type = $feeditem[5];
+
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
@@ -161,7 +175,10 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 			$last_user = 0;
 		}
 		
-		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
+		$date = explode(" ",$feeditem[0]->_date);
+		$time = explode(":",$date[1]);
+		
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type || $feeditem[5]."-".$time[0] == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -193,6 +210,11 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 					$group[] = $feeditem;
 					if($feeditem[5] == "COLLECTIONUPDATE")
 						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else if($feeditem[5] == "RANK"){
+						$date = explode(" ",$feeditem[0]->_date);
+						$time = explode(":",$date[1]);
+						$last_type = $feeditem[5]."-".$time[0];
+					}
 					else
 						$last_type = $feeditem[5];
 					$last_user = $feeditem[0]->_userid;
@@ -203,8 +225,14 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				$group[] = $feeditem;
 				if($feeditem[5] == "COLLECTIONUPDATE")
 					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else if($feeditem[5] == "RANK"){
+					$date = explode(" ",$feeditem[0]->_date);
+					$time = explode(":",$date[1]);
+					$last_type = $feeditem[5]."-".$time[0];
+				}
 				else
 					$last_type = $feeditem[5];
+					
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
