@@ -8,18 +8,21 @@ require_once "includes.php";
 //foreach($list as $old){
 	//UpdateUser($old,8146);
 //}
-//RankUp(7);
 
-function RankUp($userid){
+//CleanUpWatched();
+
+function CleanUpWatched(){
 	$mysqli = Connect();
-	$rank = 1;
-	if ($result = $mysqli->query("select * from `Experiences` where `UserID` = '".$userid."' and `Tier` > 0 order by `Tier`,`ID`")) {
+	if ($result = $mysqli->query("SELECT e.`UserID`, e.`GameID`, (select count(*) from `Sub-Experiences` where `UserID` = e.`UserID` and `GameID` = e.`GameID` and `Type` = 'Watched') as `Watched`, (select count(*) from `Sub-Experiences` where `UserID` = e.`UserID` and `GameID` = e.`GameID` and `Type` = 'Played') as `Played` FROM `Experiences` e WHERE e.`Tier` > 0 order by e.`GameID`, e.`UserID` LIMIT 0,500")) {
 		while($row = mysqli_fetch_array($result)){
-			$mysqli->query("update `Experiences` set `Rank` = '".$rank."' where `ID` = '".$row['ID']."'");
-			$rank++;
+			if($row['Played'] == 0 && $row['Watched'] > 0){
+				echo "Clear Tier for ".$row['UserID']." on ".$row["GameID"]."<br>";
+				$mysqli->query("UPDATE `Experiences` SET `Tier` = 0 where `UserID` = '".$row['UserID']."' and `GameID` = '".$row['GameID']."'");
+			}
 		}
 	}
 }
+
 
 function AssociateLikesToEvents(){
 	$mysqli = Connect();
@@ -534,6 +537,10 @@ function GetExperienceData(){
 	while($row = mysqli_fetch_array($result)){
 		$edata[] = $row["count(*)"]; 
 	}
+	$result = $mysqli->query("select count(*) from `Feedback` where `Reviewed` = 'No'");
+	while($row = mysqli_fetch_array($result)){
+		$edata[] = $row["count(*)"]; 
+	}
 	Close($mysqli, $result);
 	return $edata;
 }
@@ -547,6 +554,12 @@ function GetFeedbackData(){
 	}
 	
 	return $fdata;
+}
+
+function SubmitFeedback($feedback,$userid){
+	$mysqli = Connect();
+	$mysqli->query("insert into `Feedback` (`UserID`,`Feedback`) VALUES ('$userid', '$feedback')");
+	Close($mysqli, $result);
 }
 
 function GetIGNUnmapped(){
@@ -635,6 +648,15 @@ function SaveIGNImportForLater($id){
 	$mysqli = Connect();
 	$result = $mysqli->query("Update `ImportReview` set `Owner` = '-1' where `ID` = '".$id."'");
 	Close($mysqli, $result);
+}
+
+function GetUserFeedback(){
+	$mysqli = Connect();
+	$result = $mysqli->query("select * from `Feedback` where `Reviewed` != 'Yes'");
+	while($row = mysqli_fetch_array($result)){
+		$feedback[] = $row;
+	}
+	return $feedback;
 }
 
 function CheckVersion($myver){

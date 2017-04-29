@@ -182,6 +182,7 @@ function CloseSearch(){
 function ShowDiscoverHome(){
 	if(location.hash != "#discover")
 		UpdateBrowserHash("#discover");
+	ResetContentContainers();
   	ShowLoader($("#discoverInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#discover").css({"display":"inline-block", "left": -windowWidth});
@@ -482,7 +483,7 @@ function AttachDiscoverHomeEvents(){
 	    	},
 	    	timeout:45000
 		});
-		
+		$(window).unbind("scroll");
 		if($(window).width() < 600 || ($(window).width() < 992 && $(".searchContainerAnonymous").length > 0 ) )
 			CloseSearch();
 	});

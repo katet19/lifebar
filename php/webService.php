@@ -224,14 +224,7 @@
 				DisplayMilestonesTree($_POST["userid"]);
 			else
 				DisplayMilestonesTree($_SESSION['logged-in']->_id);
-		}
-		if($_POST['action'] == "DisplayMyLibrary"){
-			DisplayMyLibrary($_POST["userid"], $_POST["filter"]);
-		}
-		if($_POST['action'] == "DisplayMyLibraryEndless"){
-			DisplayMyLibraryEndless($_POST["userid"], $_POST["page"], $_POST["group"], $_POST["filter"]);
-		}
-		
+		}		
 	}
 	function WeaveServices(){
 		if($_POST['action'] == 'DisplayWeave' ){
@@ -312,6 +305,9 @@
 			EquipBadge($_POST['userid'], $_POST['badgeid']);
 		}
 		if($_SESSION['logged-in']->_security == 'Admin'){
+			if($_POST['action'] == 'DisplayUserFeedback'){
+				DisplayUserFeedback();
+			}
 			if($_POST['action'] == 'DisplayRefPtSchedule'){
 				DisplayRefPtSchedule();
 			}
@@ -469,6 +465,11 @@
 				echo CalculateXPGain("star", $isNewXP);
 			}
 		}
+		if($_POST['action'] =='ClearStars' && $_SESSION['logged-in']->_id > 0){
+			if($_POST['gameid'] > 0){
+				ClearStar($_SESSION['logged-in']->_id,$_POST['gameid']);
+			}
+		}
 		if($_POST['action'] =='SavePlayedExperience' && $_SESSION['logged-in']->_id > 0){
 			if($_POST['gameid'] > 0){
 				SaveXP($_SESSION['logged-in']->_id,$_POST['gameid'],$_POST['quote'],0,'','','',$_POST['rank']);
@@ -563,6 +564,9 @@
 		if($_POST['action'] == "SaveJournalEntry"){
 			SaveJournalEntry($_POST['subject'], $_POST['journal'], $_POST['gameid']);
 		}
+		if($_POST['action'] == "DisplayMyLibrary"){
+			DisplayMyLibrary($_SESSION['logged-in']->_id);
+		}
 	}
 	function GameServices(){
 		if($_POST['action'] == 'DisplayGame' && isset($_POST['gbid'])){
@@ -628,6 +632,12 @@
 		}
 		if($_POST['action'] == "DismissUser"){
 			IgnoreUser($_POST['dismiss']);
+		}
+		if($_POST['action'] == "DisplayFeedback"){
+			DisplayFeedback();
+		}
+		if($_POST['action'] == "SubmitFeedback"){
+			SubmitFeedback($_POST['feedback'],$_SESSION['logged-in']->_id);
 		}
 	}
 	function DiscoverServices(){

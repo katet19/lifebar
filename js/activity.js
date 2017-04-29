@@ -3,6 +3,7 @@ function ShowActivityHome(){
 }
 
 function ShowActivityContent(filter){
+	ResetContentContainers();
   	ShowLoader($("#activityInnerContainer"), 'big', "<br><br><br>");
   	var windowWidth = $(window).width();
     $("#activity").css({"display":"inline-block", "left": -windowWidth});
@@ -130,7 +131,7 @@ function AttachActivityEvents(){
 	 $(window).unbind("scroll");
 	 $(window).scroll(function(){
 	 	if(isScrolledIntoView($("#feed-endless-loader"))){
-	 		if($("#feed-endless-loader").html() == "")
+	 		if($("#feed-endless-loader").html() == "" && $("#activity").is(":visible"))
       			EndlessLoader();
 	 	}
      });

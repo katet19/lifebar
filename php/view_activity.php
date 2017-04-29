@@ -37,8 +37,11 @@ function DisplayMainActivity($userid, $filter){
 			$last_type = "";
 			$last_user = 0;
 		}
+
+		$date = explode(" ",$feeditem[0]->_date);
+		$time = explode(":",$date[1]);
 		
-		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type || $feeditem[5]."-".$time[0] == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -70,6 +73,11 @@ function DisplayMainActivity($userid, $filter){
 					$group[] = $feeditem;
 					if($feeditem[5] == "COLLECTIONUPDATE")
 						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else if($feeditem[5] == "RANK"){
+						$date = explode(" ",$feeditem[0]->_date);
+						$time = explode(":",$date[1]);
+						$last_type = $feeditem[5]."-".$time[0];
+					}
 					else
 						$last_type = $feeditem[5];
 						
@@ -81,8 +89,14 @@ function DisplayMainActivity($userid, $filter){
 				$group[] = $feeditem;
 				if($feeditem[5] == "COLLECTIONUPDATE")
 					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else if($feeditem[5] == "RANK"){
+					$date = explode(" ",$feeditem[0]->_date);
+					$time = explode(":",$date[1]);
+					$last_type = $feeditem[5]."-".$time[0];
+				}
 				else
 					$last_type = $feeditem[5];
+
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
@@ -161,7 +175,10 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 			$last_user = 0;
 		}
 		
-		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type){
+		$date = explode(" ",$feeditem[0]->_date);
+		$time = explode(":",$date[1]);
+		
+		if($feeditem[5] == $last_type || $feeditem[5]."-".$feeditem[2]->_id == $last_type || $feeditem[5]."-".$time[0] == $last_type){
 			if($last_user == $feeditem[0]->_userid){
 				$group[] = $feeditem;
 			}else{
@@ -193,6 +210,11 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 					$group[] = $feeditem;
 					if($feeditem[5] == "COLLECTIONUPDATE")
 						$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+					else if($feeditem[5] == "RANK"){
+						$date = explode(" ",$feeditem[0]->_date);
+						$time = explode(":",$date[1]);
+						$last_type = $feeditem[5]."-".$time[0];
+					}
 					else
 						$last_type = $feeditem[5];
 					$last_user = $feeditem[0]->_userid;
@@ -203,8 +225,14 @@ function DisplayActivityEndless($userid, $page, $current_date, $filter){
 				$group[] = $feeditem;
 				if($feeditem[5] == "COLLECTIONUPDATE")
 					$last_type = $feeditem[5]."-".$feeditem[2]->_id;
+				else if($feeditem[5] == "RANK"){
+					$date = explode(" ",$feeditem[0]->_date);
+					$time = explode(":",$date[1]);
+					$last_type = $feeditem[5]."-".$time[0];
+				}
 				else
 					$last_type = $feeditem[5];
+					
 				$last_user = $feeditem[0]->_userid;
 			}
 		}
@@ -347,7 +375,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
 					<div class="feed-activity-icon-xp"><i class="material-icons" style='font-size: 1em;margin-top: 4px;'>subject</i></div>
 				<?php }else if(sizeof($feed) > 0){ ?>
 					<div class="feed-activity-icon-xp"><span style='font-size: 0.8em;font-weight: bold;line-height: 28px;position:relative;top:-1px;'>XP</span></div>
-				<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?> 
+				<?php }else if(strtotime($feed[0][0]->_date) < strtotime("now -182 days")){ ?> 
 					<div class="feed-activity-icon-xp"><i class="material-icons">access time</i></div>
 				<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
 					<div class="feed-activity-icon-xp"><i class="material-icons">done</i></div>
@@ -381,7 +409,7 @@ function FeedXPItem($feed, $conn, $mutualconn){
                          <?php } ?>
 					<?php }else if($user->_security == "Journalist" || ($user->_security == "Authenticated" && sizeof($feed) == 1 && $feed[0][3]->_link != '')){ ?>
 						reviewed
-					<?php }else if(strtotime($feed[0][3]->_date) < strtotime("now -182 days")){ ?>
+					<?php }else if(strtotime($feed[0][0]->_date) < strtotime("now -182 days") && sizeof($feed[0][3]->_playedxp) > 0){ ?>
 						reminisced about
 					<?php }else if($feed[0][0]->_event == "FINISHED"){ ?>
 						finished

@@ -192,7 +192,7 @@ function AttachGameEvents(currentTab){
 	$(".fixed-close-modal-btn, .lean-overlay").on('click', function(){
 		$("#game").css({ "right": "-75%" }); 
 		$(".lean-overlay").each(function(){ $(this).remove(); } );
-		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); }, 300);
+		setTimeout(function(){ $("#game").css({"display":"none"}); $('body').removeClass("bodynoscroll").css({'top': $(window).scrollTop(SCROLL_POS) + 'px'}); $("#gameInnerContainer").html(""); }, 300);
 	});
 
 	if($(window).width() < 600){
@@ -316,6 +316,40 @@ function AttachStarEvents(){
 
 		}
 		element.find(".star-icon-pre").text("star");
+	});
+	$(".clear-star-ranking").on("click", function(){
+		var gameid = $(this).parent().parent().parent().attr("data-id");
+		$(this).parent().removeClass("tierTextColor1");
+		$(this).parent().removeClass("tierTextColor2");
+		$(this).parent().removeClass("tierTextColor3");
+		$(this).parent().removeClass("tierTextColor4");
+		$(this).parent().removeClass("tierTextColor5");
+		$(this).parent().find(".star-icon").each(function(){
+			$(this).removeClass("tierTextColor1");
+			$(this).removeClass("tierTextColor2");
+			$(this).removeClass("tierTextColor3");
+			$(this).removeClass("tierTextColor4");
+			$(this).removeClass("tierTextColor5");
+			$(this).removeClass("star-icon-pre");
+			$(this).removeClass("tier-modal-icon");
+			$(this).text("star_border");
+		});
+
+		$.ajax({ url: '../php/webService.php',
+				data: {action: "ClearStars", gameid: gameid, tier: 0 },
+				type: 'post',
+				success: function(output) {
+
+				},
+					error: function(x, t, m) {
+						if(t==="timeout") {
+							ToastError("Server Timeout");
+						} else {
+							ToastError(t);
+						}
+					},
+					timeout:45000
+				});
 	});
 	$(".star-icon").on("click", function(){
 		var gameid = $(this).parent().parent().parent().attr("data-id");
@@ -739,11 +773,6 @@ function InitializeGameCardUpdate(gameid){
 		}
 	});
 	$(".game-card-action-pick").unbind();
-	$(".game-card-action-pick").on("click", function(e){
-		e.stopPropagation();
-		if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
-			GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
-	});
 }
 
 function FinishGameCardUpdate(gameid){
@@ -758,6 +787,11 @@ function FinishGameCardUpdate(gameid){
 					if(container.parent().find(".game-activity-content-sub-header").length > 0){
 						container.parent().find(".game-activity-content-sub-header").html("Updated your details!");
 					}
+					$(".game-card-action-pick").on("click", function(e){
+						e.stopPropagation();
+						if($(this).attr("data-action") == "xp" && $(".lean-overlay-details").length == 0)
+							GameCardAction($(this).attr("data-action"), $(this).attr("data-id"));
+					});
 				},
 				error: function(x, t, m) {
 					if(t==="timeout") {

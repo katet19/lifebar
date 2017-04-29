@@ -80,4 +80,5 @@ require_once 'php/view_profile.php';
 require_once 'php/view_onboarding.php';
 require_once 'php/view_daily.php';
 require_once 'php/view_ranking.php';
+require_once 'php/view_mylibrary.php';
 ?>

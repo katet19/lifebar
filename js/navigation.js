@@ -147,6 +147,9 @@ function NavigateToPage(page, fromURL = false){
 			}else if(page[0] == "#ranking"){
 				$("#nav-ranking").addClass("nav-slide-out-selected-page");
 				ShowRanking();
+			}else if(page[0] == "#mylibrary"){
+				$("#nav-mylibrary").addClass("nav-slide-out-selected-page");
+				ShowMyLibrary();
 			}else{
 				$('body').css({'overflow-y':'scroll'});
 				ShowDiscoverHome();
@@ -175,9 +178,11 @@ function NavigateToPage(page, fromURL = false){
 				ShowUserProfile($(".userContainer").attr("data-id"), true);
 			else if(page == "#ranking")
 				ShowRanking();
+			else if(page == "#mylibrary")
+				ShowMyLibrary();
 			else if(page == "#collections")
 				DisplayUserCollection($(".userContainer").attr("data-id"));
-			else if(page != "#logout")
+			else if(page != "#logout" && page != "#feedback")
 				ShowDiscoverHome();
 			GLOBAL_HASH_REDIRECT = "";
 		}
@@ -232,7 +237,44 @@ function AttachTabLoadingEvents(){
 	  	window.open("https://lifebar.freshdesk.com");
 	  });
 	  $(".supportBlogButton").on("click", function(){
-	  	window.open("https://medium.com/lifebar-io");
+			$.ajax({ url: '../php/webService.php',
+			     data: {action: 'DisplayFeedback', },
+			     type: 'post',
+			     success: function(output) {
+					ShowPopUp(output);
+					$(".myfeedback-submit").on("click", function(){
+						var feedback = $("#myfeedback").val();
+						Toast("Thanks for the feedback! We will respond as soon as we can.");
+						$("#universalPopUp").closeModal();
+						HideFocus();
+						$.ajax({ url: '../php/webService.php',
+								data: {action: 'SubmitFeedback', feedback: feedback },
+								type: 'post',
+								success: function(output) {
+
+								},
+									error: function(x, t, m) {
+										if(t==="timeout") {
+											ToastError("Server Timeout");
+										} else {
+											ToastError(t);
+										}
+									},
+									timeout:45000
+							});
+							
+					});
+			     },
+			        error: function(x, t, m) {
+				        if(t==="timeout") {
+				            ToastError("Server Timeout");
+				        } else {
+				            ToastError(t);
+				        }
+			    	},
+			    	timeout:45000
+			});
+	  	
 	  });
 	  $(".logoContainer").on("click", function(){
 	  	if($("#userAccountNav").length > 0){

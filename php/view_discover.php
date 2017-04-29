@@ -21,8 +21,8 @@ function DisplayDynamicDiscover(){
 					DisplayHorizontalGameList($zdepth, $item['CATEGORY'], $item['GAMES'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC']);
 				else if($item["DTYPE"] == "USERLIST")
 					DisplayHorizontalUserList($zdepth, $item['CATEGORY'], $item['USERS'], $item['TYPE'], $item['COLOR'], $item['CATEGORYDESC'], $connections);
-				else if($item['DTYPE'] == 'DAILY')
-					DisplayDailyHeader($zdepth, $item);
+				//else if($item['DTYPE'] == 'DAILY')
+				//	DisplayDailyHeader($zdepth, $item);
 				else if($item['DTYPE'] == 'WATCHLIST')
 					DisplayHorizontalWatchList($zdepth, $item);
 				else if($item['DTYPE'] == 'MEMBERLIST')
@@ -106,8 +106,8 @@ function DisplayInviteFriends($userid){
 	<div class="col s12 discoverCategory">
 		<div class="row">
 			<div class="discover-gnow-card col s12 m10 offset-m1 l8 offset-l2 z-depth-1">
-				<div class="discover-gnow-title"><i class="mdi-action-question-answer"></i> <span>Social</span></div>
-				<div class="discover-gnow-header" style="height:initial;width:100%;margin-bottom:5px;">Tell your friends & family about Lifebar to really get your activity feed flowing</div>
+				<div class="discover-gnow-title"><i class="mdi-action-question-answer"></i> <span style='opacity:0;'>Social</span></div>
+				<div class="discover-gnow-header" style="height:initial;width:100%;margin-bottom:5px;">Tell your friends about Lifebar to really get your activity feed flowing</div>
 				<div class="btn-flat discover-gnow-action waves-effect discover-invite-users">Invite people you know</div>
 			</div>
 		</div>

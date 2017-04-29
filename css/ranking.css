@@ -13,7 +13,7 @@
     padding: 0em 35px 1em 15px !important;
 }
 
-.rank-header-container{
+.rank-header-container, .mylib-header-container{
     margin-top: 30px;
     text-align: left;
     z-index: 10;
@@ -23,7 +23,7 @@
     display: inline-block;
 }
 
-.rank-header-container-active{
+.rank-header-container-active, .mylib-header-container-active{
     width: 60%;
 }
 
@@ -32,7 +32,7 @@
     margin-right:20px;
 }
 
-.rank-list-container{
+.rank-list-container, .mylib-list-container{
     width: calc(100% - 40px);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     display: inline-block;
@@ -103,7 +103,7 @@
     z-index:9;
 }
 
-.rank-filter-list-container{
+.rank-filter-list-container, .mylib-filter-list-container{
     position: fixed;
     right: -30%;
     background-color: white;
@@ -130,7 +130,7 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.rank-filter-list-container-active{
+.rank-filter-list-container-active, .mylib-filter-list-container-active{
     right:0px !important;
     width:calc(30% - 40px);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -609,6 +609,11 @@
     padding-left:130px;
 }
 
+.mylib-item-title-w-image{
+    padding-left:100px;
+    font-weight: 500;
+}
+
 @media only screen and (max-width : 600px) {
     .rank-user-container{
         left:10px;
@@ -620,11 +625,11 @@
     .rank-unranked-list-container-active{
         width: calc(80% - 40px);
     }
-    .rank-filter-list-container-active{
+    .rank-filter-list-container-active, .mylib-filter-list-container-active{
         width: calc(80% - 40px);
         top:155px;
     }
-    .rank-filter-list-container{
+    .rank-filter-list-container, .mylib-filter-list-container{
         top:155px;
     }
     .rank-welcome-container{

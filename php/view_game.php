@@ -58,11 +58,12 @@ function ShowGameContent($game, $myxp, $otherxp){
 							<?php if($myxp->_tier > 0){ ?>
 								<div class="nav-game-action-btn <?php if($myxp->_tier > 0){ echo "tierTextColor".$myxp->_tier; } ?>" style='position: relative;font-size:2.5em;cursor:pointer;'>
 									<?php DisplayStarSequence($myxp->_tier, true); ?>
+									<i class="material-icons clear-star-ranking" style='color:gray;'>remove_circle_outline</i>
 								</div>
 								<div class="game-activity-content-sub-header">
 									<?php if($toprating == $myxp->_tier){ ?>
 										You <b>agree</b> with most other members.
-									<?php }else if($toprating > $myxp->_tier){ ?>
+									<?php }else if($toprating < $myxp->_tier){ ?>
 										You rated <b>higher</b> than other members.
 									<?php }else if($toprating > 0){ ?>
 										You rated <b>lower</b> than other members.
@@ -753,6 +754,7 @@ function DisplayGameCard($game, $count, $classId, $type = ""){
 						<?php if($xp->_tier > 0){ ?>
 							<div class="nav-game-action-btn <?php if($xp->_tier > 0){ echo "tierTextColor".$xp->_tier; } ?>">
 								<?php DisplayStarSequence($xp->_tier, true); ?>
+								<i class="material-icons clear-star-ranking">remove_circle_outline</i>
 							</div>
 						<?php }else{ ?>
 							<div class="nav-game-action-btn">

@@ -14,8 +14,7 @@ function BuildDiscoverFlow($userid){
 		$dAtts['OBJECTTYPE'] = $daily['OBJECTTYPE'];
 		$dAtts['FINISHED'] = $daily['Finished'];
 		$dAtts['ITEMS'] = $daily["Items"];
-		$dItems[] = $dAtts;
-	*/
+		$dItems[] = $dAtts;*/
 	
 	/*
 	* Determine the order & content

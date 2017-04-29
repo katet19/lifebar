@@ -5,6 +5,27 @@ function DisplayAdmin($userid){
 	$userdata = GetUsersData(); ?>
 	<div class="col s12">
 		<div class="row">
+				<!-- 
+  			
+  			Issue Management
+  			
+  			-->
+			<div class="col s12">
+				<div class="admin-category-header" style='margin-top:0px;'>
+					Issue Management
+				</div>
+				</div>
+				<div class="col s12 m6">
+	          <div class="card admin-card">
+	            <div class="card-content">
+	              <span class="card-title"><i class="mdi-editor-mode-comment" style='margin: 0 5px;'></i> Reported Feedback <div class="admin-counter"><?php echo $admindata[11]; ?></div></span>
+	            </div>
+	            <div class="card-action">
+	              <a href="#" class="admin-action admin-manage-issues">Manage</a>
+	            </div>
+	          </div>
+				</div>
+			</div>
   			<!-- 
   			
   			XP Management
@@ -222,6 +243,19 @@ function DisplayDBThreads(){
 	<?php }
 }
 
+function DisplayFeedback(){
+	?>
+	<div class="row" style='margin:50px 0px;'>
+			<div class="input-field col s10 offset-s1">
+				<textarea id="myfeedback" class="materialize-textarea myfeedback" ></textarea>
+				<label for="myfeedback">Enter feedback, report bugs or send ideas</label>
+			</div>
+			<div class="col s10 offset-s1">
+				<div class='btn myfeedback-submit'>Submit Feedback</div>
+			</div>
+	</div>
+	<?php
+}
 
 function DisplayPendingReviews(){
 	$rssfeeds = GetUnReviewedRSSFeeds();
@@ -751,5 +785,26 @@ function DisplayRefPtPicker($new, $search){
 			<?php } ?>
 		</div>
 	<?php
+}
+
+function DisplayUserFeedback(){
+	$allfeedback = GetUserFeedback(); ?>
+		<div class="row">
+			<?php
+			foreach($allfeedback as $feedback){
+				$user = GetUser($feedback["UserID"]);
+				$msg = $feedback["Feedback"];
+			?>
+			<div class="col s12 z-depth-1" style='text-align:left;background-color:white;margin-top:20px;padding:20px 25px;'>
+				<span style='font-weight:500;'><?php echo $user->_username; ?> (<?php echo $user->_email; ?>)</span>
+				<p>
+					"<?php echo $msg; ?>"
+				</p>
+				<textarea class='feedback-response'></textarea>
+				<div class='btn-flat feedback-response-send' data-id="<?php echo $feedback['ID']; ?>">Respond</div>
+			</div>
+			<?php } ?>
+		</div>
+<?php
 }
 ?>
