@@ -19,7 +19,7 @@ function ProcessEmailQue(){
 			if($prevTo != $row['ToField'] && $prevTo != ''){
 				$imploded = implode($body);
 				if($imploded != ''){
-					$message = GetHeaderAkuma().$imploded.GetFooter($prevUser, '1up');
+					$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
 					if($count > 1){
 						$prevSubject = "You have been given 1ups!";
 						$prevFrom = "Lifebar Notifications";
@@ -82,7 +82,7 @@ function ProcessEmailQue(){
 		
 		$imploded = implode($body);
 		if($imploded != ''){
-			$message = GetHeaderAkuma().$imploded.GetFooter($prevUser, '1up');
+			$message = GetHeader().$imploded.GetFooter($prevUser, '1up');
 			if($count > 1){
 				$prevSubject = "You have been given 1ups!";
 				$prevFrom = "Lifebar Notifications";
@@ -110,7 +110,7 @@ function ProcessEmailQue(){
 				if($prevTo != $row['ToField'] && $prevTo != ''){
 					$imploded = implode($body);
 					if($imploded != ''){
-						$message = GetHeaderAkuma().$imploded.GetFooter($prevUser, 'Following');
+						$message = GetHeader().$imploded.GetFooter($prevUser, 'Following');
 						if($count > 1){
 							$prevSubject = "You have new followers!";
 							$prevFrom = "Lifebar Notifications";
@@ -159,7 +159,7 @@ function ProcessEmailQue(){
 		$body[] = $message;
 		$imploded = implode($body);
 		if($imploded != ''){
-			$message = GetHeaderAkuma().$imploded.GetFooter($prevUser, 'Following');
+			$message = GetHeader().$imploded.GetFooter($prevUser, 'Following');
 			if($count > 1){
 				$prevSubject = "You have new followers!";
 				$prevFrom = "Lifebar Notifications";
@@ -170,16 +170,9 @@ function ProcessEmailQue(){
 }
 
 function GetHeader(){
-	$body = $body."<div style='background-color:rgb(237, 236, 236);width:100%;text-align:center;position:relative;'>";
-	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;'>";
-	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#3F51B5;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/LifebarLogoEmail.png'></div>";
-	return $body;
-}
-
-function GetHeaderAkuma(){
 	$body = $body."<div style='#3F51B5;width:100%;text-align:center;position:relative;'>";
-	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;'>";
-	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#3F51B5;'><div style='color:white;font-size:1.5em;'><span style='font-weight:bold;'>Life</span>bar</div></div>";
+	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;text-align:center;'>";
+	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#3F51B5;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg'></div>";
 	return $body;
 }
 

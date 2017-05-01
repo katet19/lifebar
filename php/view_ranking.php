@@ -73,7 +73,7 @@ function DisplayRanking($userid){
                         <div class='onboarding-sub-sub-welcome'>Before you start ranking, we recommend you have a good list of games already rated. Focusing on a genre, year or your Lifebar backlog will help you build a list of games that are ready to be ranked.</div>
                     <?php }else{ ?>
                         <div class='onboarding-sub-sub-welcome'><i class='material-icons red-text left'  style='font-size:1.5em;'>warning</i> We are missing some key info to get you started</div>
-                        <div class='onboarding-sub-sub-welcome'>Explore <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>explore</i> Discover, review your <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>whatshot</i> Activity feed or search for games you have experienced and give them a star rating first. Once you have given them a star rating, you can rank them here.</div>
+                        <div class='onboarding-sub-sub-welcome'>Take a look at <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>explore</i> Discover, review your <i class='material-icons indigo-text' style='font-size: 1em;position: relative;top: 2px;margin-right: -2px;margin-left: 3px;'>whatshot</i> Activity feed or search for games you have experienced and give them a star rating first. Once you have given them a star rating, you can rank them here.</div>
                     <?php } ?>
                 </div>
             </div>
@@ -252,7 +252,7 @@ function ShowFilterList($userid, $sizeOfList){
                         <input type="checkbox" class="xp-dropdown-checkbox" id="Finished" />
                         <label for="Finished">Finished</label>
                     </div>
-                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp"Watched">
+                    <div class='col s12 xp-dropdown-filter-item filter-line-item' data-xp="Watched">
                         <input type="checkbox" class="xp-dropdown-checkbox" id="Watched" />
                         <label for="Watched">Watched</label>
                     </div>

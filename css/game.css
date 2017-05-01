@@ -246,6 +246,22 @@
     padding: 0px 4px;
 }
 
+.clear-star-ranking{
+    font-size: 0.8em;
+    display: inline-block;
+    position: absolute;
+    padding: 0px 4px;
+    opacity: 0;
+    right: 2px;
+    cursor: pointer;
+    top: 6px;
+    z-index: 2;
+}
+
+.game-card-action-pick:hover .clear-star-ranking, .nav-game-action-btn:hover .clear-star-ranking{
+    opacity:1;
+}
+
 .game-activity-content .game-card-summary-prog-bar-container{
     height:25px !important;
     left:50px !important;

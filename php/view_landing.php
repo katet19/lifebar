@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="col s12" style='color:white;'>
-      <div style='font-weight: 300;text-align: left;font-size: 2.5em;position:fixed;'><span style='font-weight:bold;'>Life</span>bar</div>
+      <div style='font-weight: 300;text-align: left;font-size: 2.5em;position:fixed;'><img src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.png' style='width: 160px;position: relative;top: 10px;'></div>
     </div>
     <div class="col s8 offset-s2 m7 offset-m2 l6 offset-l3" style='margin-top:150px;'>
       <div class='landing-intro-text'>

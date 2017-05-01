@@ -13,9 +13,9 @@ function DisplayHeaderNavigation(){ ?>
 			<div class="col navigation-col navigation-menu navigation-menu-slide-out">
 				<?php if($_SESSION['logged-in'] != null){ ?>
 					<i class="material-icons nav-icon">menu</i>
-					<div class="navigation-menu-logo navigation-menu-logo-slide-out"><b>Life</b>bar</div>
+					<div class="navigation-menu-logo navigation-menu-logo-slide-out"><img src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg' style='width: 130px;position: relative;top: 3px;'></div>
 				<?php }else{ ?>
-					<div class="navigation-menu-logo navigation-menu-logo-slide-out" style='margin-top: 5px;'><b>Life</b>bar</div>
+					<div class="navigation-menu-logo navigation-menu-logo-slide-out" style='margin-top: 5px;'><img src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg' style='width: 130px;position: relative;top: 3px;'></div>
 				<?php } ?>
 			</div>
 		    <div class="col navigation-col navigation-lifebar navigation-lifebar-slide-out">
@@ -77,6 +77,7 @@ function DisplaySideDrawer(){ ?>
 		<li class="nav-slide-out-selected-page" id="nav-discover"><a href="#discover"><i class="material-icons">explore</i> Discover</a></li>
 		<li id="nav-activity"><a href="#activity"><i class="material-icons">whatshot</i> Activity</a></li>
 		<li id="nav-ranking"><a href="#ranking"><i class="material-icons">swap_vert</i> Rank</a></li>
+		<li id="nav-mylibrary"><a href="#mylibrary"><i class="material-icons">view_list</i> My Library</a></li>
 		<!--<li id="nav-profile"><a href="#profile"><i class="material-icons">account_box</i> Profile</a></li>-->
 		<!--<li id="nav-collections"><a href="#collections"><i class="material-icons">collections</i> Collections</a></li>-->
 			<div class="divider"></div>
@@ -86,7 +87,7 @@ function DisplaySideDrawer(){ ?>
 				<li id="nav-admin"><a href="#admin" class="adminButton"><i class="material-icons">security</i> Admin</a></li>
 			<?php } ?>
 			<div class="divider"></div>
-			<li><a href="#!" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>
+			<li><a href="#feedback" class="supportBlogButton"><i class="material-icons">feedback</i> Feedback</a></li>
 			<!--<li><a href="#!" class="supportForumButton"><i class="material-icons">feedback</i> Support</a></li>-->
 			<!--<li><a href="#!" class="supportButton"><i class="material-icons">bug_report</i> Report Bug</a></li>-->
 			<div class="divider"></div>
@@ -113,24 +114,6 @@ function DisplayUniversalBottomSheet(){ ?>
 function DisplayBattleProgressSheet(){ ?>
 	<div id="BattleProgess" class="modal bottom-sheet" style="background-color:white;"></div>
 <?php
-}
-
-function DisplayLifeBarLogo($showtag){ ?>
-	<div class="logoContainer <?php if(!$showtag){ ?>logoLandingPage<?php } ?>">
-		<div class="logoImage">
-			<img src='http://lifebar.io/Images/Generic/LifebarLogoTestTopDull.png' />
-			<?php if($showtag){ ?> <div class="logoAlpha">beta</div><?php } ?>
-		</div>
-	</div>
-	<?php /*
-	<div class="logoContainer">
-		<div class="logoTitle"><b>Life</b>bar</div>
-		<div class="logoAlpha">alpha</div>
-		<div class="logoLifebar">
-			<div class="logoLifebarHealth"></div>
-			<div class="logoLifebarDamage"></div>
-		</div>
-	</div>*/
 }
 
 function DisplayShareContent($userid, $type, $otherid){

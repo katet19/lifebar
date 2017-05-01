@@ -210,9 +210,6 @@ function AttachProfileEvents(userid){
  	 $(".developer-profile-item").on("click", function(){
 	 	DisplayDeveloperDetails(userid, $(this).attr("data-objectid"), $(this).attr("data-progid"));
 	 });
-	 $(".mylibrary").on("click", function(){
-	 	DisplayMyLibrary(userid);
-	 });
  	 $(".view-collections").on("click", function(){
  		DisplayUserCollection(userid);
 	 });
@@ -240,34 +237,6 @@ function AttachProfileEvents(userid){
   	 $(".newprofile-best-item").on('click', function(){
 	 	ShowGame($(this).attr("data-id"), $("#profile"));
 	 });
-}
-
-function EndlessMyLibraryLoader(userid){
-	ShowLoader($("#mylibrary-endless-loader"), 'big', "<br><br><br>");
-	$("#mylibrary-endless-loader").append("<br><br><br>");
-	var page = $("#mylibrary-endless-loader").attr("data-page");
-	var group = $("#mylibrary-endless-loader").attr("data-date");
-	var filter = $("#mylibrary-endless-loader").attr("data-filter");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "DisplayMyLibraryEndless", userid: userid, page: page, group: group, filter: filter },
-     type: 'post',
-     success: function(output) {
-		$("#mylibrary-endless-loader").before(output);
-		$("#mylibrary-endless-loader").html("");
-		$("#mylibrary-endless-loader").attr("data-page", parseInt(page) + 100);
-		var lastdate = $("#mylibrary-endless-loader").parent().find(".feed-date-divider:last").attr("data-date");
-		$("#mylibrary-endless-loader").attr("data-date", lastdate);
-		AttachMyLibraryEvents(userid);
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
 }
 
 function DisplayTracking(userid){
@@ -397,27 +366,6 @@ function DisplayAbilitiesViewMore(userid){
 	});
 }
 
-function DisplayMyLibrary(userid){
-	window.scrollTo(0, 0);
-  	ShowLoader($("#profileInnerContainer"), 'big', "<br><br><br>");
-	$.ajax({ url: '../php/webService.php',
-     data: {action: "DisplayMyLibrary", userid: userid, filter: 'Alpha' },
-     type: 'post',
-     success: function(output) {
- 		$("#profileInnerContainer").html(output); 
- 		AttachMyLibraryEvents(userid);
-     },
-        error: function(x, t, m) {
-	        if(t==="timeout") {
-	            ToastError("Server Timeout");
-	        } else {
-	            ToastError(t);
-	        }
-    	},
-    	timeout:45000
-	});
-}
-
 function AttachMyLibraryEvents(userid){
  	$(".card-game-list").on("click", function(e){
  		e.stopPropagation();
@@ -428,12 +376,6 @@ function AttachMyLibraryEvents(userid){
   	$(".backButton").on("click", function(){
  		ShowUserProfile(userid);
  	});
-	$(window).scroll(function(){
-	 	if(isScrolledIntoView($("#mylibrary-endless-loader"))){
-	 		if($("#mylibrary-endless-loader").html() == "")
-	  			EndlessMyLibraryLoader(userid);
-	 	}
-	 });
  	$('.mylib-tier').change(function() {
 		if(this.checked){
 			MyLibraryToggleTier(true, $(this).attr("data-tier"));

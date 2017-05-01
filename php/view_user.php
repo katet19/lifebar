@@ -78,7 +78,7 @@ function DisplayFollowUserCard($user, $checked, $showquote, $showbtn){
         		$game = GetGame($event->_gameid);
         	?>
         		<div class="feed-horizontal-card" style='max-height:150px;'  data-gameid="<?php echo $game->_id; ?>" data-gbid="<?php echo $game->_gbid; ?>">
-				    <a class="feed-card-image waves-effect waves-block" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
+				    <a class="feed-card-image waves-effect waves-block suggested-member-game-card" data-gbid="<?php echo $game->_gbid; ?>" style="display:inline-block;background:url(<?php echo $game->_imagesmall; ?>) 50% 25%;z-index:0;-webkit-background-size: cover; background-size: cover; -moz-background-size: cover; -o-background-size: cover;" onclick="var event = arguments[0] || window.event; event.stopPropagation();">
 				    </a>
 			    	<div class="feed-card-content" <?php if($showquote){ ?>style='height:150px;'<?php } ?>>
 					  	<?php if($user->_security == "Journalist" || ($user->_security == "Authenticated" && $xp->_authenticxp != "Yes" && !$showquote)){ ?>
@@ -515,7 +515,7 @@ function DisplayRoleManagement($userid){
 
 function InviteUsers($userid){
 	?>
-	<div class="row" style='overflow:auto;height:100%;'>
+	<div class="row" style='overflow:auto;height:100%;padding: 50px 0 0;'>
 		<div class="col s10 offset-s1">
 			<div class='analyze-card-header' style='border-bottom:none;padding:0;'>
 				<div class='analyze-card-title'>Email Invite</div>
@@ -526,7 +526,7 @@ function InviteUsers($userid){
 			<div class="input-field col s10 offset-s1">
 				<textarea id="invite-to" class="materialize-textarea" style='font-size: 1.25em;' maxlength="500"></textarea>
 				<label for="invite-to" style='font-weight: 500;'>Send To</label>
-				<div style='font-size: 0.9em;margin-top: -15px;margin-bottom: 40px;'>Enter email addresses separated by commas. i.e. <span style='font-weight:400;'>drmario@hotmail.com, darealrobotnik@yahoo.com, liquidsnake@gmail.com</span></div>
+				<div style='font-size: 0.8em;margin-top: -20px;margin-bottom: 40px;'>Enter email addresses separated by commas. i.e. <span style='font-weight:400;'>drmario@hotmail.com, darealrobotnik@yahoo.com, liquidsnake@gmail.com</span></div>
 			</div>
 			<div class="input-field col s10 offset-s1">
 				<textarea id="invite-body" class="materialize-textarea" style='font-size: 1.25em;' maxlength="400"></textarea>
@@ -537,7 +537,7 @@ function InviteUsers($userid){
 			<div class="input-field col s10 offset-s1">
 				<div class="btn invite-send-btn">Send invite</div>
 				<div class="btn-flat invite-cancel-btn">Cancel</div>
-				<div style='font-size: 0.9em'>Lifebar will send a custom invitation in your name asking them to join Lifebar.io</div>
+				<div style='font-size: 0.9em;margin-top: 5px;'>Lifebar will send a custom invitation in your name asking them to join Lifebar.io</div>
 				<div class="invite-error-msg" style='color:red;font-weight:400;margin:1em 0;display:none;'></div>
 			</div>
 		</div>

@@ -22,7 +22,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 		<?php
 	}else{
 		?>
-		<title>Lifebar | We Heart Games ;)</title>
+		<title>Lifebar</title>
 		<?php
 	} 
 ?>
@@ -45,7 +45,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 	}
 	?>
 
-<link rel="shortcut icon" href="http://lifebar.io/fav.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://lifebar.io/favicon_3.ico" type="image/x-icon" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="../css/library/materialize.css" rel="stylesheet" type="text/css" />
 <link href="../css/library/circle.css" rel="stylesheet" type="text/css" />
@@ -69,6 +69,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <link href="../css/collection.css" rel="stylesheet" type="text/css" />
 <link href="../css/import.css" rel="stylesheet" type="text/css" />
 <link href="../css/ranking.css" rel="stylesheet" type="text/css" />
+<link href="../css/mylibrary.css" rel="stylesheet" type="text/css" />
 <link href="../css/lifebar.webflow.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
@@ -95,6 +96,7 @@ if($GLOBALS["DownForMaintenance"]){ ?> <!--&& $_SESSION['logged-in']->_security 
 <script type="text/javascript" src="../js/import.js"></script>
 <script type="text/javascript" src="../js/onboarding.js"></script>
 <script type="text/javascript" src="../js/ranking.js"></script>
+<script type="text/javascript" src="../js/mylibrary.js"></script>
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
