@@ -281,6 +281,10 @@ function ShowAdvancedSearch(){
 function AttachDiscoverHomeEvents(){
 	//Game
 	$(".game-discover-card .card-image, .card-action a").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
+	$(".suggested-member-game-card").on("click", function(e){ 
+		e.stopPropagation(); 
+		ShowGame($(this).attr("data-gbid"), $("#discover")); 
+	});
  	$(".suggested-game-link").on("click", function(e){ e.stopPropagation(); ShowGame($(this).parent().attr("data-gbid"), $("#discover")); });
 	AttachGameCardEvents();
 	$("select").material_select();

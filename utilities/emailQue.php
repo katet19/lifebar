@@ -171,7 +171,7 @@ function ProcessEmailQue(){
 
 function GetHeader(){
 	$body = $body."<div style='#3F51B5;width:100%;text-align:center;position:relative;'>";
-	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;'>";
+	$body = $body."<div style='display:inline-block;width:500px;background-color:#fff;text-align:center;'>";
 	$body = $body."<div style='width:100%;text-align:center;padding:15px 0;background-color:#3F51B5;'><img style='max-height:40px;' src='http://lifebar.io/Images/Generic/lifebarheartcontrollerlogo.jpg'></div>";
 	return $body;
 }
