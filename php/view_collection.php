@@ -3,11 +3,11 @@ function DisplayUserCollection($userid){
 	$user = GetUser($userid);
 	if($user->_security == "Journalist" || $user->_security == "Authenticated"){ $name = $user->_first." ".$user->_last; }else{ $name = $user->_username; }
 	DisplayBackButton($name."'s Collections");
-	$autocollections = GetPersonalAutoCollections($userid);
+	//$autocollections = GetPersonalAutoCollections($userid);
 	$personalcollections = GetPersonalCollections($userid);
 	$subcollections = GetSubscribedCollections($userid);
 	?>
-	<div class="row" style='margin-top:4em;margin-left:2.5%;margin-right:2.5%;text-align:left;'>
+	<!--<div class="row" style='margin-top:4em;margin-left:2.5%;margin-right:2.5%;text-align:left;'>
 		<div class="col s12" style='border-bottom:1px solid rgba(0,0,0,0.4);'>
 			<div class="row" style='margin-top:2em;'>
 				<div class="col s12 ability-tracking-header">Auto Collections</div>
@@ -27,7 +27,7 @@ function DisplayUserCollection($userid){
 				<?php } ?>
 			</div>
 		</div>
-	</div>
+	</div>-->
 	<div class="row" style='margin-left:2.5%;margin-right:2.5%;text-align:left;'>
 		<div class="col s12" style='border-bottom:1px solid rgba(0,0,0,0.4);'>
 			<div class="row" style='margin-top:2em;'>

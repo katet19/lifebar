@@ -106,13 +106,13 @@ function BuildDiscoverFlow($userid){
 		$dItems[] = $dAtts;	
 	
 	//Get Suggested Collection
-	/*$suggcoll = GetSuggestedCollection($mysqli, $userid);
+	$suggcoll = GetSuggestedCollection($mysqli, $userid);
 	if($suggcoll != ''){
 		unset($dAtts);
 		$dAtts['DTYPE'] = 'COLLECTION';
 		$dAtts['COLLECTION'] = $suggcoll;
 		$dItems[] = $dAtts;
-	}*/
+	}
 
 	//Get Users that aren't mutual followers
 	$notmutual = GetNotMutualFollowers($mysqli, $userid);
